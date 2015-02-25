@@ -148,19 +148,16 @@ impl<'a> ToXml<'a> for Item<'a> {
             namespace: namespace,
         });
 
-        match self.title {
-            Some(s) => add_block(&mut events, namespace, "title", s),
-            None => (),
+        if let Some(s) = self.title {
+            add_block(&mut events, namespace, "title", s);
         }
 
-        match self.link {
-            Some(s) => add_block(&mut events, namespace, "link", s),
-            None => (),
+        if let Some(s) = self.link {
+            add_block(&mut events, namespace, "link", s);
         }
 
-        match self.description {
-            Some(s) => add_block(&mut events, namespace, "description", s),
-            None => (),
+        if let Some(s) = self.description {
+            add_block(&mut events, namespace, "description", s);
         }
 
         // </channel>
