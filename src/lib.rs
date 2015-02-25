@@ -141,7 +141,7 @@ impl<'a> ToXml<'a> for Item<'a> {
     fn to_xml(&'a self, namespace: &'a Namespace) -> Vec<XmlEvent> {
         let mut events = vec![];
 
-        // <channel>
+        // <item>
         events.push(XmlEvent::StartElement {
             name: Name::local("item"),
             attributes: vec![],
@@ -160,7 +160,7 @@ impl<'a> ToXml<'a> for Item<'a> {
             add_block(&mut events, namespace, "description", s);
         }
 
-        // </channel>
+        // </item>
         events.push(XmlEvent::EndElement {
             name: Name::local("item"),
         });
