@@ -10,7 +10,7 @@ use xml::writer::EventWriter;
 use xml::writer::events::XmlEvent;
 
 
-fn add_block<'a>(events: &mut Vec<XmlEvent<'a>>, namespace: &'a Namespace, tag_name: &'static str, chars: &'a String) {
+fn add_block<'a>(events: &mut Vec<XmlEvent<'a>>, namespace: &'a Namespace, tag_name: &'static str, chars: &'a str) {
     // <(tag_name)>
     events.push(XmlEvent::StartElement {
         name: Name::local(tag_name),
@@ -39,9 +39,9 @@ trait ToXml<'a> {
 
 
 /// RSS version 2.0
-pub struct Rss(pub Vec<Channel>);
+pub struct Rss<'a>(pub Vec<Channel<'a>>);
 
-impl<'a> ToXml<'a> for Rss {
+impl<'a> ToXml<'a> for Rss<'a> {
     fn to_xml(&'a self, namespace: &'a Namespace) -> Vec<XmlEvent> {
         let mut events = vec![];
 
@@ -77,7 +77,7 @@ impl<'a> ToXml<'a> for Rss {
     }
 }
 
-impl Write for Rss {
+impl<'a> Write for Rss<'a> {
     fn write<W: Writer>(&self, writer: W) -> Result<(), ()> {
         let mut event_writer = EventWriter::new(writer);
 
@@ -93,14 +93,14 @@ impl Write for Rss {
 }
 
 
-pub struct Channel {
+pub struct Channel<'a> {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub items: Vec<Item>,
+    pub items: Vec<Item<'a>>,
 }
 
-impl<'a> ToXml<'a> for Channel {
+impl<'a> ToXml<'a> for Channel<'a> {
     fn to_xml(&'a self, namespace: &'a Namespace) -> Vec<XmlEvent> {
         let mut events = vec![];
 
@@ -115,6 +115,12 @@ impl<'a> ToXml<'a> for Channel {
         add_block(&mut events, namespace, "link", &self.link);
         add_block(&mut events, namespace, "description", &self.description);
 
+        for item in &self.items {
+            for event in item.to_xml(namespace) {
+                events.push(event);
+            }
+        }
+
         // </channel>
         events.push(XmlEvent::EndElement {
             name: Name::local("channel"),
@@ -124,10 +130,46 @@ impl<'a> ToXml<'a> for Channel {
     }
 }
 
-pub struct Item {
-    pub title: Option<String>,
-    pub link: Option<String>,
-    pub description: Option<String>,
+pub struct Item<'a> {
+    pub title: Option<&'a str>,
+    pub link: Option<&'a str>,
+    pub description: Option<&'a str>,
+}
+
+
+impl<'a> ToXml<'a> for Item<'a> {
+    fn to_xml(&'a self, namespace: &'a Namespace) -> Vec<XmlEvent> {
+        let mut events = vec![];
+
+        // <channel>
+        events.push(XmlEvent::StartElement {
+            name: Name::local("item"),
+            attributes: vec![],
+            namespace: namespace,
+        });
+
+        match self.title {
+            Some(s) => add_block(&mut events, namespace, "title", s),
+            None => (),
+        }
+
+        match self.link {
+            Some(s) => add_block(&mut events, namespace, "link", s),
+            None => (),
+        }
+
+        match self.description {
+            Some(s) => add_block(&mut events, namespace, "description", s),
+            None => (),
+        }
+
+        // </channel>
+        events.push(XmlEvent::EndElement {
+            name: Name::local("item"),
+        });
+
+        events
+    }
 }
 
 
@@ -135,11 +177,17 @@ pub struct Item {
 fn test_consruct() {
     use std::old_io;
 
+    let item = Item {
+        title: Some("My first post!"),
+        link: Some("http://myblog.com/post1"),
+        description: Some("This is my first post"),
+    };
+
     let channel = Channel {
         title: String::from_str("My Blog"),
         link: String::from_str("http://myblog.com"),
         description: String::from_str("Where I write stuff"),
-        items: vec![],
+        items: vec![item],
     };
 
     let rss = Rss(vec![channel]);
