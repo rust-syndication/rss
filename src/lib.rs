@@ -10,6 +10,23 @@ use xml::writer::EventWriter;
 use xml::writer::events::XmlEvent;
 
 
+fn add_block<'a>(events: &mut Vec<XmlEvent<'a>>, namespace: &'a Namespace, tag_name: &'static str, chars: &'a String) {
+    // <(tag_name)>
+    events.push(XmlEvent::StartElement {
+        name: Name::local(tag_name),
+        attributes: vec![],
+        namespace: namespace,
+    });
+
+    events.push(XmlEvent::Characters(chars));
+    
+    // </(tag_name)>
+    events.push(XmlEvent::EndElement {
+        name: Name::local(tag_name),
+    });
+}
+
+
 trait Write {
     fn write<W: Writer>(&self, writer: W) -> Result<(), ()>;
 }
@@ -44,14 +61,12 @@ impl<'a> ToXml<'a> for Rss {
             namespace: namespace,
         });
 
-        /*
         let &Rss(ref channels) = self;
         for channel in channels {
             for event in channel.to_xml(namespace) {
                 events.push(event);
             }
         }
-        */
 
         // </rss>
         events.push(XmlEvent::EndElement {
@@ -85,13 +100,29 @@ pub struct Channel {
     pub items: Vec<Item>,
 }
 
-/*
 impl<'a> ToXml<'a> for Channel {
-    fn to_xml(&self) -> Vec<XmlEvent> {
-        vec![]
+    fn to_xml(&'a self, namespace: &'a Namespace) -> Vec<XmlEvent> {
+        let mut events = vec![];
+
+        // <channel>
+        events.push(XmlEvent::StartElement {
+            name: Name::local("channel"),
+            attributes: vec![],
+            namespace: namespace,
+        });
+
+        add_block(&mut events, namespace, "title", &self.title);
+        add_block(&mut events, namespace, "link", &self.link);
+        add_block(&mut events, namespace, "description", &self.description);
+
+        // </channel>
+        events.push(XmlEvent::EndElement {
+            name: Name::local("channel"),
+        });
+
+        events
     }
 }
-*/
 
 pub struct Item {
     pub title: Option<String>,
@@ -103,6 +134,14 @@ pub struct Item {
 #[test]
 fn test_consruct() {
     use std::old_io;
-    let rss = Rss(vec![]);
+
+    let channel = Channel {
+        title: String::from_str("My Blog"),
+        link: String::from_str("http://myblog.com"),
+        description: String::from_str("Where I write stuff"),
+        items: vec![],
+    };
+
+    let rss = Rss(vec![channel]);
     rss.write(old_io::stdout());
 }
