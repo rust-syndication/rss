@@ -19,7 +19,7 @@ fn add_block<'a>(events: &mut Vec<XmlEvent<'a>>, namespace: &'a Namespace, tag_n
     });
 
     events.push(XmlEvent::Characters(chars));
-    
+
     // </(tag_name)>
     events.push(XmlEvent::EndElement {
         name: Name::local(tag_name),
@@ -46,7 +46,7 @@ impl<'a> ToXml<'a> for Rss<'a> {
         let mut events = vec![];
 
         // <?xml version="1.0" encoding="UTF-8"?>
-        events.push(XmlEvent::StartDocument{ 
+        events.push(XmlEvent::StartDocument{
             version: XmlVersion::Version10,
             encoding: Some("UTF-8"),
             standalone: None,
@@ -72,7 +72,7 @@ impl<'a> ToXml<'a> for Rss<'a> {
         events.push(XmlEvent::EndElement {
             name: Name::local("rss"),
         });
-        
+
         events
     }
 }
