@@ -94,9 +94,9 @@ impl<'a> Write for Rss<'a> {
 
 
 pub struct Channel<'a> {
-    pub title: String,
-    pub link: String,
-    pub description: String,
+    pub title: &'a str,
+    pub link: &'a str,
+    pub description: &'a str,
     pub items: Vec<Item<'a>>,
 }
 
@@ -111,9 +111,9 @@ impl<'a> ToXml<'a> for Channel<'a> {
             namespace: namespace,
         });
 
-        add_block(&mut events, namespace, "title", &self.title);
-        add_block(&mut events, namespace, "link", &self.link);
-        add_block(&mut events, namespace, "description", &self.description);
+        add_block(&mut events, namespace, "title", self.title);
+        add_block(&mut events, namespace, "link", self.link);
+        add_block(&mut events, namespace, "description", self.description);
 
         for item in &self.items {
             for event in item.to_xml(namespace) {
@@ -184,9 +184,9 @@ fn test_consruct() {
     };
 
     let channel = Channel {
-        title: String::from_str("My Blog"),
-        link: String::from_str("http://myblog.com"),
-        description: String::from_str("Where I write stuff"),
+        title: "My Blog",
+        link: "http://myblog.com",
+        description: "Where I write stuff",
         items: vec![item],
     };
 
