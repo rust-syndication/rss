@@ -85,7 +85,10 @@ impl<'a> Write for Rss<'a> {
         let events = self.to_xml(&namespace);
 
         for event in events {
-            event_writer.write(event);
+            match event_writer.write(event) {
+                Ok(..) => (),
+                Err(..) => return Err(()),
+            }
         };
 
         Ok(())
