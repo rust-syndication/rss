@@ -93,6 +93,8 @@ impl ToXml for Item {
 
 #[test]
 fn test_consruct() {
+    #![feature(collections)]
+
     let item = Item {
         title: Some(String::from_str("My first post!")),
         link: Some(String::from_str("http://myblog.com/post1")),
