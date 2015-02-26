@@ -10,7 +10,7 @@ fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
 }
 
 
-trait ViaXml<> {
+trait ViaXml {
     fn to_xml(&self) -> Element;
 }
 
