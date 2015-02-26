@@ -10,7 +10,7 @@ fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
 }
 
 
-trait ToXml<> {
+trait ViaXml<> {
     fn to_xml(&self) -> Element;
 }
 
@@ -18,7 +18,7 @@ trait ToXml<> {
 /// RSS version 2.0
 pub struct Rss(pub Vec<Channel>);
 
-impl ToXml for Rss {
+impl ViaXml for Rss {
     fn to_xml(&self) -> Element {
         let mut rss = Element::new("rss", None, &[("version", None, "2.0")]);
 
@@ -47,7 +47,7 @@ pub struct Channel {
     pub items: Vec<Item>,
 }
 
-impl ToXml for Channel {
+impl ViaXml for Channel {
     fn to_xml(&self) -> Element {
         let mut channel = Element::new("channel", None, &[]);
 
@@ -70,7 +70,7 @@ pub struct Item {
 }
 
 
-impl ToXml for Item {
+impl ViaXml for Item {
     fn to_xml(&self) -> Element {
         let mut item = Element::new("item", None, &[]);
 
