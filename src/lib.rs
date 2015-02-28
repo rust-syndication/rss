@@ -96,7 +96,7 @@ impl ViaXml for Item {
 
 
 #[test]
-fn test_consruct() {
+fn test_basic_to_string() {
     #![feature(collections)]
 
     let item = Item {
