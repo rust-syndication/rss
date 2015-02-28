@@ -16,6 +16,7 @@ trait ViaXml {
 
 
 /// RSS version 2.0
+#[derive(Default)]
 pub struct Rss(pub Vec<Channel>);
 
 impl ViaXml for Rss {
@@ -40,6 +41,7 @@ impl Rss {
 }
 
 
+#[derive(Default)]
 pub struct Channel {
     pub title: String,
     pub link: String,
@@ -63,6 +65,8 @@ impl ViaXml for Channel {
     }
 }
 
+
+#[derive(Default)]
 pub struct Item {
     pub title: Option<String>,
     pub link: Option<String>,
