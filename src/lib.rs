@@ -1,8 +1,11 @@
+#![feature(io)]
+
 extern crate xml;
 
 use std::ascii::AsciiExt;
 use std::default::Default;
 use std::iter::IteratorExt;
+use std::io;
 use xml::{Element, ElementBuilder, Parser, Xml};
 
 
@@ -56,9 +59,16 @@ impl Rss {
         ret
     }
 
-    fn from_str(input: &str) -> Self {
+    fn from_read(reader: &mut io::Read) -> Self {
+        let mut rss_string = String::new();
+
+        match reader.read_to_string(&mut rss_string) {
+            Ok(..) => (),
+            Err(..) => panic!("Error reading string from reader"),
+        }
+
         let mut parser = Parser::new();
-        parser.feed_str(input);
+        parser.feed_str(&rss_string);
 
         let mut builder = ElementBuilder::new();
 
@@ -199,23 +209,23 @@ mod test {
     }
 
     #[test]
-    fn test_from_str_no_channels() {
-        let rss_str = "<rss></rss>";
-        let Rss(channels) = Rss::from_str(rss_str);
+    fn test_from_read_no_channels() {
+        let mut rss_bytes = "<rss></rss>".as_bytes();
+        let Rss(channels) = Rss::from_read(&mut rss_bytes);
         assert_eq!(0, channels.len());
     }
 
     #[test]
-    fn test_from_str_one_channel() {
-        let rss_str = "<rss><channel></channel></rss>";
-        let Rss(channels) = Rss::from_str(rss_str);
+    fn test_from_read_one_channel() {
+        let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
+        let Rss(channels) = Rss::from_read(&mut rss_bytes);
         assert_eq!(1, channels.len());
     }
 
     #[test]
-    fn test_from_str_one_channel_with_title() {
-        let rss_str = "<rss><channel><title>Hello world!</title></channel></rss>";
-        let Rss(channels) = Rss::from_str(rss_str);
+    fn test_from_read_one_channel_with_title() {
+        let mut rss_bytes = "<rss><channel><title>Hello world!</title></channel></rss>".as_bytes();
+        let Rss(channels) = Rss::from_read(&mut rss_bytes);
         assert_eq!(1, channels.len());
         assert_eq!("Hello world!", channels[0].title);
     }
