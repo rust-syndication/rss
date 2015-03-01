@@ -175,43 +175,48 @@ impl ViaXml for Item {
 }
 
 
-#[test]
-fn test_basic_to_string() {
-    let item = Item {
-        title: Some(String::from_str("My first post!")),
-        link: Some(String::from_str("http://myblog.com/post1")),
-        description: Some(String::from_str("This is my first post")),
-    };
+#[cfg(test)]
+mod test {
+    use super::{Rss, Item, Channel};
 
-    let channel = Channel {
-        title: String::from_str("My Blog"),
-        link: String::from_str("http://myblog.com"),
-        description: String::from_str("Where I write stuff"),
-        items: vec![item],
-    };
+    #[test]
+    fn test_basic_to_string() {
+        let item = Item {
+            title: Some(String::from_str("My first post!")),
+            link: Some(String::from_str("http://myblog.com/post1")),
+            description: Some(String::from_str("This is my first post")),
+        };
 
-    let rss = Rss(vec![channel]);
-    assert_eq!(rss.to_string(), "<?xml version=\'1.0\' encoding=\'UTF-8\'?><rss version=\'2.0\'><channel><title>My Blog</title><link>http://myblog.com</link><description>Where I write stuff</description><item><title>My first post!</title><link>http://myblog.com/post1</link><description>This is my first post</description></item></channel></rss>");
-}
+        let channel = Channel {
+            title: String::from_str("My Blog"),
+            link: String::from_str("http://myblog.com"),
+            description: String::from_str("Where I write stuff"),
+            items: vec![item],
+        };
 
-#[test]
-fn test_from_str_no_channels() {
-    let rss_str = "<rss></rss>";
-    let Rss(channels) = Rss::from_str(rss_str);
-    assert_eq!(0, channels.len());
-}
+        let rss = Rss(vec![channel]);
+        assert_eq!(rss.to_string(), "<?xml version=\'1.0\' encoding=\'UTF-8\'?><rss version=\'2.0\'><channel><title>My Blog</title><link>http://myblog.com</link><description>Where I write stuff</description><item><title>My first post!</title><link>http://myblog.com/post1</link><description>This is my first post</description></item></channel></rss>");
+    }
 
-#[test]
-fn test_from_str_one_channel() {
-    let rss_str = "<rss><channel></channel></rss>";
-    let Rss(channels) = Rss::from_str(rss_str);
-    assert_eq!(1, channels.len());
-}
+    #[test]
+    fn test_from_str_no_channels() {
+        let rss_str = "<rss></rss>";
+        let Rss(channels) = Rss::from_str(rss_str);
+        assert_eq!(0, channels.len());
+    }
 
-#[test]
-fn test_from_str_one_channel_with_title() {
-    let rss_str = "<rss><channel><title>Hello world!</title></channel></rss>";
-    let Rss(channels) = Rss::from_str(rss_str);
-    assert_eq!(1, channels.len());
-    assert_eq!("Hello world!", channels[0].title);
+    #[test]
+    fn test_from_str_one_channel() {
+        let rss_str = "<rss><channel></channel></rss>";
+        let Rss(channels) = Rss::from_str(rss_str);
+        assert_eq!(1, channels.len());
+    }
+
+    #[test]
+    fn test_from_str_one_channel_with_title() {
+        let rss_str = "<rss><channel><title>Hello world!</title></channel></rss>";
+        let Rss(channels) = Rss::from_str(rss_str);
+        assert_eq!(1, channels.len());
+        assert_eq!("Hello world!", channels[0].title);
+    }
 }
