@@ -182,15 +182,15 @@ mod test {
     #[test]
     fn test_basic_to_string() {
         let item = Item {
-            title: Some(String::from_str("My first post!")),
-            link: Some(String::from_str("http://myblog.com/post1")),
-            description: Some(String::from_str("This is my first post")),
+            title: Some("My first post!".to_string()),
+            link: Some("http://myblog.com/post1".to_string()),
+            description: Some("This is my first post".to_string()),
         };
 
         let channel = Channel {
-            title: String::from_str("My Blog"),
-            link: String::from_str("http://myblog.com"),
-            description: String::from_str("Where I write stuff"),
+            title: "My Blog".to_string(),
+            link: "http://myblog.com".to_string(),
+            description: "Where I write stuff".to_string(),
             items: vec![item],
         };
 
