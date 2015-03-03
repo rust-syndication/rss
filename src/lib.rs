@@ -105,6 +105,22 @@ pub struct Channel {
     pub link: String,
     pub description: String,
     pub items: Vec<Item>,
+    // pub language: Option<String>,
+    // pub copyright: Option<String>,
+    // pub managing_editor: Option<String>,
+    // pub web_master: Option<String>,
+    // pub pub_date: Option<String>,
+    // pub last_build_date: Option<String>,
+    // pub category:
+    // pub generator: Option<String>,
+    // pub docs: Option<String>,
+    // pub cloud:
+    // pub ttl:
+    // pub image: Option<String>,
+    // pub rating: Option<String>,
+    // pub text_input:
+    // pub skip_hours: Option<String>,
+    // pub skip_days: Option<String>,
 }
 
 impl ViaXml for Channel {
@@ -155,6 +171,13 @@ pub struct Item {
     pub title: Option<String>,
     pub link: Option<String>,
     pub description: Option<String>,
+    // pub author
+    // pub category
+    // pub comments
+    // pub enclosure
+    // pub guid
+    // pub pubDate
+    // pub source
 }
 
 
