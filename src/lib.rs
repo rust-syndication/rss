@@ -80,6 +80,25 @@ impl Rss {
 }
 
 
+/// Channel
+///
+/// "Subordinate to the \<rss\> element is a single \<channel\> element, which contains information
+/// about the channel (metadata) and its contents."
+///
+/// [RSS 2.0 Specification § Channel]
+/// (http://cyber.law.harvard.edu/rss/rss.html#requiredChannelElements)
+///
+/// ## Examples
+///
+/// ```
+/// use rss::Channel;
+///
+/// let channel = Channel {
+///     title: "My Blog".to_string(),
+///     link: "http://myblog.com".to_string(),
+///     description: "Where I write stuff".to_string(),
+/// };
+/// ```
 #[derive(Default)]
 pub struct Channel {
     pub title: String,
