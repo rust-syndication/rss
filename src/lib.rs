@@ -24,16 +24,14 @@ trait ViaXml {
 
 /// RSS version 2.0
 #[derive(Default)]
-pub struct Rss(pub Vec<Channel>);
+pub struct Rss(pub Channel);
 
 impl ViaXml for Rss {
     fn to_xml(&self) -> Element {
         let mut rss = Element::new("rss", None, &[("version", None, "2.0")]);
 
-        let &Rss(ref channels) = self;
-        for channel in channels {
-            rss.tag(channel.to_xml());
-        }
+        let &Rss(ref channel) = self;
+        rss.tag(channel.to_xml());
 
         rss
     }
@@ -43,12 +41,10 @@ impl ViaXml for Rss {
             panic!("Expected <rss>, found <{}>", element.name);
         }
 
-        let channels = element.get_children("channel", None)
-            .into_iter()
-            .map(|e| ViaXml::from_xml(e.clone()))
-            .collect();
+        let channel_element = element.get_child("channel", None).unwrap();
+        let channel = ViaXml::from_xml(channel_element.clone());
 
-        Rss(channels)
+        Rss(channel)
     }
 }
 
@@ -204,29 +200,27 @@ mod test {
             items: vec![item],
         };
 
-        let rss = Rss(vec![channel]);
+        let rss = Rss(channel);
         assert_eq!(rss.to_string(), "<?xml version=\'1.0\' encoding=\'UTF-8\'?><rss version=\'2.0\'><channel><title>My Blog</title><link>http://myblog.com</link><description>Where I write stuff</description><item><title>My first post!</title><link>http://myblog.com/post1</link><description>This is my first post</description></item></channel></rss>");
     }
 
     #[test]
+    #[should_fail]
     fn test_from_read_no_channels() {
         let mut rss_bytes = "<rss></rss>".as_bytes();
-        let Rss(channels) = Rss::from_read(&mut rss_bytes);
-        assert_eq!(0, channels.len());
+        let Rss(channel) = Rss::from_read(&mut rss_bytes);
     }
 
     #[test]
     fn test_from_read_one_channel() {
         let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
-        let Rss(channels) = Rss::from_read(&mut rss_bytes);
-        assert_eq!(1, channels.len());
+        let Rss(channel) = Rss::from_read(&mut rss_bytes);
     }
 
     #[test]
     fn test_from_read_one_channel_with_title() {
         let mut rss_bytes = "<rss><channel><title>Hello world!</title></channel></rss>".as_bytes();
-        let Rss(channels) = Rss::from_read(&mut rss_bytes);
-        assert_eq!(1, channels.len());
-        assert_eq!("Hello world!", channels[0].title);
+        let Rss(channel) = Rss::from_read(&mut rss_bytes);
+        assert_eq!("Hello world!", channel.title);
     }
 }
