@@ -247,6 +247,12 @@ mod test {
     }
 
     #[test]
+    fn test_from_file() {
+        let mut file = File::open("test-data/pinboard.xml").unwrap();
+        let Rss(channel) = Rss::from_read(&mut file);
+    }
+
+    #[test]
     #[should_fail]
     fn test_from_read_no_channels() {
         let mut rss_bytes = "<rss></rss>".as_bytes();
