@@ -22,7 +22,14 @@ trait ViaXml {
 }
 
 
-/// RSS version 2.0
+/// RSS
+///
+/// "At the top level, a RSS document is a \<rss\> element, with a mandatory attribute called
+/// version, that specifies the version of RSS that the document conforms to. If it conforms to
+/// this specification, the version attribute must be 2.0."
+///
+/// [RSS 2.0 Specification § RSS]
+/// (http://cyber.law.harvard.edu/rss/rss.html#whatIsRss)
 #[derive(Default)]
 pub struct Rss(pub Channel);
 
