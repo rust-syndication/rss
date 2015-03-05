@@ -258,21 +258,21 @@ mod test {
     #[test]
     fn test_from_file() {
         let mut file = File::open("test-data/pinboard.xml").unwrap();
-        let Rss(channel) = Rss::from_read(&mut file).unwrap();
+        let Rss(_) = Rss::from_read(&mut file).unwrap();
     }
 
     #[test]
     #[should_fail]
     fn test_from_read_no_channels() {
         let mut rss_bytes = "<rss></rss>".as_bytes();
-        let Rss(channel) = Rss::from_read(&mut rss_bytes).unwrap();
+        let Rss(_) = Rss::from_read(&mut rss_bytes).unwrap();
     }
 
     #[test]
     #[should_fail]
     fn test_from_read_one_channel() {
         let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
-        let Rss(channel) = Rss::from_read(&mut rss_bytes).unwrap();
+        let Rss(_) = Rss::from_read(&mut rss_bytes).unwrap();
     }
 
     #[test]
