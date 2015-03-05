@@ -104,6 +104,7 @@ impl Rss {
 ///     title: "My Blog".to_string(),
 ///     link: "http://myblog.com".to_string(),
 ///     description: "Where I write stuff".to_string(),
+///     items: vec![],
 /// };
 /// ```
 #[derive(Default)]
