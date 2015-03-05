@@ -18,7 +18,7 @@ fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
 
 trait ViaXml {
     fn to_xml(&self) -> Element;
-    fn from_xml(element: Element) -> Self;
+    fn from_xml(element: Element) -> Result<Self, &'static str>;
 }
 
 
@@ -43,15 +43,15 @@ impl ViaXml for Rss {
         rss
     }
 
-    fn from_xml(element: Element) -> Self {
+    fn from_xml(element: Element) -> Result<Self, &'static str> {
         if element.name.to_ascii_lowercase() != "rss" {
             panic!("Expected <rss>, found <{}>", element.name);
         }
 
         let channel_element = element.get_child("channel", None).unwrap();
-        let channel = ViaXml::from_xml(channel_element.clone());
+        let channel = try!(ViaXml::from_xml(channel_element.clone()));
 
-        Rss(channel)
+        Ok(Rss(channel))
     }
 }
 
@@ -62,12 +62,12 @@ impl Rss {
         ret
     }
 
-    fn from_read(reader: &mut io::Read) -> Self {
+    fn from_read(reader: &mut io::Read) -> Result<Self, &'static str> {
         let mut rss_string = String::new();
 
         match reader.read_to_string(&mut rss_string) {
             Ok(..) => (),
-            Err(..) => panic!("Error reading string from reader"),
+            Err(..) => return Err("Error reading string from reader"),
         }
 
         let mut parser = Parser::new();
@@ -82,7 +82,7 @@ impl Rss {
             }
         }
 
-        panic!("RSS read error")
+        Err("RSS read error")
     }
 }
 
@@ -146,30 +146,30 @@ impl ViaXml for Channel {
         channel
     }
 
-    fn from_xml(element: Element) -> Self {
+    fn from_xml(element: Element) -> Result<Self, &'static str> {
         let mut channel: Channel = Default::default();
 
         match element.get_child("title", None) {
             Some(element) => channel.title = element.content_str(),
-            None => (),
+            None => return Err("<channel> is missing required <title> element"),
         }
 
         match element.get_child("link", None) {
             Some(element) => channel.link = element.content_str(),
-            None => (),
+            None => return Err("<channel> is missing required <link> element"),
         }
 
         match element.get_child("description", None) {
             Some(element) => channel.description = element.content_str(),
-            None => (),
+            None => return Err("<channel> is missing required <description> element"),
         }
 
         channel.items = element.get_children("item", None)
             .into_iter()
-            .map(|e| ViaXml::from_xml(e.clone()))
+            .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
-        channel
+        Ok(channel)
     }
 }
 
@@ -208,7 +208,7 @@ impl ViaXml for Item {
         item
     }
 
-    fn from_xml(element: Element) -> Self {
+    fn from_xml(element: Element) -> Result<Self, &'static str> {
         let mut item: Item = Default::default();
 
         match element.get_child("title", None) {
@@ -258,26 +258,27 @@ mod test {
     #[test]
     fn test_from_file() {
         let mut file = File::open("test-data/pinboard.xml").unwrap();
-        let Rss(channel) = Rss::from_read(&mut file);
+        let Rss(channel) = Rss::from_read(&mut file).unwrap();
     }
 
     #[test]
     #[should_fail]
     fn test_from_read_no_channels() {
         let mut rss_bytes = "<rss></rss>".as_bytes();
-        let Rss(channel) = Rss::from_read(&mut rss_bytes);
+        let Rss(channel) = Rss::from_read(&mut rss_bytes).unwrap();
     }
 
     #[test]
+    #[should_fail]
     fn test_from_read_one_channel() {
         let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
-        let Rss(channel) = Rss::from_read(&mut rss_bytes);
+        let Rss(channel) = Rss::from_read(&mut rss_bytes).unwrap();
     }
 
     #[test]
     fn test_from_read_one_channel_with_title() {
-        let mut rss_bytes = "<rss><channel><title>Hello world!</title></channel></rss>".as_bytes();
-        let Rss(channel) = Rss::from_read(&mut rss_bytes);
+        let mut rss_bytes = "<rss><channel><title>Hello world!</title><description></description><link></link></channel></rss>".as_bytes();
+        let Rss(channel) = Rss::from_read(&mut rss_bytes).unwrap();
         assert_eq!("Hello world!", channel.title);
     }
 }
