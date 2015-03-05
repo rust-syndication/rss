@@ -1,4 +1,4 @@
-#![feature(io)]
+#![feature(fs, io)]
 
 extern crate xml;
 
@@ -226,13 +226,14 @@ impl ViaXml for Item {
             None => (),
         }
 
-        item
+        Ok(item)
     }
 }
 
 
 #[cfg(test)]
 mod test {
+    use std::fs::File;
     use super::{Rss, Item, Channel};
 
     #[test]
