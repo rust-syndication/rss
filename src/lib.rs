@@ -43,13 +43,17 @@ impl ViaXml for Rss {
         rss
     }
 
-    fn from_xml(element: Element) -> Result<Self, &'static str> {
-        if element.name.to_ascii_lowercase() != "rss" {
-            panic!("Expected <rss>, found <{}>", element.name);
+    fn from_xml(rss_elem: Element) -> Result<Self, &'static str> {
+        if rss_elem.name.to_ascii_lowercase() != "rss" {
+            panic!("Expected <rss>, found <{}>", rss_elem.name);
         }
 
-        let channel_element = element.get_child("channel", None).unwrap();
-        let channel = try!(ViaXml::from_xml(channel_element.clone()));
+        let channel_elem = match rss_elem.get_child("channel", None) {
+            Some(elem) => elem,
+            None => return Err("No <channel> element found in <rss>"),
+        };
+
+        let channel = try!(ViaXml::from_xml(channel_elem.clone()));
 
         Ok(Rss(channel))
     }
