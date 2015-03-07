@@ -1,4 +1,4 @@
-#![feature(fs, io)]
+#![feature(io)]
 
 extern crate xml;
 
