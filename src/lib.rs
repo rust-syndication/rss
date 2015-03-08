@@ -286,13 +286,13 @@ mod test {
 
     #[test]
     #[should_fail]
-    fn test_from_read_one_channel() {
+    fn test_from_read_one_channel_no_properties() {
         let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
         let Rss(_) = Rss::from_read(&mut rss_bytes).unwrap();
     }
 
     #[test]
-    fn test_from_read_one_channel_with_title() {
+    fn test_from_read_one_channel() {
         let mut rss_bytes = "<rss><channel><title>Hello world!</title><description></description><link></link></channel></rss>".as_bytes();
         let Rss(channel) = Rss::from_read(&mut rss_bytes).unwrap();
         assert_eq!("Hello world!", channel.title);
