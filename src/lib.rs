@@ -79,13 +79,13 @@ impl ViaXml for Rss {
 }
 
 impl Rss {
-    fn to_string(&self) -> String {
+    pub fn to_string(&self) -> String {
         let mut ret = format!("{}", Xml::PINode("xml version='1.0' encoding='UTF-8'".to_string()));
         ret.push_str(&format!("{}", self.to_xml()));
         ret
     }
 
-    fn from_read(reader: &mut io::Read) -> Result<Self, &'static str> {
+    pub fn from_read(reader: &mut io::Read) -> Result<Self, &'static str> {
         let mut rss_string = String::new();
 
         match reader.read_to_string(&mut rss_string) {
