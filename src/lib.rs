@@ -9,22 +9,29 @@ use std::io;
 use xml::{Element, ElementBuilder, Parser, Xml};
 
 
+trait ElementUtils {
+    fn tag_with_text(&mut self, child_name: &'static str, child_body: &str);
+    fn tag_with_text_opt(&mut self, child_name: &'static str, child_body: &Option<String>);
+}
+
+
+impl ElementUtils for Element {
+    fn tag_with_text(&mut self, child_name: &'static str, child_body: &str) {
+        self.tag(elem_with_text(child_name, child_body));
+    }
+
+    fn tag_with_text_opt(&mut self, child_name: &'static str, child_body: &Option<String>) {
+        if let Some(ref c) = *child_body {
+            self.tag_with_text(child_name, &c);
+        }
+    }
+}
+
+
 fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
     let mut elem = Element::new(tag_name, None, &[]);
     elem.text(chars);
     elem
-}
-
-
-fn tag_text_elem(parent: &mut Element, child_name: &'static str, child_body: &str) {
-    parent.tag(elem_with_text(child_name, child_body));
-}
-
-
-fn tag_text_elem_opt(parent: &mut Element, child_name: &'static str, child_body: &Option<String>) {
-    if let Some(ref c) = *child_body {
-        tag_text_elem(parent, child_name, &c);
-    }
 }
 
 
@@ -151,9 +158,9 @@ impl ViaXml for Channel {
     fn to_xml(&self) -> Element {
         let mut channel = Element::new("channel", None, &[]);
 
-        tag_text_elem(&mut channel, "title", &self.title);
-        tag_text_elem(&mut channel, "link", &self.link);
-        tag_text_elem(&mut channel, "description", &self.description);
+        channel.tag_with_text("title", &self.title);
+        channel.tag_with_text("link", &self.link);
+        channel.tag_with_text("description", &self.description);
 
         for item in &self.items {
             channel.tag(item.to_xml());
@@ -209,9 +216,9 @@ impl ViaXml for Item {
     fn to_xml(&self) -> Element {
         let mut item = Element::new("item", None, &[]);
 
-        tag_text_elem_opt(&mut item, "title", &self.title);
-        tag_text_elem_opt(&mut item, "link", &self.link);
-        tag_text_elem_opt(&mut item, "description", &self.description);
+        item.tag_with_text_opt("title", &self.title);
+        item.tag_with_text_opt("link", &self.link);
+        item.tag_with_text_opt("description", &self.description);
 
         item
     }
