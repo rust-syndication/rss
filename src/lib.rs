@@ -16,6 +16,11 @@ fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
 }
 
 
+fn tag_text_elem(parent: &mut Element, child_name: &'static str, child_body: &str) {
+    parent.tag(elem_with_text(child_name, child_body));
+}
+
+
 trait ViaXml {
     fn to_xml(&self) -> Element;
     fn from_xml(element: Element) -> Result<Self, &'static str>;
@@ -139,9 +144,9 @@ impl ViaXml for Channel {
     fn to_xml(&self) -> Element {
         let mut channel = Element::new("channel", None, &[]);
 
-        channel.tag(elem_with_text("title", &self.title));
-        channel.tag(elem_with_text("link", &self.link));
-        channel.tag(elem_with_text("description", &self.description));
+        tag_text_elem(&mut channel, "title", &self.title);
+        tag_text_elem(&mut channel, "link", &self.link);
+        tag_text_elem(&mut channel, "description", &self.description);
 
         for item in &self.items {
             channel.tag(item.to_xml());
@@ -198,15 +203,15 @@ impl ViaXml for Item {
         let mut item = Element::new("item", None, &[]);
 
         if let Some(ref s) = self.title {
-            item.tag(elem_with_text("title", s));
+            tag_text_elem(&mut item, "title", s);
         }
 
         if let Some(ref s) = self.link {
-            item.tag(elem_with_text("link", s));
+            tag_text_elem(&mut item, "link", s);
         }
 
         if let Some(ref s) = self.description {
-            item.tag(elem_with_text("description", s));
+            tag_text_elem(&mut item, "description", s);
         }
 
         item
