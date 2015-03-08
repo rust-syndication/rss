@@ -21,6 +21,13 @@ fn tag_text_elem(parent: &mut Element, child_name: &'static str, child_body: &st
 }
 
 
+fn tag_text_elem_opt(parent: &mut Element, child_name: &'static str, child_body: &Option<String>) {
+    if let Some(ref c) = *child_body {
+        tag_text_elem(parent, child_name, &c);
+    }
+}
+
+
 trait ViaXml {
     fn to_xml(&self) -> Element;
     fn from_xml(element: Element) -> Result<Self, &'static str>;
@@ -202,17 +209,9 @@ impl ViaXml for Item {
     fn to_xml(&self) -> Element {
         let mut item = Element::new("item", None, &[]);
 
-        if let Some(ref s) = self.title {
-            tag_text_elem(&mut item, "title", s);
-        }
-
-        if let Some(ref s) = self.link {
-            tag_text_elem(&mut item, "link", s);
-        }
-
-        if let Some(ref s) = self.description {
-            tag_text_elem(&mut item, "description", s);
-        }
+        tag_text_elem_opt(&mut item, "title", &self.title);
+        tag_text_elem_opt(&mut item, "link", &self.link);
+        tag_text_elem_opt(&mut item, "description", &self.description);
 
         item
     }
