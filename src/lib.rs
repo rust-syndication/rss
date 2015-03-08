@@ -266,7 +266,8 @@ mod test {
     #[test]
     fn test_from_file() {
         let mut file = File::open("test-data/pinboard.xml").unwrap();
-        let Rss(_) = Rss::from_read(&mut file).unwrap();
+        let rss = Rss::from_read(&mut file).unwrap();
+        assert!(rss.to_string().len() > 0);
     }
 
     #[test]
