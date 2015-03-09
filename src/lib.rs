@@ -122,12 +122,14 @@ impl Rss {
 ///
 /// ```
 /// use rss::Channel;
+/// use std::default::Default;
 ///
 /// let channel = Channel {
 ///     title: "My Blog".to_string(),
 ///     link: "http://myblog.com".to_string(),
 ///     description: "Where I write stuff".to_string(),
 ///     items: vec![],
+///     ..Default::default()
 /// };
 /// ```
 #[derive(Default)]
@@ -136,22 +138,22 @@ pub struct Channel {
     pub link: String,
     pub description: String,
     pub items: Vec<Item>,
-    // pub language: Option<String>,
-    // pub copyright: Option<String>,
-    // pub managing_editor: Option<String>,
-    // pub web_master: Option<String>,
-    // pub pub_date: Option<String>,
-    // pub last_build_date: Option<String>,
+    pub language: Option<String>,
+    pub copyright: Option<String>,
+    pub managing_editor: Option<String>,
+    pub web_master: Option<String>,
+    pub pub_date: Option<String>,
+    pub last_build_date: Option<String>,
     // pub category:
-    // pub generator: Option<String>,
-    // pub docs: Option<String>,
+    pub generator: Option<String>,
+    pub docs: Option<String>,
     // pub cloud:
     // pub ttl:
-    // pub image: Option<String>,
-    // pub rating: Option<String>,
+    pub image: Option<String>,
+    pub rating: Option<String>,
     // pub text_input:
-    // pub skip_hours: Option<String>,
-    // pub skip_days: Option<String>,
+    pub skip_hours: Option<String>,
+    pub skip_days: Option<String>,
 }
 
 impl ViaXml for Channel {
@@ -165,6 +167,19 @@ impl ViaXml for Channel {
         for item in &self.items {
             channel.tag(item.to_xml());
         }
+
+        channel.tag_with_text_opt("language", &self.language);
+        channel.tag_with_text_opt("copyright", &self.copyright);
+        channel.tag_with_text_opt("managingEditor", &self.managing_editor);
+        channel.tag_with_text_opt("webMaster", &self.web_master);
+        channel.tag_with_text_opt("pubDate", &self.pub_date);
+        channel.tag_with_text_opt("lastBuildDate", &self.last_build_date);
+        channel.tag_with_text_opt("generator", &self.generator);
+        channel.tag_with_text_opt("docs", &self.docs);
+        channel.tag_with_text_opt("image", &self.image);
+        channel.tag_with_text_opt("rating", &self.rating);
+        channel.tag_with_text_opt("skipHours", &self.skip_hours);
+        channel.tag_with_text_opt("skipDays", &self.skip_days);
 
         channel
     }
@@ -248,6 +263,7 @@ impl ViaXml for Item {
 
 #[cfg(test)]
 mod test {
+    use std::default::Default;
     use std::fs::File;
     use super::{Rss, Item, Channel};
 
@@ -264,6 +280,7 @@ mod test {
             link: "http://myblog.com".to_string(),
             description: "Where I write stuff".to_string(),
             items: vec![item],
+            ..Default::default()
         };
 
         let rss = Rss(channel);
