@@ -295,14 +295,14 @@ mod test {
     }
 
     #[test]
-    #[should_fail]
+    #[should_panic]
     fn test_from_read_no_channels() {
         let mut rss_bytes = "<rss></rss>".as_bytes();
         let Rss(_) = Rss::from_read(&mut rss_bytes).unwrap();
     }
 
     #[test]
-    #[should_fail]
+    #[should_panic]
     fn test_from_read_one_channel_no_properties() {
         let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
         let Rss(_) = Rss::from_read(&mut rss_bytes).unwrap();
