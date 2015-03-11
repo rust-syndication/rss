@@ -144,7 +144,7 @@ pub struct Channel {
     pub web_master: Option<String>,
     pub pub_date: Option<String>,
     pub last_build_date: Option<String>,
-    // pub category:
+    pub category: Vec<Category>,
     pub generator: Option<String>,
     pub docs: Option<String>,
     // pub cloud:
@@ -218,7 +218,7 @@ pub struct Item {
     pub link: Option<String>,
     pub description: Option<String>,
     // pub author
-    // pub category
+    pub category: Vec<Category>,
     // pub comments
     // pub enclosure
     // pub guid
@@ -261,6 +261,14 @@ impl ViaXml for Item {
 }
 
 
+#[derive(Default)]
+pub struct Category {
+    pub domain: Option<String>,
+    pub value: String,
+}
+
+
+
 #[cfg(test)]
 mod test {
     use std::default::Default;
@@ -273,6 +281,7 @@ mod test {
             title: Some("My first post!".to_string()),
             link: Some("http://myblog.com/post1".to_string()),
             description: Some("This is my first post".to_string()),
+            ..Default::default()
         };
 
         let channel = Channel {
