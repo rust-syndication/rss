@@ -269,6 +269,10 @@ impl ViaXml for Item {
 }
 
 
+/// Category
+///
+/// [RSS 2.0 Specification § Category]
+/// (http://cyber.law.harvard.edu/rss/rss.html#ltcategorygtSubelementOfLtitemgt)
 #[derive(Default)]
 pub struct Category {
     pub domain: Option<String>,
