@@ -144,7 +144,7 @@ pub struct Channel {
     pub web_master: Option<String>,
     pub pub_date: Option<String>,
     pub last_build_date: Option<String>,
-    pub category: Vec<Category>,
+    pub categories: Vec<Category>,
     pub generator: Option<String>,
     pub docs: Option<String>,
     // pub cloud:
@@ -180,6 +180,10 @@ impl ViaXml for Channel {
         channel.tag_with_text_opt("rating", &self.rating);
         channel.tag_with_text_opt("skipHours", &self.skip_hours);
         channel.tag_with_text_opt("skipDays", &self.skip_days);
+
+        for category in &self.categories {
+            channel.tag(category.to_xml());
+        }
 
         channel
     }
@@ -218,7 +222,7 @@ pub struct Item {
     pub link: Option<String>,
     pub description: Option<String>,
     // pub author
-    pub category: Vec<Category>,
+    pub categories: Vec<Category>,
     // pub comments
     // pub enclosure
     // pub guid
@@ -234,6 +238,10 @@ impl ViaXml for Item {
         item.tag_with_text_opt("title", &self.title);
         item.tag_with_text_opt("link", &self.link);
         item.tag_with_text_opt("description", &self.description);
+
+        for category in &self.categories {
+            item.tag(category.to_xml());
+        }
 
         item
     }
@@ -265,6 +273,21 @@ impl ViaXml for Item {
 pub struct Category {
     pub domain: Option<String>,
     pub value: String,
+}
+
+impl ViaXml for Category {
+    fn to_xml(&self) -> Element {
+        let mut category = match self.domain {
+            Some(ref d) => Element::new("category", None, &[("domain", None, d)]),
+            None => Element::new("category", None, &[]),
+        };
+        category.text(&self.value);
+        category
+    }
+
+    fn from_xml(element: Element) -> Result<Self, &'static str> {
+        panic!("TODO")
+    }
 }
 
 
