@@ -248,19 +248,16 @@ impl ViaXml for Item {
     fn from_xml(element: Element) -> Result<Self, &'static str> {
         let mut item: Item = Default::default();
 
-        match element.get_child("title", None) {
-            Some(element) => item.title = Some(element.content_str()),
-            None => (),
+        if let Some(element) = element.get_child("title", None) {
+            item.title = Some(element.content_str());
         }
 
-        match element.get_child("link", None) {
-            Some(element) => item.link = Some(element.content_str()),
-            None => (),
+        if let Some(element) = element.get_child("link", None) {
+            item.link = Some(element.content_str());
         }
 
-        match element.get_child("description", None) {
-            Some(element) => item.description = Some(element.content_str()),
-            None => (),
+        if let Some(element) = element.get_child("description", None) {
+            item.description = Some(element.content_str());
         }
 
         Ok(item)
