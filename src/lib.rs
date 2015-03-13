@@ -99,9 +99,8 @@ impl Rss {
         let mut builder = ElementBuilder::new();
 
         for event in parser {
-            match builder.push_event(event) {
-                Ok(Some(element)) => return ViaXml::from_xml(element),
-                _ => (),
+            if let Ok(Some(element)) = builder.push_event(event) {
+                return ViaXml::from_xml(element);
             }
         }
 
