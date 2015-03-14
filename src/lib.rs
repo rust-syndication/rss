@@ -188,34 +188,39 @@ impl ViaXml for Channel {
     }
 
     fn from_xml(element: Element) -> Result<Self, &'static str> {
-        let mut channel: Channel = Default::default();
-
-        match element.get_child("title", None) {
-            Some(element) => channel.title = element.content_str(),
+        let title = match element.get_child("title", None) {
+            Some(element) => element.content_str(),
             None => return Err("<channel> is missing required <title> element"),
-        }
+        };
 
-        match element.get_child("link", None) {
-            Some(element) => channel.link = element.content_str(),
+        let link = match element.get_child("link", None) {
+            Some(element) => element.content_str(),
             None => return Err("<channel> is missing required <link> element"),
-        }
+        };
 
-        match element.get_child("description", None) {
-            Some(element) => channel.description = element.content_str(),
+        let description = match element.get_child("description", None) {
+            Some(element) => element.content_str(),
             None => return Err("<channel> is missing required <description> element"),
-        }
+        };
 
-        channel.items = element.get_children("item", None)
+        let items = element.get_children("item", None)
             .into_iter()
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
-        channel.categories = element.get_children("category", None)
+        let categories = element.get_children("category", None)
             .into_iter()
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
-        Ok(channel)
+        Ok(Channel {
+            title: title,
+            link: link,
+            description: description,
+            items: items,
+            categories: categories,
+            ..Default::default()  // TODO
+        })
     }
 }
 
@@ -251,26 +256,21 @@ impl ViaXml for Item {
     }
 
     fn from_xml(element: Element) -> Result<Self, &'static str> {
-        let mut item: Item = Default::default();
+        let title = element.get_child("title", None).map(|e| e.content_str());
+        let link = element.get_child("link", None).map(|e| e.content_str());
+        let description = element.get_child("description", None).map(|e| e.content_str());
 
-        if let Some(element) = element.get_child("title", None) {
-            item.title = Some(element.content_str());
-        }
-
-        if let Some(element) = element.get_child("link", None) {
-            item.link = Some(element.content_str());
-        }
-
-        if let Some(element) = element.get_child("description", None) {
-            item.description = Some(element.content_str());
-        }
-
-        item.categories = element.get_children("category", None)
+        let categories = element.get_children("category", None)
             .into_iter()
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
-        Ok(item)
+        Ok(Item {
+            title: title,
+            link: link,
+            description: description,
+            categories: categories,
+        })
     }
 }
 
