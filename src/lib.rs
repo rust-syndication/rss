@@ -1,5 +1,3 @@
-#![feature(io)]
-
 extern crate xml;
 
 use std::ascii::AsciiExt;
