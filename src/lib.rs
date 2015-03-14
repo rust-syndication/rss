@@ -210,6 +210,11 @@ impl ViaXml for Channel {
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
+        channel.categories = element.get_children("category", None)
+            .into_iter()
+            .map(|e| ViaXml::from_xml(e.clone()).unwrap())
+            .collect();
+
         Ok(channel)
     }
 }
@@ -260,6 +265,11 @@ impl ViaXml for Item {
             item.description = Some(element.content_str());
         }
 
+        item.categories = element.get_children("category", None)
+            .into_iter()
+            .map(|e| ViaXml::from_xml(e.clone()).unwrap())
+            .collect();
+
         Ok(item)
     }
 }
@@ -285,8 +295,14 @@ impl ViaXml for Category {
         category
     }
 
-    fn from_xml(element: Element) -> Result<Self, &'static str> {
-        panic!("TODO")
+    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+        let domain = elem.get_attribute("domain", None).map(|s| s.to_string());
+        let value = elem.content_str();
+
+        Ok(Category {
+            domain: domain,
+            value: value,
+        })
     }
 }
 
