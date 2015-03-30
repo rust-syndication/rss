@@ -85,9 +85,8 @@ impl Rss {
     pub fn from_read(reader: &mut io::Read) -> Result<Self, &'static str> {
         let mut rss_string = String::new();
 
-        match reader.read_to_string(&mut rss_string) {
-            Ok(..) => (),
-            Err(..) => return Err("Error reading string from reader"),
+        if let Err(..) = reader.read_to_string(&mut rss_string) {
+            return Err("Error reading string from reader");
         }
 
         let mut parser = Parser::new();
