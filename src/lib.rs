@@ -3,7 +3,6 @@ extern crate xml;
 use std::ascii::AsciiExt;
 use std::default::Default;
 use std::io;
-use std::iter::IteratorExt;
 use xml::{Element, ElementBuilder, Parser, Xml};
 
 
