@@ -26,8 +26,8 @@ impl ElementUtils for Element {
 
 
 fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
-    let mut elem = Element::new(tag_name, None, &[]);
-    elem.text(chars);
+    let mut elem = Element::new(tag_name.to_string(), None, vec![]);
+    elem.text(chars.to_string());
     elem
 }
 
@@ -51,7 +51,7 @@ pub struct Rss(pub Channel);
 
 impl ViaXml for Rss {
     fn to_xml(&self) -> Element {
-        let mut rss = Element::new("rss", None, &[("version", None, "2.0")]);
+        let mut rss = Element::new("rss".to_string(), None, vec![("version".to_string(), None, "2.0".to_string())]);
 
         let &Rss(ref channel) = self;
         rss.tag(channel.to_xml());
@@ -95,7 +95,7 @@ impl Rss {
         let mut builder = ElementBuilder::new();
 
         for event in parser {
-            if let Ok(Some(element)) = builder.push_event(event) {
+            if let Some(Ok(element)) = builder.handle_event(event) {
                 return ViaXml::from_xml(element);
             }
         }
@@ -153,7 +153,7 @@ pub struct Channel {
 
 impl ViaXml for Channel {
     fn to_xml(&self) -> Element {
-        let mut channel = Element::new("channel", None, &[]);
+        let mut channel = Element::new("channel".to_string(), None, vec![]);
 
         channel.tag_with_text("title", &self.title);
         channel.tag_with_text("link", &self.link);
@@ -200,12 +200,10 @@ impl ViaXml for Channel {
         };
 
         let items = element.get_children("item", None)
-            .into_iter()
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
         let categories = element.get_children("category", None)
-            .into_iter()
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
@@ -238,7 +236,7 @@ pub struct Item {
 
 impl ViaXml for Item {
     fn to_xml(&self) -> Element {
-        let mut item = Element::new("item", None, &[]);
+        let mut item = Element::new("item".to_string(), None, vec![]);
 
         item.tag_with_text_opt("title", &self.title);
         item.tag_with_text_opt("link", &self.link);
@@ -257,7 +255,6 @@ impl ViaXml for Item {
         let description = element.get_child("description", None).map(|e| e.content_str());
 
         let categories = element.get_children("category", None)
-            .into_iter()
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
@@ -284,10 +281,10 @@ pub struct Category {
 impl ViaXml for Category {
     fn to_xml(&self) -> Element {
         let mut category = match self.domain {
-            Some(ref d) => Element::new("category", None, &[("domain", None, d)]),
-            None => Element::new("category", None, &[]),
+            Some(ref d) => Element::new("category".to_string(), None, vec![("domain".to_string(), None, d.clone())]),
+            None => Element::new("category".to_string(), None, vec![]),
         };
-        category.text(&self.value);
+        category.text(self.value.clone());
         category
     }
 
