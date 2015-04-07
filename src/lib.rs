@@ -250,9 +250,9 @@ impl ViaXml for Item {
     }
 
     fn from_xml(element: Element) -> Result<Self, &'static str> {
-        let title = element.get_child("title", None).map(|e| e.content_str());
-        let link = element.get_child("link", None).map(|e| e.content_str());
-        let description = element.get_child("description", None).map(|e| e.content_str());
+        let title = element.get_child("title", None).map(Element::content_str);
+        let link = element.get_child("link", None).map(Element::content_str);
+        let description = element.get_child("description", None).map(Element::content_str);
 
         let categories = element.get_children("category", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
