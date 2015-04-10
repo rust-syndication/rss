@@ -222,7 +222,7 @@ impl ViaXml for Channel {
 /// Item
 ///
 /// [RSS 2.0 Specification § Item]
-/// http://cyber.law.harvard.edu/rss/rss.html#hrelementsOfLtitemgt
+/// (http://cyber.law.harvard.edu/rss/rss.html#hrelementsOfLtitemgt)
 #[derive(Default)]
 pub struct Item {
     pub title: Option<String>,
