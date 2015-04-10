@@ -228,7 +228,7 @@ pub struct Item {
     pub title: Option<String>,
     pub link: Option<String>,
     pub description: Option<String>,
-    // pub author
+    pub author: Option<String>,
     pub categories: Vec<Category>,
     // pub comments
     // pub enclosure
@@ -245,6 +245,7 @@ impl ViaXml for Item {
         item.tag_with_text_opt("title", &self.title);
         item.tag_with_text_opt("link", &self.link);
         item.tag_with_text_opt("description", &self.description);
+        item.tag_with_text_opt("author", &self.author);
 
         for category in &self.categories {
             item.tag(category.to_xml());
@@ -257,6 +258,7 @@ impl ViaXml for Item {
         let title = element.get_child("title", None).map(Element::content_str);
         let link = element.get_child("link", None).map(Element::content_str);
         let description = element.get_child("description", None).map(Element::content_str);
+        let author = element.get_child("author", None).map(Element::content_str);
 
         let categories = element.get_children("category", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
@@ -267,6 +269,7 @@ impl ViaXml for Item {
             link: link,
             description: description,
             categories: categories,
+            author: author,
         })
     }
 }
