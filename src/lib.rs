@@ -143,7 +143,7 @@ pub struct Channel {
     pub generator: Option<String>,
     pub docs: Option<String>,
     // pub cloud:
-    // pub ttl:
+    pub ttl: Option<String>,  // TODO: change this to Option<i32>?
     pub image: Option<String>,
     pub rating: Option<String>,
     // pub text_input:
@@ -171,6 +171,7 @@ impl ViaXml for Channel {
         channel.tag_with_text_opt("lastBuildDate", &self.last_build_date);
         channel.tag_with_text_opt("generator", &self.generator);
         channel.tag_with_text_opt("docs", &self.docs);
+        channel.tag_with_text_opt("ttl", &self.ttl);
         channel.tag_with_text_opt("image", &self.image);
         channel.tag_with_text_opt("rating", &self.rating);
         channel.tag_with_text_opt("skipHours", &self.skip_hours);
