@@ -8,7 +8,7 @@ use xml::{Element, ElementBuilder, Parser, Xml};
 
 trait ElementUtils {
     fn tag_with_text(&mut self, child_name: &'static str, child_body: &str);
-    fn tag_with_text_opt(&mut self, child_name: &'static str, child_body: &Option<String>);
+    fn tag_with_optional_text(&mut self, child_name: &'static str, child_body: &Option<String>);
 }
 
 
@@ -17,7 +17,7 @@ impl ElementUtils for Element {
         self.tag(elem_with_text(child_name, child_body));
     }
 
-    fn tag_with_text_opt(&mut self, child_name: &'static str, child_body: &Option<String>) {
+    fn tag_with_optional_text(&mut self, child_name: &'static str, child_body: &Option<String>) {
         if let Some(ref c) = *child_body {
             self.tag_with_text(child_name, &c);
         }
@@ -163,19 +163,19 @@ impl ViaXml for Channel {
             channel.tag(item.to_xml());
         }
 
-        channel.tag_with_text_opt("language", &self.language);
-        channel.tag_with_text_opt("copyright", &self.copyright);
-        channel.tag_with_text_opt("managingEditor", &self.managing_editor);
-        channel.tag_with_text_opt("webMaster", &self.web_master);
-        channel.tag_with_text_opt("pubDate", &self.pub_date);
-        channel.tag_with_text_opt("lastBuildDate", &self.last_build_date);
-        channel.tag_with_text_opt("generator", &self.generator);
-        channel.tag_with_text_opt("docs", &self.docs);
-        channel.tag_with_text_opt("ttl", &self.ttl);
-        channel.tag_with_text_opt("image", &self.image);
-        channel.tag_with_text_opt("rating", &self.rating);
-        channel.tag_with_text_opt("skipHours", &self.skip_hours);
-        channel.tag_with_text_opt("skipDays", &self.skip_days);
+        channel.tag_with_optional_text("language", &self.language);
+        channel.tag_with_optional_text("copyright", &self.copyright);
+        channel.tag_with_optional_text("managingEditor", &self.managing_editor);
+        channel.tag_with_optional_text("webMaster", &self.web_master);
+        channel.tag_with_optional_text("pubDate", &self.pub_date);
+        channel.tag_with_optional_text("lastBuildDate", &self.last_build_date);
+        channel.tag_with_optional_text("generator", &self.generator);
+        channel.tag_with_optional_text("docs", &self.docs);
+        channel.tag_with_optional_text("ttl", &self.ttl);
+        channel.tag_with_optional_text("image", &self.image);
+        channel.tag_with_optional_text("rating", &self.rating);
+        channel.tag_with_optional_text("skipHours", &self.skip_hours);
+        channel.tag_with_optional_text("skipDays", &self.skip_days);
 
         for category in &self.categories {
             channel.tag(category.to_xml());
@@ -243,11 +243,11 @@ impl ViaXml for Item {
     fn to_xml(&self) -> Element {
         let mut item = Element::new("item".to_string(), None, vec![]);
 
-        item.tag_with_text_opt("title", &self.title);
-        item.tag_with_text_opt("link", &self.link);
-        item.tag_with_text_opt("description", &self.description);
-        item.tag_with_text_opt("author", &self.author);
-        item.tag_with_text_opt("comments", &self.comments);
+        item.tag_with_optional_text("title", &self.title);
+        item.tag_with_optional_text("link", &self.link);
+        item.tag_with_optional_text("description", &self.description);
+        item.tag_with_optional_text("author", &self.author);
+        item.tag_with_optional_text("comments", &self.comments);
 
         for category in &self.categories {
             item.tag(category.to_xml());
