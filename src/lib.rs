@@ -1,7 +1,6 @@
 extern crate xml;
 
 use std::ascii::AsciiExt;
-use std::default::Default;
 use std::io;
 use xml::{Element, ElementBuilder, Parser, Xml};
 
@@ -204,17 +203,44 @@ impl ViaXml for Channel {
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
+        let language = element.get_child("language", None).map(Element::content_str);
+        let copyright = element.get_child("copyright", None).map(Element::content_str);
+        let managing_editor = element.get_child("managing_editor", None).map(Element::content_str);
+        let web_master = element.get_child("managing_editor", None).map(Element::content_str);
+        let pub_date = element.get_child("pub_date", None).map(Element::content_str);
+        let last_build_date = element.get_child("last_build_date", None).map(Element::content_str);
+
         let categories = element.get_children("category", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
+
+        let generator = element.get_child("generator", None).map(Element::content_str);
+        let docs = element.get_child("docs", None).map(Element::content_str);
+        let ttl = element.get_child("ttl", None).map(Element::content_str);
+        let image = element.get_child("image", None).map(Element::content_str);
+        let rating = element.get_child("rating", None).map(Element::content_str);
+        let skip_hours = element.get_child("skip_hours", None).map(Element::content_str);
+        let skip_days = element.get_child("skip_days", None).map(Element::content_str);
 
         Ok(Channel {
             title: title,
             link: link,
             description: description,
             items: items,
+            language: language,
+            copyright: copyright,
+            managing_editor: managing_editor,
+            web_master: web_master,
+            pub_date: pub_date,
+            last_build_date: last_build_date,
             categories: categories,
-            ..Default::default()  // TODO
+            generator: generator,
+            docs: docs,
+            ttl: ttl,
+            image: image,
+            rating: rating,
+            skip_hours: skip_hours,
+            skip_days: skip_days,
         })
     }
 }
