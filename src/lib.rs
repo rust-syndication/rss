@@ -95,7 +95,7 @@ impl Rss {
         ret
     }
 
-    pub fn from_read(reader: &mut io::Read) -> Result<Self, &'static str> {
+    pub fn from_reader(reader: &mut io::Read) -> Result<Self, &'static str> {
         let mut rss_string = String::new();
 
         if let Err(..) = reader.read_to_string(&mut rss_string) {
@@ -382,7 +382,7 @@ mod test {
     #[test]
     fn test_from_file() {
         let mut file = File::open("test-data/pinboard.xml").unwrap();
-        let rss = Rss::from_read(&mut file).unwrap();
+        let rss = Rss::from_reader(&mut file).unwrap();
         assert!(rss.to_string().len() > 0);
     }
 
@@ -390,20 +390,20 @@ mod test {
     #[should_panic]
     fn test_from_read_no_channels() {
         let mut rss_bytes = "<rss></rss>".as_bytes();
-        let Rss(_) = Rss::from_read(&mut rss_bytes).unwrap();
+        let Rss(_) = Rss::from_reader(&mut rss_bytes).unwrap();
     }
 
     #[test]
     #[should_panic]
     fn test_from_read_one_channel_no_properties() {
         let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
-        let Rss(_) = Rss::from_read(&mut rss_bytes).unwrap();
+        let Rss(_) = Rss::from_reader(&mut rss_bytes).unwrap();
     }
 
     #[test]
     fn test_from_read_one_channel() {
         let mut rss_bytes = "<rss><channel><title>Hello world!</title><description></description><link></link></channel></rss>".as_bytes();
-        let Rss(channel) = Rss::from_read(&mut rss_bytes).unwrap();
+        let Rss(channel) = Rss::from_reader(&mut rss_bytes).unwrap();
         assert_eq!("Hello world!", channel.title);
     }
 }
