@@ -406,4 +406,20 @@ mod test {
         let Rss(channel) = Rss::from_reader(&mut rss_bytes).unwrap();
         assert_eq!("Hello world!", channel.title);
     }
+
+    // Ensure reader ignores the PI XML node and continues to parse the RSS
+    #[test]
+    fn test_read_with_pinode() {
+        let rss_bytes = "\
+            <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
+            <rss>\
+                <channel>\
+                    <title>Title</title>\
+                    <link></link>\
+                    <description></description>\
+                </channel>\
+            </rss>";
+        let Rss(channel) = Rss::from_reader(&mut rss_bytes.as_bytes()).unwrap();
+        assert_eq!("Title", channel.title);
+    }
 }
