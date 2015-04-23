@@ -401,9 +401,16 @@ mod test {
     }
 
     #[test]
-    fn test_from_read_one_channel() {
-        let mut rss_bytes = "<rss><channel><title>Hello world!</title><description></description><link></link></channel></rss>".as_bytes();
-        let Rss(channel) = Rss::from_reader(&mut rss_bytes).unwrap();
+    fn test_read_one_channel() {
+        let rss_bytes = "\
+            <rss>\
+                <channel>\
+                    <title>Hello world!</title>\
+                    <description></description>\
+                    <link></link>\
+                </channel>\
+            </rss>";
+        let Rss(channel) = Rss::from_reader(&mut rss_bytes.as_bytes()).unwrap();
         assert_eq!("Hello world!", channel.title);
     }
 
