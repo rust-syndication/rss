@@ -387,17 +387,15 @@ mod test {
     }
 
     #[test]
-    #[should_panic]
     fn test_from_read_no_channels() {
         let mut rss_bytes = "<rss></rss>".as_bytes();
-        let Rss(_) = Rss::from_reader(&mut rss_bytes).unwrap();
+        assert!(Rss::from_reader(&mut rss_bytes).is_err());
     }
 
     #[test]
-    #[should_panic]
     fn test_from_read_one_channel_no_properties() {
         let mut rss_bytes = "<rss><channel></channel></rss>".as_bytes();
-        let Rss(_) = Rss::from_reader(&mut rss_bytes).unwrap();
+        assert!(Rss::from_reader(&mut rss_bytes).is_err());
     }
 
     #[test]
