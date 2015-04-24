@@ -187,6 +187,11 @@ impl ViaXml for Channel {
         channel.tag_with_optional_text("ttl", &self.ttl);
         channel.tag_with_optional_text("image", &self.image);
         channel.tag_with_optional_text("rating", &self.rating);
+
+        if let Some(ref text_input) = self.text_input {
+            channel.tag(text_input.to_xml());
+        }
+
         channel.tag_with_optional_text("skipHours", &self.skip_hours);
         channel.tag_with_optional_text("skipDays", &self.skip_days);
 
