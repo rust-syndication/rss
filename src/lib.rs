@@ -399,7 +399,7 @@ mod test {
                 <channel>\
                 </channel>\
             </rss>";
-        assert!(Rss::from_reader(&mut rss_bytes.as_bytes()).is_err());
+        assert!(Rss::from_reader(&mut rss_str.as_bytes()).is_err());
     }
 
     #[test]
