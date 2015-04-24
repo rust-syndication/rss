@@ -159,7 +159,7 @@ pub struct Channel {
     pub ttl: Option<String>,  // TODO: change this to Option<i32>?
     pub image: Option<String>,
     pub rating: Option<String>,
-    // pub text_input:
+    pub text_input: Option<TextInput>,
     pub skip_hours: Option<String>,
     pub skip_days: Option<String>,
 }
@@ -233,6 +233,9 @@ impl ViaXml for Channel {
         let ttl = element.get_child("ttl", None).map(Element::content_str);
         let image = element.get_child("image", None).map(Element::content_str);
         let rating = element.get_child("rating", None).map(Element::content_str);
+
+        let text_input = element.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());
+
         let skip_hours = element.get_child("skip_hours", None).map(Element::content_str);
         let skip_days = element.get_child("skip_days", None).map(Element::content_str);
 
@@ -253,8 +256,61 @@ impl ViaXml for Channel {
             ttl: ttl,
             image: image,
             rating: rating,
+            text_input: text_input,
             skip_hours: skip_hours,
             skip_days: skip_days,
+        })
+    }
+}
+
+
+/// TextInput
+///
+/// [RSS 2.0 Specification § Text Input]
+/// (http://cyber.law.harvard.edu/rss/rss.html#lttextinputgtSubelementOfLtchannelgt)
+pub struct TextInput {
+    pub title: String,
+    pub description: String,
+    pub name: String,
+    pub link: String,
+}
+
+impl ViaXml for TextInput {
+    fn to_xml(&self) -> Element {
+        let mut elem = Element::new("textInput".to_string(), None, vec![]);
+        elem.tag_with_text("title", &self.title);
+        elem.tag_with_text("description", &self.description);
+        elem.tag_with_text("name", &self.name);
+        elem.tag_with_text("link", &self.link);
+        elem
+    }
+
+    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+        let title = match elem.get_child("title", None) {
+            Some(elem) => elem.content_str(),
+            None => return Err("<textInput> is missing required <title> element"),
+        };
+
+        let description = match elem.get_child("description", None) {
+            Some(elem) => elem.content_str(),
+            None => return Err("<textInput> is missing required <description> element"),
+        };
+
+        let name = match elem.get_child("name", None) {
+            Some(elem) => elem.content_str(),
+            None => return Err("<textInput> is missing required <name> element"),
+        };
+
+        let link = match elem.get_child("link", None) {
+            Some(elem) => elem.content_str(),
+            None => return Err("<textInput> is missing required <link> element"),
+        };
+
+        Ok(TextInput {
+            title: title,
+            description: description,
+            name: name,
+            link: link,
         })
     }
 }
@@ -414,6 +470,26 @@ mod test {
             </rss>";
         let Rss(channel) = Rss::from_reader(&mut rss_str.as_bytes()).unwrap();
         assert_eq!("Hello world!", channel.title);
+    }
+
+    #[test]
+    fn test_read_text_input() {
+        let rss_str = "\
+            <rss>\
+                <channel>\
+                    <title></title>\
+                    <description></description>\
+                    <link></link>\
+                    <textInput>\
+                        <title>Foobar</title>\
+                        <description></description>\
+                        <name></name>\
+                        <link></link>\
+                    </textInput>\
+                </channel>\
+            </rss>";
+        let Rss(channel) = Rss::from_reader(&mut rss_str.as_bytes()).unwrap();
+        assert_eq!("Foobar", channel.text_input.unwrap().title);
     }
 
     // Ensure reader ignores the PI XML node and continues to parse the RSS
