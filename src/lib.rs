@@ -335,7 +335,7 @@ pub struct Item {
     pub comments: Option<String>,
     // pub enclosure
     // pub guid
-    // pub pubDate
+    pub pub_date: Option<String>,  // add a custom String type to parse this date?
     // pub source
 }
 
@@ -349,6 +349,7 @@ impl ViaXml for Item {
         item.tag_with_optional_text("description", &self.description);
         item.tag_with_optional_text("author", &self.author);
         item.tag_with_optional_text("comments", &self.comments);
+        item.tag_with_optional_text("pubDate", &self.pub_date);
 
         for category in &self.categories {
             item.tag(category.to_xml());
@@ -363,6 +364,7 @@ impl ViaXml for Item {
         let description = element.get_child("description", None).map(Element::content_str);
         let author = element.get_child("author", None).map(Element::content_str);
         let comments = element.get_child("comments", None).map(Element::content_str);
+        let pub_date = element.get_child("pubDate", None).map(Element::content_str);
 
         let categories = element.get_children("category", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
@@ -375,6 +377,7 @@ impl ViaXml for Item {
             categories: categories,
             author: author,
             comments: comments,
+            pub_date: pub_date,
         })
     }
 }
