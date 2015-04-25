@@ -47,7 +47,7 @@ fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
 
 trait ViaXml {
     fn to_xml(&self) -> Element;
-    fn from_xml(element: Element) -> Result<Self, &'static str>;
+    fn from_xml(elem: Element) -> Result<Self, &'static str>;
 }
 
 
@@ -108,8 +108,8 @@ impl Rss {
         let mut builder = ElementBuilder::new();
 
         for event in parser {
-            if let Some(Ok(element)) = builder.handle_event(event) {
-                return ViaXml::from_xml(element);
+            if let Some(Ok(elem)) = builder.handle_event(event) {
+                return ViaXml::from_xml(elem);
             }
         }
 
@@ -202,47 +202,47 @@ impl ViaXml for Channel {
         channel
     }
 
-    fn from_xml(element: Element) -> Result<Self, &'static str> {
-        let title = match element.get_child("title", None) {
-            Some(element) => element.content_str(),
+    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+        let title = match elem.get_child("title", None) {
+            Some(elem) => elem.content_str(),
             None => return Err("<channel> is missing required <title> element"),
         };
 
-        let link = match element.get_child("link", None) {
-            Some(element) => element.content_str(),
+        let link = match elem.get_child("link", None) {
+            Some(elem) => elem.content_str(),
             None => return Err("<channel> is missing required <link> element"),
         };
 
-        let description = match element.get_child("description", None) {
-            Some(element) => element.content_str(),
+        let description = match elem.get_child("description", None) {
+            Some(elem) => elem.content_str(),
             None => return Err("<channel> is missing required <description> element"),
         };
 
-        let items = element.get_children("item", None)
+        let items = elem.get_children("item", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
-        let language = element.get_child("language", None).map(Element::content_str);
-        let copyright = element.get_child("copyright", None).map(Element::content_str);
-        let managing_editor = element.get_child("managing_editor", None).map(Element::content_str);
-        let web_master = element.get_child("managing_editor", None).map(Element::content_str);
-        let pub_date = element.get_child("pub_date", None).map(Element::content_str);
-        let last_build_date = element.get_child("last_build_date", None).map(Element::content_str);
+        let language = elem.get_child("language", None).map(Element::content_str);
+        let copyright = elem.get_child("copyright", None).map(Element::content_str);
+        let managing_editor = elem.get_child("managing_editor", None).map(Element::content_str);
+        let web_master = elem.get_child("managing_editor", None).map(Element::content_str);
+        let pub_date = elem.get_child("pub_date", None).map(Element::content_str);
+        let last_build_date = elem.get_child("last_build_date", None).map(Element::content_str);
 
-        let categories = element.get_children("category", None)
+        let categories = elem.get_children("category", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
-        let generator = element.get_child("generator", None).map(Element::content_str);
-        let docs = element.get_child("docs", None).map(Element::content_str);
-        let ttl = element.get_child("ttl", None).map(Element::content_str);
-        let image = element.get_child("image", None).map(Element::content_str);
-        let rating = element.get_child("rating", None).map(Element::content_str);
+        let generator = elem.get_child("generator", None).map(Element::content_str);
+        let docs = elem.get_child("docs", None).map(Element::content_str);
+        let ttl = elem.get_child("ttl", None).map(Element::content_str);
+        let image = elem.get_child("image", None).map(Element::content_str);
+        let rating = elem.get_child("rating", None).map(Element::content_str);
 
-        let text_input = element.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());
+        let text_input = elem.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());
 
-        let skip_hours = element.get_child("skip_hours", None).map(Element::content_str);
-        let skip_days = element.get_child("skip_days", None).map(Element::content_str);
+        let skip_hours = elem.get_child("skip_hours", None).map(Element::content_str);
+        let skip_days = elem.get_child("skip_days", None).map(Element::content_str);
 
         Ok(Channel {
             title: title,
@@ -358,15 +358,15 @@ impl ViaXml for Item {
         item
     }
 
-    fn from_xml(element: Element) -> Result<Self, &'static str> {
-        let title = element.get_child("title", None).map(Element::content_str);
-        let link = element.get_child("link", None).map(Element::content_str);
-        let description = element.get_child("description", None).map(Element::content_str);
-        let author = element.get_child("author", None).map(Element::content_str);
-        let comments = element.get_child("comments", None).map(Element::content_str);
-        let pub_date = element.get_child("pubDate", None).map(Element::content_str);
+    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+        let title = elem.get_child("title", None).map(Element::content_str);
+        let link = elem.get_child("link", None).map(Element::content_str);
+        let description = elem.get_child("description", None).map(Element::content_str);
+        let author = elem.get_child("author", None).map(Element::content_str);
+        let comments = elem.get_child("comments", None).map(Element::content_str);
+        let pub_date = elem.get_child("pubDate", None).map(Element::content_str);
 
-        let categories = element.get_children("category", None)
+        let categories = elem.get_children("category", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
             .collect();
 
