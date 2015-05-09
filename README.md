@@ -5,6 +5,8 @@
 
 [Documentation](https://frewsxcv.github.io/rust-rss/)
 
+Library for serializing the RSS web content syndication format
+
 ## Examples
 
 ### Writing
