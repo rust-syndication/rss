@@ -50,7 +50,7 @@
 //! <?xml version="1.0" encoding="UTF-8"?>
 //! <rss version="2.0">
 //!   <channel>
-//!     <title>Public weblog for Pinboard</title>
+//!     <title>TechCrunch</title>
 //!     <link>http://techcrunch.com</link>
 //!     <description>The latest technology news and information on startups</description>
 //!     <item>
