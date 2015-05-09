@@ -6,7 +6,7 @@ use ::{Category, ElementUtils, Item, TextInput, ViaXml};
 /// [RSS 2.0 Specification § Required channel elements]
 /// (http://cyber.law.harvard.edu/rss/rss.html#requiredChannelElements)
 ///
-/// ## Examples
+/// # Examples
 ///
 /// ```
 /// use rss::Channel;
