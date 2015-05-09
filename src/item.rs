@@ -5,6 +5,18 @@ use ::{Category, ElementUtils, ViaXml};
 
 /// [RSS 2.0 Specification § Elements of `<item>`]
 /// (http://cyber.law.harvard.edu/rss/rss.html#hrelementsOfLtitemgt)
+///
+/// # Examples
+///
+/// ```
+/// use rss::Item;
+///
+/// let item = Item {
+///     title: Some(String::from("A blog post title")),
+///     description: Some(String::from("This is a description of the blog post")),
+///     ..Default::default()
+/// };
+/// ```
 #[derive(Default)]
 pub struct Item {
     pub title: Option<String>,
