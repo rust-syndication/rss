@@ -17,9 +17,9 @@ use ::{Category, ElementUtils, Item, TextInput, ViaXml};
 /// use rss::Channel;
 ///
 /// let channel = Channel {
-///     title: "My Blog".to_string(),
-///     link: "http://myblog.com".to_string(),
-///     description: "Where I write stuff".to_string(),
+///     title: String::from("My Blog"),
+///     link: String::from("http://myblog.com"),
+///     description: String::from("My thoughts on life, the universe, and everything"),
 ///     items: vec![],
 ///     ..Default::default()
 /// };
