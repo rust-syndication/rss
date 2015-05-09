@@ -15,7 +15,6 @@ use ::{Category, ElementUtils, Item, TextInput, ViaXml};
 ///
 /// ```
 /// use rss::Channel;
-/// use std::default::Default;
 ///
 /// let channel = Channel {
 ///     title: "My Blog".to_string(),
