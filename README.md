@@ -53,5 +53,5 @@ let rss_str = r#"
 </rss>
 "#;
 
-let rss = Rss::from_reader(&mut rss_str.as_bytes()).unwrap();
+let rss = rss_str.parse::<Rss>().unwrap();
 ```

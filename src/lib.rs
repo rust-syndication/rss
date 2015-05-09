@@ -60,7 +60,7 @@
 //! </rss>
 //! "#;
 //!
-//! let rss = Rss::from_reader(&mut rss_str.as_bytes()).unwrap();
+//! let rss = rss_str.parse::<Rss>().unwrap();
 //! ```
 
 mod category;
@@ -71,7 +71,7 @@ mod text_input;
 extern crate xml;
 
 use std::ascii::AsciiExt;
-use std::io;
+use std::str::FromStr;
 
 use xml::{Element, ElementBuilder, Parser, Xml};
 
@@ -144,22 +144,12 @@ impl ViaXml for Rss {
     }
 }
 
-impl Rss {
-    pub fn to_string(&self) -> String {
-        let mut ret = format!("{}", Xml::PINode("xml version='1.0' encoding='UTF-8'".to_string()));
-        ret.push_str(&format!("{}", self.to_xml()));
-        ret
-    }
+impl FromStr for Rss {
+    type Err = &'static str;
 
-    pub fn from_reader(reader: &mut io::Read) -> Result<Self, &'static str> {
-        let mut rss_string = String::new();
-
-        if let Err(..) = reader.read_to_string(&mut rss_string) {
-            return Err("Error reading string from reader");
-        }
-
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut parser = Parser::new();
-        parser.feed_str(&rss_string);
+        parser.feed_str(&s);
 
         let mut builder = ElementBuilder::new();
 
@@ -173,11 +163,21 @@ impl Rss {
     }
 }
 
+impl Rss {
+    pub fn to_string(&self) -> String {
+        let mut ret = format!("{}", Xml::PINode("xml version='1.0' encoding='UTF-8'".to_string()));
+        ret.push_str(&format!("{}", self.to_xml()));
+        ret
+    }
+}
+
 
 #[cfg(test)]
 mod test {
     use std::default::Default;
     use std::fs::File;
+    use std::io::Read;
+    use std::str::FromStr;
     use super::{Rss, Item, Channel};
 
     #[test]
@@ -204,14 +204,16 @@ mod test {
     #[test]
     fn test_from_file() {
         let mut file = File::open("test-data/pinboard.xml").unwrap();
-        let rss = Rss::from_reader(&mut file).unwrap();
+        let mut rss_string = String::new();
+        file.read_to_string(&mut rss_string).unwrap();
+        let rss = Rss::from_str(&rss_string).unwrap();
         assert!(rss.to_string().len() > 0);
     }
 
     #[test]
     fn test_read_no_channels() {
         let rss_str = "<rss></rss>";
-        assert!(Rss::from_reader(&mut rss_str.as_bytes()).is_err());
+        assert!(Rss::from_str(rss_str).is_err());
     }
 
     #[test]
@@ -221,7 +223,7 @@ mod test {
                 <channel>\
                 </channel>\
             </rss>";
-        assert!(Rss::from_reader(&mut rss_str.as_bytes()).is_err());
+        assert!(Rss::from_str(rss_str).is_err());
     }
 
     #[test]
@@ -234,7 +236,7 @@ mod test {
                     <link></link>\
                 </channel>\
             </rss>";
-        let Rss(channel) = Rss::from_reader(&mut rss_str.as_bytes()).unwrap();
+        let Rss(channel) = Rss::from_str(rss_str).unwrap();
         assert_eq!("Hello world!", channel.title);
     }
 
@@ -254,7 +256,7 @@ mod test {
                     </textInput>\
                 </channel>\
             </rss>";
-        let Rss(channel) = Rss::from_reader(&mut rss_str.as_bytes()).unwrap();
+        let Rss(channel) = Rss::from_str(rss_str).unwrap();
         assert_eq!("Foobar", channel.text_input.unwrap().title);
     }
 
@@ -270,7 +272,7 @@ mod test {
                     <description></description>\
                 </channel>\
             </rss>";
-        let Rss(channel) = Rss::from_reader(&mut rss_str.as_bytes()).unwrap();
+        let Rss(channel) = Rss::from_str(rss_str).unwrap();
         assert_eq!("Title", channel.title);
     }
 }
