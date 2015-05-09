@@ -163,8 +163,8 @@ impl FromStr for Rss {
     }
 }
 
-impl Rss {
-    pub fn to_string(&self) -> String {
+impl ToString for Rss {
+    fn to_string(&self) -> String {
         let mut ret = format!("{}", Xml::PINode("xml version='1.0' encoding='UTF-8'".to_string()));
         ret.push_str(&format!("{}", self.to_xml()));
         ret
