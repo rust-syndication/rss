@@ -3,9 +3,7 @@ use xml::Element;
 use ::{Category, ElementUtils, ViaXml};
 
 
-/// Item
-///
-/// [RSS 2.0 Specification § Item]
+/// [RSS 2.0 Specification § Elements of `<item>`]
 /// (http://cyber.law.harvard.edu/rss/rss.html#hrelementsOfLtitemgt)
 #[derive(Default)]
 pub struct Item {

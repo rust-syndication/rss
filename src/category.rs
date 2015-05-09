@@ -3,9 +3,7 @@ use xml::Element;
 use ::ViaXml;
 
 
-/// Category
-///
-/// [RSS 2.0 Specification § Category]
+/// [RSS 2.0 Specification § `<category>` sub-element of `<item>`]
 /// (http://cyber.law.harvard.edu/rss/rss.html#ltcategorygtSubelementOfLtitemgt)
 #[derive(Default)]
 pub struct Category {

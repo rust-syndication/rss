@@ -3,9 +3,7 @@ use xml::Element;
 use ::{ElementUtils, ViaXml};
 
 
-/// TextInput
-///
-/// [RSS 2.0 Specification § Text Input]
+/// [RSS 2.0 Specification § `<textInput>` sub-element of `<channel>`]
 /// (http://cyber.law.harvard.edu/rss/rss.html#lttextinputgtSubelementOfLtchannelgt)
 pub struct TextInput {
     pub title: String,

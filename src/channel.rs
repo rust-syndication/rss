@@ -3,12 +3,7 @@ use xml::Element;
 use ::{Category, ElementUtils, Item, TextInput, ViaXml};
 
 
-/// Channel
-///
-/// "Subordinate to the \<rss\> element is a single \<channel\> element, which contains information
-/// about the channel (metadata) and its contents."
-///
-/// [RSS 2.0 Specification § Channel]
+/// [RSS 2.0 Specification § Required channel elements]
 /// (http://cyber.law.harvard.edu/rss/rss.html#requiredChannelElements)
 ///
 /// ## Examples
