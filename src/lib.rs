@@ -117,7 +117,7 @@ trait ViaXml {
 
 /// [RSS 2.0 Specification § What is RSS]
 /// (http://cyber.law.harvard.edu/rss/rss.html#whatIsRss)
-#[derive(Default)]
+#[derive(Default, Debug, Clone)]
 pub struct Rss(pub Channel);
 
 impl ViaXml for Rss {
