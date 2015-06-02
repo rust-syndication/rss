@@ -19,6 +19,7 @@ use ::{ElementUtils, ViaXml};
 
 /// [RSS 2.0 Specification § `<textInput>` sub-element of `<channel>`]
 /// (http://cyber.law.harvard.edu/rss/rss.html#lttextinputgtSubelementOfLtchannelgt)
+#[derive(Debug, Clone)]
 pub struct TextInput {
     pub title: String,
     pub description: String,

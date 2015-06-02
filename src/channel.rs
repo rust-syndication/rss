@@ -33,7 +33,7 @@ use ::{Category, ElementUtils, Item, TextInput, ViaXml};
 ///     ..Default::default()
 /// };
 /// ```
-#[derive(Default)]
+#[derive(Default, Debug, Clone)]
 pub struct Channel {
     pub title: String,
     pub link: String,

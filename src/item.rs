@@ -31,7 +31,7 @@ use ::{Category, ElementUtils, ViaXml};
 ///     ..Default::default()
 /// };
 /// ```
-#[derive(Default)]
+#[derive(Default, Debug, Clone)]
 pub struct Item {
     pub title: Option<String>,
     pub link: Option<String>,

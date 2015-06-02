@@ -19,7 +19,7 @@ use ::ViaXml;
 
 /// [RSS 2.0 Specification § `<category>` sub-element of `<item>`]
 /// (http://cyber.law.harvard.edu/rss/rss.html#ltcategorygtSubelementOfLtitemgt)
-#[derive(Default)]
+#[derive(Default, Debug, Clone)]
 pub struct Category {
     pub domain: Option<String>,
     pub value: String,
