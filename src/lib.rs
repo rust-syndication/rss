@@ -132,7 +132,7 @@ impl ViaXml for Rss {
 
     fn from_xml(rss_elem: Element) -> Result<Self, &'static str> {
         if rss_elem.name.to_ascii_lowercase() != "rss" {
-            panic!("Expected <rss>, found <{}>", rss_elem.name);
+            return Err("Top element is not <rss>, most likely not an RSS feed");
         }
 
         let channel_elem = match rss_elem.get_child("channel", None) {
