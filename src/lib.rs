@@ -73,6 +73,9 @@ mod text_input;
 extern crate xml;
 
 use std::ascii::AsciiExt;
+use std::error::Error;
+use std::fmt::{Display, Formatter};
+use std::fmt::Error as FmtError;
 use std::str::FromStr;
 
 use xml::{Element, ElementBuilder, Parser, Xml};
@@ -111,7 +114,7 @@ fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
 
 trait ViaXml {
     fn to_xml(&self) -> Element;
-    fn from_xml(elem: Element) -> Result<Self, &'static str>;
+    fn from_xml(elem: Element) -> Result<Self, ReadError>;
 }
 
 
@@ -130,14 +133,14 @@ impl ViaXml for Rss {
         rss
     }
 
-    fn from_xml(rss_elem: Element) -> Result<Self, &'static str> {
+    fn from_xml(rss_elem: Element) -> Result<Self, ReadError> {
         if rss_elem.name.to_ascii_lowercase() != "rss" {
-            return Err("Top element is not <rss>, most likely not an RSS feed");
+            return Err(ReadError::NotRssElement);
         }
 
         let channel_elem = match rss_elem.get_child("channel", None) {
             Some(elem) => elem,
-            None => return Err("No <channel> element found in <rss>"),
+            None => return Err(ReadError::RssMissingChannel),
         };
 
         let channel = try!(ViaXml::from_xml(channel_elem.clone()));
@@ -147,7 +150,7 @@ impl ViaXml for Rss {
 }
 
 impl FromStr for Rss {
-    type Err = &'static str;
+    type Err = ReadError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut parser = Parser::new();
@@ -161,7 +164,7 @@ impl FromStr for Rss {
             }
         }
 
-        Err("RSS read error")
+        Err(ReadError::InvalidXml)
     }
 }
 
@@ -170,6 +173,44 @@ impl ToString for Rss {
         let mut ret = format!("{}", Xml::PINode("xml version='1.0' encoding='UTF-8'".to_string()));
         ret.push_str(&format!("{}", self.to_xml()));
         ret
+    }
+}
+
+
+#[derive(Debug)]
+pub enum ReadError {
+    ChannelMissingTitle,
+    ChannelMissingLink,
+    ChannelMissingDescription,
+    InvalidXml,
+    NotRssElement,
+    RssMissingChannel,
+    TextInputMissingDescription,
+    TextInputMissingLink,
+    TextInputMissingName,
+    TextInputMissingTitle,
+}
+
+impl Display for ReadError {
+    fn fmt(&self, formatter: &mut Formatter) -> Result<(), FmtError> {
+        Display::fmt(self.description(), formatter)
+    }
+}
+
+impl Error for ReadError {
+    fn description(&self) -> &str {
+        match *self {
+            ReadError::ChannelMissingDescription => "<channel> is missing required <description> element",
+            ReadError::ChannelMissingLink => "<channel> is missing required <link> element",
+            ReadError::ChannelMissingTitle => "<channel> is missing required <title> element",
+            ReadError::InvalidXml => "Could not parse XML from input",
+            ReadError::NotRssElement => "Top element is not <rss> element",
+            ReadError::RssMissingChannel => "<rss> is missing required <channel> element",
+            ReadError::TextInputMissingDescription => "<textInput> is missing required <description> element",
+            ReadError::TextInputMissingLink => "<textInput> is missing required <link> element",
+            ReadError::TextInputMissingName => "<textInput> is missing required <name> element",
+            ReadError::TextInputMissingTitle => "<textInput> is missing required <title> element",
+        }
     }
 }
 

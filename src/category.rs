@@ -14,7 +14,7 @@
 
 use xml::Element;
 
-use ::ViaXml;
+use ::{ReadError, ViaXml};
 
 
 /// [RSS 2.0 Specification § `<category>` sub-element of `<item>`]
@@ -35,7 +35,7 @@ impl ViaXml for Category {
         category
     }
 
-    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+    fn from_xml(elem: Element) -> Result<Self, ReadError> {
         let domain = elem.get_attribute("domain", None).map(|s| s.to_string());
         let value = elem.content_str();
 

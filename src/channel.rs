@@ -14,7 +14,7 @@
 
 use xml::Element;
 
-use ::{Category, ElementUtils, Item, TextInput, ViaXml};
+use ::{Category, ElementUtils, Item, ReadError, TextInput, ViaXml};
 
 
 /// [RSS 2.0 Specification § Required channel elements]
@@ -95,20 +95,20 @@ impl ViaXml for Channel {
         channel
     }
 
-    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+    fn from_xml(elem: Element) -> Result<Self, ReadError> {
         let title = match elem.get_child("title", None) {
             Some(elem) => elem.content_str(),
-            None => return Err("<channel> is missing required <title> element"),
+            None => return Err(ReadError::ChannelMissingTitle),
         };
 
         let link = match elem.get_child("link", None) {
             Some(elem) => elem.content_str(),
-            None => return Err("<channel> is missing required <link> element"),
+            None => return Err(ReadError::ChannelMissingLink),
         };
 
         let description = match elem.get_child("description", None) {
             Some(elem) => elem.content_str(),
-            None => return Err("<channel> is missing required <description> element"),
+            None => return Err(ReadError::ChannelMissingDescription),
         };
 
         let items = elem.get_children("item", None)

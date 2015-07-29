@@ -14,7 +14,7 @@
 
 use xml::Element;
 
-use ::{ElementUtils, ViaXml};
+use ::{ElementUtils, ReadError, ViaXml};
 
 
 /// [RSS 2.0 Specification § `<textInput>` sub-element of `<channel>`]
@@ -37,25 +37,25 @@ impl ViaXml for TextInput {
         elem
     }
 
-    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+    fn from_xml(elem: Element) -> Result<Self, ReadError> {
         let title = match elem.get_child("title", None) {
             Some(elem) => elem.content_str(),
-            None => return Err("<textInput> is missing required <title> element"),
+            None => return Err(ReadError::TextInputMissingTitle),
         };
 
         let description = match elem.get_child("description", None) {
             Some(elem) => elem.content_str(),
-            None => return Err("<textInput> is missing required <description> element"),
+            None => return Err(ReadError::TextInputMissingDescription),
         };
 
         let name = match elem.get_child("name", None) {
             Some(elem) => elem.content_str(),
-            None => return Err("<textInput> is missing required <name> element"),
+            None => return Err(ReadError::TextInputMissingName),
         };
 
         let link = match elem.get_child("link", None) {
             Some(elem) => elem.content_str(),
-            None => return Err("<textInput> is missing required <link> element"),
+            None => return Err(ReadError::TextInputMissingLink),
         };
 
         Ok(TextInput {
