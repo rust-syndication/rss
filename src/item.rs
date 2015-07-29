@@ -14,7 +14,7 @@
 
 use xml::Element;
 
-use ::{Category, ElementUtils, ViaXml};
+use ::{Category, ElementUtils, ReadError, ViaXml};
 
 
 /// [RSS 2.0 Specification § Elements of `<item>`]
@@ -64,7 +64,7 @@ impl ViaXml for Item {
         item
     }
 
-    fn from_xml(elem: Element) -> Result<Self, &'static str> {
+    fn from_xml(elem: Element) -> Result<Self, ReadError> {
         let title = elem.get_child("title", None).map(Element::content_str);
         let link = elem.get_child("link", None).map(Element::content_str);
         let description = elem.get_child("description", None).map(Element::content_str);
