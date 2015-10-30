@@ -117,10 +117,10 @@ impl ViaXml for Channel {
 
         let language = elem.get_child("language", None).map(Element::content_str);
         let copyright = elem.get_child("copyright", None).map(Element::content_str);
-        let managing_editor = elem.get_child("managing_editor", None).map(Element::content_str);
-        let web_master = elem.get_child("managing_editor", None).map(Element::content_str);
-        let pub_date = elem.get_child("pub_date", None).map(Element::content_str);
-        let last_build_date = elem.get_child("last_build_date", None).map(Element::content_str);
+        let managing_editor = elem.get_child("managingEditor", None).map(Element::content_str);
+        let web_master = elem.get_child("webMaster", None).map(Element::content_str);
+        let pub_date = elem.get_child("pubDate", None).map(Element::content_str);
+        let last_build_date = elem.get_child("lastBuildDate", None).map(Element::content_str);
 
         let categories = elem.get_children("category", None)
             .map(|e| ViaXml::from_xml(e.clone()).unwrap())
@@ -134,8 +134,8 @@ impl ViaXml for Channel {
 
         let text_input = elem.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());
 
-        let skip_hours = elem.get_child("skip_hours", None).map(Element::content_str);
-        let skip_days = elem.get_child("skip_days", None).map(Element::content_str);
+        let skip_hours = elem.get_child("skipHours", None).map(Element::content_str);
+        let skip_days = elem.get_child("skipDays", None).map(Element::content_str);
 
         Ok(Channel {
             title: title,

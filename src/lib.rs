@@ -284,6 +284,32 @@ mod test {
     }
 
     #[test]
+    fn test_read_channel_properties() {
+        let rss_str = "\
+            <rss>\
+                <channel>\
+                    <title></title>\
+                    <link></link>\
+                    <description></description>\
+
+                    <pubDate>alpha</pubDate>\
+                    <skipHours>beta</skipHours>\
+                    <skipDays>gamma</skipDays>\
+                    <managingEditor>delta</managingEditor>\
+                    <lastBuildDate>epsilon</lastBuildDate>\
+                    <webMaster>zeta</webMaster>\
+                </channel>\
+            </rss>";
+        let Rss(channel) = Rss::from_str(rss_str).unwrap();
+        assert_eq!("alpha", channel.pub_date.unwrap());
+        assert_eq!("beta", channel.skip_hours.unwrap());
+        assert_eq!("gamma", channel.skip_days.unwrap());
+        assert_eq!("delta", channel.managing_editor.unwrap());
+        assert_eq!("epsilon", channel.last_build_date.unwrap());
+        assert_eq!("zeta", channel.web_master.unwrap());
+    }
+
+    #[test]
     fn test_read_text_input() {
         let rss_str = "\
             <rss>\
