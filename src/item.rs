@@ -14,7 +14,7 @@
 
 use xml::Element;
 
-use ::{Category, ElementUtils, ReadError, ViaXml};
+use ::{Category, Guid, ElementUtils, ReadError, ViaXml};
 
 
 /// [RSS 2.0 Specification § Elements of `<item>`]
@@ -40,7 +40,7 @@ pub struct Item {
     pub categories: Vec<Category>,
     pub comments: Option<String>,
     // pub enclosure
-    // pub guid
+    pub guid: Option<Guid>,
     pub pub_date: Option<String>,  // add a custom String type to parse this date?
     // pub source
 }
@@ -55,6 +55,9 @@ impl ViaXml for Item {
         item.tag_with_optional_text("description", &self.description);
         item.tag_with_optional_text("author", &self.author);
         item.tag_with_optional_text("comments", &self.comments);
+        if let &Some(ref guid) = &self.guid {
+            item.tag(guid.to_xml());
+        }
         item.tag_with_optional_text("pubDate", &self.pub_date);
 
         for category in &self.categories {
@@ -70,6 +73,7 @@ impl ViaXml for Item {
         let description = elem.get_child("description", None).map(Element::content_str);
         let author = elem.get_child("author", None).map(Element::content_str);
         let comments = elem.get_child("comments", None).map(Element::content_str);
+        let guid = elem.get_child("guid", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());
         let pub_date = elem.get_child("pubDate", None).map(Element::content_str);
 
         let categories = elem.get_children("category", None)
@@ -83,6 +87,7 @@ impl ViaXml for Item {
             categories: categories,
             author: author,
             comments: comments,
+            guid: guid,
             pub_date: pub_date,
         })
     }

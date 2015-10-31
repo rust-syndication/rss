@@ -66,6 +66,7 @@
 //! ```
 
 mod category;
+mod guid;
 mod channel;
 mod item;
 mod text_input;
@@ -81,6 +82,7 @@ use std::str::FromStr;
 use xml::{Element, ElementBuilder, Parser, Xml};
 
 pub use ::category::Category;
+pub use ::guid::Guid;
 pub use ::channel::Channel;
 pub use ::item::Item;
 pub use ::text_input::TextInput;
