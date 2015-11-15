@@ -68,6 +68,7 @@
 mod category;
 mod guid;
 mod channel;
+mod image;
 mod item;
 mod text_input;
 
@@ -85,31 +86,32 @@ pub use ::category::Category;
 pub use ::guid::Guid;
 pub use ::channel::Channel;
 pub use ::item::Item;
+pub use ::image::Image;
 pub use ::text_input::TextInput;
 
 
 trait ElementUtils {
-    fn tag_with_text(&mut self, child_name: &'static str, child_body: &str);
-    fn tag_with_optional_text(&mut self, child_name: &'static str, child_body: &Option<String>);
+    fn tag_with_text(&mut self, child_name: &'static str, child_body: String);
+    fn tag_with_optional_text(&mut self, child_name: &'static str, child_body: Option<String>);
 }
 
 
 impl ElementUtils for Element {
-    fn tag_with_text(&mut self, child_name: &'static str, child_body: &str) {
+    fn tag_with_text(&mut self, child_name: &'static str, child_body: String) {
         self.tag(elem_with_text(child_name, child_body));
     }
 
-    fn tag_with_optional_text(&mut self, child_name: &'static str, child_body: &Option<String>) {
-        if let Some(ref c) = *child_body {
-            self.tag_with_text(child_name, &c);
+    fn tag_with_optional_text(&mut self, child_name: &'static str, child_body: Option<String>) {
+        if let Some(ref c) = child_body {
+            self.tag_with_text(child_name, c.clone());
         }
     }
 }
 
 
-fn elem_with_text(tag_name: &'static str, chars: &str) -> Element {
+fn elem_with_text(tag_name: &'static str, chars: String) -> Element {
     let mut elem = Element::new(tag_name.to_string(), None, vec![]);
-    elem.text(chars.to_string());
+    elem.text(chars);
     elem
 }
 
@@ -179,7 +181,7 @@ impl ToString for Rss {
 }
 
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum ReadError {
     ChannelMissingTitle,
     ChannelMissingLink,
@@ -191,6 +193,11 @@ pub enum ReadError {
     TextInputMissingLink,
     TextInputMissingName,
     TextInputMissingTitle,
+    ImageMissingUrl,
+    ImageMissingTitle,
+    ImageMissingLink,
+    ImageHeightInvalid,
+    ImageWidthInvalid,
 }
 
 impl Display for ReadError {
@@ -212,6 +219,11 @@ impl Error for ReadError {
             ReadError::TextInputMissingLink => "<textInput> is missing required <link> element",
             ReadError::TextInputMissingName => "<textInput> is missing required <name> element",
             ReadError::TextInputMissingTitle => "<textInput> is missing required <title> element",
+            ReadError::ImageMissingUrl => "<image> is missing required <url> element",
+            ReadError::ImageMissingTitle => "<image> is missing required <title> element",
+            ReadError::ImageMissingLink => "<image> is missing required <link> element",
+            ReadError::ImageHeightInvalid => "<image> has invalid integer value for <height>",
+            ReadError::ImageWidthInvalid => "<image> has invalid integer value for <width>",
         }
     }
 }
@@ -223,7 +235,7 @@ mod test {
     use std::fs::File;
     use std::io::Read;
     use std::str::FromStr;
-    use super::{Rss, Item, Channel};
+    use super::{Rss, Item, Channel, ReadError};
 
     #[test]
     fn test_basic_to_string() {
@@ -345,5 +357,126 @@ mod test {
             </rss>";
         let Rss(channel) = Rss::from_str(rss_str).unwrap();
         assert_eq!("Title", channel.title);
+    }
+
+    #[test]
+    fn test_read_image() {
+        let rss_str = "\
+            <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
+            <rss>\
+                <channel>\
+                    <title>Title</title>\
+                    <link></link>\
+                    <description></description>\
+                    <image>\
+                        <url>a url</url>\
+                        <title>a title</title>\
+                        <link>a link</link>\
+                        <height>140</height>\
+                        <width>280</width>\
+                    </image>\
+                </channel>\
+            </rss>";
+        let rss = Rss::from_str(rss_str).unwrap();
+        let image = rss.0.image.unwrap();
+        assert_eq!(image.url, "a url");
+        assert_eq!(image.title, "a title");
+        assert_eq!(image.link, "a link");
+        assert_eq!(image.height, Some(140));
+        assert_eq!(image.width, Some(280));
+    }
+
+    #[test]
+    fn test_read_image_no_url() {
+        let rss_str = "\
+            <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
+            <rss>\
+                <channel>\
+                    <title>Title</title>\
+                    <link></link>\
+                    <description></description>\
+                    <image>\
+                        <title></title>\
+                        <link></link>\
+                    </image>\
+                </channel>\
+            </rss>";
+        assert_eq!(Rss::from_str(rss_str).unwrap_err(), ReadError::ImageMissingUrl);
+    }
+
+    #[test]
+    fn test_read_image_no_title() {
+        let rss_str = "\
+            <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
+            <rss>\
+                <channel>\
+                    <title>Title</title>\
+                    <link></link>\
+                    <description></description>\
+                    <image>\
+                        <link></link>\
+                        <url></url>\
+                    </image>\
+                </channel>\
+            </rss>";
+        assert_eq!(Rss::from_str(rss_str).unwrap_err(), ReadError::ImageMissingTitle);
+    }
+
+    #[test]
+    fn test_read_image_no_link() {
+        let rss_str = "\
+            <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
+            <rss>\
+                <channel>\
+                    <title>Title</title>\
+                    <link></link>\
+                    <description></description>\
+                    <image>\
+                        <title></title>\
+                        <url></url>\
+                    </image>\
+                </channel>\
+            </rss>";
+        assert_eq!(Rss::from_str(rss_str).unwrap_err(), ReadError::ImageMissingLink);
+    }
+
+    #[test]
+    fn test_read_image_invalid_height() {
+        let rss_str = "\
+            <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
+            <rss>\
+                <channel>\
+                    <title>Title</title>\
+                    <link></link>\
+                    <description></description>\
+                    <image>\
+                        <title></title>\
+                        <url></url>\
+                        <link></link>\
+                        <height>a</height>
+                    </image>\
+                </channel>\
+            </rss>";
+        assert_eq!(Rss::from_str(rss_str).unwrap_err(), ReadError::ImageHeightInvalid);
+    }
+
+    #[test]
+    fn test_read_image_invalid_width() {
+        let rss_str = "\
+            <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
+            <rss>\
+                <channel>\
+                    <title>Title</title>\
+                    <link></link>\
+                    <description></description>\
+                    <image>\
+                        <title></title>\
+                        <url></url>\
+                        <link></link>\
+                        <width>a</width>
+                    </image>\
+                </channel>\
+            </rss>";
+        assert_eq!(Rss::from_str(rss_str).unwrap_err(), ReadError::ImageWidthInvalid);
     }
 }

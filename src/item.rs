@@ -50,15 +50,15 @@ impl ViaXml for Item {
     fn to_xml(&self) -> Element {
         let mut item = Element::new("item".to_string(), None, vec![]);
 
-        item.tag_with_optional_text("title", &self.title);
-        item.tag_with_optional_text("link", &self.link);
-        item.tag_with_optional_text("description", &self.description);
-        item.tag_with_optional_text("author", &self.author);
-        item.tag_with_optional_text("comments", &self.comments);
+        item.tag_with_optional_text("title", self.title.clone());
+        item.tag_with_optional_text("link", self.link.clone());
+        item.tag_with_optional_text("description", self.description.clone());
+        item.tag_with_optional_text("author", self.author.clone());
+        item.tag_with_optional_text("comments", self.comments.clone());
         if let &Some(ref guid) = &self.guid {
             item.tag(guid.to_xml());
         }
-        item.tag_with_optional_text("pubDate", &self.pub_date);
+        item.tag_with_optional_text("pubDate", self.pub_date.clone());
 
         for category in &self.categories {
             item.tag(category.to_xml());
