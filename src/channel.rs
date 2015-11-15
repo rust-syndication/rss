@@ -110,9 +110,13 @@ impl ViaXml for Channel {
             None => return Err(ReadError::ChannelMissingDescription),
         };
 
-        let items = elem.get_children("item", None)
-            .map(|e| ViaXml::from_xml(e.clone()).unwrap())
-            .collect();
+        let items = match elem.get_children("item", None)
+                              .map(|e| ViaXml::from_xml(e.clone()))
+                              .collect::<Result<Vec<_>, _>>()
+        {
+            Ok(items) => items,
+            Err(err) => return Err(err),
+        };
 
         let language = elem.get_child("language", None).map(Element::content_str);
         let copyright = elem.get_child("copyright", None).map(Element::content_str);
@@ -121,9 +125,13 @@ impl ViaXml for Channel {
         let pub_date = elem.get_child("pubDate", None).map(Element::content_str);
         let last_build_date = elem.get_child("lastBuildDate", None).map(Element::content_str);
 
-        let categories = elem.get_children("category", None)
-            .map(|e| ViaXml::from_xml(e.clone()).unwrap())
-            .collect();
+        let categories = match elem.get_children("category", None)
+                                   .map(|e| ViaXml::from_xml(e.clone()))
+                                   .collect::<Result<Vec<_>, _>>()
+        {
+            Ok(categories) => categories,
+            Err(err) => return Err(err),
+        };
 
         let generator = elem.get_child("generator", None).map(Element::content_str);
         let docs = elem.get_child("docs", None).map(Element::content_str);
@@ -137,7 +145,11 @@ impl ViaXml for Channel {
 
         let rating = elem.get_child("rating", None).map(Element::content_str);
 
-        let text_input = elem.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());
+        let text_input = match elem.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone())) {
+            Some(Ok(text_input)) => Some(text_input),
+            Some(Err(err)) => return Err(err),
+            None => None,
+        };
 
         let skip_hours = elem.get_child("skipHours", None).map(Element::content_str);
         let skip_days = elem.get_child("skipDays", None).map(Element::content_str);

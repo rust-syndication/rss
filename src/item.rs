@@ -73,12 +73,22 @@ impl ViaXml for Item {
         let description = elem.get_child("description", None).map(Element::content_str);
         let author = elem.get_child("author", None).map(Element::content_str);
         let comments = elem.get_child("comments", None).map(Element::content_str);
-        let guid = elem.get_child("guid", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());
+
+        let guid = match elem.get_child("guid", None).map(|e| ViaXml::from_xml(e.clone())) {
+            Some(Ok(guid)) => Some(guid),
+            Some(Err(err)) => return Err(err),
+            None => None,
+        };
+
         let pub_date = elem.get_child("pubDate", None).map(Element::content_str);
 
-        let categories = elem.get_children("category", None)
-            .map(|e| ViaXml::from_xml(e.clone()).unwrap())
-            .collect();
+        let categories = match elem.get_children("categories", None)
+                                   .map(|e| ViaXml::from_xml(e.clone()))
+                                   .collect::<Result<Vec<_>, _>>()
+        {
+            Ok(categories) => categories,
+            Err(err) => return Err(err),
+        };
 
         Ok(Item {
             title: title,
