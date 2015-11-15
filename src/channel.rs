@@ -14,7 +14,7 @@
 
 use xml::Element;
 
-use ::{Category, ElementUtils, Item, ReadError, TextInput, ViaXml};
+use ::{Category, ElementUtils, Item, Image, ReadError, TextInput, ViaXml};
 
 
 /// [RSS 2.0 Specification § Required channel elements]
@@ -50,7 +50,7 @@ pub struct Channel {
     pub docs: Option<String>,
     // pub cloud:
     pub ttl: Option<String>,  // TODO: change this to Option<i32>?
-    pub image: Option<String>,
+    pub image: Option<Image>,
     pub rating: Option<String>,
     pub text_input: Option<TextInput>,
     pub skip_hours: Option<String>,
@@ -61,32 +61,31 @@ impl ViaXml for Channel {
     fn to_xml(&self) -> Element {
         let mut channel = Element::new("channel".to_string(), None, vec![]);
 
-        channel.tag_with_text("title", &self.title);
-        channel.tag_with_text("link", &self.link);
-        channel.tag_with_text("description", &self.description);
+        channel.tag_with_text("title", self.title.clone());
+        channel.tag_with_text("link", self.link.clone());
+        channel.tag_with_text("description", self.description.clone());
 
         for item in &self.items {
             channel.tag(item.to_xml());
         }
 
-        channel.tag_with_optional_text("language", &self.language);
-        channel.tag_with_optional_text("copyright", &self.copyright);
-        channel.tag_with_optional_text("managingEditor", &self.managing_editor);
-        channel.tag_with_optional_text("webMaster", &self.web_master);
-        channel.tag_with_optional_text("pubDate", &self.pub_date);
-        channel.tag_with_optional_text("lastBuildDate", &self.last_build_date);
-        channel.tag_with_optional_text("generator", &self.generator);
-        channel.tag_with_optional_text("docs", &self.docs);
-        channel.tag_with_optional_text("ttl", &self.ttl);
-        channel.tag_with_optional_text("image", &self.image);
-        channel.tag_with_optional_text("rating", &self.rating);
+        channel.tag_with_optional_text("language", self.language.clone());
+        channel.tag_with_optional_text("copyright", self.copyright.clone());
+        channel.tag_with_optional_text("managingEditor", self.managing_editor.clone());
+        channel.tag_with_optional_text("webMaster", self.web_master.clone());
+        channel.tag_with_optional_text("pubDate", self.pub_date.clone());
+        channel.tag_with_optional_text("lastBuildDate", self.last_build_date.clone());
+        channel.tag_with_optional_text("generator", self.generator.clone());
+        channel.tag_with_optional_text("docs", self.docs.clone());
+        channel.tag_with_optional_text("ttl", self.ttl.clone());
+        channel.tag_with_optional_text("rating", self.rating.clone());
 
         if let Some(ref text_input) = self.text_input {
             channel.tag(text_input.to_xml());
         }
 
-        channel.tag_with_optional_text("skipHours", &self.skip_hours);
-        channel.tag_with_optional_text("skipDays", &self.skip_days);
+        channel.tag_with_optional_text("skipHours", self.skip_hours.clone());
+        channel.tag_with_optional_text("skipDays", self.skip_days.clone());
 
         for category in &self.categories {
             channel.tag(category.to_xml());
@@ -129,7 +128,13 @@ impl ViaXml for Channel {
         let generator = elem.get_child("generator", None).map(Element::content_str);
         let docs = elem.get_child("docs", None).map(Element::content_str);
         let ttl = elem.get_child("ttl", None).map(Element::content_str);
-        let image = elem.get_child("image", None).map(Element::content_str);
+
+        let image = match elem.get_child("image", None).map(|e| Image::from_xml(e.clone())) {
+            Some(Ok(image)) => Some(image),
+            Some(Err(err)) => return Err(err),
+            None => None,
+        };
+
         let rating = elem.get_child("rating", None).map(Element::content_str);
 
         let text_input = elem.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone()).unwrap());

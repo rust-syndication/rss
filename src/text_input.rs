@@ -30,10 +30,10 @@ pub struct TextInput {
 impl ViaXml for TextInput {
     fn to_xml(&self) -> Element {
         let mut elem = Element::new("textInput".to_string(), None, vec![]);
-        elem.tag_with_text("title", &self.title);
-        elem.tag_with_text("description", &self.description);
-        elem.tag_with_text("name", &self.name);
-        elem.tag_with_text("link", &self.link);
+        elem.tag_with_text("title", self.title.clone());
+        elem.tag_with_text("description", self.description.clone());
+        elem.tag_with_text("name", self.name.clone());
+        elem.tag_with_text("link", self.link.clone());
         elem
     }
 
