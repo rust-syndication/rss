@@ -13,9 +13,9 @@ pub struct Guid {
 impl ViaXml for Guid {
     fn to_xml(&self) -> Element {
         let mut guid = if !self.is_perma_link {
-            Element::new("guid".to_string(), None, vec![("isPermaLink".to_string(), None, "false".to_string())])
+            Element::new("guid".to_owned(), None, vec![("isPermaLink".to_owned(), None, "false".to_owned())])
         } else {
-            Element::new("guid".to_string(), None, vec![])
+            Element::new("guid".to_owned(), None, vec![])
         };
 
         guid.text(self.value.clone());

@@ -59,7 +59,7 @@ pub struct Channel {
 
 impl ViaXml for Channel {
     fn to_xml(&self) -> Element {
-        let mut channel = Element::new("channel".to_string(), None, vec![]);
+        let mut channel = Element::new("channel".to_owned(), None, vec![]);
 
         channel.tag_with_text("title", self.title.clone());
         channel.tag_with_text("link", self.link.clone());
