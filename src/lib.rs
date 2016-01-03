@@ -110,7 +110,7 @@ impl ElementUtils for Element {
 
 
 fn elem_with_text(tag_name: &'static str, chars: String) -> Element {
-    let mut elem = Element::new(tag_name.to_string(), None, vec![]);
+    let mut elem = Element::new(tag_name.to_owned(), None, vec![]);
     elem.text(chars);
     elem
 }
@@ -129,7 +129,7 @@ pub struct Rss(pub Channel);
 
 impl ViaXml for Rss {
     fn to_xml(&self) -> Element {
-        let mut rss = Element::new("rss".to_string(), None, vec![("version".to_string(), None, "2.0".to_string())]);
+        let mut rss = Element::new("rss".to_owned(), None, vec![("version".to_owned(), None, "2.0".to_owned())]);
 
         let &Rss(ref channel) = self;
         rss.tag(channel.to_xml());
@@ -174,7 +174,7 @@ impl FromStr for Rss {
 
 impl ToString for Rss {
     fn to_string(&self) -> String {
-        let mut ret = format!("{}", Xml::PINode("xml version='1.0' encoding='UTF-8'".to_string()));
+        let mut ret = format!("{}", Xml::PINode("xml version='1.0' encoding='UTF-8'".to_owned()));
         ret.push_str(&format!("{}", self.to_xml()));
         ret
     }
@@ -240,16 +240,16 @@ mod test {
     #[test]
     fn test_basic_to_string() {
         let item = Item {
-            title: Some("My first post!".to_string()),
-            link: Some("http://myblog.com/post1".to_string()),
-            description: Some("This is my first post".to_string()),
+            title: Some("My first post!".to_owned()),
+            link: Some("http://myblog.com/post1".to_owned()),
+            description: Some("This is my first post".to_owned()),
             ..Default::default()
         };
 
         let channel = Channel {
-            title: "My Blog".to_string(),
-            link: "http://myblog.com".to_string(),
-            description: "Where I write stuff".to_string(),
+            title: "My Blog".to_owned(),
+            link: "http://myblog.com".to_owned(),
+            description: "Where I write stuff".to_owned(),
             items: vec![item],
             ..Default::default()
         };

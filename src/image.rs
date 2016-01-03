@@ -17,7 +17,7 @@ pub struct Image {
 
 impl ViaXml for Image {
     fn to_xml(&self) -> Element {
-        let mut elem = Element::new("image".to_string(), None, vec![]);
+        let mut elem = Element::new("image".to_owned(), None, vec![]);
         elem.tag_with_text("url", self.url.clone());
         elem.tag_with_text("title", self.title.clone());
         elem.tag_with_text("link", self.link.clone());

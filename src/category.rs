@@ -28,15 +28,15 @@ pub struct Category {
 impl ViaXml for Category {
     fn to_xml(&self) -> Element {
         let mut category = match self.domain {
-            Some(ref d) => Element::new("category".to_string(), None, vec![("domain".to_string(), None, d.clone())]),
-            None => Element::new("category".to_string(), None, vec![]),
+            Some(ref d) => Element::new("category".to_owned(), None, vec![("domain".to_owned(), None, d.clone())]),
+            None => Element::new("category".to_owned(), None, vec![]),
         };
         category.text(self.value.clone());
         category
     }
 
     fn from_xml(elem: Element) -> Result<Self, ReadError> {
-        let domain = elem.get_attribute("domain", None).map(|s| s.to_string());
+        let domain = elem.get_attribute("domain", None).map(|s| s.to_owned());
         let value = elem.content_str();
 
         Ok(Category {

@@ -48,14 +48,14 @@ pub struct Item {
 
 impl ViaXml for Item {
     fn to_xml(&self) -> Element {
-        let mut item = Element::new("item".to_string(), None, vec![]);
+        let mut item = Element::new("item".to_owned(), None, vec![]);
 
         item.tag_with_optional_text("title", self.title.clone());
         item.tag_with_optional_text("link", self.link.clone());
         item.tag_with_optional_text("description", self.description.clone());
         item.tag_with_optional_text("author", self.author.clone());
         item.tag_with_optional_text("comments", self.comments.clone());
-        if let &Some(ref guid) = &self.guid {
+        if let Some(ref guid) = self.guid {
             item.tag(guid.to_xml());
         }
         item.tag_with_optional_text("pubDate", self.pub_date.clone());
