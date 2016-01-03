@@ -479,4 +479,32 @@ mod test {
             </rss>";
         assert_eq!(Rss::from_str(rss_str).unwrap_err(), ReadError::ImageWidthInvalid);
     }
+
+    #[test]
+    fn test_read_categories() {
+        let rss_str = "\
+            <rss>\
+            <channel>\
+                    <title></title>\
+                    <link></link>\
+                    <description></description>\
+
+                    <category domain='lambda'>42</category>
+                </channel>\
+                </rss>";
+        let Rss(channel) = Rss::from_str(rss_str).unwrap();
+        assert_eq!(Some("lambda".to_string()), channel.categories[0].domain);
+        assert_eq!("42".to_string(), channel.categories[0].value);
+
+        let rss_str = "\
+            <rss>\
+                <channel>\
+                    <title>Hello world!</title>\
+                    <description></description>\
+                    <link></link>\
+                </channel>\
+            </rss>";
+        let Rss(channel) = Rss::from_str(rss_str).unwrap();
+        assert!(channel.categories.is_empty());
+    }
 }
