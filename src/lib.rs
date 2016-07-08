@@ -65,6 +65,8 @@
 //! let rss = rss_str.parse::<Rss>().unwrap();
 //! ```
 
+#![feature(stmt_expr_attributes)]
+
 mod category;
 mod guid;
 mod channel;

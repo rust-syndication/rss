@@ -8,9 +8,20 @@ use ::{ElementUtils, ReadError, ViaXml};
 /// (http://cyber.law.harvard.edu/rss/rss.html#ltimagegtSubelementOfLtchannelgt)
 #[derive(Default, Debug, Clone)]
 pub struct Image {
+    #[cfg(not(feature = "rss_loose"))]
     pub url: String,
+    #[cfg(not(feature = "rss_loose"))]
     pub title: String,
+    #[cfg(not(feature = "rss_loose"))]
     pub link: String,
+
+    #[cfg(feature = "rss_loose")]
+    pub url: Option<String>,
+    #[cfg(feature = "rss_loose")]
+    pub title: Option<String>,
+    #[cfg(feature = "rss_loose")]
+    pub link: Option<String>,
+
     pub width: Option<u32>,
     pub height: Option<u32>,
 }
@@ -18,9 +29,21 @@ pub struct Image {
 impl ViaXml for Image {
     fn to_xml(&self) -> Element {
         let mut elem = Element::new("image".to_owned(), None, vec![]);
+
+        #[cfg(not(feature = "rss_loose"))]
         elem.tag_with_text("url", self.url.clone());
+        #[cfg(not(feature = "rss_loose"))]
         elem.tag_with_text("title", self.title.clone());
+        #[cfg(not(feature = "rss_loose"))]
         elem.tag_with_text("link", self.link.clone());
+
+        #[cfg(feature = "rss_loose")]
+        elem.tag_with_optional_text("url", self.url.clone());
+        #[cfg(feature = "rss_loose")]
+        elem.tag_with_optional_text("title", self.title.clone());
+        #[cfg(feature = "rss_loose")]
+        elem.tag_with_optional_text("link", self.link.clone());
+
         if let Some(ref n) = self.width {
             elem.tag_with_text("width", n.to_string());
         }

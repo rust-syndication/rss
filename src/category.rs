@@ -45,3 +45,4 @@ impl ViaXml for Category {
         })
     }
 }
+
