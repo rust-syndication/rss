@@ -23,8 +23,10 @@ use ::{Category, ElementUtils, Item, Image, ReadError, TextInput, ViaXml};
 /// # Examples
 ///
 /// ```
+///# #![feature(stmt_expr_attributes)]
 /// use rss::Channel;
 ///
+///# #[cfg(not(feature = "rss_loose"))]
 /// let channel = Channel {
 ///     title: String::from("My Blog"),
 ///     link: String::from("http://myblog.com"),
@@ -32,12 +34,31 @@ use ::{Category, ElementUtils, Item, Image, ReadError, TextInput, ViaXml};
 ///     items: vec![],
 ///     ..Default::default()
 /// };
+///# #[cfg(feature = "rss_loose")]
+///# let channel = Channel {
+///#     title: Some(String::from("My Blog")),
+///#     link: Some(String::from("http://myblog.com")),
+///#     description: Some(String::from("My thoughts on life, the universe, and everything")),
+///#     items: vec![],
+///#     ..Default::default()
+///# };
 /// ```
 #[derive(Default, Debug, Clone)]
 pub struct Channel {
+    #[cfg(not(feature = "rss_loose"))]
     pub title: String,
+    #[cfg(not(feature = "rss_loose"))]
     pub link: String,
+    #[cfg(not(feature = "rss_loose"))]
     pub description: String,
+
+    #[cfg(feature = "rss_loose")]
+    pub title: Option<String>,
+    #[cfg(feature = "rss_loose")]
+    pub link: Option<String>,
+    #[cfg(feature = "rss_loose")]
+    pub description: Option<String>,
+
     pub items: Vec<Item>,
     pub language: Option<String>,
     pub copyright: Option<String>,
@@ -61,9 +82,19 @@ impl ViaXml for Channel {
     fn to_xml(&self) -> Element {
         let mut channel = Element::new("channel".to_owned(), None, vec![]);
 
+        #[cfg(not(feature = "rss_loose"))]
         channel.tag_with_text("title", self.title.clone());
+        #[cfg(not(feature = "rss_loose"))]
         channel.tag_with_text("link", self.link.clone());
+        #[cfg(not(feature = "rss_loose"))]
         channel.tag_with_text("description", self.description.clone());
+
+        #[cfg(feature = "rss_loose")]
+        channel.tag_with_optional_text("title", self.title.clone());
+        #[cfg(feature = "rss_loose")]
+        channel.tag_with_optional_text("link", self.link.clone());
+        #[cfg(feature = "rss_loose")]
+        channel.tag_with_optional_text("description", self.description.clone());
 
         for item in &self.items {
             channel.tag(item.to_xml());
@@ -95,20 +126,28 @@ impl ViaXml for Channel {
     }
 
     fn from_xml(elem: Element) -> Result<Self, ReadError> {
+        #[cfg(not(feature = "rss_loose"))]
         let title = match elem.get_child("title", None) {
             Some(elem) => elem.content_str(),
             None => return Err(ReadError::ChannelMissingTitle),
         };
-
+        #[cfg(not(feature = "rss_loose"))]
         let link = match elem.get_child("link", None) {
             Some(elem) => elem.content_str(),
             None => return Err(ReadError::ChannelMissingLink),
         };
-
+        #[cfg(not(feature = "rss_loose"))]
         let description = match elem.get_child("description", None) {
             Some(elem) => elem.content_str(),
             None => return Err(ReadError::ChannelMissingDescription),
         };
+
+        #[cfg(feature = "rss_loose")]
+        let title = elem.get_child("title", None).map(Element::content_str);
+        #[cfg(feature = "rss_loose")]
+        let link = elem.get_child("link", None).map(Element::content_str);
+        #[cfg(feature = "rss_loose")]
+        let description = elem.get_child("description", None).map(Element::content_str);
 
         let items = match elem.get_children("item", None)
                               .map(|e| ViaXml::from_xml(e.clone()))
