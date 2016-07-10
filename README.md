@@ -57,3 +57,10 @@ let rss_str = r#"
 
 let rss = rss_str.parse::<Rss>().unwrap();
 ```
+
+## Contributors & License
+
+- Michael Yoo [GitHub](https://github.com/sekjun9878) [Web](https://www.michael.yoo.id.au/)
+
+Released under The Apache License 2.0
+
