@@ -4,6 +4,9 @@ rust:
   - nightly
   - beta
   - stable
+script:
+    - cargo test --verbose
+    - cargo test --verbose --features rss_loose
 after_success: |
   cargo doc && \
   echo '<meta http-equiv=refresh content=0;url=rss/index.html>' > target/doc/index.html && \
