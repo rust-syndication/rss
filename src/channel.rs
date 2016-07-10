@@ -23,8 +23,10 @@ use ::{Category, ElementUtils, Item, Image, ReadError, TextInput, ViaXml};
 /// # Examples
 ///
 /// ```
+///# #![feature(stmt_expr_attributes)]
 /// use rss::Channel;
 ///
+///# #[cfg(not(feature = "rss_loose"))]
 /// let channel = Channel {
 ///     title: String::from("My Blog"),
 ///     link: String::from("http://myblog.com"),
@@ -32,6 +34,14 @@ use ::{Category, ElementUtils, Item, Image, ReadError, TextInput, ViaXml};
 ///     items: vec![],
 ///     ..Default::default()
 /// };
+///# #[cfg(feature = "rss_loose")]
+///# let channel = Channel {
+///#     title: Some(String::from("My Blog")),
+///#     link: Some(String::from("http://myblog.com")),
+///#     description: Some(String::from("My thoughts on life, the universe, and everything")),
+///#     items: vec![],
+///#     ..Default::default()
+///# };
 /// ```
 #[derive(Default, Debug, Clone)]
 pub struct Channel {

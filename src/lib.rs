@@ -19,6 +19,7 @@
 //! ## Writing
 //!
 //! ```
+//!# #![feature(stmt_expr_attributes)]
 //! use rss::{Channel, Item, Rss};
 //!
 //! let item = Item {
@@ -28,6 +29,7 @@
 //!     ..Default::default()
 //! };
 //!
+//!# #[cfg(not(feature = "rss_loose"))]
 //! let channel = Channel {
 //!     title: String::from("TechCrunch"),
 //!     link: String::from("http://techcrunch.com"),
@@ -35,6 +37,15 @@
 //!     items: vec![item],
 //!     ..Default::default()
 //! };
+//!#
+//!# #[cfg(feature = "rss_loose")]
+//!# let channel = Channel {
+//!#     title: Some(String::from("TechCrunch")),
+//!#     link: Some(String::from("http://techcrunch.com")),
+//!#     description: Some(String::from("The latest technology news and information on startups")),
+//!#     items: vec![item],
+//!#     ..Default::default()
+//!# };
 //!
 //! let rss = Rss(channel);
 //!
