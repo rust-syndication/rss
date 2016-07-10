@@ -248,10 +248,20 @@ mod test {
             ..Default::default()
         };
 
+        #[cfg(not(feature = "rss_loose"))]
         let channel = Channel {
             title: "My Blog".to_owned(),
             link: "http://myblog.com".to_owned(),
             description: "Where I write stuff".to_owned(),
+            items: vec![item],
+            ..Default::default()
+        };
+
+        #[cfg(feature = "rss_loose")]
+        let channel = Channel {
+            title: Some("My Blog".to_owned()),
+            link: Some("http://myblog.com".to_owned()),
+            description: Some("Where I write stuff".to_owned()),
             items: vec![item],
             ..Default::default()
         };
@@ -276,6 +286,7 @@ mod test {
     }
 
     #[test]
+    #[cfg_attr(feature = "rss_loose", ignore)]
     fn test_read_one_channel_no_properties() {
         let rss_str = "\
             <rss>\
@@ -296,7 +307,11 @@ mod test {
                 </channel>\
             </rss>";
         let Rss(channel) = Rss::from_str(rss_str).unwrap();
+
+        #[cfg(not(feature = "rss_loose"))]
         assert_eq!("Hello world!", channel.title);
+        #[cfg(feature = "rss_loose")]
+        assert_eq!(Some("Hello world!".to_owned()), channel.title); // How come &str is dereferenced but Some(&str) is not?
     }
 
     #[test]
@@ -342,7 +357,11 @@ mod test {
                 </channel>\
             </rss>";
         let Rss(channel) = Rss::from_str(rss_str).unwrap();
+
+        #[cfg(not(feature = "rss_loose"))]
         assert_eq!("Foobar", channel.text_input.unwrap().title);
+        #[cfg(feature = "rss_loose")]
+        assert_eq!(Some("Foobar".to_owned()), channel.text_input.unwrap().title);
     }
 
     // Ensure reader ignores the PI XML node and continues to parse the RSS
@@ -358,7 +377,11 @@ mod test {
                 </channel>\
             </rss>";
         let Rss(channel) = Rss::from_str(rss_str).unwrap();
+
+        #[cfg(not(feature = "rss_loose"))]
         assert_eq!("Title", channel.title);
+        #[cfg(feature = "rss_loose")]
+        assert_eq!(Some("Title".to_owned()), channel.title);
     }
 
     #[test]
@@ -381,14 +404,27 @@ mod test {
             </rss>";
         let rss = Rss::from_str(rss_str).unwrap();
         let image = rss.0.image.unwrap();
-        assert_eq!(image.url, "a url");
-        assert_eq!(image.title, "a title");
-        assert_eq!(image.link, "a link");
+
+        #[cfg(not(feature = "rss_loose"))]
+        assert_eq!(image.url, "a url".to_owned());
+        #[cfg(not(feature = "rss_loose"))]
+        assert_eq!(image.title, "a title".to_owned());
+        #[cfg(not(feature = "rss_loose"))]
+        assert_eq!(image.link, "a link".to_owned());
+
+        #[cfg(feature = "rss_loose")]
+        assert_eq!(image.url, Some("a url".to_owned()));
+        #[cfg(feature = "rss_loose")]
+        assert_eq!(image.title, Some("a title".to_owned()));
+        #[cfg(feature = "rss_loose")]
+        assert_eq!(image.link, Some("a link".to_owned()));
+
         assert_eq!(image.height, Some(140));
         assert_eq!(image.width, Some(280));
     }
 
     #[test]
+    #[cfg_attr(feature = "rss_loose", ignore)]
     fn test_read_image_no_url() {
         let rss_str = "\
             <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
@@ -407,6 +443,7 @@ mod test {
     }
 
     #[test]
+    #[cfg_attr(feature = "rss_loose", ignore)]
     fn test_read_image_no_title() {
         let rss_str = "\
             <?xml version=\'1.0\' encoding=\'UTF-8\'?>\
@@ -425,6 +462,7 @@ mod test {
     }
 
     #[test]
+    #[cfg_attr(feature = "rss_loose", ignore)]
     fn test_read_image_no_link() {
         let rss_str = "\
             <?xml version=\'1.0\' encoding=\'UTF-8\'?>\

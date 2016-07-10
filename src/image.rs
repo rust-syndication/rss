@@ -54,20 +54,30 @@ impl ViaXml for Image {
     }
 
     fn from_xml(elem: Element) -> Result<Self, ReadError> {
+        #[cfg(not(feature = "rss_loose"))]
         let url = match elem.get_child("url", None) {
             Some(elem) => elem.content_str(),
             None => return Err(ReadError::ImageMissingUrl),
         };
 
+        #[cfg(not(feature = "rss_loose"))]
         let title = match elem.get_child("title", None) {
             Some(elem) => elem.content_str(),
             None => return Err(ReadError::ImageMissingTitle),
         };
 
+        #[cfg(not(feature = "rss_loose"))]
         let link = match elem.get_child("link", None) {
             Some(elem) => elem.content_str(),
             None => return Err(ReadError::ImageMissingLink),
         };
+
+        #[cfg(feature = "rss_loose")]
+        let url = elem.get_child("url", None).map(Element::content_str);
+        #[cfg(feature = "rss_loose")]
+        let title = elem.get_child("title", None).map(Element::content_str);
+        #[cfg(feature = "rss_loose")]
+        let link = elem.get_child("link", None).map(Element::content_str);
 
         let height = match elem.get_child("height", None)
                                .map(|h| u32::from_str(&h.content_str()))
