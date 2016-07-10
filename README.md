@@ -58,6 +58,20 @@ let rss_str = r#"
 let rss = rss_str.parse::<Rss>().unwrap();
 ```
 
+### Partial Feeds
+
+In some cases, the RSS source may not return a standards-compliant RSS such as a missing description tag. The library
+is designed to return an error in such cases, however this behaviour can be loosened by using the feature
+flag `rss_loose`.
+
+Using this flag changes what would normally be a `String` type to a `Option<String>`, just like other fields.
+
+In your `Cargo.toml`, add the following:
+```toml
+[dependencies.rss]
+features = ["rss_loose"]
+```
+
 ## Contributors & License
 
 - Michael Yoo [GitHub](https://github.com/sekjun9878) [Web](https://www.michael.yoo.id.au/)
