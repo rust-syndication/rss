@@ -1,8 +1,10 @@
 # rss-rs
 
-[![Build Status](https://travis-ci.org/jameshurst/rss-rs.svg)](https://travis-ci.org/jameshurst/rss-rs)
+[![Build Status](https://travis-ci.org/jameshurst/rss-rs.svg?branch=master)](https://travis-ci.org/jameshurst/rss-rs)
 [![Crates.io Status](http://meritbadge.herokuapp.com/rss-rs)](https://crates.io/crates/rss-rs)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/jameshurst/rss-rs/master/LICENSE)
+
+[Documentation](https://jameshurst.github.io/rss-rs/rss/index.html)
 
 RSS feed parser written in Rust. 
 
