@@ -4,7 +4,7 @@
 [![Crates.io Status](http://meritbadge.herokuapp.com/rss-rs)](https://crates.io/crates/rss-rs)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/jameshurst/rss-rs/master/LICENSE)
 
-[Documentation](https://jameshurst.github.io/rss-rs/rss/index.html)
+[Documentation](https://jameshurst.github.io/rss-rs/rss/)
 
 RSS feed parser written in Rust. 
 
