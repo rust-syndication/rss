@@ -22,7 +22,7 @@ rss-rs = "0.1"
 
 If you would like to use rss-rs with quick-xml as the XML parser then enable the `quick-xml` feature and disable default features.
 
-```yaml
+```toml
 [dependencies]
 rss-rs = {version = "0.1", features = ["quick-xml"], default-features = false}
 ```
