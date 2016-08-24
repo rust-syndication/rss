@@ -24,7 +24,7 @@ pub struct Item {
     pub comments: Option<String>,
     /// The description of a media object that is attached to the item.
     pub enclosure: Option<Enclosure>,
-    /// A string that uniquely identifies the item.
+    /// A unique identifier for the item.
     pub guid: Option<Guid>,
     /// The date the item was published.
     pub pub_date: Option<String>,

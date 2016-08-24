@@ -8,11 +8,11 @@ use error::Error;
 /// A representation of the `<enclosure>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct Enclosure {
-    /// The url of the enclosure.
+    /// The URL of the enclosure.
     pub url: String,
     /// The length of the enclosure in bytes.
     pub length: String,
-    /// The mime type of the enclosure.
+    /// The MIME type of the enclosure.
     pub mime_type: String,
 }
 

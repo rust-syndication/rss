@@ -1,9 +1,23 @@
 #![warn(missing_docs)]
 #![allow(unknown_lints, while_let_on_iterator)]
 
-//! ## Reading
+//! A fast RSS feed parser.
 //!
-//! See [`Channel::read_from`](struct.Channel.html#method.read_from).
+//! # Reading
+//!
+//! Reading can be done using any object that implements the `BufRead` trait.
+//! 
+//! ## Example
+//!
+//! ```rust,no_run
+//! use std::fs::File;
+//! use std::io::BufReader;
+//! use rss::Channel;
+//!
+//! let file = File::open("example.xml").unwrap();
+//! let reader = BufReader::new(file);
+//! let channel = Channel::read_from(reader).unwrap();
+//! ```
 
 extern crate quick_xml;
 

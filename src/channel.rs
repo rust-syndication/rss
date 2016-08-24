@@ -17,7 +17,7 @@ pub struct Channel {
     pub title: String,
     /// The URL for the website corresponding to the channel.
     pub link: String,
-    /// The description of the channel.
+    /// A description of the channel.
     pub description: String,
     /// The language of the channel.
     pub language: Option<String>,

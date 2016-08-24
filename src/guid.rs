@@ -6,9 +6,9 @@ use error::Error;
 /// A representation of the `<guid>` element.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Guid {
-    /// The value of the guid.
+    /// The value of the GUID.
     pub value: String,
-    /// Indicates if the guid is a permalink.
+    /// Indicates if the GUID is a permalink.
     pub is_permalink: bool,
 }
 
