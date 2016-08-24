@@ -1,19 +1,23 @@
 #![warn(missing_docs)]
+#![allow(unknown_lints, while_let_on_iterator)]
 
 //! ## Reading
 //!
-//! See [`Channel::read_from`](struct.Channel.html#method.read_from) and [`parse`](fn.parse.html).
+//! See [`Channel::read_from`](struct.Channel.html#method.read_from).
 
-#[cfg(feature = "quick-xml")]
 extern crate quick_xml;
-#[cfg(feature = "xml-rs")]
-extern crate xml;
+
+#[macro_use]
+mod fromxml;
 
 mod channel;
 pub use channel::Channel;
 
 mod item;
 pub use item::Item;
+
+mod category;
+pub use category::Category;
 
 mod guid;
 pub use guid::Guid;
@@ -24,17 +28,16 @@ pub use enclosure::Enclosure;
 mod source;
 pub use source::Source;
 
-#[cfg(feature = "quick-xml")]
-mod parser_quickxml;
-#[cfg(feature = "quick-xml")]
-pub use parser_quickxml::parse;
+mod cloud;
+pub use cloud::Cloud;
 
-#[cfg(feature = "xml-rs")]
-mod parser_xmlrs;
-#[cfg(feature = "xml-rs")]
-pub use parser_xmlrs::parse;
+mod image;
+pub use image::Image;
+
+mod textinput;
+pub use textinput::TextInput;
 
 mod error;
 pub use error::Error;
 
-mod fromxml;
+mod parser;

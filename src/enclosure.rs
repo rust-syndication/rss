@@ -1,70 +1,50 @@
-use fromxml::{FromXml, XmlName, XmlAttribute};
+use std::str;
+
+use quick_xml::{XmlReader, Event, Element};
+
+use fromxml::FromXml;
 use error::Error;
 
 /// A representation of the `<enclosure>` element.
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct Enclosure {
-    /// The url of the enclosure. This is the `url` attribute of the `<enclosure>`.
+    /// The url of the enclosure.
     pub url: String,
-    /// The length of the enclosure. This is the `length` attribute of the `<enclosure>`.
-    pub length: u64,
-    /// The mime type of the enclosure. This is the `type` attribute of the `<enclosure>`.
+    /// The length of the enclosure in bytes.
+    pub length: String,
+    /// The mime type of the enclosure.
     pub mime_type: String,
 }
 
-#[derive(Default)]
-pub struct EnclosureBuilder {
-    pub url: Option<String>,
-    pub length: Option<u64>,
-    pub mime_type: Option<String>,
-}
+impl FromXml for Enclosure {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
+                                       element: Element)
+                                       -> Result<(Self, XmlReader<R>), Error> {
+        let mut url = None;
+        let mut length = None;
+        let mut mime_type = None;
 
-impl EnclosureBuilder {
-    pub fn new() -> EnclosureBuilder {
-        Default::default()
-    }
+        for attr in element.attributes() {
+            if let Ok(attr) = attr {
+                match attr.0 {
+                    b"url" => url = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
+                    b"length" => length = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
+                    b"type" => mime_type = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
+                    _ => {}
+                }
+            }
+        }
 
-    pub fn build(self) -> Result<Enclosure, Error> {
-        let url = match self.url {
-            Some(value) => value,
-            None => return Err(Error::MissingField("Enclosure", "url")),
-        };
+        close_element!(reader);
 
-        let length = match self.length {
-            Some(value) => value,
-            None => return Err(Error::MissingField("Enclosure", "length")),
-        };
+        let url = url.unwrap_or_default();
+        let length = length.unwrap_or_default();
+        let mime_type = mime_type.unwrap_or_default();
 
-        let mime_type = match self.mime_type {
-            Some(value) => value,
-            None => return Err(Error::MissingField("Enclosure", "type")),
-        };
-
-        Ok(Enclosure {
+        Ok((Enclosure {
             url: url,
             length: length,
             mime_type: mime_type,
-        })
+        }, reader))
     }
 }
-
-impl FromXml for EnclosureBuilder {
-    fn consume_attribute<T: XmlAttribute>(&mut self, attr: T) -> Result<(), Error> {
-        match attr.name().local_name() {
-            b"url" => self.url = Some(try!(attr.owned_value())),
-            b"length" => {
-                self.length = Some({
-                    let value = try!(attr.borrowed_value());
-                    match value.parse::<u64>() {
-                        Ok(value) => value,
-                        Err(_) => return Err(Error::InvalidField("Enclosure", "length")),
-                    }
-                })
-            }
-            b"type" => self.mime_type = Some(try!(attr.owned_value())),
-            _ => {}
-        }
-
-        Ok(())
-    }
-}
-

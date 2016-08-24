@@ -1,109 +1,97 @@
-use fromxml::{FromXml, XmlName};
+use quick_xml::{XmlReader, Event, Element};
+
+use fromxml::FromXml;
 use error::Error;
-use guid::{Guid, GuidBuilder};
-use enclosure::{Enclosure, EnclosureBuilder};
-use source::{Source, SourceBuilder};
+use category::Category;
+use guid::Guid;
+use enclosure::Enclosure;
+use source::Source;
 
 /// A representation of the `<item>` element.
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct Item {
-    /// The title of the item. This is the content of the `<title>` element inside the `<item>`.
+    /// The title of the item.
     pub title: Option<String>,
-    /// The URL of the item. This is the content of the `<link>` element inside the `<item>`.
+    /// The URL of the item.
     pub link: Option<String>,
-    /// The item synopsis. This is the content of the `<description>` element inside the `<item>`.
+    /// The item synopsis.
     pub description: Option<String>,
-    /// The email address of author of the item. This is the content of the `<author>` element inside the `<item>`.
+    /// The email address of author of the item.
     pub author: Option<String>,
-    /// The categories the item belongs to. This is the content of all of the `<category>` elements inside the `<item>`.
-    pub categories: Vec<String>,
-    /// The URL for the comments page of the item. This is the content of the `<comments>` element inside the `<item>`.
+    /// The categories the item belongs to.
+    pub categories: Vec<Category>,
+    /// The URL for the comments page of the item.
     pub comments: Option<String>,
-    /// The description of a media object that is attached to the item. This is the content of the `<enclosure>` element inside the `<item>`.
+    /// The description of a media object that is attached to the item.
     pub enclosure: Option<Enclosure>,
-    /// A string that uniquely identifies the item. This is the content of the `<guid>` element inside the `<item>`.
+    /// A string that uniquely identifies the item.
     pub guid: Option<Guid>,
-    /// The date the item was published. This is the content of the `<pubDate>` element inside the `<item>`.
+    /// The date the item was published.
     pub pub_date: Option<String>,
-    /// The RSS channel the item came from. This is the content of the `<source>` element inside the `<item>`.
+    /// The RSS channel the item came from.
     pub source: Option<Source>,
-    /// The HTML contents of the item. This is the content of the `<content:encoded>` element inside the `<item>`.
+    /// The HTML contents of the item.
     pub content: Option<String>,
 }
 
-#[derive(Default)]
-pub struct ItemBuilder {
-    pub title: Option<String>,
-    pub link: Option<String>,
-    pub description: Option<String>,
-    pub author: Option<String>,
-    pub categories: Vec<String>,
-    pub comments: Option<String>,
-    pub enclosure: Option<EnclosureBuilder>,
-    pub guid: Option<GuidBuilder>,
-    pub pub_date: Option<String>,
-    pub source: Option<SourceBuilder>,
-    pub content: Option<String>,
-}
+impl FromXml for Item {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
+                                       _: Element)
+                                       -> Result<(Self, XmlReader<R>), Error> {
+        let mut item = Item::default();
+        let mut depth = 0;
 
-impl ItemBuilder {
-    #[inline]
-    pub fn new() -> ItemBuilder {
-        Default::default()
-    }
+        while let Some(e) = reader.next() {
+            match e {
+                Ok(Event::Start(element)) => {
+                    if depth > 0 {
+                        depth += 1;
+                        continue;
+                    }
 
-    pub fn build(self) -> Result<Item, Error> {
-        let enclosure = match self.enclosure {
-            Some(value) => value.build().ok(),
-            None => None,
-        };
+                    match element.name() {
+                        b"category" => {
+                            let (category, reader_) = try!(Category::from_xml(reader, element));
+                            reader = reader_;
+                            item.categories.push(category);
+                        }
+                        b"guid" => {
+                            let (guid, reader_) = try!(Guid::from_xml(reader, element));
+                            reader = reader_;
+                            item.guid = Some(guid);
+                        }
+                        b"enclosure" => {
+                            let (enclosure, reader_) = try!(Enclosure::from_xml(reader, element));
+                            reader = reader_;
+                            item.enclosure = Some(enclosure);
+                        }
+                        b"source" => {
+                            let (source, reader_) = try!(Source::from_xml(reader, element));
+                            reader = reader_;
+                            item.source = Some(source);
+                        }
+                        b"title" => item.title = element_text!(reader),
+                        b"link" => item.link = element_text!(reader),
+                        b"description" => item.description = element_text!(reader),
+                        b"author" => item.author = element_text!(reader),
+                        b"comments" => item.comments = element_text!(reader),
+                        b"pubDate" => item.pub_date = element_text!(reader),
+                        b"content:encoded" => item.content = element_text!(reader),
+                        _ => depth += 1,
+                    }
+                }
+                Ok(Event::End(_)) => {
+                    depth -= 1;
 
-        let guid = match self.guid {
-            Some(value) => Some(try!(value.build())),
-            None => None,
-        };
-
-        let source = match self.source {
-            Some(value) => Some(try!(value.build())),
-            None => None,
-        };
-
-
-        Ok(Item {
-            title: self.title,
-            link: self.link,
-            description: self.description,
-            author: self.author,
-            categories: self.categories,
-            comments: self.comments,
-            enclosure: enclosure,
-            guid: guid,
-            pub_date: self.pub_date,
-            source: source,
-            content: self.content,
-        })
-    }
-}
-
-impl FromXml for ItemBuilder {
-    fn consume_named<T: XmlName>(&mut self, name: T, content: String) {
-        match name.local_name() {
-            b"title" => self.title = Some(content),
-            b"link" => self.link = Some(content),
-            b"description" => self.description = Some(content),
-            b"author" => self.author = Some(content),
-            b"category" => self.categories.push(content),
-            b"comments" => self.comments = Some(content),
-            b"pubDate" => self.pub_date = Some(content),
-            #[cfg(feature = "quick-xml")]
-            b"content:encoded" => {
-                self.content = Some(content);
+                    if depth == -1 {
+                        return Ok((item, reader));
+                    }
+                }
+                Err(err) => return Err(err.0.into()),
+                _ => {}
             }
-            #[cfg(feature = "xml-rs")]
-            b"encoded" if name.prefix() == Some(b"content") => {
-                self.content = Some(content);
-            }
-            _ => {}
         }
+
+        Err(Error::EOF)
     }
 }
-

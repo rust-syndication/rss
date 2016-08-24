@@ -83,8 +83,8 @@ fn test_enclosure() {
                Some("http://example.com/"));
     assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.url.as_str()), 
                Some("http://example.com/media.mp3"));
-    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.length), 
-               Some(4992349));
+    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.length.as_str()), 
+               Some("4992349"));
     assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.mime_type.as_str()), 
                Some("audio/mpeg"));
 }

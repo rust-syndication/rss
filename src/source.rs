@@ -1,51 +1,39 @@
-use fromxml::{FromXml, XmlName, XmlAttribute};
+use std::str;
+
+use quick_xml::{XmlReader, Element};
+
+use fromxml::FromXml;
 use error::Error;
 
 /// A representation of the `<source>` element.
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct Source {
-    /// The url of the source. This is the `url` attribute of the `<source>`.
+    /// The URL of the source.
     pub url: String,
-    /// The title of the source. This is the content of the `<source>`.
+    /// The title of the source.
     pub title: Option<String>,
 }
 
-#[derive(Default)]
-pub struct SourceBuilder {
-    pub url: Option<String>,
-    pub title: Option<String>,
-}
+impl FromXml for Source {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
+                                       element: Element)
+                                       -> Result<(Self, XmlReader<R>), Error> {
+        let mut url = None;
 
-impl SourceBuilder {
-    #[inline]
-    pub fn new() -> SourceBuilder {
-        Default::default()
-    }
-
-    pub fn build(self) -> Result<Source, Error> {
-        let url = match self.url {
-            Some(value) => value,
-            None => return Err(Error::MissingField("Source", "url")),
-        };
-
-        Ok(Source {
-            url: url,
-            title: self.title,
-        })
-    }
-}
-
-impl FromXml for SourceBuilder {
-    #[inline]
-    fn consume_content(&mut self, content: String) {
-        self.title = Some(content);
-    }
-
-    fn consume_attribute<T: XmlAttribute>(&mut self, attr: T) -> Result<(), Error> {
-        if attr.name().local_name() == b"url" {
-            self.url = Some(try!(attr.owned_value()));
+        for attr in element.attributes() {
+            if let Ok(attr) = attr {
+                if attr.0 == b"url" {
+                    url = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                }
+            }
         }
 
-        Ok(())
+        let url = url.unwrap_or_default();
+        let content = element_text!(reader);
+
+        Ok((Source {
+            url: url,
+            title: content,
+        }, reader))
     }
 }
-

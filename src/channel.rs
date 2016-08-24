@@ -1,31 +1,59 @@
 use std::str::FromStr;
 
-use fromxml::{FromXml, XmlName};
+use quick_xml::{XmlReader, Event, Element};
+
+use fromxml::FromXml;
 use error::Error;
+use category::Category;
+use cloud::Cloud;
+use image::Image;
+use textinput::TextInput;
 use item::Item;
 
 /// A representation of the `<channel>` element.
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct Channel {
-    /// The name of the channel. This is the content of the `<title>` element inside the `<channel>`.
+    /// The name of the channel.
     pub title: String,
-    /// The URL for the website corresponding to the channel. This is the content of the `<link>` element inside the `<channel>`.
+    /// The URL for the website corresponding to the channel.
     pub link: String,
-    /// The description of the channel. This is the content of the `<description>` element inside the `<channel>`.
+    /// The description of the channel.
     pub description: String,
-    /// The language of the channel. This is the content of the `<language>` element inside the `<channel>`.
+    /// The language of the channel.
     pub language: Option<String>,
-    /// The publication date for the content of the channel. This is the content of the `<pubDate>` element inside the `<channel>`.
+    /// The copyright notice for the channel.
+    pub copyright: Option<String>,
+    /// The email address for the managing editor.
+    pub managing_editor: Option<String>,
+    /// The email address for the webmaster.
+    pub webmaster: Option<String>,
+    /// The publication date for the content of the channel.
     pub pub_date: Option<String>,
-    /// The date that the contents of the channel last changed. This is the content of the `<lastBuildDate>` element inside the `<channel>`.
+    /// The date that the contents of the channel last changed.
     pub last_build_date: Option<String>,
-    /// The categories the channel belongs to. This is the content of all of the `<category>` elements inside the `<channel>`.
-    pub categories: Vec<String>,
-    /// The items in the channel. This is the content of all of the `<item>` elements inside the `<channel>`.
+    /// The categories the channel belongs to.
+    pub categories: Vec<Category>,
+    /// The program used to generate the channel.
+    pub generator: Option<String>,
+    /// A URL that points to the documentation for the RSS format.
+    pub docs: Option<String>,
+    /// The cloud to register with to be notified of updates to the channel.
+    pub cloud: Option<Cloud>,
+    /// The number of minutes the channel can be cached before refreshing.
+    pub ttl: Option<String>,
+    /// An image that can be displayed with the channel.
+    pub image: Option<Image>,
+    /// A text input box that can be displayed with the channel.
+    pub text_input: Option<TextInput>,
+    /// A hint to tell the aggregator which hours it can skip.
+    pub skip_hours: Vec<String>,
+    /// A hint to tell the aggregator which days it can skip.
+    pub skip_days: Vec<String>,
+    /// The items in the channel.
     pub items: Vec<Item>,
 }
 
 impl Channel {
-    #[cfg(feature = "quick-xml")]
     #[inline]
     /// Attempt to read the RSS channel from the speficied reader.
     ///
@@ -36,22 +64,144 @@ impl Channel {
     /// let channel = Channel::read_from(reader).unwrap();
     /// ```
     pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
-        ::parse(::quick_xml::XmlReader::from_reader(reader))
+        ::parser::parse(::quick_xml::XmlReader::from_reader(reader))
     }
+}
 
-    #[cfg(feature = "xml-rs")]
-    #[inline]
-    /// Attempt to read the RSS channel from the speficied reader.
-    ///
-    /// # Example
-    ///
-    /// ```rust,ignore
-    /// let reader: Read = ...;
-    /// let channel = Channel::read_from(reader).unwrap();
-    /// ```
+impl FromXml for Channel {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
+                                       _: Element)
+                                       -> Result<(Self, XmlReader<R>), Error> {
+        let mut channel = Channel::default();
+        let mut depth = 0;
 
-    pub fn read_from<R: ::std::io::Read>(reader: R) -> Result<Channel, Error> {
-        ::parse(::xml::reader::EventReader::new(reader))
+        while let Some(e) = reader.next() {
+            match e {
+                Ok(Event::Start(element)) => {
+                    if depth > 0 {
+                        depth += 1;
+                        continue;
+                    }
+
+                    match element.name() {
+                        b"category" => {
+                            let (category, reader_) = try!(Category::from_xml(reader, element));
+                            reader = reader_;
+                            channel.categories.push(category);
+                        }
+                        b"cloud" => {
+                            let (cloud, reader_) = try!(Cloud::from_xml(reader, element));
+                            reader = reader_;
+                            channel.cloud = Some(cloud);
+                        }
+                        b"image" => {
+                            let (image, reader_) = try!(Image::from_xml(reader, element));
+                            reader = reader_;
+                            channel.image = Some(image);
+                        }
+                        b"textInput" => {
+                            let (text_input, reader_) = try!(TextInput::from_xml(reader, element));
+                            reader = reader_;
+                            channel.text_input = Some(text_input);
+                        }
+                        b"item" => {
+                            let (item, reader_) = try!(Item::from_xml(reader, element));
+                            reader = reader_;
+                            channel.items.push(item);
+                        }
+                        b"title" => {
+                            if let Some(content) = element_text!(reader) {
+                                channel.title = content;
+                            }
+                        }
+                        b"link" => {
+                            if let Some(content) = element_text!(reader) {
+                                channel.link = content;
+                            }
+                        }
+                        b"description" => {
+                            if let Some(content) = element_text!(reader) {
+                                channel.description = content;
+                            }
+                        }
+                        b"language" => channel.language = element_text!(reader),
+                        b"copyright" => channel.copyright = element_text!(reader),
+                        b"managingEditor" => {
+                            channel.managing_editor = element_text!(reader);
+                        }
+                        b"webMaster" => channel.webmaster = element_text!(reader),
+                        b"pubDate" => channel.pub_date = element_text!(reader),
+                        b"lastBuildDate" => {
+                            channel.last_build_date = element_text!(reader);
+                        }
+                        b"generator" => channel.generator = element_text!(reader),
+                        b"docs" => channel.docs = element_text!(reader),
+                        b"ttl" => channel.ttl = element_text!(reader),
+                        b"skipHours" => {
+                            let mut depth = 0;
+                            while let Some(e) = reader.next() {
+                                match e {
+                                    Ok(Event::Start(element)) => {
+                                        if depth == 0 && element.name() == b"hour" {
+                                            if let Some(content) = element_text!(reader) {
+                                                channel.skip_hours.push(content);
+                                            }
+                                        } else {
+                                            depth += 1;
+                                        }
+                                    }
+                                    Ok(Event::End(_)) => {
+                                        depth -= 1;
+                                        if depth == -1 {
+                                            break;
+                                        }
+                                    }
+                                    Err(err) => return Err(err.0.into()),
+                                    _ => {}
+                                }
+                            }
+                        }
+                        b"skipDays" => {
+                            let mut depth = 0;
+                            while let Some(e) = reader.next() {
+                                match e {
+                                    Ok(Event::Start(element)) => {
+                                        if depth == 0 && element.name() == b"day" {
+                                            if let Some(content) = element_text!(reader) {
+                                                channel.skip_days.push(content);
+                                            }
+                                        } else {
+                                            depth += 1;
+                                        }
+                                    }
+                                    Ok(Event::End(_)) => {
+                                        depth -= 1;
+                                        if depth == -1 {
+                                            break;
+                                        }
+                                    }
+                                    Err(err) => return Err(err.0.into()),
+                                    _ => {}
+                                }
+                            }
+                        }
+                        _ => depth += 1,
+                    }
+
+                }
+                Ok(Event::End(_)) => {
+                    depth -= 1;
+
+                    if depth == -1 {
+                        return Ok((channel, reader));
+                    }
+                }
+                Err(err) => return Err(err.0.into()),
+                _ => {}
+            }
+        }
+
+        Err(Error::EOF)
     }
 }
 
@@ -63,66 +213,3 @@ impl FromStr for Channel {
         Channel::read_from(s.as_bytes())
     }
 }
-
-#[derive(Default)]
-pub struct ChannelBuilder {
-    pub title: Option<String>,
-    pub link: Option<String>,
-    pub description: Option<String>,
-    pub language: Option<String>,
-    pub pub_date: Option<String>,
-    pub last_build_date: Option<String>,
-    pub categories: Vec<String>,
-    pub items: Vec<Item>,
-}
-
-impl ChannelBuilder {
-    #[inline]
-    pub fn new() -> ChannelBuilder {
-        Default::default()
-    }
-
-    pub fn build(self) -> Result<Channel, Error> {
-        let title = match self.title {
-            Some(value) => value,
-            None => return Err(Error::MissingField("Channel", "title")),
-        };
-
-        let link = match self.link {
-            Some(value) => value,
-            None => return Err(Error::MissingField("Channel", "link")),
-        };
-
-        let description = match self.description {
-            Some(value) => value,
-            None => return Err(Error::MissingField("Channel", "description")),
-        };
-
-        Ok(Channel {
-            title: title,
-            link: link,
-            description: description,
-            language: self.language,
-            pub_date: self.pub_date,
-            last_build_date: self.last_build_date,
-            categories: self.categories,
-            items: self.items,
-        })
-    }
-}
-
-impl FromXml for ChannelBuilder {
-    fn consume_named<T: XmlName>(&mut self, name: T, content: String) {
-        match name.local_name() {
-            b"title" => self.title = Some(content),
-            b"link" => self.link = Some(content),
-            b"description" => self.description = Some(content),
-            b"language" => self.language = Some(content),
-            b"pubDate" => self.pub_date = Some(content),
-            b"lastBuildDate" => self.last_build_date = Some(content),
-            b"category" => self.categories.push(content),
-            _ => {}
-        }
-    }
-}
-
