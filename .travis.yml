@@ -13,8 +13,6 @@ script:
   - |
       travis-cargo build &&
       travis-cargo test &&
-      travis-cargo build -- --features quick-xml --no-default-features &&
-      travis-cargo test -- --features quick-xml --no-default-features &&
       travis-cargo --only stable doc
 after_success:
   - travis-cargo --only stable doc-upload
