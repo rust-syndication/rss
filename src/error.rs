@@ -11,7 +11,7 @@ pub enum Error {
     /// An error occurred while converting bytes to UTF8"
     Utf8(Utf8Error),
     /// An XML parser error occurred.
-    XmlParsing(XmlError),
+    XmlParsing(XmlError, usize),
     /// The end of the input was reached without finding a complete channel element.
     EOF,
 }
@@ -20,7 +20,7 @@ impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
             Error::Utf8(ref err) => err.description(),
-            Error::XmlParsing(ref err) => err.description(),
+            Error::XmlParsing(ref err, _) => err.description(),
             Error::EOF => "reached end of input without finding a complete channel",
         }
     }
@@ -28,7 +28,7 @@ impl StdError for Error {
     fn cause(&self) -> Option<&StdError> {
         match *self {
             Error::Utf8(ref err) => Some(err),
-            Error::XmlParsing(ref err) => Some(err),
+            Error::XmlParsing(ref err, _) => Some(err),
             _ => None,
         }
     }
@@ -38,15 +38,15 @@ impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
             Error::Utf8(ref err) => fmt::Display::fmt(err, f),
-            Error::XmlParsing(ref err) => fmt::Display::fmt(err, f),
+            Error::XmlParsing(ref err, _) => fmt::Display::fmt(err, f),
             Error::EOF => write!(f, "reached end of input without finding a complete channel"),
         }
     }
 }
 
-impl From<XmlError> for Error {
-    fn from(err: XmlError) -> Error {
-        Error::XmlParsing(err)
+impl From<(XmlError, usize)> for Error {
+    fn from(err: (XmlError, usize)) -> Error {
+        Error::XmlParsing(err.0, err.1)
     }
 }
 

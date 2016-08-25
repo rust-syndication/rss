@@ -28,10 +28,10 @@ impl FromXml for Guid {
                                        -> Result<(Self, XmlReader<R>), Error> {
         let mut is_permalink = true;
 
-        for attr in element.attributes().with_checks(false) {
+        for attr in element.attributes().with_checks(false).unescaped() {
             if let Ok(attr) = attr {
                 if attr.0 == b"isPermaLink" {
-                    is_permalink = attr.1 != b"false";
+                    is_permalink = &attr.1 as &[u8] != b"false";
                     break;
                 }
             }

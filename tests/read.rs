@@ -56,13 +56,7 @@ fn test_source() {
     let input = include_str!("data/source.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
     assert_eq!(channel.title, "Source Test");
-    assert_eq!(channel.link, "http://example.com/");
-    assert_eq!(channel.description, "Just some test data.");
 
-    assert_eq!(channel.items[0].title.as_ref().map(|s| s.as_str()), 
-               Some("Example"));
-    assert_eq!(channel.items[0].link.as_ref().map(|s| s.as_str()), 
-               Some("http://example.com/"));
     assert_eq!(channel.items[0].source.as_ref().map(|v| v.url.as_str()), 
                Some("http://example.com/feed/"));
     assert_eq!(channel.items[0].source.as_ref().and_then(|v| v.title.as_ref().map(|s| s.as_str())), 
@@ -74,13 +68,7 @@ fn test_enclosure() {
     let input = include_str!("data/enclosure.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
     assert_eq!(channel.title, "Enclosure Test");
-    assert_eq!(channel.link, "http://example.com/");
-    assert_eq!(channel.description, "Just some test data.");
 
-    assert_eq!(channel.items[0].title.as_ref().map(|s| s.as_str()), 
-               Some("Example"));
-    assert_eq!(channel.items[0].link.as_ref().map(|s| s.as_str()), 
-               Some("http://example.com/"));
     assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.url.as_str()), 
                Some("http://example.com/media.mp3"));
     assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.length.as_str()), 
@@ -89,3 +77,32 @@ fn test_enclosure() {
                Some("audio/mpeg"));
 }
 
+#[test]
+fn test_extension() {
+    let input = include_str!("data/extension.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    assert_eq!(channel.title, "Extension Test");
+
+    let ext = channel.items[0].extensions.get("ext").expect("failed to find extension");
+    assert_eq!(ext.get("ext:creator")
+               .map(|v| v.iter()
+                    .map(|v| v.value.as_ref().map(|s| s.as_str()))
+                    .collect::<Vec<_>>()), 
+               Some(vec![Some("Creator Name")]));
+    assert_eq!(ext.get("ext:contributor")
+               .map(|v| v.iter()
+                    .map(|v| v.value.as_ref().map(|s| s.as_str()))
+                    .collect::<Vec<_>>()), 
+               Some(vec![Some("Contributor 1"), Some("Contributor 2")]));
+    assert_eq!(ext.get("ext:parent")
+               .map(|v| v.iter()
+                    .find(|v| v.children.contains_key("ext:child"))
+                    .expect("failed to find child elements")
+                    .children
+                    .get("ext:child")
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.value.as_ref().map(|s| s.as_str()))
+                    .collect::<Vec<_>>()),
+               Some(vec![Some("Child 1"), Some("Child 2")]));
+}

@@ -1,5 +1,3 @@
-use std::str;
-
 use quick_xml::{XmlReader, Element};
 
 use fromxml::FromXml;
@@ -20,10 +18,10 @@ impl FromXml for Category {
                                        -> Result<(Self, XmlReader<R>), Error> {
         let mut domain = None;
 
-        for attr in element.attributes().with_checks(false) {
+        for attr in element.attributes().with_checks(false).unescaped() {
             if let Ok(attr) = attr {
                 if attr.0 == b"domain" {
-                    domain = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    domain = Some(try!(String::from_utf8(attr.1.into_owned())));
                     break;
                 }
             }

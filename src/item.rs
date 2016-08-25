@@ -1,11 +1,12 @@
 use quick_xml::{XmlReader, Event, Element};
 
-use fromxml::FromXml;
+use fromxml::{self, FromXml};
 use error::Error;
 use category::Category;
 use guid::Guid;
 use enclosure::Enclosure;
 use source::Source;
+use extension::ExtensionMap;
 
 /// A representation of the `<item>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -32,6 +33,9 @@ pub struct Item {
     pub source: Option<Source>,
     /// The HTML contents of the item.
     pub content: Option<String>,
+    /// The extensions for the item. This is a map of extension namespace prefixes to qualified
+    /// names to elements.
+    pub extensions: ExtensionMap,
 }
 
 impl FromXml for Item {
@@ -71,13 +75,19 @@ impl FromXml for Item {
                         b"comments" => item.comments = element_text!(reader),
                         b"pubDate" => item.pub_date = element_text!(reader),
                         b"content:encoded" => item.content = element_text!(reader),
-                        _ => skip_element!(reader),
+                        _ => {
+                            if let Some((ns, name)) = fromxml::extension_name(&element) {
+                                parse_extension!(reader, element, ns, name, item.extensions);
+                            } else {
+                                skip_element!(reader);
+                            }
+                        }
                     }
                 }
                 Ok(Event::End(_)) => {
                     return Ok((item, reader));
                 }
-                Err(err) => return Err(err.0.into()),
+                Err(err) => return Err(err.into()),
                 _ => {}
             }
         }

@@ -49,7 +49,7 @@ impl FromXml for TextInput {
                         link: link,
                     }, reader))
                 }
-                Err(err) => return Err(err.0.into()),
+                Err(err) => return Err(err.into()),
                 _ => {}
             }
         }

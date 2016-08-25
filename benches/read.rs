@@ -14,3 +14,10 @@ fn bench_rss2sample(b: &mut Bencher) {
     });
 }
 
+#[bench]
+fn bench_extensions(b: &mut Bencher) {
+    let input: &[u8] = include_bytes!("../tests/data/extension.xml");
+    b.iter(|| {
+        let _ = Channel::read_from(input).expect("failed to parse feed");
+    });
+}

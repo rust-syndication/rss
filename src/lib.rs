@@ -51,6 +51,9 @@ pub use image::Image;
 mod textinput;
 pub use textinput::TextInput;
 
+mod extension;
+pub use extension::Extension;
+
 mod error;
 pub use error::Error;
 

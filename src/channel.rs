@@ -2,13 +2,14 @@ use std::str::FromStr;
 
 use quick_xml::{XmlReader, Event, Element};
 
-use fromxml::FromXml;
+use fromxml::{self, FromXml};
 use error::Error;
 use category::Category;
 use cloud::Cloud;
 use image::Image;
 use textinput::TextInput;
 use item::Item;
+use extension::ExtensionMap;
 
 /// A representation of the `<channel>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -51,6 +52,9 @@ pub struct Channel {
     pub skip_days: Vec<String>,
     /// The items in the channel.
     pub items: Vec<Item>,
+    /// The extensions for the channel. This is a map of extension namespace prefixes to qualified
+    /// names to elements.
+    pub extensions: ExtensionMap,
 }
 
 impl Channel {
@@ -146,7 +150,7 @@ impl FromXml for Channel {
                                     Ok(Event::End(_)) => {
                                         break;
                                     }
-                                    Err(err) => return Err(err.0.into()),
+                                    Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
                             }
@@ -166,18 +170,24 @@ impl FromXml for Channel {
                                     Ok(Event::End(_)) => {
                                         break;
                                     }
-                                    Err(err) => return Err(err.0.into()),
+                                    Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
                             }
                         }
-                        _ => skip_element!(reader),
+                        _ => {
+                            if let Some((ns, name)) = fromxml::extension_name(&element) {
+                                parse_extension!(reader, element, ns, name, channel.extensions);
+                            } else {
+                                skip_element!(reader);
+                            }
+                        }
                     }
                 }
                 Ok(Event::End(_)) => {
                     return Ok((channel, reader));
                 }
-                Err(err) => return Err(err.0.into()),
+                Err(err) => return Err(err.into()),
                 _ => {}
             }
         }

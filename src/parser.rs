@@ -16,7 +16,7 @@ pub fn parse<R: BufRead>(reader: XmlReader<R>) -> Result<Channel, Error> {
                     return Channel::from_xml(reader, element).map(|v| v.0);
                 }
             }
-            Err(err) => return Err(Error::XmlParsing(err.0)),
+            Err(err) => return Err(err.into()),
             _ => {}
         }
     }

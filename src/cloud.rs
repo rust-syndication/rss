@@ -1,5 +1,3 @@
-use std::str;
-
 use quick_xml::{XmlReader, Element};
 
 use fromxml::FromXml;
@@ -30,23 +28,23 @@ impl FromXml for Cloud {
         let mut register_procedure = None;
         let mut protocol = None;
 
-        for attr in element.attributes().with_checks(false) {
+        for attr in element.attributes().with_checks(false).unescaped() {
             if let Ok(attr) = attr {
                 match attr.0 {
                     b"domain" if domain.is_none() => {
-                        domain = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                        domain = Some(try!(String::from_utf8(attr.1.into_owned())));
                     }
                     b"port" if port.is_none() => {
-                        port = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                        port = Some(try!(String::from_utf8(attr.1.into_owned())));
                     }
                     b"path" if path.is_none() => {
-                        path = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                        path = Some(try!(String::from_utf8(attr.1.into_owned())));
                     }
                     b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                        register_procedure = Some(try!(String::from_utf8(attr.1.into_owned())));
                     }
                     b"protocol" if protocol.is_none() => {
-                        protocol = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                        protocol = Some(try!(String::from_utf8(attr.1.into_owned())));
                     }
                     _ => {}
                 }
