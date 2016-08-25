@@ -24,12 +24,18 @@ impl FromXml for Enclosure {
         let mut length = None;
         let mut mime_type = None;
 
-        for attr in element.attributes() {
+        for attr in element.attributes().with_checks(false) {
             if let Ok(attr) = attr {
                 match attr.0 {
-                    b"url" => url = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
-                    b"length" => length = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
-                    b"type" => mime_type = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
+                    b"url" if url.is_none() => {
+                        url = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    }
+                    b"length" if length.is_none() => {
+                        length = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    }
+                    b"type" if mime_type.is_none() => {
+                        mime_type = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    }
                     _ => {}
                 }
             }

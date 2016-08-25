@@ -20,10 +20,11 @@ impl FromXml for Category {
                                        -> Result<(Self, XmlReader<R>), Error> {
         let mut domain = None;
 
-        for attr in element.attributes() {
+        for attr in element.attributes().with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.0 == b"domain" {
                     domain = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    break;
                 }
             }
         }

@@ -30,16 +30,24 @@ impl FromXml for Cloud {
         let mut register_procedure = None;
         let mut protocol = None;
 
-        for attr in element.attributes() {
+        for attr in element.attributes().with_checks(false) {
             if let Ok(attr) = attr {
                 match attr.0 {
-                    b"domain" => domain = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
-                    b"port" => port = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
-                    b"path" => path = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
-                    b"registerProcedure" => {
-                        register_procedure = str::from_utf8(attr.1).map(|s| s.to_string()).ok()
+                    b"domain" if domain.is_none() => {
+                        domain = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
                     }
-                    b"protocol" => protocol = str::from_utf8(attr.1).map(|s| s.to_string()).ok(),
+                    b"port" if port.is_none() => {
+                        port = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    }
+                    b"path" if path.is_none() => {
+                        path = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    }
+                    b"registerProcedure" if register_procedure.is_none() => {
+                        register_procedure = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    }
+                    b"protocol" if protocol.is_none() => {
+                        protocol = str::from_utf8(attr.1).map(|s| s.to_string()).ok();
+                    }
                     _ => {}
                 }
             }
