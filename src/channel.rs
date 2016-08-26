@@ -10,6 +10,7 @@ use image::Image;
 use textinput::TextInput;
 use item::Item;
 use extension::ExtensionMap;
+use extension::itunes::ITunesChannelExtension;
 
 /// A representation of the `<channel>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -52,9 +53,10 @@ pub struct Channel {
     pub skip_days: Vec<String>,
     /// The items in the channel.
     pub items: Vec<Item>,
-    /// The extensions for the channel. This is a map of extension namespace prefixes to qualified
-    /// names to elements.
+    /// The extensions for the channel.
     pub extensions: ExtensionMap,
+    /// The iTunes extension for the channel.
+    pub itunes_ext: ITunesChannelExtension,
 }
 
 impl Channel {
@@ -185,6 +187,12 @@ impl FromXml for Channel {
                     }
                 }
                 Ok(Event::End(_)) => {
+                    if !channel.extensions.is_empty() {
+                        if let Some(map) = channel.extensions.remove("itunes") {
+                            channel.itunes_ext = ITunesChannelExtension::from_map(map);
+                        }
+                    }
+
                     return Ok((channel, reader));
                 }
                 Err(err) => return Err(err.into()),

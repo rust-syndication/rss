@@ -51,7 +51,8 @@ pub use image::Image;
 mod textinput;
 pub use textinput::TextInput;
 
-mod extension;
+/// Types and functions for namespace extensions.
+pub mod extension;
 pub use extension::Extension;
 
 mod error;

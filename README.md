@@ -34,6 +34,12 @@ let reader: BufRead = ...;
 let channel = Channel::read_from(reader).unwrap();
 ```
 
+## Extensions
+
+Elements which have non-default namespaces will be considered extensions. Extensions are stored in `Channel.extensions` and `Item.extensions`. 
+
+For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted in to structs and stored in `Channel.itunes_ext`, `Channel.dublin_core_ext`, `Item.itunes_ext`, and `Item.dublin_core_ext`.
+
 ## Invalid Feeds
 
 As a best effort to parse invalid feeds rss-rs will default elements declared as "required" by the RSS 2.0 specification to an empty string.
