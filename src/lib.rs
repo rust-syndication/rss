@@ -6,7 +6,7 @@
 //! # Reading
 //!
 //! Reading can be done using any object that implements the `BufRead` trait.
-//! 
+//!
 //! ## Example
 //!
 //! ```rust,no_run

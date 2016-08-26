@@ -54,7 +54,7 @@ pub fn element_text<R: BufRead>(mut reader: XmlReader<R>)
             }
             Ok(Event::Text(element)) => {
                 let text_content = try_reader!(element.unescaped_content().map_err(|e| e.0),
-                reader);
+                                               reader);
                 let text = try_reader!(String::from_utf8(text_content.into_owned()), reader);
                 content = Some(text);
             }
