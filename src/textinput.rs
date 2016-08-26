@@ -33,7 +33,7 @@ impl FromXml for TextInput {
                         b"description" => description = element_text!(reader),
                         b"name" => name = element_text!(reader),
                         b"link" => link = element_text!(reader),
-                        _ => close_element!(reader),
+                        _ => skip_element!(reader),
                     }
                 }
                 Ok(Event::End(_)) => {

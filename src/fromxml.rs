@@ -25,9 +25,9 @@ macro_rules! element_text {
     })
 }
 
-macro_rules! close_element {
+macro_rules! skip_element {
     ($reader:ident) => ({
-        let result = ::fromxml::close_element($reader);
+        let result = ::fromxml::skip_element($reader);
         $reader = result.1;
         try!(result.0)
     })
@@ -40,7 +40,7 @@ pub fn element_text<R: BufRead>(mut reader: XmlReader<R>)
     while let Some(e) = reader.next() {
         match e {
             Ok(Event::Start(_)) => {
-                let result = close_element(reader);
+                let result = skip_element(reader);
                 reader = result.1;
                 try_reader!(result.0, reader);
             }
@@ -66,20 +66,16 @@ pub fn element_text<R: BufRead>(mut reader: XmlReader<R>)
     (Ok(content), reader)
 }
 
-pub fn close_element<R: BufRead>(mut reader: XmlReader<R>) -> (Result<(), Error>, XmlReader<R>) {
-    let mut depth = 0;
-
+pub fn skip_element<R: BufRead>(mut reader: XmlReader<R>) -> (Result<(), Error>, XmlReader<R>) {
     while let Some(e) = reader.next() {
         match e {
             Ok(Event::Start(_)) => {
-                depth += 1;
+                let result = skip_element(reader);
+                reader = result.1;
+                try_reader!(result.0, reader);
             }
             Ok(Event::End(_)) => {
-                if depth == 0 {
-                    return (Ok(()), reader);
-                }
-                
-                depth -= 1;
+                return (Ok(()), reader);
             }
             Err(err) => return (Err(err.0.into()), reader),
             _ => {}

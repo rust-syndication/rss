@@ -140,7 +140,7 @@ impl FromXml for Channel {
                                                 channel.skip_hours.push(content);
                                             }
                                         } else {
-                                            close_element!(reader);
+                                            skip_element!(reader);
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -160,7 +160,7 @@ impl FromXml for Channel {
                                                 channel.skip_days.push(content);
                                             }
                                         } else {
-                                            close_element!(reader);
+                                            skip_element!(reader);
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -171,7 +171,7 @@ impl FromXml for Channel {
                                 }
                             }
                         }
-                        _ => close_element!(reader),
+                        _ => skip_element!(reader),
                     }
                 }
                 Ok(Event::End(_)) => {

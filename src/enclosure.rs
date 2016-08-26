@@ -41,7 +41,7 @@ impl FromXml for Enclosure {
             }
         }
 
-        close_element!(reader);
+        skip_element!(reader);
 
         let url = url.unwrap_or_default();
         let length = length.unwrap_or_default();

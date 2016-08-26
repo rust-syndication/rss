@@ -53,7 +53,7 @@ impl FromXml for Cloud {
             }
         }
 
-        close_element!(reader);
+        skip_element!(reader);
 
         let domain = domain.unwrap_or_default();
         let port = port.unwrap_or_default();

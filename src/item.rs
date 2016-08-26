@@ -71,7 +71,7 @@ impl FromXml for Item {
                         b"comments" => item.comments = element_text!(reader),
                         b"pubDate" => item.pub_date = element_text!(reader),
                         b"content:encoded" => item.content = element_text!(reader),
-                        _ => close_element!(reader),
+                        _ => skip_element!(reader),
                     }
                 }
                 Ok(Event::End(_)) => {

@@ -50,7 +50,7 @@ impl FromXml for Image {
                         b"link" => link = element_text!(reader),
                         b"width" => width = element_text!(reader),
                         b"height" => height = element_text!(reader),
-                        _ => close_element!(reader),
+                        _ => skip_element!(reader),
                     }
                 }
                 Ok(Event::End(_)) => {
