@@ -39,16 +39,10 @@ impl FromXml for Item {
                                        _: Element)
                                        -> Result<(Self, XmlReader<R>), Error> {
         let mut item = Item::default();
-        let mut depth = 0;
 
         while let Some(e) = reader.next() {
             match e {
                 Ok(Event::Start(element)) => {
-                    if depth > 0 {
-                        depth += 1;
-                        continue;
-                    }
-
                     match element.name() {
                         b"category" => {
                             let (category, reader_) = try!(Category::from_xml(reader, element));
@@ -77,15 +71,11 @@ impl FromXml for Item {
                         b"comments" => item.comments = element_text!(reader),
                         b"pubDate" => item.pub_date = element_text!(reader),
                         b"content:encoded" => item.content = element_text!(reader),
-                        _ => depth += 1,
+                        _ => close_element!(reader),
                     }
                 }
                 Ok(Event::End(_)) => {
-                    depth -= 1;
-
-                    if depth == -1 {
-                        return Ok((item, reader));
-                    }
+                    return Ok((item, reader));
                 }
                 Err(err) => return Err(err.0.into()),
                 _ => {}

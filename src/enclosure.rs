@@ -1,6 +1,6 @@
 use std::str;
 
-use quick_xml::{XmlReader, Event, Element};
+use quick_xml::{XmlReader, Element};
 
 use fromxml::FromXml;
 use error::Error;

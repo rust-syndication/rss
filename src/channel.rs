@@ -73,16 +73,10 @@ impl FromXml for Channel {
                                        _: Element)
                                        -> Result<(Self, XmlReader<R>), Error> {
         let mut channel = Channel::default();
-        let mut depth = 0;
 
         while let Some(e) = reader.next() {
             match e {
                 Ok(Event::Start(element)) => {
-                    if depth > 0 {
-                        depth += 1;
-                        continue;
-                    }
-
                     match element.name() {
                         b"category" => {
                             let (category, reader_) = try!(Category::from_xml(reader, element));
@@ -138,23 +132,19 @@ impl FromXml for Channel {
                         b"docs" => channel.docs = element_text!(reader),
                         b"ttl" => channel.ttl = element_text!(reader),
                         b"skipHours" => {
-                            let mut depth = 0;
                             while let Some(e) = reader.next() {
                                 match e {
                                     Ok(Event::Start(element)) => {
-                                        if depth == 0 && element.name() == b"hour" {
+                                        if element.name() == b"hour" {
                                             if let Some(content) = element_text!(reader) {
                                                 channel.skip_hours.push(content);
                                             }
                                         } else {
-                                            depth += 1;
+                                            close_element!(reader);
                                         }
                                     }
                                     Ok(Event::End(_)) => {
-                                        depth -= 1;
-                                        if depth == -1 {
-                                            break;
-                                        }
+                                        break;
                                     }
                                     Err(err) => return Err(err.0.into()),
                                     _ => {}
@@ -162,39 +152,30 @@ impl FromXml for Channel {
                             }
                         }
                         b"skipDays" => {
-                            let mut depth = 0;
                             while let Some(e) = reader.next() {
                                 match e {
                                     Ok(Event::Start(element)) => {
-                                        if depth == 0 && element.name() == b"day" {
+                                        if element.name() == b"day" {
                                             if let Some(content) = element_text!(reader) {
                                                 channel.skip_days.push(content);
                                             }
                                         } else {
-                                            depth += 1;
+                                            close_element!(reader);
                                         }
                                     }
                                     Ok(Event::End(_)) => {
-                                        depth -= 1;
-                                        if depth == -1 {
-                                            break;
-                                        }
+                                        break;
                                     }
                                     Err(err) => return Err(err.0.into()),
                                     _ => {}
                                 }
                             }
                         }
-                        _ => depth += 1,
+                        _ => close_element!(reader),
                     }
-
                 }
                 Ok(Event::End(_)) => {
-                    depth -= 1;
-
-                    if depth == -1 {
-                        return Ok((channel, reader));
-                    }
+                    return Ok((channel, reader));
                 }
                 Err(err) => return Err(err.0.into()),
                 _ => {}
