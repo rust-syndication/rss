@@ -6,9 +6,9 @@ use std::string::FromUtf8Error;
 use quick_xml::error::Error as XmlError;
 
 #[derive(Debug)]
-/// An enumration containing the types of errors that could occur while parsing an RSS feed.
+/// Types of errors that could occur while parsing an RSS feed.
 pub enum Error {
-    /// An error occurred while converting bytes to UTF8"
+    /// An error occurred while converting bytes to UTF8.
     Utf8(Utf8Error),
     /// An XML parser error occurred.
     XmlParsing(XmlError, usize),

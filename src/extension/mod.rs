@@ -1,8 +1,11 @@
 use std::collections::HashMap;
 
 /// Types and functions for
-/// [iTunes extensions](https://help.apple.com/itc/podcasts_connect/#/itcb54353390).
+/// [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions.
 pub mod itunes;
+
+/// Types and functions for [Dublin Core](http://dublincore.org/documents/dces/) extensions.
+pub mod dublincore;
 
 /// A map of extension namespace prefixes to local names to elements.
 pub type ExtensionMap = HashMap<String, HashMap<String, Vec<Extension>>>;
@@ -22,31 +25,31 @@ pub struct Extension {
 }
 
 /// Get a reference to the value for the first extension with the specified key.
-pub fn get_extension_text<'a>(map: &'a HashMap<String, Vec<Extension>>,
-                              key: &str)
-                              -> Option<&'a str> {
+pub fn get_extension_value<'a>(map: &'a HashMap<String, Vec<Extension>>,
+                               key: &str)
+                               -> Option<&'a str> {
     map.get(key).and_then(|v| v.first()).and_then(|ext| ext.value.as_ref()).map(|s| s.as_str())
 }
 
 /// Remove and return the value for the first extension with the specified key.
-pub fn remove_extension_text(map: &mut HashMap<String, Vec<Extension>>,
-                             key: &str)
-                             -> Option<String> {
+pub fn remove_extension_value(map: &mut HashMap<String, Vec<Extension>>,
+                              key: &str)
+                              -> Option<String> {
     map.remove(key).map(|mut v| v.remove(0)).and_then(|ext| ext.value)
 }
 
-/// Get a reference to the values for the extensions with the specified key.
-pub fn get_extension_array<'a>(map: &'a HashMap<String, Vec<Extension>>,
-                               key: &str)
-                               -> Option<Vec<&'a str>> {
+/// Get a reference to all values for the extensions with the specified key.
+pub fn get_extension_values<'a>(map: &'a HashMap<String, Vec<Extension>>,
+                                key: &str)
+                                -> Option<Vec<&'a str>> {
     map.get(key).map(|v| {
         v.iter().filter_map(|ext| ext.value.as_ref().map(|s| s.as_str())).collect::<Vec<_>>()
     })
 }
 
-/// Remove and return the values for the extensions with the specified key.
-pub fn remove_extension_array(map: &mut HashMap<String, Vec<Extension>>,
-                              key: &str)
-                              -> Option<Vec<String>> {
+/// Remove and return all values for the extensions with the specified key.
+pub fn remove_extension_values(map: &mut HashMap<String, Vec<Extension>>,
+                               key: &str)
+                               -> Option<Vec<String>> {
     map.remove(key).map(|v| v.into_iter().filter_map(|ext| ext.value).collect::<Vec<_>>())
 }

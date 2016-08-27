@@ -1,7 +1,8 @@
 extern crate rss;
 
 use rss::Channel;
-use rss::extension::get_extension_array;
+use rss::extension::dublincore::DublinCoreExtension;
+use rss::extension::get_extension_values;
 
 #[test]
 fn test_rss2sample() {
@@ -86,9 +87,9 @@ fn test_extension() {
     assert_eq!(channel.title, "Extension Test");
 
     let ext = channel.items[0].extensions.get("ext").expect("failed to find extension");
-    assert_eq!(get_extension_array(&ext, "creator"),
+    assert_eq!(get_extension_values(&ext, "creator"),
                Some(vec!["Creator Name"]));
-    assert_eq!(get_extension_array(&ext, "contributor"),
+    assert_eq!(get_extension_values(&ext, "contributor"),
                Some(vec!["Contributor 1", "Contributor 2"]));
     assert_eq!(ext.get("parent")
                    .map(|v| {
@@ -110,7 +111,7 @@ fn test_itunes() {
     let input = include_str!("data/itunes.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    let itunes = channel.itunes_ext;
+    let itunes = channel.itunes_ext.expect("itunes extension missing");
     assert_eq!(itunes.author.as_ref().map(|s| s.as_str()),
                Some("Example author"));
     assert_eq!(itunes.block.as_ref().map(|s| s.as_str()), Some("yes"));
@@ -139,7 +140,7 @@ fn test_itunes() {
     assert_eq!(itunes.keywords.as_ref().map(|s| s.as_str()),
                Some("key1,key2,key3"));
 
-    let itunes = &channel.items[0].itunes_ext;
+    let itunes = &channel.items[0].itunes_ext.as_ref().expect("itunes extension missing");
     assert_eq!(itunes.author.as_ref().map(|s| s.as_str()),
                Some("Example author"));
     assert_eq!(itunes.block.as_ref().map(|s| s.as_str()), Some("yes"));
@@ -157,4 +158,46 @@ fn test_itunes() {
                Some("Example summary"));
     assert_eq!(itunes.keywords.as_ref().map(|s| s.as_str()),
                Some("key1,key2,key3"));
+}
+
+#[test]
+fn test_dublincore() {
+    let input = include_str!("data/dublincore.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    fn test_ext(dc: &DublinCoreExtension) {
+        assert_eq!(dc.contributor.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Contributor 1", "Contributor 2"]));
+        assert_eq!(dc.coverage.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example coverage"]));
+        assert_eq!(dc.creator.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example creator"]));
+        assert_eq!(dc.date.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["2016-08-27"]));
+        assert_eq!(dc.description.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example description"]));
+        assert_eq!(dc.format.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["text/plain"]));
+        assert_eq!(dc.identifier.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example identifier"]));
+        assert_eq!(dc.language.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["en-US"]));
+        assert_eq!(dc.publisher.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example publisher"]));
+        assert_eq!(dc.relation.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example relation"]));
+        assert_eq!(dc.rights.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example company"]));
+        assert_eq!(dc.source.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example source"]));
+        assert_eq!(dc.subject.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example subject"]));
+        assert_eq!(dc.title.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example title"]));
+        assert_eq!(dc.resource_type.as_ref().map(|v| v.iter().map(|s| s.as_str()).collect::<Vec<_>>()),
+        Some(vec!["Example type"]));
+    }
+    
+    test_ext(&channel.dublin_core_ext.expect("dc extension missing"));
+    test_ext(&channel.items[0].dublin_core_ext.as_ref().expect("ds extension missing"));
 }

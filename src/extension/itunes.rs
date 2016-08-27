@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use extension::Extension;
-use extension::remove_extension_text;
+use extension::remove_extension_value;
 
 /// An iTunes channel element extension.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -39,17 +39,17 @@ impl ITunesChannelExtension {
     /// Creates an ITunesChannelExtension using the specified hashmap.
     pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
         let mut ext = ITunesChannelExtension::default();
-        ext.author = remove_extension_text(&mut map, "author");
-        ext.block = remove_extension_text(&mut map, "block");
+        ext.author = remove_extension_value(&mut map, "author");
+        ext.block = remove_extension_value(&mut map, "block");
         ext.categories = parse_categories(&mut map);
         ext.image = parse_image(&mut map);
-        ext.explicit = remove_extension_text(&mut map, "explicit");
-        ext.complete = remove_extension_text(&mut map, "complete");
-        ext.new_feed_url = remove_extension_text(&mut map, "new-feed-url");
+        ext.explicit = remove_extension_value(&mut map, "explicit");
+        ext.complete = remove_extension_value(&mut map, "complete");
+        ext.new_feed_url = remove_extension_value(&mut map, "new-feed-url");
         ext.owner = parse_owner(&mut map);
-        ext.subtitle = remove_extension_text(&mut map, "subtitle");
-        ext.summary = remove_extension_text(&mut map, "summary");
-        ext.keywords = remove_extension_text(&mut map, "keywords");
+        ext.subtitle = remove_extension_value(&mut map, "subtitle");
+        ext.summary = remove_extension_value(&mut map, "summary");
+        ext.keywords = remove_extension_value(&mut map, "keywords");
         ext
     }
 }
@@ -89,21 +89,21 @@ impl ITunesItemExtension {
     /// Creates an ITunesChannelExtension using the specified hashmap.
     pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
         let mut ext = ITunesItemExtension::default();
-        ext.author = remove_extension_text(&mut map, "author");
-        ext.block = remove_extension_text(&mut map, "block");
+        ext.author = remove_extension_value(&mut map, "author");
+        ext.block = remove_extension_value(&mut map, "block");
         ext.image = parse_image(&mut map);
-        ext.duration = remove_extension_text(&mut map, "duration");
-        ext.explicit = remove_extension_text(&mut map, "explicit");
-        ext.closed_captioned = remove_extension_text(&mut map, "isClosedCaptioned");
-        ext.order = remove_extension_text(&mut map, "order");
-        ext.subtitle = remove_extension_text(&mut map, "subtitle");
-        ext.summary = remove_extension_text(&mut map, "summary");
-        ext.keywords = remove_extension_text(&mut map, "keywords");
+        ext.duration = remove_extension_value(&mut map, "duration");
+        ext.explicit = remove_extension_value(&mut map, "explicit");
+        ext.closed_captioned = remove_extension_value(&mut map, "isClosedCaptioned");
+        ext.order = remove_extension_value(&mut map, "order");
+        ext.subtitle = remove_extension_value(&mut map, "subtitle");
+        ext.summary = remove_extension_value(&mut map, "summary");
+        ext.keywords = remove_extension_value(&mut map, "keywords");
         ext
     }
 }
 
-/// The category for an iTunes podcast.
+/// A category for an iTunes podcast.
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct ITunesCategory {
     /// The name of the category.

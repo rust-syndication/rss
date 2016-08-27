@@ -8,6 +8,7 @@ use enclosure::Enclosure;
 use source::Source;
 use extension::ExtensionMap;
 use extension::itunes::ITunesItemExtension;
+use extension::dublincore::DublinCoreExtension;
 
 /// A representation of the `<item>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -37,7 +38,9 @@ pub struct Item {
     /// The extensions for the item.
     pub extensions: ExtensionMap,
     /// The iTunes extension for the item.
-    pub itunes_ext: ITunesItemExtension,
+    pub itunes_ext: Option<ITunesItemExtension>,
+    /// The Dublin Core extension for the item.
+    pub dublin_core_ext: Option<DublinCoreExtension>,
 }
 
 impl FromXml for Item {
@@ -89,7 +92,11 @@ impl FromXml for Item {
                 Ok(Event::End(_)) => {
                     if !item.extensions.is_empty() {
                         if let Some(map) = item.extensions.remove("itunes") {
-                            item.itunes_ext = ITunesItemExtension::from_map(map);
+                            item.itunes_ext = Some(ITunesItemExtension::from_map(map));
+                        }
+
+                        if let Some(map) = item.extensions.remove("dc") {
+                            item.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
                         }
                     }
 

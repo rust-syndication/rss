@@ -11,6 +11,7 @@ use textinput::TextInput;
 use item::Item;
 use extension::ExtensionMap;
 use extension::itunes::ITunesChannelExtension;
+use extension::dublincore::DublinCoreExtension;
 
 /// A representation of the `<channel>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -56,7 +57,9 @@ pub struct Channel {
     /// The extensions for the channel.
     pub extensions: ExtensionMap,
     /// The iTunes extension for the channel.
-    pub itunes_ext: ITunesChannelExtension,
+    pub itunes_ext: Option<ITunesChannelExtension>,
+    /// The Dublin Core extension for the channel.
+    pub dublin_core_ext: Option<DublinCoreExtension>,
 }
 
 impl Channel {
@@ -189,7 +192,11 @@ impl FromXml for Channel {
                 Ok(Event::End(_)) => {
                     if !channel.extensions.is_empty() {
                         if let Some(map) = channel.extensions.remove("itunes") {
-                            channel.itunes_ext = ITunesChannelExtension::from_map(map);
+                            channel.itunes_ext = Some(ITunesChannelExtension::from_map(map));
+                        }
+
+                        if let Some(map) = channel.extensions.remove("dc") {
+                            channel.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
                         }
                     }
 
