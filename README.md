@@ -47,4 +47,3 @@ As a best effort to parse invalid feeds rss-rs will default elements declared as
 ## Todo
 
 * Writing support
-* More tests

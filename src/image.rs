@@ -4,31 +4,20 @@ use fromxml::FromXml;
 use error::Error;
 
 /// A representation of the `<image>` element.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct Image {
     /// The URL of the channel image.
     pub url: String,
-    /// A description of the image.
+    /// A description of the image. This is used in the HTML `alt` attribute.
     pub title: String,
     /// The URL that the image links to.
     pub link: String,
     /// The width of the image.
-    pub width: String,
+    pub width: Option<String>,
     /// The height of the image.
-    pub height: String,
-}
-
-impl Default for Image {
-    #[inline]
-    fn default() -> Self {
-        Image {
-            url: Default::default(),
-            title: Default::default(),
-            link: Default::default(),
-            width: "88".to_string(),
-            height: "31".to_string(),
-        }
-    }
+    pub height: Option<String>,
+    /// The text for the HTML `title` attribute.
+    pub description: Option<String>,
 }
 
 impl FromXml for Image {
@@ -40,6 +29,7 @@ impl FromXml for Image {
         let mut link = None;
         let mut width = None;
         let mut height = None;
+        let mut description = None;
 
         while let Some(e) = reader.next() {
             match e {
@@ -50,6 +40,7 @@ impl FromXml for Image {
                         b"link" => link = element_text!(reader),
                         b"width" => width = element_text!(reader),
                         b"height" => height = element_text!(reader),
+                        b"description" => description = element_text!(reader),
                         _ => skip_element!(reader),
                     }
                 }
@@ -57,8 +48,6 @@ impl FromXml for Image {
                     let url = url.unwrap_or_default();
                     let title = title.unwrap_or_default();
                     let link = link.unwrap_or_default();
-                    let width = width.unwrap_or("88".to_string());
-                    let height = height.unwrap_or("31".to_string());
 
                     return Ok((Image {
                         url: url,
@@ -66,6 +55,7 @@ impl FromXml for Image {
                         link: link,
                         width: width,
                         height: height,
+                        description: description,
                     }, reader))
                 }
                 Err(err) => return Err(err.into()),
