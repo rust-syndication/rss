@@ -39,9 +39,12 @@ fn test_item() {
     let item = &channel.items[0];
 
     assert_eq!(item.title.as_ref().map(|s| s.as_str()), Some("<Title>"));
-    assert_eq!(item.link.as_ref().map(|s| s.as_str()), Some("http://example.com/"));
-    assert_eq!(item.description.as_ref().map(|s| s.as_str()), Some("Description"));
-    assert_eq!(item.author.as_ref().map(|s| s.as_str()), Some("author@example.com"));
+    assert_eq!(item.link.as_ref().map(|s| s.as_str()),
+               Some("http://example.com/"));
+    assert_eq!(item.description.as_ref().map(|s| s.as_str()),
+               Some("Description"));
+    assert_eq!(item.author.as_ref().map(|s| s.as_str()),
+               Some("author@example.com"));
     assert_eq!(item.comments.as_ref().map(|s| s.as_str()), Some("Comments"));
     assert_eq!(item.pub_date.as_ref().map(|s| s.as_str()),
                Some("Sat, 27 Aug 2016 00:00:00 GMT"));
@@ -127,7 +130,8 @@ fn test_image() {
     assert_eq!(image.link, "http://example.org/link");
     assert_eq!(image.width.as_ref().map(|s| s.as_str()), Some("100"));
     assert_eq!(image.height.as_ref().map(|s| s.as_str()), Some("200"));
-    assert_eq!(image.description.as_ref().map(|s| s.as_str()), Some("Description"));
+    assert_eq!(image.description.as_ref().map(|s| s.as_str()),
+               Some("Description"));
 }
 
 #[test]
@@ -198,7 +202,7 @@ fn test_itunes() {
     assert_eq!(itunes.author.as_ref().map(|s| s.as_str()), Some("Author"));
     assert_eq!(itunes.block.as_ref().map(|s| s.as_str()), Some("yes"));
     assert_eq!(itunes.categories.as_ref().map(|v| v.len()), Some(2));
-   
+
     assert_eq!(itunes.categories.as_ref().map(|v| v[0].text.as_str()),
                Some("Category 1"));
     assert_eq!(itunes.categories
@@ -206,16 +210,16 @@ fn test_itunes() {
                    .and_then(|v| v[0].subcategory.as_ref())
                    .map(|v| v.text.as_str()),
                Some("Subcategory"));
-   
+
     assert_eq!(itunes.categories.as_ref().map(|v| v[1].text.as_str()),
-    Some("Category 2"));
+               Some("Category 2"));
     assert_eq!(itunes.categories
-               .as_ref()
-               .and_then(|v| v[1].subcategory.as_ref()),
+                   .as_ref()
+                   .and_then(|v| v[1].subcategory.as_ref()),
                None);
-    
+
     assert_eq!(itunes.image.as_ref().map(|s| s.as_str()),
-    Some("http://example.com/image.jpg"));
+               Some("http://example.com/image.jpg"));
     assert_eq!(itunes.explicit.as_ref().map(|s| s.as_str()), Some("no"));
     assert_eq!(itunes.complete.as_ref().map(|s| s.as_str()), Some("yes"));
     assert_eq!(itunes.new_feed_url.as_ref().map(|s| s.as_str()),
