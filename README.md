@@ -16,7 +16,7 @@ To use rss-rs just add the dependency to your `Cargo.toml`.
 
 ```toml
 [dependencies]
-rss-rs = "0.2"
+rss-rs = "0.3"
 ```
 
 The package includes a single crate named `rss`.
