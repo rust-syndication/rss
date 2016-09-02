@@ -1,4 +1,4 @@
-# rss-rs
+# rss
 
 [![Build Status](https://travis-ci.org/rust-syndication/rss.svg?branch=master)](https://travis-ci.org/rust-syndication/rss)
 [![Crates.io Status](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
@@ -42,7 +42,7 @@ For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTun
 
 ## Invalid Feeds
 
-As a best effort to parse invalid feeds rss-rs will default elements declared as "required" by the RSS 2.0 specification to an empty string.
+As a best effort to parse invalid feeds `rss` will default elements declared as "required" by the RSS 2.0 specification to an empty string.
 
 ## Todo
 
