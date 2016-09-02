@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/rust-syndication/rss.svg?branch=master)](https://travis-ci.org/rust-syndication/rss)
 [![Crates.io Status](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rust-syndication/rss/master/LICENSE)
 
 [Documentation](https://rust-syndication.github.io/rss/rss/)
 
@@ -47,3 +46,12 @@ As a best effort to parse invalid feeds `rss` will default elements declared as 
 ## Todo
 
 * Writing support
+
+## License
+
+Licensed under either of
+
+ * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
