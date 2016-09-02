@@ -1,22 +1,22 @@
 # rss-rs
 
-[![Build Status](https://travis-ci.org/jameshurst/rss-rs.svg?branch=master)](https://travis-ci.org/jameshurst/rss-rs)
-[![Crates.io Status](http://meritbadge.herokuapp.com/rss-rs)](https://crates.io/crates/rss-rs)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/jameshurst/rss-rs/master/LICENSE)
+[![Build Status](https://travis-ci.org/rust-syndication/rss.svg?branch=master)](https://travis-ci.org/rust-syndication/rss)
+[![Crates.io Status](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rust-syndication/rss/master/LICENSE)
 
-[Documentation](https://jameshurst.github.io/rss-rs/rss/)
+[Documentation](https://rust-syndication.github.io/rss/rss/)
 
 A fast RSS feed parser written in Rust. 
 
-rss-rs provides a complete implementation of the RSS 2.0 specification.
+This library provides a complete implementation of the RSS 2.0 specification.
 
 ## Usage
 
-To use rss-rs just add the dependency to your `Cargo.toml`.
+Add the dependency to your `Cargo.toml`.
 
 ```toml
 [dependencies]
-rss-rs = "0.3"
+rss = "0.4"
 ```
 
 The package includes a single crate named `rss`.
