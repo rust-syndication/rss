@@ -1,6 +1,8 @@
-use quick_xml::{XmlReader, Element};
+use quick_xml::{XmlReader, XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::FromXml;
+use toxml::ToXml;
 use error::Error;
 
 /// A representation of the `<category>` element.
@@ -33,5 +35,23 @@ impl FromXml for Category {
             name: content,
             domain: domain,
         }, reader))
+    }
+}
+
+impl ToXml for Category {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"category");
+
+        try!(writer.write(Event::Start({
+            let mut element = element.clone();
+            if let Some(ref domain) = self.domain {
+                element.extend_attributes(::std::iter::once((b"domain", domain)));
+            }
+            element
+        })));
+
+        try!(writer.write(Event::Text(Element::new(self.name.as_str()))));
+
+        writer.write(Event::End(element))
     }
 }

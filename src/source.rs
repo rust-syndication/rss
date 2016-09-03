@@ -1,6 +1,8 @@
-use quick_xml::{XmlReader, Element};
+use quick_xml::{XmlReader, XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::FromXml;
+use toxml::ToXml;
 use error::Error;
 
 /// A representation of the `<source>` element.
@@ -34,5 +36,23 @@ impl FromXml for Source {
             url: url,
             title: content,
         }, reader))
+    }
+}
+
+impl ToXml for Source {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"source");
+
+        try!(writer.write(Event::Start({
+            let mut element = element.clone();
+            element.extend_attributes(::std::iter::once((b"url", self.url.as_str())));
+            element
+        })));
+
+        if let Some(text) = self.title.as_ref().map(|s| s.as_str()) {
+            try!(writer.write(Event::Text(Element::new(text))));
+        }
+
+        writer.write(Event::End(element))
     }
 }

@@ -1,6 +1,8 @@
-use quick_xml::{XmlReader, Element};
+use quick_xml::{XmlReader, XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::FromXml;
+use toxml::ToXml;
 use error::Error;
 
 /// A representation of the `<enclosure>` element.
@@ -50,5 +52,24 @@ impl FromXml for Enclosure {
             length: length,
             mime_type: mime_type,
         }, reader))
+    }
+}
+
+impl ToXml for Enclosure {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"enclosure");
+
+        try!(writer.write(Event::Start({
+            let mut element = element.clone();
+
+            let attrs = &[(b"url" as &[u8], &self.url),
+                          (b"length", &self.length),
+                          (b"type", &self.mime_type)];
+            element.extend_attributes(attrs.into_iter().map(|v| *v));
+
+            element
+        })));
+
+        writer.write(Event::End(element))
     }
 }

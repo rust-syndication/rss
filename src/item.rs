@@ -1,6 +1,8 @@
-use quick_xml::{XmlReader, Event, Element};
+use quick_xml::{XmlReader, XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::{self, FromXml};
+use toxml::{ToXml, XmlWriterExt};
 use error::Error;
 use category::Category;
 use guid::Guid;
@@ -108,5 +110,73 @@ impl FromXml for Item {
         }
 
         Err(Error::EOF)
+    }
+}
+
+impl ToXml for Item {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"item");
+
+        try!(writer.write(Event::Start(element.clone())));
+
+        if let Some(title) = self.title.as_ref() {
+            try!(writer.write_text_element(b"title", title));
+        }
+
+        if let Some(link) = self.link.as_ref() {
+            try!(writer.write_text_element(b"link", link));
+        }
+
+        if let Some(description) = self.description.as_ref() {
+            try!(writer.write_text_element(b"description", description));
+        }
+
+        if let Some(author) = self.author.as_ref() {
+            try!(writer.write_text_element(b"author", author));
+        }
+
+        try!(writer.write_objects(&self.categories));
+
+        if let Some(comments) = self.comments.as_ref() {
+            try!(writer.write_text_element(b"comments", comments));
+        }
+
+        if let Some(enclosure) = self.enclosure.as_ref() {
+            try!(writer.write_object(enclosure));
+        }
+
+        if let Some(guid) = self.guid.as_ref() {
+            try!(writer.write_object(guid));
+        }
+
+        if let Some(pub_date) = self.pub_date.as_ref() {
+            try!(writer.write_text_element(b"pubDate", pub_date));
+        }
+
+        if let Some(source) = self.source.as_ref() {
+            try!(writer.write_object(source));
+        }
+
+        if let Some(content) = self.content.as_ref() {
+            try!(writer.write_cdata_element(b"content:encoded", content));
+        }
+
+        for map in self.extensions.values() {
+            for extensions in map.values() {
+                for extension in extensions {
+                    try!(extension.to_xml(writer));
+                }
+            }
+        }
+
+        if let Some(ext) = self.itunes_ext.as_ref() {
+            try!(ext.to_xml(writer));
+        }
+
+        if let Some(ext) = self.dublin_core_ext.as_ref() {
+            try!(ext.to_xml(writer));
+        }
+
+        writer.write(Event::End(element))
     }
 }

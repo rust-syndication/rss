@@ -29,11 +29,28 @@ extern crate rss;
 
 ## Reading
 
-Reading can be done using any object that implements the `BufRead` trait. 
+A channel can be read from any object that implements the `BufRead` trait. 
 
 ```rust
 let reader: BufRead = ...;
 let channel = Channel::read_from(reader).unwrap();
+```
+
+## Writing
+
+A channel can be written to any object that implements the `Write` trait or converted to an XML string using the `ToString` trait.
+
+**Note**: Writing a channel does not perform any escaping of XML entities.
+
+```rust
+let channel: Channel = ...;
+let writer: Write = ...;
+
+// write the channel to a writer
+channel.write_to(writer).unwrap();
+
+// conver the channel to a string
+let string = channel.to_string();
 ```
 
 ## Extensions
@@ -45,10 +62,6 @@ For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTun
 ## Invalid Feeds
 
 As a best effort to parse invalid feeds `rss` will default elements declared as "required" by the RSS 2.0 specification to an empty string.
-
-## Todo
-
-* Writing support
 
 ## License
 

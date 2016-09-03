@@ -1,8 +1,10 @@
 use std::str::FromStr;
 
-use quick_xml::{XmlReader, Event, Element};
+use quick_xml::{XmlReader, XmlWriter, Event, Element};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::{self, FromXml};
+use toxml::{ToXml, XmlWriterExt};
 use error::Error;
 use category::Category;
 use cloud::Cloud;
@@ -74,6 +76,30 @@ impl Channel {
     /// ```
     pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
         ::parser::parse(::quick_xml::XmlReader::from_reader(reader))
+    }
+
+    #[inline]
+    /// Attempt to write the RSS channel as XML to the speficied writer.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let channel: Channel = ...;
+    /// let writer: Write = ...;
+    /// channel.write_to(writer).unwrap();
+    /// ```
+    pub fn write_to<W: ::std::io::Write>(&self, writer: W) -> Result<(), Error> {
+        let mut writer = ::quick_xml::XmlWriter::new(writer);
+        self.to_xml(&mut writer).map_err(|e| e.into())
+    }
+}
+
+impl ToString for Channel {
+    fn to_string(&self) -> String {
+        let mut writer = ::quick_xml::XmlWriter::new(Vec::new());
+        let _ = self.to_xml(&mut writer);
+        // this unwrap should be safe since the bytes written from the Channel are all valid utf8
+        String::from_utf8(writer.into_inner()).unwrap()
     }
 }
 
@@ -208,6 +234,106 @@ impl FromXml for Channel {
         }
 
         Err(Error::EOF)
+    }
+}
+
+impl ToXml for Channel {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"channel");
+
+        try!(writer.write(Event::Start(element.clone())));
+
+        try!(writer.write_text_element(b"title", &self.title));
+        try!(writer.write_text_element(b"link", &self.link));
+        try!(writer.write_text_element(b"description", &self.description));
+
+        if let Some(language) = self.language.as_ref() {
+            try!(writer.write_text_element(b"language", language));
+        }
+
+        if let Some(copyright) = self.copyright.as_ref() {
+            try!(writer.write_text_element(b"copyright", copyright));
+        }
+
+        if let Some(managing_editor) = self.managing_editor.as_ref() {
+            try!(writer.write_text_element(b"managingEditor", managing_editor));
+        }
+
+        if let Some(webmaster) = self.webmaster.as_ref() {
+            try!(writer.write_text_element(b"webMaster", webmaster));
+        }
+
+        if let Some(pub_date) = self.pub_date.as_ref() {
+            try!(writer.write_text_element(b"pubDate", pub_date));
+        }
+
+        if let Some(last_build_date) = self.last_build_date.as_ref() {
+            try!(writer.write_text_element(b"lastBuildDate", last_build_date));
+        }
+
+        try!(writer.write_objects(&self.categories));
+
+        if let Some(generator) = self.generator.as_ref() {
+            try!(writer.write_text_element(b"generator", generator));
+        }
+
+        if let Some(docs) = self.docs.as_ref() {
+            try!(writer.write_text_element(b"docs", docs));
+        }
+
+        if let Some(cloud) = self.cloud.as_ref() {
+            try!(writer.write_object(cloud));
+        }
+
+        if let Some(ttl) = self.ttl.as_ref() {
+            try!(writer.write_text_element(b"ttl", ttl));
+        }
+
+        if let Some(image) = self.image.as_ref() {
+            try!(writer.write_object(image));
+        }
+
+        if let Some(text_input) = self.text_input.as_ref() {
+            try!(writer.write_object(text_input));
+        }
+
+        if !self.skip_hours.is_empty() {
+            let element = Element::new(b"skipHours");
+            try!(writer.write(Event::Start(element.clone())));
+            for hour in &self.skip_hours {
+                try!(writer.write_text_element(b"hour", hour));
+            }
+            try!(writer.write(Event::End(element)));
+        }
+
+        if !self.skip_days.is_empty() {
+            let element = Element::new(b"skipDays");
+            try!(writer.write(Event::Start(element.clone())));
+            for day in &self.skip_days {
+                try!(writer.write_text_element(b"day", day));
+            }
+            try!(writer.write(Event::End(element)));
+        }
+
+        try!(writer.write_objects(&self.items));
+
+        for map in self.extensions.values() {
+            for extensions in map.values() {
+                for extension in extensions {
+                    try!(extension.to_xml(writer));
+                }
+            }
+        }
+
+        if let Some(ext) = self.itunes_ext.as_ref() {
+            try!(ext.to_xml(writer));
+        }
+
+        if let Some(ext) = self.dublin_core_ext.as_ref() {
+            try!(ext.to_xml(writer));
+        }
+
+        writer.write(Event::End(element))
     }
 }
 
