@@ -3,35 +3,36 @@ use quick_xml::{XmlReader, Element};
 use fromxml::FromXml;
 use error::Error;
 
-/// A representation of the `<category>` element.
+/// A representation of the `<source>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Category {
-    /// The name of the category.
-    pub name: String,
-    /// The domain for the category.
-    pub domain: Option<String>,
+pub struct Source {
+    /// The URL of the source.
+    pub url: String,
+    /// The title of the source.
+    pub title: Option<String>,
 }
 
-impl FromXml for Category {
+impl FromXml for Source {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
                                        -> Result<(Self, XmlReader<R>), Error> {
-        let mut domain = None;
+        let mut url = None;
 
         for attr in element.attributes().with_checks(false).unescaped() {
             if let Ok(attr) = attr {
-                if attr.0 == b"domain" {
-                    domain = Some(try!(String::from_utf8(attr.1.into_owned())));
+                if attr.0 == b"url" {
+                    url = Some(try!(String::from_utf8(attr.1.into_owned())));
                     break;
                 }
             }
         }
 
-        let content = element_text!(reader).unwrap_or_default();
+        let url = url.unwrap_or_default();
+        let content = element_text!(reader);
 
-        Ok((Category {
-            name: content,
-            domain: domain,
+        Ok((Source {
+            url: url,
+            title: content,
         }, reader))
     }
 }

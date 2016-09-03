@@ -1,38 +1,47 @@
-use xml::Element;
+use quick_xml::{XmlReader, Element};
 
-use ::{ReadError, ViaXml};
+use fromxml::FromXml;
+use error::Error;
 
-/// [RSS 2.0 Specification § `<guid>` sub-element of `<item>`]
-/// (http://cyber.law.harvard.edu/rss/rss.html#ltguidgtSubelementOfLtitemgt)
-#[derive(Debug, Clone)]
+/// A representation of the `<guid>` element.
+#[derive(Debug, Clone, PartialEq)]
 pub struct Guid {
-    pub is_perma_link: bool,
+    /// The value of the GUID.
     pub value: String,
+    /// Indicates if the GUID is a permalink.
+    pub is_permalink: bool,
 }
 
-impl ViaXml for Guid {
-    fn to_xml(&self) -> Element {
-        let mut guid = if !self.is_perma_link {
-            Element::new("guid".to_owned(), None, vec![("isPermaLink".to_owned(), None, "false".to_owned())])
-        } else {
-            Element::new("guid".to_owned(), None, vec![])
-        };
-
-        guid.text(self.value.clone());
-        guid
+impl Default for Guid {
+    #[inline]
+    fn default() -> Self {
+        Guid {
+            value: Default::default(),
+            is_permalink: true,
+        }
     }
+}
 
-    fn from_xml(elem: Element) -> Result<Self, ReadError> {
-        let is_perma_link = match elem.get_attribute("isPermaLink", None) {
-            Some("false") => false,
-            _ => true
-        };
+impl FromXml for Guid {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
+                                       element: Element)
+                                       -> Result<(Self, XmlReader<R>), Error> {
+        let mut is_permalink = true;
 
-        let value = elem.content_str();
+        for attr in element.attributes().with_checks(false).unescaped() {
+            if let Ok(attr) = attr {
+                if attr.0 == b"isPermaLink" {
+                    is_permalink = &attr.1 as &[u8] != b"false";
+                    break;
+                }
+            }
+        }
 
-        Ok(Guid {
-            is_perma_link: is_perma_link,
-            value: value,
-        })
+        let content = element_text!(reader).unwrap_or_default();
+
+        Ok((Guid {
+            value: content,
+            is_permalink: is_permalink,
+        }, reader))
     }
 }

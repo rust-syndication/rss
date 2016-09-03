@@ -1,179 +1,221 @@
-// Copyright 2015 Corey Farwell
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//	http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+use std::str::FromStr;
 
-use xml::Element;
+use quick_xml::{XmlReader, Event, Element};
 
-use ::{Category, ElementUtils, Item, Image, ReadError, TextInput, ViaXml};
+use fromxml::{self, FromXml};
+use error::Error;
+use category::Category;
+use cloud::Cloud;
+use image::Image;
+use textinput::TextInput;
+use item::Item;
+use extension::ExtensionMap;
+use extension::itunes::ITunesChannelExtension;
+use extension::dublincore::DublinCoreExtension;
 
-
-/// [RSS 2.0 Specification § Required channel elements]
-/// (http://cyber.law.harvard.edu/rss/rss.html#requiredChannelElements)
-///
-/// # Examples
-///
-/// ```
-/// use rss::Channel;
-///
-/// let channel = Channel {
-///     title: String::from("My Blog"),
-///     link: String::from("http://myblog.com"),
-///     description: String::from("My thoughts on life, the universe, and everything"),
-///     items: vec![],
-///     ..Default::default()
-/// };
-/// ```
-#[derive(Default, Debug, Clone)]
+/// A representation of the `<channel>` element.
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct Channel {
+    /// The name of the channel.
     pub title: String,
+    /// The URL for the website corresponding to the channel.
     pub link: String,
+    /// A description of the channel.
     pub description: String,
-    pub items: Vec<Item>,
+    /// The language of the channel.
     pub language: Option<String>,
+    /// The copyright notice for the channel.
     pub copyright: Option<String>,
+    /// The email address for the managing editor.
     pub managing_editor: Option<String>,
-    pub web_master: Option<String>,
+    /// The email address for the webmaster.
+    pub webmaster: Option<String>,
+    /// The publication date for the content of the channel.
     pub pub_date: Option<String>,
+    /// The date that the contents of the channel last changed.
     pub last_build_date: Option<String>,
+    /// The categories the channel belongs to.
     pub categories: Vec<Category>,
+    /// The program used to generate the channel.
     pub generator: Option<String>,
+    /// A URL that points to the documentation for the RSS format.
     pub docs: Option<String>,
-    // pub cloud:
-    pub ttl: Option<String>,  // TODO: change this to Option<i32>?
+    /// The cloud to register with to be notified of updates to the channel.
+    pub cloud: Option<Cloud>,
+    /// The number of minutes the channel can be cached before refreshing.
+    pub ttl: Option<String>,
+    /// An image that can be displayed with the channel.
     pub image: Option<Image>,
-    pub rating: Option<String>,
+    /// A text input box that can be displayed with the channel.
     pub text_input: Option<TextInput>,
-    pub skip_hours: Option<String>,
-    pub skip_days: Option<String>,
+    /// A hint to tell the aggregator which hours it can skip.
+    pub skip_hours: Vec<String>,
+    /// A hint to tell the aggregator which days it can skip.
+    pub skip_days: Vec<String>,
+    /// The items in the channel.
+    pub items: Vec<Item>,
+    /// The extensions for the channel.
+    pub extensions: ExtensionMap,
+    /// The iTunes extension for the channel.
+    pub itunes_ext: Option<ITunesChannelExtension>,
+    /// The Dublin Core extension for the channel.
+    pub dublin_core_ext: Option<DublinCoreExtension>,
 }
 
-impl ViaXml for Channel {
-    fn to_xml(&self) -> Element {
-        let mut channel = Element::new("channel".to_owned(), None, vec![]);
-
-        channel.tag_with_text("title", self.title.clone());
-        channel.tag_with_text("link", self.link.clone());
-        channel.tag_with_text("description", self.description.clone());
-
-        for item in &self.items {
-            channel.tag(item.to_xml());
-        }
-
-        channel.tag_with_optional_text("language", self.language.clone());
-        channel.tag_with_optional_text("copyright", self.copyright.clone());
-        channel.tag_with_optional_text("managingEditor", self.managing_editor.clone());
-        channel.tag_with_optional_text("webMaster", self.web_master.clone());
-        channel.tag_with_optional_text("pubDate", self.pub_date.clone());
-        channel.tag_with_optional_text("lastBuildDate", self.last_build_date.clone());
-        channel.tag_with_optional_text("generator", self.generator.clone());
-        channel.tag_with_optional_text("docs", self.docs.clone());
-        channel.tag_with_optional_text("ttl", self.ttl.clone());
-        channel.tag_with_optional_text("rating", self.rating.clone());
-
-        if let Some(ref text_input) = self.text_input {
-            channel.tag(text_input.to_xml());
-        }
-
-        channel.tag_with_optional_text("skipHours", self.skip_hours.clone());
-        channel.tag_with_optional_text("skipDays", self.skip_days.clone());
-
-        for category in &self.categories {
-            channel.tag(category.to_xml());
-        }
-
-        channel
+impl Channel {
+    #[inline]
+    /// Attempt to read the RSS channel from the speficied reader.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let reader: BufRead = ...;
+    /// let channel = Channel::read_from(reader).unwrap();
+    /// ```
+    pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
+        ::parser::parse(::quick_xml::XmlReader::from_reader(reader))
     }
+}
 
-    fn from_xml(elem: Element) -> Result<Self, ReadError> {
-        let title = match elem.get_child("title", None) {
-            Some(elem) => elem.content_str(),
-            None => return Err(ReadError::ChannelMissingTitle),
-        };
+impl FromXml for Channel {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
+                                       _: Element)
+                                       -> Result<(Self, XmlReader<R>), Error> {
+        let mut channel = Channel::default();
 
-        let link = match elem.get_child("link", None) {
-            Some(elem) => elem.content_str(),
-            None => return Err(ReadError::ChannelMissingLink),
-        };
+        while let Some(e) = reader.next() {
+            match e {
+                Ok(Event::Start(element)) => {
+                    match element.name() {
+                        b"category" => {
+                            let (category, reader_) = try!(Category::from_xml(reader, element));
+                            reader = reader_;
+                            channel.categories.push(category);
+                        }
+                        b"cloud" => {
+                            let (cloud, reader_) = try!(Cloud::from_xml(reader, element));
+                            reader = reader_;
+                            channel.cloud = Some(cloud);
+                        }
+                        b"image" => {
+                            let (image, reader_) = try!(Image::from_xml(reader, element));
+                            reader = reader_;
+                            channel.image = Some(image);
+                        }
+                        b"textInput" => {
+                            let (text_input, reader_) = try!(TextInput::from_xml(reader, element));
+                            reader = reader_;
+                            channel.text_input = Some(text_input);
+                        }
+                        b"item" => {
+                            let (item, reader_) = try!(Item::from_xml(reader, element));
+                            reader = reader_;
+                            channel.items.push(item);
+                        }
+                        b"title" => {
+                            if let Some(content) = element_text!(reader) {
+                                channel.title = content;
+                            }
+                        }
+                        b"link" => {
+                            if let Some(content) = element_text!(reader) {
+                                channel.link = content;
+                            }
+                        }
+                        b"description" => {
+                            if let Some(content) = element_text!(reader) {
+                                channel.description = content;
+                            }
+                        }
+                        b"language" => channel.language = element_text!(reader),
+                        b"copyright" => channel.copyright = element_text!(reader),
+                        b"managingEditor" => {
+                            channel.managing_editor = element_text!(reader);
+                        }
+                        b"webMaster" => channel.webmaster = element_text!(reader),
+                        b"pubDate" => channel.pub_date = element_text!(reader),
+                        b"lastBuildDate" => {
+                            channel.last_build_date = element_text!(reader);
+                        }
+                        b"generator" => channel.generator = element_text!(reader),
+                        b"docs" => channel.docs = element_text!(reader),
+                        b"ttl" => channel.ttl = element_text!(reader),
+                        b"skipHours" => {
+                            while let Some(e) = reader.next() {
+                                match e {
+                                    Ok(Event::Start(element)) => {
+                                        if element.name() == b"hour" {
+                                            if let Some(content) = element_text!(reader) {
+                                                channel.skip_hours.push(content);
+                                            }
+                                        } else {
+                                            skip_element!(reader);
+                                        }
+                                    }
+                                    Ok(Event::End(_)) => {
+                                        break;
+                                    }
+                                    Err(err) => return Err(err.into()),
+                                    _ => {}
+                                }
+                            }
+                        }
+                        b"skipDays" => {
+                            while let Some(e) = reader.next() {
+                                match e {
+                                    Ok(Event::Start(element)) => {
+                                        if element.name() == b"day" {
+                                            if let Some(content) = element_text!(reader) {
+                                                channel.skip_days.push(content);
+                                            }
+                                        } else {
+                                            skip_element!(reader);
+                                        }
+                                    }
+                                    Ok(Event::End(_)) => {
+                                        break;
+                                    }
+                                    Err(err) => return Err(err.into()),
+                                    _ => {}
+                                }
+                            }
+                        }
+                        _ => {
+                            if let Some((ns, name)) = fromxml::extension_name(&element) {
+                                parse_extension!(reader, element, ns, name, channel.extensions);
+                            } else {
+                                skip_element!(reader);
+                            }
+                        }
+                    }
+                }
+                Ok(Event::End(_)) => {
+                    if !channel.extensions.is_empty() {
+                        if let Some(map) = channel.extensions.remove("itunes") {
+                            channel.itunes_ext = Some(ITunesChannelExtension::from_map(map));
+                        }
 
-        let description = match elem.get_child("description", None) {
-            Some(elem) => elem.content_str(),
-            None => return Err(ReadError::ChannelMissingDescription),
-        };
+                        if let Some(map) = channel.extensions.remove("dc") {
+                            channel.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
+                        }
+                    }
 
-        let items = match elem.get_children("item", None)
-                              .map(|e| ViaXml::from_xml(e.clone()))
-                              .collect::<Result<Vec<_>, _>>()
-        {
-            Ok(items) => items,
-            Err(err) => return Err(err),
-        };
+                    return Ok((channel, reader));
+                }
+                Err(err) => return Err(err.into()),
+                _ => {}
+            }
+        }
 
-        let language = elem.get_child("language", None).map(Element::content_str);
-        let copyright = elem.get_child("copyright", None).map(Element::content_str);
-        let managing_editor = elem.get_child("managingEditor", None).map(Element::content_str);
-        let web_master = elem.get_child("webMaster", None).map(Element::content_str);
-        let pub_date = elem.get_child("pubDate", None).map(Element::content_str);
-        let last_build_date = elem.get_child("lastBuildDate", None).map(Element::content_str);
+        Err(Error::EOF)
+    }
+}
 
-        let categories = match elem.get_children("category", None)
-                                   .map(|e| ViaXml::from_xml(e.clone()))
-                                   .collect::<Result<Vec<_>, _>>()
-        {
-            Ok(categories) => categories,
-            Err(err) => return Err(err),
-        };
-
-        let generator = elem.get_child("generator", None).map(Element::content_str);
-        let docs = elem.get_child("docs", None).map(Element::content_str);
-        let ttl = elem.get_child("ttl", None).map(Element::content_str);
-
-        let image = match elem.get_child("image", None).map(|e| Image::from_xml(e.clone())) {
-            Some(Ok(image)) => Some(image),
-            Some(Err(err)) => return Err(err),
-            None => None,
-        };
-
-        let rating = elem.get_child("rating", None).map(Element::content_str);
-
-        let text_input = match elem.get_child("textInput", None).map(|e| ViaXml::from_xml(e.clone())) {
-            Some(Ok(text_input)) => Some(text_input),
-            Some(Err(err)) => return Err(err),
-            None => None,
-        };
-
-        let skip_hours = elem.get_child("skipHours", None).map(Element::content_str);
-        let skip_days = elem.get_child("skipDays", None).map(Element::content_str);
-
-        Ok(Channel {
-            title: title,
-            link: link,
-            description: description,
-            items: items,
-            language: language,
-            copyright: copyright,
-            managing_editor: managing_editor,
-            web_master: web_master,
-            pub_date: pub_date,
-            last_build_date: last_build_date,
-            categories: categories,
-            generator: generator,
-            docs: docs,
-            ttl: ttl,
-            image: image,
-            rating: rating,
-            text_input: text_input,
-            skip_hours: skip_hours,
-            skip_days: skip_days,
-        })
+impl FromStr for Channel {
+    type Err = Error;
+    #[inline]
+    /// Attempt to read the RSS channel from the speficied str.
+    fn from_str(s: &str) -> Result<Channel, Error> {
+        Channel::read_from(s.as_bytes())
     }
 }

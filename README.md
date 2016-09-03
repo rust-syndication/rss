@@ -1,59 +1,60 @@
-# rust-rss
+# rss
 
-[![Build Status](https://travis-ci.org/frewsxcv/rust-rss.svg?branch=master)](https://travis-ci.org/frewsxcv/rust-rss)
-[![rss on Crates.io](https://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
+[![Build Status](https://travis-ci.org/rust-syndication/rss.svg?branch=master)](https://travis-ci.org/rust-syndication/rss)
+[![Crates.io Status](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
 
-[Documentation](https://frewsxcv.github.io/rust-rss/)
+A fast RSS feed parser written in Rust. 
 
-Library for serializing the RSS web content syndication format.
+This library provides a complete implementation of the RSS 2.0 specification.
 
-## Examples
+### Documentation
 
-### Writing
+- [Released](https://docs.rs/rss/)
+- [Master](https://rust-syndication.github.io/rss/rss/)
 
-```rust
-use rss::{Channel, Item, Rss};
+## Usage
 
-let item = Item {
-    title: Some(String::from("Ford hires Elon Musk as CEO")),
-    pub_date: Some(String::from("01 Apr 2019 07:30:00 GMT")),
-    description: Some(String::from("In an unprecedented move, Ford hires Elon Musk.")),
-    ..Default::default()
-};
+Add the dependency to your `Cargo.toml`.
 
-let channel = Channel {
-    title: String::from("TechCrunch"),
-    link: String::from("http://techcrunch.com"),
-    description: String::from("The latest technology news and information on startups"),
-    items: vec![item],
-    ..Default::default()
-};
-
-let rss = Rss(channel);
-
-let rss_string = rss.to_string();
+```toml
+[dependencies]
+rss = "0.4"
 ```
 
-### Reading
+The package includes a single crate named `rss`.
 
 ```rust
-use rss::Rss;
-
-let rss_str = r#"
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>TechCrunch</title>
-    <link>http://techcrunch.com</link>
-    <description>The latest technology news and information on startups</description>
-    <item>
-      <title>Ford hires Elon Musk as CEO</title>
-      <pubDate>01 Apr 2019 07:30:00 GMT</pubDate>
-      <description>In an unprecedented move, Ford hires Elon Musk.</description>
-    </item>
-  </channel>
-</rss>
-"#;
-
-let rss = rss_str.parse::<Rss>().unwrap();
+extern crate rss;
 ```
+
+## Reading
+
+Reading can be done using any object that implements the `BufRead` trait. 
+
+```rust
+let reader: BufRead = ...;
+let channel = Channel::read_from(reader).unwrap();
+```
+
+## Extensions
+
+Elements which have non-default namespaces will be considered extensions. Extensions are stored in `Channel.extensions` and `Item.extensions`. 
+
+For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted to structs and stored in `Channel.itunes_ext`, `Channel.dublin_core_ext`, `Item.itunes_ext`, and `Item.dublin_core_ext`.
+
+## Invalid Feeds
+
+As a best effort to parse invalid feeds `rss` will default elements declared as "required" by the RSS 2.0 specification to an empty string.
+
+## Todo
+
+* Writing support
+
+## License
+
+Licensed under either of
+
+ * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
