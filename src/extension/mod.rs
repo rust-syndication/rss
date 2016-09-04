@@ -1,4 +1,11 @@
+extern crate quick_xml;
+
+use quick_xml::{XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
+
 use std::collections::HashMap;
+
+use toxml::ToXml;
 
 /// Types and functions for
 /// [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions.
@@ -22,6 +29,30 @@ pub struct Extension {
     /// The children of the extension element. This is a map of local names to child
     /// elements.
     pub children: HashMap<String, Vec<Extension>>,
+}
+
+impl ToXml for Extension {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(&self.name);
+
+        try!(writer.write(Event::Start({
+            let mut element = element.clone();
+            element.extend_attributes(&self.attrs);
+            element
+        })));
+
+        if let Some(value) = self.value.as_ref() {
+            try!(writer.write(Event::Text(Element::new(value))));
+        }
+
+        for extensions in self.children.values() {
+            for extension in extensions {
+                try!(extension.to_xml(writer));
+            }
+        }
+
+        writer.write(Event::End(element))
+    }
 }
 
 /// Get a reference to the value for the first extension with the specified key.

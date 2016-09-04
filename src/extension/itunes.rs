@@ -1,7 +1,14 @@
+extern crate quick_xml;
+
+use quick_xml::{XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
+
 use std::collections::HashMap;
 
 use extension::Extension;
 use extension::remove_extension_value;
+
+use toxml::{ToXml, XmlWriterExt};
 
 /// An iTunes channel element extension.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -13,7 +20,7 @@ pub struct ITunesChannelExtension {
     /// are ignored.
     pub block: Option<String>,
     /// The iTunes categories the podcast belongs to.
-    pub categories: Option<Vec<ITunesCategory>>,
+    pub categories: Vec<ITunesCategory>,
     /// The artwork for the podcast.
     pub image: Option<String>,
     /// Specifies whether the podcast contains explicit content. A value of `Yes`, `Explicit`, or
@@ -51,6 +58,60 @@ impl ITunesChannelExtension {
         ext.summary = remove_extension_value(&mut map, "summary");
         ext.keywords = remove_extension_value(&mut map, "keywords");
         ext
+    }
+}
+
+impl ToXml for ITunesChannelExtension {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        if let Some(author) = self.author.as_ref() {
+            try!(writer.write_text_element(b"itunes:author", author));
+        }
+
+        if let Some(block) = self.block.as_ref() {
+            try!(writer.write_text_element(b"itunes:block", block));
+        }
+
+        try!(writer.write_objects(&self.categories));
+
+        if let Some(image) = self.image.as_ref() {
+            let element = Element::new(b"itunes:image");
+            try!(writer.write(Event::Start({
+                let mut element = element.clone();
+                element.extend_attributes(::std::iter::once((b"href", image)));
+                element
+            })));
+            try!(writer.write(Event::End(element)));
+        }
+
+        if let Some(explicit) = self.explicit.as_ref() {
+            try!(writer.write_text_element(b"itunes:explicit", explicit));
+        }
+
+        if let Some(complete) = self.complete.as_ref() {
+            try!(writer.write_text_element(b"itunes:complete", complete));
+        }
+
+        if let Some(new_feed_url) = self.new_feed_url.as_ref() {
+            try!(writer.write_text_element(b"itunes:new-feed-url", new_feed_url));
+        }
+
+        if let Some(owner) = self.owner.as_ref() {
+            try!(writer.write_object(owner));
+        }
+
+        if let Some(subtitle) = self.subtitle.as_ref() {
+            try!(writer.write_text_element(b"itunes:subtitle", subtitle));
+        }
+
+        if let Some(summary) = self.summary.as_ref() {
+            try!(writer.write_text_element(b"itunes:summary", summary));
+        }
+
+        if let Some(keywords) = self.keywords.as_ref() {
+            try!(writer.write_text_element(b"itunes:keywords", keywords));
+        }
+
+        Ok(())
     }
 }
 
@@ -103,6 +164,59 @@ impl ITunesItemExtension {
     }
 }
 
+impl ToXml for ITunesItemExtension {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        if let Some(author) = self.author.as_ref() {
+            try!(writer.write_text_element(b"itunes:author", author));
+        }
+
+        if let Some(block) = self.block.as_ref() {
+            try!(writer.write_text_element(b"itunes:block", block));
+        }
+
+        if let Some(image) = self.image.as_ref() {
+            let element = Element::new(b"itunes:image");
+            try!(writer.write(Event::Start({
+                let mut element = element.clone();
+                element.extend_attributes(::std::iter::once((b"href", image)));
+                element
+            })));
+            try!(writer.write(Event::End(element)));
+        }
+
+        if let Some(duration) = self.duration.as_ref() {
+            try!(writer.write_text_element(b"itunes:duration", duration));
+        }
+
+        if let Some(explicit) = self.explicit.as_ref() {
+            try!(writer.write_text_element(b"itunes:explicit", explicit));
+        }
+
+        if let Some(closed_captioned) = self.closed_captioned.as_ref() {
+            try!(writer.write_text_element(b"itunes:isClosedCaptioned", closed_captioned));
+        }
+
+        if let Some(order) = self.order.as_ref() {
+            try!(writer.write_text_element(b"itunes:order", order));
+        }
+
+        if let Some(subtitle) = self.subtitle.as_ref() {
+            try!(writer.write_text_element(b"itunes:subtitle", subtitle));
+        }
+
+        if let Some(summary) = self.summary.as_ref() {
+            try!(writer.write_text_element(b"itunes:summary", summary));
+        }
+
+        if let Some(keywords) = self.keywords.as_ref() {
+            try!(writer.write_text_element(b"itunes:keywords", keywords));
+        }
+
+        Ok(())
+    }
+}
+
+
 /// A category for an iTunes podcast.
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct ITunesCategory {
@@ -114,6 +228,24 @@ pub struct ITunesCategory {
     pub subcategory: Option<Box<ITunesCategory>>,
 }
 
+impl ToXml for ITunesCategory {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"itunes:category");
+
+        try!(writer.write(Event::Start({
+            let mut element = element.clone();
+            element.extend_attributes(::std::iter::once((b"text", &self.text)));
+            element
+        })));
+
+        if let Some(subcategory) = self.subcategory.as_ref() {
+            try!(subcategory.to_xml(writer));
+        }
+
+        writer.write(Event::End(element))
+    }
+}
+
 /// The contact information for the owner of an iTunes podcast.
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct ITunesOwner {
@@ -121,6 +253,24 @@ pub struct ITunesOwner {
     pub name: Option<String>,
     /// The email of the email.
     pub email: Option<String>,
+}
+
+impl ToXml for ITunesOwner {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"itunes:owner");
+
+        try!(writer.write(Event::Start(element.clone())));
+
+        if let Some(name) = self.name.as_ref() {
+            try!(writer.write_text_element(b"name", name));
+        }
+
+        if let Some(email) = self.email.as_ref() {
+            try!(writer.write_text_element(b"email", email));
+        }
+
+        writer.write(Event::End(element))
+    }
 }
 
 fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
@@ -132,10 +282,10 @@ fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
     element.attrs.remove("href")
 }
 
-fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Option<Vec<ITunesCategory>> {
+fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Vec<ITunesCategory> {
     let mut elements = match map.remove("category") {
         Some(elements) => elements,
-        None => return None,
+        None => return Vec::new(),
     };
 
     let mut categories = Vec::with_capacity(elements.len());
@@ -161,7 +311,7 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Option<Vec<ITu
         })
     }
 
-    Some(categories)
+    categories
 }
 
 fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Option<ITunesOwner> {

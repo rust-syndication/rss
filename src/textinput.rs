@@ -1,6 +1,8 @@
-use quick_xml::{XmlReader, Event, Element};
+use quick_xml::{XmlReader, XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::FromXml;
+use toxml::{ToXml, XmlWriterExt};
 use error::Error;
 
 /// A representation of the `<textInput>` element.
@@ -55,5 +57,20 @@ impl FromXml for TextInput {
         }
 
         Err(Error::EOF)
+    }
+}
+
+impl ToXml for TextInput {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new("textInput");
+
+        try!(writer.write(Event::Start(element.clone())));
+
+        try!(writer.write_text_element(b"title", &self.title));
+        try!(writer.write_text_element(b"description", &self.description));
+        try!(writer.write_text_element(b"name", &self.name));
+        try!(writer.write_text_element(b"link", &self.link));
+
+        writer.write(Event::End(element))
     }
 }

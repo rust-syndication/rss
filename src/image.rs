@@ -1,6 +1,8 @@
-use quick_xml::{XmlReader, Event, Element};
+use quick_xml::{XmlReader, XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::FromXml;
+use toxml::{ToXml, XmlWriterExt};
 use error::Error;
 
 /// A representation of the `<image>` element.
@@ -64,5 +66,31 @@ impl FromXml for Image {
         }
 
         Err(Error::EOF)
+    }
+}
+
+impl ToXml for Image {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"image");
+
+        try!(writer.write(Event::Start(element.clone())));
+
+        try!(writer.write_text_element(b"url", &self.url));
+        try!(writer.write_text_element(b"title", &self.title));
+        try!(writer.write_text_element(b"link", &self.link));
+
+        if let Some(width) = self.width.as_ref() {
+            try!(writer.write_text_element(b"width", width));
+        }
+
+        if let Some(height) = self.height.as_ref() {
+            try!(writer.write_text_element(b"height", height));
+        }
+
+        if let Some(description) = self.description.as_ref() {
+            try!(writer.write_text_element(b"description", description));
+        }
+
+        writer.write(Event::End(element))
     }
 }

@@ -1,6 +1,8 @@
-use quick_xml::{XmlReader, Element};
+use quick_xml::{XmlReader, XmlWriter, Element, Event};
+use quick_xml::error::Error as XmlError;
 
 use fromxml::FromXml;
+use toxml::ToXml;
 use error::Error;
 
 /// A representation of the `<cloud>` element.
@@ -67,5 +69,26 @@ impl FromXml for Cloud {
             protocol: protocol,
         }, reader))
 
+    }
+}
+
+impl ToXml for Cloud {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        let element = Element::new(b"cloud");
+
+        try!(writer.write(Event::Start({
+            let mut element = element.clone();
+
+            let attrs = &[(b"domain" as &[u8], &self.domain),
+                          (b"port", &self.port),
+                          (b"path", &self.path),
+                          (b"registerProcedure", &self.register_procedure),
+                          (b"protocol", &self.protocol)];
+            element.extend_attributes(attrs.into_iter().map(|v| *v));
+
+            element
+        })));
+
+        writer.write(Event::End(element))
     }
 }
