@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/rust-syndication/rss.svg?branch=master)](https://travis-ci.org/rust-syndication/rss)
 [![Crates.io Status](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
 
-A fast RSS feed parser written in Rust. 
+Library for serializing the RSS web content syndication format.
 
 This library provides a complete implementation of the RSS 2.0 specification.
 

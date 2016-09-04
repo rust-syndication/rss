@@ -1,7 +1,7 @@
 #![warn(missing_docs)]
 #![allow(unknown_lints, while_let_on_iterator)]
 
-//! A fast RSS feed parser.
+//! Library for serializing the RSS web content syndication format.
 //!
 //! # Reading
 //!
