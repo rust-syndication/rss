@@ -49,7 +49,7 @@ let writer: Write = ...;
 // write the channel to a writer
 channel.write_to(writer).unwrap();
 
-// conver the channel to a string
+// convert the channel to a string
 let string = channel.to_string();
 ```
 
