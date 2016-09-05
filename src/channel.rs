@@ -105,7 +105,7 @@ impl Channel {
                                     }
 
                                     let key = try!(str::from_utf8(name)).to_string();
-                                    let value = try!(String::from_utf8(attr.1.into_owned()));
+                                    let value = try!(str::from_utf8(attr.1)).to_string();
                                     namespaces.insert(key, value);
                                 }
                             }
