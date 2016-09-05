@@ -1,6 +1,6 @@
 extern crate rss;
 
-use rss::{Channel, Item};
+use rss::{Channel, Item, extension};
 
 macro_rules! test_write {
     ($channel:ident) => ({
@@ -114,7 +114,13 @@ fn verify_write_format() {
     channel.title = "Title".to_string();
     channel.link = "http://example.com/".to_string();
     channel.description = "Description".to_string();
-    channel.items.push(Item::default());
+    channel.items.push({
+        let mut item = Item::default();
+        item.itunes_ext = Some(extension::itunes::ITunesItemExtension::default());
+        item.dublin_core_ext = Some(extension::dublincore::DublinCoreExtension::default());
+        item
+    });
+    channel.namespaces.insert("ext".to_string(), "http://example.com/".to_string());
     
     let output = include_str!("data/verify_write_format.xml").replace("\n", "").replace("\t", "");
 

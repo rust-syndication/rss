@@ -172,6 +172,10 @@ fn read_textinput() {
 fn read_extension() {
     let input = include_str!("data/extension.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
+    
+    let ns = channel.namespaces.get("ext").expect("failed to find namespace");
+    assert_eq!(ns, "http://example.com/");
+    assert_eq!(channel.namespaces.len(), 1);
 
     let ext = channel.items[0].extensions.get("ext").expect("failed to find extension");
     assert_eq!(get_extension_values(&ext, "creator"),

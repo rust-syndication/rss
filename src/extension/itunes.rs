@@ -10,6 +10,9 @@ use extension::remove_extension_value;
 
 use toxml::{ToXml, XmlWriterExt};
 
+/// The iTunes XML namespace.
+pub static NAMESPACE: &'static str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+
 /// An iTunes channel element extension.
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct ITunesChannelExtension {

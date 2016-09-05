@@ -10,6 +10,9 @@ use extension::remove_extension_values;
 
 use toxml::{ToXml, XmlWriterExt};
 
+/// The Dublin Core XML namespace.
+pub static NAMESPACE: &'static str = "http://purl.org/dc/elements/1.1/";
+
 /// A Dublin Core element extension.
 #[derive(Debug, Default, Clone, PartialEq)]
 pub struct DublinCoreExtension {
