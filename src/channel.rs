@@ -11,7 +11,7 @@ use cloud::Cloud;
 use image::Image;
 use textinput::TextInput;
 use item::Item;
-use extension::ExtensionMap;
+use extension::{self, ExtensionMap};
 use extension::itunes::ITunesChannelExtension;
 use extension::dublincore::DublinCoreExtension;
 
@@ -114,6 +114,34 @@ impl Channel {
         try!(writer.write(Event::Start({
             let mut element = element.clone();
             element.extend_attributes(::std::iter::once((b"version", b"2.0")));
+
+            let mut itunes_ns = self.itunes_ext.is_some();
+            let mut dc_ns = self.dublin_core_ext.is_some();
+
+            if !itunes_ns || dc_ns {
+                for item in &self.items {
+                    if !itunes_ns {
+                        itunes_ns = item.itunes_ext.is_some();
+                    }
+
+                    if !dc_ns {
+                        dc_ns = item.dublin_core_ext.is_some();
+                    }
+
+                    if itunes_ns && dc_ns {
+                        break;
+                    }
+                }
+            }
+
+            if itunes_ns {
+                element.extend_attributes(::std::iter::once((b"xmlns:itunes", extension::itunes::NAMESPACE)));
+            }
+
+            if dc_ns {
+                element.extend_attributes(::std::iter::once((b"xmlns:dc", extension::dublincore::NAMESPACE)));
+            }
+
             element
         })));
 
