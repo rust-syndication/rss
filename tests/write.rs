@@ -1,6 +1,6 @@
 extern crate rss;
 
-use rss::Channel;
+use rss::{Channel, Item};
 
 macro_rules! test_write {
     ($channel:ident) => ({
@@ -106,4 +106,17 @@ fn write_dublincore() {
     let input = include_str!("data/dublincore.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
     test_write!(channel);
+}
+
+#[test]
+fn verify_write_format() {
+    let mut channel = Channel::default();
+    channel.title = "Title".to_string();
+    channel.link = "http://example.com/".to_string();
+    channel.description = "Description".to_string();
+    channel.items.push(Item::default());
+    
+    let output = include_str!("data/verify_write_format.xml").replace("\n", "").replace("\t", "");
+
+    assert_eq!(channel.to_string(), output);
 }
