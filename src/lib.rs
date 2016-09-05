@@ -82,5 +82,3 @@ pub use extension::Extension;
 
 mod error;
 pub use error::Error;
-
-mod parser;

@@ -65,7 +65,6 @@ pub struct Channel {
 }
 
 impl Channel {
-    #[inline]
     /// Attempt to read the RSS channel from the speficied reader.
     ///
     /// # Example
@@ -75,10 +74,29 @@ impl Channel {
     /// let channel = Channel::read_from(reader).unwrap();
     /// ```
     pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
-        ::parser::parse(::quick_xml::XmlReader::from_reader(reader))
+        let mut reader = XmlReader::from_reader(reader).trim_text(true);
+        let mut in_rss = false;
+
+        while let Some(e) = reader.next() {
+            match e {
+                Ok(Event::Start(element)) => {
+                    match element.name() {
+                        b"rss" if !in_rss => in_rss = true,
+                        b"channel" if in_rss => {
+                            return Channel::from_xml(reader, element).map(|v| v.0);
+                        }
+                        _ => skip_element!(reader),
+                    }
+                }
+                Ok(Event::End(_)) => in_rss = false,
+                Err(err) => return Err(err.into()),
+                _ => {}
+            }
+        }
+
+        Err(Error::EOF)
     }
 
-    #[inline]
     /// Attempt to write the RSS channel as XML to the speficied writer.
     ///
     /// # Example
@@ -88,18 +106,30 @@ impl Channel {
     /// let writer: Write = ...;
     /// channel.write_to(writer).unwrap();
     /// ```
-    pub fn write_to<W: ::std::io::Write>(&self, writer: W) -> Result<(), Error> {
+    pub fn write_to<W: ::std::io::Write>(&self, writer: W) -> Result<W, Error> {
         let mut writer = ::quick_xml::XmlWriter::new(writer);
-        self.to_xml(&mut writer).map_err(|e| e.into())
+
+        let element = Element::new(b"rss");
+        
+        try!(writer.write(Event::Start({
+            let mut element = element.clone();
+            element.extend_attributes(::std::iter::once((b"version", b"2.0")));
+            element
+        })));
+
+        try!(self.to_xml(&mut writer));
+
+        try!(writer.write(Event::End(element)));
+
+        Ok(writer.into_inner())
     }
 }
 
 impl ToString for Channel {
     fn to_string(&self) -> String {
-        let mut writer = ::quick_xml::XmlWriter::new(Vec::new());
-        let _ = self.to_xml(&mut writer);
+        let buf = self.write_to(Vec::new()).unwrap_or(Vec::new());
         // this unwrap should be safe since the bytes written from the Channel are all valid utf8
-        String::from_utf8(writer.into_inner()).unwrap()
+        String::from_utf8(buf).unwrap()
     }
 }
 
