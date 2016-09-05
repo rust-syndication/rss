@@ -1,4 +1,5 @@
-use std::str::FromStr;
+use std::str::{self, FromStr};
+use std::collections::HashMap;
 
 use quick_xml::{XmlReader, XmlWriter, Event, Element};
 use quick_xml::error::Error as XmlError;
@@ -62,6 +63,8 @@ pub struct Channel {
     pub itunes_ext: Option<ITunesChannelExtension>,
     /// The Dublin Core extension for the channel.
     pub dublin_core_ext: Option<DublinCoreExtension>,
+    /// The namespaces present in the RSS tag.
+    pub namespaces: HashMap<String, String>,
 }
 
 impl Channel {
@@ -76,14 +79,43 @@ impl Channel {
     pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
         let mut reader = XmlReader::from_reader(reader).trim_text(true);
         let mut in_rss = false;
+        let mut namespaces = HashMap::new();
 
         while let Some(e) = reader.next() {
             match e {
                 Ok(Event::Start(element)) => {
                     match element.name() {
-                        b"rss" if !in_rss => in_rss = true,
+                        b"rss" if !in_rss => {
+                            for attr in element.attributes().with_checks(false) {
+                                if let Ok(attr) = attr {
+                                    let split =
+                                        attr.0.splitn(2, |b| *b == b':').collect::<Vec<_>>();
+                                    if split.len() != 2 {
+                                        continue;
+                                    }
+
+                                    let ns = unsafe { split.get_unchecked(0) };
+                                    if ns != b"xmlns" {
+                                        continue;
+                                    }
+
+                                    let name = unsafe { split.get_unchecked(1) };
+                                    if name == b"itunes" || name == b"dc" {
+                                        continue;
+                                    }
+
+                                    let key = try!(str::from_utf8(name)).to_string();
+                                    let value = try!(String::from_utf8(attr.1.into_owned()));
+                                    namespaces.insert(key, value);
+                                }
+                            }
+
+                            in_rss = true;
+                        }
                         b"channel" if in_rss => {
-                            return Channel::from_xml(reader, element).map(|v| v.0);
+                            let mut channel = try!(Channel::from_xml(reader, element).map(|v| v.0));
+                            channel.namespaces = namespaces;
+                            return Ok(channel);
                         }
                         _ => skip_element!(reader),
                     }
@@ -110,7 +142,7 @@ impl Channel {
         let mut writer = ::quick_xml::XmlWriter::new(writer);
 
         let element = Element::new(b"rss");
-        
+
         try!(writer.write(Event::Start({
             let mut element = element.clone();
             element.extend_attributes(::std::iter::once((b"version", b"2.0")));
@@ -135,12 +167,18 @@ impl Channel {
             }
 
             if itunes_ns {
-                element.extend_attributes(::std::iter::once((b"xmlns:itunes", extension::itunes::NAMESPACE)));
+                element.extend_attributes(::std::iter::once((b"xmlns:itunes",
+                                                             extension::itunes::NAMESPACE)));
             }
 
             if dc_ns {
-                element.extend_attributes(::std::iter::once((b"xmlns:dc", extension::dublincore::NAMESPACE)));
+                element.extend_attributes(::std::iter::once((b"xmlns:dc",
+                                                             extension::dublincore::NAMESPACE)));
             }
+
+            element.extend_attributes(self.namespaces
+                .iter()
+                .map(|(name, url)| (format!("xmlns:{}", name), url)));
 
             element
         })));

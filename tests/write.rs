@@ -120,6 +120,7 @@ fn verify_write_format() {
         item.dublin_core_ext = Some(extension::dublincore::DublinCoreExtension::default());
         item
     });
+    channel.namespaces.insert("ext".to_string(), "http://example.com/".to_string());
     
     let output = include_str!("data/verify_write_format.xml").replace("\n", "").replace("\t", "");
 
