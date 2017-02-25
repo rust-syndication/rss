@@ -14,10 +14,13 @@ use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesItemExtension;
 use fromxml::{self, FromXml};
 use guid::Guid;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use source::Source;
-use toxml::{ToXml, XmlWriterExt};
+use toxml::{ToXml, WriterExt};
 use url::Url;
 
 /// A representation of the `<item>` element.
@@ -446,32 +449,33 @@ impl Item {
 }
 
 impl FromXml for Item {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       _: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+                                       _: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut item = Item::default();
+        let mut buf = Vec::new();
 
-        while let Some(e) = reader.next() {
-            match e {
+        loop {
+            match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader, element)?;
+                            let (category, reader_) = Category::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             item.categories.push(category);
                         }
                         b"guid" => {
-                            let (guid, reader_) = Guid::from_xml(reader, element)?;
+                            let (guid, reader_) = Guid::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             item.guid = Some(guid);
                         }
                         b"enclosure" => {
-                            let (enclosure, reader_) = Enclosure::from_xml(reader, element)?;
+                            let (enclosure, reader_) = Enclosure::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             item.enclosure = Some(enclosure);
                         }
                         b"source" => {
-                            let (source, reader_) = Source::from_xml(reader, element)?;
+                            let (source, reader_) = Source::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             item.source = Some(source);
                         }
@@ -482,8 +486,8 @@ impl FromXml for Item {
                         b"comments" => item.comments = element_text!(reader),
                         b"pubDate" => item.pub_date = element_text!(reader),
                         b"content:encoded" => item.content = element_text!(reader),
-                        _ => {
-                            if let Some((ns, name)) = fromxml::extension_name(&element) {
+                        n => {
+                            if let Some((ns, name)) = fromxml::extension_name(n) {
                                 parse_extension!(reader, element, ns, name, item.extensions);
                             } else {
                                 skip_element!(reader);
@@ -504,9 +508,11 @@ impl FromXml for Item {
 
                     return Ok((item, reader));
                 }
+                Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
             }
+            buf.clear();
         }
 
         Err(Error::EOF)
@@ -514,10 +520,10 @@ impl FromXml for Item {
 }
 
 impl ToXml for Item {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"item");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"item";
 
-        writer.write(Event::Start(element.clone()))?;
+        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         if let Some(title) = self.title.as_ref() {
             writer.write_text_element(b"title", title)?;
@@ -577,7 +583,8 @@ impl ToXml for Item {
             ext.to_xml(writer)?;
         }
 
-        writer.write(Event::End(element))
+        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        Ok(())
     }
 }
 

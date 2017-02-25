@@ -17,14 +17,17 @@ use fromxml::{self, FromXml};
 use guid::GuidBuilder;
 use image::{Image, ImageBuilder};
 use item::{Item, ItemBuilder};
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::errors::Error as XmlError;
 use source::SourceBuilder;
 use std::collections::HashMap;
 use std::i64;
 use std::str::{self, FromStr};
 use textinput::{TextInput, TextInputBuilder};
-use toxml::{ToXml, XmlWriterExt};
+use toxml::{ToXml, WriterExt};
 use url::Url;
 
 /// A representation of the `<channel>` element.
@@ -908,19 +911,21 @@ impl Channel {
     /// let channel = Channel::read_from(reader).unwrap();
     /// ```
     pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
-        let mut reader = XmlReader::from_reader(reader).trim_text(true);
+        let mut reader = Reader::from_reader(reader);
+        reader.trim_text(true).expand_empty_elements(true);
         let mut in_rss = false;
         let mut namespaces = HashMap::new();
+        let mut buf = Vec::new();
 
-        while let Some(e) = reader.next() {
-            match e {
+        loop {
+            match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"rss" if !in_rss => {
                             for attr in element.attributes().with_checks(false) {
                                 if let Ok(attr) = attr {
                                     let split =
-                                        attr.0.splitn(2, |b| *b == b':').collect::<Vec<_>>();
+                                        attr.key.splitn(2, |b| *b == b':').collect::<Vec<_>>();
                                     if split.len() != 2 {
                                         continue;
                                     }
@@ -936,7 +941,7 @@ impl Channel {
                                     }
 
                                     let key = str::from_utf8(name)?.to_string();
-                                    let value = str::from_utf8(attr.1)?.to_string();
+                                    let value = reader.decode(attr.value).into_owned();
                                     namespaces.insert(key, value);
                                 }
                             }
@@ -944,7 +949,7 @@ impl Channel {
                             in_rss = true;
                         }
                         b"channel" if in_rss => {
-                            let mut channel = Channel::from_xml(reader, element).map(|v| v.0)?;
+                            let mut channel = Channel::from_xml(reader, element.attributes()).map(|v| v.0)?;
                             channel.namespaces = namespaces;
                             return Ok(channel);
                         }
@@ -952,9 +957,11 @@ impl Channel {
                     }
                 }
                 Ok(Event::End(_)) => in_rss = false,
+                Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
             }
+            buf.clear();
         }
 
         Err(Error::EOF)
@@ -970,60 +977,50 @@ impl Channel {
     /// channel.write_to(writer).unwrap();
     /// ```
     pub fn write_to<W: ::std::io::Write>(&self, writer: W) -> Result<W, Error> {
-        let mut writer = ::quick_xml::XmlWriter::new(writer);
+        let mut writer = ::quick_xml::Writer::new(writer);
 
-        let element = Element::new(b"rss");
+        let name = b"rss";
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
-                                    element.extend_attributes(::std::iter::once((b"version",
-                                                                                 b"2.0")));
+        writer.write_event(Event::Start({
+            let mut element = BytesStart::borrowed(name, name.len());
+            element.push_attribute((b"version".as_ref(), b"2.0".as_ref()));
 
-                                    let mut itunes_ns = self.itunes_ext.is_some();
-                                    let mut dc_ns = self.dublin_core_ext.is_some();
+            let mut itunes_ns = self.itunes_ext.is_some();
+            let mut dc_ns = self.dublin_core_ext.is_some();
 
-                                    if !itunes_ns || dc_ns {
-                                        for item in &self.items {
-                                            if !itunes_ns {
-                                                itunes_ns = item.itunes_ext().is_some();
-                                            }
+            if !itunes_ns || dc_ns { 
+                for item in &self.items {
+                    if !itunes_ns {
+                        itunes_ns = item.itunes_ext().is_some();
+                    }
 
-                                            if !dc_ns {
-                                                dc_ns = item.dublin_core_ext().is_some();
-                                            }
+                    if !dc_ns {
+                        dc_ns = item.dublin_core_ext().is_some();
+                    }
 
-                                            if itunes_ns && dc_ns {
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    if itunes_ns {
-                    element.extend_attributes(::std::iter::once((b"xmlns:itunes",
-                                                                 extension::itunes::NAMESPACE)));
+                    if itunes_ns && dc_ns {
+                        break;
+                    }
                 }
+            }
 
-                                    if dc_ns {
-                    element
-                        .extend_attributes(::std::iter::once((b"xmlns:dc",
-                                                              extension::dublincore::NAMESPACE)));
-                }
+            if itunes_ns {
+                element.push_attribute(("xmlns:itunes", extension::itunes::NAMESPACE));
+            }
 
-                                    element.extend_attributes(self.namespaces
-                                                                  .iter()
-                                                                  .map(|(name, url)| {
-                                                                           (format!("xmlns:{}",
-                                                                                    name),
-                                                                            url)
-                                                                       }));
+            if dc_ns {
+                element.push_attribute(("xmlns:dc", extension::dublincore::NAMESPACE));
+            }
+            for (name, url) in &self.namespaces {
+                element.push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
+            }
 
-                                    element
-                                }))?;
+            element
+        }))?;
 
         self.to_xml(&mut writer)?;
 
-        writer.write(Event::End(element))?;
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
 
         Ok(writer.into_inner())
     }
@@ -1300,37 +1297,38 @@ impl ToString for Channel {
 }
 
 impl FromXml for Channel {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       _: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+                                       _: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut channel = Channel::default();
+        let mut buf = Vec::new();
 
-        while let Some(e) = reader.next() {
-            match e {
+        loop {
+            match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader, element)?;
+                            let (category, reader_) = Category::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             channel.categories.push(category);
                         }
                         b"cloud" => {
-                            let (cloud, reader_) = Cloud::from_xml(reader, element)?;
+                            let (cloud, reader_) = Cloud::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             channel.cloud = Some(cloud);
                         }
                         b"image" => {
-                            let (image, reader_) = Image::from_xml(reader, element)?;
+                            let (image, reader_) = Image::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             channel.image = Some(image);
                         }
                         b"textInput" => {
-                            let (text_input, reader_) = TextInput::from_xml(reader, element)?;
+                            let (text_input, reader_) = TextInput::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             channel.text_input = Some(text_input);
                         }
                         b"item" => {
-                            let (item, reader_) = Item::from_xml(reader, element)?;
+                            let (item, reader_) = Item::from_xml(reader, element.attributes())?;
                             reader = reader_;
                             channel.items.push(item);
                         }
@@ -1363,8 +1361,9 @@ impl FromXml for Channel {
                         b"docs" => channel.docs = element_text!(reader),
                         b"ttl" => channel.ttl = element_text!(reader),
                         b"skipHours" => {
-                            while let Some(e) = reader.next() {
-                                match e {
+                            let mut buf = Vec::new();
+                            loop {
+                                match reader.read_event(&mut buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"hour" {
                                             if let Some(content) = element_text!(reader) {
@@ -1377,14 +1376,17 @@ impl FromXml for Channel {
                                     Ok(Event::End(_)) => {
                                         break;
                                     }
+                                    Ok(Event::Eof) => break,
                                     Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
+                                buf.clear();
                             }
                         }
                         b"skipDays" => {
-                            while let Some(e) = reader.next() {
-                                match e {
+                            let mut buf = Vec::new();
+                            loop {
+                                match reader.read_event(&mut buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"day" {
                                             if let Some(content) = element_text!(reader) {
@@ -1397,9 +1399,11 @@ impl FromXml for Channel {
                                     Ok(Event::End(_)) => {
                                         break;
                                     }
+                                    Ok(Event::Eof) => break,
                                     Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
+                                buf.clear();
                             }
                         }
                         _ => {
@@ -1424,9 +1428,11 @@ impl FromXml for Channel {
 
                     return Ok((channel, reader));
                 }
+                Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
             }
+            buf.clear();
         }
 
         Err(Error::EOF)
@@ -1434,10 +1440,10 @@ impl FromXml for Channel {
 }
 
 impl ToXml for Channel {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"channel");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"channel";
 
-        writer.write(Event::Start(element.clone()))?;
+        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"title", &self.title)?;
         writer.write_text_element(b"link", &self.link)?;
@@ -1497,21 +1503,21 @@ impl ToXml for Channel {
         }
 
         if !self.skip_hours.is_empty() {
-            let element = Element::new(b"skipHours");
-            writer.write(Event::Start(element.clone()))?;
+            let name = b"skipHours";
+            writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for hour in &self.skip_hours {
                 writer.write_text_element(b"hour", hour)?;
             }
-            writer.write(Event::End(element))?;
+            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         }
 
         if !self.skip_days.is_empty() {
-            let element = Element::new(b"skipDays");
-            writer.write(Event::Start(element.clone()))?;
+            let name = b"skipDays";
+            writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for day in &self.skip_days {
                 writer.write_text_element(b"day", day)?;
             }
-            writer.write(Event::End(element))?;
+            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         }
 
         writer.write_objects(&self.items)?;
@@ -1532,7 +1538,8 @@ impl ToXml for Channel {
             ext.to_xml(writer)?;
         }
 
-        writer.write(Event::End(element))
+        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        Ok(())
     }
 }
 

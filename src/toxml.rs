@@ -5,20 +5,21 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use quick_xml::{Element, Event, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
+use quick_xml::writer::Writer;
 
 pub trait ToXml {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError>;
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError>;
 }
 
 impl<'a, T: ToXml> ToXml for &'a T {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         (*self).to_xml(writer)
     }
 }
 
-pub trait XmlWriterExt {
+pub trait WriterExt {
     fn write_text_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(&mut self,
                                                           name: N,
                                                           text: T)
@@ -42,15 +43,16 @@ pub trait XmlWriterExt {
                                                           -> Result<(), XmlError>;
 }
 
-impl<W: ::std::io::Write> XmlWriterExt for XmlWriter<W> {
+impl<W: ::std::io::Write> WriterExt for Writer<W> {
     fn write_text_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(&mut self,
                                                           name: N,
                                                           text: T)
                                                           -> Result<(), XmlError> {
-        let elem = Element::new(name);
-        self.write(Event::Start(elem.clone()))?;
-        self.write(Event::Text(Element::new(text)))?;
-        self.write(Event::End(elem))
+        let name = name.as_ref();
+        self.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        self.write_event(Event::Text(BytesText::borrowed(text.as_ref())))?;
+        self.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 
     fn write_text_elements<N: AsRef<[u8]>, T: AsRef<[u8]>, I: IntoIterator<Item = T>>
@@ -69,10 +71,11 @@ impl<W: ::std::io::Write> XmlWriterExt for XmlWriter<W> {
                                                            name: N,
                                                            text: T)
                                                            -> Result<(), XmlError> {
-        let elem = Element::new(name);
-        self.write(Event::Start(elem.clone()))?;
-        self.write(Event::CData(Element::new(text)))?;
-        self.write(Event::End(elem))
+        let name = name.as_ref();
+        self.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        self.write_event(Event::CData(BytesText::borrowed(text.as_ref())))?;
+        self.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 
     #[inline]

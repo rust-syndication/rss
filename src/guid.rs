@@ -7,8 +7,11 @@
 
 use error::Error;
 use fromxml::FromXml;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use toxml::ToXml;
 
 /// A representation of the `<guid>` element.
@@ -96,15 +99,15 @@ impl Default for Guid {
 }
 
 impl FromXml for Guid {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+                                       mut atts: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut is_permalink = true;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
-                if attr.0 == b"isPermaLink" {
-                    is_permalink = &attr.1 as &[u8] != b"false";
+                if attr.key == b"isPermaLink" {
+                    is_permalink = attr.value != b"false";
                     break;
                 }
             }
@@ -121,22 +124,21 @@ impl FromXml for Guid {
 }
 
 impl ToXml for Guid {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"guid");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"guid";
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
-                                    if !self.is_permalink {
-                    element.extend_attributes(::std::iter::once((b"isPermaLink", b"false")));
-                }
-                                    element
-                                }))?;
+        writer.write_event(Event::Start({
+            let mut element = BytesStart::borrowed(name, name.len());
+            if !self.is_permalink {
+                element.push_attribute((b"isPermaLink".as_ref(), b"false".as_ref()));
+            }
+            element
+        }))?;
 
-        writer
-            .write(Event::Text(Element::new(self.value.as_str())))?;
+        writer.write_event(Event::Text(BytesText::borrowed(self.value.as_bytes())))?;
 
-        writer.write(Event::End(element))
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 

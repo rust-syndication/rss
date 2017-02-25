@@ -8,8 +8,11 @@
 use error::Error;
 use fromxml::FromXml;
 use mime::Mime;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use toxml::ToXml;
 use url::Url;
 
@@ -100,24 +103,24 @@ impl Enclosure {
 }
 
 impl FromXml for Enclosure {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+                                       mut atts: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut url = None;
         let mut length = None;
         let mut mime_type = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
-                match attr.0 {
+                match attr.key {
                     b"url" if url.is_none() => {
-                        url = Some(String::from_utf8(attr.1.into_owned())?);
+                        url = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     b"length" if length.is_none() => {
-                        length = Some(String::from_utf8(attr.1.into_owned())?);
+                        length  = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     b"type" if mime_type.is_none() => {
-                        mime_type = Some(String::from_utf8(attr.1.into_owned())?);
+                        mime_type  = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     _ => {}
                 }
@@ -140,22 +143,22 @@ impl FromXml for Enclosure {
 }
 
 impl ToXml for Enclosure {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"enclosure");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"enclosure";
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
+        writer.write_event(Event::Start({
+            let mut element = BytesStart::borrowed(name, name.len());
 
-                                    let attrs = &[(b"url" as &[u8], &self.url),
-                                                  (b"length", &self.length),
-                                                  (b"type", &self.mime_type)];
-                                    element.extend_attributes(attrs.into_iter().map(|v| *v));
+            let attrs = &[(b"url" as &[u8], self.url.as_bytes()),
+                          (b"length", self.length.as_bytes()),
+                          (b"type", self.mime_type.as_bytes())];
+            element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-                                    element
-                                }))?;
+            element
+        }))?;
 
-        writer.write(Event::End(element))
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 

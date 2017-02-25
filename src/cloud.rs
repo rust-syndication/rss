@@ -7,8 +7,11 @@
 
 use error::Error;
 use fromxml::FromXml;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use std::str::FromStr;
 use toxml::ToXml;
 use url::Url;
@@ -141,32 +144,32 @@ impl Cloud {
 }
 
 impl FromXml for Cloud {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>, 
+                                       mut atts: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut domain = None;
         let mut port = None;
         let mut path = None;
         let mut register_procedure = None;
         let mut protocol = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
-            if let Ok(attr) = attr {
-                match attr.0 {
+        for attr in atts.with_checks(false) {
+            if let Ok(att) = attr {
+                match att.key {
                     b"domain" if domain.is_none() => {
-                        domain = Some(String::from_utf8(attr.1.into_owned())?);
+                        domain = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"port" if port.is_none() => {
-                        port = Some(String::from_utf8(attr.1.into_owned())?);
+                        port  = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"path" if path.is_none() => {
-                        path = Some(String::from_utf8(attr.1.into_owned())?);
+                        path  = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure = Some(String::from_utf8(attr.1.into_owned())?);
+                        register_procedure  = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"protocol" if protocol.is_none() => {
-                        protocol = Some(String::from_utf8(attr.1.into_owned())?);
+                        protocol  = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     _ => {}
                 }
@@ -194,24 +197,24 @@ impl FromXml for Cloud {
 }
 
 impl ToXml for Cloud {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"cloud");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"cloud";
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
+        writer.write_event(Event::Start({
+            let mut element = BytesStart::borrowed(name, name.len());
 
-                                    let attrs = &[(b"domain" as &[u8], &self.domain),
-                                                  (b"port", &self.port),
-                                                  (b"path", &self.path),
-                                                  (b"registerProcedure", &self.register_procedure),
-                                                  (b"protocol", &self.protocol)];
-                                    element.extend_attributes(attrs.into_iter().map(|v| *v));
+            let attrs = &[(b"domain" as &[u8], self.domain.as_bytes()),
+                          (b"port", self.port.as_bytes()),
+                          (b"path", self.path.as_bytes()),
+                          (b"registerProcedure", self.register_procedure.as_bytes()),
+                          (b"protocol", self.protocol.as_bytes())];
+            element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-                                    element
-                                }))?;
+            element
+        }))?;
 
-        writer.write(Event::End(element))
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 

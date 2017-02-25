@@ -7,9 +7,12 @@
 
 use error::Error;
 use fromxml::FromXml;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
-use toxml::{ToXml, XmlWriterExt};
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
+use toxml::{ToXml, WriterExt};
 use url::Url;
 
 /// A representation of the `<image>` element.
@@ -247,18 +250,19 @@ impl Image {
 }
 
 impl FromXml for Image {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       _: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+                                       _: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut url = None;
         let mut title = None;
         let mut link = None;
         let mut width = None;
         let mut height = None;
         let mut description = None;
+        let mut buf = Vec::new();
 
-        while let Some(e) = reader.next() {
-            match e {
+        loop {
+            match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"url" => url = element_text!(reader),
@@ -285,9 +289,11 @@ impl FromXml for Image {
                                },
                                reader));
                 }
+                Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
             }
+            buf.clear();
         }
 
         Err(Error::EOF)
@@ -295,10 +301,10 @@ impl FromXml for Image {
 }
 
 impl ToXml for Image {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"image");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"image";
 
-        writer.write(Event::Start(element.clone()))?;
+        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"url", &self.url)?;
         writer.write_text_element(b"title", &self.title)?;
@@ -316,7 +322,8 @@ impl ToXml for Image {
             writer.write_text_element(b"description", description)?;
         }
 
-        writer.write(Event::End(element))
+        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        Ok(())
     }
 }
 

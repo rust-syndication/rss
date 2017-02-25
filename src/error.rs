@@ -6,7 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use chrono::ParseError as DateParseError;
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
 use std::error::Error as StdError;
 use std::fmt;
 use std::io::Error as IOError;

@@ -5,10 +5,14 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
+
 use error::Error;
 use fromxml::FromXml;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use toxml::ToXml;
 use url::Url;
 
@@ -76,15 +80,15 @@ impl Category {
 }
 
 impl FromXml for Category {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+                                       mut atts: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut domain = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
-                if attr.0 == b"domain" {
-                    domain = Some(String::from_utf8(attr.1.into_owned())?);
+                if attr.key == b"domain" {
+                    domain = Some(try!(attr.unescape_and_decode_value(&reader)));
                     break;
                 }
             }
@@ -101,22 +105,21 @@ impl FromXml for Category {
 }
 
 impl ToXml for Category {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"category");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"category";
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
-                                    if let Some(ref domain) = self.domain {
-                                        element.extend_attributes(::std::iter::once((b"domain",
-                                                                                     domain)));
-                                    }
-                                    element
-                                }))?;
+        try!(writer.write_event(Event::Start({
+            let mut element = BytesStart::borrowed(name, name.len());
+            if let Some(ref domain) = self.domain {
+                element.push_attribute((b"domain".as_ref(), domain.as_bytes()));
+            }
+            element
+        })));
 
-        writer.write(Event::Text(Element::new(self.name.as_str())))?;
+        try!(writer.write_event(Event::Text(BytesText::borrowed(self.name.as_bytes()))));
 
-        writer.write(Event::End(element))
+        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        Ok(())
     }
 }
 

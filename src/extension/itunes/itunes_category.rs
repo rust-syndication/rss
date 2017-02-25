@@ -6,8 +6,9 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use quick_xml::{Element, Event, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::writer::Writer;
 use toxml::ToXml;
 
 /// A category for an iTunes podcast.
@@ -84,22 +85,18 @@ impl ITunesCategory {
 }
 
 impl ToXml for ITunesCategory {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"itunes:category");
-
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
-                                    element.extend_attributes(::std::iter::once((b"text",
-                                                                                 &self.text)));
-                                    element
-                                }))?;
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"itunes:category";
+        let mut element = BytesStart::borrowed(name, name.len());
+        element.push_attribute(("text", &*self.text));
+        writer.write_event(Event::Start(element))?;
 
         if let Some(subcategory) = self.subcategory.as_ref() {
             subcategory.to_xml(writer)?;
         }
 
-        writer.write(Event::End(element))
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 

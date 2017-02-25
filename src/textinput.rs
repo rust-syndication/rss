@@ -7,9 +7,12 @@
 
 use error::Error;
 use fromxml::FromXml;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
-use toxml::{ToXml, XmlWriterExt};
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
+use toxml::{ToXml, WriterExt};
 use url::Url;
 
 /// A representation of the `<textInput>` element.
@@ -112,16 +115,17 @@ impl TextInput {
 
 
 impl FromXml for TextInput {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       _: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+                                       _: Attributes)
+                                       -> Result<(Self, Reader<R>), Error> {
         let mut title = None;
         let mut description = None;
         let mut name = None;
         let mut link = None;
+        let mut buf = Vec::new();
 
-        while let Some(e) = reader.next() {
-            match e {
+        loop {
+            match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"title" => title = element_text!(reader),
@@ -145,9 +149,11 @@ impl FromXml for TextInput {
                                },
                                reader));
                 }
+                Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
             }
+            buf.clear();
         }
 
         Err(Error::EOF)
@@ -155,10 +161,10 @@ impl FromXml for TextInput {
 }
 
 impl ToXml for TextInput {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new("textInput");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"textInput";
 
-        writer.write(Event::Start(element.clone()))?;
+        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"title", &self.title)?;
         writer
@@ -166,7 +172,8 @@ impl ToXml for TextInput {
         writer.write_text_element(b"name", &self.name)?;
         writer.write_text_element(b"link", &self.link)?;
 
-        writer.write(Event::End(element))
+        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        Ok(())
     }
 }
 
