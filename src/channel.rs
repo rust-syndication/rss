@@ -1407,7 +1407,7 @@ impl FromXml for Channel {
                             }
                         }
                         _ => {
-                            if let Some((ns, name)) = fromxml::extension_name(&element) {
+                            if let Some((ns, name)) = fromxml::extension_name(element.name()) {
                                 parse_extension!(reader, element, ns, name, channel.extensions);
                             } else {
                                 skip_element!(reader);
