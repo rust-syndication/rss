@@ -91,15 +91,15 @@ fn read_guid()
     let input = include_str!("data/guid.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].guid.as_ref().map(|v| v.is_permalink),
+    assert_eq!(channel.items[0].guid.as_ref().map(|v| v.is_permalink()),
                Some(false));
-    assert_eq!(channel.items[0].guid.as_ref().map(|v| v.value.as_str()),
-               Some("abc"));
+    assert_eq!(channel.items[0].guid.as_ref().map(|v| v.value()),
+               Some("abc".to_owned()));
 
-    assert_eq!(channel.items[1].guid.as_ref().map(|v| v.is_permalink),
+    assert_eq!(channel.items[1].guid.as_ref().map(|v| v.is_permalink()),
                Some(true));
-    assert_eq!(channel.items[1].guid.as_ref().map(|v| v.value.as_str()),
-               Some("def"));
+    assert_eq!(channel.items[1].guid.as_ref().map(|v| v.value()),
+               Some("def".to_owned()));
 }
 
 #[test]

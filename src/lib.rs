@@ -73,6 +73,7 @@ pub use category::CategoryBuilder;
 
 mod guid;
 pub use guid::Guid;
+pub use guid::GuidBuilder;
 
 mod enclosure;
 pub use enclosure::Enclosure;
