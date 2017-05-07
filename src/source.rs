@@ -10,8 +10,8 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use toxml::ToXml;
 use string_utils;
+use toxml::ToXml;
 
 /// A representation of the `<source>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -73,7 +73,7 @@ impl Source
 
 impl FromXml for Source
 {
-    ///TODO
+    /// TODO
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -100,7 +100,7 @@ impl FromXml for Source
 
 impl ToXml for Source
 {
-    ///TODO
+    /// TODO
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

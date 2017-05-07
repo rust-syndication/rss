@@ -10,8 +10,8 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use toxml::{ToXml, XmlWriterExt};
 use string_utils;
+use toxml::{ToXml, XmlWriterExt};
 
 /// A representation of the `<textInput>` element.
 #[derive(Debug, Default, Clone, PartialEq)]

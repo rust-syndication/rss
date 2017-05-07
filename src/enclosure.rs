@@ -1,4 +1,3 @@
-
 use error::Error;
 
 use fromxml::FromXml;

@@ -1,4 +1,3 @@
-
 use category::Category;
 use cloud::Cloud;
 use error::Error;

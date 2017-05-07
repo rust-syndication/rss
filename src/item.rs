@@ -1,4 +1,3 @@
-
 use category::Category;
 use enclosure::Enclosure;
 use error::Error;
