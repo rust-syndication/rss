@@ -79,10 +79,10 @@ fn read_source()
     let input = include_str!("data/source.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].source.as_ref().map(|v| v.url.as_str()),
-               Some("http://example.com/feed/"));
-    assert_eq!(channel.items[0].source.as_ref().and_then(|v| v.title.as_ref().map(|s| s.as_str())),
-               Some("Feed"));
+    assert_eq!(channel.items[0].source.as_ref().map(|v| v.url()),
+               Some("http://example.com/feed/".to_owned()));
+    assert_eq!(channel.items[0].source.as_ref().and_then(|v| v.title()),
+               Some("Feed".to_owned()));
 }
 
 #[test]

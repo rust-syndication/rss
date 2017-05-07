@@ -78,6 +78,7 @@ pub use enclosure::Enclosure;
 
 mod source;
 pub use source::Source;
+pub use source::SourceBuilder;
 
 mod cloud;
 pub use cloud::Cloud;
