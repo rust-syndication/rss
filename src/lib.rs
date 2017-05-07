@@ -69,6 +69,7 @@ pub use item::Item;
 
 mod category;
 pub use category::Category;
+pub use category::CategoryBuilder;
 
 mod guid;
 pub use guid::Guid;

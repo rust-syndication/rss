@@ -122,24 +122,24 @@ fn read_category()
     let input = include_str!("data/category.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.categories[0].domain,
+    assert_eq!(channel.categories[0].domain(),
                None);
-    assert_eq!(channel.categories[0].name,
+    assert_eq!(channel.categories[0].name(),
                "Category 1");
 
-    assert_eq!(channel.categories[1].domain.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.categories[1].domain().as_ref().map(|s| s.as_str()),
                Some("http://example.com/"));
-    assert_eq!(channel.categories[1].name,
+    assert_eq!(channel.categories[1].name(),
                "Category 2");
 
-    assert_eq!(channel.items[0].categories[0].domain,
+    assert_eq!(channel.items[0].categories[0].domain(),
                None);
-    assert_eq!(channel.items[0].categories[0].name,
+    assert_eq!(channel.items[0].categories[0].name(),
                "Category 1");
 
-    assert_eq!(channel.items[0].categories[1].domain.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.items[0].categories[1].domain().as_ref().map(|s| s.as_str()),
                Some("http://example.com/"));
-    assert_eq!(channel.items[0].categories[1].name,
+    assert_eq!(channel.items[0].categories[1].name(),
                "Category 2");
 }
 
