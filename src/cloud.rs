@@ -1,8 +1,16 @@
+// This file is part of rss.
+//
+// Copyright © 2015-2017 The rust-syndication Developers
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the MIT License and/or Apache 2.0 License.
+
 use error::Error;
 
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
+use string_utils;
 use toxml::ToXml;
 
 /// A representation of the `<cloud>` element.
@@ -10,19 +18,138 @@ use toxml::ToXml;
 pub struct Cloud
 {
     /// The domain to register with.
-    pub domain: String,
+    domain: String,
     /// The port to register with.
-    pub port: String,
+    port: String,
     /// The path to register with.
-    pub path: String,
+    path: String,
     /// The procedure to register with.
-    pub register_procedure: String,
+    register_procedure: String,
     /// The protocol to register with.
-    pub protocol: String,
+    protocol: String,
+}
+
+impl Cloud
+{
+    /// Get the domain that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{CloudBuilder, Cloud};
+    ///
+    /// let domain = "http://rpc.sys.com/";
+    ///
+    /// let cloud = CloudBuilder::new()
+    ///     .domain(domain)
+    ///     .protocol("soap")
+    ///     .finalize()
+    ///     .unwrap();
+    ///
+    /// assert_eq!(domain.to_owned(), cloud.domain());
+    /// ```
+    pub fn domain(&self) -> String
+    {
+        self.domain.clone()
+    }
+
+
+    /// Get the port that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{CloudBuilder, Cloud};
+    ///
+    /// let port: i64 = 80;
+    ///
+    /// let cloud = CloudBuilder::new()
+    ///     .port(port)
+    ///     .domain("http://rpc.sys.com/")
+    ///     .protocol("soap")
+    ///     .finalize()
+    ///     .unwrap();
+    ///
+    /// assert_eq!(port.to_string(), cloud.port());
+    /// ```
+    pub fn port(&self) -> String
+    {
+        self.port.clone()
+    }
+
+
+    /// Get the path that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{CloudBuilder, Cloud};
+    ///
+    /// let path = "/RPC2";
+    ///
+    /// let cloud = CloudBuilder::new()
+    ///     .path(path)
+    ///     .domain("http://rpc.sys.com/")
+    ///     .protocol("soap")
+    ///     .finalize()
+    ///     .unwrap();
+    ///
+    /// assert_eq!(path.to_owned(), cloud.path());
+    /// ```
+    pub fn path(&self) -> String
+    {
+        self.path.clone()
+    }
+
+
+    /// Get the register procedure that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{CloudBuilder, Cloud};
+    ///
+    /// let register_procedure = "pingMe";
+    /// let cloud = CloudBuilder::new()
+    ///     .register_procedure(register_procedure)
+    ///     .domain("http://rpc.sys.com/")
+    ///     .protocol("soap")
+    ///     .finalize()
+    ///     .unwrap();
+    /// assert_eq!(register_procedure.to_owned(), cloud.register_procedure());
+    /// ```
+    pub fn register_procedure(&self) -> String
+    {
+        self.register_procedure.clone()
+    }
+
+
+    /// Get the protocol that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{CloudBuilder, Cloud};
+    ///
+    /// let protocol = "soap";
+    ///
+    /// let cloud = CloudBuilder::new()
+    ///     .protocol(protocol)
+    ///     .domain("http://rpc.sys.com/")
+    ///     .finalize()
+    ///     .unwrap();
+    ///
+    /// assert_eq!(protocol.to_owned(), cloud.protocol());
+    /// ```
+    pub fn protocol(&self) -> String
+    {
+        self.protocol.clone()
+    }
 }
 
 impl FromXml for Cloud
 {
+    /// TODO
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -76,6 +203,7 @@ impl FromXml for Cloud
 
 impl ToXml for Cloud
 {
+    /// TODO
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>
@@ -96,5 +224,219 @@ impl ToXml for Cloud
                                   }))?;
 
         writer.write(Event::End(element))
+    }
+}
+
+/// This `CloudBuilder` struct creates the `Cloud`.
+#[derive(Debug, Clone, Default)]
+pub struct CloudBuilder
+{
+    domain: String,
+    port: i64,
+    path: String,
+    register_procedure: String,
+    protocol: String,
+}
+
+
+impl CloudBuilder
+{
+    /// Construct a new `CloudBuilder` and return default values.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let cloud_builder = CloudBuilder::new();
+    /// ```
+    pub fn new() -> CloudBuilder
+    {
+        CloudBuilder::default()
+    }
+
+
+    /// Set the domain that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let mut cloud_builder = CloudBuilder::new();
+    /// cloud_builder.domain("http://rpc.sys.com/");
+    /// ```
+    pub fn domain(&mut self,
+                  domain: &str)
+        -> &mut CloudBuilder
+    {
+        self.domain = domain.to_owned();
+        self
+    }
+
+
+    /// Set the port that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let mut cloud_builder = CloudBuilder::new();
+    /// cloud_builder.port(80);
+    /// ```
+    pub fn port(&mut self,
+                port: i64)
+        -> &mut CloudBuilder
+    {
+
+        self.port = port;
+        self
+    }
+
+
+    /// Set the path that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let mut cloud_builder = CloudBuilder::new();
+    /// cloud_builder.path("/RPC2");
+    /// ```
+    pub fn path(&mut self,
+                path: &str)
+        -> &mut CloudBuilder
+    {
+        self.path = path.to_owned();
+        self
+    }
+
+
+    /// Set the register procedure that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let mut cloud_builder = CloudBuilder::new();
+    /// cloud_builder.register_procedure("pingMe");
+    /// ```
+    pub fn register_procedure(&mut self,
+                              register_procedure: &str)
+        -> &mut CloudBuilder
+    {
+        self.register_procedure = register_procedure.to_owned();
+        self
+    }
+
+
+    /// Set the protocol that exists under `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let mut cloud_builder = CloudBuilder::new();
+    /// cloud_builder.protocol("soap");
+    /// ```
+    pub fn protocol(&mut self,
+                    protocol: &str)
+        -> &mut CloudBuilder
+    {
+        self.protocol = protocol.to_owned();
+        self
+    }
+
+
+    /// Validate the contents of `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let cloud = CloudBuilder::new()
+    ///         .domain("http://rpc.sys.com/")
+    ///         .port(80)
+    ///         .path("/RPC2")
+    ///         .register_procedure("pingMe")
+    ///         .protocol("soap")
+    ///         .validate().unwrap()
+    ///         .finalize().unwrap();
+    /// ```
+    pub fn validate(&mut self) -> Result<&mut CloudBuilder, String>
+    {
+        if self.port < 0 {
+            return Err("Cloud Port cannot be a negative value".to_owned());
+        }
+
+        string_utils::str_to_url(self.domain.as_str())?;
+        CloudProtocol::value_of(self.protocol.as_str())?;
+
+        Ok(self)
+    }
+
+
+    /// Construct the `Cloud` from the `CloudBuilder`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::CloudBuilder;
+    ///
+    /// let cloud = CloudBuilder::new()
+    ///         .domain("http://rpc.sys.com/")
+    ///         .port(80)
+    ///         .path("/RPC2")
+    ///         .register_procedure("pingMe")
+    ///         .protocol("soap")
+    ///         .finalize();
+    /// ```
+    pub fn finalize(&self) -> Result<Cloud, String>
+    {
+        let port = string_utils::i64_to_string(self.port)?;
+
+        Ok(Cloud { domain: self.domain.clone(),
+                   port: port,
+                   path: self.path.clone(),
+                   register_procedure: self.register_procedure.clone(),
+                   protocol: self.protocol.clone(), })
+    }
+}
+
+
+/// Enumerations of protocols for `Cloud`.
+#[derive(Clone, Debug)]
+enum CloudProtocol
+{
+    /// http-post
+    HttpPost,
+
+    /// xml-rpc
+    XmlRpc,
+
+    /// soap
+    Soap,
+}
+
+
+impl CloudProtocol
+{
+    // Convert `&str` to `CloudProtocol`.
+    pub fn value_of(s: &str) -> Result<CloudProtocol, String>
+    {
+        match s {
+            "http-post" => Ok(CloudProtocol::HttpPost),
+            "xml-rpc" => Ok(CloudProtocol::XmlRpc),
+            "soap" => Ok(CloudProtocol::Soap),
+            _ => {
+                Err(format!("Invalid value: {}",
+                            s))
+            },
+        }
     }
 }

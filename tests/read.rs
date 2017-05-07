@@ -181,15 +181,15 @@ fn read_cloud()
     let channel = input.parse::<Channel>().expect("failed to parse xml");
     let cloud = channel.cloud.expect("cloud missing");
 
-    assert_eq!(cloud.domain,
+    assert_eq!(cloud.domain(),
                "example.com");
-    assert_eq!(cloud.port,
+    assert_eq!(cloud.port(),
                "80");
-    assert_eq!(cloud.path,
+    assert_eq!(cloud.path(),
                "/rpc");
-    assert_eq!(cloud.register_procedure,
+    assert_eq!(cloud.register_procedure(),
                "notify");
-    assert_eq!(cloud.protocol,
+    assert_eq!(cloud.protocol(),
                "xml-rpc");
 }
 

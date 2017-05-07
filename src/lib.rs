@@ -83,6 +83,7 @@ pub use source::SourceBuilder;
 
 mod cloud;
 pub use cloud::Cloud;
+pub use cloud::CloudBuilder;
 
 mod image;
 pub use image::Image;
