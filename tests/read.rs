@@ -49,17 +49,17 @@ fn read_item()
     let channel = input.parse::<Channel>().expect("failed to parse xml");
     let item = &channel.items[0];
 
-    assert_eq!(item.title.as_ref().map(|s| s.as_str()),
+    assert_eq!(item.title().as_ref().map(|s| s.as_str()),
                Some("Title"));
-    assert_eq!(item.link.as_ref().map(|s| s.as_str()),
+    assert_eq!(item.link().as_ref().map(|s| s.as_str()),
                Some("http://example.com/"));
-    assert_eq!(item.description.as_ref().map(|s| s.as_str()),
+    assert_eq!(item.description().as_ref().map(|s| s.as_str()),
                Some("Description"));
-    assert_eq!(item.author.as_ref().map(|s| s.as_str()),
+    assert_eq!(item.author().as_ref().map(|s| s.as_str()),
                Some("author@example.com"));
-    assert_eq!(item.comments.as_ref().map(|s| s.as_str()),
+    assert_eq!(item.comments().as_ref().map(|s| s.as_str()),
                Some("Comments"));
-    assert_eq!(item.pub_date.as_ref().map(|s| s.as_str()),
+    assert_eq!(item.pub_date().as_ref().map(|s| s.as_str()),
                Some("Sat, 27 Aug 2016 00:00:00 GMT"));
 }
 
@@ -69,7 +69,7 @@ fn read_content()
     let input = include_str!("data/content.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].content.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.items[0].content().as_ref().map(|s| s.as_str()),
                Some("An example <a href=\"http://example.com/\">link</a>."));
 }
 
@@ -79,9 +79,9 @@ fn read_source()
     let input = include_str!("data/source.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].source.as_ref().map(|v| v.url()),
+    assert_eq!(channel.items[0].source().as_ref().map(|v| v.url()),
                Some("http://example.com/feed/".to_owned()));
-    assert_eq!(channel.items[0].source.as_ref().and_then(|v| v.title()),
+    assert_eq!(channel.items[0].source().as_ref().and_then(|v| v.title()),
                Some("Feed".to_owned()));
 }
 
@@ -91,14 +91,14 @@ fn read_guid()
     let input = include_str!("data/guid.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].guid.as_ref().map(|v| v.is_permalink()),
+    assert_eq!(channel.items[0].guid().as_ref().map(|v| v.is_permalink()),
                Some(false));
-    assert_eq!(channel.items[0].guid.as_ref().map(|v| v.value()),
+    assert_eq!(channel.items[0].guid().as_ref().map(|v| v.value()),
                Some("abc".to_owned()));
 
-    assert_eq!(channel.items[1].guid.as_ref().map(|v| v.is_permalink()),
+    assert_eq!(channel.items[1].guid().as_ref().map(|v| v.is_permalink()),
                Some(true));
-    assert_eq!(channel.items[1].guid.as_ref().map(|v| v.value()),
+    assert_eq!(channel.items[1].guid().as_ref().map(|v| v.value()),
                Some("def".to_owned()));
 }
 
@@ -108,11 +108,11 @@ fn read_enclosure()
     let input = include_str!("data/enclosure.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.url()),
+    assert_eq!(channel.items[0].enclosure().as_ref().map(|v| v.url()),
                Some("http://example.com/media.mp3".to_owned()));
-    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.length()),
+    assert_eq!(channel.items[0].enclosure().as_ref().map(|v| v.length()),
                Some("4992349".to_owned()));
-    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.mime_type()),
+    assert_eq!(channel.items[0].enclosure().as_ref().map(|v| v.mime_type()),
                Some("audio/mpeg".to_owned()));
 }
 
@@ -132,14 +132,14 @@ fn read_category()
     assert_eq!(channel.categories[1].name(),
                "Category 2");
 
-    assert_eq!(channel.items[0].categories[0].domain(),
+    assert_eq!(channel.items[0].categories()[0].domain(),
                None);
-    assert_eq!(channel.items[0].categories[0].name(),
+    assert_eq!(channel.items[0].categories()[0].name(),
                "Category 1");
 
-    assert_eq!(channel.items[0].categories[1].domain().as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.items[0].categories()[1].domain().as_ref().map(|s| s.as_str()),
                Some("http://example.com/"));
-    assert_eq!(channel.items[0].categories[1].name(),
+    assert_eq!(channel.items[0].categories()[1].name(),
                "Category 2");
 }
 
@@ -223,7 +223,7 @@ fn read_extension()
     assert_eq!(channel.namespaces.len(),
                1);
 
-    let ext = channel.items[0].extensions.get("ext").expect("failed to find extension");
+    let ext = channel.items[0].extensions().get("ext").expect("failed to find extension");
     assert_eq!(get_extension_values(&ext,
                                     "creator"),
                Some(vec!["Creator Name"]));
@@ -289,7 +289,7 @@ fn read_itunes()
     assert_eq!(itunes.keywords.as_ref().map(|s| s.as_str()),
                Some("key1,key2,key3"));
 
-    let itunes = &channel.items[0].itunes_ext.as_ref().expect("itunes extension missing");
+    let itunes = &channel.items[0].itunes_ext().expect("itunes extension missing");
     assert_eq!(itunes.author.as_ref().map(|s| s.as_str()),
                Some("Author"));
     assert_eq!(itunes.block.as_ref().map(|s| s.as_str()),
@@ -354,5 +354,5 @@ fn read_dublincore()
     }
 
     test_ext(&channel.dublin_core_ext.as_ref().expect("dc extension missing"));
-    test_ext(&channel.items[0].dublin_core_ext.as_ref().expect("ds extension missing"));
+    test_ext(&channel.items[0].dublin_core_ext().as_ref().expect("ds extension missing"));
 }

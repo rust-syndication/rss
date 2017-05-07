@@ -171,11 +171,11 @@ impl Channel
                                       if !itunes_ns || dc_ns {
                                           for item in &self.items {
                                               if !itunes_ns {
-                                                  itunes_ns = item.itunes_ext.is_some();
+                                                  itunes_ns = item.itunes_ext().is_some();
                                               }
 
                                               if !dc_ns {
-                                                  dc_ns = item.dublin_core_ext.is_some();
+                                                  dc_ns = item.dublin_core_ext().is_some();
                                               }
 
                                               if itunes_ns && dc_ns {
@@ -213,6 +213,7 @@ impl Channel
 
 impl ToString for Channel
 {
+    /// TODO: document to string
     fn to_string(&self) -> String
     {
         let buf = self.write_to(Vec::new()).unwrap_or(Vec::new());
@@ -223,6 +224,7 @@ impl ToString for Channel
 
 impl FromXml for Channel
 {
+    /// TODO: document from xml
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -368,6 +370,7 @@ impl FromXml for Channel
 
 impl ToXml for Channel
 {
+    /// TODO: : document from xml
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

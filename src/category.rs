@@ -85,7 +85,7 @@ impl Category
 
 impl FromXml for Category
 {
-    /// TODO
+    /// TODO: document from xml
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -111,7 +111,7 @@ impl FromXml for Category
 
 impl ToXml for Category
 {
-    /// TODO
+    /// TODO: document to xml
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

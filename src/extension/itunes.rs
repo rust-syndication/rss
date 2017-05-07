@@ -83,6 +83,7 @@ impl ITunesChannelExtension
 
 impl ToXml for ITunesChannelExtension
 {
+    /// TODO: document from xml
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

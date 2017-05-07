@@ -257,7 +257,7 @@ impl Image
 
 impl FromXml for Image
 {
-    /// TODO
+    /// TODO: document from xml
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -306,7 +306,7 @@ impl FromXml for Image
 
 impl ToXml for Image
 {
-    /// TODO
+    /// TODO: document to xml
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

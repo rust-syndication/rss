@@ -130,6 +130,7 @@ fn verify_write_format()
     channel.link = "http://example.com/".to_string();
     channel.description = "Description".to_string();
     channel.items.push({
+                           // TODO: change to ItemBuilder
                            let mut item = Item::default();
                            item.itunes_ext = Some(extension::itunes::ITunesItemExtension::default());
                            item.dublin_core_ext = Some(extension::dublincore::DublinCoreExtension::default());

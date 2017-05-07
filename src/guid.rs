@@ -102,7 +102,7 @@ impl Default for Guid
 
 impl FromXml for Guid
 {
-    /// TODO
+    /// TODO: document from xml
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -128,7 +128,7 @@ impl FromXml for Guid
 
 impl ToXml for Guid
 {
-    /// TODO
+    /// TODO: document to xml
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>
