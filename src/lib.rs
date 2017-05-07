@@ -1,5 +1,13 @@
+// This file is part of rss.
+//
+// Copyright © 2015-2017 The rust-syndication Developers
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the MIT License and/or Apache 2.0 License.
+
 #![warn(missing_docs)]
 #![allow(unknown_lints, while_let_on_iterator)]
+#![doc(html_root_url = "https://docs.rs/rss/")]
 
 //! Library for serializing the RSS web content syndication format.
 //!
@@ -18,9 +26,9 @@
 //! let reader = BufReader::new(file);
 //! let channel = Channel::read_from(reader).unwrap();
 //! ```
-//! # Writing 
+//! # Writing
 //!
-//! A channel can be written to any object that implements the `Write` trait or converted to an 
+//! A channel can be written to any object that implements the `Write` trait or converted to an
 //! XML string using the `ToString` trait.
 //!
 //! **Note**: Writing a channel does not perform any escaping of XML entities.
@@ -44,6 +52,10 @@
 //! ```
 
 extern crate quick_xml;
+extern crate chrono;
+extern crate curl;
+extern crate mime;
+extern crate url;
 
 #[macro_use]
 mod fromxml;
@@ -75,6 +87,7 @@ pub use image::Image;
 
 mod textinput;
 pub use textinput::TextInput;
+pub use textinput::TextInputBuilder;
 
 /// Types and functions for namespaced extensions.
 pub mod extension;
@@ -82,3 +95,5 @@ pub use extension::Extension;
 
 mod error;
 pub use error::Error;
+
+mod string_utils;

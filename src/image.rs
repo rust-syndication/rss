@@ -1,13 +1,15 @@
-use quick_xml::{XmlReader, XmlWriter, Element, Event};
-use quick_xml::error::Error as XmlError;
+
+use error::Error;
 
 use fromxml::FromXml;
+use quick_xml::{Element, Event, XmlReader, XmlWriter};
+use quick_xml::error::Error as XmlError;
 use toxml::{ToXml, XmlWriterExt};
-use error::Error;
 
 /// A representation of the `<image>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Image {
+pub struct Image
+{
     /// The URL of the channel image.
     pub url: String,
     /// A description of the image. This is used in the HTML `alt` attribute.
@@ -22,10 +24,12 @@ pub struct Image {
     pub description: Option<String>,
 }
 
-impl FromXml for Image {
+impl FromXml for Image
+{
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+        -> Result<(Self, XmlReader<R>), Error>
+    {
         let mut url = None;
         let mut title = None;
         let mut link = None;
@@ -45,23 +49,22 @@ impl FromXml for Image {
                         b"description" => description = element_text!(reader),
                         _ => skip_element!(reader),
                     }
-                }
+                },
                 Ok(Event::End(_)) => {
                     let url = url.unwrap_or_default();
                     let title = title.unwrap_or_default();
                     let link = link.unwrap_or_default();
 
-                    return Ok((Image {
-                        url: url,
-                        title: title,
-                        link: link,
-                        width: width,
-                        height: height,
-                        description: description,
-                    }, reader))
-                }
+                    return Ok((Image { url: url,
+                                       title: title,
+                                       link: link,
+                                       width: width,
+                                       height: height,
+                                       description: description, },
+                               reader));
+                },
                 Err(err) => return Err(err.into()),
-                _ => {}
+                _ => {},
             }
         }
 
@@ -69,26 +72,36 @@ impl FromXml for Image {
     }
 }
 
-impl ToXml for Image {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+impl ToXml for Image
+{
+    fn to_xml<W: ::std::io::Write>(&self,
+                                   writer: &mut XmlWriter<W>)
+        -> Result<(), XmlError>
+    {
         let element = Element::new(b"image");
 
-        try!(writer.write(Event::Start(element.clone())));
+        writer.write(Event::Start(element.clone()))?;
 
-        try!(writer.write_text_element(b"url", &self.url));
-        try!(writer.write_text_element(b"title", &self.title));
-        try!(writer.write_text_element(b"link", &self.link));
+        writer.write_text_element(b"url",
+                                  &self.url)?;
+        writer.write_text_element(b"title",
+                                  &self.title)?;
+        writer.write_text_element(b"link",
+                                  &self.link)?;
 
         if let Some(width) = self.width.as_ref() {
-            try!(writer.write_text_element(b"width", width));
+            writer.write_text_element(b"width",
+                                      width)?;
         }
 
         if let Some(height) = self.height.as_ref() {
-            try!(writer.write_text_element(b"height", height));
+            writer.write_text_element(b"height",
+                                      height)?;
         }
 
         if let Some(description) = self.description.as_ref() {
-            try!(writer.write_text_element(b"description", description));
+            writer.write_text_element(b"description",
+                                      description)?;
         }
 
         writer.write(Event::End(element))

@@ -1,13 +1,15 @@
-use std::fmt;
+
+
+use quick_xml::error::Error as XmlError;
 use std::error::Error as StdError;
+use std::fmt;
 use std::str::Utf8Error;
 use std::string::FromUtf8Error;
 
-use quick_xml::error::Error as XmlError;
-
 #[derive(Debug)]
 /// Types of errors that could occur while parsing an RSS feed.
-pub enum Error {
+pub enum Error
+{
     /// An error occurred while converting bytes to UTF8.
     Utf8(Utf8Error),
     /// An XML parser error occurred at the specified byte offset.
@@ -18,8 +20,10 @@ pub enum Error {
     EOF,
 }
 
-impl StdError for Error {
-    fn description(&self) -> &str {
+impl StdError for Error
+{
+    fn description(&self) -> &str
+    {
         match *self {
             Error::Utf8(ref err) => err.description(),
             Error::XmlParsing(ref err, _) => err.description(),
@@ -28,7 +32,8 @@ impl StdError for Error {
         }
     }
 
-    fn cause(&self) -> Option<&StdError> {
+    fn cause(&self) -> Option<&StdError>
+    {
         match *self {
             Error::Utf8(ref err) => Some(err),
             Error::XmlParsing(ref err, _) => Some(err),
@@ -38,37 +43,62 @@ impl StdError for Error {
     }
 }
 
-impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl fmt::Display for Error
+{
+    fn fmt(&self,
+           f: &mut fmt::Formatter)
+        -> fmt::Result
+    {
         match *self {
-            Error::Utf8(ref err) => fmt::Display::fmt(err, f),
-            Error::XmlParsing(ref err, _) => fmt::Display::fmt(err, f),
-            Error::Xml(ref err) => fmt::Display::fmt(err, f),
-            Error::EOF => write!(f, "reached end of input without finding a complete channel"),
+            Error::Utf8(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::XmlParsing(ref err, _) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::Xml(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::EOF => {
+                write!(f,
+                       "reached end of input without finding a complete channel")
+            },
         }
     }
 }
 
-impl From<(XmlError, usize)> for Error {
-    fn from(err: (XmlError, usize)) -> Error {
-        Error::XmlParsing(err.0, err.1)
+impl From<(XmlError, usize)> for Error
+{
+    fn from(err: (XmlError, usize)) -> Error
+    {
+        Error::XmlParsing(err.0,
+                          err.1)
     }
 }
 
-impl From<XmlError> for Error {
-    fn from(err: XmlError) -> Error {
+impl From<XmlError> for Error
+{
+    fn from(err: XmlError) -> Error
+    {
         Error::Xml(err)
     }
 }
 
-impl From<Utf8Error> for Error {
-    fn from(err: Utf8Error) -> Error {
+impl From<Utf8Error> for Error
+{
+    fn from(err: Utf8Error) -> Error
+    {
         Error::Utf8(err)
     }
 }
 
-impl From<FromUtf8Error> for Error {
-    fn from(err: FromUtf8Error) -> Error {
+impl From<FromUtf8Error> for Error
+{
+    fn from(err: FromUtf8Error) -> Error
+    {
         Error::Utf8(err.utf8_error())
     }
 }

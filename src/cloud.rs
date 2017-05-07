@@ -1,13 +1,15 @@
-use quick_xml::{XmlReader, XmlWriter, Element, Event};
-use quick_xml::error::Error as XmlError;
+
+use error::Error;
 
 use fromxml::FromXml;
+use quick_xml::{Element, Event, XmlReader, XmlWriter};
+use quick_xml::error::Error as XmlError;
 use toxml::ToXml;
-use error::Error;
 
 /// A representation of the `<cloud>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Cloud {
+pub struct Cloud
+{
     /// The domain to register with.
     pub domain: String,
     /// The port to register with.
@@ -20,10 +22,12 @@ pub struct Cloud {
     pub protocol: String,
 }
 
-impl FromXml for Cloud {
+impl FromXml for Cloud
+{
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+        -> Result<(Self, XmlReader<R>), Error>
+    {
         let mut domain = None;
         let mut port = None;
         let mut path = None;
@@ -34,21 +38,21 @@ impl FromXml for Cloud {
             if let Ok(attr) = attr {
                 match attr.0 {
                     b"domain" if domain.is_none() => {
-                        domain = Some(try!(String::from_utf8(attr.1.into_owned())));
-                    }
+                        domain = Some(String::from_utf8(attr.1.into_owned())?);
+                    },
                     b"port" if port.is_none() => {
-                        port = Some(try!(String::from_utf8(attr.1.into_owned())));
-                    }
+                        port = Some(String::from_utf8(attr.1.into_owned())?);
+                    },
                     b"path" if path.is_none() => {
-                        path = Some(try!(String::from_utf8(attr.1.into_owned())));
-                    }
+                        path = Some(String::from_utf8(attr.1.into_owned())?);
+                    },
                     b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure = Some(try!(String::from_utf8(attr.1.into_owned())));
-                    }
+                        register_procedure = Some(String::from_utf8(attr.1.into_owned())?);
+                    },
                     b"protocol" if protocol.is_none() => {
-                        protocol = Some(try!(String::from_utf8(attr.1.into_owned())));
-                    }
-                    _ => {}
+                        protocol = Some(String::from_utf8(attr.1.into_owned())?);
+                    },
+                    _ => {},
                 }
             }
         }
@@ -61,33 +65,36 @@ impl FromXml for Cloud {
         let register_procedure = register_procedure.unwrap_or_default();
         let protocol = protocol.unwrap_or_default();
 
-        Ok((Cloud {
-            domain: domain,
-            port: port,
-            path: path,
-            register_procedure: register_procedure,
-            protocol: protocol,
-        }, reader))
+        Ok((Cloud { domain: domain,
+                    port: port,
+                    path: path,
+                    register_procedure: register_procedure,
+                    protocol: protocol, },
+            reader))
 
     }
 }
 
-impl ToXml for Cloud {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+impl ToXml for Cloud
+{
+    fn to_xml<W: ::std::io::Write>(&self,
+                                   writer: &mut XmlWriter<W>)
+        -> Result<(), XmlError>
+    {
         let element = Element::new(b"cloud");
 
-        try!(writer.write(Event::Start({
-            let mut element = element.clone();
+        writer.write(Event::Start({
+                                      let mut element = element.clone();
 
-            let attrs = &[(b"domain" as &[u8], &self.domain),
-                          (b"port", &self.port),
-                          (b"path", &self.path),
-                          (b"registerProcedure", &self.register_procedure),
-                          (b"protocol", &self.protocol)];
-            element.extend_attributes(attrs.into_iter().map(|v| *v));
+                                      let attrs = &[(b"domain" as &[u8], &self.domain),
+                                                    (b"port", &self.port),
+                                                    (b"path", &self.path),
+                                                    (b"registerProcedure", &self.register_procedure),
+                                                    (b"protocol", &self.protocol)];
+                                      element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-            element
-        })));
+                                      element
+                                  }))?;
 
         writer.write(Event::End(element))
     }
