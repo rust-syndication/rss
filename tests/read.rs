@@ -108,12 +108,12 @@ fn read_enclosure()
     let input = include_str!("data/enclosure.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.url.as_str()),
-               Some("http://example.com/media.mp3"));
-    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.length.as_str()),
-               Some("4992349"));
-    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.mime_type.as_str()),
-               Some("audio/mpeg"));
+    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.url()),
+               Some("http://example.com/media.mp3".to_owned()));
+    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.length()),
+               Some("4992349".to_owned()));
+    assert_eq!(channel.items[0].enclosure.as_ref().map(|v| v.mime_type()),
+               Some("audio/mpeg".to_owned()));
 }
 
 #[test]

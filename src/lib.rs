@@ -77,6 +77,7 @@ pub use guid::GuidBuilder;
 
 mod enclosure;
 pub use enclosure::Enclosure;
+pub use enclosure::EnclosureBuilder;
 
 mod source;
 pub use source::Source;
