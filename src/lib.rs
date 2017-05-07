@@ -89,6 +89,7 @@ pub use cloud::CloudBuilder;
 
 mod image;
 pub use image::Image;
+pub use image::ImageBuilder;
 
 mod textinput;
 pub use textinput::TextInput;

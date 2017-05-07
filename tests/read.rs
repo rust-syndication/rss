@@ -150,17 +150,17 @@ fn read_image()
     let channel = input.parse::<Channel>().expect("failed to parse xml");
     let image = channel.image.as_ref().expect("image missing");
 
-    assert_eq!(image.title,
+    assert_eq!(image.title(),
                "Title");
-    assert_eq!(image.url,
+    assert_eq!(image.url(),
                "http://example.org/url");
-    assert_eq!(image.link,
+    assert_eq!(image.link(),
                "http://example.org/link");
-    assert_eq!(image.width.as_ref().map(|s| s.as_str()),
+    assert_eq!(image.width().as_ref().map(|s| s.as_str()),
                Some("100"));
-    assert_eq!(image.height.as_ref().map(|s| s.as_str()),
+    assert_eq!(image.height().as_ref().map(|s| s.as_str()),
                Some("200"));
-    assert_eq!(image.description.as_ref().map(|s| s.as_str()),
+    assert_eq!(image.description().as_ref().map(|s| s.as_str()),
                Some("Description"));
 }
 
