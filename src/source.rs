@@ -6,12 +6,11 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use string_utils;
 use toxml::ToXml;
+use url::Url;
 
 /// A representation of the `<source>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -197,9 +196,9 @@ impl SourceBuilder
     ///     .validate().unwrap()
     ///     .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut SourceBuilder, String>
+    pub fn validate(&mut self) -> Result<&mut SourceBuilder, Error>
     {
-        string_utils::str_to_url(self.url.as_str())?;
+        Url::parse(self.url.as_str())?;
 
         Ok(self)
     }
@@ -218,7 +217,7 @@ impl SourceBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<Source, String>
+    pub fn finalize(&self) -> Result<Source, Error>
     {
         Ok(Source { url: self.url.clone(),
                     title: self.title.clone(), })

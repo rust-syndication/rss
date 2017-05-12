@@ -5,13 +5,10 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-extern crate quick_xml;
-
+use error::Error;
 use quick_xml::{Element, Event, XmlWriter};
 use quick_xml::error::Error as XmlError;
-
 use std::collections::HashMap;
-
 use toxml::ToXml;
 
 /// Types and functions for
@@ -29,14 +26,45 @@ pub type ExtensionMap = HashMap<String, HashMap<String, Vec<Extension>>>;
 pub struct Extension
 {
     /// The qualified name of the extension element.
-    pub name: String,
+    name: String,
     /// The content of the extension element.
-    pub value: Option<String>,
+    value: Option<String>,
     /// The attributes for the extension element.
-    pub attrs: HashMap<String, String>,
+    attrs: HashMap<String, String>,
     /// The children of the extension element. This is a map of local names to child
     /// elements.
-    pub children: HashMap<String, Vec<Extension>>,
+    children: HashMap<String, Vec<Extension>>,
+}
+
+impl Extension
+{
+    /// Get the name that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn name(&self) -> String
+    {
+        self.name.clone()
+    }
+
+    /// Get the value that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn value(&self) -> Option<String>
+    {
+        self.value.clone()
+    }
+
+    /// Get the attrs that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn attrs(&self) -> HashMap<String, String>
+    {
+        self.attrs.clone()
+    }
+
+    /// Get the children that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn children(&self) -> HashMap<String, Vec<Extension>>
+    {
+        self.children.clone()
+    }
 }
 
 impl ToXml for Extension
@@ -65,6 +93,88 @@ impl ToXml for Extension
         }
 
         writer.write(Event::End(element))
+    }
+}
+
+/// A namespaced extension such as iTunes or Dublin Core.
+#[derive(Debug, Default, Clone)]
+pub struct ExtensionBuilder
+{
+    /// The qualified name of the extension element.
+    name: String,
+    /// The content of the extension element.
+    value: Option<String>,
+    /// The attributes for the extension element.
+    attrs: HashMap<String, String>,
+    /// The children of the extension element. This is a map of local names to child
+    /// elements.
+    children: HashMap<String, Vec<Extension>>,
+}
+
+impl ExtensionBuilder
+{
+    // Construct a new `DublinCoreExtensionBuilder` and return default values.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::ExtensionBuilder;
+    ///
+    /// let extension_builder = ExtensionBuilder::new();
+    /// ```
+    pub fn new() -> ExtensionBuilder
+    {
+        ExtensionBuilder::default()
+    }
+
+    /// Get the name that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn name(&mut self,
+                name: &str)
+        -> &mut ExtensionBuilder
+    {
+        self.name = String::from(name);
+        self
+    }
+
+    /// Get the value that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn value(&mut self,
+                 value: Option<String>)
+        -> &mut ExtensionBuilder
+    {
+        self.value = value;
+        self
+    }
+
+    /// Get the attrs that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn attrs(&mut self,
+                 attrs: HashMap<String, String>)
+        -> &mut ExtensionBuilder
+    {
+        self.attrs = attrs;
+        self
+    }
+
+    /// Get the children that exists under `Extension`.
+    /// TODO: Add Example
+    pub fn children(&mut self,
+                    children: HashMap<String, Vec<Extension>>)
+        -> &mut ExtensionBuilder
+    {
+        self.children = children;
+        self
+    }
+
+    // Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
+    /// TODO: Add Example
+    pub fn finalize(&self) -> Result<Extension, Error>
+    {
+        Ok(Extension { name: self.name.clone(),
+                       value: self.value.clone(),
+                       attrs: self.attrs.clone(),
+                       children: self.children.clone(), })
     }
 }
 

@@ -5,16 +5,27 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
+use chrono::ParseError as DateParseError;
 use quick_xml::error::Error as XmlError;
 use std::error::Error as StdError;
 use std::fmt;
+use std::num::ParseIntError;
 use std::str::Utf8Error;
 use std::string::FromUtf8Error;
+use url::ParseError as UrlParseError;
 
 #[derive(Debug)]
 /// Types of errors that could occur while parsing an RSS feed.
 pub enum Error
 {
+    /// An error occured during validation
+    Validation(String),
+    /// An error occured while parsing a str to i64.
+    IntParsing(ParseIntError),
+    /// An error occured during parsing dates from str.
+    DateParsing(DateParseError),
+    /// An error occurred while parsing a str to Url.
+    UrlParsing(UrlParseError),
     /// An error occurred while converting bytes to UTF8.
     Utf8(Utf8Error),
     /// An XML parser error occurred at the specified byte offset.
@@ -30,6 +41,10 @@ impl StdError for Error
     fn description(&self) -> &str
     {
         match *self {
+            Error::Validation(ref err) => err,
+            Error::IntParsing(ref err) => err.description(),
+            Error::DateParsing(ref err) => err.description(),
+            Error::UrlParsing(ref err) => err.description(),
             Error::Utf8(ref err) => err.description(),
             Error::XmlParsing(ref err, _) => err.description(),
             Error::Xml(ref err) => err.description(),
@@ -40,6 +55,9 @@ impl StdError for Error
     fn cause(&self) -> Option<&StdError>
     {
         match *self {
+            Error::IntParsing(ref err) => Some(err),
+            Error::DateParsing(ref err) => Some(err),
+            Error::UrlParsing(ref err) => Some(err),
             Error::Utf8(ref err) => Some(err),
             Error::XmlParsing(ref err, _) => Some(err),
             Error::Xml(ref err) => Some(err),
@@ -55,6 +73,22 @@ impl fmt::Display for Error
         -> fmt::Result
     {
         match *self {
+            Error::Validation(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::IntParsing(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::DateParsing(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::UrlParsing(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
             Error::Utf8(ref err) => {
                 fmt::Display::fmt(err,
                                   f)
@@ -105,5 +139,29 @@ impl From<FromUtf8Error> for Error
     fn from(err: FromUtf8Error) -> Error
     {
         Error::Utf8(err.utf8_error())
+    }
+}
+
+impl From<UrlParseError> for Error
+{
+    fn from(err: UrlParseError) -> Error
+    {
+        Error::UrlParsing(err)
+    }
+}
+
+impl From<DateParseError> for Error
+{
+    fn from(err: DateParseError) -> Error
+    {
+        Error::DateParsing(err)
+    }
+}
+
+impl From<ParseIntError> for Error
+{
+    fn from(err: ParseIntError) -> Error
+    {
+        Error::IntParsing(err)
     }
 }

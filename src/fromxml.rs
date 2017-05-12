@@ -6,8 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use extension::{Extension, ExtensionMap};
-
+use extension::{Extension, ExtensionBuilder, ExtensionMap};
 use quick_xml::{Element, Event, XmlReader};
 use std::collections::HashMap;
 use std::io::BufRead;
@@ -226,13 +225,14 @@ fn parse_extension_element<R: BufRead>(mut reader: XmlReader<R>,
                 }
             },
             Ok(Event::End(element)) => {
-                return (Ok(Extension { name: try_reader!(str::from_utf8(element.name()),
-                                                         reader)
-                                           .to_string(),
-                                       value: content,
-                                       attrs: attrs,
-                                       children: children, }),
-                        reader)
+                return (ExtensionBuilder::new()
+                            .name(try_reader!(str::from_utf8(element.name()),
+                                              reader))
+                            .value(content)
+                            .attrs(attrs)
+                            .children(children)
+                            .finalize(),
+                        reader);
             },
             Ok(Event::CData(element)) => {
                 let text = element.content();

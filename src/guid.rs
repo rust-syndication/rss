@@ -6,7 +6,6 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
@@ -221,7 +220,7 @@ impl GuidBuilder
     ///         .is_permalink(Some(true))
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Guid, String>
+    pub fn finalize(&self) -> Result<Guid, Error>
     {
         let is_permalink = match self.is_permalink {
             Some(val) => val,

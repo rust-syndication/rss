@@ -6,12 +6,11 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use string_utils;
 use toxml::ToXml;
+use url::Url;
 
 /// A representation of the `<cloud>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -368,13 +367,13 @@ impl CloudBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut CloudBuilder, String>
+    pub fn validate(&mut self) -> Result<&mut CloudBuilder, Error>
     {
         if self.port < 0 {
-            return Err("Cloud Port cannot be a negative value".to_owned());
+            return Err(Error::Validation(String::from("Cloud Port cannot be a negative value")));
         }
 
-        string_utils::str_to_url(self.domain.as_str())?;
+        Url::parse(self.domain.as_str())?;
         CloudProtocol::value_of(self.protocol.as_str())?;
 
         Ok(self)
@@ -396,9 +395,9 @@ impl CloudBuilder
     ///         .protocol("soap")
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Cloud, String>
+    pub fn finalize(&self) -> Result<Cloud, Error>
     {
-        let port = string_utils::i64_to_string(self.port)?;
+        let port = self.port.to_string();
 
         Ok(Cloud { domain: self.domain.clone(),
                    port: port,
@@ -427,15 +426,15 @@ enum CloudProtocol
 impl CloudProtocol
 {
     // Convert `&str` to `CloudProtocol`.
-    pub fn value_of(s: &str) -> Result<CloudProtocol, String>
+    pub fn value_of(s: &str) -> Result<CloudProtocol, Error>
     {
         match s {
             "http-post" => Ok(CloudProtocol::HttpPost),
             "xml-rpc" => Ok(CloudProtocol::XmlRpc),
             "soap" => Ok(CloudProtocol::Soap),
             _ => {
-                Err(format!("Invalid value: {}",
-                            s))
+                Err(Error::Validation(String::from(format!("Invalid value: {}",
+                                                           s))))
             },
         }
     }

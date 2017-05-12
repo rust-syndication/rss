@@ -11,11 +11,9 @@ use error::Error;
 use extension::{self, ExtensionMap};
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesChannelExtension;
-
 use fromxml::{self, FromXml};
 use image::Image;
 use item::Item;
-
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
 use std::collections::HashMap;
@@ -349,7 +347,7 @@ impl FromXml for Channel
                 Ok(Event::End(_)) => {
                     if !channel.extensions.is_empty() {
                         if let Some(map) = channel.extensions.remove("itunes") {
-                            channel.itunes_ext = Some(ITunesChannelExtension::from_map(map));
+                            channel.itunes_ext = Some(ITunesChannelExtension::from_map(map)?);
                         }
 
                         if let Some(map) = channel.extensions.remove("dc") {

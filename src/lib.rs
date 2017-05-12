@@ -66,6 +66,7 @@ pub use channel::Channel;
 
 mod item;
 pub use item::Item;
+pub use item::ItemBuilder;
 
 mod category;
 pub use category::Category;
@@ -101,5 +102,3 @@ pub use extension::Extension;
 
 mod error;
 pub use error::Error;
-
-mod string_utils;

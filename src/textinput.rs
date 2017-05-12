@@ -6,12 +6,11 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use string_utils;
 use toxml::{ToXml, XmlWriterExt};
+use url::Url;
 
 /// A representation of the `<textInput>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -299,9 +298,9 @@ impl TextInputBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut TextInputBuilder, String>
+    pub fn validate(&mut self) -> Result<&mut TextInputBuilder, Error>
     {
-        string_utils::str_to_url(self.link.clone().as_str())?;
+        Url::parse(self.link.clone().as_str())?;
 
         Ok(self)
     }
@@ -321,7 +320,7 @@ impl TextInputBuilder
     ///         .finalize()
     ///         .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<TextInput, String>
+    pub fn finalize(&self) -> Result<TextInput, Error>
     {
         Ok(TextInput { title: self.title.clone(),
                        description: self.description.clone(),

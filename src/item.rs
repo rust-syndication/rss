@@ -6,19 +6,19 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use category::Category;
+use chrono::DateTime;
 use enclosure::Enclosure;
 use error::Error;
 use extension::ExtensionMap;
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesItemExtension;
-
 use fromxml::{self, FromXml};
 use guid::Guid;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
 use source::Source;
-use string_utils;
 use toxml::{ToXml, XmlWriterExt};
+use url::Url;
 
 /// A representation of the `<item>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -666,6 +666,7 @@ pub struct ItemBuilder
     pub_date: Option<String>,
     source: Option<Source>,
     itunes_ext: Option<ITunesItemExtension>,
+    dublin_core_ext: Option<DublinCoreExtension>,
 }
 
 impl ItemBuilder
@@ -938,6 +939,16 @@ impl ItemBuilder
         self
     }
 
+    /// Set the optional dublin_core_ext that exists under `Item`.
+    /// TODO: Add Example
+    pub fn dublin_core_ext(&mut self,
+                           dublin_core_ext: Option<DublinCoreExtension>)
+        -> &mut ItemBuilder
+    {
+        self.dublin_core_ext = dublin_core_ext;
+        self
+    }
+
     // TODO: add dublincore, extensions, content to builder
 
     /// Validate the contents of `Item`.
@@ -961,23 +972,26 @@ impl ItemBuilder
     ///     .validate().unwrap()
     ///     .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut ItemBuilder, String>
+    pub fn validate(&mut self) -> Result<&mut ItemBuilder, Error>
     {
         if self.title.is_none() && self.description.is_none() {
-            return Err("Either Title or Description must have a value.".to_owned());
+            return Err(Error::Validation(String::from("Either Title or Description must have a value.")));
         }
 
         let link = self.link.clone();
         if link.is_some() {
-            string_utils::str_to_url(link.unwrap().as_str())?;
+            Url::parse(link.unwrap().as_str())?;
         }
 
         let comments = self.comments.clone();
         if comments.is_some() {
-            string_utils::str_to_url(comments.unwrap().as_str())?;
+            Url::parse(comments.unwrap().as_str())?;
         }
 
-        string_utils::option_string_to_option_date(self.pub_date.clone())?;
+        let pub_date = self.pub_date.clone();
+        if pub_date.is_some() {
+            DateTime::parse_from_rfc2822(pub_date.unwrap().as_str())?;
+        }
 
         Ok(self)
     }
@@ -1004,7 +1018,7 @@ impl ItemBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<Item, String>
+    pub fn finalize(&self) -> Result<Item, Error>
     {
         Ok(Item { title: self.title.clone(),
                   link: self.link.clone(),

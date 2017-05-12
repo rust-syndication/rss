@@ -6,12 +6,11 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use string_utils;
 use toxml::{ToXml, XmlWriterExt};
+use url::Url;
 
 /// A representation of the `<image>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -502,24 +501,24 @@ impl ImageBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut ImageBuilder, String>
+    pub fn validate(&mut self) -> Result<&mut ImageBuilder, Error>
     {
         let url_string = self.url.clone();
         if !url_string.ends_with(".jpeg") && !url_string.ends_with(".jpg") && !url_string.ends_with(".png") &&
            !url_string.ends_with(".gif") {
-            return Err("Image Url must end with .jpeg, .png, or .gif".to_owned());
+            return Err(Error::Validation(String::from("Image Url must end with .jpeg, .png, or .gif")));
         }
 
-        string_utils::str_to_url(url_string.as_str())?;
-        string_utils::str_to_url(self.link.as_str())?;
+        Url::parse(url_string.as_str())?;
+        Url::parse(self.link.as_str())?;
 
         let width_opt = self.width;
         if width_opt.is_some() {
             let width = width_opt.unwrap();
             if width > 144 {
-                return Err("Image width cannot be greater than 144.".to_owned());
+                return Err(Error::Validation(String::from("Image width cannot be greater than 144.")));
             } else if width < 0 {
-                return Err("Image width cannot be a negative value.".to_owned());
+                return Err(Error::Validation(String::from("Image width cannot be a negative value.")));
             }
         }
 
@@ -527,9 +526,9 @@ impl ImageBuilder
         if height_opt.is_some() {
             let height = height_opt.unwrap();
             if height > 144 {
-                return Err("Image height cannot be greater than 400.".to_owned());
+                return Err(Error::Validation(String::from("Image height cannot be greater than 400.")));
             } else if height < 0 {
-                return Err("Image height cannot be a negative value.".to_owned());
+                return Err(Error::Validation(String::from("Image height cannot be a negative value.")));
             }
         }
 
@@ -553,17 +552,17 @@ impl ImageBuilder
     ///         .description(Some("This is a test".to_owned()))
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Image, String>
+    pub fn finalize(&self) -> Result<Image, Error>
     {
 
         let width = match self.width {
-            Some(val) => string_utils::i64_to_option_string(val)?,
-            None => string_utils::i64_to_option_string(88)?,
+            Some(val) => Some(val.to_string()),
+            None => Some(88.to_string()),
         };
 
         let height = match self.height {
-            Some(val) => string_utils::i64_to_option_string(val)?,
-            None => string_utils::i64_to_option_string(31)?,
+            Some(val) => Some(val.to_string()),
+            None => Some(31.to_string()),
         };
 
         Ok(Image { url: self.url.clone(),

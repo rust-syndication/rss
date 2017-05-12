@@ -6,12 +6,11 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use string_utils;
 use toxml::ToXml;
+use url::Url;
 
 /// A representation of the `<category>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -206,11 +205,11 @@ impl CategoryBuilder
     /// category_builder.finalize().unwrap();
     /// ```
 
-    pub fn validate(&mut self) -> Result<&mut CategoryBuilder, String>
+    pub fn validate(&mut self) -> Result<&mut CategoryBuilder, Error>
     {
         let domain = self.domain.clone();
         if domain.is_some() {
-            string_utils::str_to_url(domain.unwrap().as_str())?;
+            Url::parse(domain.unwrap().as_str())?;
         }
 
         Ok(self)
@@ -229,7 +228,7 @@ impl CategoryBuilder
     ///         .finalize()
     ///         .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<Category, String>
+    pub fn finalize(&self) -> Result<Category, Error>
     {
         Ok(Category { name: self.name.clone(),
                       domain: self.domain.clone(), })

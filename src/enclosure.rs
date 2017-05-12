@@ -6,13 +6,12 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-
 use fromxml::FromXml;
 use mime::Mime;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use string_utils;
 use toxml::ToXml;
+use url::Url;
 
 /// A representation of the `<enclosure>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -273,18 +272,18 @@ impl EnclosureBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut EnclosureBuilder, String>
+    pub fn validate(&mut self) -> Result<&mut EnclosureBuilder, Error>
     {
-        string_utils::str_to_url(self.url.as_str())?;
+        Url::parse(self.url.as_str())?;
 
         let mime = self.mime_type.parse::<Mime>();
         if mime.is_err() {
-            return Err(format!("Error: {:?}",
-                               mime.unwrap_err()));
+            return Err(Error::Validation(String::from(format!("Error: {:?}",
+                                                              mime.unwrap_err()))));
         }
 
         if self.length < 0 {
-            return Err("Enclosure Length cannot be a negative value".to_owned());
+            return Err(Error::Validation(String::from("Enclosure Length cannot be a negative value")));
         }
 
         Ok(self)
@@ -307,9 +306,9 @@ impl EnclosureBuilder
     ///         .mime_type("audio/ogg")
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Enclosure, String>
+    pub fn finalize(&self) -> Result<Enclosure, Error>
     {
-        let length = string_utils::i64_to_string(self.length)?;
+        let length = self.length.to_string();
 
         Ok(Enclosure { url: self.url.clone(),
                        length: length,
