@@ -490,7 +490,7 @@ impl FromXml for Item {
                             if let Some((ns, name)) = fromxml::extension_name(n) {
                                 parse_extension!(reader, element, ns, name, item.extensions);
                             } else {
-                                skip_element!(reader);
+                                try!(reader.read_to_end(n, &mut Vec::new()));
                             }
                         }
                     }

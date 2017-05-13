@@ -123,6 +123,7 @@ impl FromXml for TextInput {
         let mut name = None;
         let mut link = None;
         let mut buf = Vec::new();
+        let mut skip_buf = Vec::new();
 
         loop {
             match reader.read_event(&mut buf) {
@@ -132,7 +133,7 @@ impl FromXml for TextInput {
                         b"description" => description = element_text!(reader),
                         b"name" => name = element_text!(reader),
                         b"link" => link = element_text!(reader),
-                        _ => skip_element!(reader),
+                        n => try!(reader.read_to_end(n, &mut skip_buf)),
                     }
                 }
                 Ok(Event::End(_)) => {

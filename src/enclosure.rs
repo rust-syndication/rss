@@ -127,7 +127,17 @@ impl FromXml for Enclosure {
             }
         }
 
-        skip_element!(reader);
+        let mut depth = 1;
+        let mut buf = Vec::new();
+        while depth > 0 {
+            match reader.read_event(&mut buf) {
+                Ok(Event::Start(_)) => depth += 1,
+                Ok(Event::End(_)) => depth -= 1,
+                Ok(Event::Eof) => break,
+                Err(e) => return Err(e.into()),
+                _ => {},
+            }
+        }
 
         let url = url.unwrap_or_default();
         let length = length.unwrap_or_default();

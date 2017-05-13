@@ -35,14 +35,6 @@ macro_rules! element_text {
     })
 }
 
-macro_rules! skip_element {
-    ($reader:ident) => ({
-        let result = ::fromxml::skip_element($reader);
-        $reader = result.1;
-        try!(result.0)
-    })
-}
-
 macro_rules! parse_extension {
     ($reader:ident, $element:ident, $ns:ident, $name:ident, $extensions:expr) => ({
         let result = ::fromxml::parse_extension($reader, $element.attributes(), $ns, $name, &mut $extensions);
@@ -55,24 +47,23 @@ pub fn element_text<R: BufRead>(mut reader: Reader<R>)
                                 -> (Result<Option<String>, Error>, Reader<R>) {
     let mut content: Option<String> = None;
     let mut buf = Vec::new();
+    let mut skip_buf = Vec::new();
 
     loop {
         match reader.read_event(&mut buf) {
-            Ok(Event::Start(_)) => {
-                let result = skip_element(reader);
-                reader = result.1;
-                try_reader!(result.0, reader);
+            Ok(Event::Start(element)) => {
+                try_reader!(reader.read_to_end(element.name(), &mut skip_buf), reader);
             }
             Ok(Event::End(_)) => {
                 break;
             }
             Ok(Event::CData(element)) => {
-                let text = &*element;
-                content = Some(try_reader!(str::from_utf8(text), reader).to_string());
+                let text = reader.decode(&*element).into_owned();
+                content = Some(text);
             }
             Ok(Event::Text(element)) => {
-                let text = try_reader!(element.unescaped(), reader);
-                content = Some(try_reader!(String::from_utf8(text.into_owned()), reader));
+                let text = try_reader!(element.unescape_and_decode(&reader), reader);
+                content = Some(text);
             }
             Ok(Event::Eof) => break,
             Err(err) => return (Err(err.into()), reader),
@@ -82,28 +73,6 @@ pub fn element_text<R: BufRead>(mut reader: Reader<R>)
     }
 
     (Ok(content), reader)
-}
-
-pub fn skip_element<R: BufRead>(mut reader: Reader<R>) -> (Result<(), Error>, Reader<R>) {
-    let mut buf = Vec::new();
-    loop {
-        match reader.read_event(&mut buf) {
-            Ok(Event::Start(_)) => {
-                let result = skip_element(reader);
-                reader = result.1;
-                try_reader!(result.0, reader);
-            }
-            Ok(Event::End(_)) => {
-                return (Ok(()), reader);
-            }
-            Ok(Event::Eof) => break,
-            Err(err) => return (Err(err.into()), reader),
-            _ => {}
-        }
-        buf.clear();
-    }
-
-    (Err(Error::EOF), reader)
 }
 
 pub fn extension_name(element_name: &[u8]) -> Option<(&[u8], &[u8])> {

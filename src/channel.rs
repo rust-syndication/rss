@@ -916,6 +916,7 @@ impl Channel {
         let mut in_rss = false;
         let mut namespaces = HashMap::new();
         let mut buf = Vec::new();
+        let mut skip_buf = Vec::new();
 
         loop {
             match reader.read_event(&mut buf) {
@@ -953,7 +954,7 @@ impl Channel {
                             channel.namespaces = namespaces;
                             return Ok(channel);
                         }
-                        _ => skip_element!(reader),
+                        name => try!(reader.read_to_end(name, &mut skip_buf)),
                     }
                 }
                 Ok(Event::End(_)) => in_rss = false,
@@ -1302,6 +1303,7 @@ impl FromXml for Channel {
                                        -> Result<(Self, Reader<R>), Error> {
         let mut channel = Channel::default();
         let mut buf = Vec::new();
+        let mut skip_buf = Vec::new();
 
         loop {
             match reader.read_event(&mut buf) {
@@ -1361,16 +1363,16 @@ impl FromXml for Channel {
                         b"docs" => channel.docs = element_text!(reader),
                         b"ttl" => channel.ttl = element_text!(reader),
                         b"skipHours" => {
-                            let mut buf = Vec::new();
                             loop {
-                                match reader.read_event(&mut buf) {
+                                skip_buf.clear();
+                                match reader.read_event(&mut skip_buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"hour" {
                                             if let Some(content) = element_text!(reader) {
                                                 channel.skip_hours.push(content);
                                             }
                                         } else {
-                                            skip_element!(reader);
+                                            try!(reader.read_to_end(element.name(), &mut Vec::new()));
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -1380,20 +1382,19 @@ impl FromXml for Channel {
                                     Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
-                                buf.clear();
                             }
                         }
                         b"skipDays" => {
-                            let mut buf = Vec::new();
                             loop {
-                                match reader.read_event(&mut buf) {
+                                skip_buf.clear();
+                                match reader.read_event(&mut skip_buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"day" {
                                             if let Some(content) = element_text!(reader) {
                                                 channel.skip_days.push(content);
                                             }
                                         } else {
-                                            skip_element!(reader);
+                                            try!(reader.read_to_end(element.name(), &mut Vec::new()));
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -1403,14 +1404,13 @@ impl FromXml for Channel {
                                     Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
-                                buf.clear();
                             }
                         }
-                        _ => {
+                        n => {
                             if let Some((ns, name)) = fromxml::extension_name(element.name()) {
                                 parse_extension!(reader, element, ns, name, channel.extensions);
                             } else {
-                                skip_element!(reader);
+                                try!(reader.read_to_end(n, &mut skip_buf));
                             }
                         }
                     }

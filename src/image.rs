@@ -260,6 +260,7 @@ impl FromXml for Image {
         let mut height = None;
         let mut description = None;
         let mut buf = Vec::new();
+        let mut skip_buf = Vec::new();
 
         loop {
             match reader.read_event(&mut buf) {
@@ -271,7 +272,7 @@ impl FromXml for Image {
                         b"width" => width = element_text!(reader),
                         b"height" => height = element_text!(reader),
                         b"description" => description = element_text!(reader),
-                        _ => skip_element!(reader),
+                        n => try!(reader.read_to_end(n, &mut skip_buf)),
                     }
                 }
                 Ok(Event::End(_)) => {
