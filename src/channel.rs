@@ -925,24 +925,15 @@ impl Channel {
                         b"rss" if !in_rss => {
                             for attr in element.attributes().with_checks(false) {
                                 if let Ok(attr) = attr {
-                                    let split =
-                                        attr.key.splitn(2, |b| *b == b':').collect::<Vec<_>>();
-                                    if split.len() != 2 {
+
+                                    if !attr.key.starts_with(b"xmlns:") 
+                                        || attr.key == b"xmlns:itunes"
+                                        || attr.key == b"xmlns:dc" {
                                         continue;
                                     }
 
-                                    let ns = unsafe { split.get_unchecked(0) };
-                                    if ns != b"xmlns" {
-                                        continue;
-                                    }
-
-                                    let name = unsafe { split.get_unchecked(1) };
-                                    if name == b"itunes" || name == b"dc" {
-                                        continue;
-                                    }
-
-                                    let key = str::from_utf8(name)?.to_string();
-                                    let value = reader.decode(attr.value).into_owned();
+                                    let key = str::from_utf8(&attr.key[6..])?.to_string();
+                                    let value = attr.unescape_and_decode_value(&reader)?;
                                     namespaces.insert(key, value);
                                 }
                             }

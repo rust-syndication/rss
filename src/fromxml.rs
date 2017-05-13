@@ -148,15 +148,7 @@ fn parse_extension_element<R: BufRead>(mut reader: Reader<R>,
                 let child = parse_extension_element(reader, element.attributes());
                 reader = child.1;
                 let ext = try_reader!(child.0, reader);
-
-                let name = {
-                    let split = element.name().splitn(2, |b| *b == b':').collect::<Vec<_>>();
-                    if split.len() == 2 {
-                        try_reader!(str::from_utf8(unsafe { split.get_unchecked(1) }), reader)
-                    } else {
-                        try_reader!(str::from_utf8(unsafe { split.get_unchecked(0) }), reader)
-                    }
-                };
+                let name = try_reader!(str::from_utf8(element.local_name()), reader);
 
                 let ext = {
                     if let Some(list) = children.get_mut(name) {
