@@ -461,7 +461,6 @@ impl ITunesItemExtension
 
 impl ToXml for ITunesItemExtension
 {
-    /// TODO: Document this
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

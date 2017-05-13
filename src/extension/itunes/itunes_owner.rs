@@ -100,7 +100,6 @@ impl ITunesOwner
 
 impl ToXml for ITunesOwner
 {
-    /// TODO: Document this
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

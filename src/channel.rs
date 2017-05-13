@@ -1358,7 +1358,6 @@ impl Channel
 
 impl ToString for Channel
 {
-    /// TODO: document to string
     fn to_string(&self) -> String
     {
         let buf = self.write_to(Vec::new())
@@ -1370,7 +1369,6 @@ impl ToString for Channel
 
 impl FromXml for Channel
 {
-    /// TODO: document from xml
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -1523,7 +1521,6 @@ impl FromXml for Channel
 
 impl ToXml for Channel
 {
-    /// TODO: : document from xml
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

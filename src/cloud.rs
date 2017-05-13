@@ -153,7 +153,6 @@ impl Cloud
 
 impl FromXml for Cloud
 {
-    /// TODO: document from xml
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
         -> Result<(Self, XmlReader<R>), Error>
@@ -214,7 +213,6 @@ impl FromXml for Cloud
 
 impl ToXml for Cloud
 {
-    /// TODO: document to xml
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>

@@ -1,6 +1,7 @@
 extern crate rss;
 
-use rss::{Channel, ItemBuilder, extension};
+use rss::{Channel, ChannelBuilder, ItemBuilder, extension};
+use std::collections::HashMap;
 
 macro_rules! test_write {
     ($channel:ident) => ({
@@ -136,34 +137,38 @@ fn write_dublincore()
     test_write!(channel);
 }
 
-// TODO: FIX THIS
-// #[test]
-// fn verify_write_format()
-// {
-//     let mut channel = Channel::default();
-//     channel.title = "Title".to_string();
-//     channel.link = "http://example.com/".to_string();
-//     channel.description = "Description".to_string();
-//     channel.items.push({
-// TODO: change to ItemBuilder
-//                            let item = ItemBuilder::new()
-//
-// .itunes_ext(Some(extension::itunes::ITunesItemExtensionBuilder::new().finalize().unwrap()))
-//
-// .dublin_core_ext(Some(extension::dublincore::DublinCoreExtensionBuilder::new().finalize().unwrap()))
-//                            .finalize()
-//                            .unwrap();
-//                            item
-//                        });
-//     channel.namespaces.insert("ext".to_string(),
-//                               "http://example.com/".to_string());
+#[test]
+fn verify_write_format()
+{
+    let item = ItemBuilder::new()
+        .itunes_ext(Some(extension::itunes::ITunesItemExtensionBuilder::new()
+                             .finalize()
+                             .unwrap()))
+        .dublin_core_ext(Some(extension::dublincore::DublinCoreExtensionBuilder::new()
+                                  .finalize()
+                                  .unwrap()))
+        .finalize()
+        .unwrap();
 
-//     let output = include_str!("data/verify_write_format.xml")
-//         .replace("\n",
-//                  "")
-//         .replace("\t",
-//                  "");
+    let mut namespaces: HashMap<String, String> = HashMap::new();
+    namespaces.insert(String::from("ext"),
+                      String::from("http://example.com/"));
 
-//     assert_eq!(channel.to_string(),
-//                output);
-// }
+    let channel = ChannelBuilder::new()
+        .title("Title")
+        .link("http://example.com/")
+        .description("Description")
+        .items(vec![item])
+        .namespaces(namespaces)
+        .finalize()
+        .unwrap();
+
+    let output = include_str!("data/verify_write_format.xml")
+        .replace("\n",
+                 "")
+        .replace("\t",
+                 "");
+
+    assert_eq!(channel.to_string(),
+               output);
+}
