@@ -6,6 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use chrono::ParseError as DateParseError;
+use curl::Error as CurlError;
 use quick_xml::error::Error as XmlError;
 use std::error::Error as StdError;
 use std::fmt;
@@ -20,6 +21,10 @@ pub enum Error
 {
     /// An error occured during validation
     Validation(String),
+    /// An error occured while reading channel from url.
+    FromUrl(String),
+    /// An error occurred during curl.
+    CurlParsing(CurlError),
     /// An error occured while parsing a str to i64.
     IntParsing(ParseIntError),
     /// An error occured during parsing dates from str.
@@ -42,6 +47,8 @@ impl StdError for Error
     {
         match *self {
             Error::Validation(ref err) => err,
+            Error::FromUrl(ref err) => err,
+            Error::CurlParsing(ref err) => err.description(),
             Error::IntParsing(ref err) => err.description(),
             Error::DateParsing(ref err) => err.description(),
             Error::UrlParsing(ref err) => err.description(),
@@ -55,6 +62,7 @@ impl StdError for Error
     fn cause(&self) -> Option<&StdError>
     {
         match *self {
+            Error::CurlParsing(ref err) => Some(err),
             Error::IntParsing(ref err) => Some(err),
             Error::DateParsing(ref err) => Some(err),
             Error::UrlParsing(ref err) => Some(err),
@@ -74,6 +82,14 @@ impl fmt::Display for Error
     {
         match *self {
             Error::Validation(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::FromUrl(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::CurlParsing(ref err) => {
                 fmt::Display::fmt(err,
                                   f)
             },
@@ -163,5 +179,13 @@ impl From<ParseIntError> for Error
     fn from(err: ParseIntError) -> Error
     {
         Error::IntParsing(err)
+    }
+}
+
+impl From<CurlError> for Error
+{
+    fn from(err: CurlError) -> Error
+    {
+        Error::CurlParsing(err)
     }
 }

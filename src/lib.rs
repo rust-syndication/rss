@@ -63,6 +63,7 @@ mod toxml;
 
 mod channel;
 pub use channel::Channel;
+pub use channel::ChannelBuilder;
 
 mod item;
 pub use item::Item;
