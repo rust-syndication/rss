@@ -176,7 +176,9 @@ fn parse_extension_element<R: BufRead>(mut reader: XmlReader<R>,
     let mut attrs = HashMap::<String, String>::new();
     let mut content = None;
 
-    for attr in element.attributes().with_checks(false).unescaped() {
+    for attr in element.attributes()
+                       .with_checks(false)
+                       .unescaped() {
         if let Ok(attr) = attr {
             let key = try_reader!(str::from_utf8(attr.0),
                                   reader);

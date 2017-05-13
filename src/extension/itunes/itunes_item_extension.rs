@@ -82,7 +82,8 @@ impl ITunesItemExtension
     /// ```
     pub fn author(&self) -> Option<String>
     {
-        self.author.clone()
+        self.author
+            .clone()
     }
 
 
@@ -119,7 +120,8 @@ impl ITunesItemExtension
     /// ```
     pub fn block(&self) -> Option<String>
     {
-        self.block.clone()
+        self.block
+            .clone()
     }
 
 
@@ -156,7 +158,8 @@ impl ITunesItemExtension
     /// ```
     pub fn image(&self) -> Option<String>
     {
-        self.image.clone()
+        self.image
+            .clone()
     }
 
 
@@ -193,7 +196,8 @@ impl ITunesItemExtension
     /// ```
     pub fn duration(&self) -> Option<String>
     {
-        self.duration.clone()
+        self.duration
+            .clone()
     }
 
 
@@ -230,7 +234,8 @@ impl ITunesItemExtension
     /// ```
     pub fn explicit(&self) -> Option<String>
     {
-        self.explicit.clone()
+        self.explicit
+            .clone()
     }
 
 
@@ -268,7 +273,8 @@ impl ITunesItemExtension
     /// ```
     pub fn closed_captioned(&self) -> Option<String>
     {
-        self.closed_captioned.clone()
+        self.closed_captioned
+            .clone()
     }
 
 
@@ -305,7 +311,8 @@ impl ITunesItemExtension
     /// ```
     pub fn order(&self) -> Option<String>
     {
-        self.order.clone()
+        self.order
+            .clone()
     }
 
 
@@ -342,7 +349,8 @@ impl ITunesItemExtension
     /// ```
     pub fn subtitle(&self) -> Option<String>
     {
-        self.subtitle.clone()
+        self.subtitle
+            .clone()
     }
 
 
@@ -379,7 +387,8 @@ impl ITunesItemExtension
     /// ```
     pub fn summary(&self) -> Option<String>
     {
-        self.summary.clone()
+        self.summary
+            .clone()
     }
 
 
@@ -416,7 +425,8 @@ impl ITunesItemExtension
     /// ```
     pub fn keywords(&self) -> Option<String>
     {
-        self.keywords.clone()
+        self.keywords
+            .clone()
     }
 }
 
@@ -456,17 +466,20 @@ impl ToXml for ITunesItemExtension
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>
     {
-        if let Some(author) = self.author.as_ref() {
+        if let Some(author) = self.author
+                                  .as_ref() {
             writer.write_text_element(b"itunes:author",
                                       author)?;
         }
 
-        if let Some(block) = self.block.as_ref() {
+        if let Some(block) = self.block
+                                 .as_ref() {
             writer.write_text_element(b"itunes:block",
                                       block)?;
         }
 
-        if let Some(image) = self.image.as_ref() {
+        if let Some(image) = self.image
+                                 .as_ref() {
             let element = Element::new(b"itunes:image");
             writer.write(Event::Start({
                                           let mut element = element.clone();
@@ -476,37 +489,45 @@ impl ToXml for ITunesItemExtension
             writer.write(Event::End(element))?;
         }
 
-        if let Some(duration) = self.duration.as_ref() {
+        if let Some(duration) = self.duration
+                                    .as_ref() {
             writer.write_text_element(b"itunes:duration",
                                       duration)?;
         }
 
-        if let Some(explicit) = self.explicit.as_ref() {
+        if let Some(explicit) = self.explicit
+                                    .as_ref() {
             writer.write_text_element(b"itunes:explicit",
                                       explicit)?;
         }
 
-        if let Some(closed_captioned) = self.closed_captioned.as_ref() {
+        if let Some(closed_captioned) =
+            self.closed_captioned
+                .as_ref() {
             writer.write_text_element(b"itunes:isClosedCaptioned",
                                       closed_captioned)?;
         }
 
-        if let Some(order) = self.order.as_ref() {
+        if let Some(order) = self.order
+                                 .as_ref() {
             writer.write_text_element(b"itunes:order",
                                       order)?;
         }
 
-        if let Some(subtitle) = self.subtitle.as_ref() {
+        if let Some(subtitle) = self.subtitle
+                                    .as_ref() {
             writer.write_text_element(b"itunes:subtitle",
                                       subtitle)?;
         }
 
-        if let Some(summary) = self.summary.as_ref() {
+        if let Some(summary) = self.summary
+                                   .as_ref() {
             writer.write_text_element(b"itunes:summary",
                                       summary)?;
         }
 
-        if let Some(keywords) = self.keywords.as_ref() {
+        if let Some(keywords) = self.keywords
+                                    .as_ref() {
             writer.write_text_element(b"itunes:keywords",
                                       keywords)?;
         }
@@ -764,15 +785,25 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn finalize(&self) -> Result<ITunesItemExtension, Error>
     {
-        Ok(ITunesItemExtension { author: self.author.clone(),
-                                 block: self.block.clone(),
-                                 image: self.image.clone(),
-                                 duration: self.duration.clone(),
-                                 explicit: self.explicit.clone(),
-                                 closed_captioned: self.closed_captioned.clone(),
-                                 order: self.order.clone(),
-                                 subtitle: self.subtitle.clone(),
-                                 summary: self.summary.clone(),
-                                 keywords: self.keywords.clone(), })
+        Ok(ITunesItemExtension { author: self.author
+                                             .clone(),
+                                 block: self.block
+                                            .clone(),
+                                 image: self.image
+                                            .clone(),
+                                 duration: self.duration
+                                               .clone(),
+                                 explicit: self.explicit
+                                               .clone(),
+                                 closed_captioned: self.closed_captioned
+                                                       .clone(),
+                                 order: self.order
+                                            .clone(),
+                                 subtitle: self.subtitle
+                                               .clone(),
+                                 summary: self.summary
+                                              .clone(),
+                                 keywords: self.keywords
+                                               .clone(), })
     }
 }

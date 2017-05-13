@@ -42,7 +42,8 @@ impl Source
     /// ```
     pub fn url(&self) -> String
     {
-        self.url.clone()
+        self.url
+            .clone()
     }
 
     /// Get the source that exists under `Source`.
@@ -66,7 +67,8 @@ impl Source
     /// ```
     pub fn title(&self) -> Option<String>
     {
-        self.title.clone()
+        self.title
+            .clone()
     }
 }
 
@@ -79,10 +81,13 @@ impl FromXml for Source
     {
         let mut url = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in element.attributes()
+                           .with_checks(false)
+                           .unescaped() {
             if let Ok(attr) = attr {
                 if attr.0 == b"url" {
-                    url = Some(String::from_utf8(attr.1.into_owned())?);
+                    url = Some(String::from_utf8(attr.1
+                                                     .into_owned())?);
                     break;
                 }
             }
@@ -108,11 +113,15 @@ impl ToXml for Source
 
         writer.write(Event::Start({
                                       let mut element = element.clone();
-                                      element.extend_attributes(::std::iter::once((b"url", self.url.as_str())));
+                                      element.extend_attributes(::std::iter::once((b"url",
+                                                                                   self.url
+                                                                                       .as_str())));
                                       element
                                   }))?;
 
-        if let Some(text) = self.title.as_ref().map(|s| s.as_str()) {
+        if let Some(text) = self.title
+                                .as_ref()
+                                .map(|s| s.as_str()) {
             writer.write(Event::Text(Element::new(text)))?;
         }
 
@@ -198,7 +207,8 @@ impl SourceBuilder
     /// ```
     pub fn validate(&mut self) -> Result<&mut SourceBuilder, Error>
     {
-        Url::parse(self.url.as_str())?;
+        Url::parse(self.url
+                       .as_str())?;
 
         Ok(self)
     }
@@ -219,7 +229,9 @@ impl SourceBuilder
     /// ```
     pub fn finalize(&self) -> Result<Source, Error>
     {
-        Ok(Source { url: self.url.clone(),
-                    title: self.title.clone(), })
+        Ok(Source { url: self.url
+                             .clone(),
+                    title: self.title
+                               .clone(), })
     }
 }

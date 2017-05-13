@@ -47,7 +47,8 @@ impl Enclosure
     /// ```
     pub fn url(&self) -> String
     {
-        self.url.clone()
+        self.url
+            .clone()
     }
 
 
@@ -74,7 +75,8 @@ impl Enclosure
     /// ```
     pub fn length(&self) -> String
     {
-        self.length.clone()
+        self.length
+            .clone()
     }
 
 
@@ -100,7 +102,8 @@ impl Enclosure
     /// ```
     pub fn mime_type(&self) -> String
     {
-        self.mime_type.clone()
+        self.mime_type
+            .clone()
     }
 }
 
@@ -115,17 +118,22 @@ impl FromXml for Enclosure
         let mut length = None;
         let mut mime_type = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in element.attributes()
+                           .with_checks(false)
+                           .unescaped() {
             if let Ok(attr) = attr {
                 match attr.0 {
                     b"url" if url.is_none() => {
-                        url = Some(String::from_utf8(attr.1.into_owned())?);
+                        url = Some(String::from_utf8(attr.1
+                                                         .into_owned())?);
                     },
                     b"length" if length.is_none() => {
-                        length = Some(String::from_utf8(attr.1.into_owned())?);
+                        length = Some(String::from_utf8(attr.1
+                                                            .into_owned())?);
                     },
                     b"type" if mime_type.is_none() => {
-                        mime_type = Some(String::from_utf8(attr.1.into_owned())?);
+                        mime_type = Some(String::from_utf8(attr.1
+                                                               .into_owned())?);
                     },
                     _ => {},
                 }
@@ -160,7 +168,8 @@ impl ToXml for Enclosure
                                       let attrs = &[(b"url" as &[u8], &self.url),
                                                     (b"length", &self.length),
                                                     (b"type", &self.mime_type)];
-                                      element.extend_attributes(attrs.into_iter().map(|v| *v));
+                                      element.extend_attributes(attrs.into_iter()
+                                                                     .map(|v| *v));
 
                                       element
                                   }))?;
@@ -274,9 +283,11 @@ impl EnclosureBuilder
     /// ```
     pub fn validate(&mut self) -> Result<&mut EnclosureBuilder, Error>
     {
-        Url::parse(self.url.as_str())?;
+        Url::parse(self.url
+                       .as_str())?;
 
-        let mime = self.mime_type.parse::<Mime>();
+        let mime = self.mime_type
+                       .parse::<Mime>();
         if mime.is_err() {
             return Err(Error::Validation(String::from(format!("Error: {:?}",
                                                               mime.unwrap_err()))));
@@ -308,10 +319,13 @@ impl EnclosureBuilder
     /// ```
     pub fn finalize(&self) -> Result<Enclosure, Error>
     {
-        let length = self.length.to_string();
+        let length = self.length
+                         .to_string();
 
-        Ok(Enclosure { url: self.url.clone(),
+        Ok(Enclosure { url: self.url
+                                .clone(),
                        length: length,
-                       mime_type: self.mime_type.clone(), })
+                       mime_type: self.mime_type
+                                      .clone(), })
     }
 }

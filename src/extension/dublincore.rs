@@ -59,105 +59,120 @@ impl DublinCoreExtension
     /// TODO: Add Example
     pub fn contributors(&self) -> Vec<String>
     {
-        self.contributors.clone()
+        self.contributors
+            .clone()
     }
 
     /// Get the coverages that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn coverages(&self) -> Vec<String>
     {
-        self.coverages.clone()
+        self.coverages
+            .clone()
     }
 
     /// Get the creators that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn creators(&self) -> Vec<String>
     {
-        self.creators.clone()
+        self.creators
+            .clone()
     }
 
     /// Get the dates that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn dates(&self) -> Vec<String>
     {
-        self.dates.clone()
+        self.dates
+            .clone()
     }
 
     /// Get the descriptions that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn descriptions(&self) -> Vec<String>
     {
-        self.descriptions.clone()
+        self.descriptions
+            .clone()
     }
 
     /// Get the formats that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn formats(&self) -> Vec<String>
     {
-        self.formats.clone()
+        self.formats
+            .clone()
     }
 
     /// Get the identifiers that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn identifiers(&self) -> Vec<String>
     {
-        self.identifiers.clone()
+        self.identifiers
+            .clone()
     }
 
     /// Get the languages that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn languages(&self) -> Vec<String>
     {
-        self.languages.clone()
+        self.languages
+            .clone()
     }
 
     /// Get the publishers that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn publishers(&self) -> Vec<String>
     {
-        self.publishers.clone()
+        self.publishers
+            .clone()
     }
 
     /// Get the relations that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn relations(&self) -> Vec<String>
     {
-        self.relations.clone()
+        self.relations
+            .clone()
     }
 
     /// Get the rights that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn rights(&self) -> Vec<String>
     {
-        self.rights.clone()
+        self.rights
+            .clone()
     }
 
     /// Get the sources that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn sources(&self) -> Vec<String>
     {
-        self.sources.clone()
+        self.sources
+            .clone()
     }
 
     /// Get the subjects that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn subjects(&self) -> Vec<String>
     {
-        self.subjects.clone()
+        self.subjects
+            .clone()
     }
 
     /// Get the titles that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn titles(&self) -> Vec<String>
     {
-        self.titles.clone()
+        self.titles
+            .clone()
     }
 
     /// Get the resource_types that exists under `DublinCoreExtension`.
     /// TODO: Add Example
     pub fn resource_types(&self) -> Vec<String>
     {
-        self.resource_types.clone()
+        self.resource_types
+            .clone()
     }
 }
 
@@ -463,20 +478,35 @@ impl DublinCoreExtensionBuilder
     /// TODO: Add Example
     pub fn finalize(&self) -> Result<DublinCoreExtension, Error>
     {
-        Ok(DublinCoreExtension { contributors: self.contributors.clone(),
-                                 coverages: self.coverages.clone(),
-                                 creators: self.creators.clone(),
-                                 dates: self.dates.clone(),
-                                 descriptions: self.descriptions.clone(),
-                                 formats: self.formats.clone(),
-                                 identifiers: self.identifiers.clone(),
-                                 languages: self.languages.clone(),
-                                 publishers: self.publishers.clone(),
-                                 relations: self.relations.clone(),
-                                 rights: self.rights.clone(),
-                                 sources: self.sources.clone(),
-                                 subjects: self.subjects.clone(),
-                                 titles: self.titles.clone(),
-                                 resource_types: self.resource_types.clone(), })
+        Ok(DublinCoreExtension { contributors: self.contributors
+                                                   .clone(),
+                                 coverages: self.coverages
+                                                .clone(),
+                                 creators: self.creators
+                                               .clone(),
+                                 dates: self.dates
+                                            .clone(),
+                                 descriptions: self.descriptions
+                                                   .clone(),
+                                 formats: self.formats
+                                              .clone(),
+                                 identifiers: self.identifiers
+                                                  .clone(),
+                                 languages: self.languages
+                                                .clone(),
+                                 publishers: self.publishers
+                                                 .clone(),
+                                 relations: self.relations
+                                                .clone(),
+                                 rights: self.rights
+                                             .clone(),
+                                 sources: self.sources
+                                              .clone(),
+                                 subjects: self.subjects
+                                               .clone(),
+                                 titles: self.titles
+                                             .clone(),
+                                 resource_types: self.resource_types
+                                                     .clone(), })
     }
 }

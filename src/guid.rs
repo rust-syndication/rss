@@ -85,7 +85,8 @@ impl Guid
     /// ```
     pub fn value(&self) -> String
     {
-        self.value.clone()
+        self.value
+            .clone()
     }
 }
 
@@ -108,7 +109,9 @@ impl FromXml for Guid
     {
         let mut is_permalink = true;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in element.attributes()
+                           .with_checks(false)
+                           .unescaped() {
             if let Ok(attr) = attr {
                 if attr.0 == b"isPermaLink" {
                     is_permalink = &attr.1 as &[u8] != b"false";
@@ -142,7 +145,8 @@ impl ToXml for Guid
                                       element
                                   }))?;
 
-        writer.write(Event::Text(Element::new(self.value.as_str())))?;
+        writer.write(Event::Text(Element::new(self.value
+                                                  .as_str())))?;
 
         writer.write(Event::End(element))
     }
@@ -228,6 +232,7 @@ impl GuidBuilder
         };
 
         Ok(Guid { is_permalink: is_permalink,
-                  value: self.value.clone(), })
+                  value: self.value
+                             .clone(), })
     }
 }

@@ -55,7 +55,8 @@ impl ITunesOwner
     /// ```
     pub fn name(&self) -> Option<String>
     {
-        self.name.clone()
+        self.name
+            .clone()
     }
 
 
@@ -92,7 +93,8 @@ impl ITunesOwner
     /// ```
     pub fn email(&self) -> Option<String>
     {
-        self.email.clone()
+        self.email
+            .clone()
     }
 }
 
@@ -107,12 +109,14 @@ impl ToXml for ITunesOwner
 
         writer.write(Event::Start(element.clone()))?;
 
-        if let Some(name) = self.name.as_ref() {
+        if let Some(name) = self.name
+                                .as_ref() {
             writer.write_text_element(b"name",
                                       name)?;
         }
 
-        if let Some(email) = self.email.as_ref() {
+        if let Some(email) = self.email
+                                 .as_ref() {
             writer.write_text_element(b"email",
                                       email)?;
         }
@@ -196,7 +200,9 @@ impl ITunesOwnerBuilder
     /// ```
     pub fn finalize(&self) -> Result<ITunesOwner, Error>
     {
-        Ok(ITunesOwner { name: self.name.clone(),
-                         email: self.email.clone(), })
+        Ok(ITunesOwner { name: self.name
+                                   .clone(),
+                         email: self.email
+                                    .clone(), })
     }
 }

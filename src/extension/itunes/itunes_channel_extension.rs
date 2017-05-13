@@ -86,7 +86,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn author(&self) -> Option<String>
     {
-        self.author.clone()
+        self.author
+            .clone()
     }
 
 
@@ -125,7 +126,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn block(&self) -> Option<String>
     {
-        self.block.clone()
+        self.block
+            .clone()
     }
 
 
@@ -160,7 +162,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn categories(&self) -> Vec<ITunesCategory>
     {
-        self.categories.clone()
+        self.categories
+            .clone()
     }
 
 
@@ -199,7 +202,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn image(&self) -> Option<String>
     {
-        self.image.clone()
+        self.image
+            .clone()
     }
 
 
@@ -238,7 +242,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn explicit(&self) -> Option<String>
     {
-        self.explicit.clone()
+        self.explicit
+            .clone()
     }
 
 
@@ -277,7 +282,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn complete(&self) -> Option<String>
     {
-        self.complete.clone()
+        self.complete
+            .clone()
     }
 
 
@@ -317,7 +323,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn new_feed_url(&self) -> Option<String>
     {
-        self.new_feed_url.clone()
+        self.new_feed_url
+            .clone()
     }
 
 
@@ -358,7 +365,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn owner(&self) -> Option<ITunesOwner>
     {
-        self.owner.clone()
+        self.owner
+            .clone()
     }
 
 
@@ -397,7 +405,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn subtitle(&self) -> Option<String>
     {
-        self.subtitle.clone()
+        self.subtitle
+            .clone()
     }
 
 
@@ -436,7 +445,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn summary(&self) -> Option<String>
     {
-        self.summary.clone()
+        self.summary
+            .clone()
     }
 
 
@@ -475,7 +485,8 @@ impl ITunesChannelExtension
     /// ```
     pub fn keywords(&self) -> Option<String>
     {
-        self.keywords.clone()
+        self.keywords
+            .clone()
     }
 }
 
@@ -515,19 +526,22 @@ impl ToXml for ITunesChannelExtension
                                    writer: &mut XmlWriter<W>)
         -> Result<(), XmlError>
     {
-        if let Some(author) = self.author.as_ref() {
+        if let Some(author) = self.author
+                                  .as_ref() {
             writer.write_text_element(b"itunes:author",
                                       author)?;
         }
 
-        if let Some(block) = self.block.as_ref() {
+        if let Some(block) = self.block
+                                 .as_ref() {
             writer.write_text_element(b"itunes:block",
                                       block)?;
         }
 
         writer.write_objects(&self.categories)?;
 
-        if let Some(image) = self.image.as_ref() {
+        if let Some(image) = self.image
+                                 .as_ref() {
             let element = Element::new(b"itunes:image");
             writer.write(Event::Start({
                                           let mut element = element.clone();
@@ -537,36 +551,44 @@ impl ToXml for ITunesChannelExtension
             writer.write(Event::End(element))?;
         }
 
-        if let Some(explicit) = self.explicit.as_ref() {
+        if let Some(explicit) = self.explicit
+                                    .as_ref() {
             writer.write_text_element(b"itunes:explicit",
                                       explicit)?;
         }
 
-        if let Some(complete) = self.complete.as_ref() {
+        if let Some(complete) = self.complete
+                                    .as_ref() {
             writer.write_text_element(b"itunes:complete",
                                       complete)?;
         }
 
-        if let Some(new_feed_url) = self.new_feed_url.as_ref() {
+        if let Some(new_feed_url) =
+            self.new_feed_url
+                .as_ref() {
             writer.write_text_element(b"itunes:new-feed-url",
                                       new_feed_url)?;
         }
 
-        if let Some(owner) = self.owner.as_ref() {
+        if let Some(owner) = self.owner
+                                 .as_ref() {
             writer.write_object(owner)?;
         }
 
-        if let Some(subtitle) = self.subtitle.as_ref() {
+        if let Some(subtitle) = self.subtitle
+                                    .as_ref() {
             writer.write_text_element(b"itunes:subtitle",
                                       subtitle)?;
         }
 
-        if let Some(summary) = self.summary.as_ref() {
+        if let Some(summary) = self.summary
+                                   .as_ref() {
             writer.write_text_element(b"itunes:summary",
                                       summary)?;
         }
 
-        if let Some(keywords) = self.keywords.as_ref() {
+        if let Some(keywords) = self.keywords
+                                    .as_ref() {
             writer.write_text_element(b"itunes:keywords",
                                       keywords)?;
         }
@@ -884,16 +906,27 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn finalize(&self) -> Result<ITunesChannelExtension, Error>
     {
-        Ok(ITunesChannelExtension { author: self.author.clone(),
-                                    block: self.block.clone(),
-                                    categories: self.categories.clone(),
-                                    image: self.image.clone(),
-                                    explicit: self.explicit.clone(),
-                                    complete: self.complete.clone(),
-                                    new_feed_url: self.new_feed_url.clone(),
-                                    owner: self.owner.clone(),
-                                    subtitle: self.subtitle.clone(),
-                                    summary: self.summary.clone(),
-                                    keywords: self.keywords.clone(), })
+        Ok(ITunesChannelExtension { author: self.author
+                                                .clone(),
+                                    block: self.block
+                                               .clone(),
+                                    categories: self.categories
+                                                    .clone(),
+                                    image: self.image
+                                               .clone(),
+                                    explicit: self.explicit
+                                                  .clone(),
+                                    complete: self.complete
+                                                  .clone(),
+                                    new_feed_url: self.new_feed_url
+                                                      .clone(),
+                                    owner: self.owner
+                                               .clone(),
+                                    subtitle: self.subtitle
+                                                  .clone(),
+                                    summary: self.summary
+                                                 .clone(),
+                                    keywords: self.keywords
+                                                  .clone(), })
     }
 }

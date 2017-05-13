@@ -49,7 +49,8 @@ impl Cloud
     /// ```
     pub fn domain(&self) -> String
     {
-        self.domain.clone()
+        self.domain
+            .clone()
     }
 
 
@@ -73,7 +74,8 @@ impl Cloud
     /// ```
     pub fn port(&self) -> String
     {
-        self.port.clone()
+        self.port
+            .clone()
     }
 
 
@@ -97,7 +99,8 @@ impl Cloud
     /// ```
     pub fn path(&self) -> String
     {
-        self.path.clone()
+        self.path
+            .clone()
     }
 
 
@@ -119,7 +122,8 @@ impl Cloud
     /// ```
     pub fn register_procedure(&self) -> String
     {
-        self.register_procedure.clone()
+        self.register_procedure
+            .clone()
     }
 
 
@@ -142,7 +146,8 @@ impl Cloud
     /// ```
     pub fn protocol(&self) -> String
     {
-        self.protocol.clone()
+        self.protocol
+            .clone()
     }
 }
 
@@ -159,23 +164,30 @@ impl FromXml for Cloud
         let mut register_procedure = None;
         let mut protocol = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in element.attributes()
+                           .with_checks(false)
+                           .unescaped() {
             if let Ok(attr) = attr {
                 match attr.0 {
                     b"domain" if domain.is_none() => {
-                        domain = Some(String::from_utf8(attr.1.into_owned())?);
+                        domain = Some(String::from_utf8(attr.1
+                                                            .into_owned())?);
                     },
                     b"port" if port.is_none() => {
-                        port = Some(String::from_utf8(attr.1.into_owned())?);
+                        port = Some(String::from_utf8(attr.1
+                                                          .into_owned())?);
                     },
                     b"path" if path.is_none() => {
-                        path = Some(String::from_utf8(attr.1.into_owned())?);
+                        path = Some(String::from_utf8(attr.1
+                                                          .into_owned())?);
                     },
                     b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure = Some(String::from_utf8(attr.1.into_owned())?);
+                        register_procedure = Some(String::from_utf8(attr.1
+                                                                        .into_owned())?);
                     },
                     b"protocol" if protocol.is_none() => {
-                        protocol = Some(String::from_utf8(attr.1.into_owned())?);
+                        protocol = Some(String::from_utf8(attr.1
+                                                              .into_owned())?);
                     },
                     _ => {},
                 }
@@ -217,7 +229,8 @@ impl ToXml for Cloud
                                                     (b"path", &self.path),
                                                     (b"registerProcedure", &self.register_procedure),
                                                     (b"protocol", &self.protocol)];
-                                      element.extend_attributes(attrs.into_iter().map(|v| *v));
+                                      element.extend_attributes(attrs.into_iter()
+                                                                     .map(|v| *v));
 
                                       element
                                   }))?;
@@ -373,8 +386,10 @@ impl CloudBuilder
             return Err(Error::Validation(String::from("Cloud Port cannot be a negative value")));
         }
 
-        Url::parse(self.domain.as_str())?;
-        CloudProtocol::value_of(self.protocol.as_str())?;
+        Url::parse(self.domain
+                       .as_str())?;
+        CloudProtocol::value_of(self.protocol
+                                    .as_str())?;
 
         Ok(self)
     }
@@ -397,13 +412,18 @@ impl CloudBuilder
     /// ```
     pub fn finalize(&self) -> Result<Cloud, Error>
     {
-        let port = self.port.to_string();
+        let port = self.port
+                       .to_string();
 
-        Ok(Cloud { domain: self.domain.clone(),
+        Ok(Cloud { domain: self.domain
+                               .clone(),
                    port: port,
-                   path: self.path.clone(),
-                   register_procedure: self.register_procedure.clone(),
-                   protocol: self.protocol.clone(), })
+                   path: self.path
+                             .clone(),
+                   register_procedure: self.register_procedure
+                                           .clone(),
+                   protocol: self.protocol
+                                 .clone(), })
     }
 }
 

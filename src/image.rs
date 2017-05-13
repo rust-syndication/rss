@@ -53,7 +53,8 @@ impl Image
     /// ```
     pub fn url(&self) -> String
     {
-        self.url.clone()
+        self.url
+            .clone()
     }
 
 
@@ -81,7 +82,8 @@ impl Image
     /// ```
     pub fn title(&self) -> String
     {
-        self.title.clone()
+        self.title
+            .clone()
     }
 
 
@@ -106,7 +108,8 @@ impl Image
     /// ```
     pub fn link(&self) -> String
     {
-        self.link.clone()
+        self.link
+            .clone()
     }
 
 
@@ -155,7 +158,8 @@ impl Image
     /// ```
     pub fn width(&self) -> Option<String>
     {
-        self.width.clone()
+        self.width
+            .clone()
     }
 
 
@@ -202,7 +206,8 @@ impl Image
     /// ```
     pub fn height(&self) -> Option<String>
     {
-        self.height.clone()
+        self.height
+            .clone()
     }
 
 
@@ -250,7 +255,8 @@ impl Image
     /// ```
     pub fn description(&self) -> Option<String>
     {
-        self.description.clone()
+        self.description
+            .clone()
     }
 }
 
@@ -321,17 +327,21 @@ impl ToXml for Image
         writer.write_text_element(b"link",
                                   &self.link)?;
 
-        if let Some(width) = self.width.as_ref() {
+        if let Some(width) = self.width
+                                 .as_ref() {
             writer.write_text_element(b"width",
                                       width)?;
         }
 
-        if let Some(height) = self.height.as_ref() {
+        if let Some(height) = self.height
+                                  .as_ref() {
             writer.write_text_element(b"height",
                                       height)?;
         }
 
-        if let Some(description) = self.description.as_ref() {
+        if let Some(description) =
+            self.description
+                .as_ref() {
             writer.write_text_element(b"description",
                                       description)?;
         }
@@ -503,14 +513,16 @@ impl ImageBuilder
     /// ```
     pub fn validate(&mut self) -> Result<&mut ImageBuilder, Error>
     {
-        let url_string = self.url.clone();
+        let url_string = self.url
+                             .clone();
         if !url_string.ends_with(".jpeg") && !url_string.ends_with(".jpg") && !url_string.ends_with(".png") &&
            !url_string.ends_with(".gif") {
             return Err(Error::Validation(String::from("Image Url must end with .jpeg, .png, or .gif")));
         }
 
         Url::parse(url_string.as_str())?;
-        Url::parse(self.link.as_str())?;
+        Url::parse(self.link
+                       .as_str())?;
 
         let width_opt = self.width;
         if width_opt.is_some() {
@@ -565,11 +577,15 @@ impl ImageBuilder
             None => Some(31.to_string()),
         };
 
-        Ok(Image { url: self.url.clone(),
-                   title: self.title.clone(),
-                   link: self.link.clone(),
+        Ok(Image { url: self.url
+                            .clone(),
+                   title: self.title
+                              .clone(),
+                   link: self.link
+                             .clone(),
                    width: width,
                    height: height,
-                   description: self.description.clone(), })
+                   description: self.description
+                                    .clone(), })
     }
 }

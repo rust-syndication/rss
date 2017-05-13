@@ -42,7 +42,8 @@ impl Category
     /// ```
     pub fn name(&self) -> String
     {
-        self.name.clone()
+        self.name
+            .clone()
     }
 
     /// Get the optional domain that exists under `Category`.
@@ -78,7 +79,8 @@ impl Category
     /// ```
     pub fn domain(&self) -> Option<String>
     {
-        self.domain.clone()
+        self.domain
+            .clone()
     }
 }
 
@@ -91,10 +93,13 @@ impl FromXml for Category
     {
         let mut domain = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in element.attributes()
+                           .with_checks(false)
+                           .unescaped() {
             if let Ok(attr) = attr {
                 if attr.0 == b"domain" {
-                    domain = Some(String::from_utf8(attr.1.into_owned())?);
+                    domain = Some(String::from_utf8(attr.1
+                                                        .into_owned())?);
                     break;
                 }
             }
@@ -125,7 +130,8 @@ impl ToXml for Category
                                       element
                                   }))?;
 
-        writer.write(Event::Text(Element::new(self.name.as_str())))?;
+        writer.write(Event::Text(Element::new(self.name
+                                                  .as_str())))?;
 
         writer.write(Event::End(element))
     }
@@ -207,9 +213,11 @@ impl CategoryBuilder
 
     pub fn validate(&mut self) -> Result<&mut CategoryBuilder, Error>
     {
-        let domain = self.domain.clone();
+        let domain = self.domain
+                         .clone();
         if domain.is_some() {
-            Url::parse(domain.unwrap().as_str())?;
+            Url::parse(domain.unwrap()
+                             .as_str())?;
         }
 
         Ok(self)
@@ -230,7 +238,9 @@ impl CategoryBuilder
     /// ```
     pub fn finalize(&self) -> Result<Category, Error>
     {
-        Ok(Category { name: self.name.clone(),
-                      domain: self.domain.clone(), })
+        Ok(Category { name: self.name
+                                .clone(),
+                      domain: self.domain
+                                  .clone(), })
     }
 }

@@ -8,7 +8,8 @@ use rss::extension::get_extension_values;
 fn read_channel()
 {
     let input = include_str!("data/channel.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
     assert_eq!(channel.title,
                "Title");
@@ -16,21 +17,37 @@ fn read_channel()
                "http://example.com/");
     assert_eq!(channel.description,
                "Description");
-    assert_eq!(channel.language.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.language
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("en-US"));
-    assert_eq!(channel.managing_editor.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.managing_editor
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("editor@example.com"));
-    assert_eq!(channel.webmaster.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.webmaster
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("webmaster@example.com"));
-    assert_eq!(channel.pub_date.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.pub_date
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("Sat, 27 Aug 2016 00:00:00 GMT"));
-    assert_eq!(channel.last_build_date.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.last_build_date
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("Sat, 27 Aug 2016 09:00:00 GMT"));
-    assert_eq!(channel.generator.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.generator
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("Generator"));
-    assert_eq!(channel.docs.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.docs
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("http://blogs.law.harvard.edu/tech/rss"));
-    assert_eq!(channel.ttl.as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.ttl
+                      .as_ref()
+                      .map(|s| s.as_str()),
                Some("60"));
     assert_eq!(channel.skip_hours[0].as_str(),
                "6");
@@ -46,20 +63,33 @@ fn read_channel()
 fn read_item()
 {
     let input = include_str!("data/item.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
     let item = &channel.items[0];
 
-    assert_eq!(item.title().as_ref().map(|s| s.as_str()),
+    assert_eq!(item.title()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("Title"));
-    assert_eq!(item.link().as_ref().map(|s| s.as_str()),
+    assert_eq!(item.link()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("http://example.com/"));
-    assert_eq!(item.description().as_ref().map(|s| s.as_str()),
+    assert_eq!(item.description()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("Description"));
-    assert_eq!(item.author().as_ref().map(|s| s.as_str()),
+    assert_eq!(item.author()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("author@example.com"));
-    assert_eq!(item.comments().as_ref().map(|s| s.as_str()),
+    assert_eq!(item.comments()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("Comments"));
-    assert_eq!(item.pub_date().as_ref().map(|s| s.as_str()),
+    assert_eq!(item.pub_date()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("Sat, 27 Aug 2016 00:00:00 GMT"));
 }
 
@@ -67,9 +97,13 @@ fn read_item()
 fn read_content()
 {
     let input = include_str!("data/content.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].content().as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.items[0]
+                   .content()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("An example <a href=\"http://example.com/\">link</a>."));
 }
 
@@ -77,11 +111,18 @@ fn read_content()
 fn read_source()
 {
     let input = include_str!("data/source.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].source().as_ref().map(|v| v.url()),
+    assert_eq!(channel.items[0]
+                   .source()
+                   .as_ref()
+                   .map(|v| v.url()),
                Some(String::from("http://example.com/feed/")));
-    assert_eq!(channel.items[0].source().as_ref().and_then(|v| v.title()),
+    assert_eq!(channel.items[0]
+                   .source()
+                   .as_ref()
+                   .and_then(|v| v.title()),
                Some(String::from("Feed")));
 }
 
@@ -89,16 +130,29 @@ fn read_source()
 fn read_guid()
 {
     let input = include_str!("data/guid.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].guid().as_ref().map(|v| v.is_permalink()),
+    assert_eq!(channel.items[0]
+                   .guid()
+                   .as_ref()
+                   .map(|v| v.is_permalink()),
                Some(false));
-    assert_eq!(channel.items[0].guid().as_ref().map(|v| v.value()),
+    assert_eq!(channel.items[0]
+                   .guid()
+                   .as_ref()
+                   .map(|v| v.value()),
                Some(String::from("abc")));
 
-    assert_eq!(channel.items[1].guid().as_ref().map(|v| v.is_permalink()),
+    assert_eq!(channel.items[1]
+                   .guid()
+                   .as_ref()
+                   .map(|v| v.is_permalink()),
                Some(true));
-    assert_eq!(channel.items[1].guid().as_ref().map(|v| v.value()),
+    assert_eq!(channel.items[1]
+                   .guid()
+                   .as_ref()
+                   .map(|v| v.value()),
                Some(String::from("def")));
 }
 
@@ -106,13 +160,23 @@ fn read_guid()
 fn read_enclosure()
 {
     let input = include_str!("data/enclosure.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
-    assert_eq!(channel.items[0].enclosure().as_ref().map(|v| v.url()),
+    assert_eq!(channel.items[0]
+                   .enclosure()
+                   .as_ref()
+                   .map(|v| v.url()),
                Some(String::from("http://example.com/media.mp3")));
-    assert_eq!(channel.items[0].enclosure().as_ref().map(|v| v.length()),
+    assert_eq!(channel.items[0]
+                   .enclosure()
+                   .as_ref()
+                   .map(|v| v.length()),
                Some(String::from("4992349")));
-    assert_eq!(channel.items[0].enclosure().as_ref().map(|v| v.mime_type()),
+    assert_eq!(channel.items[0]
+                   .enclosure()
+                   .as_ref()
+                   .map(|v| v.mime_type()),
                Some(String::from("audio/mpeg")));
 }
 
@@ -120,14 +184,18 @@ fn read_enclosure()
 fn read_category()
 {
     let input = include_str!("data/category.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
     assert_eq!(channel.categories[0].domain(),
                None);
     assert_eq!(channel.categories[0].name(),
                "Category 1");
 
-    assert_eq!(channel.categories[1].domain().as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.categories[1]
+                   .domain()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("http://example.com/"));
     assert_eq!(channel.categories[1].name(),
                "Category 2");
@@ -137,7 +205,10 @@ fn read_category()
     assert_eq!(channel.items[0].categories()[0].name(),
                "Category 1");
 
-    assert_eq!(channel.items[0].categories()[1].domain().as_ref().map(|s| s.as_str()),
+    assert_eq!(channel.items[0].categories()[1]
+                   .domain()
+                   .as_ref()
+                   .map(|s| s.as_str()),
                Some("http://example.com/"));
     assert_eq!(channel.items[0].categories()[1].name(),
                "Category 2");
@@ -147,8 +218,11 @@ fn read_category()
 fn read_image()
 {
     let input = include_str!("data/image.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
-    let image = channel.image.as_ref().expect("image missing");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
+    let image = channel.image
+                       .as_ref()
+                       .expect("image missing");
 
     assert_eq!(image.title(),
                "Title");
@@ -156,11 +230,17 @@ fn read_image()
                "http://example.org/url");
     assert_eq!(image.link(),
                "http://example.org/link");
-    assert_eq!(image.width().as_ref().map(|s| s.as_str()),
+    assert_eq!(image.width()
+                    .as_ref()
+                    .map(|s| s.as_str()),
                Some("100"));
-    assert_eq!(image.height().as_ref().map(|s| s.as_str()),
+    assert_eq!(image.height()
+                    .as_ref()
+                    .map(|s| s.as_str()),
                Some("200"));
-    assert_eq!(image.description().as_ref().map(|s| s.as_str()),
+    assert_eq!(image.description()
+                    .as_ref()
+                    .map(|s| s.as_str()),
                Some("Description"));
 }
 
@@ -168,7 +248,8 @@ fn read_image()
 fn read_mixed_content()
 {
     let input = include_str!("data/mixed_content.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
     assert_eq!(channel.title,
                "Title");
@@ -178,8 +259,10 @@ fn read_mixed_content()
 fn read_cloud()
 {
     let input = include_str!("data/cloud.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
-    let cloud = channel.cloud.expect("cloud missing");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
+    let cloud = channel.cloud
+                       .expect("cloud missing");
 
     assert_eq!(cloud.domain(),
                "example.com");
@@ -197,8 +280,10 @@ fn read_cloud()
 fn read_textinput()
 {
     let input = include_str!("data/textinput.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
-    let text_input = channel.text_input.expect("textinput missing");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
+    let text_input = channel.text_input
+                            .expect("textinput missing");
 
     assert_eq!(text_input.title(),
                "Title");
@@ -215,12 +300,16 @@ fn read_textinput()
 fn read_extension()
 {
     let input = include_str!("data/extension.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
-    let ns = channel.namespaces.get("ext").expect("failed to find namespace");
+    let ns = channel.namespaces
+                    .get("ext")
+                    .expect("failed to find namespace");
     assert_eq!(ns,
                "http://example.com/");
-    assert_eq!(channel.namespaces.len(),
+    assert_eq!(channel.namespaces
+                      .len(),
                1);
 
     // TODO: FIX THIS
@@ -251,65 +340,120 @@ fn read_extension()
 fn read_itunes()
 {
     let input = include_str!("data/itunes.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
-    let itunes = channel.itunes_ext.as_ref().expect("itunes extension missing");
-    assert_eq!(itunes.author().as_ref().map(|s| s.as_str()),
+    let itunes = channel.itunes_ext
+                        .as_ref()
+                        .expect("itunes extension missing");
+    assert_eq!(itunes.author()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("Author"));
-    assert_eq!(itunes.block().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.block()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("yes"));
-    assert_eq!(itunes.categories().len(),
+    assert_eq!(itunes.categories()
+                     .len(),
                2);
 
-    assert_eq!(itunes.categories()[0].text().as_str(),
+    assert_eq!(itunes.categories()[0]
+                   .text()
+                   .as_str(),
                "Category 1");
-    assert_eq!(itunes.categories()[0].subcategory().as_ref().map(|v| v.text()),
+    assert_eq!(itunes.categories()[0]
+                   .subcategory()
+                   .as_ref()
+                   .map(|v| v.text()),
                Some(String::from("Subcategory")));
 
-    assert_eq!(itunes.categories()[1].text().as_str(),
+    assert_eq!(itunes.categories()[1]
+                   .text()
+                   .as_str(),
                "Category 2");
     assert_eq!(itunes.categories()[1].subcategory(),
                None);
 
-    assert_eq!(itunes.image().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.image()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("http://example.com/image.jpg"));
-    assert_eq!(itunes.explicit().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.explicit()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("no"));
-    assert_eq!(itunes.complete().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.complete()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("yes"));
-    assert_eq!(itunes.new_feed_url().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.new_feed_url()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("http://example.com/feed/"));
-    assert_eq!(itunes.owner().as_ref().and_then(|v| v.name()),
+    assert_eq!(itunes.owner()
+                     .as_ref()
+                     .and_then(|v| v.name()),
                Some(String::from("Name")));
-    assert_eq!(itunes.owner().as_ref().and_then(|v| v.email()),
+    assert_eq!(itunes.owner()
+                     .as_ref()
+                     .and_then(|v| v.email()),
                Some(String::from("example@example.com")));
-    assert_eq!(itunes.subtitle().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.subtitle()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("Subtitle"));
-    assert_eq!(itunes.summary().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.summary()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("Summary"));
-    assert_eq!(itunes.keywords().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.keywords()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("key1,key2,key3"));
 
-    let itunes = &channel.items[0].itunes_ext().expect("itunes extension missing");
-    assert_eq!(itunes.author().as_ref().map(|s| s.as_str()),
+    let itunes = &channel.items[0]
+                      .itunes_ext()
+                      .expect("itunes extension missing");
+    assert_eq!(itunes.author()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("Author"));
-    assert_eq!(itunes.block().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.block()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("yes"));
-    assert_eq!(itunes.image().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.image()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("http://example.com/image.jpg"));
-    assert_eq!(itunes.duration().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.duration()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("01:22:33"));
-    assert_eq!(itunes.explicit().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.explicit()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("yes"));
-    assert_eq!(itunes.closed_captioned().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.closed_captioned()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("no"));
-    assert_eq!(itunes.order().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.order()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("1"));
-    assert_eq!(itunes.subtitle().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.subtitle()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("Subtitle"));
-    assert_eq!(itunes.summary().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.summary()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("Summary"));
-    assert_eq!(itunes.keywords().as_ref().map(|s| s.as_str()),
+    assert_eq!(itunes.keywords()
+                     .as_ref()
+                     .map(|s| s.as_str()),
                Some("key1,key2,key3"));
 }
 
@@ -317,43 +461,94 @@ fn read_itunes()
 fn read_dublincore()
 {
     let input = include_str!("data/dublincore.xml");
-    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let channel = input.parse::<Channel>()
+                       .expect("failed to parse xml");
 
     fn test_ext(dc: &DublinCoreExtension)
     {
-        assert_eq!(dc.contributors().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.contributors()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Contributor 1",
                         "Contributor 2"]);
-        assert_eq!(dc.coverages().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.coverages()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Coverage"]);
-        assert_eq!(dc.creators().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.creators()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Creator"]);
-        assert_eq!(dc.dates().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.dates()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["2016-08-27"]);
-        assert_eq!(dc.descriptions().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.descriptions()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Description"]);
-        assert_eq!(dc.formats().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.formats()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["text/plain"]);
-        assert_eq!(dc.identifiers().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.identifiers()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Identifier"]);
-        assert_eq!(dc.languages().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.languages()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["en-US"]);
-        assert_eq!(dc.publishers().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.publishers()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Publisher"]);
-        assert_eq!(dc.relations().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.relations()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Relation"]);
-        assert_eq!(dc.rights().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.rights()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Company"]);
-        assert_eq!(dc.sources().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.sources()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Source"]);
-        assert_eq!(dc.subjects().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.subjects()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Subject"]);
-        assert_eq!(dc.titles().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.titles()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Title"]);
-        assert_eq!(dc.resource_types().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+        assert_eq!(dc.resource_types()
+                     .iter()
+                     .map(|s| s.as_str())
+                     .collect::<Vec<_>>(),
                    vec!["Type"]);
     }
 
-    test_ext(&channel.dublin_core_ext.as_ref().expect("dc extension missing"));
-    test_ext(&channel.items[0].dublin_core_ext().as_ref().expect("ds extension missing"));
+    test_ext(&channel.dublin_core_ext
+                     .as_ref()
+                     .expect("dc extension missing"));
+    test_ext(&channel.items[0]
+                  .dublin_core_ext()
+                  .as_ref()
+                  .expect("ds extension missing"));
 }

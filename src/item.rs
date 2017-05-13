@@ -89,7 +89,8 @@ impl Item
     /// ```
     pub fn title(&self) -> Option<String>
     {
-        self.title.clone()
+        self.title
+            .clone()
     }
 
     /// Get the optional link that exists under `Item`.
@@ -125,7 +126,8 @@ impl Item
     /// ```
     pub fn link(&self) -> Option<String>
     {
-        self.link.clone()
+        self.link
+            .clone()
     }
 
     /// Get the optional description that exists under `Item`.
@@ -162,7 +164,8 @@ impl Item
     /// ```
     pub fn description(&self) -> Option<String>
     {
-        self.description.clone()
+        self.description
+            .clone()
     }
 
     /// Get the optional author that exists under `Item`.
@@ -199,7 +202,8 @@ impl Item
     /// ```
     pub fn author(&self) -> Option<String>
     {
-        self.author.clone()
+        self.author
+            .clone()
     }
 
     /// Get the categories that exists under `Item`.
@@ -233,7 +237,8 @@ impl Item
     /// ```
     pub fn categories(&self) -> Vec<Category>
     {
-        self.categories.clone()
+        self.categories
+            .clone()
     }
 
     /// Get the optional comments that exists under `Item`.
@@ -270,7 +275,8 @@ impl Item
     /// ```
     pub fn comments(&self) -> Option<String>
     {
-        self.comments.clone()
+        self.comments
+            .clone()
     }
 
     /// Get the optional enclosure that exists under `Item`.
@@ -312,7 +318,8 @@ impl Item
     /// ```
     pub fn enclosure(&self) -> Option<Enclosure>
     {
-        self.enclosure.clone()
+        self.enclosure
+            .clone()
     }
 
     /// Get the optional guid that exists under `Item`.
@@ -349,7 +356,8 @@ impl Item
     /// ```
     pub fn guid(&self) -> Option<Guid>
     {
-        self.guid.clone()
+        self.guid
+            .clone()
     }
 
     /// Get the optional pub date that exists under `Item`.
@@ -386,7 +394,8 @@ impl Item
     /// ```
     pub fn pub_date(&self) -> Option<String>
     {
-        self.pub_date.clone()
+        self.pub_date
+            .clone()
     }
 
     /// Get the optional source that exists under `Item`.
@@ -424,7 +433,8 @@ impl Item
     /// ```
     pub fn source(&self) -> Option<Source>
     {
-        self.source.clone()
+        self.source
+            .clone()
     }
 
     /// Get the optional `ITunesItemExtension` under `Item`.
@@ -470,25 +480,29 @@ impl Item
     /// ```
     pub fn itunes_ext(&self) -> Option<ITunesItemExtension>
     {
-        self.itunes_ext.clone()
+        self.itunes_ext
+            .clone()
     }
 
     /// TODO: document dublincore getter
     pub fn dublin_core_ext(&self) -> Option<DublinCoreExtension>
     {
-        self.dublin_core_ext.clone()
+        self.dublin_core_ext
+            .clone()
     }
 
     /// TODO: document extensions getter
     pub fn extensions(&self) -> ExtensionMap
     {
-        self.extensions.clone()
+        self.extensions
+            .clone()
     }
 
     /// TODO: document content getter
     pub fn content(&self) -> Option<String>
     {
-        self.content.clone()
+        self.content
+            .clone()
     }
 }
 
@@ -509,7 +523,8 @@ impl FromXml for Item
                             let (category, reader_) = Category::from_xml(reader,
                                                                          element)?;
                             reader = reader_;
-                            item.categories.push(category);
+                            item.categories
+                                .push(category);
                         },
                         b"guid" => {
                             let (guid, reader_) = Guid::from_xml(reader,
@@ -550,12 +565,15 @@ impl FromXml for Item
                     }
                 },
                 Ok(Event::End(_)) => {
-                    if !item.extensions.is_empty() {
-                        if let Some(map) = item.extensions.remove("itunes") {
+                    if !item.extensions
+                            .is_empty() {
+                        if let Some(map) = item.extensions
+                                               .remove("itunes") {
                             item.itunes_ext = Some(ITunesItemExtension::from_map(map));
                         }
 
-                        if let Some(map) = item.extensions.remove("dc") {
+                        if let Some(map) = item.extensions
+                                               .remove("dc") {
                             item.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
                         }
                     }
@@ -582,56 +600,68 @@ impl ToXml for Item
 
         writer.write(Event::Start(element.clone()))?;
 
-        if let Some(title) = self.title.as_ref() {
+        if let Some(title) = self.title
+                                 .as_ref() {
             writer.write_text_element(b"title",
                                       title)?;
         }
 
-        if let Some(link) = self.link.as_ref() {
+        if let Some(link) = self.link
+                                .as_ref() {
             writer.write_text_element(b"link",
                                       link)?;
         }
 
-        if let Some(description) = self.description.as_ref() {
+        if let Some(description) =
+            self.description
+                .as_ref() {
             writer.write_text_element(b"description",
                                       description)?;
         }
 
-        if let Some(author) = self.author.as_ref() {
+        if let Some(author) = self.author
+                                  .as_ref() {
             writer.write_text_element(b"author",
                                       author)?;
         }
 
         writer.write_objects(&self.categories)?;
 
-        if let Some(comments) = self.comments.as_ref() {
+        if let Some(comments) = self.comments
+                                    .as_ref() {
             writer.write_text_element(b"comments",
                                       comments)?;
         }
 
-        if let Some(enclosure) = self.enclosure.as_ref() {
+        if let Some(enclosure) = self.enclosure
+                                     .as_ref() {
             writer.write_object(enclosure)?;
         }
 
-        if let Some(guid) = self.guid.as_ref() {
+        if let Some(guid) = self.guid
+                                .as_ref() {
             writer.write_object(guid)?;
         }
 
-        if let Some(pub_date) = self.pub_date.as_ref() {
+        if let Some(pub_date) = self.pub_date
+                                    .as_ref() {
             writer.write_text_element(b"pubDate",
                                       pub_date)?;
         }
 
-        if let Some(source) = self.source.as_ref() {
+        if let Some(source) = self.source
+                                  .as_ref() {
             writer.write_object(source)?;
         }
 
-        if let Some(content) = self.content.as_ref() {
+        if let Some(content) = self.content
+                                   .as_ref() {
             writer.write_cdata_element(b"content:encoded",
                                        content)?;
         }
 
-        for map in self.extensions.values() {
+        for map in self.extensions
+                       .values() {
             for extensions in map.values() {
                 for extension in extensions {
                     extension.to_xml(writer)?;
@@ -639,11 +669,13 @@ impl ToXml for Item
             }
         }
 
-        if let Some(ext) = self.itunes_ext.as_ref() {
+        if let Some(ext) = self.itunes_ext
+                               .as_ref() {
             ext.to_xml(writer)?;
         }
 
-        if let Some(ext) = self.dublin_core_ext.as_ref() {
+        if let Some(ext) = self.dublin_core_ext
+                               .as_ref() {
             ext.to_xml(writer)?;
         }
 
@@ -665,8 +697,10 @@ pub struct ItemBuilder
     guid: Option<Guid>,
     pub_date: Option<String>,
     source: Option<Source>,
+    extensions: ExtensionMap,
     itunes_ext: Option<ITunesItemExtension>,
     dublin_core_ext: Option<DublinCoreExtension>,
+    content: Option<String>,
 }
 
 impl ItemBuilder
@@ -949,6 +983,26 @@ impl ItemBuilder
         self
     }
 
+    /// Set the extensions that exists under `Item`.
+    /// TODO: Add Example
+    pub fn extensions(&mut self,
+                      extensions: ExtensionMap)
+        -> &mut ItemBuilder
+    {
+        self.extensions = extensions;
+        self
+    }
+
+    /// Set the optional content that exists under `Item`.
+    /// TODO: Add Example
+    pub fn content(&mut self,
+                   content: Option<String>)
+        -> &mut ItemBuilder
+    {
+        self.content = content;
+        self
+    }
+
     // TODO: add dublincore, extensions, content to builder
 
     /// Validate the contents of `Item`.
@@ -974,23 +1028,32 @@ impl ItemBuilder
     /// ```
     pub fn validate(&mut self) -> Result<&mut ItemBuilder, Error>
     {
-        if self.title.is_none() && self.description.is_none() {
+        if self.title
+               .is_none() &&
+           self.description
+               .is_none() {
             return Err(Error::Validation(String::from("Either Title or Description must have a value.")));
         }
 
-        let link = self.link.clone();
+        let link = self.link
+                       .clone();
         if link.is_some() {
-            Url::parse(link.unwrap().as_str())?;
+            Url::parse(link.unwrap()
+                           .as_str())?;
         }
 
-        let comments = self.comments.clone();
+        let comments = self.comments
+                           .clone();
         if comments.is_some() {
-            Url::parse(comments.unwrap().as_str())?;
+            Url::parse(comments.unwrap()
+                               .as_str())?;
         }
 
-        let pub_date = self.pub_date.clone();
+        let pub_date = self.pub_date
+                           .clone();
         if pub_date.is_some() {
-            DateTime::parse_from_rfc2822(pub_date.unwrap().as_str())?;
+            DateTime::parse_from_rfc2822(pub_date.unwrap()
+                                                 .as_str())?;
         }
 
         Ok(self)
@@ -1020,17 +1083,33 @@ impl ItemBuilder
     /// ```
     pub fn finalize(&self) -> Result<Item, Error>
     {
-        Ok(Item { title: self.title.clone(),
-                  link: self.link.clone(),
-                  description: self.description.clone(),
-                  author: self.author.clone(),
-                  categories: self.categories.clone(),
-                  comments: self.comments.clone(),
-                  enclosure: self.enclosure.clone(),
-                  guid: self.guid.clone(),
-                  pub_date: self.pub_date.clone(),
-                  source: self.source.clone(),
-                  itunes_ext: self.itunes_ext.clone(),
-                  ..Default::default() })
+        Ok(Item { title: self.title
+                             .clone(),
+                  link: self.link
+                            .clone(),
+                  description: self.description
+                                   .clone(),
+                  author: self.author
+                              .clone(),
+                  categories: self.categories
+                                  .clone(),
+                  comments: self.comments
+                                .clone(),
+                  enclosure: self.enclosure
+                                 .clone(),
+                  guid: self.guid
+                            .clone(),
+                  pub_date: self.pub_date
+                                .clone(),
+                  source: self.source
+                              .clone(),
+                  extensions: self.extensions
+                                  .clone(),
+                  itunes_ext: self.itunes_ext
+                                  .clone(),
+                  dublin_core_ext: self.dublin_core_ext
+                                       .clone(),
+                  content: self.content
+                               .clone(), })
     }
 }

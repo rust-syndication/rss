@@ -42,28 +42,32 @@ impl Extension
     /// TODO: Add Example
     pub fn name(&self) -> String
     {
-        self.name.clone()
+        self.name
+            .clone()
     }
 
     /// Get the value that exists under `Extension`.
     /// TODO: Add Example
     pub fn value(&self) -> Option<String>
     {
-        self.value.clone()
+        self.value
+            .clone()
     }
 
     /// Get the attrs that exists under `Extension`.
     /// TODO: Add Example
     pub fn attrs(&self) -> HashMap<String, String>
     {
-        self.attrs.clone()
+        self.attrs
+            .clone()
     }
 
     /// Get the children that exists under `Extension`.
     /// TODO: Add Example
     pub fn children(&self) -> HashMap<String, Vec<Extension>>
     {
-        self.children.clone()
+        self.children
+            .clone()
     }
 }
 
@@ -82,11 +86,13 @@ impl ToXml for Extension
                                       element
                                   }))?;
 
-        if let Some(value) = self.value.as_ref() {
+        if let Some(value) = self.value
+                                 .as_ref() {
             writer.write(Event::Text(Element::new(value)))?;
         }
 
-        for extensions in self.children.values() {
+        for extensions in self.children
+                              .values() {
             for extension in extensions {
                 extension.to_xml(writer)?;
             }
@@ -171,10 +177,14 @@ impl ExtensionBuilder
     /// TODO: Add Example
     pub fn finalize(&self) -> Result<Extension, Error>
     {
-        Ok(Extension { name: self.name.clone(),
-                       value: self.value.clone(),
-                       attrs: self.attrs.clone(),
-                       children: self.children.clone(), })
+        Ok(Extension { name: self.name
+                                 .clone(),
+                       value: self.value
+                                  .clone(),
+                       attrs: self.attrs
+                                  .clone(),
+                       children: self.children
+                                     .clone(), })
     }
 }
 
@@ -183,7 +193,13 @@ pub fn get_extension_value<'a>(map: &'a HashMap<String, Vec<Extension>>,
                                key: &str)
     -> Option<&'a str>
 {
-    map.get(key).and_then(|v| v.first()).and_then(|ext| ext.value.as_ref()).map(|s| s.as_str())
+    map.get(key)
+       .and_then(|v| v.first())
+       .and_then(|ext| {
+                     ext.value
+                        .as_ref()
+                 })
+       .map(|s| s.as_str())
 }
 
 /// Remove and return the value for the first extension with the specified key.
@@ -191,7 +207,9 @@ pub fn remove_extension_value(map: &mut HashMap<String, Vec<Extension>>,
                               key: &str)
     -> Option<String>
 {
-    map.remove(key).map(|mut v| v.remove(0)).and_then(|ext| ext.value)
+    map.remove(key)
+       .map(|mut v| v.remove(0))
+       .and_then(|ext| ext.value)
 }
 
 /// Get a reference to all values for the extensions with the specified key.
@@ -199,7 +217,16 @@ pub fn get_extension_values<'a>(map: &'a HashMap<String, Vec<Extension>>,
                                 key: &str)
     -> Option<Vec<&'a str>>
 {
-    map.get(key).map(|v| v.iter().filter_map(|ext| ext.value.as_ref().map(|s| s.as_str())).collect::<Vec<_>>())
+    map.get(key)
+       .map(|v| {
+                v.iter()
+                 .filter_map(|ext| {
+                                 ext.value
+                                    .as_ref()
+                                    .map(|s| s.as_str())
+                             })
+                 .collect::<Vec<_>>()
+            })
 }
 
 /// Remove and return all values for the extensions with the specified key.
@@ -207,5 +234,10 @@ pub fn remove_extension_values(map: &mut HashMap<String, Vec<Extension>>,
                                key: &str)
     -> Option<Vec<String>>
 {
-    map.remove(key).map(|v| v.into_iter().filter_map(|ext| ext.value).collect::<Vec<_>>())
+    map.remove(key)
+       .map(|v| {
+                v.into_iter()
+                 .filter_map(|ext| ext.value)
+                 .collect::<Vec<_>>()
+            })
 }

@@ -43,7 +43,8 @@ impl ITunesCategory
     /// ```
     pub fn text(&self) -> String
     {
-        self.text.clone()
+        self.text
+            .clone()
     }
 
 
@@ -83,7 +84,8 @@ impl ITunesCategory
     /// ```
     pub fn subcategory(&self) -> Option<Box<ITunesCategory>>
     {
-        self.subcategory.clone()
+        self.subcategory
+            .clone()
     }
 }
 
@@ -102,7 +104,9 @@ impl ToXml for ITunesCategory
                                       element
                                   }))?;
 
-        if let Some(subcategory) = self.subcategory.as_ref() {
+        if let Some(subcategory) =
+            self.subcategory
+                .as_ref() {
             subcategory.to_xml(writer)?;
         }
 
@@ -195,7 +199,9 @@ impl ITunesCategoryBuilder
     /// ```
     pub fn finalize(&self) -> Result<ITunesCategory, Error>
     {
-        Ok(ITunesCategory { text: self.text.clone(),
-                            subcategory: self.subcategory.clone(), })
+        Ok(ITunesCategory { text: self.text
+                                      .clone(),
+                            subcategory: self.subcategory
+                                             .clone(), })
     }
 }

@@ -94,7 +94,8 @@ impl Channel
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"rss" if !in_rss => {
-                            for attr in element.attributes().with_checks(false) {
+                            for attr in element.attributes()
+                                               .with_checks(false) {
                                 if let Ok(attr) = attr {
                                     let split = attr.0
                                                     .splitn(2,
@@ -114,8 +115,10 @@ impl Channel
                                         continue;
                                     }
 
-                                    let key = str::from_utf8(name)?.to_string();
-                                    let value = str::from_utf8(attr.1)?.to_string();
+                                    let key = str::from_utf8(name)?
+                                        .to_string();
+                                    let value = str::from_utf8(attr.1)?
+                                        .to_string();
                                     namespaces.insert(key,
                                                       value);
                                 }
@@ -163,17 +166,21 @@ impl Channel
                                       let mut element = element.clone();
                                       element.extend_attributes(::std::iter::once((b"version", b"2.0")));
 
-                                      let mut itunes_ns = self.itunes_ext.is_some();
-                                      let mut dc_ns = self.dublin_core_ext.is_some();
+                                      let mut itunes_ns = self.itunes_ext
+                                                              .is_some();
+                                      let mut dc_ns = self.dublin_core_ext
+                                                          .is_some();
 
                                       if !itunes_ns || dc_ns {
                                           for item in &self.items {
                                               if !itunes_ns {
-                                                  itunes_ns = item.itunes_ext().is_some();
+                                                  itunes_ns = item.itunes_ext()
+                                                                  .is_some();
                                               }
 
                                               if !dc_ns {
-                                                  dc_ns = item.dublin_core_ext().is_some();
+                                                  dc_ns = item.dublin_core_ext()
+                                                              .is_some();
                                               }
 
                                               if itunes_ns && dc_ns {
@@ -184,19 +191,20 @@ impl Channel
 
                                       if itunes_ns {
                                           element.extend_attributes(::std::iter::once((b"xmlns:itunes",
-                                                             extension::itunes::NAMESPACE)));
+                                                                                       extension::itunes::NAMESPACE)));
                                       }
 
                                       if dc_ns {
-                                          element.extend_attributes(::std::iter::once((b"xmlns:dc",
-                                                             extension::dublincore::NAMESPACE)));
-                                      }
+                element.extend_attributes(::std::iter::once((b"xmlns:dc", extension::dublincore::NAMESPACE)));
+            }
 
-                                      element.extend_attributes(self.namespaces.iter().map(|(name, url)| {
-                                                                                               (format!("xmlns:{}",
-                                                                                                        name),
-                                                                                                url)
-                                                                                           }));
+                                      element.extend_attributes(self.namespaces
+                                                                    .iter()
+                                                                    .map(|(name, url)| {
+                                                                             (format!("xmlns:{}",
+                                                                                      name),
+                                                                              url)
+                                                                         }));
 
                                       element
                                   }))?;
@@ -214,7 +222,8 @@ impl ToString for Channel
     /// TODO: document to string
     fn to_string(&self) -> String
     {
-        let buf = self.write_to(Vec::new()).unwrap_or(Vec::new());
+        let buf = self.write_to(Vec::new())
+                      .unwrap_or(Vec::new());
         // this unwrap should be safe since the bytes written from the Channel are all valid utf8
         String::from_utf8(buf).unwrap()
     }
@@ -237,7 +246,8 @@ impl FromXml for Channel
                             let (category, reader_) = Category::from_xml(reader,
                                                                          element)?;
                             reader = reader_;
-                            channel.categories.push(category);
+                            channel.categories
+                                   .push(category);
                         },
                         b"cloud" => {
                             let (cloud, reader_) = Cloud::from_xml(reader,
@@ -261,7 +271,8 @@ impl FromXml for Channel
                             let (item, reader_) = Item::from_xml(reader,
                                                                  element)?;
                             reader = reader_;
-                            channel.items.push(item);
+                            channel.items
+                                   .push(item);
                         },
                         b"title" => {
                             if let Some(content) = element_text!(reader) {
@@ -297,7 +308,8 @@ impl FromXml for Channel
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"hour" {
                                             if let Some(content) = element_text!(reader) {
-                                                channel.skip_hours.push(content);
+                                                channel.skip_hours
+                                                       .push(content);
                                             }
                                         } else {
                                             skip_element!(reader);
@@ -317,7 +329,8 @@ impl FromXml for Channel
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"day" {
                                             if let Some(content) = element_text!(reader) {
-                                                channel.skip_days.push(content);
+                                                channel.skip_days
+                                                       .push(content);
                                             }
                                         } else {
                                             skip_element!(reader);
@@ -345,12 +358,15 @@ impl FromXml for Channel
                     }
                 },
                 Ok(Event::End(_)) => {
-                    if !channel.extensions.is_empty() {
-                        if let Some(map) = channel.extensions.remove("itunes") {
+                    if !channel.extensions
+                               .is_empty() {
+                        if let Some(map) = channel.extensions
+                                                  .remove("itunes") {
                             channel.itunes_ext = Some(ITunesChannelExtension::from_map(map)?);
                         }
 
-                        if let Some(map) = channel.extensions.remove("dc") {
+                        if let Some(map) = channel.extensions
+                                                  .remove("dc") {
                             channel.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
                         }
                     }
@@ -384,66 +400,81 @@ impl ToXml for Channel
         writer.write_text_element(b"description",
                                   &self.description)?;
 
-        if let Some(language) = self.language.as_ref() {
+        if let Some(language) = self.language
+                                    .as_ref() {
             writer.write_text_element(b"language",
                                       language)?;
         }
 
-        if let Some(copyright) = self.copyright.as_ref() {
+        if let Some(copyright) = self.copyright
+                                     .as_ref() {
             writer.write_text_element(b"copyright",
                                       copyright)?;
         }
 
-        if let Some(managing_editor) = self.managing_editor.as_ref() {
+        if let Some(managing_editor) =
+            self.managing_editor
+                .as_ref() {
             writer.write_text_element(b"managingEditor",
                                       managing_editor)?;
         }
 
-        if let Some(webmaster) = self.webmaster.as_ref() {
+        if let Some(webmaster) = self.webmaster
+                                     .as_ref() {
             writer.write_text_element(b"webMaster",
                                       webmaster)?;
         }
 
-        if let Some(pub_date) = self.pub_date.as_ref() {
+        if let Some(pub_date) = self.pub_date
+                                    .as_ref() {
             writer.write_text_element(b"pubDate",
                                       pub_date)?;
         }
 
-        if let Some(last_build_date) = self.last_build_date.as_ref() {
+        if let Some(last_build_date) =
+            self.last_build_date
+                .as_ref() {
             writer.write_text_element(b"lastBuildDate",
                                       last_build_date)?;
         }
 
         writer.write_objects(&self.categories)?;
 
-        if let Some(generator) = self.generator.as_ref() {
+        if let Some(generator) = self.generator
+                                     .as_ref() {
             writer.write_text_element(b"generator",
                                       generator)?;
         }
 
-        if let Some(docs) = self.docs.as_ref() {
+        if let Some(docs) = self.docs
+                                .as_ref() {
             writer.write_text_element(b"docs",
                                       docs)?;
         }
 
-        if let Some(cloud) = self.cloud.as_ref() {
+        if let Some(cloud) = self.cloud
+                                 .as_ref() {
             writer.write_object(cloud)?;
         }
 
-        if let Some(ttl) = self.ttl.as_ref() {
+        if let Some(ttl) = self.ttl
+                               .as_ref() {
             writer.write_text_element(b"ttl",
                                       ttl)?;
         }
 
-        if let Some(image) = self.image.as_ref() {
+        if let Some(image) = self.image
+                                 .as_ref() {
             writer.write_object(image)?;
         }
 
-        if let Some(text_input) = self.text_input.as_ref() {
+        if let Some(text_input) = self.text_input
+                                      .as_ref() {
             writer.write_object(text_input)?;
         }
 
-        if !self.skip_hours.is_empty() {
+        if !self.skip_hours
+                .is_empty() {
             let element = Element::new(b"skipHours");
             writer.write(Event::Start(element.clone()))?;
             for hour in &self.skip_hours {
@@ -453,7 +484,8 @@ impl ToXml for Channel
             writer.write(Event::End(element))?;
         }
 
-        if !self.skip_days.is_empty() {
+        if !self.skip_days
+                .is_empty() {
             let element = Element::new(b"skipDays");
             writer.write(Event::Start(element.clone()))?;
             for day in &self.skip_days {
@@ -465,7 +497,8 @@ impl ToXml for Channel
 
         writer.write_objects(&self.items)?;
 
-        for map in self.extensions.values() {
+        for map in self.extensions
+                       .values() {
             for extensions in map.values() {
                 for extension in extensions {
                     extension.to_xml(writer)?;
@@ -473,11 +506,13 @@ impl ToXml for Channel
             }
         }
 
-        if let Some(ext) = self.itunes_ext.as_ref() {
+        if let Some(ext) = self.itunes_ext
+                               .as_ref() {
             ext.to_xml(writer)?;
         }
 
-        if let Some(ext) = self.dublin_core_ext.as_ref() {
+        if let Some(ext) = self.dublin_core_ext
+                               .as_ref() {
             ext.to_xml(writer)?;
         }
 

@@ -47,7 +47,8 @@ impl TextInput
     /// ```
     pub fn title(&self) -> String
     {
-        self.title.clone()
+        self.title
+            .clone()
     }
 
     /// Get the description that exists under `TextInput`.
@@ -69,7 +70,8 @@ impl TextInput
     /// ```
     pub fn description(&self) -> String
     {
-        self.description.clone()
+        self.description
+            .clone()
     }
 
     /// Get the name that exists under `TextInput`.
@@ -91,7 +93,8 @@ impl TextInput
     /// ```
     pub fn name(&self) -> String
     {
-        self.name.clone()
+        self.name
+            .clone()
     }
 
     /// Get the link that exists under `TextInput`.
@@ -112,7 +115,8 @@ impl TextInput
     /// ```
     pub fn link(&self) -> String
     {
-        self.link.clone()
+        self.link
+            .clone()
     }
 }
 
@@ -300,7 +304,9 @@ impl TextInputBuilder
     /// ```
     pub fn validate(&mut self) -> Result<&mut TextInputBuilder, Error>
     {
-        Url::parse(self.link.clone().as_str())?;
+        Url::parse(self.link
+                       .clone()
+                       .as_str())?;
 
         Ok(self)
     }
@@ -322,9 +328,13 @@ impl TextInputBuilder
     /// ```
     pub fn finalize(&self) -> Result<TextInput, Error>
     {
-        Ok(TextInput { title: self.title.clone(),
-                       description: self.description.clone(),
-                       name: self.name.clone(),
-                       link: self.link.clone(), })
+        Ok(TextInput { title: self.title
+                                  .clone(),
+                       description: self.description
+                                        .clone(),
+                       name: self.name
+                                 .clone(),
+                       link: self.link
+                                 .clone(), })
     }
 }
