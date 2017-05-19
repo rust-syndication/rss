@@ -171,9 +171,9 @@ impl GuidBuilder {
     /// let mut guid_builder = GuidBuilder::new();
     /// guid_builder.is_permalink(Some(false));
     /// ```
-    pub fn is_permalink(&mut self,
+    pub fn is_permalink(mut self,
                         is_permalink: Option<bool>)
-        -> &mut GuidBuilder {
+        -> GuidBuilder {
         self.is_permalink = is_permalink;
         self
     }
@@ -188,9 +188,9 @@ impl GuidBuilder {
     /// let mut guid_builder = GuidBuilder::new();
     /// guid_builder.value("9DE46946-2F90-4D5D-9047-7E9165C16E7C");
     /// ```
-    pub fn value(&mut self,
+    pub fn value(mut self,
                  value: &str)
-        -> &mut GuidBuilder {
+        -> GuidBuilder {
         self.value = value.to_owned();
         self
     }
@@ -207,14 +207,13 @@ impl GuidBuilder {
     ///         .is_permalink(Some(true))
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Guid, Error> {
+    pub fn finalize(self) -> Result<Guid, Error> {
         let is_permalink = match self.is_permalink {
             Some(val) => val,
             None => true,
         };
 
         Ok(Guid { is_permalink: is_permalink,
-                  value: self.value
-                             .clone(), })
+                  value: self.value, })
     }
 }

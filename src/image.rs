@@ -373,9 +373,9 @@ impl ImageBuilder {
     /// image_builder.url("http://jupiterbroadcasting.com/images/LAS-300-Badge.
     /// jpg");
     /// ```
-    pub fn url(&mut self,
+    pub fn url(mut self,
                url: &str)
-        -> &mut ImageBuilder {
+        -> ImageBuilder {
         self.url = url.to_owned();
         self
     }
@@ -391,9 +391,9 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.title("LAS 300 Logo");
     /// ```
-    pub fn title(&mut self,
+    pub fn title(mut self,
                  title: &str)
-        -> &mut ImageBuilder {
+        -> ImageBuilder {
         self.title = title.to_owned();
         self
     }
@@ -409,9 +409,9 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.link("http://www.jupiterbroadcasting.com/");
     /// ```
-    pub fn link(&mut self,
+    pub fn link(mut self,
                 link: &str)
-        -> &mut ImageBuilder {
+        -> ImageBuilder {
         self.link = link.to_owned();
         self
     }
@@ -427,9 +427,9 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.width(Some(88));
     /// ```
-    pub fn width(&mut self,
+    pub fn width(mut self,
                  width: Option<i64>)
-        -> &mut ImageBuilder {
+        -> ImageBuilder {
         self.width = width;
         self
     }
@@ -445,9 +445,9 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.height(Some(88));
     /// ```
-    pub fn height(&mut self,
+    pub fn height(mut self,
                   height: Option<i64>)
-        -> &mut ImageBuilder {
+        -> ImageBuilder {
         self.height = height;
         self
     }
@@ -463,9 +463,9 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.description(Some("This is a test".to_owned()));
     /// ```
-    pub fn description(&mut self,
+    pub fn description(mut self,
                        description: Option<String>)
-        -> &mut ImageBuilder {
+        -> ImageBuilder {
         self.description = description;
         self
     }
@@ -488,7 +488,7 @@ impl ImageBuilder {
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut ImageBuilder, Error> {
+    pub fn validate(self) -> Result<ImageBuilder, Error> {
         let url_string = self.url
                              .clone();
         if !url_string.ends_with(".jpeg") && !url_string.ends_with(".jpg") && !url_string.ends_with(".png") &&
@@ -540,7 +540,7 @@ impl ImageBuilder {
     ///         .description(Some("This is a test".to_owned()))
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Image, Error> {
+    pub fn finalize(self) -> Result<Image, Error> {
 
         let width = match self.width {
             Some(val) => Some(val.to_string()),
@@ -552,15 +552,11 @@ impl ImageBuilder {
             None => Some(31.to_string()),
         };
 
-        Ok(Image { url: self.url
-                            .clone(),
-                   title: self.title
-                              .clone(),
-                   link: self.link
-                             .clone(),
+        Ok(Image { url: self.url,
+                   title: self.title,
+                   link: self.link,
                    width: width,
                    height: height,
-                   description: self.description
-                                    .clone(), })
+                   description: self.description, })
     }
 }

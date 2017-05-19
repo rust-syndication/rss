@@ -156,9 +156,9 @@ impl CategoryBuilder {
     /// let mut category_builder = CategoryBuilder::new();
     /// category_builder.name("Podcast");
     /// ```
-    pub fn name(&mut self,
+    pub fn name(mut self,
                 name: &str)
-        -> &mut CategoryBuilder {
+        -> CategoryBuilder {
         self.name = name.to_owned();
         self
     }
@@ -173,9 +173,9 @@ impl CategoryBuilder {
     /// let mut category_builder = CategoryBuilder::new();
     /// category_builder.domain(Some("http://www.example.com".to_owned()));
     /// ```
-    pub fn domain(&mut self,
+    pub fn domain(mut self,
                   domain: Option<String>)
-        -> &mut CategoryBuilder {
+        -> CategoryBuilder {
         self.domain = domain;
         self
     }
@@ -187,14 +187,16 @@ impl CategoryBuilder {
     /// ```
     /// use rss::CategoryBuilder;
     ///
-    /// let mut category_builder = CategoryBuilder::new();
-    /// category_builder.domain(Some("http://www.example.com".to_owned()));
-    /// category_builder.name("Podcast");
-    /// category_builder.validate().unwrap();
-    /// category_builder.finalize().unwrap();
+    /// let category_builder = CategoryBuilder::new()
+    ///         .domain(Some("http://www.example.com".to_owned()))
+    ///         .name("Podcast")
+    ///         .validate()
+    ///         .unwrap()
+    ///         .finalize()
+    ///         .unwrap();
     /// ```
 
-    pub fn validate(&mut self) -> Result<&mut CategoryBuilder, Error> {
+    pub fn validate(self) -> Result<CategoryBuilder, Error> {
         let domain = self.domain
                          .clone();
         if domain.is_some() {
@@ -218,10 +220,8 @@ impl CategoryBuilder {
     ///         .finalize()
     ///         .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<Category, Error> {
-        Ok(Category { name: self.name
-                                .clone(),
-                      domain: self.domain
-                                  .clone(), })
+    pub fn finalize(self) -> Result<Category, Error> {
+        Ok(Category { name: self.name,
+                      domain: self.domain, })
     }
 }

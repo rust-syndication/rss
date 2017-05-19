@@ -151,9 +151,9 @@ impl SourceBuilder {
     /// let mut source_builder = SourceBuilder::new();
     /// source_builder.url("http://www.example.com/source");
     /// ```
-    pub fn url(&mut self,
+    pub fn url(mut self,
                url: &str)
-        -> &mut SourceBuilder {
+        -> SourceBuilder {
         self.url = url.to_owned();
         self
     }
@@ -169,9 +169,9 @@ impl SourceBuilder {
     /// let mut source_builder = SourceBuilder::new();
     /// source_builder.title(Some("Test".to_owned()));
     /// ```
-    pub fn title(&mut self,
+    pub fn title(mut self,
                  title: Option<String>)
-        -> &mut SourceBuilder {
+        -> SourceBuilder {
         self.title = title;
         self
     }
@@ -187,10 +187,12 @@ impl SourceBuilder {
     /// let source = SourceBuilder::new()
     ///     .url("http://www.example.com/source")
     ///     .title(None)
-    ///     .validate().unwrap()
-    ///     .finalize().unwrap();
+    ///     .validate()
+    ///     .unwrap()
+    ///     .finalize()
+    ///     .unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut SourceBuilder, Error> {
+    pub fn validate(self) -> Result<SourceBuilder, Error> {
         Url::parse(self.url
                        .as_str())?;
 
@@ -211,10 +213,8 @@ impl SourceBuilder {
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<Source, Error> {
-        Ok(Source { url: self.url
-                             .clone(),
-                    title: self.title
-                               .clone(), })
+    pub fn finalize(self) -> Result<Source, Error> {
+        Ok(Source { url: self.url,
+                    title: self.title, })
     }
 }

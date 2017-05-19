@@ -1641,9 +1641,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.title("The Linux Action Show! OGG");
     /// ```
-    pub fn title(&mut self,
+    pub fn title(mut self,
                  title: &str)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.title = title.to_owned();
         self
     }
@@ -1659,9 +1659,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.link("http://www.jupiterbroadcasting.com");
     /// ```
-    pub fn link(&mut self,
+    pub fn link(mut self,
                 link: &str)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.link = link.to_owned();
         self
     }
@@ -1682,9 +1682,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.description(description.as_ref());
     /// ```
-    pub fn description(&mut self,
+    pub fn description(mut self,
                        description: &str)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.description = description.to_owned();
         self
     }
@@ -1700,9 +1700,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.language(Some("en".to_owned()));
     /// ```
-    pub fn language(&mut self,
+    pub fn language(mut self,
                     language: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.language = language;
         self
     }
@@ -1720,9 +1720,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.copyright(Some(copyright));
     /// ```
-    pub fn copyright(&mut self,
+    pub fn copyright(mut self,
                      copyright: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.copyright = copyright;
         self
     }
@@ -1741,9 +1741,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.managing_editor(Some(managing_editor));
     /// ```
-    pub fn managing_editor(&mut self,
+    pub fn managing_editor(mut self,
                            managing_editor: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.managing_editor = managing_editor;
         self
     }
@@ -1762,9 +1762,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.webmaster(Some(webmaster));
     /// ```
-    pub fn webmaster(&mut self,
+    pub fn webmaster(mut self,
                      webmaster: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.webmaster = webmaster;
         self
     }
@@ -1781,9 +1781,9 @@ impl ChannelBuilder {
     /// channel_builder.pub_date(Some("Sun, 13 Mar 2016 20:02:02
     /// -0700".to_owned()));
     /// ```
-    pub fn pub_date(&mut self,
+    pub fn pub_date(mut self,
                     pub_date: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.pub_date = pub_date;
         self
     }
@@ -1800,9 +1800,9 @@ impl ChannelBuilder {
     /// channel_builder.last_build_date(Some("Sun, 13 Mar 2016 20:02:02
     /// -0700".to_owned()));
     /// ```
-    pub fn last_build_date(&mut self,
+    pub fn last_build_date(mut self,
                            last_build_date: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.last_build_date = last_build_date;
         self
     }
@@ -1823,9 +1823,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.categories(categories);
     /// ```
-    pub fn categories(&mut self,
+    pub fn categories(mut self,
                       categories: Vec<Category>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.categories = categories;
         self
     }
@@ -1845,9 +1845,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.generator(Some(generator));
     /// ```
-    pub fn generator(&mut self,
+    pub fn generator(mut self,
                      generator: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.generator = generator;
         self
     }
@@ -1864,9 +1864,9 @@ impl ChannelBuilder {
     /// channel_builder.docs(Some("http://blogs.law.harvard.edu/tech/rss/".
     /// to_owned()));
     /// ```
-    pub fn docs(&mut self,
+    pub fn docs(mut self,
                 docs: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.docs = docs;
         self
     }
@@ -1888,9 +1888,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.cloud(Some(cloud));
     /// ```
-    pub fn cloud(&mut self,
+    pub fn cloud(mut self,
                  cloud: Option<Cloud>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.cloud = cloud;
         self
     }
@@ -1906,9 +1906,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.ttl(Some(60));
     /// ```
-    pub fn ttl(&mut self,
+    pub fn ttl(mut self,
                ttl: Option<i64>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.ttl = ttl;
         self
     }
@@ -1934,9 +1934,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.image(Some(image));
     /// ```
-    pub fn image(&mut self,
+    pub fn image(mut self,
                  image: Option<Image>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.image = image;
         self
     }
@@ -1951,9 +1951,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.rating(Some("PG-13".to_owned()));
     /// ```
-    pub fn rating(&mut self,
+    pub fn rating(mut self,
                   rating: Option<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.rating = rating;
         self
     }
@@ -1974,9 +1974,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.text_input(Some(text_input));
     /// ```
-    pub fn text_input(&mut self,
+    pub fn text_input(mut self,
                       text_input: Option<TextInput>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.text_input = text_input;
         self
     }
@@ -1994,9 +1994,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.skip_hours(hours);
     /// ```
-    pub fn skip_hours(&mut self,
+    pub fn skip_hours(mut self,
                       skip_hours: Vec<i64>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.skip_hours = skip_hours;
         self
     }
@@ -2014,9 +2014,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.skip_days(days);
     /// ```
-    pub fn skip_days(&mut self,
+    pub fn skip_days(mut self,
                      skip_days: Vec<String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.skip_days = skip_days;
         self
     }
@@ -2040,9 +2040,9 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.items(items);
     /// ```
-    pub fn items(&mut self,
+    pub fn items(mut self,
                  items: Vec<Item>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.items = items;
         self
     }
@@ -2094,33 +2094,33 @@ impl ChannelBuilder {
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.itunes_ext(Some(itunes_channel));
     /// ```
-    pub fn itunes_ext(&mut self,
+    pub fn itunes_ext(mut self,
                       itunes_ext: Option<ITunesChannelExtension>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.itunes_ext = itunes_ext;
         self
     }
 
     /// Set the optional dublin_core_ext that exists under `Channel`.
-    pub fn dublin_core_ext(&mut self,
+    pub fn dublin_core_ext(mut self,
                            dublin_core_ext: Option<DublinCoreExtension>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.dublin_core_ext = dublin_core_ext;
         self
     }
 
     /// Set the extensions that exists under `Channel`.
-    pub fn extensions(&mut self,
+    pub fn extensions(mut self,
                       extensions: ExtensionMap)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.extensions = extensions;
         self
     }
 
-    /// Set the onamespaces that exists under `Channel`.
-    pub fn namespaces(&mut self,
+    /// Set the namespaces that exists under `Channel`.
+    pub fn namespaces(mut self,
                       namespaces: HashMap<String, String>)
-        -> &mut ChannelBuilder {
+        -> ChannelBuilder {
         self.namespaces = namespaces;
         self
     }
@@ -2162,7 +2162,7 @@ impl ChannelBuilder {
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut ChannelBuilder, Error> {
+    pub fn validate(self) -> Result<ChannelBuilder, Error> {
         Url::parse(self.link
                        .as_str())?;
 
@@ -2193,7 +2193,10 @@ impl ChannelBuilder {
         skip_days.dedup();
 
         for day in skip_days {
-            Day::value_of(day.as_str())?;
+            match Day::from_str(day.as_str()) {
+                Ok(_) => (),
+                Err(err) => return Err(Error::Validation(String::from(err))),
+            };
         }
 
         let mut skip_hours = self.skip_hours
@@ -2255,7 +2258,7 @@ impl ChannelBuilder {
     ///         .items(Vec::new())
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Channel, Error> {
+    pub fn finalize(self) -> Result<Channel, Error> {
         let mut skip_hours: Vec<String> = Vec::new();
         for hour in self.skip_hours
                         .clone() {
@@ -2267,52 +2270,30 @@ impl ChannelBuilder {
             Some(val) => Some(val.to_string()),
         };
 
-        Ok(Channel { title: self.title
-                                .clone(),
-                     link: self.link
-                               .clone(),
-                     description: self.description
-                                      .clone(),
-                     language: self.language
-                                   .clone(),
-                     copyright: self.copyright
-                                    .clone(),
-                     managing_editor: self.managing_editor
-                                          .clone(),
-                     webmaster: self.webmaster
-                                    .clone(),
-                     pub_date: self.pub_date
-                                   .clone(),
-                     last_build_date: self.last_build_date
-                                          .clone(),
-                     categories: self.categories
-                                     .clone(),
-                     generator: self.generator
-                                    .clone(),
-                     docs: self.docs
-                               .clone(),
-                     cloud: self.cloud
-                                .clone(),
+        Ok(Channel { title: self.title,
+                     link: self.link,
+                     description: self.description,
+                     language: self.language,
+                     copyright: self.copyright,
+                     managing_editor: self.managing_editor,
+                     webmaster: self.webmaster,
+                     pub_date: self.pub_date,
+                     last_build_date: self.last_build_date,
+                     categories: self.categories,
+                     generator: self.generator,
+                     docs: self.docs,
+                     cloud: self.cloud,
                      ttl: ttl,
-                     image: self.image
-                                .clone(),
-                     rating: self.rating
-                                 .clone(),
-                     text_input: self.text_input
-                                     .clone(),
+                     image: self.image,
+                     rating: self.rating,
+                     text_input: self.text_input,
                      skip_hours: skip_hours,
-                     skip_days: self.skip_days
-                                    .clone(),
-                     items: self.items
-                                .clone(),
-                     itunes_ext: self.itunes_ext
-                                     .clone(),
-                     dublin_core_ext: self.dublin_core_ext
-                                          .clone(),
-                     extensions: self.extensions
-                                     .clone(),
-                     namespaces: self.namespaces
-                                     .clone(), })
+                     skip_days: self.skip_days,
+                     items: self.items,
+                     itunes_ext: self.itunes_ext,
+                     dublin_core_ext: self.dublin_core_ext,
+                     extensions: self.extensions,
+                     namespaces: self.namespaces, })
     }
 }
 
@@ -2340,9 +2321,11 @@ enum Day {
     Sunday,
 }
 
-impl Day {
+impl FromStr for Day {
+    type Err = &'static str;
+
     /// Convert `&str` to `Day`.
-    pub fn value_of(s: &str) -> Result<Day, Error> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "Monday" => Ok(Day::Monday),
             "Tuesday" => Ok(Day::Tuesday),
@@ -2351,10 +2334,7 @@ impl Day {
             "Friday" => Ok(Day::Friday),
             "Saturday" => Ok(Day::Saturday),
             "Sunday" => Ok(Day::Sunday),
-            _ => {
-                Err(Error::Validation(String::from(format!("Invalid value: {}",
-                                                           s))))
-            },
+            _ => Err("not a valid value"),
         }
     }
 }

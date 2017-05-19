@@ -210,9 +210,9 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.title("Title");
     /// ```
-    pub fn title(&mut self,
+    pub fn title(mut self,
                  title: &str)
-        -> &mut TextInputBuilder {
+        -> TextInputBuilder {
         self.title = title.to_owned();
         self
     }
@@ -227,9 +227,9 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.description("This is a test description.");
     /// ```
-    pub fn description(&mut self,
+    pub fn description(mut self,
                        description: &str)
-        -> &mut TextInputBuilder {
+        -> TextInputBuilder {
         self.description = description.to_owned();
         self
     }
@@ -244,9 +244,9 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.name("Comments");
     /// ```
-    pub fn name(&mut self,
+    pub fn name(mut self,
                 name: &str)
-        -> &mut TextInputBuilder {
+        -> TextInputBuilder {
         self.name = name.to_owned();
         self
     }
@@ -261,9 +261,9 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.link("http://www.example.com/feedback");
     /// ```
-    pub fn link(&mut self,
+    pub fn link(mut self,
                 link: &str)
-        -> &mut TextInputBuilder {
+        -> TextInputBuilder {
         self.link = link.to_owned();
         self
     }
@@ -280,10 +280,12 @@ impl TextInputBuilder {
     ///         .description("This is a test description.")
     ///         .name("Comments")
     ///         .link("http://www.example.com/feedback")
-    ///         .validate().unwrap()
-    ///         .finalize().unwrap();
+    ///         .validate()
+    ///         .unwrap()
+    ///         .finalize()
+    ///         .unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut TextInputBuilder, Error> {
+    pub fn validate(self) -> Result<TextInputBuilder, Error> {
         Url::parse(self.link
                        .clone()
                        .as_str())?;
@@ -306,14 +308,10 @@ impl TextInputBuilder {
     ///         .finalize()
     ///         .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<TextInput, Error> {
-        Ok(TextInput { title: self.title
-                                  .clone(),
-                       description: self.description
-                                        .clone(),
-                       name: self.name
-                                 .clone(),
-                       link: self.link
-                                 .clone(), })
+    pub fn finalize(self) -> Result<TextInput, Error> {
+        Ok(TextInput { title: self.title,
+                       description: self.description,
+                       name: self.name,
+                       link: self.link, })
     }
 }

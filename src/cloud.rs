@@ -10,6 +10,7 @@ use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
 use reqwest::Url;
+use std::str::FromStr;
 use toxml::ToXml;
 
 /// A representation of the `<cloud>` element.
@@ -262,9 +263,9 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.domain("http://rpc.sys.com/");
     /// ```
-    pub fn domain(&mut self,
+    pub fn domain(mut self,
                   domain: &str)
-        -> &mut CloudBuilder {
+        -> CloudBuilder {
         self.domain = domain.to_owned();
         self
     }
@@ -280,9 +281,9 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.port(80);
     /// ```
-    pub fn port(&mut self,
+    pub fn port(mut self,
                 port: i64)
-        -> &mut CloudBuilder {
+        -> CloudBuilder {
 
         self.port = port;
         self
@@ -299,9 +300,9 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.path("/RPC2");
     /// ```
-    pub fn path(&mut self,
+    pub fn path(mut self,
                 path: &str)
-        -> &mut CloudBuilder {
+        -> CloudBuilder {
         self.path = path.to_owned();
         self
     }
@@ -317,9 +318,9 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.register_procedure("pingMe");
     /// ```
-    pub fn register_procedure(&mut self,
+    pub fn register_procedure(mut self,
                               register_procedure: &str)
-        -> &mut CloudBuilder {
+        -> CloudBuilder {
         self.register_procedure = register_procedure.to_owned();
         self
     }
@@ -335,9 +336,9 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.protocol("soap");
     /// ```
-    pub fn protocol(&mut self,
+    pub fn protocol(mut self,
                     protocol: &str)
-        -> &mut CloudBuilder {
+        -> CloudBuilder {
         self.protocol = protocol.to_owned();
         self
     }
@@ -359,15 +360,19 @@ impl CloudBuilder {
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut CloudBuilder, Error> {
+    pub fn validate(self) -> Result<CloudBuilder, Error> {
         if self.port < 0 {
             return Err(Error::Validation(String::from("Cloud Port cannot be a negative value")));
         }
 
         Url::parse(self.domain
                        .as_str())?;
-        CloudProtocol::value_of(self.protocol
-                                    .as_str())?;
+
+        match CloudProtocol::from_str(self.protocol
+                                          .as_str()) {
+            Ok(_) => (),
+            Err(err) => return Err(Error::Validation(String::from(err))),
+        };
 
         Ok(self)
     }
@@ -388,19 +393,15 @@ impl CloudBuilder {
     ///         .protocol("soap")
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Cloud, Error> {
+    pub fn finalize(self) -> Result<Cloud, Error> {
         let port = self.port
                        .to_string();
 
-        Ok(Cloud { domain: self.domain
-                               .clone(),
+        Ok(Cloud { domain: self.domain,
                    port: port,
-                   path: self.path
-                             .clone(),
-                   register_procedure: self.register_procedure
-                                           .clone(),
-                   protocol: self.protocol
-                                 .clone(), })
+                   path: self.path,
+                   register_procedure: self.register_procedure,
+                   protocol: self.protocol, })
     }
 }
 
@@ -419,17 +420,16 @@ enum CloudProtocol {
 }
 
 
-impl CloudProtocol {
+impl FromStr for CloudProtocol {
+    type Err = &'static str;
+
     // Convert `&str` to `CloudProtocol`.
-    pub fn value_of(s: &str) -> Result<CloudProtocol, Error> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "http-post" => Ok(CloudProtocol::HttpPost),
             "xml-rpc" => Ok(CloudProtocol::XmlRpc),
             "soap" => Ok(CloudProtocol::Soap),
-            _ => {
-                Err(Error::Validation(String::from(format!("Invalid value: {}",
-                                                           s))))
-            },
+            _ => Err("not a valid value"),
         }
     }
 }
