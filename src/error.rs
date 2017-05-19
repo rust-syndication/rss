@@ -6,14 +6,15 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use chrono::ParseError as DateParseError;
-use curl::Error as CurlError;
 use quick_xml::error::Error as XmlError;
+use reqwest::Error as ReqError;
+use reqwest::UrlError as UrlParseError;
 use std::error::Error as StdError;
 use std::fmt;
+use std::io::Error as IOError;
 use std::num::ParseIntError;
 use std::str::Utf8Error;
 use std::string::FromUtf8Error;
-use url::ParseError as UrlParseError;
 
 #[derive(Debug)]
 /// Types of errors that could occur while parsing an RSS feed.
@@ -23,8 +24,10 @@ pub enum Error
     Validation(String),
     /// An error occured while reading channel from url.
     FromUrl(String),
+    /// An error occured while reading url to string.
+    IO(IOError),
     /// An error occurred during curl.
-    CurlParsing(CurlError),
+    ReqParsing(ReqError),
     /// An error occured while parsing a str to i64.
     IntParsing(ParseIntError),
     /// An error occured during parsing dates from str.
@@ -48,7 +51,8 @@ impl StdError for Error
         match *self {
             Error::Validation(ref err) => err,
             Error::FromUrl(ref err) => err,
-            Error::CurlParsing(ref err) => err.description(),
+            Error::IO(ref err) => err.description(),
+            Error::ReqParsing(ref err) => err.description(),
             Error::IntParsing(ref err) => err.description(),
             Error::DateParsing(ref err) => err.description(),
             Error::UrlParsing(ref err) => err.description(),
@@ -62,7 +66,8 @@ impl StdError for Error
     fn cause(&self) -> Option<&StdError>
     {
         match *self {
-            Error::CurlParsing(ref err) => Some(err),
+            Error::IO(ref err) => Some(err),
+            Error::ReqParsing(ref err) => Some(err),
             Error::IntParsing(ref err) => Some(err),
             Error::DateParsing(ref err) => Some(err),
             Error::UrlParsing(ref err) => Some(err),
@@ -89,7 +94,11 @@ impl fmt::Display for Error
                 fmt::Display::fmt(err,
                                   f)
             },
-            Error::CurlParsing(ref err) => {
+            Error::IO(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::ReqParsing(ref err) => {
                 fmt::Display::fmt(err,
                                   f)
             },
@@ -182,10 +191,19 @@ impl From<ParseIntError> for Error
     }
 }
 
-impl From<CurlError> for Error
+impl From<ReqError> for Error
 {
-    fn from(err: CurlError) -> Error
+    fn from(err: ReqError) -> Error
     {
-        Error::CurlParsing(err)
+        Error::ReqParsing(err)
+    }
+}
+
+
+impl From<IOError> for Error
+{
+    fn from(err: IOError) -> Error
+    {
+        Error::IO(err)
     }
 }

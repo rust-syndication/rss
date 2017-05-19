@@ -53,9 +53,7 @@
 
 extern crate quick_xml;
 extern crate chrono;
-extern crate curl;
-extern crate mime;
-extern crate url;
+extern crate reqwest;
 
 #[macro_use]
 mod fromxml;

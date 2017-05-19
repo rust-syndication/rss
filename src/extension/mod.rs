@@ -164,7 +164,7 @@ impl ExtensionBuilder
         self
     }
 
-    // Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
+    /// Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
     pub fn finalize(&self) -> Result<Extension, Error>
     {
         Ok(Extension { name: self.name

@@ -8,7 +8,6 @@
 use category::{Category, CategoryBuilder};
 use chrono::DateTime;
 use cloud::{Cloud, CloudBuilder};
-use curl::easy::Easy;
 use enclosure::EnclosureBuilder;
 use error::Error;
 use extension::{self, ExtensionMap};
@@ -20,13 +19,14 @@ use image::{Image, ImageBuilder};
 use item::{Item, ItemBuilder};
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
+use reqwest::{self, Url};
 use source::SourceBuilder;
 use std::collections::HashMap;
 use std::i64;
+use std::io::Read;
 use std::str::{self, FromStr};
 use textinput::{TextInput, TextInputBuilder};
 use toxml::{ToXml, XmlWriterExt};
-use url::Url;
 
 /// A representation of the `<channel>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -987,34 +987,12 @@ impl Channel
     /// ```
     pub fn from_url(url: &str) -> Result<Channel, Error>
     {
-        let feed_url = Url::parse(url)?;
-        let mut xml = Vec::new();
-        let mut handle = Easy::new();
+        let mut content = String::new();
 
-        handle.url(feed_url.into_string()
-                           .as_str())?;
-        {
-            let mut transfer = handle.transfer();
-            transfer.write_function(|data| {
-                                        xml.extend_from_slice(data);
-                                        Ok(data.len())
-                                    })
-                    .unwrap();
-            transfer.perform()
-                    .unwrap();
-        }
+        reqwest::get(url)?
+            .read_to_string(&mut content)?;
 
-        let content_type = match handle.content_type()? {
-            Some(val) => val,
-            None => return Err(Error::FromUrl(String::from("Unable to unwrap() content_type"))),
-        };
-
-        if !content_type.contains("xml") {
-            return Err(Error::FromUrl(String::from("Url must end with .xml")));
-        }
-
-        Ok(Channel::from_str(String::from_utf8(xml)?
-                                 .as_str())?)
+        Ok(Channel::from_str(content.as_str())?)
     }
 
     /// Attempt to read the RSS channel from the speficied reader.

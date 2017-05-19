@@ -9,8 +9,8 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
+use reqwest::Url;
 use toxml::{ToXml, XmlWriterExt};
-use url::Url;
 
 /// A representation of the `<image>` element.
 #[derive(Debug, Default, Clone, PartialEq)]

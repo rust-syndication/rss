@@ -16,9 +16,9 @@ use fromxml::{self, FromXml};
 use guid::Guid;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
+use reqwest::Url;
 use source::Source;
 use toxml::{ToXml, XmlWriterExt};
-use url::Url;
 
 /// A representation of the `<item>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
