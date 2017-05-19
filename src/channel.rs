@@ -945,21 +945,21 @@ impl Channel
             .clone()
     }
 
-    /// TODO: document dublincore getter
+    /// Get the optional `DublinCoreExtension` under `Channel`.
     pub fn dublin_core_ext(&self) -> Option<DublinCoreExtension>
     {
         self.dublin_core_ext
             .clone()
     }
 
-    /// TODO: document extensions getter
+    /// Get the `ExtensionMap` under `Channel`.
     pub fn extensions(&self) -> ExtensionMap
     {
         self.extensions
             .clone()
     }
 
-    /// TODO: document namespaces getter
+    /// Get the namespaces under `Channel`.
     pub fn namespaces(&self) -> HashMap<String, String>
     {
         self.namespaces
@@ -2206,7 +2206,6 @@ impl ChannelBuilder
     }
 
     /// Set the optional dublin_core_ext that exists under `Channel`.
-    /// TODO: Add Example
     pub fn dublin_core_ext(&mut self,
                            dublin_core_ext: Option<DublinCoreExtension>)
         -> &mut ChannelBuilder
@@ -2216,7 +2215,6 @@ impl ChannelBuilder
     }
 
     /// Set the extensions that exists under `Channel`.
-    /// TODO: Add Example
     pub fn extensions(&mut self,
                       extensions: ExtensionMap)
         -> &mut ChannelBuilder
@@ -2226,7 +2224,6 @@ impl ChannelBuilder
     }
 
     /// Set the onamespaces that exists under `Channel`.
-    /// TODO: Add Example
     pub fn namespaces(&mut self,
                       namespaces: HashMap<String, String>)
         -> &mut ChannelBuilder

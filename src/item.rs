@@ -484,21 +484,21 @@ impl Item
             .clone()
     }
 
-    /// TODO: document dublincore getter
+    /// Get the optional `DublinCoreExtension` under `Item`.
     pub fn dublin_core_ext(&self) -> Option<DublinCoreExtension>
     {
         self.dublin_core_ext
             .clone()
     }
 
-    /// TODO: document extensions getter
+    /// Get the `ExtensionMap` under `Item`.
     pub fn extensions(&self) -> ExtensionMap
     {
         self.extensions
             .clone()
     }
 
-    /// TODO: document content getter
+    /// Get the optional content under `Item`.
     pub fn content(&self) -> Option<String>
     {
         self.content
@@ -972,7 +972,6 @@ impl ItemBuilder
     }
 
     /// Set the optional dublin_core_ext that exists under `Item`.
-    /// TODO: Add Example
     pub fn dublin_core_ext(&mut self,
                            dublin_core_ext: Option<DublinCoreExtension>)
         -> &mut ItemBuilder
@@ -982,7 +981,6 @@ impl ItemBuilder
     }
 
     /// Set the extensions that exists under `Item`.
-    /// TODO: Add Example
     pub fn extensions(&mut self,
                       extensions: ExtensionMap)
         -> &mut ItemBuilder
@@ -992,7 +990,6 @@ impl ItemBuilder
     }
 
     /// Set the optional content that exists under `Item`.
-    /// TODO: Add Example
     pub fn content(&mut self,
                    content: Option<String>)
         -> &mut ItemBuilder
@@ -1000,8 +997,6 @@ impl ItemBuilder
         self.content = content;
         self
     }
-
-    // TODO: add dublincore, extensions, content to builder
 
     /// Validate the contents of `Item`.
     ///

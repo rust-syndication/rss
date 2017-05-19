@@ -38,7 +38,7 @@ impl Category
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(category.to_owned(), category_obj.name());
+    /// assert_eq!(category, category_obj.name().as_str());
     /// ```
     pub fn name(&self) -> String
     {
@@ -61,9 +61,7 @@ impl Category
     ///     .unwrap();
     ///
     /// let domain_option = category.domain();
-    /// assert!(domain_option.is_some());
-    ///
-    /// assert_eq!(domain_string.clone(), domain_option.unwrap());
+    /// assert_eq!(Some(domain_string.clone()), domain_option);
     /// ```
     ///
     /// ```

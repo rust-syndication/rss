@@ -56,7 +56,6 @@ pub struct DublinCoreExtension
 impl DublinCoreExtension
 {
     /// Get the contributors that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn contributors(&self) -> Vec<String>
     {
         self.contributors
@@ -64,7 +63,6 @@ impl DublinCoreExtension
     }
 
     /// Get the coverages that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn coverages(&self) -> Vec<String>
     {
         self.coverages
@@ -72,7 +70,6 @@ impl DublinCoreExtension
     }
 
     /// Get the creators that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn creators(&self) -> Vec<String>
     {
         self.creators
@@ -80,7 +77,6 @@ impl DublinCoreExtension
     }
 
     /// Get the dates that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn dates(&self) -> Vec<String>
     {
         self.dates
@@ -88,7 +84,6 @@ impl DublinCoreExtension
     }
 
     /// Get the descriptions that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn descriptions(&self) -> Vec<String>
     {
         self.descriptions
@@ -96,7 +91,6 @@ impl DublinCoreExtension
     }
 
     /// Get the formats that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn formats(&self) -> Vec<String>
     {
         self.formats
@@ -104,7 +98,6 @@ impl DublinCoreExtension
     }
 
     /// Get the identifiers that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn identifiers(&self) -> Vec<String>
     {
         self.identifiers
@@ -112,7 +105,6 @@ impl DublinCoreExtension
     }
 
     /// Get the languages that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn languages(&self) -> Vec<String>
     {
         self.languages
@@ -120,7 +112,6 @@ impl DublinCoreExtension
     }
 
     /// Get the publishers that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn publishers(&self) -> Vec<String>
     {
         self.publishers
@@ -128,7 +119,6 @@ impl DublinCoreExtension
     }
 
     /// Get the relations that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn relations(&self) -> Vec<String>
     {
         self.relations
@@ -136,7 +126,6 @@ impl DublinCoreExtension
     }
 
     /// Get the rights that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn rights(&self) -> Vec<String>
     {
         self.rights
@@ -144,7 +133,6 @@ impl DublinCoreExtension
     }
 
     /// Get the sources that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn sources(&self) -> Vec<String>
     {
         self.sources
@@ -152,7 +140,6 @@ impl DublinCoreExtension
     }
 
     /// Get the subjects that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn subjects(&self) -> Vec<String>
     {
         self.subjects
@@ -160,7 +147,6 @@ impl DublinCoreExtension
     }
 
     /// Get the titles that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn titles(&self) -> Vec<String>
     {
         self.titles
@@ -168,7 +154,6 @@ impl DublinCoreExtension
     }
 
     /// Get the resource_types that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn resource_types(&self) -> Vec<String>
     {
         self.resource_types
@@ -324,7 +309,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the contributors that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn contributors(&mut self,
                         contributors: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -334,7 +318,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the coverages that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn coverages(&mut self,
                      coverages: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -344,7 +327,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the creators that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn creators(&mut self,
                     creators: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -354,7 +336,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the dates that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn dates(&mut self,
                  dates: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -364,7 +345,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the descriptions that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn descriptions(&mut self,
                         descriptions: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -374,7 +354,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the formats that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn formats(&mut self,
                    formats: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -384,7 +363,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the identifiers that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn identifiers(&mut self,
                        identifiers: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -394,7 +372,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the languages that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn languages(&mut self,
                      languages: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -404,7 +381,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the publishers that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn publishers(&mut self,
                       publishers: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -414,7 +390,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the relations that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn relations(&mut self,
                      relations: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -424,7 +399,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the rights that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn rights(&mut self,
                   rights: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -434,7 +408,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the sources that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn sources(&mut self,
                    sources: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -444,7 +417,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the subjects that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn subjects(&mut self,
                     subjects: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -454,7 +426,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the titles that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn titles(&mut self,
                   titles: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -464,7 +435,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Set the resource_types that exists under `DublinCoreExtension`.
-    /// TODO: Add Example
     pub fn resource_types(&mut self,
                           resource_types: Vec<String>)
         -> &mut DublinCoreExtensionBuilder
@@ -474,7 +444,6 @@ impl DublinCoreExtensionBuilder
     }
 
     /// Construct the `DublinCoreExtension` from the `DublinCoreExtensionBuilder`.
-    /// TODO: Add Example
     pub fn finalize(&self) -> Result<DublinCoreExtension, Error>
     {
         Ok(DublinCoreExtension { contributors: self.contributors

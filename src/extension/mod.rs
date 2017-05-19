@@ -39,7 +39,6 @@ pub struct Extension
 impl Extension
 {
     /// Get the name that exists under `Extension`.
-    /// TODO: Add Example
     pub fn name(&self) -> String
     {
         self.name
@@ -47,7 +46,6 @@ impl Extension
     }
 
     /// Get the value that exists under `Extension`.
-    /// TODO: Add Example
     pub fn value(&self) -> Option<String>
     {
         self.value
@@ -55,7 +53,6 @@ impl Extension
     }
 
     /// Get the attrs that exists under `Extension`.
-    /// TODO: Add Example
     pub fn attrs(&self) -> HashMap<String, String>
     {
         self.attrs
@@ -63,7 +60,6 @@ impl Extension
     }
 
     /// Get the children that exists under `Extension`.
-    /// TODO: Add Example
     pub fn children(&self) -> HashMap<String, Vec<Extension>>
     {
         self.children
@@ -133,7 +129,6 @@ impl ExtensionBuilder
     }
 
     /// Get the name that exists under `Extension`.
-    /// TODO: Add Example
     pub fn name(&mut self,
                 name: &str)
         -> &mut ExtensionBuilder
@@ -143,7 +138,6 @@ impl ExtensionBuilder
     }
 
     /// Get the value that exists under `Extension`.
-    /// TODO: Add Example
     pub fn value(&mut self,
                  value: Option<String>)
         -> &mut ExtensionBuilder
@@ -153,7 +147,6 @@ impl ExtensionBuilder
     }
 
     /// Get the attrs that exists under `Extension`.
-    /// TODO: Add Example
     pub fn attrs(&mut self,
                  attrs: HashMap<String, String>)
         -> &mut ExtensionBuilder
@@ -163,7 +156,6 @@ impl ExtensionBuilder
     }
 
     /// Get the children that exists under `Extension`.
-    /// TODO: Add Example
     pub fn children(&mut self,
                     children: HashMap<String, Vec<Extension>>)
         -> &mut ExtensionBuilder
@@ -173,7 +165,6 @@ impl ExtensionBuilder
     }
 
     // Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
-    /// TODO: Add Example
     pub fn finalize(&self) -> Result<Extension, Error>
     {
         Ok(Extension { name: self.name
