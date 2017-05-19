@@ -14,16 +14,14 @@ use toxml::ToXml;
 
 /// A representation of the `<source>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Source
-{
+pub struct Source {
     /// The URL of the source.
     url: String,
     /// The title of the source.
     title: Option<String>,
 }
 
-impl Source
-{
+impl Source {
     /// Get the url that exists under `Source`.
     ///
     /// # Examples
@@ -38,12 +36,11 @@ impl Source
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(url.to_owned(), source.url());
+    /// assert_eq!(url, source.url());
     /// ```
-    pub fn url(&self) -> String
-    {
+    pub fn url(&self) -> &str {
         self.url
-            .clone()
+            .as_str()
     }
 
     /// Get the source that exists under `Source`.
@@ -65,19 +62,16 @@ impl Source
     ///
     /// assert_eq!(title.to_owned(), source_obj.title().unwrap());
     /// ```
-    pub fn title(&self) -> Option<String>
-    {
+    pub fn title(&self) -> Option<String> {
         self.title
             .clone()
     }
 }
 
-impl FromXml for Source
-{
+impl FromXml for Source {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-        -> Result<(Self, XmlReader<R>), Error>
-    {
+        -> Result<(Self, XmlReader<R>), Error> {
         let mut url = None;
 
         for attr in element.attributes()
@@ -101,12 +95,10 @@ impl FromXml for Source
     }
 }
 
-impl ToXml for Source
-{
+impl ToXml for Source {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"source");
 
         writer.write(Event::Start({
@@ -129,14 +121,12 @@ impl ToXml for Source
 
 /// This `SourceBuilder` struct creates the `Source`.
 #[derive(Debug, Clone, Default)]
-pub struct SourceBuilder
-{
+pub struct SourceBuilder {
     url: String,
     title: Option<String>,
 }
 
-impl SourceBuilder
-{
+impl SourceBuilder {
     /// Construct a new `SourceBuilder` and return default values.
     ///
     /// # Examples
@@ -146,8 +136,7 @@ impl SourceBuilder
     ///
     /// let source_builder = SourceBuilder::new();
     /// ```
-    pub fn new() -> SourceBuilder
-    {
+    pub fn new() -> SourceBuilder {
         SourceBuilder::default()
     }
 
@@ -164,8 +153,7 @@ impl SourceBuilder
     /// ```
     pub fn url(&mut self,
                url: &str)
-        -> &mut SourceBuilder
-    {
+        -> &mut SourceBuilder {
         self.url = url.to_owned();
         self
     }
@@ -183,8 +171,7 @@ impl SourceBuilder
     /// ```
     pub fn title(&mut self,
                  title: Option<String>)
-        -> &mut SourceBuilder
-    {
+        -> &mut SourceBuilder {
         self.title = title;
         self
     }
@@ -203,8 +190,7 @@ impl SourceBuilder
     ///     .validate().unwrap()
     ///     .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut SourceBuilder, Error>
-    {
+    pub fn validate(&mut self) -> Result<&mut SourceBuilder, Error> {
         Url::parse(self.url
                        .as_str())?;
 
@@ -225,8 +211,7 @@ impl SourceBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<Source, Error>
-    {
+    pub fn finalize(&self) -> Result<Source, Error> {
         Ok(Source { url: self.url
                              .clone(),
                     title: self.title

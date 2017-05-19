@@ -18,8 +18,7 @@ use toxml::{ToXml, XmlWriterExt};
 
 /// An iTunes channel element extension.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct ITunesChannelExtension
-{
+pub struct ITunesChannelExtension {
     /// The author of the podcast.
     author: Option<String>,
     /// Specifies if the podcast should be prevented from appearing in the iTunes Store. A value of
@@ -49,8 +48,7 @@ pub struct ITunesChannelExtension
     keywords: Option<String>,
 }
 
-impl ITunesChannelExtension
-{
+impl ITunesChannelExtension {
     /// Get the optional author that exists under `ITunesChannelExtension`.
     ///
     /// # Examples
@@ -84,8 +82,7 @@ impl ITunesChannelExtension
     /// let author_opt = channel.author();
     /// assert!(author_opt.is_none());
     /// ```
-    pub fn author(&self) -> Option<String>
-    {
+    pub fn author(&self) -> Option<String> {
         self.author
             .clone()
     }
@@ -124,8 +121,7 @@ impl ITunesChannelExtension
     /// let block_opt = channel.block();
     /// assert!(block_opt.is_none());
     /// ```
-    pub fn block(&self) -> Option<String>
-    {
+    pub fn block(&self) -> Option<String> {
         self.block
             .clone()
     }
@@ -160,8 +156,7 @@ impl ITunesChannelExtension
     /// let categories = channel.categories();
     /// assert!(!categories.is_empty());
     /// ```
-    pub fn categories(&self) -> Vec<ITunesCategory>
-    {
+    pub fn categories(&self) -> Vec<ITunesCategory> {
         self.categories
             .clone()
     }
@@ -200,8 +195,7 @@ impl ITunesChannelExtension
     /// let image_opt = channel.image();
     /// assert!(image_opt.is_none());
     /// ```
-    pub fn image(&self) -> Option<String>
-    {
+    pub fn image(&self) -> Option<String> {
         self.image
             .clone()
     }
@@ -240,8 +234,7 @@ impl ITunesChannelExtension
     /// let explicit_opt = channel.explicit();
     /// assert!(explicit_opt.is_none());
     /// ```
-    pub fn explicit(&self) -> Option<String>
-    {
+    pub fn explicit(&self) -> Option<String> {
         self.explicit
             .clone()
     }
@@ -280,8 +273,7 @@ impl ITunesChannelExtension
     /// let complete_opt = channel.complete();
     /// assert!(complete_opt.is_none());
     /// ```
-    pub fn complete(&self) -> Option<String>
-    {
+    pub fn complete(&self) -> Option<String> {
         self.complete
             .clone()
     }
@@ -321,8 +313,7 @@ impl ITunesChannelExtension
     /// let new_feed_url_opt = channel.new_feed_url();
     /// assert!(new_feed_url_opt.is_none());
     /// ```
-    pub fn new_feed_url(&self) -> Option<String>
-    {
+    pub fn new_feed_url(&self) -> Option<String> {
         self.new_feed_url
             .clone()
     }
@@ -363,8 +354,7 @@ impl ITunesChannelExtension
     /// let owner_opt = channel.owner();
     /// assert!(owner_opt.is_none());
     /// ```
-    pub fn owner(&self) -> Option<ITunesOwner>
-    {
+    pub fn owner(&self) -> Option<ITunesOwner> {
         self.owner
             .clone()
     }
@@ -403,8 +393,7 @@ impl ITunesChannelExtension
     /// let subtitle_opt = channel.subtitle();
     /// assert!(subtitle_opt.is_none());
     /// ```
-    pub fn subtitle(&self) -> Option<String>
-    {
+    pub fn subtitle(&self) -> Option<String> {
         self.subtitle
             .clone()
     }
@@ -443,8 +432,7 @@ impl ITunesChannelExtension
     /// let summary_opt = channel.summary();
     /// assert!(summary_opt.is_none());
     /// ```
-    pub fn summary(&self) -> Option<String>
-    {
+    pub fn summary(&self) -> Option<String> {
         self.summary
             .clone()
     }
@@ -483,18 +471,15 @@ impl ITunesChannelExtension
     /// let keywords_opt = channel.keywords();
     /// assert!(keywords_opt.is_none());
     /// ```
-    pub fn keywords(&self) -> Option<String>
-    {
+    pub fn keywords(&self) -> Option<String> {
         self.keywords
             .clone()
     }
 }
 
-impl ITunesChannelExtension
-{
+impl ITunesChannelExtension {
     /// Creates an ITunesChannelExtension using the specified hashmap.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Result<Self, Error>
-    {
+    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Result<Self, Error> {
         let mut ext = ITunesChannelExtension::default();
         ext.author = remove_extension_value(&mut map,
                                             "author");
@@ -519,12 +504,10 @@ impl ITunesChannelExtension
     }
 }
 
-impl ToXml for ITunesChannelExtension
-{
+impl ToXml for ITunesChannelExtension {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         if let Some(author) = self.author
                                   .as_ref() {
             writer.write_text_element(b"itunes:author",
@@ -599,8 +582,7 @@ impl ToXml for ITunesChannelExtension
 /// This `ITunesChannelExtensionBuilder` struct creates the
 /// `ITunesChannelExtension`.
 #[derive(Debug, Clone, Default)]
-pub struct ITunesChannelExtensionBuilder
-{
+pub struct ITunesChannelExtensionBuilder {
     author: Option<String>,
     block: Option<String>,
     categories: Vec<ITunesCategory>,
@@ -614,8 +596,7 @@ pub struct ITunesChannelExtensionBuilder
     keywords: Option<String>,
 }
 
-impl ITunesChannelExtensionBuilder
-{
+impl ITunesChannelExtensionBuilder {
     /// Construct a new `ITunesChannelExtension` and return default values.
     ///
     /// # Examples
@@ -625,8 +606,7 @@ impl ITunesChannelExtensionBuilder
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new();
     /// ```
-    pub fn new() -> ITunesChannelExtensionBuilder
-    {
+    pub fn new() -> ITunesChannelExtensionBuilder {
         ITunesChannelExtensionBuilder::default()
     }
 
@@ -641,8 +621,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn author(&mut self,
                   author: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.author = author;
         self
     }
@@ -660,8 +639,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn block(&mut self,
                  block: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.block = block;
         self
     }
@@ -693,8 +671,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn categories(&mut self,
                       categories: Vec<ITunesCategory>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.categories = categories;
         self
     }
@@ -712,8 +689,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn image(&mut self,
                  image: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.image = image;
         self
     }
@@ -731,8 +707,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn explicit(&mut self,
                     explicit: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.explicit = explicit;
         self
     }
@@ -750,8 +725,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn complete(&mut self,
                     complete: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.complete = complete;
         self
     }
@@ -770,8 +744,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn new_feed_url(&mut self,
                         new_feed_url: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.new_feed_url = new_feed_url;
         self
     }
@@ -796,8 +769,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn owner(&mut self,
                  owner: Option<ITunesOwner>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.owner = owner;
         self
     }
@@ -815,8 +787,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn subtitle(&mut self,
                     subtitle: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.subtitle = subtitle;
         self
     }
@@ -834,8 +805,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn summary(&mut self,
                    summary: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.summary = summary;
         self
     }
@@ -853,8 +823,7 @@ impl ITunesChannelExtensionBuilder
     /// ```
     pub fn keywords(&mut self,
                     keywords: Option<String>)
-        -> &mut ITunesChannelExtensionBuilder
-    {
+        -> &mut ITunesChannelExtensionBuilder {
         self.keywords = keywords;
         self
     }
@@ -903,8 +872,7 @@ impl ITunesChannelExtensionBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<ITunesChannelExtension, Error>
-    {
+    pub fn finalize(&self) -> Result<ITunesChannelExtension, Error> {
         Ok(ITunesChannelExtension { author: self.author
                                                 .clone(),
                                     block: self.block

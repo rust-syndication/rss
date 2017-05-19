@@ -14,8 +14,7 @@ use toxml::ToXml;
 
 /// A representation of the `<cloud>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Cloud
-{
+pub struct Cloud {
     /// The domain to register with.
     domain: String,
     /// The port to register with.
@@ -28,8 +27,7 @@ pub struct Cloud
     protocol: String,
 }
 
-impl Cloud
-{
+impl Cloud {
     /// Get the domain that exists under `Cloud`.
     ///
     /// # Examples
@@ -47,10 +45,9 @@ impl Cloud
     ///
     /// assert_eq!(domain.to_owned(), cloud.domain());
     /// ```
-    pub fn domain(&self) -> String
-    {
+    pub fn domain(&self) -> &str {
         self.domain
-            .clone()
+            .as_str()
     }
 
 
@@ -72,10 +69,9 @@ impl Cloud
     ///
     /// assert_eq!(port.to_string(), cloud.port());
     /// ```
-    pub fn port(&self) -> String
-    {
+    pub fn port(&self) -> &str {
         self.port
-            .clone()
+            .as_str()
     }
 
 
@@ -95,12 +91,11 @@ impl Cloud
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(path.to_owned(), cloud.path());
+    /// assert_eq!(path, cloud.path());
     /// ```
-    pub fn path(&self) -> String
-    {
+    pub fn path(&self) -> &str {
         self.path
-            .clone()
+            .as_str()
     }
 
 
@@ -118,12 +113,11 @@ impl Cloud
     ///     .protocol("soap")
     ///     .finalize()
     ///     .unwrap();
-    /// assert_eq!(register_procedure.to_owned(), cloud.register_procedure());
+    /// assert_eq!(register_procedure, cloud.register_procedure());
     /// ```
-    pub fn register_procedure(&self) -> String
-    {
+    pub fn register_procedure(&self) -> &str {
         self.register_procedure
-            .clone()
+            .as_str()
     }
 
 
@@ -142,21 +136,18 @@ impl Cloud
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(protocol.to_owned(), cloud.protocol());
+    /// assert_eq!(protocol, cloud.protocol());
     /// ```
-    pub fn protocol(&self) -> String
-    {
+    pub fn protocol(&self) -> &str {
         self.protocol
-            .clone()
+            .as_str()
     }
 }
 
-impl FromXml for Cloud
-{
+impl FromXml for Cloud {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-        -> Result<(Self, XmlReader<R>), Error>
-    {
+        -> Result<(Self, XmlReader<R>), Error> {
         let mut domain = None;
         let mut port = None;
         let mut path = None;
@@ -211,12 +202,10 @@ impl FromXml for Cloud
     }
 }
 
-impl ToXml for Cloud
-{
+impl ToXml for Cloud {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"cloud");
 
         writer.write(Event::Start({
@@ -239,8 +228,7 @@ impl ToXml for Cloud
 
 /// This `CloudBuilder` struct creates the `Cloud`.
 #[derive(Debug, Clone, Default)]
-pub struct CloudBuilder
-{
+pub struct CloudBuilder {
     domain: String,
     port: i64,
     path: String,
@@ -249,8 +237,7 @@ pub struct CloudBuilder
 }
 
 
-impl CloudBuilder
-{
+impl CloudBuilder {
     /// Construct a new `CloudBuilder` and return default values.
     ///
     /// # Examples
@@ -260,8 +247,7 @@ impl CloudBuilder
     ///
     /// let cloud_builder = CloudBuilder::new();
     /// ```
-    pub fn new() -> CloudBuilder
-    {
+    pub fn new() -> CloudBuilder {
         CloudBuilder::default()
     }
 
@@ -278,8 +264,7 @@ impl CloudBuilder
     /// ```
     pub fn domain(&mut self,
                   domain: &str)
-        -> &mut CloudBuilder
-    {
+        -> &mut CloudBuilder {
         self.domain = domain.to_owned();
         self
     }
@@ -297,8 +282,7 @@ impl CloudBuilder
     /// ```
     pub fn port(&mut self,
                 port: i64)
-        -> &mut CloudBuilder
-    {
+        -> &mut CloudBuilder {
 
         self.port = port;
         self
@@ -317,8 +301,7 @@ impl CloudBuilder
     /// ```
     pub fn path(&mut self,
                 path: &str)
-        -> &mut CloudBuilder
-    {
+        -> &mut CloudBuilder {
         self.path = path.to_owned();
         self
     }
@@ -336,8 +319,7 @@ impl CloudBuilder
     /// ```
     pub fn register_procedure(&mut self,
                               register_procedure: &str)
-        -> &mut CloudBuilder
-    {
+        -> &mut CloudBuilder {
         self.register_procedure = register_procedure.to_owned();
         self
     }
@@ -355,8 +337,7 @@ impl CloudBuilder
     /// ```
     pub fn protocol(&mut self,
                     protocol: &str)
-        -> &mut CloudBuilder
-    {
+        -> &mut CloudBuilder {
         self.protocol = protocol.to_owned();
         self
     }
@@ -378,8 +359,7 @@ impl CloudBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut CloudBuilder, Error>
-    {
+    pub fn validate(&mut self) -> Result<&mut CloudBuilder, Error> {
         if self.port < 0 {
             return Err(Error::Validation(String::from("Cloud Port cannot be a negative value")));
         }
@@ -408,8 +388,7 @@ impl CloudBuilder
     ///         .protocol("soap")
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Cloud, Error>
-    {
+    pub fn finalize(&self) -> Result<Cloud, Error> {
         let port = self.port
                        .to_string();
 
@@ -428,8 +407,7 @@ impl CloudBuilder
 
 /// Enumerations of protocols for `Cloud`.
 #[derive(Clone, Debug)]
-enum CloudProtocol
-{
+enum CloudProtocol {
     /// http-post
     HttpPost,
 
@@ -441,11 +419,9 @@ enum CloudProtocol
 }
 
 
-impl CloudProtocol
-{
+impl CloudProtocol {
     // Convert `&str` to `CloudProtocol`.
-    pub fn value_of(s: &str) -> Result<CloudProtocol, Error>
-    {
+    pub fn value_of(s: &str) -> Result<CloudProtocol, Error> {
         match s {
             "http-post" => Ok(CloudProtocol::HttpPost),
             "xml-rpc" => Ok(CloudProtocol::XmlRpc),

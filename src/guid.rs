@@ -13,16 +13,14 @@ use toxml::ToXml;
 
 /// A representation of the `<guid>` element.
 #[derive(Debug, Clone, PartialEq)]
-pub struct Guid
-{
+pub struct Guid {
     /// The value of the GUID.
     value: String,
     /// Indicates if the GUID is a permalink.
     is_permalink: bool,
 }
 
-impl Guid
-{
+impl Guid {
     /// Get the permalink that exists under `Guid`.
     ///
     /// # Examples
@@ -63,8 +61,7 @@ impl Guid
     ///
     /// assert_eq!(permalink, guid.is_permalink());
     /// ```
-    pub fn is_permalink(&self) -> bool
-    {
+    pub fn is_permalink(&self) -> bool {
         self.is_permalink
     }
 
@@ -81,31 +78,26 @@ impl Guid
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(guid.to_owned(), guid_obj.value());
+    /// assert_eq!(guid, guid_obj.value());
     /// ```
-    pub fn value(&self) -> String
-    {
+    pub fn value(&self) -> &str {
         self.value
-            .clone()
+            .as_str()
     }
 }
 
-impl Default for Guid
-{
+impl Default for Guid {
     #[inline]
-    fn default() -> Self
-    {
+    fn default() -> Self {
         Guid { value: Default::default(),
                is_permalink: true, }
     }
 }
 
-impl FromXml for Guid
-{
+impl FromXml for Guid {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-        -> Result<(Self, XmlReader<R>), Error>
-    {
+        -> Result<(Self, XmlReader<R>), Error> {
         let mut is_permalink = true;
 
         for attr in element.attributes()
@@ -127,12 +119,10 @@ impl FromXml for Guid
     }
 }
 
-impl ToXml for Guid
-{
+impl ToXml for Guid {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"guid");
 
         writer.write(Event::Start({
@@ -152,14 +142,12 @@ impl ToXml for Guid
 
 /// This `GuidBuilder` struct creates the `Guid`.
 #[derive(Debug, Clone, Default)]
-pub struct GuidBuilder
-{
+pub struct GuidBuilder {
     is_permalink: Option<bool>,
     value: String,
 }
 
-impl GuidBuilder
-{
+impl GuidBuilder {
     /// Construct a new `GuidBuilder` and return default values.
     ///
     /// # Examples
@@ -169,8 +157,7 @@ impl GuidBuilder
     ///
     /// let guid_builder = GuidBuilder::new();
     /// ```
-    pub fn new() -> GuidBuilder
-    {
+    pub fn new() -> GuidBuilder {
         GuidBuilder::default()
     }
 
@@ -186,8 +173,7 @@ impl GuidBuilder
     /// ```
     pub fn is_permalink(&mut self,
                         is_permalink: Option<bool>)
-        -> &mut GuidBuilder
-    {
+        -> &mut GuidBuilder {
         self.is_permalink = is_permalink;
         self
     }
@@ -204,8 +190,7 @@ impl GuidBuilder
     /// ```
     pub fn value(&mut self,
                  value: &str)
-        -> &mut GuidBuilder
-    {
+        -> &mut GuidBuilder {
         self.value = value.to_owned();
         self
     }
@@ -222,8 +207,7 @@ impl GuidBuilder
     ///         .is_permalink(Some(true))
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Guid, Error>
-    {
+    pub fn finalize(&self) -> Result<Guid, Error> {
         let is_permalink = match self.is_permalink {
             Some(val) => val,
             None => true,

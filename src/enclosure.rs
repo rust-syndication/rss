@@ -15,8 +15,7 @@ use toxml::ToXml;
 
 /// A representation of the `<enclosure>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Enclosure
-{
+pub struct Enclosure {
     /// The URL of the enclosure.
     url: String,
     /// The length of the enclosure in bytes.
@@ -25,8 +24,7 @@ pub struct Enclosure
     mime_type: String,
 }
 
-impl Enclosure
-{
+impl Enclosure {
     /// Get the url that exists under `Enclosure`.
     ///
     /// # Examples
@@ -43,12 +41,11 @@ impl Enclosure
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(url.to_owned(), enclosure.url())
+    /// assert_eq!(url, enclosure.url())
     /// ```
-    pub fn url(&self) -> String
-    {
+    pub fn url(&self) -> &str {
         self.url
-            .clone()
+            .as_str()
     }
 
 
@@ -73,10 +70,9 @@ impl Enclosure
     ///
     /// assert_eq!(length.to_string(), enclosure.length())
     /// ```
-    pub fn length(&self) -> String
-    {
+    pub fn length(&self) -> &str {
         self.length
-            .clone()
+            .as_str()
     }
 
 
@@ -98,21 +94,18 @@ impl Enclosure
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(enclosure_type.to_owned(), enclosure.mime_type())
+    /// assert_eq!(enclosure_type, enclosure.mime_type())
     /// ```
-    pub fn mime_type(&self) -> String
-    {
+    pub fn mime_type(&self) -> &str {
         self.mime_type
-            .clone()
+            .as_str()
     }
 }
 
-impl FromXml for Enclosure
-{
+impl FromXml for Enclosure {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-        -> Result<(Self, XmlReader<R>), Error>
-    {
+        -> Result<(Self, XmlReader<R>), Error> {
         let mut url = None;
         let mut length = None;
         let mut mime_type = None;
@@ -152,12 +145,10 @@ impl FromXml for Enclosure
     }
 }
 
-impl ToXml for Enclosure
-{
+impl ToXml for Enclosure {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"enclosure");
 
         writer.write(Event::Start({
@@ -178,15 +169,13 @@ impl ToXml for Enclosure
 
 /// This `EnclosureBuilder` struct creates the `Enclosure`.
 #[derive(Debug, Clone, Default)]
-pub struct EnclosureBuilder
-{
+pub struct EnclosureBuilder {
     url: String,
     length: i64,
     mime_type: String,
 }
 
-impl EnclosureBuilder
-{
+impl EnclosureBuilder {
     /// Construct a new `EnclosureBuilder` and return default values.
     ///
     /// # Examples
@@ -196,8 +185,7 @@ impl EnclosureBuilder
     ///
     /// let enclosure_builder = EnclosureBuilder::new();
     /// ```
-    pub fn new() -> EnclosureBuilder
-    {
+    pub fn new() -> EnclosureBuilder {
         EnclosureBuilder::default()
     }
 
@@ -217,8 +205,7 @@ impl EnclosureBuilder
     /// ```
     pub fn url(&mut self,
                url: &str)
-        -> &mut EnclosureBuilder
-    {
+        -> &mut EnclosureBuilder {
         self.url = url.to_owned();
         self
     }
@@ -236,8 +223,7 @@ impl EnclosureBuilder
     /// ```
     pub fn length(&mut self,
                   length: i64)
-        -> &mut EnclosureBuilder
-    {
+        -> &mut EnclosureBuilder {
         self.length = length;
         self
     }
@@ -255,8 +241,7 @@ impl EnclosureBuilder
     /// ```
     pub fn mime_type(&mut self,
                      mime_type: &str)
-        -> &mut EnclosureBuilder
-    {
+        -> &mut EnclosureBuilder {
         self.mime_type = mime_type.to_owned();
         self
     }
@@ -279,8 +264,7 @@ impl EnclosureBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut EnclosureBuilder, Error>
-    {
+    pub fn validate(&mut self) -> Result<&mut EnclosureBuilder, Error> {
         Url::parse(self.url
                        .as_str())?;
 
@@ -315,8 +299,7 @@ impl EnclosureBuilder
     ///         .mime_type("audio/ogg")
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Enclosure, Error>
-    {
+    pub fn finalize(&self) -> Result<Enclosure, Error> {
         let length = self.length
                          .to_string();
 

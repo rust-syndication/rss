@@ -28,8 +28,7 @@ pub use extension::itunes::itunes_channel_extension::ITunesChannelExtensionBuild
 /// The iTunes XML namespace.
 pub static NAMESPACE: &'static str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
 
-fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String>
-{
+fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
     let mut element = match map.remove("image")
                                .map(|mut v| v.remove(0)) {
         Some(element) => element,
@@ -40,8 +39,7 @@ fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String>
            .remove("href")
 }
 
-fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Result<Vec<ITunesCategory>, Error>
-{
+fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Result<Vec<ITunesCategory>, Error> {
     let mut elements = match map.remove("category") {
         Some(elements) => elements,
         None => return Ok(Vec::new()),
@@ -79,8 +77,7 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Result<Vec<ITu
     Ok(categories)
 }
 
-fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITunesOwner>, Error>
-{
+fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITunesOwner>, Error> {
     let mut element = match map.remove("owner")
                                .map(|mut v| v.remove(0)) {
         Some(element) => element,

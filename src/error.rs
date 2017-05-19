@@ -18,8 +18,7 @@ use std::string::FromUtf8Error;
 
 #[derive(Debug)]
 /// Types of errors that could occur while parsing an RSS feed.
-pub enum Error
-{
+pub enum Error {
     /// An error occured during validation
     Validation(String),
     /// An error occured while reading channel from url.
@@ -44,10 +43,8 @@ pub enum Error
     EOF,
 }
 
-impl StdError for Error
-{
-    fn description(&self) -> &str
-    {
+impl StdError for Error {
+    fn description(&self) -> &str {
         match *self {
             Error::Validation(ref err) => err,
             Error::FromUrl(ref err) => err,
@@ -63,8 +60,7 @@ impl StdError for Error
         }
     }
 
-    fn cause(&self) -> Option<&StdError>
-    {
+    fn cause(&self) -> Option<&StdError> {
         match *self {
             Error::IO(ref err) => Some(err),
             Error::ReqParsing(ref err) => Some(err),
@@ -79,12 +75,10 @@ impl StdError for Error
     }
 }
 
-impl fmt::Display for Error
-{
+impl fmt::Display for Error {
     fn fmt(&self,
            f: &mut fmt::Formatter)
-        -> fmt::Result
-    {
+        -> fmt::Result {
         match *self {
             Error::Validation(ref err) => {
                 fmt::Display::fmt(err,
@@ -134,76 +128,58 @@ impl fmt::Display for Error
     }
 }
 
-impl From<(XmlError, usize)> for Error
-{
-    fn from(err: (XmlError, usize)) -> Error
-    {
+impl From<(XmlError, usize)> for Error {
+    fn from(err: (XmlError, usize)) -> Error {
         Error::XmlParsing(err.0,
                           err.1)
     }
 }
 
-impl From<XmlError> for Error
-{
-    fn from(err: XmlError) -> Error
-    {
+impl From<XmlError> for Error {
+    fn from(err: XmlError) -> Error {
         Error::Xml(err)
     }
 }
 
-impl From<Utf8Error> for Error
-{
-    fn from(err: Utf8Error) -> Error
-    {
+impl From<Utf8Error> for Error {
+    fn from(err: Utf8Error) -> Error {
         Error::Utf8(err)
     }
 }
 
-impl From<FromUtf8Error> for Error
-{
-    fn from(err: FromUtf8Error) -> Error
-    {
+impl From<FromUtf8Error> for Error {
+    fn from(err: FromUtf8Error) -> Error {
         Error::Utf8(err.utf8_error())
     }
 }
 
-impl From<UrlParseError> for Error
-{
-    fn from(err: UrlParseError) -> Error
-    {
+impl From<UrlParseError> for Error {
+    fn from(err: UrlParseError) -> Error {
         Error::UrlParsing(err)
     }
 }
 
-impl From<DateParseError> for Error
-{
-    fn from(err: DateParseError) -> Error
-    {
+impl From<DateParseError> for Error {
+    fn from(err: DateParseError) -> Error {
         Error::DateParsing(err)
     }
 }
 
-impl From<ParseIntError> for Error
-{
-    fn from(err: ParseIntError) -> Error
-    {
+impl From<ParseIntError> for Error {
+    fn from(err: ParseIntError) -> Error {
         Error::IntParsing(err)
     }
 }
 
-impl From<ReqError> for Error
-{
-    fn from(err: ReqError) -> Error
-    {
+impl From<ReqError> for Error {
+    fn from(err: ReqError) -> Error {
         Error::ReqParsing(err)
     }
 }
 
 
-impl From<IOError> for Error
-{
-    fn from(err: IOError) -> Error
-    {
+impl From<IOError> for Error {
+    fn from(err: IOError) -> Error {
         Error::IO(err)
     }
 }

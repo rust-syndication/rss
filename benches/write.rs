@@ -15,8 +15,7 @@ use std::io::sink;
 use test::Bencher;
 
 #[bench]
-fn write_rss2sample(b: &mut Bencher)
-{
+fn write_rss2sample(b: &mut Bencher) {
     let input: &[u8] = include_bytes!("../tests/data/rss2sample.xml");
     let channel = Channel::read_from(input).expect("failed to parse feed");
     b.iter(|| {
@@ -26,8 +25,7 @@ fn write_rss2sample(b: &mut Bencher)
 }
 
 #[bench]
-fn write_itunes(b: &mut Bencher)
-{
+fn write_itunes(b: &mut Bencher) {
     let input: &[u8] = include_bytes!("../tests/data/itunes.xml");
     let channel = Channel::read_from(input).expect("failed to parse feed");
     b.iter(|| {
@@ -37,8 +35,7 @@ fn write_itunes(b: &mut Bencher)
 }
 
 #[bench]
-fn write_dublincore(b: &mut Bencher)
-{
+fn write_dublincore(b: &mut Bencher) {
     let input: &[u8] = include_bytes!("../tests/data/dublincore.xml");
     let channel = Channel::read_from(input).expect("failed to parse feed");
     b.iter(|| {

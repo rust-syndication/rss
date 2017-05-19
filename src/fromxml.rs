@@ -12,8 +12,7 @@ use std::collections::HashMap;
 use std::io::BufRead;
 use std::str;
 
-pub trait FromXml: Sized
-{
+pub trait FromXml: Sized {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
         -> Result<(Self, XmlReader<R>), Error>;
@@ -50,8 +49,7 @@ macro_rules! parse_extension {
     })
 }
 
-pub fn element_text<R: BufRead>(mut reader: XmlReader<R>) -> (Result<Option<String>, Error>, XmlReader<R>)
-{
+pub fn element_text<R: BufRead>(mut reader: XmlReader<R>) -> (Result<Option<String>, Error>, XmlReader<R>) {
     let mut content: Option<String> = None;
 
     while let Some(e) = reader.next() {
@@ -85,8 +83,7 @@ pub fn element_text<R: BufRead>(mut reader: XmlReader<R>) -> (Result<Option<Stri
     (Ok(content), reader)
 }
 
-pub fn skip_element<R: BufRead>(mut reader: XmlReader<R>) -> (Result<(), Error>, XmlReader<R>)
-{
+pub fn skip_element<R: BufRead>(mut reader: XmlReader<R>) -> (Result<(), Error>, XmlReader<R>) {
     while let Some(e) = reader.next() {
         match e {
             Ok(Event::Start(_)) => {
@@ -106,8 +103,7 @@ pub fn skip_element<R: BufRead>(mut reader: XmlReader<R>) -> (Result<(), Error>,
     (Err(Error::EOF), reader)
 }
 
-pub fn extension_name(element: &Element) -> Option<(&[u8], &[u8])>
-{
+pub fn extension_name(element: &Element) -> Option<(&[u8], &[u8])> {
     let split = element.name()
                        .splitn(2,
                                |b| *b == b':')
@@ -128,8 +124,7 @@ pub fn parse_extension<R: BufRead>(mut reader: XmlReader<R>,
                                    ns: &[u8],
                                    name: &[u8],
                                    extensions: &mut ExtensionMap)
-    -> (Result<(), Error>, XmlReader<R>)
-{
+    -> (Result<(), Error>, XmlReader<R>) {
     let ns = try_reader!(str::from_utf8(ns),
                          reader);
     let name = try_reader!(str::from_utf8(name),
@@ -170,8 +165,7 @@ pub fn parse_extension<R: BufRead>(mut reader: XmlReader<R>,
 
 fn parse_extension_element<R: BufRead>(mut reader: XmlReader<R>,
                                        element: &Element)
-    -> (Result<Extension, Error>, XmlReader<R>)
-{
+    -> (Result<Extension, Error>, XmlReader<R>) {
     let mut children = HashMap::<String, Vec<Extension>>::new();
     let mut attrs = HashMap::<String, String>::new();
     let mut content = None;

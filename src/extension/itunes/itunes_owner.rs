@@ -12,16 +12,14 @@ use toxml::{ToXml, XmlWriterExt};
 
 /// The contact information for the owner of an iTunes podcast.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct ITunesOwner
-{
+pub struct ITunesOwner {
     /// The name of the owner.
     name: Option<String>,
     /// The email of the email.
     email: Option<String>,
 }
 
-impl ITunesOwner
-{
+impl ITunesOwner {
     /// Get the optional name that exists under `ITunesOwner`.
     ///
     /// # Examples
@@ -53,8 +51,7 @@ impl ITunesOwner
     /// let name_opt = owner.name();
     /// assert!(name_opt.is_none());
     /// ```
-    pub fn name(&self) -> Option<String>
-    {
+    pub fn name(&self) -> Option<String> {
         self.name
             .clone()
     }
@@ -91,19 +88,16 @@ impl ITunesOwner
     /// let email_opt = owner.email();
     /// assert!(email_opt.is_none());
     /// ```
-    pub fn email(&self) -> Option<String>
-    {
+    pub fn email(&self) -> Option<String> {
         self.email
             .clone()
     }
 }
 
-impl ToXml for ITunesOwner
-{
+impl ToXml for ITunesOwner {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"itunes:owner");
 
         writer.write(Event::Start(element.clone()))?;
@@ -126,14 +120,12 @@ impl ToXml for ITunesOwner
 
 /// This `ITunesOwnerBuilder` struct creates the `ITunesOwner`.
 #[derive(Debug, Clone, Default)]
-pub struct ITunesOwnerBuilder
-{
+pub struct ITunesOwnerBuilder {
     name: Option<String>,
     email: Option<String>,
 }
 
-impl ITunesOwnerBuilder
-{
+impl ITunesOwnerBuilder {
     /// Construct a new `ITunesOwnerBuilder` and return default values.
     ///
     /// # Examples
@@ -143,8 +135,7 @@ impl ITunesOwnerBuilder
     ///
     /// let owner_builder = ITunesOwnerBuilder::new();
     /// ```
-    pub fn new() -> ITunesOwnerBuilder
-    {
+    pub fn new() -> ITunesOwnerBuilder {
         ITunesOwnerBuilder::default()
     }
 
@@ -160,8 +151,7 @@ impl ITunesOwnerBuilder
     /// ```
     pub fn name(&mut self,
                 name: Option<String>)
-        -> &mut ITunesOwnerBuilder
-    {
+        -> &mut ITunesOwnerBuilder {
         self.name = name;
         self
     }
@@ -178,8 +168,7 @@ impl ITunesOwnerBuilder
     /// ```
     pub fn email(&mut self,
                  email: Option<String>)
-        -> &mut ITunesOwnerBuilder
-    {
+        -> &mut ITunesOwnerBuilder {
         self.email = email;
         self
     }
@@ -197,8 +186,7 @@ impl ITunesOwnerBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<ITunesOwner, Error>
-    {
+    pub fn finalize(&self) -> Result<ITunesOwner, Error> {
         Ok(ITunesOwner { name: self.name
                                    .clone(),
                          email: self.email

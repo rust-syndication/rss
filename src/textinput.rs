@@ -14,8 +14,7 @@ use toxml::{ToXml, XmlWriterExt};
 
 /// A representation of the `<textInput>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct TextInput
-{
+pub struct TextInput {
     /// The label of the Submit button for the text input.
     title: String,
     /// A description of the text input.
@@ -26,8 +25,7 @@ pub struct TextInput
     link: String,
 }
 
-impl TextInput
-{
+impl TextInput {
     /// Get the title that exists under `TextInput`.
     ///
     /// # Examples
@@ -43,12 +41,11 @@ impl TextInput
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(title.to_owned(), text_input.title());
+    /// assert_eq!(title, text_input.title());
     /// ```
-    pub fn title(&self) -> String
-    {
+    pub fn title(&self) -> &str {
         self.title
-            .clone()
+            .as_str()
     }
 
     /// Get the description that exists under `TextInput`.
@@ -66,12 +63,11 @@ impl TextInput
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(description.to_owned(), text_input.description());
+    /// assert_eq!(description, text_input.description());
     /// ```
-    pub fn description(&self) -> String
-    {
+    pub fn description(&self) -> &str {
         self.description
-            .clone()
+            .as_str()
     }
 
     /// Get the name that exists under `TextInput`.
@@ -89,12 +85,11 @@ impl TextInput
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(name.to_owned(), text_input.name());
+    /// assert_eq!(name, text_input.name());
     /// ```
-    pub fn name(&self) -> String
-    {
+    pub fn name(&self) -> &str {
         self.name
-            .clone()
+            .as_str()
     }
 
     /// Get the link that exists under `TextInput`.
@@ -111,22 +106,19 @@ impl TextInput
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(link.to_owned(), text_input.link());
+    /// assert_eq!(link, text_input.link());
     /// ```
-    pub fn link(&self) -> String
-    {
+    pub fn link(&self) -> &str {
         self.link
-            .clone()
+            .as_str()
     }
 }
 
 
-impl FromXml for TextInput
-{
+impl FromXml for TextInput {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
-        -> Result<(Self, XmlReader<R>), Error>
-    {
+        -> Result<(Self, XmlReader<R>), Error> {
         let mut title = None;
         let mut description = None;
         let mut name = None;
@@ -164,12 +156,10 @@ impl FromXml for TextInput
     }
 }
 
-impl ToXml for TextInput
-{
+impl ToXml for TextInput {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new("textInput");
 
         writer.write(Event::Start(element.clone()))?;
@@ -189,16 +179,14 @@ impl ToXml for TextInput
 
 /// This `TextInputBuilder` struct creates the `TextInput`.
 #[derive(Debug, Clone, Default)]
-pub struct TextInputBuilder
-{
+pub struct TextInputBuilder {
     title: String,
     description: String,
     name: String,
     link: String,
 }
 
-impl TextInputBuilder
-{
+impl TextInputBuilder {
     /// Construct a new `TextInputBuilder` and return default values.
     ///
     /// # Examples
@@ -208,8 +196,7 @@ impl TextInputBuilder
     ///
     /// let text_input_builder = TextInputBuilder::new();
     /// ```
-    pub fn new() -> TextInputBuilder
-    {
+    pub fn new() -> TextInputBuilder {
         TextInputBuilder::default()
     }
 
@@ -225,8 +212,7 @@ impl TextInputBuilder
     /// ```
     pub fn title(&mut self,
                  title: &str)
-        -> &mut TextInputBuilder
-    {
+        -> &mut TextInputBuilder {
         self.title = title.to_owned();
         self
     }
@@ -243,8 +229,7 @@ impl TextInputBuilder
     /// ```
     pub fn description(&mut self,
                        description: &str)
-        -> &mut TextInputBuilder
-    {
+        -> &mut TextInputBuilder {
         self.description = description.to_owned();
         self
     }
@@ -261,8 +246,7 @@ impl TextInputBuilder
     /// ```
     pub fn name(&mut self,
                 name: &str)
-        -> &mut TextInputBuilder
-    {
+        -> &mut TextInputBuilder {
         self.name = name.to_owned();
         self
     }
@@ -279,8 +263,7 @@ impl TextInputBuilder
     /// ```
     pub fn link(&mut self,
                 link: &str)
-        -> &mut TextInputBuilder
-    {
+        -> &mut TextInputBuilder {
         self.link = link.to_owned();
         self
     }
@@ -300,8 +283,7 @@ impl TextInputBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut TextInputBuilder, Error>
-    {
+    pub fn validate(&mut self) -> Result<&mut TextInputBuilder, Error> {
         Url::parse(self.link
                        .clone()
                        .as_str())?;
@@ -324,8 +306,7 @@ impl TextInputBuilder
     ///         .finalize()
     ///         .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<TextInput, Error>
-    {
+    pub fn finalize(&self) -> Result<TextInput, Error> {
         Ok(TextInput { title: self.title
                                   .clone(),
                        description: self.description

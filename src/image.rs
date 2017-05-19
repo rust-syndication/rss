@@ -14,8 +14,7 @@ use toxml::{ToXml, XmlWriterExt};
 
 /// A representation of the `<image>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Image
-{
+pub struct Image {
     /// The URL of the channel image.
     url: String,
     /// A description of the image. This is used in the HTML `alt` attribute.
@@ -30,8 +29,7 @@ pub struct Image
     description: Option<String>,
 }
 
-impl Image
-{
+impl Image {
     /// Get the url that exists under `Image`.
     ///
     /// # Examples
@@ -49,12 +47,11 @@ impl Image
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(url.to_owned(), image.url());
+    /// assert_eq!(url, image.url());
     /// ```
-    pub fn url(&self) -> String
-    {
+    pub fn url(&self) -> &str() {
         self.url
-            .clone()
+            .as_str()
     }
 
 
@@ -78,12 +75,11 @@ impl Image
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(title.to_owned(), image.title());
+    /// assert_eq!(title, image.title());
     /// ```
-    pub fn title(&self) -> String
-    {
+    pub fn title(&self) -> &str {
         self.title
-            .clone()
+            .as_str()
     }
 
 
@@ -104,12 +100,11 @@ impl Image
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(link.to_owned(), image.link());
+    /// assert_eq!(link, image.link());
     /// ```
-    pub fn link(&self) -> String
-    {
+    pub fn link(&self) -> &str {
         self.link
-            .clone()
+            .as_str()
     }
 
 
@@ -156,8 +151,7 @@ impl Image
     /// ```
     ///
     /// ```
-    pub fn width(&self) -> Option<String>
-    {
+    pub fn width(&self) -> Option<String> {
         self.width
             .clone()
     }
@@ -204,8 +198,7 @@ impl Image
     ///
     /// assert_eq!(height.to_string(), image.height().unwrap());
     /// ```
-    pub fn height(&self) -> Option<String>
-    {
+    pub fn height(&self) -> Option<String> {
         self.height
             .clone()
     }
@@ -253,19 +246,16 @@ impl Image
     ///
     /// assert_eq!(description_string.clone(), description_option.unwrap());
     /// ```
-    pub fn description(&self) -> Option<String>
-    {
+    pub fn description(&self) -> Option<String> {
         self.description
             .clone()
     }
 }
 
-impl FromXml for Image
-{
+impl FromXml for Image {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
-        -> Result<(Self, XmlReader<R>), Error>
-    {
+        -> Result<(Self, XmlReader<R>), Error> {
         let mut url = None;
         let mut title = None;
         let mut link = None;
@@ -308,12 +298,10 @@ impl FromXml for Image
     }
 }
 
-impl ToXml for Image
-{
+impl ToXml for Image {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"image");
 
         writer.write(Event::Start(element.clone()))?;
@@ -350,8 +338,7 @@ impl ToXml for Image
 
 /// This `ImageBuilder` struct creates the `Image`.
 #[derive(Debug, Clone, Default)]
-pub struct ImageBuilder
-{
+pub struct ImageBuilder {
     url: String,
     title: String,
     link: String,
@@ -360,8 +347,7 @@ pub struct ImageBuilder
     description: Option<String>,
 }
 
-impl ImageBuilder
-{
+impl ImageBuilder {
     /// Construct a new `ImageBuilder` and return default values.
     ///
     /// # Examples
@@ -371,8 +357,7 @@ impl ImageBuilder
     ///
     /// let image_builder = ImageBuilder::new();
     /// ```
-    pub fn new() -> ImageBuilder
-    {
+    pub fn new() -> ImageBuilder {
         ImageBuilder::default()
     }
 
@@ -390,8 +375,7 @@ impl ImageBuilder
     /// ```
     pub fn url(&mut self,
                url: &str)
-        -> &mut ImageBuilder
-    {
+        -> &mut ImageBuilder {
         self.url = url.to_owned();
         self
     }
@@ -409,8 +393,7 @@ impl ImageBuilder
     /// ```
     pub fn title(&mut self,
                  title: &str)
-        -> &mut ImageBuilder
-    {
+        -> &mut ImageBuilder {
         self.title = title.to_owned();
         self
     }
@@ -428,8 +411,7 @@ impl ImageBuilder
     /// ```
     pub fn link(&mut self,
                 link: &str)
-        -> &mut ImageBuilder
-    {
+        -> &mut ImageBuilder {
         self.link = link.to_owned();
         self
     }
@@ -447,8 +429,7 @@ impl ImageBuilder
     /// ```
     pub fn width(&mut self,
                  width: Option<i64>)
-        -> &mut ImageBuilder
-    {
+        -> &mut ImageBuilder {
         self.width = width;
         self
     }
@@ -466,8 +447,7 @@ impl ImageBuilder
     /// ```
     pub fn height(&mut self,
                   height: Option<i64>)
-        -> &mut ImageBuilder
-    {
+        -> &mut ImageBuilder {
         self.height = height;
         self
     }
@@ -485,8 +465,7 @@ impl ImageBuilder
     /// ```
     pub fn description(&mut self,
                        description: Option<String>)
-        -> &mut ImageBuilder
-    {
+        -> &mut ImageBuilder {
         self.description = description;
         self
     }
@@ -509,8 +488,7 @@ impl ImageBuilder
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut ImageBuilder, Error>
-    {
+    pub fn validate(&mut self) -> Result<&mut ImageBuilder, Error> {
         let url_string = self.url
                              .clone();
         if !url_string.ends_with(".jpeg") && !url_string.ends_with(".jpg") && !url_string.ends_with(".png") &&
@@ -562,8 +540,7 @@ impl ImageBuilder
     ///         .description(Some("This is a test".to_owned()))
     ///         .finalize();
     /// ```
-    pub fn finalize(&self) -> Result<Image, Error>
-    {
+    pub fn finalize(&self) -> Result<Image, Error> {
 
         let width = match self.width {
             Some(val) => Some(val.to_string()),

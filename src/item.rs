@@ -22,8 +22,7 @@ use toxml::{ToXml, XmlWriterExt};
 
 /// A representation of the `<item>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct Item
-{
+pub struct Item {
     /// The title of the item.
     title: Option<String>,
     /// The URL of the item.
@@ -54,8 +53,7 @@ pub struct Item
     dublin_core_ext: Option<DublinCoreExtension>,
 }
 
-impl Item
-{
+impl Item {
     /// Get the optional title that exists under `Item`.
     ///
     /// # Examples
@@ -87,8 +85,7 @@ impl Item
     ///
     /// assert!(item.title().is_none());
     /// ```
-    pub fn title(&self) -> Option<String>
-    {
+    pub fn title(&self) -> Option<String> {
         self.title
             .clone()
     }
@@ -124,8 +121,7 @@ impl Item
     ///
     /// assert!(item.link().is_none());
     /// ```
-    pub fn link(&self) -> Option<String>
-    {
+    pub fn link(&self) -> Option<String> {
         self.link
             .clone()
     }
@@ -162,8 +158,7 @@ impl Item
     ///
     /// assert!(item.description().is_none());
     /// ```
-    pub fn description(&self) -> Option<String>
-    {
+    pub fn description(&self) -> Option<String> {
         self.description
             .clone()
     }
@@ -200,8 +195,7 @@ impl Item
     ///
     /// assert!(item.author().is_none());
     /// ```
-    pub fn author(&self) -> Option<String>
-    {
+    pub fn author(&self) -> Option<String> {
         self.author
             .clone()
     }
@@ -235,8 +229,7 @@ impl Item
     ///
     /// assert_eq!(categories_vec.clone().len(), item.categories().len());
     /// ```
-    pub fn categories(&self) -> Vec<Category>
-    {
+    pub fn categories(&self) -> Vec<Category> {
         self.categories
             .clone()
     }
@@ -273,8 +266,7 @@ impl Item
     ///
     /// assert!(item.comments().is_none());
     /// ```
-    pub fn comments(&self) -> Option<String>
-    {
+    pub fn comments(&self) -> Option<String> {
         self.comments
             .clone()
     }
@@ -316,8 +308,7 @@ impl Item
     ///
     /// assert!(item.enclosure().is_none());
     /// ```
-    pub fn enclosure(&self) -> Option<Enclosure>
-    {
+    pub fn enclosure(&self) -> Option<Enclosure> {
         self.enclosure
             .clone()
     }
@@ -354,8 +345,7 @@ impl Item
     ///
     /// assert!(item.guid().is_none());
     /// ```
-    pub fn guid(&self) -> Option<Guid>
-    {
+    pub fn guid(&self) -> Option<Guid> {
         self.guid
             .clone()
     }
@@ -392,8 +382,7 @@ impl Item
     ///
     /// assert!(item.pub_date().is_none());
     /// ```
-    pub fn pub_date(&self) -> Option<String>
-    {
+    pub fn pub_date(&self) -> Option<String> {
         self.pub_date
             .clone()
     }
@@ -431,8 +420,7 @@ impl Item
     ///
     /// assert!(item.source().is_none());
     /// ```
-    pub fn source(&self) -> Option<Source>
-    {
+    pub fn source(&self) -> Option<Source> {
         self.source
             .clone()
     }
@@ -478,40 +466,34 @@ impl Item
     ///
     /// assert!(item.itunes_ext().is_none());
     /// ```
-    pub fn itunes_ext(&self) -> Option<ITunesItemExtension>
-    {
+    pub fn itunes_ext(&self) -> Option<ITunesItemExtension> {
         self.itunes_ext
             .clone()
     }
 
     /// Get the optional `DublinCoreExtension` under `Item`.
-    pub fn dublin_core_ext(&self) -> Option<DublinCoreExtension>
-    {
+    pub fn dublin_core_ext(&self) -> Option<DublinCoreExtension> {
         self.dublin_core_ext
             .clone()
     }
 
     /// Get the `ExtensionMap` under `Item`.
-    pub fn extensions(&self) -> ExtensionMap
-    {
+    pub fn extensions(&self) -> ExtensionMap {
         self.extensions
             .clone()
     }
 
     /// Get the optional content under `Item`.
-    pub fn content(&self) -> Option<String>
-    {
+    pub fn content(&self) -> Option<String> {
         self.content
             .clone()
     }
 }
 
-impl FromXml for Item
-{
+impl FromXml for Item {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
-        -> Result<(Self, XmlReader<R>), Error>
-    {
+        -> Result<(Self, XmlReader<R>), Error> {
         let mut item = Item::default();
 
         while let Some(e) = reader.next() {
@@ -588,12 +570,10 @@ impl FromXml for Item
     }
 }
 
-impl ToXml for Item
-{
+impl ToXml for Item {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"item");
 
         writer.write(Event::Start(element.clone()))?;
@@ -683,8 +663,7 @@ impl ToXml for Item
 
 /// This `ItemBuilder` struct creates the `Item`.
 #[derive(Debug, Clone, Default)]
-pub struct ItemBuilder
-{
+pub struct ItemBuilder {
     title: Option<String>,
     link: Option<String>,
     description: Option<String>,
@@ -701,8 +680,7 @@ pub struct ItemBuilder
     content: Option<String>,
 }
 
-impl ItemBuilder
-{
+impl ItemBuilder {
     /// Construct a new `ItemBuilder` and return default values.
     ///
     /// # Examples
@@ -712,8 +690,7 @@ impl ItemBuilder
     ///
     /// let item_builder = ItemBuilder::new();
     /// ```
-    pub fn new() -> ItemBuilder
-    {
+    pub fn new() -> ItemBuilder {
         ItemBuilder::default()
     }
 
@@ -731,8 +708,7 @@ impl ItemBuilder
     /// ```
     pub fn title(&mut self,
                  title: Option<String>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.title = title;
         self
     }
@@ -751,8 +727,7 @@ impl ItemBuilder
     /// ```
     pub fn link(&mut self,
                 link: Option<String>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.link = link;
         self
     }
@@ -770,8 +745,7 @@ impl ItemBuilder
     /// ```
     pub fn description(&mut self,
                        description: Option<String>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.description = description;
         self
     }
@@ -789,8 +763,7 @@ impl ItemBuilder
     /// ```
     pub fn author(&mut self,
                   author: Option<String>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.author = author;
         self
     }
@@ -813,8 +786,7 @@ impl ItemBuilder
     /// ```
     pub fn categories(&mut self,
                       categories: Vec<Category>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.categories = categories;
         self
     }
@@ -832,8 +804,7 @@ impl ItemBuilder
     /// ```
     pub fn comments(&mut self,
                     comments: Option<String>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.comments = comments;
         self
     }
@@ -860,8 +831,7 @@ impl ItemBuilder
     /// ```
     pub fn enclosure(&mut self,
                      enclosure: Option<Enclosure>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.enclosure = enclosure;
         self
     }
@@ -883,8 +853,7 @@ impl ItemBuilder
     /// ```
     pub fn guid(&mut self,
                 guid: Option<Guid>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.guid = guid;
         self
     }
@@ -903,8 +872,7 @@ impl ItemBuilder
     /// ```
     pub fn pub_date(&mut self,
                     pub_date: Option<String>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.pub_date = pub_date;
         self
     }
@@ -929,8 +897,7 @@ impl ItemBuilder
     /// ```
     pub fn source(&mut self,
                   source: Option<Source>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.source = source;
         self
     }
@@ -965,8 +932,7 @@ impl ItemBuilder
     /// ```
     pub fn itunes_ext(&mut self,
                       itunes_ext: Option<ITunesItemExtension>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.itunes_ext = itunes_ext;
         self
     }
@@ -974,8 +940,7 @@ impl ItemBuilder
     /// Set the optional dublin_core_ext that exists under `Item`.
     pub fn dublin_core_ext(&mut self,
                            dublin_core_ext: Option<DublinCoreExtension>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.dublin_core_ext = dublin_core_ext;
         self
     }
@@ -983,8 +948,7 @@ impl ItemBuilder
     /// Set the extensions that exists under `Item`.
     pub fn extensions(&mut self,
                       extensions: ExtensionMap)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.extensions = extensions;
         self
     }
@@ -992,8 +956,7 @@ impl ItemBuilder
     /// Set the optional content that exists under `Item`.
     pub fn content(&mut self,
                    content: Option<String>)
-        -> &mut ItemBuilder
-    {
+        -> &mut ItemBuilder {
         self.content = content;
         self
     }
@@ -1019,8 +982,7 @@ impl ItemBuilder
     ///     .validate().unwrap()
     ///     .finalize().unwrap();
     /// ```
-    pub fn validate(&mut self) -> Result<&mut ItemBuilder, Error>
-    {
+    pub fn validate(&mut self) -> Result<&mut ItemBuilder, Error> {
         if self.title
                .is_none() &&
            self.description
@@ -1074,8 +1036,7 @@ impl ItemBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<Item, Error>
-    {
+    pub fn finalize(&self) -> Result<Item, Error> {
         Ok(Item { title: self.title
                              .clone(),
                   link: self.link

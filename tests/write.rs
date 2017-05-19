@@ -12,8 +12,7 @@ macro_rules! test_write {
 }
 
 #[test]
-fn write_channel()
-{
+fn write_channel() {
     let input = include_str!("data/channel.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -21,8 +20,7 @@ fn write_channel()
 }
 
 #[test]
-fn write_item()
-{
+fn write_item() {
     let input = include_str!("data/item.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -30,8 +28,7 @@ fn write_item()
 }
 
 #[test]
-fn write_content()
-{
+fn write_content() {
     let input = include_str!("data/content.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -39,8 +36,7 @@ fn write_content()
 }
 
 #[test]
-fn write_source()
-{
+fn write_source() {
     let input = include_str!("data/source.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -48,8 +44,7 @@ fn write_source()
 }
 
 #[test]
-fn write_guid()
-{
+fn write_guid() {
     let input = include_str!("data/guid.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -57,8 +52,7 @@ fn write_guid()
 }
 
 #[test]
-fn write_enclosure()
-{
+fn write_enclosure() {
     let input = include_str!("data/enclosure.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -66,8 +60,7 @@ fn write_enclosure()
 }
 
 #[test]
-fn write_category()
-{
+fn write_category() {
     let input = include_str!("data/category.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -75,8 +68,7 @@ fn write_category()
 }
 
 #[test]
-fn write_image()
-{
+fn write_image() {
     let input = include_str!("data/image.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -84,8 +76,7 @@ fn write_image()
 }
 
 #[test]
-fn write_mixed_content()
-{
+fn write_mixed_content() {
     let input = include_str!("data/mixed_content.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -93,8 +84,7 @@ fn write_mixed_content()
 }
 
 #[test]
-fn write_cloud()
-{
+fn write_cloud() {
     let input = include_str!("data/cloud.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -102,8 +92,7 @@ fn write_cloud()
 }
 
 #[test]
-fn write_textinput()
-{
+fn write_textinput() {
     let input = include_str!("data/textinput.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -111,8 +100,7 @@ fn write_textinput()
 }
 
 #[test]
-fn write_extension()
-{
+fn write_extension() {
     let input = include_str!("data/extension.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -120,8 +108,7 @@ fn write_extension()
 }
 
 #[test]
-fn write_itunes()
-{
+fn write_itunes() {
     let input = include_str!("data/itunes.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -129,8 +116,7 @@ fn write_itunes()
 }
 
 #[test]
-fn write_dublincore()
-{
+fn write_dublincore() {
     let input = include_str!("data/dublincore.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -138,8 +124,7 @@ fn write_dublincore()
 }
 
 #[test]
-fn verify_write_format()
-{
+fn verify_write_format() {
     let item = ItemBuilder::new()
         .itunes_ext(Some(extension::itunes::ITunesItemExtensionBuilder::new()
                              .finalize()

@@ -12,8 +12,7 @@ use toxml::ToXml;
 
 /// A category for an iTunes podcast.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct ITunesCategory
-{
+pub struct ITunesCategory {
     /// The name of the category.
     text: String,
     // This is contained within a Box to ensure it gets allocated on the heap to prevent an
@@ -22,8 +21,7 @@ pub struct ITunesCategory
     subcategory: Option<Box<ITunesCategory>>,
 }
 
-impl ITunesCategory
-{
+impl ITunesCategory {
     /// Get the text that exists under `ITunesCategory`.
     ///
     /// # Examples
@@ -41,8 +39,7 @@ impl ITunesCategory
     ///
     /// assert_eq!(text.to_owned(), category.text())
     /// ```
-    pub fn text(&self) -> String
-    {
+    pub fn text(&self) -> String {
         self.text
             .clone()
     }
@@ -82,19 +79,16 @@ impl ITunesCategory
     ///
     /// assert!(category.subcategory().is_none());
     /// ```
-    pub fn subcategory(&self) -> Option<Box<ITunesCategory>>
-    {
+    pub fn subcategory(&self) -> Option<Box<ITunesCategory>> {
         self.subcategory
             .clone()
     }
 }
 
-impl ToXml for ITunesCategory
-{
+impl ToXml for ITunesCategory {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         let element = Element::new(b"itunes:category");
 
         writer.write(Event::Start({
@@ -115,14 +109,12 @@ impl ToXml for ITunesCategory
 
 /// This `ITunesCategoryBuilder` struct creates the `ITunesCategory`.
 #[derive(Debug, Clone, Default)]
-pub struct ITunesCategoryBuilder
-{
+pub struct ITunesCategoryBuilder {
     text: String,
     subcategory: Option<Box<ITunesCategory>>,
 }
 
-impl ITunesCategoryBuilder
-{
+impl ITunesCategoryBuilder {
     /// Construct a new `ITunesCategoryBuilder` and return default values.
     ///
     /// # Examples
@@ -132,8 +124,7 @@ impl ITunesCategoryBuilder
     ///
     /// let category_builder = ITunesCategoryBuilder::new();
     /// ```
-    pub fn new() -> ITunesCategoryBuilder
-    {
+    pub fn new() -> ITunesCategoryBuilder {
         ITunesCategoryBuilder::default()
     }
 
@@ -149,8 +140,7 @@ impl ITunesCategoryBuilder
     /// ```
     pub fn text(&mut self,
                 text: &str)
-        -> &mut ITunesCategoryBuilder
-    {
+        -> &mut ITunesCategoryBuilder {
         self.text = text.to_owned();
         self
     }
@@ -172,8 +162,7 @@ impl ITunesCategoryBuilder
     /// ```
     pub fn subcategory(&mut self,
                        subcategory: Option<Box<ITunesCategory>>)
-        -> &mut ITunesCategoryBuilder
-    {
+        -> &mut ITunesCategoryBuilder {
         self.subcategory = subcategory;
         self
     }
@@ -196,8 +185,7 @@ impl ITunesCategoryBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<ITunesCategory, Error>
-    {
+    pub fn finalize(&self) -> Result<ITunesCategory, Error> {
         Ok(ITunesCategory { text: self.text
                                       .clone(),
                             subcategory: self.subcategory

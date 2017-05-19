@@ -16,8 +16,7 @@ use toxml::{ToXml, XmlWriterExt};
 
 /// An iTunes item element extension.
 #[derive(Debug, Default, Clone, PartialEq)]
-pub struct ITunesItemExtension
-{
+pub struct ITunesItemExtension {
     /// The author of the podcast episode.
     author: Option<String>,
     /// Specifies if the podcast episode should be prevented from appearing in the iTunes Store. A
@@ -46,8 +45,7 @@ pub struct ITunesItemExtension
     keywords: Option<String>,
 }
 
-impl ITunesItemExtension
-{
+impl ITunesItemExtension {
     /// Get the optional author that exists under `ITunesItemExtension`.
     /// # Examples
     ///
@@ -80,8 +78,7 @@ impl ITunesItemExtension
     /// let author_opt = item.author();
     /// assert!(author_opt.is_none());
     /// ```
-    pub fn author(&self) -> Option<String>
-    {
+    pub fn author(&self) -> Option<String> {
         self.author
             .clone()
     }
@@ -118,8 +115,7 @@ impl ITunesItemExtension
     /// let block_opt = item.block();
     /// assert!(block_opt.is_none());
     /// ```
-    pub fn block(&self) -> Option<String>
-    {
+    pub fn block(&self) -> Option<String> {
         self.block
             .clone()
     }
@@ -156,8 +152,7 @@ impl ITunesItemExtension
     /// let image_opt = item.image();
     /// assert!(image_opt.is_none());
     /// ```
-    pub fn image(&self) -> Option<String>
-    {
+    pub fn image(&self) -> Option<String> {
         self.image
             .clone()
     }
@@ -194,8 +189,7 @@ impl ITunesItemExtension
     /// let duration_opt = item.duration();
     /// assert!(duration_opt.is_none());
     /// ```
-    pub fn duration(&self) -> Option<String>
-    {
+    pub fn duration(&self) -> Option<String> {
         self.duration
             .clone()
     }
@@ -232,8 +226,7 @@ impl ITunesItemExtension
     /// let explicit_opt = item.explicit();
     /// assert!(explicit_opt.is_none());
     /// ```
-    pub fn explicit(&self) -> Option<String>
-    {
+    pub fn explicit(&self) -> Option<String> {
         self.explicit
             .clone()
     }
@@ -271,8 +264,7 @@ impl ITunesItemExtension
     /// let closed_captioned_opt = item.closed_captioned();
     /// assert!(closed_captioned_opt.is_none());
     /// ```
-    pub fn closed_captioned(&self) -> Option<String>
-    {
+    pub fn closed_captioned(&self) -> Option<String> {
         self.closed_captioned
             .clone()
     }
@@ -309,8 +301,7 @@ impl ITunesItemExtension
     /// let order_opt = item.order();
     /// assert!(order_opt.is_none());
     /// ```
-    pub fn order(&self) -> Option<String>
-    {
+    pub fn order(&self) -> Option<String> {
         self.order
             .clone()
     }
@@ -347,8 +338,7 @@ impl ITunesItemExtension
     /// let subtitle_opt = item.subtitle();
     /// assert!(subtitle_opt.is_none());
     /// ```
-    pub fn subtitle(&self) -> Option<String>
-    {
+    pub fn subtitle(&self) -> Option<String> {
         self.subtitle
             .clone()
     }
@@ -385,8 +375,7 @@ impl ITunesItemExtension
     /// let summary_opt = item.summary();
     /// assert!(summary_opt.is_none());
     /// ```
-    pub fn summary(&self) -> Option<String>
-    {
+    pub fn summary(&self) -> Option<String> {
         self.summary
             .clone()
     }
@@ -423,18 +412,15 @@ impl ITunesItemExtension
     /// let keywords_opt = item.keywords();
     /// assert!(keywords_opt.is_none());
     /// ```
-    pub fn keywords(&self) -> Option<String>
-    {
+    pub fn keywords(&self) -> Option<String> {
         self.keywords
             .clone()
     }
 }
 
-impl ITunesItemExtension
-{
+impl ITunesItemExtension {
     /// Creates an ITunesChannelExtension using the specified hashmap.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self
-    {
+    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
         let mut ext = ITunesItemExtension::default();
         ext.author = remove_extension_value(&mut map,
                                             "author");
@@ -459,12 +445,10 @@ impl ITunesItemExtension
     }
 }
 
-impl ToXml for ITunesItemExtension
-{
+impl ToXml for ITunesItemExtension {
     fn to_xml<W: ::std::io::Write>(&self,
                                    writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError>
-    {
+        -> Result<(), XmlError> {
         if let Some(author) = self.author
                                   .as_ref() {
             writer.write_text_element(b"itunes:author",
@@ -538,8 +522,7 @@ impl ToXml for ITunesItemExtension
 /// This `ITunesItemExtensionBuilder` struct creates the
 /// `ITunesChannelExtension`.
 #[derive(Debug, Clone, Default)]
-pub struct ITunesItemExtensionBuilder
-{
+pub struct ITunesItemExtensionBuilder {
     author: Option<String>,
     block: Option<String>,
     image: Option<String>,
@@ -552,8 +535,7 @@ pub struct ITunesItemExtensionBuilder
     keywords: Option<String>,
 }
 
-impl ITunesItemExtensionBuilder
-{
+impl ITunesItemExtensionBuilder {
     /// Construct a new `ITunesItemExtensionBuilder` and return default values.
     ///
     /// # Examples
@@ -563,8 +545,7 @@ impl ITunesItemExtensionBuilder
     ///
     /// let item_builder = ITunesItemExtensionBuilder::new();
     /// ```
-    pub fn new() -> ITunesItemExtensionBuilder
-    {
+    pub fn new() -> ITunesItemExtensionBuilder {
         ITunesItemExtensionBuilder::default()
     }
 
@@ -581,8 +562,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn author(&mut self,
                   author: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.author = author;
         self
     }
@@ -600,8 +580,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn block(&mut self,
                  block: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.block = block;
         self
     }
@@ -619,8 +598,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn image(&mut self,
                  image: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.image = image;
         self
     }
@@ -638,8 +616,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn duration(&mut self,
                     duration: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.duration = duration;
         self
     }
@@ -657,8 +634,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn explicit(&mut self,
                     explicit: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.explicit = explicit;
         self
     }
@@ -677,8 +653,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn closed_captioned(&mut self,
                             closed_captioned: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.closed_captioned = closed_captioned;
         self
     }
@@ -696,8 +671,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn order(&mut self,
                  order: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.order = order;
         self
     }
@@ -715,8 +689,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn subtitle(&mut self,
                     subtitle: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.subtitle = subtitle;
         self
     }
@@ -734,8 +707,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn summary(&mut self,
                    summary: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.summary = summary;
         self
     }
@@ -753,8 +725,7 @@ impl ITunesItemExtensionBuilder
     /// ```
     pub fn keywords(&mut self,
                     keywords: Option<String>)
-        -> &mut ITunesItemExtensionBuilder
-    {
+        -> &mut ITunesItemExtensionBuilder {
         self.keywords = keywords;
         self
     }
@@ -782,8 +753,7 @@ impl ITunesItemExtensionBuilder
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<ITunesItemExtension, Error>
-    {
+    pub fn finalize(&self) -> Result<ITunesItemExtension, Error> {
         Ok(ITunesItemExtension { author: self.author
                                              .clone(),
                                  block: self.block

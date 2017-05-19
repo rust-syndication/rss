@@ -5,18 +5,17 @@ use rss::extension::dublincore::DublinCoreExtension;
 use rss::extension::get_extension_values;
 
 #[test]
-fn read_channel()
-{
+fn read_channel() {
     let input = include_str!("data/channel.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
 
     assert_eq!(channel.title(),
-               String::from("Title"));
+               "Title");
     assert_eq!(channel.link(),
-               String::from("http://example.com/"));
+               "http://example.com/");
     assert_eq!(channel.description(),
-               String::from("Description"));
+               "Description");
     assert_eq!(channel.language(),
                Some(String::from("en-US")));
     assert_eq!(channel.managing_editor(),
@@ -56,8 +55,7 @@ fn read_channel()
 }
 
 #[test]
-fn read_item()
-{
+fn read_item() {
     let input = include_str!("data/item.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -95,8 +93,7 @@ fn read_item()
 }
 
 #[test]
-fn read_content()
-{
+fn read_content() {
     let input = include_str!("data/content.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -111,8 +108,7 @@ fn read_content()
 }
 
 #[test]
-fn read_source()
-{
+fn read_source() {
     let input = include_str!("data/source.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -123,7 +119,7 @@ fn read_source()
                       .source()
                       .as_ref()
                       .map(|v| v.url()),
-               Some(String::from("http://example.com/feed/")));
+               Some("http://example.com/feed/"));
     assert_eq!(channel.items()
                       .get(0)
                       .unwrap()
@@ -134,8 +130,7 @@ fn read_source()
 }
 
 #[test]
-fn read_guid()
-{
+fn read_guid() {
     let input = include_str!("data/guid.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -153,7 +148,7 @@ fn read_guid()
                       .guid()
                       .as_ref()
                       .map(|v| v.value()),
-               Some(String::from("abc")));
+               Some("abc"));
 
     assert_eq!(channel.items()
                       .get(1)
@@ -168,12 +163,11 @@ fn read_guid()
                       .guid()
                       .as_ref()
                       .map(|v| v.value()),
-               Some(String::from("def")));
+               Some("def"));
 }
 
 #[test]
-fn read_enclosure()
-{
+fn read_enclosure() {
     let input = include_str!("data/enclosure.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -184,26 +178,25 @@ fn read_enclosure()
                       .enclosure()
                       .as_ref()
                       .map(|v| v.url()),
-               Some(String::from("http://example.com/media.mp3")));
+               Some("http://example.com/media.mp3"));
     assert_eq!(channel.items()
                       .get(0)
                       .unwrap()
                       .enclosure()
                       .as_ref()
                       .map(|v| v.length()),
-               Some(String::from("4992349")));
+               Some("4992349"));
     assert_eq!(channel.items()
                       .get(0)
                       .unwrap()
                       .enclosure()
                       .as_ref()
                       .map(|v| v.mime_type()),
-               Some(String::from("audio/mpeg")));
+               Some("audio/mpeg"));
 }
 
 #[test]
-fn read_category()
-{
+fn read_category() {
     let input = include_str!("data/category.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -270,8 +263,7 @@ fn read_category()
 }
 
 #[test]
-fn read_image()
-{
+fn read_image() {
     let input = include_str!("data/image.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -309,8 +301,7 @@ fn read_image()
 }
 
 #[test]
-fn read_mixed_content()
-{
+fn read_mixed_content() {
     let input = include_str!("data/mixed_content.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -320,8 +311,7 @@ fn read_mixed_content()
 }
 
 #[test]
-fn read_cloud()
-{
+fn read_cloud() {
     let input = include_str!("data/cloud.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -341,8 +331,7 @@ fn read_cloud()
 }
 
 #[test]
-fn read_textinput()
-{
+fn read_textinput() {
     let input = include_str!("data/textinput.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -360,8 +349,7 @@ fn read_textinput()
 }
 
 #[test]
-fn read_extension()
-{
+fn read_extension() {
     let input = include_str!("data/extension.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -418,8 +406,7 @@ fn read_extension()
 
 
 #[test]
-fn read_itunes()
-{
+fn read_itunes() {
     let input = include_str!("data/itunes.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
@@ -623,14 +610,12 @@ fn read_itunes()
 }
 
 #[test]
-fn read_dublincore()
-{
+fn read_dublincore() {
     let input = include_str!("data/dublincore.xml");
     let channel = input.parse::<Channel>()
                        .expect("failed to parse xml");
 
-    fn test_ext(dc: &DublinCoreExtension)
-    {
+    fn test_ext(dc: &DublinCoreExtension) {
         assert_eq!(dc.contributors()
                      .iter()
                      .map(|s| s.as_str())
