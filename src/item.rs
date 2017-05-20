@@ -61,17 +61,14 @@ impl Item {
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
-    /// let title_string = "Making Music with Linux | LAS 408".to_owned();
+    /// let title_string = "Making Music with Linux | LAS 408";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some(title_string.clone()))
+    ///     .title(Some(String::from(title_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let title_option = item.title();
-    /// assert!(title_option.is_some());
-    ///
-    /// assert_eq!(title_string.clone(), title_option.unwrap());
+    /// assert_eq!(Some(title_string), item.title());
     /// ```
     ///
     /// ```
@@ -79,15 +76,15 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .title(None)
-    ///     .description(Some("A Test Description".to_owned()))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.title().is_none());
     /// ```
-    pub fn title(&self) -> Option<String> {
+    pub fn title(&self) -> Option<&str> {
         self.title
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the optional link that exists under `Item`.
@@ -97,33 +94,29 @@ impl Item {
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
-    /// let link_string = "http://www.jupiterbroadcasting.com/".to_owned();
+    /// let link_string = "http://www.jupiterbroadcasting.com/";
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .link(Some(link_string.clone()))
+    ///     .link(Some(String::from(link_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let link_option = item.link();
-    /// assert!(link_option.is_some());
-    ///
-    /// assert_eq!(link_string.clone(), link_option.unwrap());
+    /// assert_eq!(Some(link_string), item.link());
     /// ```
     ///
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .link(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.link().is_none());
     /// ```
-    pub fn link(&self) -> Option<String> {
+    pub fn link(&self) -> Option<&str> {
         self.link
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the optional description that exists under `Item`.
@@ -133,34 +126,30 @@ impl Item {
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
-    /// let description_string = "This is a test description".to_owned();
+    /// let description_string = "This is a test description";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .description(Some(description_string.clone()))
+    ///     .description(Some(String::from(description_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let description_option = item.description();
-    /// assert!(description_option.is_some());
-    ///
-    /// assert_eq!(description_string.clone(), description_option.unwrap());
+    /// assert_eq!(Some(description_string), item.description());
     /// ```
     ///
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .description(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.description().is_none());
     /// ```
-    pub fn description(&self) -> Option<String> {
+    pub fn description(&self) -> Option<&str> {
         self.description
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the optional author that exists under `Item`.
@@ -170,34 +159,30 @@ impl Item {
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
-    /// let author_string = "Chris Fisher".to_owned();
+    /// let author_string = "Chris Fisher";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .author(Some(author_string.clone()))
+    ///     .author(Some(String::from(author_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let author_option = item.author();
-    /// assert!(author_option.is_some());
-    ///
-    /// assert_eq!(author_string.clone(), author_option.unwrap());
+    /// assert_eq!(Some(author_string), item.author());
     /// ```
     ///
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .author(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.author().is_none());
     /// ```
-    pub fn author(&self) -> Option<String> {
+    pub fn author(&self) -> Option<&str> {
         self.author
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the categories that exists under `Item`.
@@ -222,16 +207,14 @@ impl Item {
     /// let categories_vec = vec![category_1, category_2];
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .categories(categories_vec.clone())
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert_eq!(categories_vec.clone().len(), item.categories().len());
     /// ```
-    pub fn categories(&self) -> Vec<Category> {
-        self.categories
-            .clone()
+    pub fn categories(&self) -> &[Category] {
+        &self.categories
     }
 
     /// Get the optional comments that exists under `Item`.
@@ -241,34 +224,33 @@ impl Item {
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
-    /// let comments_string = "http://example.com/comments".to_owned();
+    /// let comments_string = "http://example.com/comments";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .comments(Some(comments_string.clone()))
+    ///     .comments(Some(String::from(comments_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let comments_option =  item.comments();
     /// assert!(comments_option.is_some());
     ///
-    /// assert_eq!(comments_string.clone(), comments_option.unwrap());
+    /// assert_eq!(Some(comments_string), item.comments());
     /// ```
     ///
     /// ```
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .comments(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.comments().is_none());
     /// ```
-    pub fn comments(&self) -> Option<String> {
+    pub fn comments(&self) -> Option<&str> {
         self.comments
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the optional enclosure that exists under `Item`.
@@ -289,7 +271,6 @@ impl Item {
     ///     .unwrap();
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .enclosure(Some(enclosure))
     ///     .finalize()
     ///     .unwrap();
@@ -301,16 +282,15 @@ impl Item {
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .enclosure(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.enclosure().is_none());
     /// ```
-    pub fn enclosure(&self) -> Option<Enclosure> {
+    pub fn enclosure(&self) -> Option<&Enclosure> {
         self.enclosure
-            .clone()
+            .as_ref()
     }
 
     /// Get the optional guid that exists under `Item`.
@@ -327,7 +307,6 @@ impl Item {
     ///     .unwrap();
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .guid(Some(guid))
     ///     .finalize()
     ///     .unwrap();
@@ -338,16 +317,15 @@ impl Item {
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .guid(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.guid().is_none());
     /// ```
-    pub fn guid(&self) -> Option<Guid> {
+    pub fn guid(&self) -> Option<&Guid> {
         self.guid
-            .clone()
+            .as_ref()
     }
 
     /// Get the optional pub date that exists under `Item`.
@@ -360,7 +338,6 @@ impl Item {
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .pub_date(Some(pub_date.to_owned()))
     ///     .finalize()
     ///     .unwrap();
@@ -375,16 +352,16 @@ impl Item {
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .pub_date(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.pub_date().is_none());
     /// ```
-    pub fn pub_date(&self) -> Option<String> {
+    pub fn pub_date(&self) -> Option<&str> {
         self.pub_date
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the optional source that exists under `Item`.
@@ -396,12 +373,10 @@ impl Item {
     ///
     /// let source = SourceBuilder::new()
     ///     .url("http://www.tomalak.org/links2.xml")
-    ///     .title(Some("Tomalak's Realm".to_owned()))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .source(Some(source))
     ///     .finalize()
     ///     .unwrap();
@@ -413,16 +388,15 @@ impl Item {
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
     ///     .source(None)
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(item.source().is_none());
     /// ```
-    pub fn source(&self) -> Option<Source> {
+    pub fn source(&self) -> Option<&Source> {
         self.source
-            .clone()
+            .as_ref()
     }
 
     /// Get the optional `ITunesItemExtension` under `Item`.
@@ -466,27 +440,27 @@ impl Item {
     ///
     /// assert!(item.itunes_ext().is_none());
     /// ```
-    pub fn itunes_ext(&self) -> Option<ITunesItemExtension> {
+    pub fn itunes_ext(&self) -> Option<&ITunesItemExtension> {
         self.itunes_ext
-            .clone()
+            .as_ref()
     }
 
     /// Get the optional `DublinCoreExtension` under `Item`.
-    pub fn dublin_core_ext(&self) -> Option<DublinCoreExtension> {
+    pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
         self.dublin_core_ext
-            .clone()
+            .as_ref()
     }
 
     /// Get the `ExtensionMap` under `Item`.
-    pub fn extensions(&self) -> ExtensionMap {
-        self.extensions
-            .clone()
+    pub fn extensions(&self) -> &ExtensionMap {
+        &self.extensions
     }
 
     /// Get the optional content under `Item`.
-    pub fn content(&self) -> Option<String> {
+    pub fn content(&self) -> Option<&str> {
         self.content
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 }
 

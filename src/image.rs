@@ -147,13 +147,14 @@ impl Image {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(width.to_string(), image.width().unwrap());
+    /// assert_eq!(Some(width.to_string().as_str()), image.width());
     /// ```
     ///
     /// ```
-    pub fn width(&self) -> Option<String> {
+    pub fn width(&self) -> Option<&str> {
         self.width
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -196,11 +197,12 @@ impl Image {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(height.to_string(), image.height().unwrap());
+    /// assert_eq!(Some(height.to_string().as_str()), image.height());
     /// ```
-    pub fn height(&self) -> Option<String> {
+    pub fn height(&self) -> Option<&str> {
         self.height
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -228,14 +230,14 @@ impl Image {
     /// ```
     /// use rss::{ImageBuilder, Image};
     ///
-    /// let description_string = "This is a test".to_owned();
+    /// let description_string = "This is a test";
     ///
     /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
     ///
     /// let link = "http://www.jupiterbroadcasting.com";
     ///
     /// let image = ImageBuilder::new()
-    ///     .description(Some(description_string.clone()))
+    ///     .description(Some(description_string.to_owned()))
     ///     .url(url)
     ///     .link(link)
     ///     .finalize()
@@ -244,11 +246,12 @@ impl Image {
     /// let description_option = image.description();
     /// assert!(description_option.is_some());
     ///
-    /// assert_eq!(description_string.clone(), description_option.unwrap());
+    /// assert_eq!(Some(description_string), image.description());
     /// ```
-    pub fn description(&self) -> Option<String> {
+    pub fn description(&self) -> Option<&str> {
         self.description
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 }
 
@@ -376,7 +379,7 @@ impl ImageBuilder {
     pub fn url(mut self,
                url: &str)
         -> ImageBuilder {
-        self.url = url.to_owned();
+        self.url = String::from(url);
         self
     }
 
@@ -394,7 +397,7 @@ impl ImageBuilder {
     pub fn title(mut self,
                  title: &str)
         -> ImageBuilder {
-        self.title = title.to_owned();
+        self.title = String::from(title);
         self
     }
 
@@ -412,7 +415,7 @@ impl ImageBuilder {
     pub fn link(mut self,
                 link: &str)
         -> ImageBuilder {
-        self.link = link.to_owned();
+        self.link = String::from(link);
         self
     }
 
@@ -489,14 +492,19 @@ impl ImageBuilder {
     ///         .finalize().unwrap();
     /// ```
     pub fn validate(self) -> Result<ImageBuilder, Error> {
-        let url_string = self.url
-                             .clone();
-        if !url_string.ends_with(".jpeg") && !url_string.ends_with(".jpg") && !url_string.ends_with(".png") &&
-           !url_string.ends_with(".gif") {
+        if !self.url
+                .ends_with(".jpeg") &&
+           !self.url
+                .ends_with(".jpg") &&
+           !self.url
+                .ends_with(".png") &&
+           !self.url
+                .ends_with(".gif") {
             return Err(Error::Validation(String::from("Image Url must end with .jpeg, .png, or .gif")));
         }
 
-        Url::parse(url_string.as_str())?;
+        Url::parse(self.url
+                       .as_str())?;
         Url::parse(self.link
                        .as_str())?;
 

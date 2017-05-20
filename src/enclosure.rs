@@ -206,7 +206,7 @@ impl EnclosureBuilder {
     pub fn url(mut self,
                url: &str)
         -> EnclosureBuilder {
-        self.url = url.to_owned();
+        self.url = String::from(url);
         self
     }
 
@@ -242,7 +242,7 @@ impl EnclosureBuilder {
     pub fn mime_type(mut self,
                      mime_type: &str)
         -> EnclosureBuilder {
-        self.mime_type = mime_type.to_owned();
+        self.mime_type = String::from(mime_type);
         self
     }
 
@@ -270,6 +270,7 @@ impl EnclosureBuilder {
 
         let mime = self.mime_type
                        .parse::<Mime>();
+
         if mime.is_err() {
             return Err(Error::Validation(String::from(format!("Error: {:?}",
                                                               mime.unwrap_err()))));

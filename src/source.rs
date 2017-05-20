@@ -60,11 +60,12 @@ impl Source {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(title.to_owned(), source_obj.title().unwrap());
+    /// assert_eq!(Some(title), source_obj.title());
     /// ```
-    pub fn title(&self) -> Option<String> {
+    pub fn title(&self) -> Option<&str> {
         self.title
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 }
 
@@ -154,7 +155,7 @@ impl SourceBuilder {
     pub fn url(mut self,
                url: &str)
         -> SourceBuilder {
-        self.url = url.to_owned();
+        self.url = String::from(url);
         self
     }
 

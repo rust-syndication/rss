@@ -37,27 +37,26 @@ pub struct Extension {
 
 impl Extension {
     /// Get the name that exists under `Extension`.
-    pub fn name(&self) -> String {
+    pub fn name(&self) -> &str {
         self.name
-            .clone()
+            .as_str()
     }
 
     /// Get the value that exists under `Extension`.
-    pub fn value(&self) -> Option<String> {
+    pub fn value(&self) -> Option<&str> {
         self.value
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the attrs that exists under `Extension`.
-    pub fn attrs(&self) -> HashMap<String, String> {
-        self.attrs
-            .clone()
+    pub fn attrs(&self) -> &HashMap<String, String> {
+        &self.attrs
     }
 
     /// Get the children that exists under `Extension`.
-    pub fn children(&self) -> HashMap<String, Vec<Extension>> {
-        self.children
-            .clone()
+    pub fn children(&self) -> &HashMap<String, Vec<Extension>> {
+        &self.children
     }
 }
 
@@ -118,47 +117,43 @@ impl ExtensionBuilder {
     }
 
     /// Get the name that exists under `Extension`.
-    pub fn name(&mut self,
+    pub fn name(mut self,
                 name: &str)
-        -> &mut ExtensionBuilder {
+        -> ExtensionBuilder {
         self.name = String::from(name);
         self
     }
 
     /// Get the value that exists under `Extension`.
-    pub fn value(&mut self,
+    pub fn value(mut self,
                  value: Option<String>)
-        -> &mut ExtensionBuilder {
+        -> ExtensionBuilder {
         self.value = value;
         self
     }
 
     /// Get the attrs that exists under `Extension`.
-    pub fn attrs(&mut self,
+    pub fn attrs(mut self,
                  attrs: HashMap<String, String>)
-        -> &mut ExtensionBuilder {
+        -> ExtensionBuilder {
         self.attrs = attrs;
         self
     }
 
     /// Get the children that exists under `Extension`.
-    pub fn children(&mut self,
+    pub fn children(mut self,
                     children: HashMap<String, Vec<Extension>>)
-        -> &mut ExtensionBuilder {
+        -> ExtensionBuilder {
         self.children = children;
         self
     }
 
     /// Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
-    pub fn finalize(&self) -> Result<Extension, Error> {
-        Ok(Extension { name: self.name
-                                 .clone(),
-                       value: self.value
-                                  .clone(),
-                       attrs: self.attrs
-                                  .clone(),
-                       children: self.children
-                                     .clone(), })
+    pub fn finalize(self) -> Result<Extension, Error> {
+        Ok(Extension { name: self.name,
+                       value: self.value,
+                       attrs: self.attrs,
+                       children: self.children, })
     }
 }
 

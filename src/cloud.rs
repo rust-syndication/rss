@@ -266,7 +266,7 @@ impl CloudBuilder {
     pub fn domain(mut self,
                   domain: &str)
         -> CloudBuilder {
-        self.domain = domain.to_owned();
+        self.domain = String::from(domain);
         self
     }
 
@@ -303,7 +303,7 @@ impl CloudBuilder {
     pub fn path(mut self,
                 path: &str)
         -> CloudBuilder {
-        self.path = path.to_owned();
+        self.path = String::from(path);
         self
     }
 
@@ -321,7 +321,7 @@ impl CloudBuilder {
     pub fn register_procedure(mut self,
                               register_procedure: &str)
         -> CloudBuilder {
-        self.register_procedure = register_procedure.to_owned();
+        self.register_procedure = String::from(register_procedure);
         self
     }
 
@@ -339,7 +339,7 @@ impl CloudBuilder {
     pub fn protocol(mut self,
                     protocol: &str)
         -> CloudBuilder {
-        self.protocol = protocol.to_owned();
+        self.protocol = String::from(protocol);
         self
     }
 

@@ -27,17 +27,14 @@ impl ITunesOwner {
     /// ```
     /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
     ///
-    /// let name = "name".to_owned();
+    /// let name = "name";
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .name(Some(name.clone()))
+    ///     .name(Some(String::from(name)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let name_opt = owner.name();
-    /// assert!(name_opt.is_some());
-    ///
-    /// assert_eq!(name, name_opt.unwrap());
+    /// assert_eq!(Some(name), owner.name());
     /// ```
     ///
     // ```
@@ -51,9 +48,10 @@ impl ITunesOwner {
     /// let name_opt = owner.name();
     /// assert!(name_opt.is_none());
     /// ```
-    pub fn name(&self) -> Option<String> {
+    pub fn name(&self) -> Option<&str> {
         self.name
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -64,17 +62,14 @@ impl ITunesOwner {
     /// ```
     /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
     ///
-    /// let email = "email@example.com".to_owned();
+    /// let email = "email@example.com";
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some(email.clone()))
+    ///     .email(Some(String::from(email)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let email_opt = owner.email();
-    /// assert!(email_opt.is_some());
-    ///
-    /// assert_eq!(email, email_opt.unwrap());
+    /// assert_eq!(Some(email), owner.email());
     /// ```
     ///
     // ```
@@ -88,9 +83,10 @@ impl ITunesOwner {
     /// let email_opt = owner.email();
     /// assert!(email_opt.is_none());
     /// ```
-    pub fn email(&self) -> Option<String> {
+    pub fn email(&self) -> Option<&str> {
         self.email
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 }
 
@@ -149,9 +145,9 @@ impl ITunesOwnerBuilder {
     /// let mut owner_builder = ITunesOwnerBuilder::new();
     /// owner_builder.name(Some("name".to_owned()));
     /// ```
-    pub fn name(&mut self,
+    pub fn name(mut self,
                 name: Option<String>)
-        -> &mut ITunesOwnerBuilder {
+        -> ITunesOwnerBuilder {
         self.name = name;
         self
     }
@@ -166,9 +162,9 @@ impl ITunesOwnerBuilder {
     /// let mut owner_builder = ITunesOwnerBuilder::new();
     /// owner_builder.email(Some("email@example.com".to_owned()));
     /// ```
-    pub fn email(&mut self,
+    pub fn email(mut self,
                  email: Option<String>)
-        -> &mut ITunesOwnerBuilder {
+        -> ITunesOwnerBuilder {
         self.email = email;
         self
     }
@@ -186,10 +182,8 @@ impl ITunesOwnerBuilder {
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<ITunesOwner, Error> {
-        Ok(ITunesOwner { name: self.name
-                                   .clone(),
-                         email: self.email
-                                    .clone(), })
+    pub fn finalize(self) -> Result<ITunesOwner, Error> {
+        Ok(ITunesOwner { name: self.name,
+                         email: self.email, })
     }
 }

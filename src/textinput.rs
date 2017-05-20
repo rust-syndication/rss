@@ -213,7 +213,7 @@ impl TextInputBuilder {
     pub fn title(mut self,
                  title: &str)
         -> TextInputBuilder {
-        self.title = title.to_owned();
+        self.title = String::from(title);
         self
     }
 
@@ -230,7 +230,7 @@ impl TextInputBuilder {
     pub fn description(mut self,
                        description: &str)
         -> TextInputBuilder {
-        self.description = description.to_owned();
+        self.description = String::from(description);
         self
     }
 
@@ -247,7 +247,7 @@ impl TextInputBuilder {
     pub fn name(mut self,
                 name: &str)
         -> TextInputBuilder {
-        self.name = name.to_owned();
+        self.name = String::from(name);
         self
     }
 
@@ -264,7 +264,7 @@ impl TextInputBuilder {
     pub fn link(mut self,
                 link: &str)
         -> TextInputBuilder {
-        self.link = link.to_owned();
+        self.link = String::from(link);
         self
     }
 
@@ -287,7 +287,6 @@ impl TextInputBuilder {
     /// ```
     pub fn validate(self) -> Result<TextInputBuilder, Error> {
         Url::parse(self.link
-                       .clone()
                        .as_str())?;
 
         Ok(self)

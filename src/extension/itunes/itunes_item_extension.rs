@@ -53,17 +53,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let author = "author".to_owned();
+    /// let author = "author";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some(author.clone()))
+    ///     .author(Some(String::from(author)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let author_opt = item.author();
-    /// assert!(author_opt.is_some());
-    ///
-    /// assert_eq!(author.clone(), author_opt.unwrap());
+    /// assert_eq!(Some(author), item.author());
     /// ```
     ///
     /// ```
@@ -78,9 +75,10 @@ impl ITunesItemExtension {
     /// let author_opt = item.author();
     /// assert!(author_opt.is_none());
     /// ```
-    pub fn author(&self) -> Option<String> {
+    pub fn author(&self) -> Option<&str> {
         self.author
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -90,17 +88,15 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let block = "block".to_owned();
+    /// let block = "block";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .block(Some(block.clone()))
+    ///     .block(Some(String::from(block)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let block_opt = item.block();
-    /// assert!(block_opt.is_some());
     ///
-    /// assert_eq!(block.clone(), block_opt.unwrap());
+    /// assert_eq!(Some(block), item.block());
     /// ```
     ///
     /// ```
@@ -115,9 +111,10 @@ impl ITunesItemExtension {
     /// let block_opt = item.block();
     /// assert!(block_opt.is_none());
     /// ```
-    pub fn block(&self) -> Option<String> {
+    pub fn block(&self) -> Option<&str> {
         self.block
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -127,17 +124,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let image = "image".to_owned();
+    /// let image = "image";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .image(Some(image.clone()))
+    ///     .image(Some(String::from(image)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let image_opt = item.image();
-    /// assert!(image_opt.is_some());
-    ///
-    /// assert_eq!(image.clone(), image_opt.unwrap());
+    /// assert_eq!(Some(image), item.image());
     /// ```
     ///
     /// ```
@@ -152,9 +146,10 @@ impl ITunesItemExtension {
     /// let image_opt = item.image();
     /// assert!(image_opt.is_none());
     /// ```
-    pub fn image(&self) -> Option<String> {
+    pub fn image(&self) -> Option<&str> {
         self.image
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -164,17 +159,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let duration = "duration".to_owned();
+    /// let duration = "duration";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .duration(Some(duration.clone()))
+    ///     .duration(Some(String::from(duration)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let duration_opt = item.duration();
-    /// assert!(duration_opt.is_some());
-    ///
-    /// assert_eq!(duration.clone(), duration_opt.unwrap());
+    /// assert_eq!(Some(duration), item.duration());
     /// ```
     ///
     /// ```
@@ -189,9 +181,10 @@ impl ITunesItemExtension {
     /// let duration_opt = item.duration();
     /// assert!(duration_opt.is_none());
     /// ```
-    pub fn duration(&self) -> Option<String> {
+    pub fn duration(&self) -> Option<&str> {
         self.duration
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -201,17 +194,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let explicit = "explicit".to_owned();
+    /// let explicit = "explicit";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .explicit(Some(explicit.clone()))
+    ///     .explicit(Some(String::from(explicit)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let explicit_opt = item.explicit();
-    /// assert!(explicit_opt.is_some());
-    ///
-    /// assert_eq!(explicit.clone(), explicit_opt.unwrap());
+    /// assert_eq!(Some(explicit), item.explicit());
     /// ```
     ///
     /// ```
@@ -226,9 +216,10 @@ impl ITunesItemExtension {
     /// let explicit_opt = item.explicit();
     /// assert!(explicit_opt.is_none());
     /// ```
-    pub fn explicit(&self) -> Option<String> {
+    pub fn explicit(&self) -> Option<&str> {
         self.explicit
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -239,17 +230,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let closed_captioned = "closed_captioned".to_owned();
+    /// let closed_captioned = "closed_captioned";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .closed_captioned(Some(closed_captioned.clone()))
+    ///     .closed_captioned(Some(String::from(closed_captioned)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let closed_captioned_opt = item.closed_captioned();
-    /// assert!(closed_captioned_opt.is_some());
-    ///
-    /// assert_eq!(closed_captioned.clone(), closed_captioned_opt.unwrap());
+    /// assert_eq!(Some(closed_captioned), item.closed_captioned());
     /// ```
     ///
     /// ```
@@ -264,9 +252,10 @@ impl ITunesItemExtension {
     /// let closed_captioned_opt = item.closed_captioned();
     /// assert!(closed_captioned_opt.is_none());
     /// ```
-    pub fn closed_captioned(&self) -> Option<String> {
+    pub fn closed_captioned(&self) -> Option<&str> {
         self.closed_captioned
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -276,17 +265,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let order = "order".to_owned();
+    /// let order = "order";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .order(Some(order.clone()))
+    ///     .order(Some(String::from(order)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let order_opt = item.order();
-    /// assert!(order_opt.is_some());
-    ///
-    /// assert_eq!(order.clone(), order_opt.unwrap());
+    /// assert_eq!(Some(order), item.order());
     /// ```
     ///
     /// ```
@@ -301,9 +287,10 @@ impl ITunesItemExtension {
     /// let order_opt = item.order();
     /// assert!(order_opt.is_none());
     /// ```
-    pub fn order(&self) -> Option<String> {
+    pub fn order(&self) -> Option<&str> {
         self.order
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -313,17 +300,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let subtitle = "subtitle".to_owned();
+    /// let subtitle = "subtitle";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .subtitle(Some(subtitle.clone()))
+    ///     .subtitle(Some(String::from(subtitle)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let subtitle_opt = item.subtitle();
-    /// assert!(subtitle_opt.is_some());
-    ///
-    /// assert_eq!(subtitle.clone(), subtitle_opt.unwrap());
+    /// assert_eq!(Some(subtitle), item.subtitle());
     /// ```
     ///
     /// ```
@@ -338,9 +322,10 @@ impl ITunesItemExtension {
     /// let subtitle_opt = item.subtitle();
     /// assert!(subtitle_opt.is_none());
     /// ```
-    pub fn subtitle(&self) -> Option<String> {
+    pub fn subtitle(&self) -> Option<&str> {
         self.subtitle
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -350,17 +335,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let summary = "summary".to_owned();
+    /// let summary = "summary";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .summary(Some(summary.clone()))
+    ///     .summary(Some(String::from(summary)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let summary_opt = item.summary();
-    /// assert!(summary_opt.is_some());
-    ///
-    /// assert_eq!(summary.clone(), summary_opt.unwrap());
+    /// assert_eq!(Some(summary), item.summary());
     /// ```
     ///
     /// ```
@@ -375,9 +357,10 @@ impl ITunesItemExtension {
     /// let summary_opt = item.summary();
     /// assert!(summary_opt.is_none());
     /// ```
-    pub fn summary(&self) -> Option<String> {
+    pub fn summary(&self) -> Option<&str> {
         self.summary
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -387,17 +370,14 @@ impl ITunesItemExtension {
     /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
     /// ITunesItemExtension};
     ///
-    /// let keywords = "keywords".to_owned();
+    /// let keywords = "keywords";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .keywords(Some(keywords.clone()))
+    ///     .keywords(Some(String::from(keywords)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let keywords_opt = item.keywords();
-    /// assert!(keywords_opt.is_some());
-    ///
-    /// assert_eq!(keywords.clone(), keywords_opt.unwrap());
+    /// assert_eq!(Some(keywords), item.keywords());
     /// ```
     ///
     /// ```
@@ -412,9 +392,10 @@ impl ITunesItemExtension {
     /// let keywords_opt = item.keywords();
     /// assert!(keywords_opt.is_none());
     /// ```
-    pub fn keywords(&self) -> Option<String> {
+    pub fn keywords(&self) -> Option<&str> {
         self.keywords
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 }
 
@@ -560,9 +541,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.author(Some("author".to_owned()));
     /// ```
-    pub fn author(&mut self,
+    pub fn author(mut self,
                   author: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.author = author;
         self
     }
@@ -578,9 +559,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.block(Some("block".to_owned()));
     /// ```
-    pub fn block(&mut self,
+    pub fn block(mut self,
                  block: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.block = block;
         self
     }
@@ -596,9 +577,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.image(Some("image".to_owned()));
     /// ```
-    pub fn image(&mut self,
+    pub fn image(mut self,
                  image: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.image = image;
         self
     }
@@ -614,9 +595,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.duration(Some("duration".to_owned()));
     /// ```
-    pub fn duration(&mut self,
+    pub fn duration(mut self,
                     duration: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.duration = duration;
         self
     }
@@ -632,9 +613,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.explicit(Some("explicit".to_owned()));
     /// ```
-    pub fn explicit(&mut self,
+    pub fn explicit(mut self,
                     explicit: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.explicit = explicit;
         self
     }
@@ -651,9 +632,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.closed_captioned(Some("closed_captioned".to_owned()));
     /// ```
-    pub fn closed_captioned(&mut self,
+    pub fn closed_captioned(mut self,
                             closed_captioned: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.closed_captioned = closed_captioned;
         self
     }
@@ -669,9 +650,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.order(Some("order".to_owned()));
     /// ```
-    pub fn order(&mut self,
+    pub fn order(mut self,
                  order: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.order = order;
         self
     }
@@ -687,9 +668,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.subtitle(Some("subtitle".to_owned()));
     /// ```
-    pub fn subtitle(&mut self,
+    pub fn subtitle(mut self,
                     subtitle: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.subtitle = subtitle;
         self
     }
@@ -705,9 +686,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.summary(Some("summary".to_owned()));
     /// ```
-    pub fn summary(&mut self,
+    pub fn summary(mut self,
                    summary: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.summary = summary;
         self
     }
@@ -723,9 +704,9 @@ impl ITunesItemExtensionBuilder {
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
     /// item_builder.keywords(Some("keywords".to_owned()));
     /// ```
-    pub fn keywords(&mut self,
+    pub fn keywords(mut self,
                     keywords: Option<String>)
-        -> &mut ITunesItemExtensionBuilder {
+        -> ITunesItemExtensionBuilder {
         self.keywords = keywords;
         self
     }
@@ -753,26 +734,16 @@ impl ITunesItemExtensionBuilder {
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<ITunesItemExtension, Error> {
-        Ok(ITunesItemExtension { author: self.author
-                                             .clone(),
-                                 block: self.block
-                                            .clone(),
-                                 image: self.image
-                                            .clone(),
-                                 duration: self.duration
-                                               .clone(),
-                                 explicit: self.explicit
-                                               .clone(),
-                                 closed_captioned: self.closed_captioned
-                                                       .clone(),
-                                 order: self.order
-                                            .clone(),
-                                 subtitle: self.subtitle
-                                               .clone(),
-                                 summary: self.summary
-                                              .clone(),
-                                 keywords: self.keywords
-                                               .clone(), })
+    pub fn finalize(self) -> Result<ITunesItemExtension, Error> {
+        Ok(ITunesItemExtension { author: self.author,
+                                 block: self.block,
+                                 image: self.image,
+                                 duration: self.duration,
+                                 explicit: self.explicit,
+                                 closed_captioned: self.closed_captioned,
+                                 order: self.order,
+                                 subtitle: self.subtitle,
+                                 summary: self.summary,
+                                 keywords: self.keywords, })
     }
 }

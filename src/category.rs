@@ -50,15 +50,14 @@ impl Category {
     /// ```
     /// use rss::{CategoryBuilder, Category};
     ///
-    /// let domain_string = "http://jupiterbroadcasting.com/".to_owned();
+    /// let domain_string = "http://jupiterbroadcasting.com/";
     ///
     /// let category = CategoryBuilder::new()
-    ///     .domain(Some(domain_string.clone()))
+    ///     .domain(Some(String::from(domain_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let domain_option = category.domain();
-    /// assert_eq!(Some(domain_string.clone()), domain_option);
+    /// assert_eq!(Some(domain_string), category.domain());
     /// ```
     ///
     /// ```
@@ -72,9 +71,10 @@ impl Category {
     /// let domain_option = category.domain();
     /// assert!(domain_option.is_none());
     /// ```
-    pub fn domain(&self) -> Option<String> {
+    pub fn domain(&self) -> Option<&str> {
         self.domain
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 }
 
@@ -159,7 +159,7 @@ impl CategoryBuilder {
     pub fn name(mut self,
                 name: &str)
         -> CategoryBuilder {
-        self.name = name.to_owned();
+        self.name = String::from(name);
         self
     }
 
@@ -197,11 +197,8 @@ impl CategoryBuilder {
     /// ```
 
     pub fn validate(self) -> Result<CategoryBuilder, Error> {
-        let domain = self.domain
-                         .clone();
-        if domain.is_some() {
-            Url::parse(domain.unwrap()
-                             .as_str())?;
+        if let Some(ref domain) = self.domain {
+            Url::parse(domain)?;
         }
 
         Ok(self)

@@ -93,7 +93,6 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .title(title)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -141,7 +140,6 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .description(description.as_ref())
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -160,18 +158,14 @@ impl Channel {
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let language_string = "en".to_owned();
+    /// let language_string = "en";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .language(Some(language_string.clone()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .language(Some(String::from(language_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let language_option = channels.language();
-    /// assert!(language_option.is_some());
-    ///
-    /// assert_eq!(language_string.clone(), language_option.unwrap());
+    /// assert_eq!(Some(language_string), channels.language());
     /// ```
     ///
     /// ```
@@ -179,15 +173,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .language(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.language().is_none());
     /// ```
-    pub fn language(&self) -> Option<String> {
+    pub fn language(&self) -> Option<&str> {
         self.language
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -199,18 +193,14 @@ impl Channel {
     /// use rss::{ChannelBuilder, Channel};
     ///
     /// let copyright_string =
-    ///     "Copyright 2002, Spartanburg Herald-Journal".to_owned();
+    ///     "Copyright 2002, Spartanburg Herald-Journal";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .copyright(Some(copyright_string.clone()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .copyright(Some(String::from(copyright_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let copyright_option = channels.copyright();
-    /// assert!(copyright_option.is_some());
-    ///
-    /// assert_eq!(copyright_string.clone(), copyright_option.unwrap());
+    /// assert_eq!(Some(copyright_string), channels.copyright());
     /// ```
     ///
     /// ```
@@ -218,15 +208,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .copyright(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.copyright().is_none());
     /// ```
-    pub fn copyright(&self) -> Option<String> {
+    pub fn copyright(&self) -> Option<&str> {
         self.copyright
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -238,19 +228,14 @@ impl Channel {
     /// use rss::{ChannelBuilder, Channel};
     ///
     /// let managing_editor_string =
-    ///     "chris@jupiterbroadcasting.com (Chris Fisher)".to_owned();
+    ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .managing_editor(Some(managing_editor_string.clone()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .managing_editor(Some(String::from(managing_editor_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let managing_editor_option = channels.managing_editor();
-    /// assert!(managing_editor_option.is_some());
-    ///
-    /// assert_eq!(managing_editor_string.clone(),
-    /// managing_editor_option.unwrap());
+    /// assert_eq!(Some(managing_editor_string), channels.managing_editor());
     /// ```
     ///
     /// ```
@@ -258,15 +243,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .managing_editor(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.managing_editor().is_none());
     /// ```
-    pub fn managing_editor(&self) -> Option<String> {
+    pub fn managing_editor(&self) -> Option<&str> {
         self.managing_editor
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the optional web master that exists under `Channel`.
@@ -277,18 +262,14 @@ impl Channel {
     /// use rss::{ChannelBuilder, Channel};
     ///
     /// let webmaster_string =
-    ///     "chris@jupiterbroadcasting.com (Chris Fisher)".to_owned();
+    ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .webmaster(Some(webmaster_string.clone()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .webmaster(Some(String::from(webmaster_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let webmaster_option = channels.webmaster();
-    /// assert!(webmaster_option.is_some());
-    ///
-    /// assert_eq!(webmaster_string.clone(), webmaster_option.unwrap());
+    /// assert_eq!(Some(webmaster_string), channels.webmaster());
     /// ```
     ///
     /// ```
@@ -296,15 +277,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .webmaster(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.webmaster().is_none());
     /// ```
-    pub fn webmaster(&self) -> Option<String> {
+    pub fn webmaster(&self) -> Option<&str> {
         self.webmaster
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -318,15 +299,11 @@ impl Channel {
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .pub_date(Some(pub_date.to_owned()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .pub_date(Some(String::from(pub_date)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let local = channels.pub_date();
-    /// assert!(local.is_some());
-    ///
-    /// assert_eq!(pub_date.to_owned(), local.unwrap());
+    /// assert_eq!(Some(pub_date), channels.pub_date());
     /// ```
     ///
     /// ```
@@ -334,15 +311,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .pub_date(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.pub_date().is_none());
     /// ```
-    pub fn pub_date(&self) -> Option<String> {
+    pub fn pub_date(&self) -> Option<&str> {
         self.pub_date
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -356,15 +333,14 @@ impl Channel {
     /// let last_build_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .last_build_date(Some(last_build_date.to_owned()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .last_build_date(Some(String::from(last_build_date)))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let local = channels.last_build_date();
     /// assert!(local.is_some());
     ///
-    /// assert_eq!(last_build_date.to_owned(), local.unwrap());
+    /// assert_eq!(Some(last_build_date), channels.last_build_date());
     /// ```
     ///
     /// ```
@@ -372,15 +348,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .last_build_date(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.last_build_date().is_none());
     /// ```
-    pub fn last_build_date(&self) -> Option<String> {
+    pub fn last_build_date(&self) -> Option<&str> {
         self.last_build_date
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -407,7 +383,6 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .categories(categories_vec.clone())
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -422,15 +397,13 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .categories(Vec::new())
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.categories().is_empty());
     /// ```
-    pub fn categories(&self) -> Vec<Category> {
-        self.categories
-            .clone()
+    pub fn categories(&self) -> &[Category] {
+        &self.categories
     }
 
 
@@ -441,20 +414,15 @@ impl Channel {
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let generator_string = "Feeder 2.5.12(2294); ".to_owned()
-    /// + "Mac OS X Version 10.9.5 (Build 13F34) "
-    /// + "http://reinventedsoftware.com/feeder/";
+    /// let generator_string = "Feeder 2.5.12(2294); Mac OS X Version 10.9.5 (Build 13F34)
+    /// http://reinventedsoftware.com/feeder/";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .generator(Some(generator_string.clone()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .generator(Some(String::from(generator_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let generator_option = channels.generator();
-    /// assert!(generator_option.is_some());
-    ///
-    /// assert_eq!(generator_string.clone(), generator_option.unwrap());
+    /// assert_eq!(Some(generator_string), channels.generator());
     /// ```
     ///
     /// ```
@@ -462,15 +430,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .generator(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.generator().is_none());
     /// ```
-    pub fn generator(&self) -> Option<String> {
+    pub fn generator(&self) -> Option<&str> {
         self.generator
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -481,18 +449,17 @@ impl Channel {
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let docs_string = "http://blogs.law.harvard.edu/tech/rss/".to_owned();
+    /// let docs_string = "http://blogs.law.harvard.edu/tech/rss/";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .docs(Some(docs_string.clone()))
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    ///     .docs(Some(String::from(docs_string)))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let docs_option = channels.docs();
     /// assert!(docs_option.is_some());
     ///
-    /// assert_eq!(docs_string.clone(), docs_option.unwrap());
+    /// assert_eq!(Some(docs_string), channels.docs());
     /// ```
     ///
     /// ```
@@ -500,15 +467,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .docs(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.docs().is_none());
     /// ```
-    pub fn docs(&self) -> Option<String> {
+    pub fn docs(&self) -> Option<&str> {
         self.docs
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
     /// Get the optional cloud that exists under `Channel`.
@@ -529,7 +496,6 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .cloud(Some(cloud))
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -541,15 +507,14 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .cloud(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.cloud().is_none());
     /// ```
-    pub fn cloud(&self) -> Option<Cloud> {
+    pub fn cloud(&self) -> Option<&Cloud> {
         self.cloud
-            .clone()
+            .as_ref()
     }
 
 
@@ -564,14 +529,10 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .ttl(Some(ttl_num))
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// let ttl_option = channels.ttl();
-    /// assert!(ttl_option.is_some());
-    ///
-    /// assert_eq!(ttl_num.to_string(), ttl_option.unwrap());
+    /// assert_eq!(Some(ttl_num.to_string().as_str()), channels.ttl());
     /// ```
     ///
     /// ```
@@ -579,15 +540,15 @@ impl Channel {
     ///
     /// let channels = ChannelBuilder::new()
     ///     .ttl(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize()
     ///     .unwrap();
     ///
     /// assert!(channels.ttl().is_none());
     /// ```
-    pub fn ttl(&self) -> Option<String> {
+    pub fn ttl(&self) -> Option<&str> {
         self.ttl
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -628,9 +589,9 @@ impl Channel {
     ///
     /// assert!(channels.image().is_none());
     /// ```
-    pub fn image(&self) -> Option<Image> {
+    pub fn image(&self) -> Option<&Image> {
         self.image
-            .clone()
+            .as_ref()
     }
 
 
@@ -649,9 +610,10 @@ impl Channel {
     ///
     /// assert!(channels.rating().is_none());
     /// ```
-    pub fn rating(&self) -> Option<String> {
+    pub fn rating(&self) -> Option<&str> {
         self.rating
-            .clone()
+            .as_ref()
+            .map(|s| s.as_str())
     }
 
 
@@ -690,9 +652,9 @@ impl Channel {
     ///
     /// assert!(channels.text_input().is_none());
     /// ```
-    pub fn text_input(&self) -> Option<TextInput> {
+    pub fn text_input(&self) -> Option<&TextInput> {
         self.text_input
-            .clone()
+            .as_ref()
     }
 
     /// Get the skip hours that exists under `Channel`.
@@ -732,9 +694,8 @@ impl Channel {
     ///
     /// assert!(channels.skip_hours().is_empty());
     /// ```
-    pub fn skip_hours(&self) -> Vec<String> {
-        self.skip_hours
-            .clone()
+    pub fn skip_hours(&self) -> &[String] {
+        &self.skip_hours
     }
 
 
@@ -777,9 +738,8 @@ impl Channel {
     ///
     /// assert!(channels.skip_days().is_empty());
     /// ```
-    pub fn skip_days(&self) -> Vec<String> {
-        self.skip_days
-            .clone()
+    pub fn skip_days(&self) -> &[String] {
+        &self.skip_days
     }
 
 
@@ -853,9 +813,8 @@ impl Channel {
     ///
     /// assert!(channels.items().is_empty());
     /// ```
-    pub fn items(&self) -> Vec<Item> {
-        self.items
-            .clone()
+    pub fn items(&self) -> &[Item] {
+        &self.items
     }
 
 
@@ -920,27 +879,25 @@ impl Channel {
     ///
     /// assert!(channel.itunes_ext().is_none());
     /// ```
-    pub fn itunes_ext(&self) -> Option<ITunesChannelExtension> {
+    pub fn itunes_ext(&self) -> Option<&ITunesChannelExtension> {
         self.itunes_ext
-            .clone()
+            .as_ref()
     }
 
     /// Get the optional `DublinCoreExtension` under `Channel`.
-    pub fn dublin_core_ext(&self) -> Option<DublinCoreExtension> {
+    pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
         self.dublin_core_ext
-            .clone()
+            .as_ref()
     }
 
     /// Get the `ExtensionMap` under `Channel`.
-    pub fn extensions(&self) -> ExtensionMap {
-        self.extensions
-            .clone()
+    pub fn extensions(&self) -> &ExtensionMap {
+        &self.extensions
     }
 
     /// Get the namespaces under `Channel`.
-    pub fn namespaces(&self) -> HashMap<String, String> {
-        self.namespaces
-            .clone()
+    pub fn namespaces(&self) -> &HashMap<String, String> {
+        &self.namespaces
     }
 }
 
@@ -1142,9 +1099,14 @@ impl Channel {
 
         let mut channel_cat: Vec<Category> = Vec::new();
         for cat in self.categories() {
+            let domain = match cat.domain() {
+                None => None,
+                Some(val) => Some(String::from(val)),
+            };
+
             channel_cat.push(CategoryBuilder::new()
                                  .name(cat.name())
-                                 .domain(cat.domain())
+                                 .domain(domain)
                                  .validate()?
                                  .finalize()?);
         }
@@ -1154,19 +1116,22 @@ impl Channel {
             skip_hours.push(i64::from_str(hour.as_str())?);
         }
 
-
-
         let image = match self.image() {
             None => None,
             Some(val) => {
                 let width = match val.width() {
                     None => None,
-                    Some(wval) => Some(i64::from_str(wval.as_str())?),
+                    Some(wval) => Some(i64::from_str(wval)?),
                 };
 
                 let height = match val.height() {
                     None => None,
-                    Some(hval) => Some(i64::from_str(hval.as_str())?),
+                    Some(hval) => Some(i64::from_str(hval)?),
+                };
+
+                let description = match val.description() {
+                    None => None,
+                    Some(dval) => Some(String::from(dval)),
                 };
 
                 Some(ImageBuilder::new()
@@ -1175,7 +1140,7 @@ impl Channel {
                          .link(val.link())
                          .width(width)
                          .height(height)
-                         .description(val.description())
+                         .description(description)
                          .validate()?
                          .finalize()?)
             },
@@ -1198,9 +1163,14 @@ impl Channel {
         for item in self.items() {
             let mut item_cat: Vec<Category> = Vec::new();
             for cat in item.categories() {
+                let domain = match cat.domain() {
+                    None => None,
+                    Some(val) => Some(String::from(val)),
+                };
+
                 item_cat.push(CategoryBuilder::new()
                                   .name(cat.name())
-                                  .domain(cat.domain())
+                                  .domain(domain)
                                   .validate()?
                                   .finalize()?);
             }
@@ -1230,21 +1200,56 @@ impl Channel {
             let source = match item.source() {
                 None => None,
                 Some(sval) => {
+                    let title = match sval.title() {
+                        None => None,
+                        Some(tval) => Some(String::from(tval)),
+                    };
+
                     Some(SourceBuilder::new()
                              .url(sval.url())
-                             .title(sval.title())
+                             .title(title)
                              .validate()?
                              .finalize()?)
                 },
             };
 
+            let title = match item.title() {
+                None => None,
+                Some(val) => Some(String::from(val)),
+            };
+
+            let link = match item.link() {
+                None => None,
+                Some(val) => Some(String::from(val)),
+            };
+
+            let description = match item.description() {
+                None => None,
+                Some(val) => Some(String::from(val)),
+            };
+
+            let author = match item.author() {
+                None => None,
+                Some(val) => Some(String::from(val)),
+            };
+
+            let pub_date = match item.pub_date() {
+                None => None,
+                Some(val) => Some(String::from(val)),
+            };
+
+            let comments = match item.comments() {
+                None => None,
+                Some(val) => Some(String::from(val)),
+            };
+
             items.push(ItemBuilder::new()
-                           .title(item.title())
-                           .link(item.link())
-                           .description(item.description())
-                           .author(item.author())
-                           .pub_date(item.pub_date())
-                           .comments(item.comments())
+                           .title(title)
+                           .link(link)
+                           .description(description)
+                           .author(author)
+                           .pub_date(pub_date)
+                           .comments(comments)
                            .categories(item_cat)
                            .enclosure(enclosure)
                            .guid(guid)
@@ -1255,21 +1260,61 @@ impl Channel {
 
         let ttl = match self.ttl() {
             None => None,
-            Some(val) => Some(i64::from_str(val.as_str())?),
+            Some(val) => Some(i64::from_str(val)?),
+        };
+
+        let language = match self.language() {
+            None => None,
+            Some(val) => Some(String::from(val)),
+        };
+
+        let copyright = match self.copyright() {
+            None => None,
+            Some(val) => Some(String::from(val)),
+        };
+
+        let managing_editor = match self.managing_editor() {
+            None => None,
+            Some(val) => Some(String::from(val)),
+        };
+
+        let webmaster = match self.webmaster() {
+            None => None,
+            Some(val) => Some(String::from(val)),
+        };
+
+        let pub_date = match self.pub_date() {
+            None => None,
+            Some(val) => Some(String::from(val)),
+        };
+
+        let last_build_date = match self.last_build_date() {
+            None => None,
+            Some(val) => Some(String::from(val)),
+        };
+
+        let generator = match self.generator() {
+            None => None,
+            Some(val) => Some(String::from(val)),
+        };
+
+        let docs = match self.docs() {
+            None => None,
+            Some(val) => Some(String::from(val)),
         };
 
         ChannelBuilder::new()
             .title(self.title())
             .link(self.link())
             .description(self.description())
-            .language(self.language())
-            .copyright(self.copyright())
-            .managing_editor(self.managing_editor())
-            .webmaster(self.webmaster())
-            .pub_date(self.pub_date())
-            .last_build_date(self.last_build_date())
-            .generator(self.generator())
-            .docs(self.docs())
+            .language(language)
+            .copyright(copyright)
+            .managing_editor(managing_editor)
+            .webmaster(webmaster)
+            .pub_date(pub_date)
+            .last_build_date(last_build_date)
+            .generator(generator)
+            .docs(docs)
             .rating(None)
             .ttl(ttl)
             .cloud(cloud)
@@ -1277,7 +1322,8 @@ impl Channel {
             .image(image)
             .text_input(text_input)
             .skip_hours(skip_hours)
-            .skip_days(self.skip_days())
+            .skip_days(self.skip_days()
+                           .to_vec())
             .items(items)
             .validate()?
             .finalize()
@@ -1644,7 +1690,7 @@ impl ChannelBuilder {
     pub fn title(mut self,
                  title: &str)
         -> ChannelBuilder {
-        self.title = title.to_owned();
+        self.title = String::from(title);
         self
     }
 
@@ -1662,7 +1708,7 @@ impl ChannelBuilder {
     pub fn link(mut self,
                 link: &str)
         -> ChannelBuilder {
-        self.link = link.to_owned();
+        self.link = String::from(link);
         self
     }
 
@@ -1685,7 +1731,7 @@ impl ChannelBuilder {
     pub fn description(mut self,
                        description: &str)
         -> ChannelBuilder {
-        self.description = description.to_owned();
+        self.description = String::from(description);
         self
     }
 

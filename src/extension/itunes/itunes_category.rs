@@ -37,11 +37,11 @@ impl ITunesCategory {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(text.to_owned(), category.text())
+    /// assert_eq!(text, category.text())
     /// ```
-    pub fn text(&self) -> String {
+    pub fn text(&self) -> &str {
         self.text
-            .clone()
+            .as_str()
     }
 
 
@@ -79,9 +79,9 @@ impl ITunesCategory {
     ///
     /// assert!(category.subcategory().is_none());
     /// ```
-    pub fn subcategory(&self) -> Option<Box<ITunesCategory>> {
+    pub fn subcategory(&self) -> Option<&Box<ITunesCategory>> {
         self.subcategory
-            .clone()
+            .as_ref()
     }
 }
 
@@ -138,9 +138,9 @@ impl ITunesCategoryBuilder {
     /// let mut category_builder = ITunesCategoryBuilder::new();
     /// category_builder.text("text");
     /// ```
-    pub fn text(&mut self,
+    pub fn text(mut self,
                 text: &str)
-        -> &mut ITunesCategoryBuilder {
+        -> ITunesCategoryBuilder {
         self.text = text.to_owned();
         self
     }
@@ -160,9 +160,9 @@ impl ITunesCategoryBuilder {
     /// let mut category_builder = ITunesCategoryBuilder::new();
     /// category_builder.subcategory(Some(Box::new(subcategory)));
     /// ```
-    pub fn subcategory(&mut self,
+    pub fn subcategory(mut self,
                        subcategory: Option<Box<ITunesCategory>>)
-        -> &mut ITunesCategoryBuilder {
+        -> ITunesCategoryBuilder {
         self.subcategory = subcategory;
         self
     }
@@ -185,10 +185,8 @@ impl ITunesCategoryBuilder {
     ///     .finalize()
     ///     .unwrap();
     /// ```
-    pub fn finalize(&self) -> Result<ITunesCategory, Error> {
-        Ok(ITunesCategory { text: self.text
-                                      .clone(),
-                            subcategory: self.subcategory
-                                             .clone(), })
+    pub fn finalize(self) -> Result<ITunesCategory, Error> {
+        Ok(ITunesCategory { text: self.text,
+                            subcategory: self.subcategory, })
     }
 }

@@ -191,7 +191,7 @@ impl GuidBuilder {
     pub fn value(mut self,
                  value: &str)
         -> GuidBuilder {
-        self.value = value.to_owned();
+        self.value = String::from(value);
         self
     }
 
