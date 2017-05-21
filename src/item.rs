@@ -964,25 +964,16 @@ impl ItemBuilder {
             return Err(Error::Validation(String::from("Either Title or Description must have a value.")));
         }
 
-        let link = self.link
-                       .clone();
-        if link.is_some() {
-            Url::parse(link.unwrap()
-                           .as_str())?;
+        if let Some(ref link) = self.link {
+            Url::parse(link.as_str())?;
         }
 
-        let comments = self.comments
-                           .clone();
-        if comments.is_some() {
-            Url::parse(comments.unwrap()
-                               .as_str())?;
+        if let Some(ref comments) = self.comments {
+            Url::parse(comments.as_str())?;
         }
 
-        let pub_date = self.pub_date
-                           .clone();
-        if pub_date.is_some() {
-            DateTime::parse_from_rfc2822(pub_date.unwrap()
-                                                 .as_str())?;
+        if let Some(ref pub_date) = self.pub_date {
+            DateTime::parse_from_rfc2822(pub_date.as_str())?;
         }
 
         Ok(self)

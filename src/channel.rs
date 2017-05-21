@@ -2212,48 +2212,29 @@ impl ChannelBuilder {
         Url::parse(self.link
                        .as_str())?;
 
-        let pub_date = self.pub_date
-                           .clone();
-        if pub_date.is_some() {
-            DateTime::parse_from_rfc2822(pub_date.unwrap()
-                                                 .as_str())?;
+        if let Some(ref pub_date) = self.pub_date {
+            DateTime::parse_from_rfc2822(pub_date.as_str())?;
         }
 
-        let last_build_date = self.last_build_date
-                                  .clone();
-        if last_build_date.is_some() {
-            DateTime::parse_from_rfc2822(last_build_date.unwrap()
-                                                        .as_str())?;
+        if let Some(ref last_build_date) = self.last_build_date {
+            DateTime::parse_from_rfc2822(last_build_date.as_str())?;
         }
 
-        let docs = self.docs
-                       .clone();
-        if docs.is_some() {
-            Url::parse(docs.unwrap()
-                           .as_str())?;
+        if let Some(ref docs) = self.docs {
+            Url::parse(docs.as_str())?;
         }
 
-        let mut skip_days = self.skip_days
-                                .clone();
-        skip_days.sort();
-        skip_days.dedup();
-
-        for day in skip_days {
+        for day in self.skip_days.as_slice() {
             match Day::from_str(day.as_str()) {
                 Ok(_) => (),
                 Err(err) => return Err(Error::Validation(String::from(err))),
             };
         }
 
-        let mut skip_hours = self.skip_hours
-                                 .clone();
-        skip_hours.sort();
-        skip_hours.dedup();
-
-        for hour in skip_hours {
-            if hour < 0 {
+        for hour in self.skip_hours.as_slice() {
+            if *hour < 0 {
                 return Err(Error::Validation(String::from("Channel Skip Hour cannot be a negative value.")));
-            } else if hour > 23 {
+            } else if *hour > 23 {
                 return Err(Error::Validation(String::from("Channel Skip Hour cannot be greater than 23.")));
             }
         }
@@ -2306,8 +2287,7 @@ impl ChannelBuilder {
     /// ```
     pub fn finalize(self) -> Result<Channel, Error> {
         let mut skip_hours: Vec<String> = Vec::new();
-        for hour in self.skip_hours
-                        .clone() {
+        for hour in self.skip_hours.as_slice() {
             skip_hours.push(hour.to_string());
         }
 
