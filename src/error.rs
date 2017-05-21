@@ -7,13 +7,13 @@
 
 use chrono::ParseError as DateParseError;
 use quick_xml::error::Error as XmlError;
-use url::ParseError as UrlParseError;
 use std::error::Error as StdError;
 use std::fmt;
 use std::io::Error as IOError;
 use std::num::ParseIntError;
 use std::str::Utf8Error;
 use std::string::FromUtf8Error;
+use url::ParseError as UrlParseError;
 
 #[derive(Debug)]
 /// Types of errors that could occur while parsing an RSS feed.
@@ -78,63 +78,27 @@ impl StdError for Error {
 }
 
 impl fmt::Display for Error {
-    fn fmt(&self,
-           f: &mut fmt::Formatter)
-        -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            Error::Validation(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::FromUrl(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::IO(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
+            Error::Validation(ref err) => fmt::Display::fmt(err, f),
+            Error::FromUrl(ref err) => fmt::Display::fmt(err, f),
+            Error::IO(ref err) => fmt::Display::fmt(err, f),
             #[cfg(feature = "from_url")]
-            Error::ReqParsing(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::IntParsing(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::DateParsing(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::UrlParsing(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::Utf8(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::XmlParsing(ref err, _) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::Xml(ref err) => {
-                fmt::Display::fmt(err,
-                                  f)
-            },
-            Error::EOF => {
-                write!(f,
-                       "reached end of input without finding a complete channel")
-            },
+            Error::ReqParsing(ref err) => fmt::Display::fmt(err, f),
+            Error::IntParsing(ref err) => fmt::Display::fmt(err, f),
+            Error::DateParsing(ref err) => fmt::Display::fmt(err, f),
+            Error::UrlParsing(ref err) => fmt::Display::fmt(err, f),
+            Error::Utf8(ref err) => fmt::Display::fmt(err, f),
+            Error::XmlParsing(ref err, _) => fmt::Display::fmt(err, f),
+            Error::Xml(ref err) => fmt::Display::fmt(err, f),
+            Error::EOF => write!(f, "reached end of input without finding a complete channel"),
         }
     }
 }
 
 impl From<(XmlError, usize)> for Error {
     fn from(err: (XmlError, usize)) -> Error {
-        Error::XmlParsing(err.0,
-                          err.1)
+        Error::XmlParsing(err.0, err.1)
     }
 }
 

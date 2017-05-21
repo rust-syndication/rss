@@ -49,9 +49,7 @@ impl ITunesOwner {
     /// assert!(name_opt.is_none());
     /// ```
     pub fn name(&self) -> Option<&str> {
-        self.name
-            .as_ref()
-            .map(|s| s.as_str())
+        self.name.as_ref().map(|s| s.as_str())
     }
 
 
@@ -84,30 +82,22 @@ impl ITunesOwner {
     /// assert!(email_opt.is_none());
     /// ```
     pub fn email(&self) -> Option<&str> {
-        self.email
-            .as_ref()
-            .map(|s| s.as_str())
+        self.email.as_ref().map(|s| s.as_str())
     }
 }
 
 impl ToXml for ITunesOwner {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(b"itunes:owner");
 
         writer.write(Event::Start(element.clone()))?;
 
-        if let Some(name) = self.name
-                                .as_ref() {
-            writer.write_text_element(b"name",
-                                      name)?;
+        if let Some(name) = self.name.as_ref() {
+            writer.write_text_element(b"name", name)?;
         }
 
-        if let Some(email) = self.email
-                                 .as_ref() {
-            writer.write_text_element(b"email",
-                                      email)?;
+        if let Some(email) = self.email.as_ref() {
+            writer.write_text_element(b"email", email)?;
         }
 
         writer.write(Event::End(element))
@@ -145,9 +135,7 @@ impl ITunesOwnerBuilder {
     /// let mut owner_builder = ITunesOwnerBuilder::new();
     /// owner_builder.name(Some("name".to_string()));
     /// ```
-    pub fn name(mut self,
-                name: Option<String>)
-        -> ITunesOwnerBuilder {
+    pub fn name(mut self, name: Option<String>) -> ITunesOwnerBuilder {
         self.name = name;
         self
     }
@@ -162,9 +150,7 @@ impl ITunesOwnerBuilder {
     /// let mut owner_builder = ITunesOwnerBuilder::new();
     /// owner_builder.email(Some("email@example.com".to_string()));
     /// ```
-    pub fn email(mut self,
-                 email: Option<String>)
-        -> ITunesOwnerBuilder {
+    pub fn email(mut self, email: Option<String>) -> ITunesOwnerBuilder {
         self.email = email;
         self
     }
@@ -183,7 +169,9 @@ impl ITunesOwnerBuilder {
     ///     .unwrap();
     /// ```
     pub fn finalize(self) -> Result<ITunesOwner, Error> {
-        Ok(ITunesOwner { name: self.name,
-                         email: self.email, })
+        Ok(ITunesOwner {
+               name: self.name,
+               email: self.email,
+           })
     }
 }

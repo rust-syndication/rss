@@ -9,8 +9,8 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use url::Url;
 use toxml::{ToXml, XmlWriterExt};
+use url::Url;
 
 /// A representation of the `<textInput>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -44,8 +44,7 @@ impl TextInput {
     /// assert_eq!(title, text_input.title());
     /// ```
     pub fn title(&self) -> &str {
-        self.title
-            .as_str()
+        self.title.as_str()
     }
 
     /// Get the description that exists under `TextInput`.
@@ -66,8 +65,7 @@ impl TextInput {
     /// assert_eq!(description, text_input.description());
     /// ```
     pub fn description(&self) -> &str {
-        self.description
-            .as_str()
+        self.description.as_str()
     }
 
     /// Get the name that exists under `TextInput`.
@@ -88,8 +86,7 @@ impl TextInput {
     /// assert_eq!(name, text_input.name());
     /// ```
     pub fn name(&self) -> &str {
-        self.name
-            .as_str()
+        self.name.as_str()
     }
 
     /// Get the link that exists under `TextInput`.
@@ -109,8 +106,7 @@ impl TextInput {
     /// assert_eq!(link, text_input.link());
     /// ```
     pub fn link(&self) -> &str {
-        self.link
-            .as_str()
+        self.link.as_str()
     }
 }
 
@@ -118,7 +114,7 @@ impl TextInput {
 impl FromXml for TextInput {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
-        -> Result<(Self, XmlReader<R>), Error> {
+                                       -> Result<(Self, XmlReader<R>), Error> {
         let mut title = None;
         let mut description = None;
         let mut name = None;
@@ -134,21 +130,23 @@ impl FromXml for TextInput {
                         b"link" => link = element_text!(reader),
                         _ => skip_element!(reader),
                     }
-                },
+                }
                 Ok(Event::End(_)) => {
                     let title = title.unwrap_or_default();
                     let description = description.unwrap_or_default();
                     let name = name.unwrap_or_default();
                     let link = link.unwrap_or_default();
 
-                    return Ok((TextInput { title: title,
-                                           description: description,
-                                           name: name,
-                                           link: link, },
+                    return Ok((TextInput {
+                                   title: title,
+                                   description: description,
+                                   name: name,
+                                   link: link,
+                               },
                                reader));
-                },
+                }
                 Err(err) => return Err(err.into()),
-                _ => {},
+                _ => {}
             }
         }
 
@@ -157,21 +155,16 @@ impl FromXml for TextInput {
 }
 
 impl ToXml for TextInput {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new("textInput");
 
         writer.write(Event::Start(element.clone()))?;
 
-        writer.write_text_element(b"title",
-                                  &self.title)?;
-        writer.write_text_element(b"description",
-                                  &self.description)?;
-        writer.write_text_element(b"name",
-                                  &self.name)?;
-        writer.write_text_element(b"link",
-                                  &self.link)?;
+        writer.write_text_element(b"title", &self.title)?;
+        writer
+            .write_text_element(b"description", &self.description)?;
+        writer.write_text_element(b"name", &self.name)?;
+        writer.write_text_element(b"link", &self.link)?;
 
         writer.write(Event::End(element))
     }
@@ -210,9 +203,7 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.title("Title");
     /// ```
-    pub fn title(mut self,
-                 title: &str)
-        -> TextInputBuilder {
+    pub fn title(mut self, title: &str) -> TextInputBuilder {
         self.title = title.to_string();
         self
     }
@@ -227,9 +218,7 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.description("This is a test description.");
     /// ```
-    pub fn description(mut self,
-                       description: &str)
-        -> TextInputBuilder {
+    pub fn description(mut self, description: &str) -> TextInputBuilder {
         self.description = description.to_string();
         self
     }
@@ -244,9 +233,7 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.name("Comments");
     /// ```
-    pub fn name(mut self,
-                name: &str)
-        -> TextInputBuilder {
+    pub fn name(mut self, name: &str) -> TextInputBuilder {
         self.name = name.to_string();
         self
     }
@@ -261,9 +248,7 @@ impl TextInputBuilder {
     /// let mut text_input_builder = TextInputBuilder::new();
     /// text_input_builder.link("http://www.example.com/feedback");
     /// ```
-    pub fn link(mut self,
-                link: &str)
-        -> TextInputBuilder {
+    pub fn link(mut self, link: &str) -> TextInputBuilder {
         self.link = link.to_string();
         self
     }
@@ -286,8 +271,7 @@ impl TextInputBuilder {
     ///         .unwrap();
     /// ```
     pub fn validate(self) -> Result<TextInputBuilder, Error> {
-        Url::parse(self.link
-                       .as_str())?;
+        Url::parse(self.link.as_str())?;
 
         Ok(self)
     }
@@ -308,9 +292,11 @@ impl TextInputBuilder {
     ///         .unwrap();
     /// ```
     pub fn finalize(self) -> Result<TextInput, Error> {
-        Ok(TextInput { title: self.title,
-                       description: self.description,
-                       name: self.name,
-                       link: self.link, })
+        Ok(TextInput {
+               title: self.title,
+               description: self.description,
+               name: self.name,
+               link: self.link,
+           })
     }
 }

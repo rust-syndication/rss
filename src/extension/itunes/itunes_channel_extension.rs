@@ -83,9 +83,7 @@ impl ITunesChannelExtension {
     /// assert!(author_opt.is_none());
     /// ```
     pub fn author(&self) -> Option<&str> {
-        self.author
-            .as_ref()
-            .map(|s| s.as_str())
+        self.author.as_ref().map(|s| s.as_str())
     }
 
 
@@ -123,9 +121,7 @@ impl ITunesChannelExtension {
     /// assert!(block_opt.is_none());
     /// ```
     pub fn block(&self) -> Option<&str> {
-        self.block
-            .as_ref()
-            .map(|s| s.as_str())
+        self.block.as_ref().map(|s| s.as_str())
     }
 
 
@@ -197,9 +193,7 @@ impl ITunesChannelExtension {
     /// assert!(image_opt.is_none());
     /// ```
     pub fn image(&self) -> Option<&str> {
-        self.image
-            .as_ref()
-            .map(|s| s.as_str())
+        self.image.as_ref().map(|s| s.as_str())
     }
 
 
@@ -237,9 +231,7 @@ impl ITunesChannelExtension {
     /// assert!(explicit_opt.is_none());
     /// ```
     pub fn explicit(&self) -> Option<&str> {
-        self.explicit
-            .as_ref()
-            .map(|s| s.as_str())
+        self.explicit.as_ref().map(|s| s.as_str())
     }
 
 
@@ -277,9 +269,7 @@ impl ITunesChannelExtension {
     /// assert!(complete_opt.is_none());
     /// ```
     pub fn complete(&self) -> Option<&str> {
-        self.complete
-            .as_ref()
-            .map(|s| s.as_str())
+        self.complete.as_ref().map(|s| s.as_str())
     }
 
 
@@ -318,9 +308,7 @@ impl ITunesChannelExtension {
     /// assert!(new_feed_url_opt.is_none());
     /// ```
     pub fn new_feed_url(&self) -> Option<&str> {
-        self.new_feed_url
-            .as_ref()
-            .map(|s| s.as_str())
+        self.new_feed_url.as_ref().map(|s| s.as_str())
     }
 
 
@@ -360,8 +348,7 @@ impl ITunesChannelExtension {
     /// assert!(owner_opt.is_none());
     /// ```
     pub fn owner(&self) -> Option<&ITunesOwner> {
-        self.owner
-            .as_ref()
+        self.owner.as_ref()
     }
 
 
@@ -399,9 +386,7 @@ impl ITunesChannelExtension {
     /// assert!(subtitle_opt.is_none());
     /// ```
     pub fn subtitle(&self) -> Option<&str> {
-        self.subtitle
-            .as_ref()
-            .map(|s| s.as_str())
+        self.subtitle.as_ref().map(|s| s.as_str())
     }
 
 
@@ -439,9 +424,7 @@ impl ITunesChannelExtension {
     /// assert!(summary_opt.is_none());
     /// ```
     pub fn summary(&self) -> Option<&str> {
-        self.summary
-            .as_ref()
-            .map(|s| s.as_str())
+        self.summary.as_ref().map(|s| s.as_str())
     }
 
 
@@ -479,9 +462,7 @@ impl ITunesChannelExtension {
     /// assert!(keywords_opt.is_none());
     /// ```
     pub fn keywords(&self) -> Option<&str> {
-        self.keywords
-            .as_ref()
-            .map(|s| s.as_str())
+        self.keywords.as_ref().map(|s| s.as_str())
     }
 }
 
@@ -489,98 +470,72 @@ impl ITunesChannelExtension {
     /// Creates an ITunesChannelExtension using the specified hashmap.
     pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Result<Self, Error> {
         let mut ext = ITunesChannelExtension::default();
-        ext.author = remove_extension_value(&mut map,
-                                            "author");
-        ext.block = remove_extension_value(&mut map,
-                                           "block");
+        ext.author = remove_extension_value(&mut map, "author");
+        ext.block = remove_extension_value(&mut map, "block");
         ext.categories = parse_categories(&mut map)?;
         ext.image = parse_image(&mut map);
-        ext.explicit = remove_extension_value(&mut map,
-                                              "explicit");
-        ext.complete = remove_extension_value(&mut map,
-                                              "complete");
-        ext.new_feed_url = remove_extension_value(&mut map,
-                                                  "new-feed-url");
+        ext.explicit = remove_extension_value(&mut map, "explicit");
+        ext.complete = remove_extension_value(&mut map, "complete");
+        ext.new_feed_url = remove_extension_value(&mut map, "new-feed-url");
         ext.owner = parse_owner(&mut map)?;
-        ext.subtitle = remove_extension_value(&mut map,
-                                              "subtitle");
-        ext.summary = remove_extension_value(&mut map,
-                                             "summary");
-        ext.keywords = remove_extension_value(&mut map,
-                                              "keywords");
+        ext.subtitle = remove_extension_value(&mut map, "subtitle");
+        ext.summary = remove_extension_value(&mut map, "summary");
+        ext.keywords = remove_extension_value(&mut map, "keywords");
         Ok(ext)
     }
 }
 
 impl ToXml for ITunesChannelExtension {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
-        if let Some(author) = self.author
-                                  .as_ref() {
-            writer.write_text_element(b"itunes:author",
-                                      author)?;
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+        if let Some(author) = self.author.as_ref() {
+            writer.write_text_element(b"itunes:author", author)?;
         }
 
-        if let Some(block) = self.block
-                                 .as_ref() {
-            writer.write_text_element(b"itunes:block",
-                                      block)?;
+        if let Some(block) = self.block.as_ref() {
+            writer.write_text_element(b"itunes:block", block)?;
         }
 
         writer.write_objects(&self.categories)?;
 
-        if let Some(image) = self.image
-                                 .as_ref() {
+        if let Some(image) = self.image.as_ref() {
             let element = Element::new(b"itunes:image");
-            writer.write(Event::Start({
-                                          let mut element = element.clone();
-                                          element.extend_attributes(::std::iter::once((b"href", image)));
-                                          element
-                                      }))?;
+            writer
+                .write(Event::Start({
+                                        let mut element = element.clone();
+                                        element.extend_attributes(::std::iter::once((b"href",
+                                                                                     image)));
+                                        element
+                                    }))?;
             writer.write(Event::End(element))?;
         }
 
-        if let Some(explicit) = self.explicit
-                                    .as_ref() {
-            writer.write_text_element(b"itunes:explicit",
-                                      explicit)?;
+        if let Some(explicit) = self.explicit.as_ref() {
+            writer.write_text_element(b"itunes:explicit", explicit)?;
         }
 
-        if let Some(complete) = self.complete
-                                    .as_ref() {
-            writer.write_text_element(b"itunes:complete",
-                                      complete)?;
+        if let Some(complete) = self.complete.as_ref() {
+            writer.write_text_element(b"itunes:complete", complete)?;
         }
 
-        if let Some(new_feed_url) =
-            self.new_feed_url
-                .as_ref() {
-            writer.write_text_element(b"itunes:new-feed-url",
-                                      new_feed_url)?;
+        if let Some(new_feed_url) = self.new_feed_url.as_ref() {
+            writer
+                .write_text_element(b"itunes:new-feed-url", new_feed_url)?;
         }
 
-        if let Some(owner) = self.owner
-                                 .as_ref() {
+        if let Some(owner) = self.owner.as_ref() {
             writer.write_object(owner)?;
         }
 
-        if let Some(subtitle) = self.subtitle
-                                    .as_ref() {
-            writer.write_text_element(b"itunes:subtitle",
-                                      subtitle)?;
+        if let Some(subtitle) = self.subtitle.as_ref() {
+            writer.write_text_element(b"itunes:subtitle", subtitle)?;
         }
 
-        if let Some(summary) = self.summary
-                                   .as_ref() {
-            writer.write_text_element(b"itunes:summary",
-                                      summary)?;
+        if let Some(summary) = self.summary.as_ref() {
+            writer.write_text_element(b"itunes:summary", summary)?;
         }
 
-        if let Some(keywords) = self.keywords
-                                    .as_ref() {
-            writer.write_text_element(b"itunes:keywords",
-                                      keywords)?;
+        if let Some(keywords) = self.keywords.as_ref() {
+            writer.write_text_element(b"itunes:keywords", keywords)?;
         }
 
         Ok(())
@@ -627,9 +582,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.author(Some("author".to_string()));
     /// ```
-    pub fn author(mut self,
-                  author: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn author(mut self, author: Option<String>) -> ITunesChannelExtensionBuilder {
         self.author = author;
         self
     }
@@ -645,9 +598,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.block(Some("block".to_string()));
     /// ```
-    pub fn block(mut self,
-                 block: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn block(mut self, block: Option<String>) -> ITunesChannelExtensionBuilder {
         self.block = block;
         self
     }
@@ -677,9 +628,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.categories(categories);
     /// ```
-    pub fn categories(mut self,
-                      categories: Vec<ITunesCategory>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn categories(mut self, categories: Vec<ITunesCategory>) -> ITunesChannelExtensionBuilder {
         self.categories = categories;
         self
     }
@@ -695,9 +644,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.image(Some("image".to_string()));
     /// ```
-    pub fn image(mut self,
-                 image: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn image(mut self, image: Option<String>) -> ITunesChannelExtensionBuilder {
         self.image = image;
         self
     }
@@ -713,9 +660,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.explicit(Some("explicit".to_string()));
     /// ```
-    pub fn explicit(mut self,
-                    explicit: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn explicit(mut self, explicit: Option<String>) -> ITunesChannelExtensionBuilder {
         self.explicit = explicit;
         self
     }
@@ -731,9 +676,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.complete(Some("complete".to_string()));
     /// ```
-    pub fn complete(mut self,
-                    complete: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn complete(mut self, complete: Option<String>) -> ITunesChannelExtensionBuilder {
         self.complete = complete;
         self
     }
@@ -750,9 +693,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.new_feed_url(Some("new_feed_url".to_string()));
     /// ```
-    pub fn new_feed_url(mut self,
-                        new_feed_url: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn new_feed_url(mut self, new_feed_url: Option<String>) -> ITunesChannelExtensionBuilder {
         self.new_feed_url = new_feed_url;
         self
     }
@@ -775,9 +716,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.owner(Some(owner));
     /// ```
-    pub fn owner(mut self,
-                 owner: Option<ITunesOwner>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn owner(mut self, owner: Option<ITunesOwner>) -> ITunesChannelExtensionBuilder {
         self.owner = owner;
         self
     }
@@ -793,9 +732,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.subtitle(Some("subtitle".to_string()));
     /// ```
-    pub fn subtitle(mut self,
-                    subtitle: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn subtitle(mut self, subtitle: Option<String>) -> ITunesChannelExtensionBuilder {
         self.subtitle = subtitle;
         self
     }
@@ -811,9 +748,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.summary(Some("summary".to_string()));
     /// ```
-    pub fn summary(mut self,
-                   summary: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn summary(mut self, summary: Option<String>) -> ITunesChannelExtensionBuilder {
         self.summary = summary;
         self
     }
@@ -829,9 +764,7 @@ impl ITunesChannelExtensionBuilder {
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
     /// channel_builder.keywords(Some("keywords".to_string()));
     /// ```
-    pub fn keywords(mut self,
-                    keywords: Option<String>)
-        -> ITunesChannelExtensionBuilder {
+    pub fn keywords(mut self, keywords: Option<String>) -> ITunesChannelExtensionBuilder {
         self.keywords = keywords;
         self
     }
@@ -881,16 +814,18 @@ impl ITunesChannelExtensionBuilder {
     ///     .unwrap();
     /// ```
     pub fn finalize(self) -> Result<ITunesChannelExtension, Error> {
-        Ok(ITunesChannelExtension { author: self.author,
-                                    block: self.block,
-                                    categories: self.categories,
-                                    image: self.image,
-                                    explicit: self.explicit,
-                                    complete: self.complete,
-                                    new_feed_url: self.new_feed_url,
-                                    owner: self.owner,
-                                    subtitle: self.subtitle,
-                                    summary: self.summary,
-                                    keywords: self.keywords, })
+        Ok(ITunesChannelExtension {
+               author: self.author,
+               block: self.block,
+               categories: self.categories,
+               image: self.image,
+               explicit: self.explicit,
+               complete: self.complete,
+               new_feed_url: self.new_feed_url,
+               owner: self.owner,
+               subtitle: self.subtitle,
+               summary: self.summary,
+               keywords: self.keywords,
+           })
     }
 }

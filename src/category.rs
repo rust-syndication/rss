@@ -9,8 +9,8 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use url::Url;
 use toxml::ToXml;
+use url::Url;
 
 /// A representation of the `<category>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -39,8 +39,7 @@ impl Category {
     /// assert_eq!(category, category_obj.name());
     /// ```
     pub fn name(&self) -> &str {
-        self.name
-            .as_str()
+        self.name.as_str()
     }
 
     /// Get the optional domain that exists under `Category`.
@@ -72,25 +71,20 @@ impl Category {
     /// assert!(domain_option.is_none());
     /// ```
     pub fn domain(&self) -> Option<&str> {
-        self.domain
-            .as_ref()
-            .map(|s| s.as_str())
+        self.domain.as_ref().map(|s| s.as_str())
     }
 }
 
 impl FromXml for Category {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-        -> Result<(Self, XmlReader<R>), Error> {
+                                       -> Result<(Self, XmlReader<R>), Error> {
         let mut domain = None;
 
-        for attr in element.attributes()
-                           .with_checks(false)
-                           .unescaped() {
+        for attr in element.attributes().with_checks(false).unescaped() {
             if let Ok(attr) = attr {
                 if attr.0 == b"domain" {
-                    domain = Some(String::from_utf8(attr.1
-                                                        .into_owned())?);
+                    domain = Some(String::from_utf8(attr.1.into_owned())?);
                     break;
                 }
             }
@@ -98,28 +92,29 @@ impl FromXml for Category {
 
         let content = element_text!(reader).unwrap_or_default();
 
-        Ok((Category { name: content,
-                       domain: domain, },
+        Ok((Category {
+                name: content,
+                domain: domain,
+            },
             reader))
     }
 }
 
 impl ToXml for Category {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(b"category");
 
-        writer.write(Event::Start({
-                                      let mut element = element.clone();
-                                      if let Some(ref domain) = self.domain {
-                                          element.extend_attributes(::std::iter::once((b"domain", domain)));
-                                      }
-                                      element
-                                  }))?;
+        writer
+            .write(Event::Start({
+                                    let mut element = element.clone();
+                                    if let Some(ref domain) = self.domain {
+                                        element.extend_attributes(::std::iter::once((b"domain",
+                                                                                     domain)));
+                                    }
+                                    element
+                                }))?;
 
-        writer.write(Event::Text(Element::new(self.name
-                                                  .as_str())))?;
+        writer.write(Event::Text(Element::new(self.name.as_str())))?;
 
         writer.write(Event::End(element))
     }
@@ -156,9 +151,7 @@ impl CategoryBuilder {
     /// let mut category_builder = CategoryBuilder::new();
     /// category_builder.name("Podcast");
     /// ```
-    pub fn name(mut self,
-                name: &str)
-        -> CategoryBuilder {
+    pub fn name(mut self, name: &str) -> CategoryBuilder {
         self.name = name.to_string();
         self
     }
@@ -173,9 +166,7 @@ impl CategoryBuilder {
     /// let mut category_builder = CategoryBuilder::new();
     /// category_builder.domain(Some("http://www.example.com".to_string()));
     /// ```
-    pub fn domain(mut self,
-                  domain: Option<String>)
-        -> CategoryBuilder {
+    pub fn domain(mut self, domain: Option<String>) -> CategoryBuilder {
         self.domain = domain;
         self
     }
@@ -218,7 +209,9 @@ impl CategoryBuilder {
     ///         .unwrap();
     /// ```
     pub fn finalize(self) -> Result<Category, Error> {
-        Ok(Category { name: self.name,
-                      domain: self.domain, })
+        Ok(Category {
+               name: self.name,
+               domain: self.domain,
+           })
     }
 }

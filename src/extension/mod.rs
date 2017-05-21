@@ -38,15 +38,12 @@ pub struct Extension {
 impl Extension {
     /// Get the name that exists under `Extension`.
     pub fn name(&self) -> &str {
-        self.name
-            .as_str()
+        self.name.as_str()
     }
 
     /// Get the value that exists under `Extension`.
     pub fn value(&self) -> Option<&str> {
-        self.value
-            .as_ref()
-            .map(|s| s.as_str())
+        self.value.as_ref().map(|s| s.as_str())
     }
 
     /// Get the attrs that exists under `Extension`.
@@ -61,24 +58,21 @@ impl Extension {
 }
 
 impl ToXml for Extension {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(&self.name);
 
-        writer.write(Event::Start({
-                                      let mut element = element.clone();
-                                      element.extend_attributes(&self.attrs);
-                                      element
-                                  }))?;
+        writer
+            .write(Event::Start({
+                                    let mut element = element.clone();
+                                    element.extend_attributes(&self.attrs);
+                                    element
+                                }))?;
 
-        if let Some(value) = self.value
-                                 .as_ref() {
+        if let Some(value) = self.value.as_ref() {
             writer.write(Event::Text(Element::new(value)))?;
         }
 
-        for extensions in self.children
-                              .values() {
+        for extensions in self.children.values() {
             for extension in extensions {
                 extension.to_xml(writer)?;
             }
@@ -117,92 +111,79 @@ impl ExtensionBuilder {
     }
 
     /// Get the name that exists under `Extension`.
-    pub fn name(mut self,
-                name: &str)
-        -> ExtensionBuilder {
+    pub fn name(mut self, name: &str) -> ExtensionBuilder {
         self.name = name.to_string();
         self
     }
 
     /// Get the value that exists under `Extension`.
-    pub fn value(mut self,
-                 value: Option<String>)
-        -> ExtensionBuilder {
+    pub fn value(mut self, value: Option<String>) -> ExtensionBuilder {
         self.value = value;
         self
     }
 
     /// Get the attrs that exists under `Extension`.
-    pub fn attrs(mut self,
-                 attrs: HashMap<String, String>)
-        -> ExtensionBuilder {
+    pub fn attrs(mut self, attrs: HashMap<String, String>) -> ExtensionBuilder {
         self.attrs = attrs;
         self
     }
 
     /// Get the children that exists under `Extension`.
-    pub fn children(mut self,
-                    children: HashMap<String, Vec<Extension>>)
-        -> ExtensionBuilder {
+    pub fn children(mut self, children: HashMap<String, Vec<Extension>>) -> ExtensionBuilder {
         self.children = children;
         self
     }
 
     /// Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
     pub fn finalize(self) -> Result<Extension, Error> {
-        Ok(Extension { name: self.name,
-                       value: self.value,
-                       attrs: self.attrs,
-                       children: self.children, })
+        Ok(Extension {
+               name: self.name,
+               value: self.value,
+               attrs: self.attrs,
+               children: self.children,
+           })
     }
 }
 
 /// Get a reference to the value for the first extension with the specified key.
 pub fn get_extension_value<'a>(map: &'a HashMap<String, Vec<Extension>>,
                                key: &str)
-    -> Option<&'a str> {
+                               -> Option<&'a str> {
     map.get(key)
-       .and_then(|v| v.first())
-       .and_then(|ext| {
-                     ext.value
-                        .as_ref()
-                 })
-       .map(|s| s.as_str())
+        .and_then(|v| v.first())
+        .and_then(|ext| ext.value.as_ref())
+        .map(|s| s.as_str())
 }
 
 /// Remove and return the value for the first extension with the specified key.
 pub fn remove_extension_value(map: &mut HashMap<String, Vec<Extension>>,
                               key: &str)
-    -> Option<String> {
+                              -> Option<String> {
     map.remove(key)
-       .map(|mut v| v.remove(0))
-       .and_then(|ext| ext.value)
+        .map(|mut v| v.remove(0))
+        .and_then(|ext| ext.value)
 }
 
 /// Get a reference to all values for the extensions with the specified key.
 pub fn get_extension_values<'a>(map: &'a HashMap<String, Vec<Extension>>,
                                 key: &str)
-    -> Option<Vec<&'a str>> {
+                                -> Option<Vec<&'a str>> {
     map.get(key)
-       .map(|v| {
-                v.iter()
-                 .filter_map(|ext| {
-                                 ext.value
-                                    .as_ref()
-                                    .map(|s| s.as_str())
-                             })
-                 .collect::<Vec<_>>()
-            })
+        .map(|v| {
+                 v.iter()
+                     .filter_map(|ext| ext.value.as_ref().map(|s| s.as_str()))
+                     .collect::<Vec<_>>()
+             })
 }
 
 /// Remove and return all values for the extensions with the specified key.
 pub fn remove_extension_values(map: &mut HashMap<String, Vec<Extension>>,
                                key: &str)
-    -> Option<Vec<String>> {
+                               -> Option<Vec<String>> {
     map.remove(key)
-       .map(|v| {
-                v.into_iter()
-                 .filter_map(|ext| ext.value)
-                 .collect::<Vec<_>>()
-            })
+        .map(|v| {
+                 v.into_iter()
+                     .filter_map(|ext| ext.value)
+                     .collect::<Vec<_>>()
+             })
 }

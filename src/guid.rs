@@ -81,28 +81,27 @@ impl Guid {
     /// assert_eq!(guid, guid_obj.value());
     /// ```
     pub fn value(&self) -> &str {
-        self.value
-            .as_str()
+        self.value.as_str()
     }
 }
 
 impl Default for Guid {
     #[inline]
     fn default() -> Self {
-        Guid { value: Default::default(),
-               is_permalink: true, }
+        Guid {
+            value: Default::default(),
+            is_permalink: true,
+        }
     }
 }
 
 impl FromXml for Guid {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-        -> Result<(Self, XmlReader<R>), Error> {
+                                       -> Result<(Self, XmlReader<R>), Error> {
         let mut is_permalink = true;
 
-        for attr in element.attributes()
-                           .with_checks(false)
-                           .unescaped() {
+        for attr in element.attributes().with_checks(false).unescaped() {
             if let Ok(attr) = attr {
                 if attr.0 == b"isPermaLink" {
                     is_permalink = &attr.1 as &[u8] != b"false";
@@ -113,28 +112,29 @@ impl FromXml for Guid {
 
         let content = element_text!(reader).unwrap_or_default();
 
-        Ok((Guid { value: content,
-                   is_permalink: is_permalink, },
+        Ok((Guid {
+                value: content,
+                is_permalink: is_permalink,
+            },
             reader))
     }
 }
 
 impl ToXml for Guid {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(b"guid");
 
-        writer.write(Event::Start({
-                                      let mut element = element.clone();
-                                      if !self.is_permalink {
-                                          element.extend_attributes(::std::iter::once((b"isPermaLink", b"false")));
-                                      }
-                                      element
-                                  }))?;
+        writer
+            .write(Event::Start({
+                                    let mut element = element.clone();
+                                    if !self.is_permalink {
+                    element.extend_attributes(::std::iter::once((b"isPermaLink", b"false")));
+                }
+                                    element
+                                }))?;
 
-        writer.write(Event::Text(Element::new(self.value
-                                                  .as_str())))?;
+        writer
+            .write(Event::Text(Element::new(self.value.as_str())))?;
 
         writer.write(Event::End(element))
     }
@@ -171,9 +171,7 @@ impl GuidBuilder {
     /// let mut guid_builder = GuidBuilder::new();
     /// guid_builder.is_permalink(Some(false));
     /// ```
-    pub fn is_permalink(mut self,
-                        is_permalink: Option<bool>)
-        -> GuidBuilder {
+    pub fn is_permalink(mut self, is_permalink: Option<bool>) -> GuidBuilder {
         self.is_permalink = is_permalink;
         self
     }
@@ -188,9 +186,7 @@ impl GuidBuilder {
     /// let mut guid_builder = GuidBuilder::new();
     /// guid_builder.value("9DE46946-2F90-4D5D-9047-7E9165C16E7C");
     /// ```
-    pub fn value(mut self,
-                 value: &str)
-        -> GuidBuilder {
+    pub fn value(mut self, value: &str) -> GuidBuilder {
         self.value = value.to_string();
         self
     }
@@ -213,7 +209,9 @@ impl GuidBuilder {
             None => true,
         };
 
-        Ok(Guid { is_permalink: is_permalink,
-                  value: self.value, })
+        Ok(Guid {
+               is_permalink: is_permalink,
+               value: self.value,
+           })
     }
 }
