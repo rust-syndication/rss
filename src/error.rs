@@ -1,13 +1,38 @@
-use std::fmt;
+// This file is part of rss.
+//
+// Copyright © 2015-2017 The rust-syndication Developers
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the MIT License and/or Apache 2.0 License.
+
+use chrono::ParseError as DateParseError;
+use quick_xml::error::Error as XmlError;
+use reqwest::Error as ReqError;
+use reqwest::UrlError as UrlParseError;
 use std::error::Error as StdError;
+use std::fmt;
+use std::io::Error as IOError;
+use std::num::ParseIntError;
 use std::str::Utf8Error;
 use std::string::FromUtf8Error;
-
-use quick_xml::error::Error as XmlError;
 
 #[derive(Debug)]
 /// Types of errors that could occur while parsing an RSS feed.
 pub enum Error {
+    /// An error occured during validation
+    Validation(String),
+    /// An error occured while reading channel from url.
+    FromUrl(String),
+    /// An error occured while reading url to string.
+    IO(IOError),
+    /// An error occurred during curl.
+    ReqParsing(ReqError),
+    /// An error occured while parsing a str to i64.
+    IntParsing(ParseIntError),
+    /// An error occured during parsing dates from str.
+    DateParsing(DateParseError),
+    /// An error occurred while parsing a str to Url.
+    UrlParsing(UrlParseError),
     /// An error occurred while converting bytes to UTF8.
     Utf8(Utf8Error),
     /// An XML parser error occurred at the specified byte offset.
@@ -21,6 +46,13 @@ pub enum Error {
 impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
+            Error::Validation(ref err) => err,
+            Error::FromUrl(ref err) => err,
+            Error::IO(ref err) => err.description(),
+            Error::ReqParsing(ref err) => err.description(),
+            Error::IntParsing(ref err) => err.description(),
+            Error::DateParsing(ref err) => err.description(),
+            Error::UrlParsing(ref err) => err.description(),
             Error::Utf8(ref err) => err.description(),
             Error::XmlParsing(ref err, _) => err.description(),
             Error::Xml(ref err) => err.description(),
@@ -30,6 +62,11 @@ impl StdError for Error {
 
     fn cause(&self) -> Option<&StdError> {
         match *self {
+            Error::IO(ref err) => Some(err),
+            Error::ReqParsing(ref err) => Some(err),
+            Error::IntParsing(ref err) => Some(err),
+            Error::DateParsing(ref err) => Some(err),
+            Error::UrlParsing(ref err) => Some(err),
             Error::Utf8(ref err) => Some(err),
             Error::XmlParsing(ref err, _) => Some(err),
             Error::Xml(ref err) => Some(err),
@@ -39,19 +76,62 @@ impl StdError for Error {
 }
 
 impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self,
+           f: &mut fmt::Formatter)
+        -> fmt::Result {
         match *self {
-            Error::Utf8(ref err) => fmt::Display::fmt(err, f),
-            Error::XmlParsing(ref err, _) => fmt::Display::fmt(err, f),
-            Error::Xml(ref err) => fmt::Display::fmt(err, f),
-            Error::EOF => write!(f, "reached end of input without finding a complete channel"),
+            Error::Validation(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::FromUrl(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::IO(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::ReqParsing(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::IntParsing(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::DateParsing(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::UrlParsing(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::Utf8(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::XmlParsing(ref err, _) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::Xml(ref err) => {
+                fmt::Display::fmt(err,
+                                  f)
+            },
+            Error::EOF => {
+                write!(f,
+                       "reached end of input without finding a complete channel")
+            },
         }
     }
 }
 
 impl From<(XmlError, usize)> for Error {
     fn from(err: (XmlError, usize)) -> Error {
-        Error::XmlParsing(err.0, err.1)
+        Error::XmlParsing(err.0,
+                          err.1)
     }
 }
 
@@ -70,5 +150,36 @@ impl From<Utf8Error> for Error {
 impl From<FromUtf8Error> for Error {
     fn from(err: FromUtf8Error) -> Error {
         Error::Utf8(err.utf8_error())
+    }
+}
+
+impl From<UrlParseError> for Error {
+    fn from(err: UrlParseError) -> Error {
+        Error::UrlParsing(err)
+    }
+}
+
+impl From<DateParseError> for Error {
+    fn from(err: DateParseError) -> Error {
+        Error::DateParsing(err)
+    }
+}
+
+impl From<ParseIntError> for Error {
+    fn from(err: ParseIntError) -> Error {
+        Error::IntParsing(err)
+    }
+}
+
+impl From<ReqError> for Error {
+    fn from(err: ReqError) -> Error {
+        Error::ReqParsing(err)
+    }
+}
+
+
+impl From<IOError> for Error {
+    fn from(err: IOError) -> Error {
+        Error::IO(err)
     }
 }
