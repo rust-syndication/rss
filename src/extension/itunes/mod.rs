@@ -29,17 +29,16 @@ pub use extension::itunes::itunes_channel_extension::ITunesChannelExtensionBuild
 pub static NAMESPACE: &'static str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
 
 fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
-    let mut element = match map.remove("image")
-                               .map(|mut v| v.remove(0)) {
+    let mut element = match map.remove("image").map(|mut v| v.remove(0)) {
         Some(element) => element,
         None => return None,
     };
 
-    element.attrs
-           .remove("href")
+    element.attrs.remove("href")
 }
 
-fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Result<Vec<ITunesCategory>, Error> {
+fn parse_categories(map: &mut HashMap<String, Vec<Extension>>)
+                    -> Result<Vec<ITunesCategory>, Error> {
     let mut elements = match map.remove("category") {
         Some(elements) => elements,
         None => return Ok(Vec::new()),
@@ -48,17 +47,13 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Result<Vec<ITu
     let mut categories = Vec::with_capacity(elements.len());
 
     for elem in &mut elements {
-        let text = elem.attrs
-                       .remove("text")
-                       .unwrap_or_default();
+        let text = elem.attrs.remove("text").unwrap_or_default();
 
         let child = {
             if let Some(mut child) = elem.children
-                                         .remove("category")
-                                         .map(|mut v| v.remove(0)) {
-                let text = child.attrs
-                                .remove("text")
-                                .unwrap_or_default();
+                   .remove("category")
+                   .map(|mut v| v.remove(0)) {
+                let text = child.attrs.remove("text").unwrap_or_default();
                 Some(Box::new(ITunesCategoryBuilder::new()
                                   .text(text.as_str())
                                   .subcategory(None)
@@ -78,24 +73,19 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Result<Vec<ITu
 }
 
 fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITunesOwner>, Error> {
-    let mut element = match map.remove("owner")
-                               .map(|mut v| v.remove(0)) {
+    let mut element = match map.remove("owner").map(|mut v| v.remove(0)) {
         Some(element) => element,
         None => return Ok(None),
     };
 
-    let name = element.children
-                      .remove("name")
-                      .and_then(|mut v| {
-                                    v.remove(0)
-                                     .value
-                                });
-    let email = element.children
-                       .remove("email")
-                       .and_then(|mut v| {
-                                     v.remove(0)
-                                      .value
-                                 });
+    let name = element
+        .children
+        .remove("name")
+        .and_then(|mut v| v.remove(0).value);
+    let email = element
+        .children
+        .remove("email")
+        .and_then(|mut v| v.remove(0).value);
 
     Ok(Some(ITunesOwnerBuilder::new()
                 .name(name)

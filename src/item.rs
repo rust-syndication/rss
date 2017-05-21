@@ -64,7 +64,7 @@ impl Item {
     /// let title_string = "Making Music with Linux | LAS 408";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some(String::from(title_string)))
+    ///     .title(Some(title_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -82,9 +82,7 @@ impl Item {
     /// assert!(item.title().is_none());
     /// ```
     pub fn title(&self) -> Option<&str> {
-        self.title
-            .as_ref()
-            .map(|s| s.as_str())
+        self.title.as_ref().map(|s| s.as_str())
     }
 
     /// Get the optional link that exists under `Item`.
@@ -96,7 +94,7 @@ impl Item {
     ///
     /// let link_string = "http://www.jupiterbroadcasting.com/";
     /// let item = ItemBuilder::new()
-    ///     .link(Some(String::from(link_string)))
+    ///     .link(Some(link_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -114,9 +112,7 @@ impl Item {
     /// assert!(item.link().is_none());
     /// ```
     pub fn link(&self) -> Option<&str> {
-        self.link
-            .as_ref()
-            .map(|s| s.as_str())
+        self.link.as_ref().map(|s| s.as_str())
     }
 
     /// Get the optional description that exists under `Item`.
@@ -129,7 +125,7 @@ impl Item {
     /// let description_string = "This is a test description";
     ///
     /// let item = ItemBuilder::new()
-    ///     .description(Some(String::from(description_string)))
+    ///     .description(Some(description_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -147,9 +143,7 @@ impl Item {
     /// assert!(item.description().is_none());
     /// ```
     pub fn description(&self) -> Option<&str> {
-        self.description
-            .as_ref()
-            .map(|s| s.as_str())
+        self.description.as_ref().map(|s| s.as_str())
     }
 
     /// Get the optional author that exists under `Item`.
@@ -162,7 +156,7 @@ impl Item {
     /// let author_string = "Chris Fisher";
     ///
     /// let item = ItemBuilder::new()
-    ///     .author(Some(String::from(author_string)))
+    ///     .author(Some(author_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -180,9 +174,7 @@ impl Item {
     /// assert!(item.author().is_none());
     /// ```
     pub fn author(&self) -> Option<&str> {
-        self.author
-            .as_ref()
-            .map(|s| s.as_str())
+        self.author.as_ref().map(|s| s.as_str())
     }
 
     /// Get the categories that exists under `Item`.
@@ -199,7 +191,7 @@ impl Item {
     ///     .unwrap();
     ///
     /// let category_2 = CategoryBuilder::new()
-    ///     .domain(Some("http://jupiterbroadcasting.com".to_owned()))
+    ///     .domain(Some("http://jupiterbroadcasting.com".to_string()))
     ///     .name("Podcast")
     ///     .finalize()
     ///     .unwrap();
@@ -227,7 +219,7 @@ impl Item {
     /// let comments_string = "http://example.com/comments";
     ///
     /// let item = ItemBuilder::new()
-    ///     .comments(Some(String::from(comments_string)))
+    ///     .comments(Some(comments_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -248,9 +240,7 @@ impl Item {
     /// assert!(item.comments().is_none());
     /// ```
     pub fn comments(&self) -> Option<&str> {
-        self.comments
-            .as_ref()
-            .map(|s| s.as_str())
+        self.comments.as_ref().map(|s| s.as_str())
     }
 
     /// Get the optional enclosure that exists under `Item`.
@@ -260,7 +250,7 @@ impl Item {
     /// ```
     /// use rss::{EnclosureBuilder, ItemBuilder, Item};
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -289,8 +279,7 @@ impl Item {
     /// assert!(item.enclosure().is_none());
     /// ```
     pub fn enclosure(&self) -> Option<&Enclosure> {
-        self.enclosure
-            .as_ref()
+        self.enclosure.as_ref()
     }
 
     /// Get the optional guid that exists under `Item`.
@@ -324,8 +313,7 @@ impl Item {
     /// assert!(item.guid().is_none());
     /// ```
     pub fn guid(&self) -> Option<&Guid> {
-        self.guid
-            .as_ref()
+        self.guid.as_ref()
     }
 
     /// Get the optional pub date that exists under `Item`.
@@ -338,14 +326,14 @@ impl Item {
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let item = ItemBuilder::new()
-    ///     .pub_date(Some(pub_date.to_owned()))
+    ///     .pub_date(Some(pub_date.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let local = item.pub_date();
     /// assert!(local.is_some());
     ///
-    /// assert_eq!(pub_date.to_owned(), local.unwrap());
+    /// assert_eq!(pub_date.to_string(), local.unwrap());
     /// ```
     ///
     /// ```
@@ -359,9 +347,7 @@ impl Item {
     /// assert!(item.pub_date().is_none());
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
-        self.pub_date
-            .as_ref()
-            .map(|s| s.as_str())
+        self.pub_date.as_ref().map(|s| s.as_str())
     }
 
     /// Get the optional source that exists under `Item`.
@@ -395,8 +381,7 @@ impl Item {
     /// assert!(item.source().is_none());
     /// ```
     pub fn source(&self) -> Option<&Source> {
-        self.source
-            .as_ref()
+        self.source.as_ref()
     }
 
     /// Get the optional `ITunesItemExtension` under `Item`.
@@ -407,21 +392,21 @@ impl Item {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let itunes_item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .duration(Some("duration".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .closed_captioned(Some("closed_captioned".to_owned()))
-    ///     .order(Some("order".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .duration(Some("duration".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .closed_captioned(Some("closed_captioned".to_string()))
+    ///     .order(Some("order".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
     ///     .itunes_ext(Some(itunes_item))
     ///     .finalize()
     ///     .unwrap();
@@ -433,7 +418,7 @@ impl Item {
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
     ///     .itunes_ext(None)
     ///     .finalize()
     ///     .unwrap();
@@ -441,14 +426,12 @@ impl Item {
     /// assert!(item.itunes_ext().is_none());
     /// ```
     pub fn itunes_ext(&self) -> Option<&ITunesItemExtension> {
-        self.itunes_ext
-            .as_ref()
+        self.itunes_ext.as_ref()
     }
 
     /// Get the optional `DublinCoreExtension` under `Item`.
     pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
-        self.dublin_core_ext
-            .as_ref()
+        self.dublin_core_ext.as_ref()
     }
 
     /// Get the `ExtensionMap` under `Item`.
@@ -458,16 +441,14 @@ impl Item {
 
     /// Get the optional content under `Item`.
     pub fn content(&self) -> Option<&str> {
-        self.content
-            .as_ref()
-            .map(|s| s.as_str())
+        self.content.as_ref().map(|s| s.as_str())
     }
 }
 
 impl FromXml for Item {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
-        -> Result<(Self, XmlReader<R>), Error> {
+                                       -> Result<(Self, XmlReader<R>), Error> {
         let mut item = Item::default();
 
         while let Some(e) = reader.next() {
@@ -475,30 +456,25 @@ impl FromXml for Item {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader,
-                                                                         element)?;
+                            let (category, reader_) = Category::from_xml(reader, element)?;
                             reader = reader_;
-                            item.categories
-                                .push(category);
-                        },
+                            item.categories.push(category);
+                        }
                         b"guid" => {
-                            let (guid, reader_) = Guid::from_xml(reader,
-                                                                 element)?;
+                            let (guid, reader_) = Guid::from_xml(reader, element)?;
                             reader = reader_;
                             item.guid = Some(guid);
-                        },
+                        }
                         b"enclosure" => {
-                            let (enclosure, reader_) = Enclosure::from_xml(reader,
-                                                                           element)?;
+                            let (enclosure, reader_) = Enclosure::from_xml(reader, element)?;
                             reader = reader_;
                             item.enclosure = Some(enclosure);
-                        },
+                        }
                         b"source" => {
-                            let (source, reader_) = Source::from_xml(reader,
-                                                                     element)?;
+                            let (source, reader_) = Source::from_xml(reader, element)?;
                             reader = reader_;
                             item.source = Some(source);
-                        },
+                        }
                         b"title" => item.title = element_text!(reader),
                         b"link" => item.link = element_text!(reader),
                         b"description" => item.description = element_text!(reader),
@@ -508,35 +484,28 @@ impl FromXml for Item {
                         b"content:encoded" => item.content = element_text!(reader),
                         _ => {
                             if let Some((ns, name)) = fromxml::extension_name(&element) {
-                                parse_extension!(reader,
-                                                 element,
-                                                 ns,
-                                                 name,
-                                                 item.extensions);
+                                parse_extension!(reader, element, ns, name, item.extensions);
                             } else {
                                 skip_element!(reader);
                             }
-                        },
+                        }
                     }
-                },
+                }
                 Ok(Event::End(_)) => {
-                    if !item.extensions
-                            .is_empty() {
-                        if let Some(map) = item.extensions
-                                               .remove("itunes") {
+                    if !item.extensions.is_empty() {
+                        if let Some(map) = item.extensions.remove("itunes") {
                             item.itunes_ext = Some(ITunesItemExtension::from_map(map));
                         }
 
-                        if let Some(map) = item.extensions
-                                               .remove("dc") {
+                        if let Some(map) = item.extensions.remove("dc") {
                             item.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
                         }
                     }
 
                     return Ok((item, reader));
-                },
+                }
                 Err(err) => return Err(err.into()),
-                _ => {},
+                _ => {}
             }
         }
 
@@ -545,75 +514,54 @@ impl FromXml for Item {
 }
 
 impl ToXml for Item {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(b"item");
 
         writer.write(Event::Start(element.clone()))?;
 
-        if let Some(title) = self.title
-                                 .as_ref() {
-            writer.write_text_element(b"title",
-                                      title)?;
+        if let Some(title) = self.title.as_ref() {
+            writer.write_text_element(b"title", title)?;
         }
 
-        if let Some(link) = self.link
-                                .as_ref() {
-            writer.write_text_element(b"link",
-                                      link)?;
+        if let Some(link) = self.link.as_ref() {
+            writer.write_text_element(b"link", link)?;
         }
 
-        if let Some(description) =
-            self.description
-                .as_ref() {
-            writer.write_text_element(b"description",
-                                      description)?;
+        if let Some(description) = self.description.as_ref() {
+            writer.write_text_element(b"description", description)?;
         }
 
-        if let Some(author) = self.author
-                                  .as_ref() {
-            writer.write_text_element(b"author",
-                                      author)?;
+        if let Some(author) = self.author.as_ref() {
+            writer.write_text_element(b"author", author)?;
         }
 
         writer.write_objects(&self.categories)?;
 
-        if let Some(comments) = self.comments
-                                    .as_ref() {
-            writer.write_text_element(b"comments",
-                                      comments)?;
+        if let Some(comments) = self.comments.as_ref() {
+            writer.write_text_element(b"comments", comments)?;
         }
 
-        if let Some(enclosure) = self.enclosure
-                                     .as_ref() {
+        if let Some(enclosure) = self.enclosure.as_ref() {
             writer.write_object(enclosure)?;
         }
 
-        if let Some(guid) = self.guid
-                                .as_ref() {
+        if let Some(guid) = self.guid.as_ref() {
             writer.write_object(guid)?;
         }
 
-        if let Some(pub_date) = self.pub_date
-                                    .as_ref() {
-            writer.write_text_element(b"pubDate",
-                                      pub_date)?;
+        if let Some(pub_date) = self.pub_date.as_ref() {
+            writer.write_text_element(b"pubDate", pub_date)?;
         }
 
-        if let Some(source) = self.source
-                                  .as_ref() {
+        if let Some(source) = self.source.as_ref() {
             writer.write_object(source)?;
         }
 
-        if let Some(content) = self.content
-                                   .as_ref() {
-            writer.write_cdata_element(b"content:encoded",
-                                       content)?;
+        if let Some(content) = self.content.as_ref() {
+            writer.write_cdata_element(b"content:encoded", content)?;
         }
 
-        for map in self.extensions
-                       .values() {
+        for map in self.extensions.values() {
             for extensions in map.values() {
                 for extension in extensions {
                     extension.to_xml(writer)?;
@@ -621,13 +569,11 @@ impl ToXml for Item {
             }
         }
 
-        if let Some(ext) = self.itunes_ext
-                               .as_ref() {
+        if let Some(ext) = self.itunes_ext.as_ref() {
             ext.to_xml(writer)?;
         }
 
-        if let Some(ext) = self.dublin_core_ext
-                               .as_ref() {
+        if let Some(ext) = self.dublin_core_ext.as_ref() {
             ext.to_xml(writer)?;
         }
 
@@ -678,11 +624,9 @@ impl ItemBuilder {
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.title(Some("Making Music with Linux | LAS
-    /// 408".to_owned()));
+    /// 408".to_string()));
     /// ```
-    pub fn title(mut self,
-                 title: Option<String>)
-        -> ItemBuilder {
+    pub fn title(mut self, title: Option<String>) -> ItemBuilder {
         self.title = title;
         self
     }
@@ -699,9 +643,7 @@ impl ItemBuilder {
     /// item_builder.link(Some("http://www.jupiterbroadcasting.com".
     /// to_owned()));
     /// ```
-    pub fn link(mut self,
-                link: Option<String>)
-        -> ItemBuilder {
+    pub fn link(mut self, link: Option<String>) -> ItemBuilder {
         self.link = link;
         self
     }
@@ -715,11 +657,9 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let mut item_builder = ItemBuilder::new();
-    /// item_builder.description(Some("This is a test description".to_owned()));
+    /// item_builder.description(Some("This is a test description".to_string()));
     /// ```
-    pub fn description(mut self,
-                       description: Option<String>)
-        -> ItemBuilder {
+    pub fn description(mut self, description: Option<String>) -> ItemBuilder {
         self.description = description;
         self
     }
@@ -733,11 +673,9 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let mut item_builder = ItemBuilder::new();
-    /// item_builder.author(Some("Chris Fisher".to_owned()));
+    /// item_builder.author(Some("Chris Fisher".to_string()));
     /// ```
-    pub fn author(mut self,
-                  author: Option<String>)
-        -> ItemBuilder {
+    pub fn author(mut self, author: Option<String>) -> ItemBuilder {
         self.author = author;
         self
     }
@@ -758,9 +696,7 @@ impl ItemBuilder {
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.categories(categories);
     /// ```
-    pub fn categories(mut self,
-                      categories: Vec<Category>)
-        -> ItemBuilder {
+    pub fn categories(mut self, categories: Vec<Category>) -> ItemBuilder {
         self.categories = categories;
         self
     }
@@ -774,11 +710,9 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let mut item_builder = ItemBuilder::new();
-    /// item_builder.comments(Some("Test Comment".to_owned()));
+    /// item_builder.comments(Some("Test Comment".to_string()));
     /// ```
-    pub fn comments(mut self,
-                    comments: Option<String>)
-        -> ItemBuilder {
+    pub fn comments(mut self, comments: Option<String>) -> ItemBuilder {
         self.comments = comments;
         self
     }
@@ -791,7 +725,7 @@ impl ItemBuilder {
     /// ```
     /// use rss::{EnclosureBuilder, ItemBuilder};
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -803,9 +737,7 @@ impl ItemBuilder {
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.enclosure(Some(enclosure));
     /// ```
-    pub fn enclosure(mut self,
-                     enclosure: Option<Enclosure>)
-        -> ItemBuilder {
+    pub fn enclosure(mut self, enclosure: Option<Enclosure>) -> ItemBuilder {
         self.enclosure = enclosure;
         self
     }
@@ -825,9 +757,7 @@ impl ItemBuilder {
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.guid(Some(guid));
     /// ```
-    pub fn guid(mut self,
-                guid: Option<Guid>)
-        -> ItemBuilder {
+    pub fn guid(mut self, guid: Option<Guid>) -> ItemBuilder {
         self.guid = guid;
         self
     }
@@ -842,11 +772,9 @@ impl ItemBuilder {
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.pub_date(Some("Sun, 13 Mar 2016
-    /// 20:02:02-0700".to_owned()));
+    /// 20:02:02-0700".to_string()));
     /// ```
-    pub fn pub_date(mut self,
-                    pub_date: Option<String>)
-        -> ItemBuilder {
+    pub fn pub_date(mut self, pub_date: Option<String>) -> ItemBuilder {
         self.pub_date = pub_date;
         self
     }
@@ -869,9 +797,7 @@ impl ItemBuilder {
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.source(Some(source));
     /// ```
-    pub fn source(mut self,
-                  source: Option<Source>)
-        -> ItemBuilder {
+    pub fn source(mut self, source: Option<Source>) -> ItemBuilder {
         self.source = source;
         self
     }
@@ -888,49 +814,41 @@ impl ItemBuilder {
     /// let url = "http://www.tomalak.org/links2.xml";
     ///
     /// let itunes_item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .duration(Some("duration".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .closed_captioned(Some("closed_captioned".to_owned()))
-    ///     .order(Some("order".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .duration(Some("duration".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .closed_captioned(Some("closed_captioned".to_string()))
+    ///     .order(Some("order".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.itunes_ext(Some(itunes_item));
     /// ```
-    pub fn itunes_ext(mut self,
-                      itunes_ext: Option<ITunesItemExtension>)
-        -> ItemBuilder {
+    pub fn itunes_ext(mut self, itunes_ext: Option<ITunesItemExtension>) -> ItemBuilder {
         self.itunes_ext = itunes_ext;
         self
     }
 
     /// Set the optional dublin_core_ext that exists under `Item`.
-    pub fn dublin_core_ext(mut self,
-                           dublin_core_ext: Option<DublinCoreExtension>)
-        -> ItemBuilder {
+    pub fn dublin_core_ext(mut self, dublin_core_ext: Option<DublinCoreExtension>) -> ItemBuilder {
         self.dublin_core_ext = dublin_core_ext;
         self
     }
 
     /// Set the extensions that exists under `Item`.
-    pub fn extensions(mut self,
-                      extensions: ExtensionMap)
-        -> ItemBuilder {
+    pub fn extensions(mut self, extensions: ExtensionMap) -> ItemBuilder {
         self.extensions = extensions;
         self
     }
 
     /// Set the optional content that exists under `Item`.
-    pub fn content(mut self,
-                   content: Option<String>)
-        -> ItemBuilder {
+    pub fn content(mut self, content: Option<String>) -> ItemBuilder {
         self.content = content;
         self
     }
@@ -943,8 +861,8 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .link(Some("http://www.jupiterbroadcasting.com".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
+    ///     .link(Some("http://www.jupiterbroadcasting.com".to_string()))
     ///     .description(None)
     ///     .author(None)
     ///     .categories(Vec::new())
@@ -957,32 +875,21 @@ impl ItemBuilder {
     ///     .finalize().unwrap();
     /// ```
     pub fn validate(self) -> Result<ItemBuilder, Error> {
-        if self.title
-               .is_none() &&
-           self.description
-               .is_none() {
-            return Err(Error::Validation(String::from("Either Title or Description must have a value.")));
+        if self.title.is_none() && self.description.is_none() {
+            return Err(Error::Validation("Either Title or Description must have a value."
+                                             .to_string()));
         }
 
-        let link = self.link
-                       .clone();
-        if link.is_some() {
-            Url::parse(link.unwrap()
-                           .as_str())?;
+        if let Some(ref link) = self.link {
+            Url::parse(link.as_str())?;
         }
 
-        let comments = self.comments
-                           .clone();
-        if comments.is_some() {
-            Url::parse(comments.unwrap()
-                               .as_str())?;
+        if let Some(ref comments) = self.comments {
+            Url::parse(comments.as_str())?;
         }
 
-        let pub_date = self.pub_date
-                           .clone();
-        if pub_date.is_some() {
-            DateTime::parse_from_rfc2822(pub_date.unwrap()
-                                                 .as_str())?;
+        if let Some(ref pub_date) = self.pub_date {
+            DateTime::parse_from_rfc2822(pub_date.as_str())?;
         }
 
         Ok(self)
@@ -997,8 +904,8 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .link(Some("http://www.jupiterbroadcasting.com".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
+    ///     .link(Some("http://www.jupiterbroadcasting.com".to_string()))
     ///     .description(None)
     ///     .author(None)
     ///     .categories(Vec::new())
@@ -1011,19 +918,21 @@ impl ItemBuilder {
     ///     .unwrap();
     /// ```
     pub fn finalize(self) -> Result<Item, Error> {
-        Ok(Item { title: self.title,
-                  link: self.link,
-                  description: self.description,
-                  author: self.author,
-                  categories: self.categories,
-                  comments: self.comments,
-                  enclosure: self.enclosure,
-                  guid: self.guid,
-                  pub_date: self.pub_date,
-                  source: self.source,
-                  extensions: self.extensions,
-                  itunes_ext: self.itunes_ext,
-                  dublin_core_ext: self.dublin_core_ext,
-                  content: self.content, })
+        Ok(Item {
+               title: self.title,
+               link: self.link,
+               description: self.description,
+               author: self.author,
+               categories: self.categories,
+               comments: self.comments,
+               enclosure: self.enclosure,
+               guid: self.guid,
+               pub_date: self.pub_date,
+               source: self.source,
+               extensions: self.extensions,
+               itunes_ext: self.itunes_ext,
+               dublin_core_ext: self.dublin_core_ext,
+               content: self.content,
+           })
     }
 }
