@@ -7,8 +7,7 @@
 
 use chrono::ParseError as DateParseError;
 use quick_xml::error::Error as XmlError;
-use reqwest::Error as ReqError;
-use reqwest::UrlError as UrlParseError;
+use url::ParseError as UrlParseError;
 use std::error::Error as StdError;
 use std::fmt;
 use std::io::Error as IOError;
@@ -25,8 +24,9 @@ pub enum Error {
     FromUrl(String),
     /// An error occured while reading url to string.
     IO(IOError),
-    /// An error occurred during curl.
-    ReqParsing(ReqError),
+    /// An error occurred during the web request.
+    #[cfg(feature = "from_url")]
+    ReqParsing(::reqwest::Error),
     /// An error occured while parsing a str to i64.
     IntParsing(ParseIntError),
     /// An error occured during parsing dates from str.
@@ -49,6 +49,7 @@ impl StdError for Error {
             Error::Validation(ref err) => err,
             Error::FromUrl(ref err) => err,
             Error::IO(ref err) => err.description(),
+            #[cfg(feature = "from_url")]
             Error::ReqParsing(ref err) => err.description(),
             Error::IntParsing(ref err) => err.description(),
             Error::DateParsing(ref err) => err.description(),
@@ -63,6 +64,7 @@ impl StdError for Error {
     fn cause(&self) -> Option<&StdError> {
         match *self {
             Error::IO(ref err) => Some(err),
+            #[cfg(feature = "from_url")]
             Error::ReqParsing(ref err) => Some(err),
             Error::IntParsing(ref err) => Some(err),
             Error::DateParsing(ref err) => Some(err),
@@ -92,6 +94,7 @@ impl fmt::Display for Error {
                 fmt::Display::fmt(err,
                                   f)
             },
+            #[cfg(feature = "from_url")]
             Error::ReqParsing(ref err) => {
                 fmt::Display::fmt(err,
                                   f)
@@ -171,8 +174,9 @@ impl From<ParseIntError> for Error {
     }
 }
 
-impl From<ReqError> for Error {
-    fn from(err: ReqError) -> Error {
+#[cfg(feature = "from_url")]
+impl From<::reqwest::Error> for Error {
+    fn from(err: ::reqwest::Error) -> Error {
         Error::ReqParsing(err)
     }
 }

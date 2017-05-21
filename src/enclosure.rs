@@ -9,8 +9,8 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use reqwest::Url;
-use reqwest::mime::Mime;
+use url::Url;
+use mime::Mime;
 use toxml::ToXml;
 
 /// A representation of the `<enclosure>` element.

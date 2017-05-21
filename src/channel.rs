@@ -19,14 +19,13 @@ use image::{Image, ImageBuilder};
 use item::{Item, ItemBuilder};
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use reqwest::{self, Url};
 use source::SourceBuilder;
 use std::collections::HashMap;
 use std::i64;
-use std::io::Read;
 use std::str::{self, FromStr};
 use textinput::{TextInput, TextInputBuilder};
 use toxml::{ToXml, XmlWriterExt};
+use url::Url;
 
 /// A representation of the `<channel>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -918,10 +917,13 @@ impl Channel {
     ///     Channel::from_url(url).unwrap();
     /// }
     /// ```
+    #[cfg(feature = "from_url")]
     pub fn from_url(url: &str) -> Result<Channel, Error> {
+        use std::io::Read;
+
         let mut content = String::new();
 
-        reqwest::get(url)?
+        ::reqwest::get(url)?
             .read_to_string(&mut content)?;
 
         Ok(Channel::from_str(content.as_str())?)

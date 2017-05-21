@@ -9,7 +9,7 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use reqwest::Url;
+use url::Url;
 use std::str::FromStr;
 use toxml::ToXml;
 

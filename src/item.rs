@@ -16,7 +16,7 @@ use fromxml::{self, FromXml};
 use guid::Guid;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use reqwest::Url;
+use url::Url;
 use source::Source;
 use toxml::{ToXml, XmlWriterExt};
 
