@@ -57,7 +57,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let author = "author".to_owned();
+    /// let author = "author".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .author(Some(author.clone()))
@@ -97,7 +97,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let block = "block".to_owned();
+    /// let block = "block".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .block(Some(block.clone()))
@@ -171,7 +171,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let image = "image".to_owned();
+    /// let image = "image".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .image(Some(image.clone()))
@@ -211,7 +211,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let explicit = "explicit".to_owned();
+    /// let explicit = "explicit".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .explicit(Some(explicit.clone()))
@@ -251,7 +251,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let complete = "complete".to_owned();
+    /// let complete = "complete".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .complete(Some(complete.clone()))
@@ -292,7 +292,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let new_feed_url = "new_feed_url".to_owned();
+    /// let new_feed_url = "new_feed_url".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .new_feed_url(Some(new_feed_url.clone()))
@@ -333,8 +333,8 @@ impl ITunesChannelExtension {
     /// ITunesChannelExtension, ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_owned()))
-    ///     .name(Some("name".to_owned()))
+    ///     .email(Some("email@example.com".to_string()))
+    ///     .name(Some("name".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -373,7 +373,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let subtitle = "subtitle".to_owned();
+    /// let subtitle = "subtitle".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .subtitle(Some(subtitle.clone()))
@@ -413,7 +413,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let summary = "summary".to_owned();
+    /// let summary = "summary".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .summary(Some(summary.clone()))
@@ -453,7 +453,7 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
     /// ITunesChannelExtension};
     ///
-    /// let keywords = "keywords".to_owned();
+    /// let keywords = "keywords".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .keywords(Some(keywords.clone()))
@@ -625,7 +625,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.author(Some("author".to_owned()));
+    /// channel_builder.author(Some("author".to_string()));
     /// ```
     pub fn author(mut self,
                   author: Option<String>)
@@ -643,7 +643,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.block(Some("block".to_owned()));
+    /// channel_builder.block(Some("block".to_string()));
     /// ```
     pub fn block(mut self,
                  block: Option<String>)
@@ -693,7 +693,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.image(Some("image".to_owned()));
+    /// channel_builder.image(Some("image".to_string()));
     /// ```
     pub fn image(mut self,
                  image: Option<String>)
@@ -711,7 +711,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.explicit(Some("explicit".to_owned()));
+    /// channel_builder.explicit(Some("explicit".to_string()));
     /// ```
     pub fn explicit(mut self,
                     explicit: Option<String>)
@@ -729,7 +729,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.complete(Some("complete".to_owned()));
+    /// channel_builder.complete(Some("complete".to_string()));
     /// ```
     pub fn complete(mut self,
                     complete: Option<String>)
@@ -748,7 +748,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.new_feed_url(Some("new_feed_url".to_owned()));
+    /// channel_builder.new_feed_url(Some("new_feed_url".to_string()));
     /// ```
     pub fn new_feed_url(mut self,
                         new_feed_url: Option<String>)
@@ -767,8 +767,8 @@ impl ITunesChannelExtensionBuilder {
     /// ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_owned()))
-    ///     .name(Some("name".to_owned()))
+    ///     .email(Some("email@example.com".to_string()))
+    ///     .name(Some("name".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -791,7 +791,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.subtitle(Some("subtitle".to_owned()));
+    /// channel_builder.subtitle(Some("subtitle".to_string()));
     /// ```
     pub fn subtitle(mut self,
                     subtitle: Option<String>)
@@ -809,7 +809,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.summary(Some("summary".to_owned()));
+    /// channel_builder.summary(Some("summary".to_string()));
     /// ```
     pub fn summary(mut self,
                    summary: Option<String>)
@@ -827,7 +827,7 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.keywords(Some("keywords".to_owned()));
+    /// channel_builder.keywords(Some("keywords".to_string()));
     /// ```
     pub fn keywords(mut self,
                     keywords: Option<String>)
@@ -847,8 +847,8 @@ impl ITunesChannelExtensionBuilder {
     /// ITunesChannelExtensionBuilder, ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_owned()))
-    ///     .name(Some("name".to_owned()))
+    ///     .email(Some("email@example.com".to_string()))
+    ///     .name(Some("name".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -866,15 +866,15 @@ impl ITunesChannelExtensionBuilder {
     /// let categories = vec![category];
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
-    ///     .new_feed_url(Some("new_feed_url".to_owned()))
-    ///     .complete(Some("complete".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
+    ///     .new_feed_url(Some("new_feed_url".to_string()))
+    ///     .complete(Some("complete".to_string()))
     ///     .owner(Some(owner))
     ///     .categories(categories)
     ///     .finalize()

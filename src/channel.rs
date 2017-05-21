@@ -96,7 +96,7 @@ impl Channel {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(title.to_owned(), channels.title());
+    /// assert_eq!(title.to_string(), channels.title());
     /// ```
     pub fn title(&self) -> &str {
         self.title
@@ -118,7 +118,7 @@ impl Channel {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(link.to_owned(), channels.link());
+    /// assert_eq!(link.to_string(), channels.link());
     /// ```
     pub fn link(&self) -> &str {
         self.link
@@ -133,7 +133,7 @@ impl Channel {
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux ".to_owned()
+    /// let description = "Ogg Vorbis audio versions of The Linux ".to_string()
     /// + "Action Show! A show that covers everything geeks care about in the "
     /// + "computer industry. Get a solid dose of Linux, gadgets, news events "
     /// + "and much more!";
@@ -143,7 +143,7 @@ impl Channel {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(description.to_owned(), channels.description());
+    /// assert_eq!(description.to_string(), channels.description());
     /// ```
     pub fn description(&self) -> &str {
         self.description
@@ -161,7 +161,7 @@ impl Channel {
     /// let language_string = "en";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .language(Some(String::from(language_string)))
+    ///     .language(Some(language_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -196,7 +196,7 @@ impl Channel {
     ///     "Copyright 2002, Spartanburg Herald-Journal";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .copyright(Some(String::from(copyright_string)))
+    ///     .copyright(Some(copyright_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -231,7 +231,7 @@ impl Channel {
     ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .managing_editor(Some(String::from(managing_editor_string)))
+    ///     .managing_editor(Some(managing_editor_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -265,7 +265,7 @@ impl Channel {
     ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .webmaster(Some(String::from(webmaster_string)))
+    ///     .webmaster(Some(webmaster_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -299,7 +299,7 @@ impl Channel {
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .pub_date(Some(String::from(pub_date)))
+    ///     .pub_date(Some(pub_date.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -333,7 +333,7 @@ impl Channel {
     /// let last_build_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .last_build_date(Some(String::from(last_build_date)))
+    ///     .last_build_date(Some(last_build_date.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -374,7 +374,7 @@ impl Channel {
     ///     .unwrap();
     ///
     /// let category_2 = CategoryBuilder::new()
-    ///     .domain(Some("http://jupiterbroadcasting.com".to_owned()))
+    ///     .domain(Some("http://jupiterbroadcasting.com".to_string()))
     ///     .name("Podcast")
     ///     .finalize()
     ///     .unwrap();
@@ -418,7 +418,7 @@ impl Channel {
     /// http://reinventedsoftware.com/feeder/";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .generator(Some(String::from(generator_string)))
+    ///     .generator(Some(generator_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -452,7 +452,7 @@ impl Channel {
     /// let docs_string = "http://blogs.law.harvard.edu/tech/rss/";
     ///
     /// let channels = ChannelBuilder::new()
-    ///     .docs(Some(String::from(docs_string)))
+    ///     .docs(Some(docs_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -706,9 +706,9 @@ impl Channel {
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let skip_days_vec: Vec<String> = vec!["Monday".to_owned(),
-    /// "Sunday".to_owned(), "Thursday".to_owned(),
-    ///     "Wednesday".to_owned()];
+    /// let skip_days_vec: Vec<String> = vec!["Monday".to_string(),
+    /// "Sunday".to_string(), "Thursday".to_owned(),
+    ///     "Wednesday".to_string()];
     ///
     /// let channels = ChannelBuilder::new()
     ///     .skip_days(skip_days_vec.clone())
@@ -750,17 +750,17 @@ impl Channel {
     /// ```
     /// use rss::{ChannelBuilder, Channel, ItemBuilder};
     ///
-    /// let link = "http://www.jupiterbroadcasting.com/97561/".to_owned()
+    /// let link = "http://www.jupiterbroadcasting.com/97561/".to_string()
     /// + "making-music-with-linux-las-408/";
     ///
-    /// let description = "<![CDATA[<p>In special Rasberry Pi 3 ".to_owned()
+    /// let description = "<![CDATA[<p>In special Rasberry Pi 3 ".to_string()
     /// + "edition of the show we look at the new hardware, review & chat with "
     /// + "Mycroft CTO Ryan Sipes on how important the Raspberry Pi is for "
     /// + "development of their open artificial intelligence platform & get "
     /// + "the latest news.</p><p>Plus replacing Spotify on Linux, the new "
     /// + "Microsoft lock-in, our hosts face a moral quandary & more!</p>]]>";
     ///
-    /// let title = "Making Music with Linux | LAS 408".to_owned();
+    /// let title = "Making Music with Linux | LAS 408".to_string();
     ///
     /// let item_1 = ItemBuilder::new()
     ///     .title(Some(title))
@@ -828,8 +828,8 @@ impl Channel {
     /// ITunesOwnerBuilder, ITunesCategoryBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_owned()))
-    ///     .name(Some("name".to_owned()))
+    ///     .email(Some("email@example.com".to_string()))
+    ///     .name(Some("name".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -847,15 +847,15 @@ impl Channel {
     /// let categories = vec![category];
     ///
     /// let itunes_channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
-    ///     .new_feed_url(Some("new_feed_url".to_owned()))
-    ///     .complete(Some("complete".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
+    ///     .new_feed_url(Some("new_feed_url".to_string()))
+    ///     .complete(Some("complete".to_string()))
     ///     .owner(Some(owner))
     ///     .categories(categories)
     ///     .finalize()
@@ -1101,7 +1101,7 @@ impl Channel {
         for cat in self.categories() {
             let domain = match cat.domain() {
                 None => None,
-                Some(val) => Some(String::from(val)),
+                Some(val) => Some(val.to_string()),
             };
 
             channel_cat.push(CategoryBuilder::new()
@@ -1131,7 +1131,7 @@ impl Channel {
 
                 let description = match val.description() {
                     None => None,
-                    Some(dval) => Some(String::from(dval)),
+                    Some(dval) => Some(dval.to_string()),
                 };
 
                 Some(ImageBuilder::new()
@@ -1165,7 +1165,7 @@ impl Channel {
             for cat in item.categories() {
                 let domain = match cat.domain() {
                     None => None,
-                    Some(val) => Some(String::from(val)),
+                    Some(val) => Some(val.to_string()),
                 };
 
                 item_cat.push(CategoryBuilder::new()
@@ -1202,7 +1202,7 @@ impl Channel {
                 Some(sval) => {
                     let title = match sval.title() {
                         None => None,
-                        Some(tval) => Some(String::from(tval)),
+                        Some(tval) => Some(tval.to_string()),
                     };
 
                     Some(SourceBuilder::new()
@@ -1215,32 +1215,32 @@ impl Channel {
 
             let title = match item.title() {
                 None => None,
-                Some(val) => Some(String::from(val)),
+                Some(val) => Some(val.to_string()),
             };
 
             let link = match item.link() {
                 None => None,
-                Some(val) => Some(String::from(val)),
+                Some(val) => Some(val.to_string()),
             };
 
             let description = match item.description() {
                 None => None,
-                Some(val) => Some(String::from(val)),
+                Some(val) => Some(val.to_string()),
             };
 
             let author = match item.author() {
                 None => None,
-                Some(val) => Some(String::from(val)),
+                Some(val) => Some(val.to_string()),
             };
 
             let pub_date = match item.pub_date() {
                 None => None,
-                Some(val) => Some(String::from(val)),
+                Some(val) => Some(val.to_string()),
             };
 
             let comments = match item.comments() {
                 None => None,
-                Some(val) => Some(String::from(val)),
+                Some(val) => Some(val.to_string()),
             };
 
             items.push(ItemBuilder::new()
@@ -1265,42 +1265,42 @@ impl Channel {
 
         let language = match self.language() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         let copyright = match self.copyright() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         let managing_editor = match self.managing_editor() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         let webmaster = match self.webmaster() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         let pub_date = match self.pub_date() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         let last_build_date = match self.last_build_date() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         let generator = match self.generator() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         let docs = match self.docs() {
             None => None,
-            Some(val) => Some(String::from(val)),
+            Some(val) => Some(val.to_string()),
         };
 
         ChannelBuilder::new()
@@ -1690,7 +1690,7 @@ impl ChannelBuilder {
     pub fn title(mut self,
                  title: &str)
         -> ChannelBuilder {
-        self.title = String::from(title);
+        self.title = title.to_string();
         self
     }
 
@@ -1708,7 +1708,7 @@ impl ChannelBuilder {
     pub fn link(mut self,
                 link: &str)
         -> ChannelBuilder {
-        self.link = String::from(link);
+        self.link = link.to_string();
         self
     }
 
@@ -1720,7 +1720,7 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux ".to_owned()
+    /// let description = "Ogg Vorbis audio versions of The Linux ".to_string()
     /// + "Action Show! A show that covers everything geeks care about in the "
     /// + "computer industry. Get a solid dose of Linux, gadgets, news events "
     /// + "and much more!";
@@ -1731,7 +1731,7 @@ impl ChannelBuilder {
     pub fn description(mut self,
                        description: &str)
         -> ChannelBuilder {
-        self.description = String::from(description);
+        self.description = description.to_string();
         self
     }
 
@@ -1744,7 +1744,7 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let mut channel_builder = ChannelBuilder::new();
-    /// channel_builder.language(Some("en".to_owned()));
+    /// channel_builder.language(Some("en".to_string()));
     /// ```
     pub fn language(mut self,
                     language: Option<String>)
@@ -1761,7 +1761,7 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let copyright = "Copyright 2002, Spartanburg Herald-Journal".to_owned();
+    /// let copyright = "Copyright 2002, Spartanburg Herald-Journal".to_string();
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.copyright(Some(copyright));
@@ -1782,7 +1782,7 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let managing_editor =
-    ///     "chris@jupiterbroadcasting.com (Chris Fisher)".to_owned();
+    ///     "chris@jupiterbroadcasting.com (Chris Fisher)".to_string();
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.managing_editor(Some(managing_editor));
@@ -1803,7 +1803,7 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let webmaster =
-    ///     "chris@jupiterbroadcasting.com (Chris Fisher)".to_owned();
+    ///     "chris@jupiterbroadcasting.com (Chris Fisher)".to_string();
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.webmaster(Some(webmaster));
@@ -1825,7 +1825,7 @@ impl ChannelBuilder {
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.pub_date(Some("Sun, 13 Mar 2016 20:02:02
-    /// -0700".to_owned()));
+    /// -0700".to_string()));
     /// ```
     pub fn pub_date(mut self,
                     pub_date: Option<String>)
@@ -1844,7 +1844,7 @@ impl ChannelBuilder {
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.last_build_date(Some("Sun, 13 Mar 2016 20:02:02
-    /// -0700".to_owned()));
+    /// -0700".to_string()));
     /// ```
     pub fn last_build_date(mut self,
                            last_build_date: Option<String>)
@@ -1884,7 +1884,7 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let generator = "Feeder 2.5.12(2294); ".to_owned()
+    /// let generator = "Feeder 2.5.12(2294); ".to_string()
     /// + "Mac OS X Version 10.9.5 (Build 13F34) "
     /// + "http://reinventedsoftware.com/feeder/";
     ///
@@ -1995,7 +1995,7 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let mut channel_builder = ChannelBuilder::new();
-    /// channel_builder.rating(Some("PG-13".to_owned()));
+    /// channel_builder.rating(Some("PG-13".to_string()));
     /// ```
     pub fn rating(mut self,
                   rating: Option<String>)
@@ -2055,7 +2055,7 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let days = vec!["Monday".to_owned(), "Tuesday".to_owned()];
+    /// let days = vec!["Monday".to_string(), "Tuesday".to_owned()];
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.skip_days(days);
@@ -2075,7 +2075,7 @@ impl ChannelBuilder {
     /// ```
     /// use rss::{ChannelBuilder, ItemBuilder};
     ///
-    /// let title = "Making Music with Linux | LAS 408".to_owned();
+    /// let title = "Making Music with Linux | LAS 408".to_string();
     ///
     /// let item = ItemBuilder::new()
     ///     .title(Some(title))
@@ -2104,8 +2104,8 @@ impl ChannelBuilder {
     /// ITunesOwnerBuilder, ITunesCategoryBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_owned()))
-    ///     .name(Some("name".to_owned()))
+    ///     .email(Some("email@example.com".to_string()))
+    ///     .name(Some("name".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -2123,15 +2123,15 @@ impl ChannelBuilder {
     /// let categories = vec![category];
     ///
     /// let itunes_channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
-    ///     .new_feed_url(Some("new_feed_url".to_owned()))
-    ///     .complete(Some("complete".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
+    ///     .new_feed_url(Some("new_feed_url".to_string()))
+    ///     .complete(Some("complete".to_string()))
     ///     .owner(Some(owner))
     ///     .categories(categories)
     ///     .finalize()
@@ -2179,7 +2179,7 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux ".to_owned()
+    /// let description = "Ogg Vorbis audio versions of The Linux ".to_string()
     /// + "Action Show! A show that covers everything geeks care about in the "
     /// + "computer industry. Get a solid dose of Linux, gadgets, news events "
     /// + "and much more!";
@@ -2227,15 +2227,15 @@ impl ChannelBuilder {
         for day in self.skip_days.as_slice() {
             match Day::from_str(day.as_str()) {
                 Ok(_) => (),
-                Err(err) => return Err(Error::Validation(String::from(err))),
+                Err(err) => return Err(Error::Validation(err.to_string())),
             };
         }
 
         for hour in self.skip_hours.as_slice() {
             if *hour < 0 {
-                return Err(Error::Validation(String::from("Channel Skip Hour cannot be a negative value.")));
+                return Err(Error::Validation("Channel Skip Hour cannot be a negative value.".to_string()));
             } else if *hour > 23 {
-                return Err(Error::Validation(String::from("Channel Skip Hour cannot be greater than 23.")));
+                return Err(Error::Validation("Channel Skip Hour cannot be greater than 23.".to_string()));
             }
         }
 
@@ -2243,7 +2243,7 @@ impl ChannelBuilder {
                .is_some() &&
            self.ttl
                .unwrap() < 0 {
-            return Err(Error::Validation(String::from("Channel ttl cannot be a negative value.")));
+            return Err(Error::Validation("Channel ttl cannot be a negative value.".to_string()));
         }
 
         Ok(self)
@@ -2257,7 +2257,7 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux ".to_owned()
+    /// let description = "Ogg Vorbis audio versions of The Linux ".to_string()
     /// + "Action Show! A show that covers everything geeks care about in the "
     /// + "computer industry. Get a solid dose of Linux, gadgets, news events "
     /// + "and much more!";

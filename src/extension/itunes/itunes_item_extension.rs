@@ -56,7 +56,7 @@ impl ITunesItemExtension {
     /// let author = "author";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some(String::from(author)))
+    ///     .author(Some(author.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -91,7 +91,7 @@ impl ITunesItemExtension {
     /// let block = "block";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .block(Some(String::from(block)))
+    ///     .block(Some(block.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -127,7 +127,7 @@ impl ITunesItemExtension {
     /// let image = "image";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .image(Some(String::from(image)))
+    ///     .image(Some(image.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -162,7 +162,7 @@ impl ITunesItemExtension {
     /// let duration = "duration";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .duration(Some(String::from(duration)))
+    ///     .duration(Some(duration.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -197,7 +197,7 @@ impl ITunesItemExtension {
     /// let explicit = "explicit";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .explicit(Some(String::from(explicit)))
+    ///     .explicit(Some(explicit.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -233,7 +233,7 @@ impl ITunesItemExtension {
     /// let closed_captioned = "closed_captioned";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .closed_captioned(Some(String::from(closed_captioned)))
+    ///     .closed_captioned(Some(closed_captioned.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -268,7 +268,7 @@ impl ITunesItemExtension {
     /// let order = "order";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .order(Some(String::from(order)))
+    ///     .order(Some(order.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -303,7 +303,7 @@ impl ITunesItemExtension {
     /// let subtitle = "subtitle";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .subtitle(Some(String::from(subtitle)))
+    ///     .subtitle(Some(subtitle.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -338,7 +338,7 @@ impl ITunesItemExtension {
     /// let summary = "summary";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .summary(Some(String::from(summary)))
+    ///     .summary(Some(summary.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -373,7 +373,7 @@ impl ITunesItemExtension {
     /// let keywords = "keywords";
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .keywords(Some(String::from(keywords)))
+    ///     .keywords(Some(keywords.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -539,7 +539,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.author(Some("author".to_owned()));
+    /// item_builder.author(Some("author".to_string()));
     /// ```
     pub fn author(mut self,
                   author: Option<String>)
@@ -557,7 +557,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.block(Some("block".to_owned()));
+    /// item_builder.block(Some("block".to_string()));
     /// ```
     pub fn block(mut self,
                  block: Option<String>)
@@ -575,7 +575,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.image(Some("image".to_owned()));
+    /// item_builder.image(Some("image".to_string()));
     /// ```
     pub fn image(mut self,
                  image: Option<String>)
@@ -593,7 +593,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.duration(Some("duration".to_owned()));
+    /// item_builder.duration(Some("duration".to_string()));
     /// ```
     pub fn duration(mut self,
                     duration: Option<String>)
@@ -611,7 +611,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.explicit(Some("explicit".to_owned()));
+    /// item_builder.explicit(Some("explicit".to_string()));
     /// ```
     pub fn explicit(mut self,
                     explicit: Option<String>)
@@ -630,7 +630,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.closed_captioned(Some("closed_captioned".to_owned()));
+    /// item_builder.closed_captioned(Some("closed_captioned".to_string()));
     /// ```
     pub fn closed_captioned(mut self,
                             closed_captioned: Option<String>)
@@ -648,7 +648,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.order(Some("order".to_owned()));
+    /// item_builder.order(Some("order".to_string()));
     /// ```
     pub fn order(mut self,
                  order: Option<String>)
@@ -666,7 +666,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.subtitle(Some("subtitle".to_owned()));
+    /// item_builder.subtitle(Some("subtitle".to_string()));
     /// ```
     pub fn subtitle(mut self,
                     subtitle: Option<String>)
@@ -684,7 +684,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.summary(Some("summary".to_owned()));
+    /// item_builder.summary(Some("summary".to_string()));
     /// ```
     pub fn summary(mut self,
                    summary: Option<String>)
@@ -702,7 +702,7 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.keywords(Some("keywords".to_owned()));
+    /// item_builder.keywords(Some("keywords".to_string()));
     /// ```
     pub fn keywords(mut self,
                     keywords: Option<String>)
@@ -721,16 +721,16 @@ impl ITunesItemExtensionBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .duration(Some("duration".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .closed_captioned(Some("closed_captioned".to_owned()))
-    ///     .order(Some("order".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .duration(Some("duration".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .closed_captioned(Some("closed_captioned".to_string()))
+    ///     .order(Some("order".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
     ///     .finalize()
     ///     .unwrap();
     /// ```

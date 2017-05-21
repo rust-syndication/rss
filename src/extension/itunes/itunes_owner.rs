@@ -30,7 +30,7 @@ impl ITunesOwner {
     /// let name = "name";
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .name(Some(String::from(name)))
+    ///     .name(Some(name.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -65,7 +65,7 @@ impl ITunesOwner {
     /// let email = "email@example.com";
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some(String::from(email)))
+    ///     .email(Some(email.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -143,7 +143,7 @@ impl ITunesOwnerBuilder {
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let mut owner_builder = ITunesOwnerBuilder::new();
-    /// owner_builder.name(Some("name".to_owned()));
+    /// owner_builder.name(Some("name".to_string()));
     /// ```
     pub fn name(mut self,
                 name: Option<String>)
@@ -160,7 +160,7 @@ impl ITunesOwnerBuilder {
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let mut owner_builder = ITunesOwnerBuilder::new();
-    /// owner_builder.email(Some("email@example.com".to_owned()));
+    /// owner_builder.email(Some("email@example.com".to_string()));
     /// ```
     pub fn email(mut self,
                  email: Option<String>)
@@ -177,8 +177,8 @@ impl ITunesOwnerBuilder {
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_owned()))
-    ///     .name(Some("name".to_owned()))
+    ///     .email(Some("email@example.com".to_string()))
+    ///     .name(Some("name".to_string()))
     ///     .finalize()
     ///     .unwrap();
     /// ```

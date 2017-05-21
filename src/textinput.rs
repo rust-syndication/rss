@@ -213,7 +213,7 @@ impl TextInputBuilder {
     pub fn title(mut self,
                  title: &str)
         -> TextInputBuilder {
-        self.title = String::from(title);
+        self.title = title.to_string();
         self
     }
 
@@ -230,7 +230,7 @@ impl TextInputBuilder {
     pub fn description(mut self,
                        description: &str)
         -> TextInputBuilder {
-        self.description = String::from(description);
+        self.description = description.to_string();
         self
     }
 
@@ -247,7 +247,7 @@ impl TextInputBuilder {
     pub fn name(mut self,
                 name: &str)
         -> TextInputBuilder {
-        self.name = String::from(name);
+        self.name = name.to_string();
         self
     }
 
@@ -264,7 +264,7 @@ impl TextInputBuilder {
     pub fn link(mut self,
                 link: &str)
         -> TextInputBuilder {
-        self.link = String::from(link);
+        self.link = link.to_string();
         self
     }
 

@@ -120,7 +120,7 @@ impl ExtensionBuilder {
     pub fn name(mut self,
                 name: &str)
         -> ExtensionBuilder {
-        self.name = String::from(name);
+        self.name = name.to_string();
         self
     }
 

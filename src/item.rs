@@ -64,7 +64,7 @@ impl Item {
     /// let title_string = "Making Music with Linux | LAS 408";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some(String::from(title_string)))
+    ///     .title(Some(title_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -96,7 +96,7 @@ impl Item {
     ///
     /// let link_string = "http://www.jupiterbroadcasting.com/";
     /// let item = ItemBuilder::new()
-    ///     .link(Some(String::from(link_string)))
+    ///     .link(Some(link_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -129,7 +129,7 @@ impl Item {
     /// let description_string = "This is a test description";
     ///
     /// let item = ItemBuilder::new()
-    ///     .description(Some(String::from(description_string)))
+    ///     .description(Some(description_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -162,7 +162,7 @@ impl Item {
     /// let author_string = "Chris Fisher";
     ///
     /// let item = ItemBuilder::new()
-    ///     .author(Some(String::from(author_string)))
+    ///     .author(Some(author_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -199,7 +199,7 @@ impl Item {
     ///     .unwrap();
     ///
     /// let category_2 = CategoryBuilder::new()
-    ///     .domain(Some("http://jupiterbroadcasting.com".to_owned()))
+    ///     .domain(Some("http://jupiterbroadcasting.com".to_string()))
     ///     .name("Podcast")
     ///     .finalize()
     ///     .unwrap();
@@ -227,7 +227,7 @@ impl Item {
     /// let comments_string = "http://example.com/comments";
     ///
     /// let item = ItemBuilder::new()
-    ///     .comments(Some(String::from(comments_string)))
+    ///     .comments(Some(comments_string.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -260,7 +260,7 @@ impl Item {
     /// ```
     /// use rss::{EnclosureBuilder, ItemBuilder, Item};
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -338,14 +338,14 @@ impl Item {
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let item = ItemBuilder::new()
-    ///     .pub_date(Some(pub_date.to_owned()))
+    ///     .pub_date(Some(pub_date.to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let local = item.pub_date();
     /// assert!(local.is_some());
     ///
-    /// assert_eq!(pub_date.to_owned(), local.unwrap());
+    /// assert_eq!(pub_date.to_string(), local.unwrap());
     /// ```
     ///
     /// ```
@@ -407,21 +407,21 @@ impl Item {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let itunes_item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .duration(Some("duration".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .closed_captioned(Some("closed_captioned".to_owned()))
-    ///     .order(Some("order".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .duration(Some("duration".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .closed_captioned(Some("closed_captioned".to_string()))
+    ///     .order(Some("order".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
     ///     .itunes_ext(Some(itunes_item))
     ///     .finalize()
     ///     .unwrap();
@@ -433,7 +433,7 @@ impl Item {
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
     ///     .itunes_ext(None)
     ///     .finalize()
     ///     .unwrap();
@@ -678,7 +678,7 @@ impl ItemBuilder {
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.title(Some("Making Music with Linux | LAS
-    /// 408".to_owned()));
+    /// 408".to_string()));
     /// ```
     pub fn title(mut self,
                  title: Option<String>)
@@ -715,7 +715,7 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let mut item_builder = ItemBuilder::new();
-    /// item_builder.description(Some("This is a test description".to_owned()));
+    /// item_builder.description(Some("This is a test description".to_string()));
     /// ```
     pub fn description(mut self,
                        description: Option<String>)
@@ -733,7 +733,7 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let mut item_builder = ItemBuilder::new();
-    /// item_builder.author(Some("Chris Fisher".to_owned()));
+    /// item_builder.author(Some("Chris Fisher".to_string()));
     /// ```
     pub fn author(mut self,
                   author: Option<String>)
@@ -774,7 +774,7 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let mut item_builder = ItemBuilder::new();
-    /// item_builder.comments(Some("Test Comment".to_owned()));
+    /// item_builder.comments(Some("Test Comment".to_string()));
     /// ```
     pub fn comments(mut self,
                     comments: Option<String>)
@@ -791,7 +791,7 @@ impl ItemBuilder {
     /// ```
     /// use rss::{EnclosureBuilder, ItemBuilder};
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -842,7 +842,7 @@ impl ItemBuilder {
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.pub_date(Some("Sun, 13 Mar 2016
-    /// 20:02:02-0700".to_owned()));
+    /// 20:02:02-0700".to_string()));
     /// ```
     pub fn pub_date(mut self,
                     pub_date: Option<String>)
@@ -888,16 +888,16 @@ impl ItemBuilder {
     /// let url = "http://www.tomalak.org/links2.xml";
     ///
     /// let itunes_item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_owned()))
-    ///     .block(Some("block".to_owned()))
-    ///     .image(Some("image".to_owned()))
-    ///     .duration(Some("duration".to_owned()))
-    ///     .explicit(Some("explicit".to_owned()))
-    ///     .closed_captioned(Some("closed_captioned".to_owned()))
-    ///     .order(Some("order".to_owned()))
-    ///     .subtitle(Some("subtitle".to_owned()))
-    ///     .summary(Some("summary".to_owned()))
-    ///     .keywords(Some("keywords".to_owned()))
+    ///     .author(Some("author".to_string()))
+    ///     .block(Some("block".to_string()))
+    ///     .image(Some("image".to_string()))
+    ///     .duration(Some("duration".to_string()))
+    ///     .explicit(Some("explicit".to_string()))
+    ///     .closed_captioned(Some("closed_captioned".to_string()))
+    ///     .order(Some("order".to_string()))
+    ///     .subtitle(Some("subtitle".to_string()))
+    ///     .summary(Some("summary".to_string()))
+    ///     .keywords(Some("keywords".to_string()))
     ///     .finalize()
     ///     .unwrap();
     ///
@@ -943,8 +943,8 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .link(Some("http://www.jupiterbroadcasting.com".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
+    ///     .link(Some("http://www.jupiterbroadcasting.com".to_string()))
     ///     .description(None)
     ///     .author(None)
     ///     .categories(Vec::new())
@@ -961,7 +961,7 @@ impl ItemBuilder {
                .is_none() &&
            self.description
                .is_none() {
-            return Err(Error::Validation(String::from("Either Title or Description must have a value.")));
+            return Err(Error::Validation("Either Title or Description must have a value.".to_string()));
         }
 
         if let Some(ref link) = self.link {
@@ -988,8 +988,8 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_owned()))
-    ///     .link(Some("http://www.jupiterbroadcasting.com".to_owned()))
+    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
+    ///     .link(Some("http://www.jupiterbroadcasting.com".to_string()))
     ///     .description(None)
     ///     .author(None)
     ///     .categories(Vec::new())

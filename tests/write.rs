@@ -136,8 +136,8 @@ fn verify_write_format() {
         .unwrap();
 
     let mut namespaces: HashMap<String, String> = HashMap::new();
-    namespaces.insert(String::from("ext"),
-                      String::from("http://example.com/"));
+    namespaces.insert("ext".to_string(),
+                      "http://example.com/".to_string());
 
     let channel = ChannelBuilder::new()
         .title("Title")

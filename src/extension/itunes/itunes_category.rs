@@ -141,7 +141,7 @@ impl ITunesCategoryBuilder {
     pub fn text(mut self,
                 text: &str)
         -> ITunesCategoryBuilder {
-        self.text = text.to_owned();
+        self.text = text.to_string();
         self
     }
 

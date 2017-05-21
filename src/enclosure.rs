@@ -32,7 +32,7 @@ impl Enclosure {
     /// ```
     /// use rss::{EnclosureBuilder, Enclosure};
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -58,7 +58,7 @@ impl Enclosure {
     ///
     /// let length: i64 = 70772893;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -85,7 +85,7 @@ impl Enclosure {
     ///
     /// let enclosure_type = "audio/ogg";
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -197,7 +197,7 @@ impl EnclosureBuilder {
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let url = "http://www.podtrac.com/pts/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/".to_string()
     /// + "redirect.ogg/traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let mut enclosure_builder = EnclosureBuilder::new();
@@ -206,7 +206,7 @@ impl EnclosureBuilder {
     pub fn url(mut self,
                url: &str)
         -> EnclosureBuilder {
-        self.url = String::from(url);
+        self.url = url.to_string();
         self
     }
 
@@ -242,7 +242,7 @@ impl EnclosureBuilder {
     pub fn mime_type(mut self,
                      mime_type: &str)
         -> EnclosureBuilder {
-        self.mime_type = String::from(mime_type);
+        self.mime_type = mime_type.to_string();
         self
     }
 
@@ -254,7 +254,7 @@ impl EnclosureBuilder {
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()
@@ -272,12 +272,11 @@ impl EnclosureBuilder {
                        .parse::<Mime>();
 
         if mime.is_err() {
-            return Err(Error::Validation(String::from(format!("Error: {:?}",
-                                                              mime.unwrap_err()))));
+            return Err(Error::Validation(format!("Error: {:?}", mime.unwrap_err())));
         }
 
         if self.length < 0 {
-            return Err(Error::Validation(String::from("Enclosure Length cannot be a negative value")));
+            return Err(Error::Validation("Enclosure Length cannot be a negative value".to_string()));
         }
 
         Ok(self)
@@ -291,7 +290,7 @@ impl EnclosureBuilder {
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_owned()
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
     /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
     ///
     /// let enclosure = EnclosureBuilder::new()

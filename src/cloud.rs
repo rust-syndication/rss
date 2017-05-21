@@ -44,7 +44,7 @@ impl Cloud {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(domain.to_owned(), cloud.domain());
+    /// assert_eq!(domain.to_string(), cloud.domain());
     /// ```
     pub fn domain(&self) -> &str {
         self.domain
@@ -266,7 +266,7 @@ impl CloudBuilder {
     pub fn domain(mut self,
                   domain: &str)
         -> CloudBuilder {
-        self.domain = String::from(domain);
+        self.domain = domain.to_string();
         self
     }
 
@@ -303,7 +303,7 @@ impl CloudBuilder {
     pub fn path(mut self,
                 path: &str)
         -> CloudBuilder {
-        self.path = String::from(path);
+        self.path = path.to_string();
         self
     }
 
@@ -321,7 +321,7 @@ impl CloudBuilder {
     pub fn register_procedure(mut self,
                               register_procedure: &str)
         -> CloudBuilder {
-        self.register_procedure = String::from(register_procedure);
+        self.register_procedure = register_procedure.to_string();
         self
     }
 
@@ -339,7 +339,7 @@ impl CloudBuilder {
     pub fn protocol(mut self,
                     protocol: &str)
         -> CloudBuilder {
-        self.protocol = String::from(protocol);
+        self.protocol = protocol.to_string();
         self
     }
 
@@ -362,7 +362,7 @@ impl CloudBuilder {
     /// ```
     pub fn validate(self) -> Result<CloudBuilder, Error> {
         if self.port < 0 {
-            return Err(Error::Validation(String::from("Cloud Port cannot be a negative value")));
+            return Err(Error::Validation("Cloud Port cannot be a negative value".to_string()));
         }
 
         Url::parse(self.domain
@@ -371,7 +371,7 @@ impl CloudBuilder {
         match CloudProtocol::from_str(self.protocol
                                           .as_str()) {
             Ok(_) => (),
-            Err(err) => return Err(Error::Validation(String::from(err))),
+            Err(err) => return Err(Error::Validation(err.to_string())),
         };
 
         Ok(self)

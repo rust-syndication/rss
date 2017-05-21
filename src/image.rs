@@ -237,7 +237,7 @@ impl Image {
     /// let link = "http://www.jupiterbroadcasting.com";
     ///
     /// let image = ImageBuilder::new()
-    ///     .description(Some(description_string.to_owned()))
+    ///     .description(Some(description_string.to_string()))
     ///     .url(url)
     ///     .link(link)
     ///     .finalize()
@@ -379,7 +379,7 @@ impl ImageBuilder {
     pub fn url(mut self,
                url: &str)
         -> ImageBuilder {
-        self.url = String::from(url);
+        self.url = url.to_string();
         self
     }
 
@@ -397,7 +397,7 @@ impl ImageBuilder {
     pub fn title(mut self,
                  title: &str)
         -> ImageBuilder {
-        self.title = String::from(title);
+        self.title = title.to_string();
         self
     }
 
@@ -415,7 +415,7 @@ impl ImageBuilder {
     pub fn link(mut self,
                 link: &str)
         -> ImageBuilder {
-        self.link = String::from(link);
+        self.link = link.to_string();
         self
     }
 
@@ -464,7 +464,7 @@ impl ImageBuilder {
     /// use rss::ImageBuilder;
     ///
     /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.description(Some("This is a test".to_owned()));
+    /// image_builder.description(Some("This is a test".to_string()));
     /// ```
     pub fn description(mut self,
                        description: Option<String>)
@@ -487,7 +487,7 @@ impl ImageBuilder {
     ///         .link("http://www.jupiterbroadcasting.com")
     ///         .width(Some(88))
     ///         .height(Some(88))
-    ///         .description(Some("This is a test".to_owned()))
+    ///         .description(Some("This is a test".to_string()))
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
@@ -500,7 +500,7 @@ impl ImageBuilder {
                 .ends_with(".png") &&
            !self.url
                 .ends_with(".gif") {
-            return Err(Error::Validation(String::from("Image Url must end with .jpeg, .png, or .gif")));
+            return Err(Error::Validation("Image Url must end with .jpeg, .png, or .gif".to_string()));
         }
 
         Url::parse(self.url
@@ -512,9 +512,9 @@ impl ImageBuilder {
         if width_opt.is_some() {
             let width = width_opt.unwrap();
             if width > 144 {
-                return Err(Error::Validation(String::from("Image width cannot be greater than 144.")));
+                return Err(Error::Validation("Image width cannot be greater than 144.".to_string()));
             } else if width < 0 {
-                return Err(Error::Validation(String::from("Image width cannot be a negative value.")));
+                return Err(Error::Validation("Image width cannot be a negative value.".to_string()));
             }
         }
 
@@ -522,9 +522,9 @@ impl ImageBuilder {
         if height_opt.is_some() {
             let height = height_opt.unwrap();
             if height > 144 {
-                return Err(Error::Validation(String::from("Image height cannot be greater than 400.")));
+                return Err(Error::Validation("Image height cannot be greater than 400.".to_string()));
             } else if height < 0 {
-                return Err(Error::Validation(String::from("Image height cannot be a negative value.")));
+                return Err(Error::Validation("Image height cannot be a negative value.".to_string()));
             }
         }
 
@@ -545,7 +545,7 @@ impl ImageBuilder {
     ///         .link("http://www.jupiterbroadcasting.com")
     ///         .width(Some(88))
     ///         .height(Some(88))
-    ///         .description(Some("This is a test".to_owned()))
+    ///         .description(Some("This is a test".to_string()))
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Result<Image, Error> {
