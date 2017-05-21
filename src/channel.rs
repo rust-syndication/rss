@@ -884,9 +884,9 @@ impl Channel {
     ///
     /// fn main()
     /// {
-    ///     let url = "https://feedpress.me/usererror.xml";
+    ///     let input = include_str!("tests/data/rss2sample.xml");
     ///
-    ///     Channel::from_url(url).unwrap();
+    ///     let channel = input.parse::<Channel>().unwrap();
     /// }
     /// ```
     #[cfg(feature = "from_url")]
@@ -1039,9 +1039,9 @@ impl Channel {
     ///
     /// fn main()
     /// {
-    ///     let url = "https://feedpress.me/usererror.xml";
+    ///     let input = include_str!("tests/data/rss2sample.xml");
     ///
-    ///     let channel = Channel::from_url(url).unwrap();
+    ///     let channel = input.parse::<Channel>().unwrap();
     ///     channel.validate().unwrap();
     /// }
     /// ```
