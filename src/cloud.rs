@@ -9,9 +9,9 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use reqwest::Url;
 use std::str::FromStr;
 use toxml::ToXml;
+use url::Url;
 
 /// A representation of the `<cloud>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -44,11 +44,10 @@ impl Cloud {
     ///     .finalize()
     ///     .unwrap();
     ///
-    /// assert_eq!(domain.to_owned(), cloud.domain());
+    /// assert_eq!(domain.to_string(), cloud.domain());
     /// ```
     pub fn domain(&self) -> &str {
-        self.domain
-            .as_str()
+        self.domain.as_str()
     }
 
 
@@ -71,8 +70,7 @@ impl Cloud {
     /// assert_eq!(port.to_string(), cloud.port());
     /// ```
     pub fn port(&self) -> &str {
-        self.port
-            .as_str()
+        self.port.as_str()
     }
 
 
@@ -95,8 +93,7 @@ impl Cloud {
     /// assert_eq!(path, cloud.path());
     /// ```
     pub fn path(&self) -> &str {
-        self.path
-            .as_str()
+        self.path.as_str()
     }
 
 
@@ -117,8 +114,7 @@ impl Cloud {
     /// assert_eq!(register_procedure, cloud.register_procedure());
     /// ```
     pub fn register_procedure(&self) -> &str {
-        self.register_procedure
-            .as_str()
+        self.register_procedure.as_str()
     }
 
 
@@ -140,47 +136,39 @@ impl Cloud {
     /// assert_eq!(protocol, cloud.protocol());
     /// ```
     pub fn protocol(&self) -> &str {
-        self.protocol
-            .as_str()
+        self.protocol.as_str()
     }
 }
 
 impl FromXml for Cloud {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        element: Element)
-        -> Result<(Self, XmlReader<R>), Error> {
+                                       -> Result<(Self, XmlReader<R>), Error> {
         let mut domain = None;
         let mut port = None;
         let mut path = None;
         let mut register_procedure = None;
         let mut protocol = None;
 
-        for attr in element.attributes()
-                           .with_checks(false)
-                           .unescaped() {
+        for attr in element.attributes().with_checks(false).unescaped() {
             if let Ok(attr) = attr {
                 match attr.0 {
                     b"domain" if domain.is_none() => {
-                        domain = Some(String::from_utf8(attr.1
-                                                            .into_owned())?);
-                    },
+                        domain = Some(String::from_utf8(attr.1.into_owned())?);
+                    }
                     b"port" if port.is_none() => {
-                        port = Some(String::from_utf8(attr.1
-                                                          .into_owned())?);
-                    },
+                        port = Some(String::from_utf8(attr.1.into_owned())?);
+                    }
                     b"path" if path.is_none() => {
-                        path = Some(String::from_utf8(attr.1
-                                                          .into_owned())?);
-                    },
+                        path = Some(String::from_utf8(attr.1.into_owned())?);
+                    }
                     b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure = Some(String::from_utf8(attr.1
-                                                                        .into_owned())?);
-                    },
+                        register_procedure = Some(String::from_utf8(attr.1.into_owned())?);
+                    }
                     b"protocol" if protocol.is_none() => {
-                        protocol = Some(String::from_utf8(attr.1
-                                                              .into_owned())?);
-                    },
-                    _ => {},
+                        protocol = Some(String::from_utf8(attr.1.into_owned())?);
+                    }
+                    _ => {}
                 }
             }
         }
@@ -193,35 +181,35 @@ impl FromXml for Cloud {
         let register_procedure = register_procedure.unwrap_or_default();
         let protocol = protocol.unwrap_or_default();
 
-        Ok((Cloud { domain: domain,
-                    port: port,
-                    path: path,
-                    register_procedure: register_procedure,
-                    protocol: protocol, },
+        Ok((Cloud {
+                domain: domain,
+                port: port,
+                path: path,
+                register_procedure: register_procedure,
+                protocol: protocol,
+            },
             reader))
 
     }
 }
 
 impl ToXml for Cloud {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(b"cloud");
 
-        writer.write(Event::Start({
-                                      let mut element = element.clone();
+        writer
+            .write(Event::Start({
+                                    let mut element = element.clone();
 
-                                      let attrs = &[(b"domain" as &[u8], &self.domain),
-                                                    (b"port", &self.port),
-                                                    (b"path", &self.path),
-                                                    (b"registerProcedure", &self.register_procedure),
-                                                    (b"protocol", &self.protocol)];
-                                      element.extend_attributes(attrs.into_iter()
-                                                                     .map(|v| *v));
+                                    let attrs = &[(b"domain" as &[u8], &self.domain),
+                                                  (b"port", &self.port),
+                                                  (b"path", &self.path),
+                                                  (b"registerProcedure", &self.register_procedure),
+                                                  (b"protocol", &self.protocol)];
+                                    element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-                                      element
-                                  }))?;
+                                    element
+                                }))?;
 
         writer.write(Event::End(element))
     }
@@ -263,10 +251,8 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.domain("http://rpc.sys.com/");
     /// ```
-    pub fn domain(mut self,
-                  domain: &str)
-        -> CloudBuilder {
-        self.domain = String::from(domain);
+    pub fn domain(mut self, domain: &str) -> CloudBuilder {
+        self.domain = domain.to_string();
         self
     }
 
@@ -281,9 +267,7 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.port(80);
     /// ```
-    pub fn port(mut self,
-                port: i64)
-        -> CloudBuilder {
+    pub fn port(mut self, port: i64) -> CloudBuilder {
 
         self.port = port;
         self
@@ -300,10 +284,8 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.path("/RPC2");
     /// ```
-    pub fn path(mut self,
-                path: &str)
-        -> CloudBuilder {
-        self.path = String::from(path);
+    pub fn path(mut self, path: &str) -> CloudBuilder {
+        self.path = path.to_string();
         self
     }
 
@@ -318,10 +300,8 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.register_procedure("pingMe");
     /// ```
-    pub fn register_procedure(mut self,
-                              register_procedure: &str)
-        -> CloudBuilder {
-        self.register_procedure = String::from(register_procedure);
+    pub fn register_procedure(mut self, register_procedure: &str) -> CloudBuilder {
+        self.register_procedure = register_procedure.to_string();
         self
     }
 
@@ -336,10 +316,8 @@ impl CloudBuilder {
     /// let mut cloud_builder = CloudBuilder::new();
     /// cloud_builder.protocol("soap");
     /// ```
-    pub fn protocol(mut self,
-                    protocol: &str)
-        -> CloudBuilder {
-        self.protocol = String::from(protocol);
+    pub fn protocol(mut self, protocol: &str) -> CloudBuilder {
+        self.protocol = protocol.to_string();
         self
     }
 
@@ -362,16 +340,14 @@ impl CloudBuilder {
     /// ```
     pub fn validate(self) -> Result<CloudBuilder, Error> {
         if self.port < 0 {
-            return Err(Error::Validation(String::from("Cloud Port cannot be a negative value")));
+            return Err(Error::Validation("Cloud Port cannot be a negative value".to_string()));
         }
 
-        Url::parse(self.domain
-                       .as_str())?;
+        Url::parse(self.domain.as_str())?;
 
-        match CloudProtocol::from_str(self.protocol
-                                          .as_str()) {
+        match CloudProtocol::from_str(self.protocol.as_str()) {
             Ok(_) => (),
-            Err(err) => return Err(Error::Validation(String::from(err))),
+            Err(err) => return Err(Error::Validation(err.to_string())),
         };
 
         Ok(self)
@@ -394,14 +370,15 @@ impl CloudBuilder {
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Result<Cloud, Error> {
-        let port = self.port
-                       .to_string();
+        let port = self.port.to_string();
 
-        Ok(Cloud { domain: self.domain,
-                   port: port,
-                   path: self.path,
-                   register_procedure: self.register_procedure,
-                   protocol: self.protocol, })
+        Ok(Cloud {
+               domain: self.domain,
+               port: port,
+               path: self.path,
+               register_procedure: self.register_procedure,
+               protocol: self.protocol,
+           })
     }
 }
 

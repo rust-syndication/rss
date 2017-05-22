@@ -9,8 +9,8 @@ use error::Error;
 use fromxml::FromXml;
 use quick_xml::{Element, Event, XmlReader, XmlWriter};
 use quick_xml::error::Error as XmlError;
-use reqwest::Url;
 use toxml::{ToXml, XmlWriterExt};
+use url::Url;
 
 /// A representation of the `<image>` element.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -50,8 +50,7 @@ impl Image {
     /// assert_eq!(url, image.url());
     /// ```
     pub fn url(&self) -> &str() {
-        self.url
-            .as_str()
+        self.url.as_str()
     }
 
 
@@ -78,8 +77,7 @@ impl Image {
     /// assert_eq!(title, image.title());
     /// ```
     pub fn title(&self) -> &str {
-        self.title
-            .as_str()
+        self.title.as_str()
     }
 
 
@@ -103,8 +101,7 @@ impl Image {
     /// assert_eq!(link, image.link());
     /// ```
     pub fn link(&self) -> &str {
-        self.link
-            .as_str()
+        self.link.as_str()
     }
 
 
@@ -152,9 +149,7 @@ impl Image {
     ///
     /// ```
     pub fn width(&self) -> Option<&str> {
-        self.width
-            .as_ref()
-            .map(|s| s.as_str())
+        self.width.as_ref().map(|s| s.as_str())
     }
 
 
@@ -200,9 +195,7 @@ impl Image {
     /// assert_eq!(Some(height.to_string().as_str()), image.height());
     /// ```
     pub fn height(&self) -> Option<&str> {
-        self.height
-            .as_ref()
-            .map(|s| s.as_str())
+        self.height.as_ref().map(|s| s.as_str())
     }
 
 
@@ -237,7 +230,7 @@ impl Image {
     /// let link = "http://www.jupiterbroadcasting.com";
     ///
     /// let image = ImageBuilder::new()
-    ///     .description(Some(description_string.to_owned()))
+    ///     .description(Some(description_string.to_string()))
     ///     .url(url)
     ///     .link(link)
     ///     .finalize()
@@ -249,16 +242,14 @@ impl Image {
     /// assert_eq!(Some(description_string), image.description());
     /// ```
     pub fn description(&self) -> Option<&str> {
-        self.description
-            .as_ref()
-            .map(|s| s.as_str())
+        self.description.as_ref().map(|s| s.as_str())
     }
 }
 
 impl FromXml for Image {
     fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
                                        _: Element)
-        -> Result<(Self, XmlReader<R>), Error> {
+                                       -> Result<(Self, XmlReader<R>), Error> {
         let mut url = None;
         let mut title = None;
         let mut link = None;
@@ -278,22 +269,24 @@ impl FromXml for Image {
                         b"description" => description = element_text!(reader),
                         _ => skip_element!(reader),
                     }
-                },
+                }
                 Ok(Event::End(_)) => {
                     let url = url.unwrap_or_default();
                     let title = title.unwrap_or_default();
                     let link = link.unwrap_or_default();
 
-                    return Ok((Image { url: url,
-                                       title: title,
-                                       link: link,
-                                       width: width,
-                                       height: height,
-                                       description: description, },
+                    return Ok((Image {
+                                   url: url,
+                                   title: title,
+                                   link: link,
+                                   width: width,
+                                   height: height,
+                                   description: description,
+                               },
                                reader));
-                },
+                }
                 Err(err) => return Err(err.into()),
-                _ => {},
+                _ => {}
             }
         }
 
@@ -302,37 +295,25 @@ impl FromXml for Image {
 }
 
 impl ToXml for Image {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(b"image");
 
         writer.write(Event::Start(element.clone()))?;
 
-        writer.write_text_element(b"url",
-                                  &self.url)?;
-        writer.write_text_element(b"title",
-                                  &self.title)?;
-        writer.write_text_element(b"link",
-                                  &self.link)?;
+        writer.write_text_element(b"url", &self.url)?;
+        writer.write_text_element(b"title", &self.title)?;
+        writer.write_text_element(b"link", &self.link)?;
 
-        if let Some(width) = self.width
-                                 .as_ref() {
-            writer.write_text_element(b"width",
-                                      width)?;
+        if let Some(width) = self.width.as_ref() {
+            writer.write_text_element(b"width", width)?;
         }
 
-        if let Some(height) = self.height
-                                  .as_ref() {
-            writer.write_text_element(b"height",
-                                      height)?;
+        if let Some(height) = self.height.as_ref() {
+            writer.write_text_element(b"height", height)?;
         }
 
-        if let Some(description) =
-            self.description
-                .as_ref() {
-            writer.write_text_element(b"description",
-                                      description)?;
+        if let Some(description) = self.description.as_ref() {
+            writer.write_text_element(b"description", description)?;
         }
 
         writer.write(Event::End(element))
@@ -376,10 +357,8 @@ impl ImageBuilder {
     /// image_builder.url("http://jupiterbroadcasting.com/images/LAS-300-Badge.
     /// jpg");
     /// ```
-    pub fn url(mut self,
-               url: &str)
-        -> ImageBuilder {
-        self.url = String::from(url);
+    pub fn url(mut self, url: &str) -> ImageBuilder {
+        self.url = url.to_string();
         self
     }
 
@@ -394,10 +373,8 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.title("LAS 300 Logo");
     /// ```
-    pub fn title(mut self,
-                 title: &str)
-        -> ImageBuilder {
-        self.title = String::from(title);
+    pub fn title(mut self, title: &str) -> ImageBuilder {
+        self.title = title.to_string();
         self
     }
 
@@ -412,10 +389,8 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.link("http://www.jupiterbroadcasting.com/");
     /// ```
-    pub fn link(mut self,
-                link: &str)
-        -> ImageBuilder {
-        self.link = String::from(link);
+    pub fn link(mut self, link: &str) -> ImageBuilder {
+        self.link = link.to_string();
         self
     }
 
@@ -430,9 +405,7 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.width(Some(88));
     /// ```
-    pub fn width(mut self,
-                 width: Option<i64>)
-        -> ImageBuilder {
+    pub fn width(mut self, width: Option<i64>) -> ImageBuilder {
         self.width = width;
         self
     }
@@ -448,9 +421,7 @@ impl ImageBuilder {
     /// let mut image_builder = ImageBuilder::new();
     /// image_builder.height(Some(88));
     /// ```
-    pub fn height(mut self,
-                  height: Option<i64>)
-        -> ImageBuilder {
+    pub fn height(mut self, height: Option<i64>) -> ImageBuilder {
         self.height = height;
         self
     }
@@ -464,11 +435,9 @@ impl ImageBuilder {
     /// use rss::ImageBuilder;
     ///
     /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.description(Some("This is a test".to_owned()));
+    /// image_builder.description(Some("This is a test".to_string()));
     /// ```
-    pub fn description(mut self,
-                       description: Option<String>)
-        -> ImageBuilder {
+    pub fn description(mut self, description: Option<String>) -> ImageBuilder {
         self.description = description;
         self
     }
@@ -487,34 +456,29 @@ impl ImageBuilder {
     ///         .link("http://www.jupiterbroadcasting.com")
     ///         .width(Some(88))
     ///         .height(Some(88))
-    ///         .description(Some("This is a test".to_owned()))
+    ///         .description(Some("This is a test".to_string()))
     ///         .validate().unwrap()
     ///         .finalize().unwrap();
     /// ```
     pub fn validate(self) -> Result<ImageBuilder, Error> {
-        if !self.url
-                .ends_with(".jpeg") &&
-           !self.url
-                .ends_with(".jpg") &&
-           !self.url
-                .ends_with(".png") &&
-           !self.url
-                .ends_with(".gif") {
-            return Err(Error::Validation(String::from("Image Url must end with .jpeg, .png, or .gif")));
+        if !self.url.ends_with(".jpeg") && !self.url.ends_with(".jpg") &&
+           !self.url.ends_with(".png") && !self.url.ends_with(".gif") {
+            return Err(Error::Validation("Image Url must end with .jpeg, .png, or .gif"
+                                             .to_string()));
         }
 
-        Url::parse(self.url
-                       .as_str())?;
-        Url::parse(self.link
-                       .as_str())?;
+        Url::parse(self.url.as_str())?;
+        Url::parse(self.link.as_str())?;
 
         let width_opt = self.width;
         if width_opt.is_some() {
             let width = width_opt.unwrap();
             if width > 144 {
-                return Err(Error::Validation(String::from("Image width cannot be greater than 144.")));
+                return Err(Error::Validation("Image width cannot be greater than 144."
+                                                 .to_string()));
             } else if width < 0 {
-                return Err(Error::Validation(String::from("Image width cannot be a negative value.")));
+                return Err(Error::Validation("Image width cannot be a negative value."
+                                                 .to_string()));
             }
         }
 
@@ -522,9 +486,11 @@ impl ImageBuilder {
         if height_opt.is_some() {
             let height = height_opt.unwrap();
             if height > 144 {
-                return Err(Error::Validation(String::from("Image height cannot be greater than 400.")));
+                return Err(Error::Validation("Image height cannot be greater than 400."
+                                                 .to_string()));
             } else if height < 0 {
-                return Err(Error::Validation(String::from("Image height cannot be a negative value.")));
+                return Err(Error::Validation("Image height cannot be a negative value."
+                                                 .to_string()));
             }
         }
 
@@ -545,7 +511,7 @@ impl ImageBuilder {
     ///         .link("http://www.jupiterbroadcasting.com")
     ///         .width(Some(88))
     ///         .height(Some(88))
-    ///         .description(Some("This is a test".to_owned()))
+    ///         .description(Some("This is a test".to_string()))
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Result<Image, Error> {
@@ -560,11 +526,13 @@ impl ImageBuilder {
             None => Some(31.to_string()),
         };
 
-        Ok(Image { url: self.url,
-                   title: self.title,
-                   link: self.link,
-                   width: width,
-                   height: height,
-                   description: self.description, })
+        Ok(Image {
+               url: self.url,
+               title: self.title,
+               link: self.link,
+               width: width,
+               height: height,
+               description: self.description,
+           })
     }
 }

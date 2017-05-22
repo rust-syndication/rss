@@ -40,8 +40,7 @@ impl ITunesCategory {
     /// assert_eq!(text, category.text())
     /// ```
     pub fn text(&self) -> &str {
-        self.text
-            .as_str()
+        self.text.as_str()
     }
 
 
@@ -80,26 +79,23 @@ impl ITunesCategory {
     /// assert!(category.subcategory().is_none());
     /// ```
     pub fn subcategory(&self) -> Option<&Box<ITunesCategory>> {
-        self.subcategory
-            .as_ref()
+        self.subcategory.as_ref()
     }
 }
 
 impl ToXml for ITunesCategory {
-    fn to_xml<W: ::std::io::Write>(&self,
-                                   writer: &mut XmlWriter<W>)
-        -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
         let element = Element::new(b"itunes:category");
 
-        writer.write(Event::Start({
-                                      let mut element = element.clone();
-                                      element.extend_attributes(::std::iter::once((b"text", &self.text)));
-                                      element
-                                  }))?;
+        writer
+            .write(Event::Start({
+                                    let mut element = element.clone();
+                                    element.extend_attributes(::std::iter::once((b"text",
+                                                                                 &self.text)));
+                                    element
+                                }))?;
 
-        if let Some(subcategory) =
-            self.subcategory
-                .as_ref() {
+        if let Some(subcategory) = self.subcategory.as_ref() {
             subcategory.to_xml(writer)?;
         }
 
@@ -138,10 +134,8 @@ impl ITunesCategoryBuilder {
     /// let mut category_builder = ITunesCategoryBuilder::new();
     /// category_builder.text("text");
     /// ```
-    pub fn text(mut self,
-                text: &str)
-        -> ITunesCategoryBuilder {
-        self.text = text.to_owned();
+    pub fn text(mut self, text: &str) -> ITunesCategoryBuilder {
+        self.text = text.to_string();
         self
     }
 
@@ -162,7 +156,7 @@ impl ITunesCategoryBuilder {
     /// ```
     pub fn subcategory(mut self,
                        subcategory: Option<Box<ITunesCategory>>)
-        -> ITunesCategoryBuilder {
+                       -> ITunesCategoryBuilder {
         self.subcategory = subcategory;
         self
     }
@@ -186,7 +180,9 @@ impl ITunesCategoryBuilder {
     ///     .unwrap();
     /// ```
     pub fn finalize(self) -> Result<ITunesCategory, Error> {
-        Ok(ITunesCategory { text: self.text,
-                            subcategory: self.subcategory, })
+        Ok(ITunesCategory {
+               text: self.text,
+               subcategory: self.subcategory,
+           })
     }
 }

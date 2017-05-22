@@ -53,6 +53,10 @@
 
 extern crate quick_xml;
 extern crate chrono;
+extern crate url;
+extern crate mime;
+
+#[cfg(feature = "from_url")]
 extern crate reqwest;
 
 #[macro_use]
