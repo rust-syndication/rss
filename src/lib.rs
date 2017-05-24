@@ -11,6 +11,17 @@
 
 //! Library for serializing the RSS web content syndication format.
 //!
+//! # Building
+//!
+//! A channel can be built using the Builder functions.
+//!
+//! TODO:
+//! ## Example
+//!
+//! ```
+//!
+//! ```
+//!
 //! # Reading
 //!
 //! A channel can be read from any object that implements the `BufRead` trait.
@@ -26,6 +37,30 @@
 //! let reader = BufReader::new(file);
 //! let channel = Channel::read_from(reader).unwrap();
 //! ```
+//!
+//! A channel can be read from an url.
+//!
+//! To enable this functionality you must define the following in the Cargo.toml.
+//!
+//! ```toml
+//! [dependencies]
+//! rss = [version = "*", features = ["from_url"]
+//! ```
+//!
+//! # Examples
+//!
+//! ```
+//! extern crate rss;
+//!
+//! use rss::Channel;
+//!
+//! fn main()
+//! {
+//!     let url = "https://feedpress.me/usererror.xml";
+//!     let channel = Channel::from_url(url).unwrap();
+//! }
+//! ```
+//!
 //! # Writing
 //!
 //! A channel can be written to any object that implements the `Write` trait or converted to an
@@ -50,7 +85,26 @@
 //! // convert the channel to a string
 //! let string = channel.to_string();
 //! ```
-
+//!
+//! # Validation
+//!
+//! A channel can be validated.
+//!
+//! TODO:
+//! ## Example
+//!
+//! ```
+//!
+//! ```
+//!
+//! A Channel or it's components can also be validated in the Builders.
+//!
+//! TODO:
+//! ## Example
+//!
+//! ```
+//!
+//! ```
 extern crate quick_xml;
 extern crate chrono;
 extern crate url;
