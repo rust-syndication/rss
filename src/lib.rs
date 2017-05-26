@@ -15,11 +15,54 @@
 //!
 //! A channel can be built using the Builder functions.
 //!
-//! TODO:
 //! ## Example
 //!
 //! ```
+//! extern crate rss;
 //!
+//! use rss::{ChannelBuilder, ImageBuilder};
+//!
+//! fn main()
+//! {
+//!     let image = ImageBuilder::new()
+//!             .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
+//!             .title("LAS 300 Logo")
+//!             .link("http://www.jupiterbroadcasting.com")
+//!             .width(Some(88))
+//!             .height(Some(88))
+//!             .description(Some("This is a test".to_string()))
+//!             .finalize()
+//!             .unwrap();
+//!
+//!     let description = "Ogg Vorbis audio versions of The Linux ".to_string()
+//!     + "Action Show! A show that covers everything geeks care about in the "
+//!     + "computer industry. Get a solid dose of Linux, gadgets, news events "
+//!     + "and much more!";
+//!
+//!     let channel = ChannelBuilder::new()
+//!             .title("The Linux Action Show! OGG")
+//!             .link("http://www.jupiterbroadcasting.com")
+//!             .description(description.as_ref())
+//!             .language(None)
+//!             .copyright(None)
+//!             .managing_editor(None)
+//!             .webmaster(None)
+//!             .pub_date(None)
+//!             .last_build_date(None)
+//!             .categories(Vec::new())
+//!             .generator(None)
+//!             .docs(None)
+//!             .cloud(None)
+//!             .ttl(None)
+//!             .image(Some(image))
+//!             .rating(None)
+//!             .text_input(None)
+//!             .skip_hours(Vec::new())
+//!             .skip_days(Vec::new())
+//!             .items(Vec::new())
+//!             .finalize()
+//!             .unwrap();
+//! }
 //! ```
 //!
 //! # Reading
@@ -88,22 +131,45 @@
 //!
 //! # Validation
 //!
-//! A channel can be validated.
+//! A channel can be validated by means of the channel or by the builders.
 //!
-//! TODO:
 //! ## Example
 //!
 //! ```
+//! extern crate rss;
 //!
+//! use rss::Channel;
+//!
+//! fn main()
+//! {
+//!     let input = include_str!("tests/data/rss2sample.xml");
+//!
+//!     let channel = input.parse::<Channel>().unwrap();
+//!     channel.validate().unwrap();
+//! }
 //! ```
 //!
-//! A Channel or it's components can also be validated in the Builders.
-//!
-//! TODO:
 //! ## Example
 //!
 //! ```
+//! extern crate rss;
 //!
+//! use rss::ImageBuilder;
+//!
+//! fn main()
+//! {
+//!     let image = ImageBuilder::new()
+//!             .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
+//!             .title("LAS 300 Logo")
+//!             .link("http://www.jupiterbroadcasting.com")
+//!             .width(Some(88))
+//!             .height(Some(88))
+//!             .description(Some("This is a test".to_string()))
+//!             .validate()
+//!             .unwrap()
+//!             .finalize()
+//!             .unwrap();
+//! }
 //! ```
 extern crate quick_xml;
 extern crate chrono;
