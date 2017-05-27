@@ -305,7 +305,8 @@ impl ToXml for Image {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"image";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer
+            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"url", &self.url)?;
         writer.write_text_element(b"title", &self.title)?;

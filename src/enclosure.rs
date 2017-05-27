@@ -117,10 +117,10 @@ impl FromXml for Enclosure {
                         url = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     b"length" if length.is_none() => {
-                        length  = Some(attr.unescape_and_decode_value(&reader)?);
+                        length = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     b"type" if mime_type.is_none() => {
-                        mime_type  = Some(attr.unescape_and_decode_value(&reader)?);
+                        mime_type = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     _ => {}
                 }
@@ -135,7 +135,7 @@ impl FromXml for Enclosure {
                 Ok(Event::End(_)) => depth -= 1,
                 Ok(Event::Eof) => break,
                 Err(e) => return Err(e.into()),
-                _ => {},
+                _ => {}
             }
         }
 
@@ -156,16 +156,17 @@ impl ToXml for Enclosure {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"enclosure";
 
-        writer.write_event(Event::Start({
-            let mut element = BytesStart::borrowed(name, name.len());
+        writer
+            .write_event(Event::Start({
+                                          let mut element = BytesStart::borrowed(name, name.len());
 
-            let attrs = &[(b"url" as &[u8], self.url.as_bytes()),
-                          (b"length", self.length.as_bytes()),
-                          (b"type", self.mime_type.as_bytes())];
-            element.extend_attributes(attrs.into_iter().map(|v| *v));
+                                          let attrs = &[(b"url" as &[u8], self.url.as_bytes()),
+                                                        (b"length", self.length.as_bytes()),
+                                                        (b"type", self.mime_type.as_bytes())];
+                                          element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-            element
-        }))?;
+                                          element
+                                      }))?;
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())

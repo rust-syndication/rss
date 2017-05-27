@@ -37,7 +37,11 @@ macro_rules! element_text {
 
 macro_rules! parse_extension {
     ($reader:ident, $element:ident, $ns:ident, $name:ident, $extensions:expr) => ({
-        let result = ::fromxml::parse_extension($reader, $element.attributes(), $ns, $name, &mut $extensions);
+        let result = ::fromxml::parse_extension($reader,
+                                                $element.attributes(),
+                                                $ns,
+                                                $name,
+                                                &mut $extensions);
         $reader = result.1;
         try!(result.0)
     })

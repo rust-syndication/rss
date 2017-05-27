@@ -109,12 +109,14 @@ impl ToXml for Category {
         let name = b"category";
 
         try!(writer.write_event(Event::Start({
-            let mut element = BytesStart::borrowed(name, name.len());
-            if let Some(ref domain) = self.domain {
-                element.push_attribute((b"domain".as_ref(), domain.as_bytes()));
-            }
-            element
-        })));
+                                                 let mut element = BytesStart::borrowed(name,
+                                                                                        name.len());
+                                                 if let Some(ref domain) = self.domain {
+                                                     element.push_attribute((b"domain".as_ref(),
+                                                                             domain.as_bytes()));
+                                                 }
+                                                 element
+                                             })));
 
         try!(writer.write_event(Event::Text(BytesText::borrowed(self.name.as_bytes()))));
 

@@ -460,7 +460,8 @@ impl FromXml for Item {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader, element.attributes())?;
+                            let (category, reader_) = Category::from_xml(reader,
+                                                                         element.attributes())?;
                             reader = reader_;
                             item.categories.push(category);
                         }
@@ -470,7 +471,8 @@ impl FromXml for Item {
                             item.guid = Some(guid);
                         }
                         b"enclosure" => {
-                            let (enclosure, reader_) = Enclosure::from_xml(reader, element.attributes())?;
+                            let (enclosure, reader_) = Enclosure::from_xml(reader,
+                                                                           element.attributes())?;
                             reader = reader_;
                             item.enclosure = Some(enclosure);
                         }
@@ -523,7 +525,8 @@ impl ToXml for Item {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"item";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer
+            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         if let Some(title) = self.title.as_ref() {
             writer.write_text_element(b"title", title)?;

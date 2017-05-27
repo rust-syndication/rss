@@ -70,7 +70,7 @@ impl Source {
 }
 
 impl FromXml for Source {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>, 
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
                                        mut atts: Attributes)
                                        -> Result<(Self, Reader<R>), Error> {
         let mut url = None;
@@ -99,14 +99,17 @@ impl ToXml for Source {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"source";
 
-        writer.write_event(Event::Start({
-            let mut element = BytesStart::borrowed(name, name.len());
-            element.push_attribute((b"url".as_ref(), self.url.as_bytes()));
-            element
-        }))?;
+        writer
+            .write_event(Event::Start({
+                                          let mut element = BytesStart::borrowed(name, name.len());
+                                          element.push_attribute((b"url".as_ref(),
+                                                                  self.url.as_bytes()));
+                                          element
+                                      }))?;
 
         if let Some(text) = self.title.as_ref().map(|s| s.as_str()) {
-            writer.write_event(Event::Text(BytesText::borrowed(text.as_bytes())))?;
+            writer
+                .write_event(Event::Text(BytesText::borrowed(text.as_bytes())))?;
         }
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;

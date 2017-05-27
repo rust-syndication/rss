@@ -144,7 +144,7 @@ impl Cloud {
 }
 
 impl FromXml for Cloud {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>, 
+    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
                                        mut atts: Attributes)
                                        -> Result<(Self, Reader<R>), Error> {
         let mut domain = None;
@@ -160,16 +160,16 @@ impl FromXml for Cloud {
                         domain = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"port" if port.is_none() => {
-                        port  = Some(att.unescape_and_decode_value(&reader)?);
+                        port = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"path" if path.is_none() => {
-                        path  = Some(att.unescape_and_decode_value(&reader)?);
+                        path = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure  = Some(att.unescape_and_decode_value(&reader)?);
+                        register_procedure = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     b"protocol" if protocol.is_none() => {
-                        protocol  = Some(att.unescape_and_decode_value(&reader)?);
+                        protocol = Some(att.unescape_and_decode_value(&reader)?);
                     }
                     _ => {}
                 }
@@ -184,7 +184,7 @@ impl FromXml for Cloud {
                 Ok(Event::End(_)) => depth -= 1,
                 Ok(Event::Eof) => break,
                 Err(e) => return Err(e.into()),
-                _ => {},
+                _ => {}
             }
         }
 
@@ -210,18 +210,21 @@ impl ToXml for Cloud {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"cloud";
 
-        writer.write_event(Event::Start({
-            let mut element = BytesStart::borrowed(name, name.len());
+        writer
+            .write_event(Event::Start({
+                                          let mut element = BytesStart::borrowed(name, name.len());
 
-            let attrs = &[(b"domain" as &[u8], self.domain.as_bytes()),
-                          (b"port", self.port.as_bytes()),
-                          (b"path", self.path.as_bytes()),
-                          (b"registerProcedure", self.register_procedure.as_bytes()),
-                          (b"protocol", self.protocol.as_bytes())];
-            element.extend_attributes(attrs.into_iter().map(|v| *v));
+                                          let attrs = &[(b"domain" as &[u8],
+                                                         self.domain.as_bytes()),
+                                                        (b"port", self.port.as_bytes()),
+                                                        (b"path", self.path.as_bytes()),
+                                                        (b"registerProcedure",
+                                                         self.register_procedure.as_bytes()),
+                                                        (b"protocol", self.protocol.as_bytes())];
+                                          element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-            element
-        }))?;
+                                          element
+                                      }))?;
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())

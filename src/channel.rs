@@ -926,9 +926,9 @@ impl Channel {
                             for attr in element.attributes().with_checks(false) {
                                 if let Ok(attr) = attr {
 
-                                    if !attr.key.starts_with(b"xmlns:") 
-                                        || attr.key == b"xmlns:itunes"
-                                        || attr.key == b"xmlns:dc" {
+                                    if !attr.key.starts_with(b"xmlns:") ||
+                                       attr.key == b"xmlns:itunes" ||
+                                       attr.key == b"xmlns:dc" {
                                         continue;
                                     }
 
@@ -941,7 +941,8 @@ impl Channel {
                             in_rss = true;
                         }
                         b"channel" if in_rss => {
-                            let mut channel = Channel::from_xml(reader, element.attributes()).map(|v| v.0)?;
+                            let mut channel = Channel::from_xml(reader, element.attributes())
+                                .map(|v| v.0)?;
                             channel.namespaces = namespaces;
                             return Ok(channel);
                         }
@@ -973,42 +974,45 @@ impl Channel {
 
         let name = b"rss";
 
-        writer.write_event(Event::Start({
-            let mut element = BytesStart::borrowed(name, name.len());
-            element.push_attribute((b"version".as_ref(), b"2.0".as_ref()));
+        writer
+            .write_event(Event::Start({
+                                          let mut element = BytesStart::borrowed(name, name.len());
+                                          element.push_attribute((b"version".as_ref(),
+                                                                  b"2.0".as_ref()));
 
-            let mut itunes_ns = self.itunes_ext.is_some();
-            let mut dc_ns = self.dublin_core_ext.is_some();
+                                          let mut itunes_ns = self.itunes_ext.is_some();
+                                          let mut dc_ns = self.dublin_core_ext.is_some();
 
-            if !itunes_ns || dc_ns { 
-                for item in &self.items {
-                    if !itunes_ns {
-                        itunes_ns = item.itunes_ext().is_some();
-                    }
+                                          if !itunes_ns || dc_ns {
+                                              for item in &self.items {
+                                                  if !itunes_ns {
+                                                      itunes_ns = item.itunes_ext().is_some();
+                                                  }
 
-                    if !dc_ns {
-                        dc_ns = item.dublin_core_ext().is_some();
-                    }
+                                                  if !dc_ns {
+                                                      dc_ns = item.dublin_core_ext().is_some();
+                                                  }
 
-                    if itunes_ns && dc_ns {
-                        break;
-                    }
+                                                  if itunes_ns && dc_ns {
+                                                      break;
+                                                  }
+                                              }
+                                          }
+
+                                          if itunes_ns {
+                    element.push_attribute(("xmlns:itunes", extension::itunes::NAMESPACE));
                 }
-            }
 
-            if itunes_ns {
-                element.push_attribute(("xmlns:itunes", extension::itunes::NAMESPACE));
-            }
+                                          if dc_ns {
+                    element.push_attribute(("xmlns:dc", extension::dublincore::NAMESPACE));
+                }
+                                          for (name, url) in &self.namespaces {
+                    element
+                        .push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
+                }
 
-            if dc_ns {
-                element.push_attribute(("xmlns:dc", extension::dublincore::NAMESPACE));
-            }
-            for (name, url) in &self.namespaces {
-                element.push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
-            }
-
-            element
-        }))?;
+                                          element
+                                      }))?;
 
         self.to_xml(&mut writer)?;
 
@@ -1301,7 +1305,8 @@ impl FromXml for Channel {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader, element.attributes())?;
+                            let (category, reader_) = Category::from_xml(reader,
+                                                                         element.attributes())?;
                             reader = reader_;
                             channel.categories.push(category);
                         }
@@ -1316,7 +1321,8 @@ impl FromXml for Channel {
                             channel.image = Some(image);
                         }
                         b"textInput" => {
-                            let (text_input, reader_) = TextInput::from_xml(reader, element.attributes())?;
+                            let (text_input, reader_) = TextInput::from_xml(reader,
+                                                                            element.attributes())?;
                             reader = reader_;
                             channel.text_input = Some(text_input);
                         }
@@ -1363,7 +1369,8 @@ impl FromXml for Channel {
                                                 channel.skip_hours.push(content);
                                             }
                                         } else {
-                                            try!(reader.read_to_end(element.name(), &mut Vec::new()));
+                                            try!(reader.read_to_end(element.name(),
+                                                                    &mut Vec::new()));
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -1385,7 +1392,8 @@ impl FromXml for Channel {
                                                 channel.skip_days.push(content);
                                             }
                                         } else {
-                                            try!(reader.read_to_end(element.name(), &mut Vec::new()));
+                                            try!(reader.read_to_end(element.name(),
+                                                                    &mut Vec::new()));
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -1434,7 +1442,8 @@ impl ToXml for Channel {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"channel";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer
+            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"title", &self.title)?;
         writer.write_text_element(b"link", &self.link)?;
@@ -1495,7 +1504,8 @@ impl ToXml for Channel {
 
         if !self.skip_hours.is_empty() {
             let name = b"skipHours";
-            writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+            writer
+                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for hour in &self.skip_hours {
                 writer.write_text_element(b"hour", hour)?;
             }
@@ -1504,7 +1514,8 @@ impl ToXml for Channel {
 
         if !self.skip_days.is_empty() {
             let name = b"skipDays";
-            writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+            writer
+                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for day in &self.skip_days {
                 writer.write_text_element(b"day", day)?;
             }
