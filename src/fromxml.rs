@@ -15,9 +15,9 @@ use std::io::BufRead;
 use std::str;
 
 pub trait FromXml: Sized {
-    fn from_xml<R: ::std::io::BufRead>(reader: Reader<R>,
-                                       atts: Attributes)
-                                       -> Result<(Self, Reader<R>), Error>;
+    fn from_xml<R: BufRead>(reader: Reader<R>,
+                            atts: Attributes)
+                            -> Result<(Self, Reader<R>), Error>;
 }
 
 macro_rules! try_reader {
@@ -31,7 +31,7 @@ macro_rules! element_text {
     ($reader:ident) => ({
         let text = ::fromxml::element_text($reader);
         $reader = text.1;
-        try!(text.0)
+        text.0?
     })
 }
 
@@ -43,7 +43,7 @@ macro_rules! parse_extension {
                                                 $name,
                                                 &mut $extensions);
         $reader = result.1;
-        try!(result.0)
+        result.2?
     })
 }
 
@@ -80,16 +80,11 @@ pub fn element_text<R: BufRead>(mut reader: Reader<R>)
 }
 
 pub fn extension_name(element_name: &[u8]) -> Option<(&[u8], &[u8])> {
-    let split = element_name.splitn(2, |b| *b == b':').collect::<Vec<_>>();
-
-    if split.len() == 2 {
-        let ns = unsafe { split.get_unchecked(0) };
-        if ns != b"" && ns != b"rss" && ns != b"rdf" {
-            return Some((ns, unsafe { split.get_unchecked(1) }));
-        }
+    let mut split = element_name.splitn(2, |b| *b == b':');
+    match split.next() {
+        Some(b"") | Some(b"rss") | Some(b"rdf") | None => None,
+        Some(ns) => split.next().map(|name| (ns, name)),
     }
-
-    None
 }
 
 pub fn parse_extension<R: BufRead>(mut reader: Reader<R>,

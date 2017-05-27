@@ -12,7 +12,7 @@ use extension::itunes::ITunesCategory;
 use extension::itunes::ITunesOwner;
 use extension::remove_extension_value;
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{Event, BytesStart};
 use quick_xml::writer::Writer;
 use std::collections::HashMap;
 use toxml::{ToXml, WriterExt};
@@ -502,8 +502,7 @@ impl ToXml for ITunesChannelExtension {
             let name = b"itunes:image";
             let mut element = BytesStart::borrowed(name, name.len());
             element.push_attribute(("href", &**image));
-            writer.write_event(Event::Start(element))?;
-            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+            writer.write_event(Event::Empty(element))?;
         }
 
         if let Some(explicit) = self.explicit.as_ref() {

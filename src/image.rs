@@ -272,7 +272,7 @@ impl FromXml for Image {
                         b"width" => width = element_text!(reader),
                         b"height" => height = element_text!(reader),
                         b"description" => description = element_text!(reader),
-                        n => try!(reader.read_to_end(n, &mut skip_buf)),
+                        n => reader.read_to_end(n, &mut skip_buf)?,
                     }
                 }
                 Ok(Event::End(_)) => {
@@ -324,7 +324,7 @@ impl ToXml for Image {
             writer.write_text_element(b"description", description)?;
         }
 
-        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
 }

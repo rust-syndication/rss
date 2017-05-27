@@ -946,7 +946,7 @@ impl Channel {
                             channel.namespaces = namespaces;
                             return Ok(channel);
                         }
-                        name => try!(reader.read_to_end(name, &mut skip_buf)),
+                        name => reader.read_to_end(name, &mut skip_buf)?,
                     }
                 }
                 Ok(Event::End(_)) => in_rss = false,
@@ -1363,8 +1363,7 @@ impl FromXml for Channel {
                                                 channel.skip_hours.push(content);
                                             }
                                         } else {
-                                            try!(reader.read_to_end(element.name(),
-                                                                    &mut Vec::new()));
+                                            reader.read_to_end(element.name(), &mut Vec::new())?;
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -1386,8 +1385,7 @@ impl FromXml for Channel {
                                                 channel.skip_days.push(content);
                                             }
                                         } else {
-                                            try!(reader.read_to_end(element.name(),
-                                                                    &mut Vec::new()));
+                                            reader.read_to_end(element.name(), &mut Vec::new())?;
                                         }
                                     }
                                     Ok(Event::End(_)) => {
@@ -1403,7 +1401,7 @@ impl FromXml for Channel {
                             if let Some((ns, name)) = fromxml::extension_name(element.name()) {
                                 parse_extension!(reader, element, ns, name, channel.extensions);
                             } else {
-                                try!(reader.read_to_end(n, &mut skip_buf));
+                                reader.read_to_end(n, &mut skip_buf)?;
                             }
                         }
                     }
@@ -1534,7 +1532,7 @@ impl ToXml for Channel {
             ext.to_xml(writer)?;
         }
 
-        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
 }

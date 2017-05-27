@@ -133,7 +133,7 @@ impl FromXml for TextInput {
                         b"description" => description = element_text!(reader),
                         b"name" => name = element_text!(reader),
                         b"link" => link = element_text!(reader),
-                        n => try!(reader.read_to_end(n, &mut skip_buf)),
+                        n => reader.read_to_end(n, &mut skip_buf)?,
                     }
                 }
                 Ok(Event::End(_)) => {
@@ -174,7 +174,7 @@ impl ToXml for TextInput {
         writer.write_text_element(b"name", &self.name)?;
         writer.write_text_element(b"link", &self.link)?;
 
-        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
 }

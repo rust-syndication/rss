@@ -126,16 +126,12 @@ impl FromXml for Guid {
 impl ToXml for Guid {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"guid";
+        let mut element = BytesStart::borrowed(name, name.len());
+        if !self.is_permalink {
+            element.push_attribute(("isPermaLink", "false"));
+        }
 
-        writer
-            .write_event(Event::Start({
-                                          let mut element = BytesStart::borrowed(name, name.len());
-                                          if !self.is_permalink {
-                                              element.push_attribute((b"isPermaLink".as_ref(),
-                                                                      b"false".as_ref()));
-                                          }
-                                          element
-                                      }))?;
+        writer.write_event(Event::Start(element))?;
 
         writer
             .write_event(Event::Text(BytesText::borrowed(self.value.as_bytes())))?;

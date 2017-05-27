@@ -103,9 +103,8 @@ impl ToXml for Source {
 
         writer.write_event(Event::Start(element))?;
 
-        if let Some(text) = self.title.as_ref().map(|s| s.as_str()) {
-            writer
-                .write_event(Event::Text(BytesText::borrowed(text.as_bytes())))?;
+        if let Some(text) = self.title.as_ref().map(|s| s.as_bytes()) {
+            writer.write_event(Event::Text(BytesText::borrowed(text)))?;
         }
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;

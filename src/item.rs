@@ -492,7 +492,7 @@ impl FromXml for Item {
                             if let Some((ns, name)) = fromxml::extension_name(n) {
                                 parse_extension!(reader, element, ns, name, item.extensions);
                             } else {
-                                try!(reader.read_to_end(n, &mut Vec::new()));
+                                reader.read_to_end(n, &mut Vec::new())?;
                             }
                         }
                     }
@@ -586,7 +586,7 @@ impl ToXml for Item {
             ext.to_xml(writer)?;
         }
 
-        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
 }

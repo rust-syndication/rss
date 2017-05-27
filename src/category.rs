@@ -88,7 +88,7 @@ impl FromXml for Category {
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"domain" {
-                    domain = Some(try!(attr.unescape_and_decode_value(&reader)));
+                    domain = Some(attr.unescape_and_decode_value(&reader)?);
                     break;
                 }
             }
