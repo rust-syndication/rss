@@ -6,7 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use fromxml::FromXml;
+use fromxml::{FromXml, element_text};
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::events::attributes::Attributes;
@@ -70,9 +70,9 @@ impl Source {
 }
 
 impl FromXml for Source {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        mut atts: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut url = None;
 
         for attr in atts.with_checks(false) {
@@ -85,13 +85,12 @@ impl FromXml for Source {
         }
 
         let url = url.unwrap_or_default();
-        let content = element_text!(reader);
+        let content = element_text(reader)?;
 
-        Ok((Source {
-                url: url,
-                title: content,
-            },
-            reader))
+        Ok(Source {
+               url: url,
+               title: content,
+           })
     }
 }
 

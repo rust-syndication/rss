@@ -6,7 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use fromxml::FromXml;
+use fromxml::{FromXml, element_text};
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::events::attributes::Attributes;
@@ -250,9 +250,9 @@ impl Image {
 }
 
 impl FromXml for Image {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        _: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut url = None;
         let mut title = None;
         let mut link = None;
@@ -266,12 +266,12 @@ impl FromXml for Image {
             match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
-                        b"url" => url = element_text!(reader),
-                        b"title" => title = element_text!(reader),
-                        b"link" => link = element_text!(reader),
-                        b"width" => width = element_text!(reader),
-                        b"height" => height = element_text!(reader),
-                        b"description" => description = element_text!(reader),
+                        b"url" => url = element_text(reader)?,
+                        b"title" => title = element_text(reader)?,
+                        b"link" => link = element_text(reader)?,
+                        b"width" => width = element_text(reader)?,
+                        b"height" => height = element_text(reader)?,
+                        b"description" => description = element_text(reader)?,
                         n => reader.read_to_end(n, &mut skip_buf)?,
                     }
                 }
@@ -280,15 +280,14 @@ impl FromXml for Image {
                     let title = title.unwrap_or_default();
                     let link = link.unwrap_or_default();
 
-                    return Ok((Image {
-                                   url: url,
-                                   title: title,
-                                   link: link,
-                                   width: width,
-                                   height: height,
-                                   description: description,
-                               },
-                               reader));
+                    return Ok(Image {
+                                  url: url,
+                                  title: title,
+                                  link: link,
+                                  width: width,
+                                  height: height,
+                                  description: description,
+                              });
                 }
                 Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),

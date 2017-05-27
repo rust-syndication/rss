@@ -144,9 +144,9 @@ impl Cloud {
 }
 
 impl FromXml for Cloud {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        mut atts: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut domain = None;
         let mut port = None;
         let mut path = None;
@@ -194,14 +194,13 @@ impl FromXml for Cloud {
         let register_procedure = register_procedure.unwrap_or_default();
         let protocol = protocol.unwrap_or_default();
 
-        Ok((Cloud {
-                domain: domain,
-                port: port,
-                path: path,
-                register_procedure: register_procedure,
-                protocol: protocol,
-            },
-            reader))
+        Ok(Cloud {
+               domain: domain,
+               port: port,
+               path: path,
+               register_procedure: register_procedure,
+               protocol: protocol,
+           })
 
     }
 }

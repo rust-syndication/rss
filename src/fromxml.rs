@@ -15,37 +15,10 @@ use std::io::BufRead;
 use std::str;
 
 pub trait FromXml: Sized {
-    fn from_xml<R: BufRead>(reader: Reader<R>,
-                            atts: Attributes)
-                            -> Result<(Self, Reader<R>), Error>;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, atts: Attributes) -> Result<Self, Error>;
 }
 
-macro_rules! element_text {
-    ($reader:ident) => ({
-        let text = ::fromxml::element_text($reader);
-        $reader = text.1;
-        text.0?
-    })
-}
-
-macro_rules! parse_extension {
-    ($reader:ident, $element:ident, $ns:ident, $name:ident, $extensions:expr) => ({
-        let result = ::fromxml::parse_extension($reader,
-                                                $element.attributes(),
-                                                $ns,
-                                                $name,
-                                                &mut $extensions);
-        $reader = result.1;
-        result.0?
-    })
-}
-
-pub fn element_text<R: BufRead>(mut reader: Reader<R>)
-                                -> (Result<Option<String>, Error>, Reader<R>) {
-    (element_text_private(&mut reader), reader)
-}
-
-pub fn element_text_private<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>, Error> {
+pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>, Error> {
     let mut content: Option<String> = None;
     let mut buf = Vec::new();
     let mut skip_buf = Vec::new();
@@ -84,21 +57,12 @@ pub fn extension_name(element_name: &[u8]) -> Option<(&[u8], &[u8])> {
     }
 }
 
-pub fn parse_extension<R: BufRead>(mut reader: Reader<R>,
+pub fn parse_extension<R: BufRead>(reader: &mut Reader<R>,
                                    atts: Attributes,
                                    ns: &[u8],
                                    name: &[u8],
                                    extensions: &mut ExtensionMap)
-                                   -> (Result<(), Error>, Reader<R>) {
-    (parse_extension_private(&mut reader, atts, ns, name, extensions), reader)
-}
-
-fn parse_extension_private<R: BufRead>(reader: &mut Reader<R>,
-                                       atts: Attributes,
-                                       ns: &[u8],
-                                       name: &[u8],
-                                       extensions: &mut ExtensionMap)
-                                       -> Result<(), Error> {
+                                   -> Result<(), Error> {
     let ns = str::from_utf8(ns)?;
     let name = str::from_utf8(name)?;
     let ext = parse_extension_element(reader, atts)?;

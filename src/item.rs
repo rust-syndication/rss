@@ -12,7 +12,7 @@ use error::Error;
 use extension::ExtensionMap;
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesItemExtension;
-use fromxml::{self, FromXml};
+use fromxml::{self, FromXml, parse_extension, element_text};
 use guid::Guid;
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
@@ -449,9 +449,9 @@ impl Item {
 }
 
 impl FromXml for Item {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        _: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut item = Item::default();
         let mut buf = Vec::new();
 
@@ -460,37 +460,35 @@ impl FromXml for Item {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader,
-                                                                         element.attributes())?;
-                            reader = reader_;
+                            let category = Category::from_xml(reader, element.attributes())?;
                             item.categories.push(category);
                         }
                         b"guid" => {
-                            let (guid, reader_) = Guid::from_xml(reader, element.attributes())?;
-                            reader = reader_;
+                            let guid = Guid::from_xml(reader, element.attributes())?;
                             item.guid = Some(guid);
                         }
                         b"enclosure" => {
-                            let (enclosure, reader_) = Enclosure::from_xml(reader,
-                                                                           element.attributes())?;
-                            reader = reader_;
+                            let enclosure = Enclosure::from_xml(reader, element.attributes())?;
                             item.enclosure = Some(enclosure);
                         }
                         b"source" => {
-                            let (source, reader_) = Source::from_xml(reader, element.attributes())?;
-                            reader = reader_;
+                            let source = Source::from_xml(reader, element.attributes())?;
                             item.source = Some(source);
                         }
-                        b"title" => item.title = element_text!(reader),
-                        b"link" => item.link = element_text!(reader),
-                        b"description" => item.description = element_text!(reader),
-                        b"author" => item.author = element_text!(reader),
-                        b"comments" => item.comments = element_text!(reader),
-                        b"pubDate" => item.pub_date = element_text!(reader),
-                        b"content:encoded" => item.content = element_text!(reader),
+                        b"title" => item.title = element_text(reader)?,
+                        b"link" => item.link = element_text(reader)?,
+                        b"description" => item.description = element_text(reader)?,
+                        b"author" => item.author = element_text(reader)?,
+                        b"comments" => item.comments = element_text(reader)?,
+                        b"pubDate" => item.pub_date = element_text(reader)?,
+                        b"content:encoded" => item.content = element_text(reader)?,
                         n => {
                             if let Some((ns, name)) = fromxml::extension_name(n) {
-                                parse_extension!(reader, element, ns, name, item.extensions);
+                                parse_extension(reader,
+                                                element.attributes(),
+                                                ns,
+                                                name,
+                                                &mut item.extensions)?;
                             } else {
                                 reader.read_to_end(n, &mut Vec::new())?;
                             }
@@ -508,7 +506,7 @@ impl FromXml for Item {
                         }
                     }
 
-                    return Ok((item, reader));
+                    return Ok(item);
                 }
                 Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),

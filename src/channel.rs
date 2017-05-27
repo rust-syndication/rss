@@ -13,7 +13,7 @@ use error::Error;
 use extension::{self, ExtensionMap};
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesChannelExtension;
-use fromxml::{self, FromXml};
+use fromxml::{self, FromXml, parse_extension, element_text};
 use guid::GuidBuilder;
 use image::{Image, ImageBuilder};
 use item::{Item, ItemBuilder};
@@ -941,8 +941,7 @@ impl Channel {
                             in_rss = true;
                         }
                         b"channel" if in_rss => {
-                            let mut channel = Channel::from_xml(reader, element.attributes())
-                                .map(|v| v.0)?;
+                            let mut channel = Channel::from_xml(&mut reader, element.attributes())?;
                             channel.namespaces = namespaces;
                             return Ok(channel);
                         }
@@ -1287,9 +1286,9 @@ impl ToString for Channel {
 }
 
 impl FromXml for Channel {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        _: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut channel = Channel::default();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();
@@ -1299,67 +1298,60 @@ impl FromXml for Channel {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader,
-                                                                         element.attributes())?;
-                            reader = reader_;
+                            let category = Category::from_xml(reader, element.attributes())?;
                             channel.categories.push(category);
                         }
                         b"cloud" => {
-                            let (cloud, reader_) = Cloud::from_xml(reader, element.attributes())?;
-                            reader = reader_;
+                            let cloud = Cloud::from_xml(reader, element.attributes())?;
                             channel.cloud = Some(cloud);
                         }
                         b"image" => {
-                            let (image, reader_) = Image::from_xml(reader, element.attributes())?;
-                            reader = reader_;
+                            let image = Image::from_xml(reader, element.attributes())?;
                             channel.image = Some(image);
                         }
                         b"textInput" => {
-                            let (text_input, reader_) = TextInput::from_xml(reader,
-                                                                            element.attributes())?;
-                            reader = reader_;
+                            let text_input = TextInput::from_xml(reader, element.attributes())?;
                             channel.text_input = Some(text_input);
                         }
                         b"item" => {
-                            let (item, reader_) = Item::from_xml(reader, element.attributes())?;
-                            reader = reader_;
+                            let item = Item::from_xml(reader, element.attributes())?;
                             channel.items.push(item);
                         }
                         b"title" => {
-                            if let Some(content) = element_text!(reader) {
+                            if let Some(content) = element_text(reader)? {
                                 channel.title = content;
                             }
                         }
                         b"link" => {
-                            if let Some(content) = element_text!(reader) {
+                            if let Some(content) = element_text(reader)? {
                                 channel.link = content;
                             }
                         }
                         b"description" => {
-                            if let Some(content) = element_text!(reader) {
+                            if let Some(content) = element_text(reader)? {
                                 channel.description = content;
                             }
                         }
-                        b"language" => channel.language = element_text!(reader),
-                        b"copyright" => channel.copyright = element_text!(reader),
+                        b"language" => channel.language = element_text(reader)?,
+                        b"copyright" => channel.copyright = element_text(reader)?,
                         b"managingEditor" => {
-                            channel.managing_editor = element_text!(reader);
+                            channel.managing_editor = element_text(reader)?;
                         }
-                        b"webMaster" => channel.webmaster = element_text!(reader),
-                        b"pubDate" => channel.pub_date = element_text!(reader),
+                        b"webMaster" => channel.webmaster = element_text(reader)?,
+                        b"pubDate" => channel.pub_date = element_text(reader)?,
                         b"lastBuildDate" => {
-                            channel.last_build_date = element_text!(reader);
+                            channel.last_build_date = element_text(reader)?;
                         }
-                        b"generator" => channel.generator = element_text!(reader),
-                        b"docs" => channel.docs = element_text!(reader),
-                        b"ttl" => channel.ttl = element_text!(reader),
+                        b"generator" => channel.generator = element_text(reader)?,
+                        b"docs" => channel.docs = element_text(reader)?,
+                        b"ttl" => channel.ttl = element_text(reader)?,
                         b"skipHours" => {
                             loop {
                                 skip_buf.clear();
                                 match reader.read_event(&mut skip_buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"hour" {
-                                            if let Some(content) = element_text!(reader) {
+                                            if let Some(content) = element_text(reader)? {
                                                 channel.skip_hours.push(content);
                                             }
                                         } else {
@@ -1381,7 +1373,7 @@ impl FromXml for Channel {
                                 match reader.read_event(&mut skip_buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"day" {
-                                            if let Some(content) = element_text!(reader) {
+                                            if let Some(content) = element_text(reader)? {
                                                 channel.skip_days.push(content);
                                             }
                                         } else {
@@ -1399,7 +1391,11 @@ impl FromXml for Channel {
                         }
                         n => {
                             if let Some((ns, name)) = fromxml::extension_name(element.name()) {
-                                parse_extension!(reader, element, ns, name, channel.extensions);
+                                parse_extension(reader,
+                                                element.attributes(),
+                                                ns,
+                                                name,
+                                                &mut channel.extensions)?;
                             } else {
                                 reader.read_to_end(n, &mut skip_buf)?;
                             }
@@ -1417,7 +1413,7 @@ impl FromXml for Channel {
                         }
                     }
 
-                    return Ok((channel, reader));
+                    return Ok(channel);
                 }
                 Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),

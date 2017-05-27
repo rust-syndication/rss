@@ -6,7 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use fromxml::FromXml;
+use fromxml::{FromXml, element_text};
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::events::attributes::Attributes;
@@ -113,11 +113,10 @@ impl TextInput {
     }
 }
 
-
 impl FromXml for TextInput {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        _: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut title = None;
         let mut description = None;
         let mut name = None;
@@ -129,10 +128,10 @@ impl FromXml for TextInput {
             match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
-                        b"title" => title = element_text!(reader),
-                        b"description" => description = element_text!(reader),
-                        b"name" => name = element_text!(reader),
-                        b"link" => link = element_text!(reader),
+                        b"title" => title = element_text(reader)?,
+                        b"description" => description = element_text(reader)?,
+                        b"name" => name = element_text(reader)?,
+                        b"link" => link = element_text(reader)?,
                         n => reader.read_to_end(n, &mut skip_buf)?,
                     }
                 }
@@ -142,13 +141,12 @@ impl FromXml for TextInput {
                     let name = name.unwrap_or_default();
                     let link = link.unwrap_or_default();
 
-                    return Ok((TextInput {
-                                   title: title,
-                                   description: description,
-                                   name: name,
-                                   link: link,
-                               },
-                               reader));
+                    return Ok(TextInput {
+                                  title: title,
+                                  description: description,
+                                  name: name,
+                                  link: link,
+                              });
                 }
                 Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),

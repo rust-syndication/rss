@@ -103,9 +103,9 @@ impl Enclosure {
 }
 
 impl FromXml for Enclosure {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        mut atts: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut url = None;
         let mut length = None;
         let mut mime_type = None;
@@ -143,12 +143,11 @@ impl FromXml for Enclosure {
         let length = length.unwrap_or_default();
         let mime_type = mime_type.unwrap_or_default();
 
-        Ok((Enclosure {
-                url: url,
-                length: length,
-                mime_type: mime_type,
-            },
-            reader))
+        Ok(Enclosure {
+               url: url,
+               length: length,
+               mime_type: mime_type,
+           })
     }
 }
 

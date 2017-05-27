@@ -6,7 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use fromxml::FromXml;
+use fromxml::{FromXml, element_text};
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::events::attributes::Attributes;
@@ -99,9 +99,9 @@ impl Default for Guid {
 }
 
 impl FromXml for Guid {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        mut atts: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut is_permalink = true;
 
         for attr in atts.with_checks(false) {
@@ -113,13 +113,12 @@ impl FromXml for Guid {
             }
         }
 
-        let content = element_text!(reader).unwrap_or_default();
+        let content = element_text(reader)?.unwrap_or_default();
 
-        Ok((Guid {
-                value: content,
-                is_permalink: is_permalink,
-            },
-            reader))
+        Ok(Guid {
+               value: content,
+               is_permalink: is_permalink,
+           })
     }
 }
 

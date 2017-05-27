@@ -7,7 +7,7 @@
 
 
 use error::Error;
-use fromxml::FromXml;
+use fromxml::{FromXml, element_text};
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::events::attributes::Attributes;
@@ -80,9 +80,9 @@ impl Category {
 }
 
 impl FromXml for Category {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: Reader<R>,
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
                                        mut atts: Attributes)
-                                       -> Result<(Self, Reader<R>), Error> {
+                                       -> Result<Self, Error> {
         let mut domain = None;
 
         for attr in atts.with_checks(false) {
@@ -94,13 +94,12 @@ impl FromXml for Category {
             }
         }
 
-        let content = element_text!(reader).unwrap_or_default();
+        let content = element_text(reader)?.unwrap_or_default();
 
-        Ok((Category {
-                name: content,
-                domain: domain,
-            },
-            reader))
+        Ok(Category {
+               name: content,
+               domain: domain,
+           })
     }
 }
 
