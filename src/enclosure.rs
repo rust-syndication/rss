@@ -9,7 +9,7 @@ use error::Error;
 use fromxml::FromXml;
 use mime::Mime;
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{Event, BytesStart};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
@@ -156,19 +156,14 @@ impl ToXml for Enclosure {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"enclosure";
 
-        writer
-            .write_event(Event::Start({
-                                          let mut element = BytesStart::borrowed(name, name.len());
+        let mut element = BytesStart::borrowed(name, name.len());
 
-                                          let attrs = &[(b"url" as &[u8], self.url.as_bytes()),
-                                                        (b"length", self.length.as_bytes()),
-                                                        (b"type", self.mime_type.as_bytes())];
-                                          element.extend_attributes(attrs.into_iter().map(|v| *v));
+        let attrs = &[(b"url" as &[u8], self.url.as_bytes()),
+                      (b"length", self.length.as_bytes()),
+                      (b"type", self.mime_type.as_bytes())];
+        element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-                                          element
-                                      }))?;
-
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::Empty(element))?;
         Ok(())
     }
 }

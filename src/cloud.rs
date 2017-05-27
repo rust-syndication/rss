@@ -8,7 +8,7 @@
 use error::Error;
 use fromxml::FromXml;
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{Event, BytesStart};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
@@ -209,24 +209,16 @@ impl FromXml for Cloud {
 impl ToXml for Cloud {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"cloud";
+        let mut element = BytesStart::borrowed(name, name.len());
 
-        writer
-            .write_event(Event::Start({
-                                          let mut element = BytesStart::borrowed(name, name.len());
+        let attrs = &[(b"domain" as &[u8], self.domain.as_bytes()),
+                      (b"port", self.port.as_bytes()),
+                      (b"path", self.path.as_bytes()),
+                      (b"registerProcedure", self.register_procedure.as_bytes()),
+                      (b"protocol", self.protocol.as_bytes())];
+        element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-                                          let attrs = &[(b"domain" as &[u8],
-                                                         self.domain.as_bytes()),
-                                                        (b"port", self.port.as_bytes()),
-                                                        (b"path", self.path.as_bytes()),
-                                                        (b"registerProcedure",
-                                                         self.register_procedure.as_bytes()),
-                                                        (b"protocol", self.protocol.as_bytes())];
-                                          element.extend_attributes(attrs.into_iter().map(|v| *v));
-
-                                          element
-                                      }))?;
-
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::Empty(element))?;
         Ok(())
     }
 }

@@ -98,14 +98,10 @@ impl FromXml for Source {
 impl ToXml for Source {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"source";
+        let mut element = BytesStart::borrowed(name, name.len());
+        element.push_attribute(("url", &*self.url));
 
-        writer
-            .write_event(Event::Start({
-                                          let mut element = BytesStart::borrowed(name, name.len());
-                                          element.push_attribute((b"url".as_ref(),
-                                                                  self.url.as_bytes()));
-                                          element
-                                      }))?;
+        writer.write_event(Event::Start(element))?;
 
         if let Some(text) = self.title.as_ref().map(|s| s.as_str()) {
             writer

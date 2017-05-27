@@ -107,20 +107,14 @@ impl FromXml for Category {
 impl ToXml for Category {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"category";
-
-        try!(writer.write_event(Event::Start({
-                                                 let mut element = BytesStart::borrowed(name,
-                                                                                        name.len());
-                                                 if let Some(ref domain) = self.domain {
-                                                     element.push_attribute((b"domain".as_ref(),
-                                                                             domain.as_bytes()));
-                                                 }
-                                                 element
-                                             })));
-
-        try!(writer.write_event(Event::Text(BytesText::borrowed(self.name.as_bytes()))));
-
-        try!(writer.write_event(Event::End(BytesEnd::borrowed(name))));
+        let mut element = BytesStart::borrowed(name, name.len());
+        if let Some(ref domain) = self.domain {
+            element.push_attribute(("domain", &**domain));
+        }
+        writer.write_event(Event::Start(element))?;
+        writer
+            .write_event(Event::Text(BytesText::borrowed(self.name.as_bytes())))?;
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
 }

@@ -973,46 +973,40 @@ impl Channel {
         let mut writer = ::quick_xml::Writer::new(writer);
 
         let name = b"rss";
+        let mut element = BytesStart::borrowed(name, name.len());
+        element.push_attribute(("version", "2.0"));
 
-        writer
-            .write_event(Event::Start({
-                                          let mut element = BytesStart::borrowed(name, name.len());
-                                          element.push_attribute((b"version".as_ref(),
-                                                                  b"2.0".as_ref()));
+        let mut itunes_ns = self.itunes_ext.is_some();
+        let mut dc_ns = self.dublin_core_ext.is_some();
 
-                                          let mut itunes_ns = self.itunes_ext.is_some();
-                                          let mut dc_ns = self.dublin_core_ext.is_some();
-
-                                          if !itunes_ns || dc_ns {
-                                              for item in &self.items {
-                                                  if !itunes_ns {
-                                                      itunes_ns = item.itunes_ext().is_some();
-                                                  }
-
-                                                  if !dc_ns {
-                                                      dc_ns = item.dublin_core_ext().is_some();
-                                                  }
-
-                                                  if itunes_ns && dc_ns {
-                                                      break;
-                                                  }
-                                              }
-                                          }
-
-                                          if itunes_ns {
-                    element.push_attribute(("xmlns:itunes", extension::itunes::NAMESPACE));
+        if !itunes_ns || !dc_ns {
+            for item in &self.items {
+                if !itunes_ns {
+                    itunes_ns = item.itunes_ext().is_some();
                 }
 
-                                          if dc_ns {
-                    element.push_attribute(("xmlns:dc", extension::dublincore::NAMESPACE));
-                }
-                                          for (name, url) in &self.namespaces {
-                    element
-                        .push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
+                if !dc_ns {
+                    dc_ns = item.dublin_core_ext().is_some();
                 }
 
-                                          element
-                                      }))?;
+                if itunes_ns && dc_ns {
+                    break;
+                }
+            }
+        }
+
+        if itunes_ns {
+            element.push_attribute(("xmlns:itunes", extension::itunes::NAMESPACE));
+        }
+
+        if dc_ns {
+            element.push_attribute(("xmlns:dc", extension::dublincore::NAMESPACE));
+        }
+        for (name, url) in &self.namespaces {
+            element.push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
+        }
+
+        writer.write_event(Event::Start(element))?;
 
         self.to_xml(&mut writer)?;
 

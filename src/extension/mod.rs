@@ -63,31 +63,22 @@ impl Extension {
 impl ToXml for Extension {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
 
-        writer
-            .write_event(Event::Start({
-                                          let name_len = self.name.len();
-                                          let mut element =
-                                              BytesStart::borrowed(self.name.as_bytes(), name_len);
-                                          element.extend_attributes(self.attrs
-                                                                        .iter()
-                                                                        .map(|a| {
-                    (a.0.as_bytes(), a.1.as_ref())
-                }));
-                                          element
-                                      }))?;
+        let name_len = self.name.len();
+        let mut element = BytesStart::borrowed(self.name.as_bytes(), name_len);
+        element.extend_attributes(self.attrs.iter().map(|a| (a.0.as_bytes(), a.1.as_bytes())));
+        writer.write_event(Event::Start(element))?;
 
         if let Some(value) = self.value.as_ref() {
             writer
                 .write_event(Event::Text(BytesText::borrowed(value.as_bytes())))?;
         }
 
-        for extensions in self.children.values() {
-            for extension in extensions {
-                extension.to_xml(writer)?;
-            }
+        for extension in self.children.values().flat_map(|extensions| extensions) {
+            extension.to_xml(writer)?;
         }
 
-        try!(writer.write_event(Event::End(BytesEnd::borrowed(self.name.as_bytes()))));
+        writer
+            .write_event(Event::End(BytesEnd::borrowed(self.name.as_bytes())))?;
         Ok(())
     }
 }
