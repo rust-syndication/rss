@@ -202,11 +202,11 @@ impl TextInputBuilder {
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.title("Title");
+    /// let text_input_builder = TextInputBuilder::new()
+    ///     .title("Title");
     /// ```
-    pub fn title(mut self, title: &str) -> TextInputBuilder {
-        self.title = title.to_string();
+    pub fn title<S: Into<String>>(mut self, title: S) -> TextInputBuilder {
+        self.title = title.into();
         self
     }
 
@@ -217,11 +217,11 @@ impl TextInputBuilder {
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.description("This is a test description.");
+    /// let text_input_builder = TextInputBuilder::new()
+    ///     .description("This is a test description.");
     /// ```
-    pub fn description(mut self, description: &str) -> TextInputBuilder {
-        self.description = description.to_string();
+    pub fn description<S: Into<String>>(mut self, description: S) -> TextInputBuilder {
+        self.description = description.into();
         self
     }
 
@@ -232,11 +232,11 @@ impl TextInputBuilder {
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.name("Comments");
+    /// let text_input_builder = TextInputBuilder::new()
+    ///     .name("Comments");
     /// ```
-    pub fn name(mut self, name: &str) -> TextInputBuilder {
-        self.name = name.to_string();
+    pub fn name<S: Into<String>>(mut self, name: S) -> TextInputBuilder {
+        self.name = name.into();
         self
     }
 
@@ -247,11 +247,11 @@ impl TextInputBuilder {
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.link("http://www.example.com/feedback");
+    /// let text_input_builder = TextInputBuilder::new()
+    ///     .link("http://www.example.com/feedback");
     /// ```
-    pub fn link(mut self, link: &str) -> TextInputBuilder {
-        self.link = link.to_string();
+    pub fn link<S: Into<String>>(mut self, link: S) -> TextInputBuilder {
+        self.link = link.into();
         self
     }
 

@@ -164,8 +164,8 @@ impl GuidBuilder {
     /// ```
     /// use rss::GuidBuilder;
     ///
-    /// let mut guid_builder = GuidBuilder::new();
-    /// guid_builder.is_permalink(Some(false));
+    /// let guid_builder = GuidBuilder::new()
+    ///     .is_permalink(Some(false));
     /// ```
     pub fn is_permalink(mut self, is_permalink: Option<bool>) -> GuidBuilder {
         self.is_permalink = is_permalink;
@@ -179,11 +179,11 @@ impl GuidBuilder {
     /// ```
     /// use rss::GuidBuilder;
     ///
-    /// let mut guid_builder = GuidBuilder::new();
-    /// guid_builder.value("9DE46946-2F90-4D5D-9047-7E9165C16E7C");
+    /// let guid_builder = GuidBuilder::new()
+    ///     .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C");
     /// ```
-    pub fn value(mut self, value: &str) -> GuidBuilder {
-        self.value = value.to_string();
+    pub fn value<S: Into<String>>(mut self, value: S) -> GuidBuilder {
+        self.value = value.into();
         self
     }
 

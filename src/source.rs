@@ -82,11 +82,10 @@ impl FromXml for Source {
             }
         }
 
-        let url = url.unwrap_or_default();
         let content = element_text(reader)?;
 
         Ok(Source {
-               url: url,
+               url: url.unwrap_or_default(),
                title: content,
            })
     }
@@ -138,11 +137,11 @@ impl SourceBuilder {
     /// ```
     /// use rss::SourceBuilder;
     ///
-    /// let mut source_builder = SourceBuilder::new();
-    /// source_builder.url("http://www.example.com/source");
+    /// let source_builder = SourceBuilder::new()
+    ///     .url("http://www.example.com/source");
     /// ```
-    pub fn url(mut self, url: &str) -> SourceBuilder {
-        self.url = url.to_string();
+    pub fn url<S: Into<String>>(mut self, url: S) -> SourceBuilder {
+        self.url = url.into();
         self
     }
 
@@ -154,8 +153,8 @@ impl SourceBuilder {
     /// ```
     /// use rss::SourceBuilder;
     ///
-    /// let mut source_builder = SourceBuilder::new();
-    /// source_builder.title(Some("Test".to_string()));
+    /// let source_builder = SourceBuilder::new()
+    ///     .title(Some("Test".to_string()));
     /// ```
     pub fn title(mut self, title: Option<String>) -> SourceBuilder {
         self.title = title;

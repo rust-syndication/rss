@@ -267,14 +267,10 @@ impl FromXml for Image {
                     }
                 }
                 Event::End(_) => {
-                    let url = url.unwrap_or_default();
-                    let title = title.unwrap_or_default();
-                    let link = link.unwrap_or_default();
-
                     return Ok(Image {
-                                  url: url,
-                                  title: title,
-                                  link: link,
+                                  url: url.unwrap_or_default(),
+                                  title: title.unwrap_or_default(),
+                                  link: link.unwrap_or_default(),
                                   width: width,
                                   height: height,
                                   description: description,
@@ -351,12 +347,11 @@ impl ImageBuilder {
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.url("http://jupiterbroadcasting.com/images/LAS-300-Badge.
-    /// jpg");
+    /// let image_builder = ImageBuilder::new()
+    ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg");
     /// ```
-    pub fn url(mut self, url: &str) -> ImageBuilder {
-        self.url = url.to_string();
+    pub fn url<S: Into<String>>(mut self, url: S) -> ImageBuilder {
+        self.url = url.into();
         self
     }
 
@@ -368,11 +363,11 @@ impl ImageBuilder {
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.title("LAS 300 Logo");
+    /// let image_builder = ImageBuilder::new()
+    ///     .title("LAS 300 Logo");
     /// ```
-    pub fn title(mut self, title: &str) -> ImageBuilder {
-        self.title = title.to_string();
+    pub fn title<S: Into<String>>(mut self, title: S) -> ImageBuilder {
+        self.title = title.into();
         self
     }
 
@@ -384,11 +379,11 @@ impl ImageBuilder {
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.link("http://www.jupiterbroadcasting.com/");
+    /// let image_builder = ImageBuilder::new()
+    ///     .link("http://www.jupiterbroadcasting.com/");
     /// ```
-    pub fn link(mut self, link: &str) -> ImageBuilder {
-        self.link = link.to_string();
+    pub fn link<S: Into<String>>(mut self, link: S) -> ImageBuilder {
+        self.link = link.into();
         self
     }
 
@@ -400,8 +395,8 @@ impl ImageBuilder {
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.width(Some(88));
+    /// let image_builder = ImageBuilder::new()
+    ///     .width(Some(88));
     /// ```
     pub fn width(mut self, width: Option<i64>) -> ImageBuilder {
         self.width = width;
@@ -416,8 +411,8 @@ impl ImageBuilder {
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.height(Some(88));
+    /// let image_builder = ImageBuilder::new()
+    ///     .height(Some(88));
     /// ```
     pub fn height(mut self, height: Option<i64>) -> ImageBuilder {
         self.height = height;
@@ -432,8 +427,8 @@ impl ImageBuilder {
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let mut image_builder = ImageBuilder::new();
-    /// image_builder.description(Some("This is a test".to_string()));
+    /// let image_builder = ImageBuilder::new()
+    ///     .description(Some("This is a test".to_string()));
     /// ```
     pub fn description(mut self, description: Option<String>) -> ImageBuilder {
         self.description = description;

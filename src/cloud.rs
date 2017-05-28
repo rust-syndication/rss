@@ -182,18 +182,12 @@ impl FromXml for Cloud {
             }
         }
 
-        let domain = domain.unwrap_or_default();
-        let port = port.unwrap_or_default();
-        let path = path.unwrap_or_default();
-        let register_procedure = register_procedure.unwrap_or_default();
-        let protocol = protocol.unwrap_or_default();
-
         Ok(Cloud {
-               domain: domain,
-               port: port,
-               path: path,
-               register_procedure: register_procedure,
-               protocol: protocol,
+               domain: domain.unwrap_or_default(),
+               port: port.unwrap_or_default(),
+               path: path.unwrap_or_default(),
+               register_procedure: register_procedure.unwrap_or_default(),
+               protocol: protocol.unwrap_or_default(),
            })
 
     }
@@ -249,11 +243,11 @@ impl CloudBuilder {
     /// ```
     /// use rss::CloudBuilder;
     ///
-    /// let mut cloud_builder = CloudBuilder::new();
-    /// cloud_builder.domain("http://rpc.sys.com/");
+    /// let cloud_builder = CloudBuilder::new()
+    ///     .domain("http://rpc.sys.com/");
     /// ```
-    pub fn domain(mut self, domain: &str) -> CloudBuilder {
-        self.domain = domain.to_string();
+    pub fn domain<S: Into<String>>(mut self, domain: S) -> CloudBuilder {
+        self.domain = domain.into();
         self
     }
 
@@ -265,8 +259,8 @@ impl CloudBuilder {
     /// ```
     /// use rss::CloudBuilder;
     ///
-    /// let mut cloud_builder = CloudBuilder::new();
-    /// cloud_builder.port(80);
+    /// let cloud_builder = CloudBuilder::new()
+    ///     .port(80);
     /// ```
     pub fn port(mut self, port: i64) -> CloudBuilder {
         self.port = port;
@@ -281,11 +275,11 @@ impl CloudBuilder {
     /// ```
     /// use rss::CloudBuilder;
     ///
-    /// let mut cloud_builder = CloudBuilder::new();
-    /// cloud_builder.path("/RPC2");
+    /// let cloud_builder = CloudBuilder::new()
+    ///     .path("/RPC2");
     /// ```
-    pub fn path(mut self, path: &str) -> CloudBuilder {
-        self.path = path.to_string();
+    pub fn path<S: Into<String>>(mut self, path: S) -> CloudBuilder {
+        self.path = path.into();
         self
     }
 
@@ -297,11 +291,11 @@ impl CloudBuilder {
     /// ```
     /// use rss::CloudBuilder;
     ///
-    /// let mut cloud_builder = CloudBuilder::new();
-    /// cloud_builder.register_procedure("pingMe");
+    /// let cloud_builder = CloudBuilder::new()
+    ///     .register_procedure("pingMe");
     /// ```
-    pub fn register_procedure(mut self, register_procedure: &str) -> CloudBuilder {
-        self.register_procedure = register_procedure.to_string();
+    pub fn register_procedure<S: Into<String>>(mut self, register_procedure: S) -> CloudBuilder {
+        self.register_procedure = register_procedure.into();
         self
     }
 
@@ -313,11 +307,11 @@ impl CloudBuilder {
     /// ```
     /// use rss::CloudBuilder;
     ///
-    /// let mut cloud_builder = CloudBuilder::new();
-    /// cloud_builder.protocol("soap");
+    /// let cloud_builder = CloudBuilder::new()
+    ///     .protocol("soap");
     /// ```
-    pub fn protocol(mut self, protocol: &str) -> CloudBuilder {
-        self.protocol = protocol.to_string();
+    pub fn protocol<S: Into<String>>(mut self, protocol: S) -> CloudBuilder {
+        self.protocol = protocol.into();
         self
     }
 

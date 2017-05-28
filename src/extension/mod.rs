@@ -96,7 +96,7 @@ pub struct ExtensionBuilder {
 }
 
 impl ExtensionBuilder {
-    // Construct a new `DublinCoreExtensionBuilder` and return default values.
+    /// Construct a new `ExtensionBuilder` and return default values.
     ///
     /// # Examples
     ///
@@ -110,8 +110,8 @@ impl ExtensionBuilder {
     }
 
     /// Get the name that exists under `Extension`.
-    pub fn name(mut self, name: &str) -> ExtensionBuilder {
-        self.name = name.to_string();
+    pub fn name<S: Into<String>>(mut self, name: S) -> ExtensionBuilder {
+        self.name = name.into();
         self
     }
 

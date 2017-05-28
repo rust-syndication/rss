@@ -130,8 +130,8 @@ impl ITunesOwnerBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let mut owner_builder = ITunesOwnerBuilder::new();
-    /// owner_builder.name(Some("name".to_string()));
+    /// let owner_builder = ITunesOwnerBuilder::new()
+    ///     .name(Some("name".to_string()));
     /// ```
     pub fn name(mut self, name: Option<String>) -> ITunesOwnerBuilder {
         self.name = name;
@@ -145,8 +145,8 @@ impl ITunesOwnerBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let mut owner_builder = ITunesOwnerBuilder::new();
-    /// owner_builder.email(Some("email@example.com".to_string()));
+    /// let owner_builder = ITunesOwnerBuilder::new()
+    ///     .email(Some("email@example.com".to_string()));
     /// ```
     pub fn email(mut self, email: Option<String>) -> ITunesOwnerBuilder {
         self.email = email;

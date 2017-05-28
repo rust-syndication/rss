@@ -55,8 +55,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let author = "author".to_string();
     ///
@@ -71,8 +70,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .author(None)
@@ -91,8 +89,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let block = "block".to_string();
     ///
@@ -107,8 +104,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .block(None)
@@ -127,8 +123,8 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension, ITunesCategoryBuilder};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension,
+    ///     ITunesCategoryBuilder};
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
@@ -158,8 +154,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let image = "image".to_string();
     ///
@@ -174,8 +169,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .image(None)
@@ -194,8 +188,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let explicit = "explicit".to_string();
     ///
@@ -210,8 +203,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .explicit(None)
@@ -230,8 +222,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let complete = "complete".to_string();
     ///
@@ -246,8 +237,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .complete(None)
@@ -267,8 +257,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let new_feed_url = "new_feed_url".to_string();
     ///
@@ -283,8 +272,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .new_feed_url(None)
@@ -303,8 +291,8 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension, ITunesOwnerBuilder};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension,
+    ///     ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(Some("email@example.com".to_string()))
@@ -320,8 +308,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .owner(None)
@@ -340,8 +327,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let subtitle = "subtitle".to_string();
     ///
@@ -356,8 +342,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .subtitle(None)
@@ -376,8 +361,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let summary = "summary".to_string();
     ///
@@ -392,8 +376,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .summary(None)
@@ -412,8 +395,7 @@ impl ITunesChannelExtension {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let keywords = "keywords".to_string();
     ///
@@ -428,8 +410,7 @@ impl ITunesChannelExtension {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesChannelExtension};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
     ///     .keywords(None)
@@ -551,8 +532,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.author(Some("author".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .author(Some("author".to_string()));
     /// ```
     pub fn author(mut self, author: Option<String>) -> ITunesChannelExtensionBuilder {
         self.author = author;
@@ -567,8 +548,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.block(Some("block".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .block(Some("block".to_string()));
     /// ```
     pub fn block(mut self, block: Option<String>) -> ITunesChannelExtensionBuilder {
         self.block = block;
@@ -581,8 +562,7 @@ impl ITunesChannelExtensionBuilder {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesChannelExtensionBuilder};
+    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesChannelExtensionBuilder};
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
@@ -595,8 +575,8 @@ impl ITunesChannelExtensionBuilder {
     ///
     /// let categories = vec![category];
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.categories(categories);
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .categories(categories);
     /// ```
     pub fn categories(mut self, categories: Vec<ITunesCategory>) -> ITunesChannelExtensionBuilder {
         self.categories = categories;
@@ -611,8 +591,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.image(Some("image".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .image(Some("image".to_string()));
     /// ```
     pub fn image(mut self, image: Option<String>) -> ITunesChannelExtensionBuilder {
         self.image = image;
@@ -627,8 +607,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.explicit(Some("explicit".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .explicit(Some("explicit".to_string()));
     /// ```
     pub fn explicit(mut self, explicit: Option<String>) -> ITunesChannelExtensionBuilder {
         self.explicit = explicit;
@@ -643,8 +623,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.complete(Some("complete".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .complete(Some("complete".to_string()));
     /// ```
     pub fn complete(mut self, complete: Option<String>) -> ITunesChannelExtensionBuilder {
         self.complete = complete;
@@ -652,16 +632,15 @@ impl ITunesChannelExtensionBuilder {
     }
 
 
-    /// Set the optional new_feed_url that exists under
-    /// `ITunesChannelExtension`.
+    /// Set the optional new_feed_url that exists under `ITunesChannelExtension`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.new_feed_url(Some("new_feed_url".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .new_feed_url(Some("new_feed_url".to_string()));
     /// ```
     pub fn new_feed_url(mut self, new_feed_url: Option<String>) -> ITunesChannelExtensionBuilder {
         self.new_feed_url = new_feed_url;
@@ -674,16 +653,15 @@ impl ITunesChannelExtensionBuilder {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesOwnerBuilder};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(Some("email@example.com".to_string()))
     ///     .name(Some("name".to_string()))
     ///     .finalize();
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.owner(Some(owner));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .owner(Some(owner));
     /// ```
     pub fn owner(mut self, owner: Option<ITunesOwner>) -> ITunesChannelExtensionBuilder {
         self.owner = owner;
@@ -698,8 +676,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.subtitle(Some("subtitle".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .subtitle(Some("subtitle".to_string()));
     /// ```
     pub fn subtitle(mut self, subtitle: Option<String>) -> ITunesChannelExtensionBuilder {
         self.subtitle = subtitle;
@@ -714,8 +692,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.summary(Some("summary".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .summary(Some("summary".to_string()));
     /// ```
     pub fn summary(mut self, summary: Option<String>) -> ITunesChannelExtensionBuilder {
         self.summary = summary;
@@ -730,8 +708,8 @@ impl ITunesChannelExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let mut channel_builder = ITunesChannelExtensionBuilder::new();
-    /// channel_builder.keywords(Some("keywords".to_string()));
+    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    ///     .keywords(Some("keywords".to_string()));
     /// ```
     pub fn keywords(mut self, keywords: Option<String>) -> ITunesChannelExtensionBuilder {
         self.keywords = keywords;
@@ -739,14 +717,13 @@ impl ITunesChannelExtensionBuilder {
     }
 
 
-    /// Construct the `ITunesChannelExtension` from the
-    /// `ITunesChannelExtensionBuilder`.
+    /// Construct the `ITunesChannelExtension` from the `ITunesChannelExtensionBuilder`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesChannelExtensionBuilder, ITunesOwnerBuilder};
+    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesChannelExtensionBuilder,
+    ///     ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(Some("email@example.com".to_string()))

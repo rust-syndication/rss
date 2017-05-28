@@ -27,8 +27,7 @@ impl ITunesCategory {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesCategory};
+    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesCategory};
     ///
     /// let text = "text";
     ///
@@ -48,8 +47,7 @@ impl ITunesCategory {
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesCategory};
+    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesCategory};
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
@@ -64,8 +62,7 @@ impl ITunesCategory {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesCategory};
+    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesCategory};
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
@@ -123,11 +120,11 @@ impl ITunesCategoryBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let mut category_builder = ITunesCategoryBuilder::new();
-    /// category_builder.text("text");
+    /// let category_builder = ITunesCategoryBuilder::new()
+    ///     .text("text");
     /// ```
-    pub fn text(mut self, text: &str) -> ITunesCategoryBuilder {
-        self.text = text.to_string();
+    pub fn text<S: Into<String>>(mut self, text: S) -> ITunesCategoryBuilder {
+        self.text = text.into();
         self
     }
 
@@ -142,8 +139,8 @@ impl ITunesCategoryBuilder {
     ///     .text("text")
     ///     .finalize();
     ///
-    /// let mut category_builder = ITunesCategoryBuilder::new();
-    /// category_builder.subcategory(Some(Box::new(subcategory)));
+    /// let category_builder = ITunesCategoryBuilder::new()
+    ///     .subcategory(Some(Box::new(subcategory)));
     /// ```
     pub fn subcategory(mut self,
                        subcategory: Option<Box<ITunesCategory>>)

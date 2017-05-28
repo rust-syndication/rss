@@ -466,8 +466,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.author(Some("author".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .author(Some("author".to_string()));
     /// ```
     pub fn author(mut self, author: Option<String>) -> ITunesItemExtensionBuilder {
         self.author = author;
@@ -482,8 +482,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.block(Some("block".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .block(Some("block".to_string()));
     /// ```
     pub fn block(mut self, block: Option<String>) -> ITunesItemExtensionBuilder {
         self.block = block;
@@ -498,8 +498,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.image(Some("image".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .image(Some("image".to_string()));
     /// ```
     pub fn image(mut self, image: Option<String>) -> ITunesItemExtensionBuilder {
         self.image = image;
@@ -514,8 +514,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.duration(Some("duration".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .duration(Some("duration".to_string()));
     /// ```
     pub fn duration(mut self, duration: Option<String>) -> ITunesItemExtensionBuilder {
         self.duration = duration;
@@ -530,8 +530,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.explicit(Some("explicit".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .explicit(Some("explicit".to_string()));
     /// ```
     pub fn explicit(mut self, explicit: Option<String>) -> ITunesItemExtensionBuilder {
         self.explicit = explicit;
@@ -547,8 +547,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.closed_captioned(Some("closed_captioned".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .closed_captioned(Some("closed_captioned".to_string()));
     /// ```
     pub fn closed_captioned(mut self,
                             closed_captioned: Option<String>)
@@ -565,8 +565,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.order(Some("order".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .order(Some("order".to_string()));
     /// ```
     pub fn order(mut self, order: Option<String>) -> ITunesItemExtensionBuilder {
         self.order = order;
@@ -581,8 +581,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.subtitle(Some("subtitle".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .subtitle(Some("subtitle".to_string()));
     /// ```
     pub fn subtitle(mut self, subtitle: Option<String>) -> ITunesItemExtensionBuilder {
         self.subtitle = subtitle;
@@ -597,8 +597,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.summary(Some("summary".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .summary(Some("summary".to_string()));
     /// ```
     pub fn summary(mut self, summary: Option<String>) -> ITunesItemExtensionBuilder {
         self.summary = summary;
@@ -613,8 +613,8 @@ impl ITunesItemExtensionBuilder {
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.keywords(Some("keywords".to_string()));
+    /// let item_builder = ITunesItemExtensionBuilder::new()
+    ///     .keywords(Some("keywords".to_string()));
     /// ```
     pub fn keywords(mut self, keywords: Option<String>) -> ITunesItemExtensionBuilder {
         self.keywords = keywords;
@@ -622,8 +622,7 @@ impl ITunesItemExtensionBuilder {
     }
 
 
-    /// Construct the `ITunesItemExtension` from the
-    /// `ITunesItemExtensionBuilder`.
+    /// Construct the `ITunesItemExtension` from the `ITunesItemExtensionBuilder`.
     ///
     /// # Examples
     ///

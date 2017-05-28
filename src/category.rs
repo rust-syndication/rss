@@ -143,11 +143,11 @@ impl CategoryBuilder {
     /// ```
     /// use rss::CategoryBuilder;
     ///
-    /// let mut category_builder = CategoryBuilder::new();
-    /// category_builder.name("Podcast");
+    /// let category_builder = CategoryBuilder::new()
+    ///     .name("Podcast");
     /// ```
-    pub fn name(mut self, name: &str) -> CategoryBuilder {
-        self.name = name.to_string();
+    pub fn name<S: Into<String>>(mut self, name: S) -> CategoryBuilder {
+        self.name = name.into();
         self
     }
 
@@ -158,8 +158,8 @@ impl CategoryBuilder {
     /// ```
     /// use rss::CategoryBuilder;
     ///
-    /// let mut category_builder = CategoryBuilder::new();
-    /// category_builder.domain(Some("http://www.example.com".to_string()));
+    /// let category_builder = CategoryBuilder::new()
+    ///     .domain(Some("http://www.example.com".to_string()));
     /// ```
     pub fn domain(mut self, domain: Option<String>) -> CategoryBuilder {
         self.domain = domain;
