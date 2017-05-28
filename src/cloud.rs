@@ -44,8 +44,7 @@ impl Cloud {
     /// let cloud = CloudBuilder::new()
     ///     .domain(domain)
     ///     .protocol("soap")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(domain.to_string(), cloud.domain());
     /// ```
@@ -67,8 +66,7 @@ impl Cloud {
     ///     .port(port)
     ///     .domain("http://rpc.sys.com/")
     ///     .protocol("soap")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(port.to_string(), cloud.port());
     /// ```
@@ -90,8 +88,7 @@ impl Cloud {
     ///     .path(path)
     ///     .domain("http://rpc.sys.com/")
     ///     .protocol("soap")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(path, cloud.path());
     /// ```
@@ -112,8 +109,7 @@ impl Cloud {
     ///     .register_procedure(register_procedure)
     ///     .domain("http://rpc.sys.com/")
     ///     .protocol("soap")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// assert_eq!(register_procedure, cloud.register_procedure());
     /// ```
     pub fn register_procedure(&self) -> &str {
@@ -133,8 +129,7 @@ impl Cloud {
     /// let cloud = CloudBuilder::new()
     ///     .protocol(protocol)
     ///     .domain("http://rpc.sys.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(protocol, cloud.protocol());
     /// ```
@@ -340,8 +335,9 @@ impl CloudBuilder {
     ///         .path("/RPC2")
     ///         .register_procedure("pingMe")
     ///         .protocol("soap")
-    ///         .validate().unwrap()
-    ///         .finalize().unwrap();
+    ///         .validate()
+    ///         .unwrap()
+    ///         .finalize();
     /// ```
     pub fn validate(self) -> Result<CloudBuilder, Error> {
         if self.port < 0 {
@@ -374,16 +370,14 @@ impl CloudBuilder {
     ///         .protocol("soap")
     ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Cloud, Error> {
-        let port = self.port.to_string();
-
-        Ok(Cloud {
-               domain: self.domain,
-               port: port,
-               path: self.path,
-               register_procedure: self.register_procedure,
-               protocol: self.protocol,
-           })
+    pub fn finalize(self) -> Cloud {
+        Cloud {
+            domain: self.domain,
+            port: self.port.to_string(),
+            path: self.path,
+            register_procedure: self.register_procedure,
+            protocol: self.protocol,
+        }
     }
 }
 

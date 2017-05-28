@@ -68,8 +68,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .title(Some(title_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(title_string), item.title());
     /// ```
@@ -79,8 +78,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .title(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.title().is_none());
     /// ```
@@ -98,8 +96,7 @@ impl Item {
     /// let link_string = "http://www.jupiterbroadcasting.com/";
     /// let item = ItemBuilder::new()
     ///     .link(Some(link_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(link_string), item.link());
     /// ```
@@ -109,8 +106,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .link(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.link().is_none());
     /// ```
@@ -129,8 +125,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .description(Some(description_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(description_string), item.description());
     /// ```
@@ -140,8 +135,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .description(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.description().is_none());
     /// ```
@@ -160,8 +154,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .author(Some(author_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(author_string), item.author());
     /// ```
@@ -171,8 +164,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .author(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.author().is_none());
     /// ```
@@ -190,21 +182,18 @@ impl Item {
     /// let category_1 = CategoryBuilder::new()
     ///     .domain(None)
     ///     .name("Media")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let category_2 = CategoryBuilder::new()
     ///     .domain(Some("http://jupiterbroadcasting.com".to_string()))
     ///     .name("Podcast")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let categories_vec = vec![category_1, category_2];
     ///
     /// let item = ItemBuilder::new()
     ///     .categories(categories_vec.clone())
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(categories_vec.clone().len(), item.categories().len());
     /// ```
@@ -223,8 +212,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .comments(Some(comments_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let comments_option =  item.comments();
     /// assert!(comments_option.is_some());
@@ -237,8 +225,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .comments(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.comments().is_none());
     /// ```
@@ -260,13 +247,11 @@ impl Item {
     ///     .url(url.as_ref())
     ///     .length(70772893)
     ///     .mime_type("audio/ogg")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
     ///     .enclosure(Some(enclosure))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.enclosure().is_some());
     /// ```
@@ -276,8 +261,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .enclosure(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.enclosure().is_none());
     /// ```
@@ -295,13 +279,11 @@ impl Item {
     /// let guid = GuidBuilder::new()
     ///     .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C")
     ///     .is_permalink(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
     ///     .guid(Some(guid))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// assert!(item.guid().is_some())
     /// ```
     ///
@@ -310,8 +292,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .guid(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.guid().is_none());
     /// ```
@@ -330,8 +311,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .pub_date(Some(pub_date.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let local = item.pub_date();
     /// assert!(local.is_some());
@@ -344,8 +324,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .pub_date(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.pub_date().is_none());
     /// ```
@@ -362,13 +341,11 @@ impl Item {
     ///
     /// let source = SourceBuilder::new()
     ///     .url("http://www.tomalak.org/links2.xml")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
     ///     .source(Some(source))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.source().is_some())
     /// ```
@@ -378,8 +355,7 @@ impl Item {
     ///
     /// let item = ItemBuilder::new()
     ///     .source(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.source().is_none());
     /// ```
@@ -405,14 +381,12 @@ impl Item {
     ///     .subtitle(Some("subtitle".to_string()))
     ///     .summary(Some("summary".to_string()))
     ///     .keywords(Some("keywords".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
     ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
     ///     .itunes_ext(Some(itunes_item))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.itunes_ext().is_some());
     /// ```
@@ -423,8 +397,7 @@ impl Item {
     /// let item = ItemBuilder::new()
     ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
     ///     .itunes_ext(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(item.itunes_ext().is_none());
     /// ```
@@ -696,8 +669,7 @@ impl ItemBuilder {
     /// use rss::{CategoryBuilder, ItemBuilder};
     ///
     /// let category = CategoryBuilder::new()
-    ///     .finalize()
-    ///     .unwrap();;
+    ///     .finalize();
     /// let categories = vec![category];
     ///
     /// let mut item_builder = ItemBuilder::new();
@@ -738,8 +710,7 @@ impl ItemBuilder {
     /// let enclosure = EnclosureBuilder::new()
     ///     .url(url.as_str())
     ///     .mime_type("audio/ogg")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.enclosure(Some(enclosure));
@@ -758,8 +729,7 @@ impl ItemBuilder {
     /// use rss::{GuidBuilder, ItemBuilder};
     ///
     /// let guid = GuidBuilder::new()
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.guid(Some(guid));
@@ -798,8 +768,7 @@ impl ItemBuilder {
     ///
     /// let source = SourceBuilder::new()
     ///     .url(url)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.source(Some(source));
@@ -831,8 +800,7 @@ impl ItemBuilder {
     ///     .subtitle(Some("subtitle".to_string()))
     ///     .summary(Some("summary".to_string()))
     ///     .keywords(Some("keywords".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut item_builder = ItemBuilder::new();
     /// item_builder.itunes_ext(Some(itunes_item));
@@ -878,8 +846,9 @@ impl ItemBuilder {
     ///     .guid(None)
     ///     .pub_date(None)
     ///     .source(None)
-    ///     .validate().unwrap()
-    ///     .finalize().unwrap();
+    ///     .validate()
+    ///     .unwrap()
+    ///     .finalize();
     /// ```
     pub fn validate(self) -> Result<ItemBuilder, Error> {
         if let Some(ref link) = self.link {
@@ -916,25 +885,24 @@ impl ItemBuilder {
     ///     .guid(None)
     ///     .pub_date(None)
     ///     .source(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Item, Error> {
-        Ok(Item {
-               title: self.title,
-               link: self.link,
-               description: self.description,
-               author: self.author,
-               categories: self.categories,
-               comments: self.comments,
-               enclosure: self.enclosure,
-               guid: self.guid,
-               pub_date: self.pub_date,
-               source: self.source,
-               extensions: self.extensions,
-               itunes_ext: self.itunes_ext,
-               dublin_core_ext: self.dublin_core_ext,
-               content: self.content,
-           })
+    pub fn finalize(self) -> Item {
+        Item {
+            title: self.title,
+            link: self.link,
+            description: self.description,
+            author: self.author,
+            categories: self.categories,
+            comments: self.comments,
+            enclosure: self.enclosure,
+            guid: self.guid,
+            pub_date: self.pub_date,
+            source: self.source,
+            extensions: self.extensions,
+            itunes_ext: self.itunes_ext,
+            dublin_core_ext: self.dublin_core_ext,
+            content: self.content,
+        }
     }
 }

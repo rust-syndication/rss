@@ -47,8 +47,7 @@ impl Image {
     /// let image = ImageBuilder::new()
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(url, image.url());
     /// ```
@@ -74,8 +73,7 @@ impl Image {
     ///     .title(title)
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(title, image.title());
     /// ```
@@ -98,8 +96,7 @@ impl Image {
     /// let image = ImageBuilder::new()
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(link, image.link());
     /// ```
@@ -125,8 +122,7 @@ impl Image {
     ///     .width(None)
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(default.to_string(), image.width().unwrap());
     /// ```
@@ -144,8 +140,7 @@ impl Image {
     ///     .width(Some(width))
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(width.to_string().as_str()), image.width());
     /// ```
@@ -173,8 +168,7 @@ impl Image {
     ///     .height(None)
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(default.to_string(), image.height().unwrap());
     /// ```
@@ -192,8 +186,7 @@ impl Image {
     ///     .height(Some(height))
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(height.to_string().as_str()), image.height());
     /// ```
@@ -217,8 +210,7 @@ impl Image {
     ///     .description(None)
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(image.description().is_none());
     /// ```
@@ -236,8 +228,7 @@ impl Image {
     ///     .description(Some(description_string.to_string()))
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let description_option = image.description();
     /// assert!(description_option.is_some());
@@ -464,8 +455,9 @@ impl ImageBuilder {
     ///         .width(Some(88))
     ///         .height(Some(88))
     ///         .description(Some("This is a test".to_string()))
-    ///         .validate().unwrap()
-    ///         .finalize().unwrap();
+    ///         .validate()
+    ///         .unwrap()
+    ///         .finalize();
     /// ```
     pub fn validate(self) -> Result<ImageBuilder, Error> {
         if !self.url.ends_with(".jpeg") && !self.url.ends_with(".jpg") &&
@@ -517,25 +509,14 @@ impl ImageBuilder {
     ///         .description(Some("This is a test".to_string()))
     ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Image, Error> {
-
-        let width = match self.width {
-            Some(val) => Some(val.to_string()),
-            None => Some(88.to_string()),
-        };
-
-        let height = match self.height {
-            Some(val) => Some(val.to_string()),
-            None => Some(31.to_string()),
-        };
-
-        Ok(Image {
-               url: self.url,
-               title: self.title,
-               link: self.link,
-               width: width,
-               height: height,
-               description: self.description,
-           })
+    pub fn finalize(self) -> Image {
+        Image {
+            url: self.url,
+            title: self.title,
+            link: self.link,
+            width: Some(self.width.unwrap_or(88).to_string()),
+            height: Some(self.height.unwrap_or(31).to_string()),
+            description: self.description,
+        }
     }
 }

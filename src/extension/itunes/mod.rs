@@ -55,7 +55,7 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>)
                 Some(Box::new(ITunesCategoryBuilder::new()
                                   .text(text.as_str())
                                   .subcategory(None)
-                                  .finalize()?))
+                                  .finalize()))
             } else {
                 None
             }
@@ -64,7 +64,7 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>)
         categories.push(ITunesCategoryBuilder::new()
                             .text(text.as_str())
                             .subcategory(child)
-                            .finalize()?);
+                            .finalize());
     }
 
     Ok(categories)
@@ -85,8 +85,5 @@ fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITune
         .remove("email")
         .and_then(|mut v| v.remove(0).value);
 
-    Ok(Some(ITunesOwnerBuilder::new()
-                .name(name)
-                .email(email)
-                .finalize()?))
+    Ok(Some(ITunesOwnerBuilder::new().name(name).email(email).finalize()))
 }

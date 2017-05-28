@@ -36,8 +36,7 @@ impl Source {
     ///
     /// let source = SourceBuilder::new()
     ///     .url(url)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(url, source.url());
     /// ```
@@ -59,8 +58,7 @@ impl Source {
     /// let source_obj = SourceBuilder::new()
     ///     .title(Some(title.to_string()))
     ///     .url(url)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(title), source_obj.title());
     /// ```
@@ -177,8 +175,7 @@ impl SourceBuilder {
     ///     .title(None)
     ///     .validate()
     ///     .unwrap()
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// ```
     pub fn validate(self) -> Result<SourceBuilder, Error> {
         Url::parse(self.url.as_str())?;
@@ -197,13 +194,12 @@ impl SourceBuilder {
     /// let source = SourceBuilder::new()
     ///     .url("http://www.example.com/source")
     ///     .title(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Source, Error> {
-        Ok(Source {
-               url: self.url,
-               title: self.title,
-           })
+    pub fn finalize(self) -> Source {
+        Source {
+            url: self.url,
+            title: self.title,
+        }
     }
 }

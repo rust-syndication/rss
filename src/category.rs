@@ -37,8 +37,7 @@ impl Category {
     ///
     /// let category_obj = CategoryBuilder::new()
     ///     .name(category)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(category, category_obj.name());
     /// ```
@@ -57,8 +56,7 @@ impl Category {
     ///
     /// let category = CategoryBuilder::new()
     ///     .domain(Some(domain_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(domain_string), category.domain());
     /// ```
@@ -68,8 +66,7 @@ impl Category {
     ///
     /// let category = CategoryBuilder::new()
     ///     .domain(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let domain_option = category.domain();
     /// assert!(domain_option.is_none());
@@ -181,8 +178,7 @@ impl CategoryBuilder {
     ///         .name("Podcast")
     ///         .validate()
     ///         .unwrap()
-    ///         .finalize()
-    ///         .unwrap();
+    ///         .finalize();
     /// ```
 
     pub fn validate(self) -> Result<CategoryBuilder, Error> {
@@ -203,13 +199,12 @@ impl CategoryBuilder {
     /// let category = CategoryBuilder::new()
     ///         .name("Title")
     ///         .domain(None)
-    ///         .finalize()
-    ///         .unwrap();
+    ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Category, Error> {
-        Ok(Category {
-               name: self.name,
-               domain: self.domain,
-           })
+    pub fn finalize(self) -> Category {
+        Category {
+            name: self.name,
+            domain: self.domain,
+        }
     }
 }

@@ -5,8 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::writer::Writer;
@@ -136,13 +134,13 @@ impl ExtensionBuilder {
     }
 
     /// Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
-    pub fn finalize(self) -> Result<Extension, Error> {
-        Ok(Extension {
-               name: self.name,
-               value: self.value,
-               attrs: self.attrs,
-               children: self.children,
-           })
+    pub fn finalize(self) -> Extension {
+        Extension {
+            name: self.name,
+            value: self.value,
+            attrs: self.attrs,
+            children: self.children,
+        }
     }
 }
 

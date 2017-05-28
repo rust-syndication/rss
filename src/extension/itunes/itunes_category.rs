@@ -5,7 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::writer::Writer;
@@ -35,8 +34,7 @@ impl ITunesCategory {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text(text)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(text, category.text())
     /// ```
@@ -55,14 +53,12 @@ impl ITunesCategory {
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
     ///     .subcategory(Some(Box::new(subcategory)))
-    ///     .finalize()
-    ///     .unwrap();;
+    ///     .finalize();
     ///
     /// assert!(category.subcategory().is_some());
     /// ```
@@ -74,8 +70,7 @@ impl ITunesCategory {
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
     ///     .subcategory(None)
-    ///     .finalize()
-    ///     .unwrap();;
+    ///     .finalize();
     ///
     /// assert!(category.subcategory().is_none());
     /// ```
@@ -145,8 +140,7 @@ impl ITunesCategoryBuilder {
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut category_builder = ITunesCategoryBuilder::new();
     /// category_builder.subcategory(Some(Box::new(subcategory)));
@@ -167,19 +161,17 @@ impl ITunesCategoryBuilder {
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
     ///     .subcategory(Some(Box::new(subcategory)))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<ITunesCategory, Error> {
-        Ok(ITunesCategory {
-               text: self.text,
-               subcategory: self.subcategory,
-           })
+    pub fn finalize(self) -> ITunesCategory {
+        ITunesCategory {
+            text: self.text,
+            subcategory: self.subcategory,
+        }
     }
 }

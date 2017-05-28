@@ -5,7 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::writer::Writer;
@@ -32,19 +31,17 @@ impl ITunesOwner {
     ///
     /// let owner = ITunesOwnerBuilder::new()
     ///     .name(Some(name.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(name), owner.name());
     /// ```
     ///
-    // ```
-    /// use feed::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// ```
+    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
     ///
     /// let owner = ITunesOwnerBuilder::new()
     ///     .name(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let name_opt = owner.name();
     /// assert!(name_opt.is_none());
@@ -65,19 +62,17 @@ impl ITunesOwner {
     ///
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(Some(email.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(email), owner.email());
     /// ```
     ///
-    // ```
-    /// use feed::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// ```
+    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
     ///
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let email_opt = owner.email();
     /// assert!(email_opt.is_none());
@@ -168,13 +163,12 @@ impl ITunesOwnerBuilder {
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(Some("email@example.com".to_string()))
     ///     .name(Some("name".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<ITunesOwner, Error> {
-        Ok(ITunesOwner {
-               name: self.name,
-               email: self.email,
-           })
+    pub fn finalize(self) -> ITunesOwner {
+        ITunesOwner {
+            name: self.name,
+            email: self.email,
+        }
     }
 }

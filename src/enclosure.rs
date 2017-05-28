@@ -41,8 +41,7 @@ impl Enclosure {
     /// let enclosure = EnclosureBuilder::new()
     ///     .url(url.as_ref())
     ///     .mime_type("audio/ogg")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(url, enclosure.url())
     /// ```
@@ -67,8 +66,7 @@ impl Enclosure {
     ///     .url(url.as_str())
     ///     .length(length)
     ///     .mime_type("audio/ogg")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(length.to_string(), enclosure.length())
     /// ```
@@ -92,8 +90,7 @@ impl Enclosure {
     /// let enclosure = EnclosureBuilder::new()
     ///     .url(url.as_str())
     ///     .mime_type(enclosure_type)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(enclosure_type, enclosure.mime_type())
     /// ```
@@ -254,8 +251,9 @@ impl EnclosureBuilder {
     ///         .url(url.as_ref())
     ///         .length(70772893)
     ///         .mime_type("audio/ogg")
-    ///         .validate().unwrap()
-    ///         .finalize().unwrap();
+    ///         .validate()
+    ///         .unwrap()
+    ///         .finalize();
     /// ```
     pub fn validate(self) -> Result<EnclosureBuilder, Error> {
         Url::parse(self.url.as_str())?;
@@ -263,7 +261,8 @@ impl EnclosureBuilder {
         let mime = self.mime_type.parse::<Mime>();
 
         if mime.is_err() {
-            return Err(Error::Validation(format!("Enclosure Mime Type is invalid: {:?}", mime.unwrap_err())));
+            return Err(Error::Validation(format!("Enclosure Mime Type is invalid: {:?}",
+                                                 mime.unwrap_err())));
         }
 
         if self.length < 0 {
@@ -291,13 +290,11 @@ impl EnclosureBuilder {
     ///         .mime_type("audio/ogg")
     ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Enclosure, Error> {
-        let length = self.length.to_string();
-
-        Ok(Enclosure {
-               url: self.url,
-               length: length,
-               mime_type: self.mime_type,
-           })
+    pub fn finalize(self) -> Enclosure {
+        Enclosure {
+            url: self.url,
+            length: self.length.to_string(),
+            mime_type: self.mime_type,
+        }
     }
 }

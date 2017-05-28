@@ -33,8 +33,7 @@ impl Guid {
     ///
     /// let guid = GuidBuilder::new()
     ///     .is_permalink(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(guid.is_permalink());
     /// ```
@@ -46,8 +45,7 @@ impl Guid {
     ///
     /// let guid = GuidBuilder::new()
     ///     .is_permalink(Some(permalink))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(permalink, guid.is_permalink());
     /// ```
@@ -59,8 +57,7 @@ impl Guid {
     ///
     /// let guid = GuidBuilder::new()
     ///     .is_permalink(Some(permalink))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(permalink, guid.is_permalink());
     /// ```
@@ -78,8 +75,7 @@ impl Guid {
     /// let guid = "9DE46946-2F90-4D5D-9047-7E9165C16E7C";
     /// let guid_obj = GuidBuilder::new()
     ///     .value(guid)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(guid, guid_obj.value());
     /// ```
@@ -203,15 +199,10 @@ impl GuidBuilder {
     ///         .is_permalink(Some(true))
     ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Guid, Error> {
-        let is_permalink = match self.is_permalink {
-            Some(val) => val,
-            None => true,
-        };
-
-        Ok(Guid {
-               is_permalink: is_permalink,
-               value: self.value,
-           })
+    pub fn finalize(self) -> Guid {
+        Guid {
+            is_permalink: self.is_permalink.unwrap_or(true),
+            value: self.value,
+        }
     }
 }

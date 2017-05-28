@@ -6,7 +6,6 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use super::parse_image;
-use error::Error;
 use extension::Extension;
 use extension::remove_extension_value;
 use quick_xml::errors::Error as XmlError;
@@ -58,8 +57,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .author(Some(author.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(author), item.author());
     /// ```
@@ -70,8 +68,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .author(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let author_opt = item.author();
     /// assert!(author_opt.is_none());
@@ -91,8 +88,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .block(Some(block.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     ///
     /// assert_eq!(Some(block), item.block());
@@ -104,8 +100,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .block(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let block_opt = item.block();
     /// assert!(block_opt.is_none());
@@ -125,8 +120,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .image(Some(image.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(image), item.image());
     /// ```
@@ -137,8 +131,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .image(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let image_opt = item.image();
     /// assert!(image_opt.is_none());
@@ -158,8 +151,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .duration(Some(duration.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(duration), item.duration());
     /// ```
@@ -170,8 +162,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .duration(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let duration_opt = item.duration();
     /// assert!(duration_opt.is_none());
@@ -191,8 +182,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .explicit(Some(explicit.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(explicit), item.explicit());
     /// ```
@@ -203,8 +193,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .explicit(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let explicit_opt = item.explicit();
     /// assert!(explicit_opt.is_none());
@@ -225,8 +214,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .closed_captioned(Some(closed_captioned.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(closed_captioned), item.closed_captioned());
     /// ```
@@ -237,8 +225,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .closed_captioned(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let closed_captioned_opt = item.closed_captioned();
     /// assert!(closed_captioned_opt.is_none());
@@ -258,8 +245,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .order(Some(order.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(order), item.order());
     /// ```
@@ -270,8 +256,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .order(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let order_opt = item.order();
     /// assert!(order_opt.is_none());
@@ -291,8 +276,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .subtitle(Some(subtitle.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(subtitle), item.subtitle());
     /// ```
@@ -303,8 +287,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .subtitle(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let subtitle_opt = item.subtitle();
     /// assert!(subtitle_opt.is_none());
@@ -324,8 +307,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .summary(Some(summary.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(summary), item.summary());
     /// ```
@@ -336,8 +318,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .summary(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let summary_opt = item.summary();
     /// assert!(summary_opt.is_none());
@@ -357,8 +338,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .keywords(Some(keywords.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(keywords), item.keywords());
     /// ```
@@ -369,8 +349,7 @@ impl ITunesItemExtension {
     ///
     /// let item = ITunesItemExtensionBuilder::new()
     ///     .keywords(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let keywords_opt = item.keywords();
     /// assert!(keywords_opt.is_none());
@@ -662,21 +641,20 @@ impl ITunesItemExtensionBuilder {
     ///     .subtitle(Some("subtitle".to_string()))
     ///     .summary(Some("summary".to_string()))
     ///     .keywords(Some("keywords".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<ITunesItemExtension, Error> {
-        Ok(ITunesItemExtension {
-               author: self.author,
-               block: self.block,
-               image: self.image,
-               duration: self.duration,
-               explicit: self.explicit,
-               closed_captioned: self.closed_captioned,
-               order: self.order,
-               subtitle: self.subtitle,
-               summary: self.summary,
-               keywords: self.keywords,
-           })
+    pub fn finalize(self) -> ITunesItemExtension {
+        ITunesItemExtension {
+            author: self.author,
+            block: self.block,
+            image: self.image,
+            duration: self.duration,
+            explicit: self.explicit,
+            closed_captioned: self.closed_captioned,
+            order: self.order,
+            subtitle: self.subtitle,
+            summary: self.summary,
+            keywords: self.keywords,
+        }
     }
 }

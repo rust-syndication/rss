@@ -5,7 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
 use extension::Extension;
 use extension::remove_extension_values;
 use quick_xml::Writer;
@@ -317,23 +316,23 @@ impl DublinCoreExtensionBuilder {
     }
 
     /// Construct the `DublinCoreExtension` from the `DublinCoreExtensionBuilder`.
-    pub fn finalize(self) -> Result<DublinCoreExtension, Error> {
-        Ok(DublinCoreExtension {
-               contributors: self.contributors,
-               coverages: self.coverages,
-               creators: self.creators,
-               dates: self.dates,
-               descriptions: self.descriptions,
-               formats: self.formats,
-               identifiers: self.identifiers,
-               languages: self.languages,
-               publishers: self.publishers,
-               relations: self.relations,
-               rights: self.rights,
-               sources: self.sources,
-               subjects: self.subjects,
-               titles: self.titles,
-               resource_types: self.resource_types,
-           })
+    pub fn finalize(self) -> DublinCoreExtension {
+        DublinCoreExtension {
+            contributors: self.contributors,
+            coverages: self.coverages,
+            creators: self.creators,
+            dates: self.dates,
+            descriptions: self.descriptions,
+            formats: self.formats,
+            identifiers: self.identifiers,
+            languages: self.languages,
+            publishers: self.publishers,
+            relations: self.relations,
+            rights: self.rights,
+            sources: self.sources,
+            subjects: self.subjects,
+            titles: self.titles,
+            resource_types: self.resource_types,
+        }
     }
 }

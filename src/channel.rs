@@ -95,8 +95,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .title(title)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(title.to_string(), channel.title());
     /// ```
@@ -116,8 +115,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(link.to_string(), channel.link());
     /// ```
@@ -140,8 +138,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .description(description.as_ref())
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(description.to_string(), channel.description());
     /// ```
@@ -161,8 +158,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .language(Some(language_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(language_string), channel.language());
     /// ```
@@ -172,8 +168,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .language(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.language().is_none());
     /// ```
@@ -194,8 +189,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .copyright(Some(copyright_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(copyright_string), channel.copyright());
     /// ```
@@ -205,8 +199,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .copyright(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.copyright().is_none());
     /// ```
@@ -227,8 +220,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .managing_editor(Some(managing_editor_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(managing_editor_string), channel.managing_editor());
     /// ```
@@ -238,8 +230,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .managing_editor(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.managing_editor().is_none());
     /// ```
@@ -259,8 +250,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .webmaster(Some(webmaster_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(webmaster_string), channel.webmaster());
     /// ```
@@ -270,8 +260,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .webmaster(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.webmaster().is_none());
     /// ```
@@ -291,8 +280,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .pub_date(Some(pub_date.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(pub_date), channel.pub_date());
     /// ```
@@ -302,8 +290,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .pub_date(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.pub_date().is_none());
     /// ```
@@ -323,8 +310,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .last_build_date(Some(last_build_date.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let local = channel.last_build_date();
     /// assert!(local.is_some());
@@ -337,8 +323,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .last_build_date(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.last_build_date().is_none());
     /// ```
@@ -357,21 +342,18 @@ impl Channel {
     /// let category_1 = CategoryBuilder::new()
     ///     .domain(None)
     ///     .name("Media")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let category_2 = CategoryBuilder::new()
     ///     .domain(Some("http://jupiterbroadcasting.com".to_string()))
     ///     .name("Podcast")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let categories_vec = vec![category_1, category_2];
     ///
     /// let channel = ChannelBuilder::new()
     ///     .categories(categories_vec.clone())
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let categories = channel.categories();
     /// assert!(!categories.is_empty());
@@ -384,8 +366,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .categories(Vec::new())
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.categories().is_empty());
     /// ```
@@ -406,8 +387,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .generator(Some(generator_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(generator_string), channel.generator());
     /// ```
@@ -417,8 +397,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .generator(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.generator().is_none());
     /// ```
@@ -438,8 +417,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .docs(Some(docs_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let docs_option = channel.docs();
     /// assert!(docs_option.is_some());
@@ -452,8 +430,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .docs(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.docs().is_none());
     /// ```
@@ -474,13 +451,11 @@ impl Channel {
     ///     .path("/RPC2")
     ///     .register_procedure("pingMe")
     ///     .protocol("soap")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
     ///     .cloud(Some(cloud))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.cloud().is_some());
     /// ```
@@ -490,8 +465,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .cloud(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.cloud().is_none());
     /// ```
@@ -511,8 +485,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .ttl(Some(ttl_num))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(Some(ttl_num.to_string().as_str()), channel.ttl());
     /// ```
@@ -522,8 +495,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .ttl(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.ttl().is_none());
     /// ```
@@ -546,14 +518,12 @@ impl Channel {
     ///     .height(None)
     ///     .width(None)
     ///     .description(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
     ///     .image(Some(image))
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.image().is_some());
     /// ```
@@ -564,8 +534,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .image(None)
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.image().is_none());
     /// ```
@@ -584,8 +553,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .rating(None)
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.rating().is_none());
     /// ```
@@ -606,14 +574,12 @@ impl Channel {
     ///     .description("Provided Feedback")
     ///     .name("Comment")
     ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
     ///     .text_input(Some(text_input))
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.text_input().is_some());
     /// ```
@@ -624,8 +590,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .text_input(None)
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.text_input().is_none());
     /// ```
@@ -645,8 +610,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .skip_hours(skip_hours_vec.clone())
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let skip_hours  = channel.skip_hours();
     /// assert!(!skip_hours.is_empty());
@@ -665,8 +629,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .skip_hours(Vec::new())
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.skip_hours().is_empty());
     /// ```
@@ -689,8 +652,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .skip_days(skip_days_vec.clone())
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let skip_days = channel.skip_days();
     /// assert!(!skip_days.is_empty());
@@ -709,8 +671,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .skip_days(Vec::new())
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.skip_days().is_empty());
     /// ```
@@ -748,8 +709,7 @@ impl Channel {
     ///     .guid(None)
     ///     .pub_date(None)
     ///     .source(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let item_2 = ItemBuilder::new()
     ///     .title(None)
@@ -761,16 +721,14 @@ impl Channel {
     ///     .guid(None)
     ///     .pub_date(None)
     ///     .source(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let items_vec = vec![item_1, item_2];
     ///
     /// let channel = ChannelBuilder::new()
     ///     .items(items_vec.clone())
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let items = channel.items();
     /// assert!(!items.is_empty());
@@ -784,8 +742,7 @@ impl Channel {
     /// let channel = ChannelBuilder::new()
     ///     .items(Vec::new())
     ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.items().is_empty());
     /// ```
@@ -806,19 +763,16 @@ impl Channel {
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(Some("email@example.com".to_string()))
     ///     .name(Some("name".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
     ///     .subcategory(Some(Box::new(subcategory)))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let categories = vec![category];
     ///
@@ -834,13 +788,11 @@ impl Channel {
     ///     .complete(Some("complete".to_string()))
     ///     .owner(Some(owner))
     ///     .categories(categories)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
     ///     .itunes_ext(Some(itunes_channel))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.itunes_ext().is_some());
     /// ```
@@ -850,8 +802,7 @@ impl Channel {
     ///
     /// let channel = ChannelBuilder::new()
     ///     .itunes_ext(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert!(channel.itunes_ext().is_none());
     /// ```
@@ -1048,7 +999,7 @@ impl Channel {
                          .register_procedure(val.register_procedure())
                          .protocol(val.protocol())
                          .validate()?
-                         .finalize()?)
+                         .finalize())
             }
         };
 
@@ -1063,7 +1014,7 @@ impl Channel {
                                  .name(cat.name())
                                  .domain(domain)
                                  .validate()?
-                                 .finalize()?);
+                                 .finalize());
         }
 
         let mut skip_hours: Vec<i64> = Vec::new();
@@ -1097,7 +1048,7 @@ impl Channel {
                          .height(height)
                          .description(description)
                          .validate()?
-                         .finalize()?)
+                         .finalize())
             }
         };
 
@@ -1110,7 +1061,7 @@ impl Channel {
                          .name(val.name())
                          .link(val.link())
                          .validate()?
-                         .finalize()?)
+                         .finalize())
             }
         };
 
@@ -1127,7 +1078,7 @@ impl Channel {
                                   .name(cat.name())
                                   .domain(domain)
                                   .validate()?
-                                  .finalize()?);
+                                  .finalize());
             }
 
             let enclosure = match item.enclosure() {
@@ -1138,7 +1089,7 @@ impl Channel {
                              .length(i64::from_str(eval.length())?)
                              .mime_type(eval.mime_type())
                              .validate()?
-                             .finalize()?)
+                             .finalize())
                 }
             };
 
@@ -1148,7 +1099,7 @@ impl Channel {
                     Some(GuidBuilder::new()
                              .value(gval.value())
                              .is_permalink(Some(gval.is_permalink()))
-                             .finalize()?)
+                             .finalize())
                 }
             };
 
@@ -1164,7 +1115,7 @@ impl Channel {
                              .url(sval.url())
                              .title(title)
                              .validate()?
-                             .finalize()?)
+                             .finalize())
                 }
             };
 
@@ -1210,7 +1161,7 @@ impl Channel {
                            .guid(guid)
                            .source(source)
                            .validate()?
-                           .finalize()?);
+                           .finalize());
         }
 
         let ttl = match self.ttl() {
@@ -1258,29 +1209,29 @@ impl Channel {
             Some(val) => Some(val.to_string()),
         };
 
-        ChannelBuilder::new()
-            .title(self.title())
-            .link(self.link())
-            .description(self.description())
-            .language(language)
-            .copyright(copyright)
-            .managing_editor(managing_editor)
-            .webmaster(webmaster)
-            .pub_date(pub_date)
-            .last_build_date(last_build_date)
-            .generator(generator)
-            .docs(docs)
-            .rating(None)
-            .ttl(ttl)
-            .cloud(cloud)
-            .categories(channel_cat)
-            .image(image)
-            .text_input(text_input)
-            .skip_hours(skip_hours)
-            .skip_days(self.skip_days().to_vec())
-            .items(items)
-            .validate()?
-            .finalize()
+        Ok(ChannelBuilder::new()
+               .title(self.title())
+               .link(self.link())
+               .description(self.description())
+               .language(language)
+               .copyright(copyright)
+               .managing_editor(managing_editor)
+               .webmaster(webmaster)
+               .pub_date(pub_date)
+               .last_build_date(last_build_date)
+               .generator(generator)
+               .docs(docs)
+               .rating(None)
+               .ttl(ttl)
+               .cloud(cloud)
+               .categories(channel_cat)
+               .image(image)
+               .text_input(text_input)
+               .skip_hours(skip_hours)
+               .skip_days(self.skip_days().to_vec())
+               .items(items)
+               .validate()?
+               .finalize())
     }
 }
 
@@ -1751,8 +1702,7 @@ impl ChannelBuilder {
     /// use rss::{ChannelBuilder, CategoryBuilder};
     ///
     /// let category = CategoryBuilder::new()
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// let categories = vec![category];
     ///
     /// let mut channel_builder = ChannelBuilder::new();
@@ -1811,8 +1761,7 @@ impl ChannelBuilder {
     /// let cloud = CloudBuilder::new()
     ///     .domain("http://rpc.sys.com/")
     ///     .protocol("soap")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.cloud(Some(cloud));
@@ -1853,8 +1802,7 @@ impl ChannelBuilder {
     /// let image = ImageBuilder::new()
     ///     .url(url)
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.image(Some(image));
@@ -1889,8 +1837,7 @@ impl ChannelBuilder {
     ///
     /// let text_input = TextInputBuilder::new()
     ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.text_input(Some(text_input));
@@ -1948,8 +1895,7 @@ impl ChannelBuilder {
     ///
     /// let item = ItemBuilder::new()
     ///     .title(Some(title))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// let items = vec![item];
     ///
     /// let mut channel_builder = ChannelBuilder::new();
@@ -1973,19 +1919,16 @@ impl ChannelBuilder {
     /// let owner = ITunesOwnerBuilder::new()
     ///     .email(Some("email@example.com".to_string()))
     ///     .name(Some("name".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
     ///     .subcategory(Some(Box::new(subcategory)))
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let categories = vec![category];
     ///
@@ -2001,8 +1944,7 @@ impl ChannelBuilder {
     ///     .complete(Some("complete".to_string()))
     ///     .owner(Some(owner))
     ///     .categories(categories)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// let mut channel_builder = ChannelBuilder::new();
     /// channel_builder.itunes_ext(Some(itunes_channel));
@@ -2066,8 +2008,9 @@ impl ChannelBuilder {
     ///         .skip_hours(Vec::new())
     ///         .skip_days(Vec::new())
     ///         .items(Vec::new())
-    ///         .validate().unwrap()
-    ///         .finalize().unwrap();
+    ///         .validate()
+    ///         .unwrap()
+    ///         .finalize();
     /// ```
     pub fn validate(self) -> Result<ChannelBuilder, Error> {
         Url::parse(self.link.as_str())?;
@@ -2144,43 +2087,33 @@ impl ChannelBuilder {
     ///         .items(Vec::new())
     ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Channel, Error> {
-        let mut skip_hours: Vec<String> = Vec::new();
-        for hour in self.skip_hours.as_slice() {
-            skip_hours.push(hour.to_string());
+    pub fn finalize(self) -> Channel {
+        Channel {
+            title: self.title,
+            link: self.link,
+            description: self.description,
+            language: self.language,
+            copyright: self.copyright,
+            managing_editor: self.managing_editor,
+            webmaster: self.webmaster,
+            pub_date: self.pub_date,
+            last_build_date: self.last_build_date,
+            categories: self.categories,
+            generator: self.generator,
+            docs: self.docs,
+            cloud: self.cloud,
+            ttl: self.ttl.map(|n| n.to_string()),
+            image: self.image,
+            rating: self.rating,
+            text_input: self.text_input,
+            skip_hours: self.skip_hours.into_iter().map(|n| n.to_string()).collect(),
+            skip_days: self.skip_days,
+            items: self.items,
+            itunes_ext: self.itunes_ext,
+            dublin_core_ext: self.dublin_core_ext,
+            extensions: self.extensions,
+            namespaces: self.namespaces,
         }
-
-        let ttl = match self.ttl {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        Ok(Channel {
-               title: self.title,
-               link: self.link,
-               description: self.description,
-               language: self.language,
-               copyright: self.copyright,
-               managing_editor: self.managing_editor,
-               webmaster: self.webmaster,
-               pub_date: self.pub_date,
-               last_build_date: self.last_build_date,
-               categories: self.categories,
-               generator: self.generator,
-               docs: self.docs,
-               cloud: self.cloud,
-               ttl: ttl,
-               image: self.image,
-               rating: self.rating,
-               text_input: self.text_input,
-               skip_hours: skip_hours,
-               skip_days: self.skip_days,
-               items: self.items,
-               itunes_ext: self.itunes_ext,
-               dublin_core_ext: self.dublin_core_ext,
-               extensions: self.extensions,
-               namespaces: self.namespaces,
-           })
     }
 }
 

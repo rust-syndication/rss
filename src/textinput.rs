@@ -41,8 +41,7 @@ impl TextInput {
     /// let text_input = TextInputBuilder::new()
     ///     .title(title)
     ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(title, text_input.title());
     /// ```
@@ -62,8 +61,7 @@ impl TextInput {
     /// let text_input = TextInputBuilder::new()
     ///     .description(description)
     ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(description, text_input.description());
     /// ```
@@ -83,8 +81,7 @@ impl TextInput {
     /// let text_input = TextInputBuilder::new()
     ///     .name(name)
     ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(name, text_input.name());
     /// ```
@@ -103,8 +100,7 @@ impl TextInput {
     ///
     /// let text_input = TextInputBuilder::new()
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(link, text_input.link());
     /// ```
@@ -273,8 +269,7 @@ impl TextInputBuilder {
     ///         .link("http://www.example.com/feedback")
     ///         .validate()
     ///         .unwrap()
-    ///         .finalize()
-    ///         .unwrap();
+    ///         .finalize();
     /// ```
     pub fn validate(self) -> Result<TextInputBuilder, Error> {
         Url::parse(self.link.as_str())?;
@@ -294,15 +289,14 @@ impl TextInputBuilder {
     ///         .description("This is a test description.")
     ///         .name("Comments")
     ///         .link("http://www.example.com/feedback")
-    ///         .finalize()
-    ///         .unwrap();
+    ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<TextInput, Error> {
-        Ok(TextInput {
-               title: self.title,
-               description: self.description,
-               name: self.name,
-               link: self.link,
-           })
+    pub fn finalize(self) -> TextInput {
+        TextInput {
+            title: self.title,
+            description: self.description,
+            name: self.name,
+            link: self.link,
+        }
     }
 }
