@@ -55,7 +55,7 @@ impl ITunesCategory {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
+    ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
     /// assert!(category.subcategory().is_some());
@@ -140,12 +140,12 @@ impl ITunesCategoryBuilder {
     ///     .finalize();
     ///
     /// let category_builder = ITunesCategoryBuilder::new()
-    ///     .subcategory(Some(Box::new(subcategory)));
+    ///     .subcategory(Box::new(subcategory));
     /// ```
-    pub fn subcategory(mut self,
-                       subcategory: Option<Box<ITunesCategory>>)
-                       -> ITunesCategoryBuilder {
-        self.subcategory = subcategory;
+    pub fn subcategory<V>(mut self, subcategory: V) -> ITunesCategoryBuilder
+        where V: Into<Option<Box<ITunesCategory>>>
+    {
+        self.subcategory = subcategory.into();
         self
     }
 
@@ -162,7 +162,7 @@ impl ITunesCategoryBuilder {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
+    ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     /// ```
     pub fn finalize(self) -> ITunesCategory {

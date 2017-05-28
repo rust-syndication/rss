@@ -44,7 +44,7 @@ impl Guid {
     /// let permalink = true;
     ///
     /// let guid = GuidBuilder::new()
-    ///     .is_permalink(Some(permalink))
+    ///     .is_permalink(permalink)
     ///     .finalize();
     ///
     /// assert_eq!(permalink, guid.is_permalink());
@@ -56,7 +56,7 @@ impl Guid {
     /// let permalink = false;
     ///
     /// let guid = GuidBuilder::new()
-    ///     .is_permalink(Some(permalink))
+    ///     .is_permalink(permalink)
     ///     .finalize();
     ///
     /// assert_eq!(permalink, guid.is_permalink());
@@ -165,10 +165,10 @@ impl GuidBuilder {
     /// use rss::GuidBuilder;
     ///
     /// let guid_builder = GuidBuilder::new()
-    ///     .is_permalink(Some(false));
+    ///     .is_permalink(false);
     /// ```
-    pub fn is_permalink(mut self, is_permalink: Option<bool>) -> GuidBuilder {
-        self.is_permalink = is_permalink;
+    pub fn is_permalink<V: Into<Option<bool>>>(mut self, is_permalink: V) -> GuidBuilder {
+        self.is_permalink = is_permalink.into();
         self
     }
 
@@ -196,7 +196,7 @@ impl GuidBuilder {
     ///
     /// let guid = GuidBuilder::new()
     ///         .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C")
-    ///         .is_permalink(Some(true))
+    ///         .is_permalink(true)
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Guid {

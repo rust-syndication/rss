@@ -157,7 +157,7 @@ impl Channel {
     /// let language_string = "en";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .language(Some(language_string.to_string()))
+    ///     .language(language_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(language_string), channel.language());
@@ -188,7 +188,7 @@ impl Channel {
     ///     "Copyright 2002, Spartanburg Herald-Journal";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .copyright(Some(copyright_string.to_string()))
+    ///     .copyright(copyright_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(copyright_string), channel.copyright());
@@ -219,7 +219,7 @@ impl Channel {
     ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .managing_editor(Some(managing_editor_string.to_string()))
+    ///     .managing_editor(managing_editor_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(managing_editor_string), channel.managing_editor());
@@ -249,7 +249,7 @@ impl Channel {
     ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .webmaster(Some(webmaster_string.to_string()))
+    ///     .webmaster(webmaster_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(webmaster_string), channel.webmaster());
@@ -279,7 +279,7 @@ impl Channel {
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .pub_date(Some(pub_date.to_string()))
+    ///     .pub_date(pub_date.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(pub_date), channel.pub_date());
@@ -309,7 +309,7 @@ impl Channel {
     /// let last_build_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .last_build_date(Some(last_build_date.to_string()))
+    ///     .last_build_date(last_build_date.to_string())
     ///     .finalize();
     ///
     /// let local = channel.last_build_date();
@@ -345,7 +345,7 @@ impl Channel {
     ///     .finalize();
     ///
     /// let category_2 = CategoryBuilder::new()
-    ///     .domain(Some("http://jupiterbroadcasting.com".to_string()))
+    ///     .domain("http://jupiterbroadcasting.com".to_string())
     ///     .name("Podcast")
     ///     .finalize();
     ///
@@ -386,7 +386,7 @@ impl Channel {
     /// http://reinventedsoftware.com/feeder/";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .generator(Some(generator_string.to_string()))
+    ///     .generator(generator_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(generator_string), channel.generator());
@@ -416,7 +416,7 @@ impl Channel {
     /// let docs_string = "http://blogs.law.harvard.edu/tech/rss/";
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .docs(Some(docs_string.to_string()))
+    ///     .docs(docs_string.to_string())
     ///     .finalize();
     ///
     /// let docs_option = channel.docs();
@@ -454,7 +454,7 @@ impl Channel {
     ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .cloud(Some(cloud))
+    ///     .cloud(cloud)
     ///     .finalize();
     ///
     /// assert!(channel.cloud().is_some());
@@ -484,7 +484,7 @@ impl Channel {
     /// let ttl_num = 60;
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .ttl(Some(ttl_num))
+    ///     .ttl(ttl_num)
     ///     .finalize();
     ///
     /// assert_eq!(Some(ttl_num.to_string().as_str()), channel.ttl());
@@ -521,7 +521,7 @@ impl Channel {
     ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .image(Some(image))
+    ///     .image(image)
     ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
@@ -577,7 +577,7 @@ impl Channel {
     ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .text_input(Some(text_input))
+    ///     .text_input(text_input)
     ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
@@ -699,8 +699,8 @@ impl Channel {
     /// let title = "Making Music with Linux | LAS 408".to_string();
     ///
     /// let item_1 = ItemBuilder::new()
-    ///     .title(Some(title))
-    ///     .link(Some(link))
+    ///     .title(title)
+    ///     .link(link)
     ///     .description(None)
     ///     .author(None)
     ///     .categories(Vec::new())
@@ -713,7 +713,7 @@ impl Channel {
     /// let item_2 = ItemBuilder::new()
     ///     .title(None)
     ///     .link(None)
-    ///     .description(Some(description))
+    ///     .description(description)
     ///     .author(None)
     ///     .categories(Vec::new())
     ///     .enclosure(None)
@@ -760,8 +760,8 @@ impl Channel {
     /// ITunesOwnerBuilder, ITunesCategoryBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()))
-    ///     .name(Some("name".to_string()))
+    ///     .email("email@example.com".to_string())
+    ///     .name("name".to_string())
     ///     .finalize();
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
@@ -770,27 +770,27 @@ impl Channel {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
+    ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
     /// let categories = vec![category];
     ///
     /// let itunes_channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some("author".to_string()))
-    ///     .block(Some("block".to_string()))
-    ///     .image(Some("image".to_string()))
-    ///     .explicit(Some("explicit".to_string()))
-    ///     .subtitle(Some("subtitle".to_string()))
-    ///     .summary(Some("summary".to_string()))
-    ///     .keywords(Some("keywords".to_string()))
-    ///     .new_feed_url(Some("new_feed_url".to_string()))
-    ///     .complete(Some("complete".to_string()))
-    ///     .owner(Some(owner))
+    ///     .author("author".to_string())
+    ///     .block("block".to_string())
+    ///     .image("image".to_string())
+    ///     .explicit("explicit".to_string())
+    ///     .subtitle("subtitle".to_string())
+    ///     .summary("summary".to_string())
+    ///     .keywords("keywords".to_string())
+    ///     .new_feed_url("new_feed_url".to_string())
+    ///     .complete("complete".to_string())
+    ///     .owner(owner)
     ///     .categories(categories)
     ///     .finalize();
     ///
     /// let channel = ChannelBuilder::new()
-    ///     .itunes_ext(Some(itunes_channel))
+    ///     .itunes_ext(itunes_channel)
     ///     .finalize();
     ///
     /// assert!(channel.itunes_ext().is_some());
@@ -1002,21 +1002,16 @@ impl Channel {
             }
         };
 
-        let mut channel_cat: Vec<Category> = Vec::new();
+        let mut categories = Vec::new();
         for cat in self.categories() {
-            let domain = match cat.domain() {
-                None => None,
-                Some(val) => Some(val.to_string()),
-            };
-
-            channel_cat.push(CategoryBuilder::new()
-                                 .name(cat.name())
-                                 .domain(domain)
-                                 .validate()?
-                                 .finalize());
+            categories.push(CategoryBuilder::new()
+                                .name(cat.name())
+                                .domain(cat.domain().map(|s| s.into()))
+                                .validate()?
+                                .finalize());
         }
 
-        let mut skip_hours: Vec<i64> = Vec::new();
+        let mut skip_hours = Vec::new();
         for hour in self.skip_hours() {
             skip_hours.push(i64::from_str(hour.as_str())?);
         }
@@ -1064,20 +1059,16 @@ impl Channel {
             }
         };
 
-        let mut items: Vec<Item> = Vec::new();
-        for item in self.items() {
-            let mut item_cat: Vec<Category> = Vec::new();
-            for cat in item.categories() {
-                let domain = match cat.domain() {
-                    None => None,
-                    Some(val) => Some(val.to_string()),
-                };
+        let mut items = Vec::new();
 
-                item_cat.push(CategoryBuilder::new()
-                                  .name(cat.name())
-                                  .domain(domain)
-                                  .validate()?
-                                  .finalize());
+        for item in self.items() {
+            let mut categories = Vec::new();
+            for cat in item.categories() {
+                categories.push(CategoryBuilder::new()
+                                    .name(cat.name())
+                                    .domain(cat.domain().map(|s| s.into()))
+                                    .validate()?
+                                    .finalize());
             }
 
             let enclosure = match item.enclosure() {
@@ -1097,7 +1088,7 @@ impl Channel {
                 Some(gval) => {
                     Some(GuidBuilder::new()
                              .value(gval.value())
-                             .is_permalink(Some(gval.is_permalink()))
+                             .is_permalink(gval.is_permalink())
                              .finalize())
                 }
             };
@@ -1155,7 +1146,7 @@ impl Channel {
                            .author(author)
                            .pub_date(pub_date)
                            .comments(comments)
-                           .categories(item_cat)
+                           .categories(categories)
                            .enclosure(enclosure)
                            .guid(guid)
                            .source(source)
@@ -1223,7 +1214,7 @@ impl Channel {
                .rating(None)
                .ttl(ttl)
                .cloud(cloud)
-               .categories(channel_cat)
+               .categories(categories)
                .image(image)
                .text_input(text_input)
                .skip_hours(skip_hours)
@@ -1595,10 +1586,10 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .language(Some("en".to_string()));
+    ///     .language("en".to_string());
     /// ```
-    pub fn language(mut self, language: Option<String>) -> ChannelBuilder {
-        self.language = language;
+    pub fn language<V: Into<Option<String>>>(mut self, language: V) -> ChannelBuilder {
+        self.language = language.into();
         self
     }
 
@@ -1611,10 +1602,10 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .copyright(Some("Copyright 2002, Spartanburg Herald-Journal".to_string()));
+    ///     .copyright("Copyright 2002, Spartanburg Herald-Journal".to_string());
     /// ```
-    pub fn copyright(mut self, copyright: Option<String>) -> ChannelBuilder {
-        self.copyright = copyright;
+    pub fn copyright<V: Into<Option<String>>>(mut self, copyright: V) -> ChannelBuilder {
+        self.copyright = copyright.into();
         self
     }
 
@@ -1627,10 +1618,12 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .managing_editor(Some("chris@jupiterbroadcasting.com (Chris Fisher)".to_string()));
+    ///     .managing_editor("chris@jupiterbroadcasting.com (Chris Fisher)".to_string());
     /// ```
-    pub fn managing_editor(mut self, managing_editor: Option<String>) -> ChannelBuilder {
-        self.managing_editor = managing_editor;
+    pub fn managing_editor<V>(mut self, managing_editor: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
+        self.managing_editor = managing_editor.into();
         self
     }
 
@@ -1643,10 +1636,10 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .webmaster(Some("chris@jupiterbroadcasting.com (Chris Fisher)".to_string()));
+    ///     .webmaster("chris@jupiterbroadcasting.com (Chris Fisher)".to_string());
     /// ```
-    pub fn webmaster(mut self, webmaster: Option<String>) -> ChannelBuilder {
-        self.webmaster = webmaster;
+    pub fn webmaster<V: Into<Option<String>>>(mut self, webmaster: V) -> ChannelBuilder {
+        self.webmaster = webmaster.into();
         self
     }
 
@@ -1659,10 +1652,10 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .pub_date(Some("Sun, 13 Mar 2016 20:02:02 -0700".to_string()));
+    ///     .pub_date("Sun, 13 Mar 2016 20:02:02 -0700".to_string());
     /// ```
-    pub fn pub_date(mut self, pub_date: Option<String>) -> ChannelBuilder {
-        self.pub_date = pub_date;
+    pub fn pub_date<V: Into<Option<String>>>(mut self, pub_date: V) -> ChannelBuilder {
+        self.pub_date = pub_date.into();
         self
     }
 
@@ -1675,10 +1668,12 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .last_build_date(Some("Sun, 13 Mar 2016 20:02:02 -0700".to_string()));
+    ///     .last_build_date("Sun, 13 Mar 2016 20:02:02 -0700".to_string());
     /// ```
-    pub fn last_build_date(mut self, last_build_date: Option<String>) -> ChannelBuilder {
-        self.last_build_date = last_build_date;
+    pub fn last_build_date<V>(mut self, last_build_date: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
+        self.last_build_date = last_build_date.into();
         self
     }
 
@@ -1696,8 +1691,8 @@ impl ChannelBuilder {
     /// let channel_builder = ChannelBuilder::new()
     ///     .categories(vec![category]);
     /// ```
-    pub fn categories(mut self, categories: Vec<Category>) -> ChannelBuilder {
-        self.categories = categories;
+    pub fn categories<V: Into<Vec<Category>>>(mut self, categories: V) -> ChannelBuilder {
+        self.categories = categories.into();
         self
     }
 
@@ -1713,10 +1708,10 @@ impl ChannelBuilder {
     ///     http://reinventedsoftware.com/feeder/".to_string();
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .generator(Some(generator));
+    ///     .generator(generator);
     /// ```
-    pub fn generator(mut self, generator: Option<String>) -> ChannelBuilder {
-        self.generator = generator;
+    pub fn generator<V: Into<Option<String>>>(mut self, generator: V) -> ChannelBuilder {
+        self.generator = generator.into();
         self
     }
 
@@ -1729,10 +1724,10 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .docs(Some("http://blogs.law.harvard.edu/tech/rss/".to_string()));
+    ///     .docs("http://blogs.law.harvard.edu/tech/rss/".to_string());
     /// ```
-    pub fn docs(mut self, docs: Option<String>) -> ChannelBuilder {
-        self.docs = docs;
+    pub fn docs<V: Into<Option<String>>>(mut self, docs: V) -> ChannelBuilder {
+        self.docs = docs.into();
         self
     }
 
@@ -1750,10 +1745,10 @@ impl ChannelBuilder {
     ///     .finalize();
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .cloud(Some(cloud));
+    ///     .cloud(cloud);
     /// ```
-    pub fn cloud(mut self, cloud: Option<Cloud>) -> ChannelBuilder {
-        self.cloud = cloud;
+    pub fn cloud<V: Into<Option<Cloud>>>(mut self, cloud: V) -> ChannelBuilder {
+        self.cloud = cloud.into();
         self
     }
 
@@ -1766,10 +1761,10 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .ttl(Some(60));
+    ///     .ttl(60);
     /// ```
-    pub fn ttl(mut self, ttl: Option<i64>) -> ChannelBuilder {
-        self.ttl = ttl;
+    pub fn ttl<V: Into<Option<i64>>>(mut self, ttl: V) -> ChannelBuilder {
+        self.ttl = ttl.into();
         self
     }
 
@@ -1787,10 +1782,10 @@ impl ChannelBuilder {
     ///     .finalize();
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .image(Some(image));
+    ///     .image(image);
     /// ```
-    pub fn image(mut self, image: Option<Image>) -> ChannelBuilder {
-        self.image = image;
+    pub fn image<V: Into<Option<Image>>>(mut self, image: V) -> ChannelBuilder {
+        self.image = image.into();
         self
     }
 
@@ -1802,10 +1797,10 @@ impl ChannelBuilder {
     /// use rss::ChannelBuilder;
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .rating(Some("PG-13".to_string()));
+    ///     .rating("PG-13".to_string());
     /// ```
-    pub fn rating(mut self, rating: Option<String>) -> ChannelBuilder {
-        self.rating = rating;
+    pub fn rating<V: Into<Option<String>>>(mut self, rating: V) -> ChannelBuilder {
+        self.rating = rating.into();
         self
     }
 
@@ -1822,10 +1817,10 @@ impl ChannelBuilder {
     ///     .finalize();
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .text_input(Some(text_input));
+    ///     .text_input(text_input);
     /// ```
-    pub fn text_input(mut self, text_input: Option<TextInput>) -> ChannelBuilder {
-        self.text_input = text_input;
+    pub fn text_input<V: Into<Option<TextInput>>>(mut self, text_input: V) -> ChannelBuilder {
+        self.text_input = text_input.into();
         self
     }
 
@@ -1840,8 +1835,8 @@ impl ChannelBuilder {
     /// let channel_builder = ChannelBuilder::new()
     ///     .skip_hours(vec![0, 12, 18]);
     /// ```
-    pub fn skip_hours(mut self, skip_hours: Vec<i64>) -> ChannelBuilder {
-        self.skip_hours = skip_hours;
+    pub fn skip_hours<V: Into<Vec<i64>>>(mut self, skip_hours: V) -> ChannelBuilder {
+        self.skip_hours = skip_hours.into();
         self
     }
 
@@ -1856,8 +1851,8 @@ impl ChannelBuilder {
     /// let channel_builder = ChannelBuilder::new()
     ///     .skip_days(vec!["Monday".to_string(), "Tuesday".to_string()]);
     /// ```
-    pub fn skip_days(mut self, skip_days: Vec<String>) -> ChannelBuilder {
-        self.skip_days = skip_days;
+    pub fn skip_days<V: Into<Vec<String>>>(mut self, skip_days: V) -> ChannelBuilder {
+        self.skip_days = skip_days.into();
         self
     }
 
@@ -1870,14 +1865,14 @@ impl ChannelBuilder {
     /// use rss::{ChannelBuilder, ItemBuilder};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
+    ///     .title("Making Music with Linux | LAS 408".to_string())
     ///     .finalize();
     ///
     /// let channel_builder = ChannelBuilder::new()
     ///     .items(vec![item]);
     /// ```
-    pub fn items(mut self, items: Vec<Item>) -> ChannelBuilder {
-        self.items = items;
+    pub fn items<V: Into<Vec<Item>>>(mut self, items: V) -> ChannelBuilder {
+        self.items = items.into();
         self
     }
 
@@ -1892,8 +1887,8 @@ impl ChannelBuilder {
     ///     ITunesCategoryBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()))
-    ///     .name(Some("name".to_string()))
+    ///     .email("email@example.com".to_string())
+    ///     .name("name".to_string())
     ///     .finalize();
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
@@ -1902,48 +1897,50 @@ impl ChannelBuilder {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
+    ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
     /// let itunes_channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some("author".to_string()))
-    ///     .block(Some("block".to_string()))
-    ///     .image(Some("image".to_string()))
-    ///     .explicit(Some("explicit".to_string()))
-    ///     .subtitle(Some("subtitle".to_string()))
-    ///     .summary(Some("summary".to_string()))
-    ///     .keywords(Some("keywords".to_string()))
-    ///     .new_feed_url(Some("new_feed_url".to_string()))
-    ///     .complete(Some("complete".to_string()))
-    ///     .owner(Some(owner))
+    ///     .author("author".to_string())
+    ///     .block("block".to_string())
+    ///     .image("image".to_string())
+    ///     .explicit("explicit".to_string())
+    ///     .subtitle("subtitle".to_string())
+    ///     .summary("summary".to_string())
+    ///     .keywords("keywords".to_string())
+    ///     .new_feed_url("new_feed_url".to_string())
+    ///     .complete("complete".to_string())
+    ///     .owner(owner)
     ///     .categories(vec![category])
     ///     .finalize();
     ///
     /// let channel_builder = ChannelBuilder::new()
-    ///     .itunes_ext(Some(itunes_channel));
+    ///     .itunes_ext(itunes_channel);
     /// ```
-    pub fn itunes_ext(mut self, itunes_ext: Option<ITunesChannelExtension>) -> ChannelBuilder {
-        self.itunes_ext = itunes_ext;
+    pub fn itunes_ext<V>(mut self, itunes_ext: V) -> ChannelBuilder
+        where V: Into<Option<ITunesChannelExtension>>
+    {
+        self.itunes_ext = itunes_ext.into();
         self
     }
 
     /// Set the optional dublin_core_ext that exists under `Channel`.
-    pub fn dublin_core_ext(mut self,
-                           dublin_core_ext: Option<DublinCoreExtension>)
-                           -> ChannelBuilder {
-        self.dublin_core_ext = dublin_core_ext;
+    pub fn dublin_core_ext<V>(mut self, dublin_core_ext: V) -> ChannelBuilder
+        where V: Into<Option<DublinCoreExtension>>
+    {
+        self.dublin_core_ext = dublin_core_ext.into();
         self
     }
 
     /// Set the extensions that exists under `Channel`.
-    pub fn extensions(mut self, extensions: ExtensionMap) -> ChannelBuilder {
-        self.extensions = extensions;
+    pub fn extensions<V: Into<ExtensionMap>>(mut self, extensions: V) -> ChannelBuilder {
+        self.extensions = extensions.into();
         self
     }
 
     /// Set the namespaces that exists under `Channel`.
-    pub fn namespaces(mut self, namespaces: HashMap<String, String>) -> ChannelBuilder {
-        self.namespaces = namespaces;
+    pub fn namespaces<V: Into<HashMap<String, String>>>(mut self, namespaces: V) -> ChannelBuilder {
+        self.namespaces = namespaces.into();
         self
     }
 

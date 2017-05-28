@@ -112,8 +112,8 @@ fn write_dublincore() {
 #[test]
 fn verify_write_format() {
     let item = ItemBuilder::new()
-        .itunes_ext(Some(extension::itunes::ITunesItemExtensionBuilder::new().finalize()))
-        .dublin_core_ext(Some(extension::dublincore::DublinCoreExtensionBuilder::new().finalize()))
+        .itunes_ext(extension::itunes::ITunesItemExtensionBuilder::new().finalize())
+        .dublin_core_ext(extension::dublincore::DublinCoreExtensionBuilder::new().finalize())
         .finalize();
 
     let mut namespaces: HashMap<String, String> = HashMap::new();

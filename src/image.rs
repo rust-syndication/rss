@@ -137,7 +137,7 @@ impl Image {
     /// let link = "http://www.jupiterbroadcasting.com";
     ///
     /// let image = ImageBuilder::new()
-    ///     .width(Some(width))
+    ///     .width(width)
     ///     .url(url)
     ///     .link(link)
     ///     .finalize();
@@ -183,7 +183,7 @@ impl Image {
     /// let link = "http://www.jupiterbroadcasting.com";
     ///
     /// let image = ImageBuilder::new()
-    ///     .height(Some(height))
+    ///     .height(height)
     ///     .url(url)
     ///     .link(link)
     ///     .finalize();
@@ -225,7 +225,7 @@ impl Image {
     /// let link = "http://www.jupiterbroadcasting.com";
     ///
     /// let image = ImageBuilder::new()
-    ///     .description(Some(description_string.to_string()))
+    ///     .description(description_string.to_string())
     ///     .url(url)
     ///     .link(link)
     ///     .finalize();
@@ -396,10 +396,10 @@ impl ImageBuilder {
     /// use rss::ImageBuilder;
     ///
     /// let image_builder = ImageBuilder::new()
-    ///     .width(Some(88));
+    ///     .width(88);
     /// ```
-    pub fn width(mut self, width: Option<i64>) -> ImageBuilder {
-        self.width = width;
+    pub fn width<V: Into<Option<i64>>>(mut self, width: V) -> ImageBuilder {
+        self.width = width.into();
         self
     }
 
@@ -412,10 +412,10 @@ impl ImageBuilder {
     /// use rss::ImageBuilder;
     ///
     /// let image_builder = ImageBuilder::new()
-    ///     .height(Some(88));
+    ///     .height(88);
     /// ```
-    pub fn height(mut self, height: Option<i64>) -> ImageBuilder {
-        self.height = height;
+    pub fn height<V: Into<Option<i64>>>(mut self, height: V) -> ImageBuilder {
+        self.height = height.into();
         self
     }
 
@@ -428,10 +428,10 @@ impl ImageBuilder {
     /// use rss::ImageBuilder;
     ///
     /// let image_builder = ImageBuilder::new()
-    ///     .description(Some("This is a test".to_string()));
+    ///     .description("This is a test".to_string());
     /// ```
-    pub fn description(mut self, description: Option<String>) -> ImageBuilder {
-        self.description = description;
+    pub fn description<V: Into<Option<String>>>(mut self, description: V) -> ImageBuilder {
+        self.description = description.into();
         self
     }
 
@@ -447,9 +447,9 @@ impl ImageBuilder {
     ///         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
     ///         .title("LAS 300 Logo")
     ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .width(Some(88))
-    ///         .height(Some(88))
-    ///         .description(Some("This is a test".to_string()))
+    ///         .width(88)
+    ///         .height(88)
+    ///         .description("This is a test".to_string())
     ///         .validate()
     ///         .unwrap()
     ///         .finalize();
@@ -499,9 +499,9 @@ impl ImageBuilder {
     ///         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
     ///         .title("LAS 300 Logo")
     ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .width(Some(88))
-    ///         .height(Some(88))
-    ///         .description(Some("This is a test".to_string()))
+    ///         .width(88)
+    ///         .height(88)
+    ///         .description("This is a test".to_string())
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Image {

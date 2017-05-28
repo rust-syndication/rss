@@ -60,7 +60,7 @@ impl ITunesChannelExtension {
     /// let author = "author".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some(author.clone()))
+    ///     .author(author.clone())
     ///     .finalize();
     ///
     /// let author_opt = channel.author();
@@ -94,7 +94,7 @@ impl ITunesChannelExtension {
     /// let block = "block".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .block(Some(block.clone()))
+    ///     .block(block.clone())
     ///     .finalize();
     ///
     /// let block_opt = channel.block();
@@ -132,7 +132,7 @@ impl ITunesChannelExtension {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
+    ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
     /// let categories_vec = vec![category];
@@ -159,13 +159,13 @@ impl ITunesChannelExtension {
     /// let image = "image".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .image(Some(image.clone()))
+    ///     .image(image.clone())
     ///     .finalize();
     ///
     /// let image_opt = channel.image();
     /// assert!(image_opt.is_some());
     ///
-    /// assert_eq!(image.clone(), image_opt.unwrap());
+    /// assert_eq!(image, image_opt.unwrap());
     /// ```
     ///
     /// ```
@@ -193,7 +193,7 @@ impl ITunesChannelExtension {
     /// let explicit = "explicit".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .explicit(Some(explicit.clone()))
+    ///     .explicit(explicit.clone())
     ///     .finalize();
     ///
     /// let explicit_opt = channel.explicit();
@@ -227,7 +227,7 @@ impl ITunesChannelExtension {
     /// let complete = "complete".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .complete(Some(complete.clone()))
+    ///     .complete(complete.clone())
     ///     .finalize();
     ///
     /// let complete_opt = channel.complete();
@@ -262,7 +262,7 @@ impl ITunesChannelExtension {
     /// let new_feed_url = "new_feed_url".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .new_feed_url(Some(new_feed_url.clone()))
+    ///     .new_feed_url(new_feed_url.clone())
     ///     .finalize();
     ///
     /// let new_feed_url_opt = channel.new_feed_url();
@@ -295,12 +295,12 @@ impl ITunesChannelExtension {
     ///     ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()))
-    ///     .name(Some("name".to_string()))
+    ///     .email("email@example.com".to_string())
+    ///     .name("name".to_string())
     ///     .finalize();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .owner(Some(owner))
+    ///     .owner(owner)
     ///     .finalize();
     ///
     /// let owner_opt = channel.owner();
@@ -332,7 +332,7 @@ impl ITunesChannelExtension {
     /// let subtitle = "subtitle".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .subtitle(Some(subtitle.clone()))
+    ///     .subtitle(subtitle.clone())
     ///     .finalize();
     ///
     /// let subtitle_opt = channel.subtitle();
@@ -366,7 +366,7 @@ impl ITunesChannelExtension {
     /// let summary = "summary".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .summary(Some(summary.clone()))
+    ///     .summary(summary.clone())
     ///     .finalize();
     ///
     /// let summary_opt = channel.summary();
@@ -400,7 +400,7 @@ impl ITunesChannelExtension {
     /// let keywords = "keywords".to_string();
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .keywords(Some(keywords.clone()))
+    ///     .keywords(keywords.clone())
     ///     .finalize();
     ///
     /// let keywords_opt = channel.keywords();
@@ -533,10 +533,10 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some("author".to_string()));
+    ///     .author("author".to_string());
     /// ```
-    pub fn author(mut self, author: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.author = author;
+    pub fn author<V: Into<Option<String>>>(mut self, author: V) -> ITunesChannelExtensionBuilder {
+        self.author = author.into();
         self
     }
 
@@ -549,10 +549,10 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .block(Some("block".to_string()));
+    ///     .block("block".to_string());
     /// ```
-    pub fn block(mut self, block: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.block = block;
+    pub fn block<V: Into<Option<String>>>(mut self, block: V) -> ITunesChannelExtensionBuilder {
+        self.block = block.into();
         self
     }
 
@@ -570,16 +570,16 @@ impl ITunesChannelExtensionBuilder {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
+    ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
-    /// let categories = vec![category];
-    ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .categories(categories);
+    ///     .categories(vec![category]);
     /// ```
-    pub fn categories(mut self, categories: Vec<ITunesCategory>) -> ITunesChannelExtensionBuilder {
-        self.categories = categories;
+    pub fn categories<V>(mut self, categories: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Vec<ITunesCategory>>
+    {
+        self.categories = categories.into();
         self
     }
 
@@ -592,10 +592,10 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .image(Some("image".to_string()));
+    ///     .image("image".to_string());
     /// ```
-    pub fn image(mut self, image: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.image = image;
+    pub fn image<V: Into<Option<String>>>(mut self, image: V) -> ITunesChannelExtensionBuilder {
+        self.image = image.into();
         self
     }
 
@@ -608,10 +608,12 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .explicit(Some("explicit".to_string()));
+    ///     .explicit("explicit".to_string());
     /// ```
-    pub fn explicit(mut self, explicit: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.explicit = explicit;
+    pub fn explicit<V>(mut self, explicit: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.explicit = explicit.into();
         self
     }
 
@@ -624,10 +626,12 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .complete(Some("complete".to_string()));
+    ///     .complete("complete".to_string());
     /// ```
-    pub fn complete(mut self, complete: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.complete = complete;
+    pub fn complete<V>(mut self, complete: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.complete = complete.into();
         self
     }
 
@@ -640,10 +644,12 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .new_feed_url(Some("new_feed_url".to_string()));
+    ///     .new_feed_url("new_feed_url".to_string());
     /// ```
-    pub fn new_feed_url(mut self, new_feed_url: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.new_feed_url = new_feed_url;
+    pub fn new_feed_url<V>(mut self, new_feed_url: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.new_feed_url = new_feed_url.into();
         self
     }
 
@@ -656,15 +662,17 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()))
-    ///     .name(Some("name".to_string()))
+    ///     .email("email@example.com".to_string())
+    ///     .name("name".to_string())
     ///     .finalize();
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .owner(Some(owner));
+    ///     .owner(owner);
     /// ```
-    pub fn owner(mut self, owner: Option<ITunesOwner>) -> ITunesChannelExtensionBuilder {
-        self.owner = owner;
+    pub fn owner<V>(mut self, owner: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<ITunesOwner>>
+    {
+        self.owner = owner.into();
         self
     }
 
@@ -677,10 +685,12 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .subtitle(Some("subtitle".to_string()));
+    ///     .subtitle("subtitle".to_string());
     /// ```
-    pub fn subtitle(mut self, subtitle: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.subtitle = subtitle;
+    pub fn subtitle<V>(mut self, subtitle: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.subtitle = subtitle.into();
         self
     }
 
@@ -693,10 +703,10 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .summary(Some("summary".to_string()));
+    ///     .summary("summary".to_string());
     /// ```
-    pub fn summary(mut self, summary: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.summary = summary;
+    pub fn summary<V: Into<Option<String>>>(mut self, summary: V) -> ITunesChannelExtensionBuilder {
+        self.summary = summary.into();
         self
     }
 
@@ -709,10 +719,12 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .keywords(Some("keywords".to_string()));
+    ///     .keywords("keywords".to_string());
     /// ```
-    pub fn keywords(mut self, keywords: Option<String>) -> ITunesChannelExtensionBuilder {
-        self.keywords = keywords;
+    pub fn keywords<V>(mut self, keywords: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.keywords = keywords.into();
         self
     }
 
@@ -726,8 +738,8 @@ impl ITunesChannelExtensionBuilder {
     ///     ITunesOwnerBuilder};
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()))
-    ///     .name(Some("name".to_string()))
+    ///     .email("email@example.com".to_string())
+    ///     .name("name".to_string())
     ///     .finalize();
     ///
     /// let subcategory = ITunesCategoryBuilder::new()
@@ -736,22 +748,22 @@ impl ITunesChannelExtensionBuilder {
     ///
     /// let category = ITunesCategoryBuilder::new()
     ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
+    ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
     /// let categories = vec![category];
     ///
     /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(Some("author".to_string()))
-    ///     .block(Some("block".to_string()))
-    ///     .image(Some("image".to_string()))
-    ///     .explicit(Some("explicit".to_string()))
-    ///     .subtitle(Some("subtitle".to_string()))
-    ///     .summary(Some("summary".to_string()))
-    ///     .keywords(Some("keywords".to_string()))
-    ///     .new_feed_url(Some("new_feed_url".to_string()))
-    ///     .complete(Some("complete".to_string()))
-    ///     .owner(Some(owner))
+    ///     .author("author".to_string())
+    ///     .block("block".to_string())
+    ///     .image("image".to_string())
+    ///     .explicit("explicit".to_string())
+    ///     .subtitle("subtitle".to_string())
+    ///     .summary("summary".to_string())
+    ///     .keywords("keywords".to_string())
+    ///     .new_feed_url("new_feed_url".to_string())
+    ///     .complete("complete".to_string())
+    ///     .owner(owner)
     ///     .categories(categories)
     ///     .finalize();
     /// ```

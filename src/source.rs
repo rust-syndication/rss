@@ -56,7 +56,7 @@ impl Source {
     /// let url = "http://www.tomalak.org/links2.xml";
     ///
     /// let source_obj = SourceBuilder::new()
-    ///     .title(Some(title.to_string()))
+    ///     .title(title.to_string())
     ///     .url(url)
     ///     .finalize();
     ///
@@ -154,10 +154,10 @@ impl SourceBuilder {
     /// use rss::SourceBuilder;
     ///
     /// let source_builder = SourceBuilder::new()
-    ///     .title(Some("Test".to_string()));
+    ///     .title("Test".to_string());
     /// ```
-    pub fn title(mut self, title: Option<String>) -> SourceBuilder {
-        self.title = title;
+    pub fn title<V: Into<Option<String>>>(mut self, title: V) -> SourceBuilder {
+        self.title = title.into();
         self
     }
 

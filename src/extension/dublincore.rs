@@ -226,92 +226,100 @@ impl DublinCoreExtensionBuilder {
     }
 
     /// Set the contributors that exists under `DublinCoreExtension`.
-    pub fn contributors(mut self, contributors: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.contributors = contributors;
+    pub fn contributors<V>(mut self, contributors: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.contributors = contributors.into();
         self
     }
 
     /// Set the coverages that exists under `DublinCoreExtension`.
-    pub fn coverages(mut self, coverages: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.coverages = coverages;
+    pub fn coverages<V: Into<Vec<String>>>(mut self, coverages: V) -> DublinCoreExtensionBuilder {
+        self.coverages = coverages.into();
         self
     }
 
     /// Set the creators that exists under `DublinCoreExtension`.
-    pub fn creators(mut self, creators: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.creators = creators;
+    pub fn creators<V: Into<Vec<String>>>(mut self, creators: V) -> DublinCoreExtensionBuilder {
+        self.creators = creators.into();
         self
     }
 
     /// Set the dates that exists under `DublinCoreExtension`.
-    pub fn dates(mut self, dates: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.dates = dates;
+    pub fn dates<V: Into<Vec<String>>>(mut self, dates: V) -> DublinCoreExtensionBuilder {
+        self.dates = dates.into();
         self
     }
 
     /// Set the descriptions that exists under `DublinCoreExtension`.
-    pub fn descriptions(mut self, descriptions: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.descriptions = descriptions;
+    pub fn descriptions<V>(mut self, descriptions: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.descriptions = descriptions.into();
         self
     }
 
     /// Get the formats that exists under `DublinCoreExtension`.
-    pub fn formats(mut self, formats: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.formats = formats;
+    pub fn formats<V: Into<Vec<String>>>(mut self, formats: V) -> DublinCoreExtensionBuilder {
+        self.formats = formats.into();
         self
     }
 
     /// Set the identifiers that exists under `DublinCoreExtension`.
-    pub fn identifiers(mut self, identifiers: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.identifiers = identifiers;
+    pub fn identifiers<V>(mut self, identifiers: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.identifiers = identifiers.into();
         self
     }
 
     /// Set the languages that exists under `DublinCoreExtension`.
-    pub fn languages(mut self, languages: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.languages = languages;
+    pub fn languages<V: Into<Vec<String>>>(mut self, languages: V) -> DublinCoreExtensionBuilder {
+        self.languages = languages.into();
         self
     }
 
     /// Set the publishers that exists under `DublinCoreExtension`.
-    pub fn publishers(mut self, publishers: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.publishers = publishers;
+    pub fn publishers<V: Into<Vec<String>>>(mut self, publishers: V) -> DublinCoreExtensionBuilder {
+        self.publishers = publishers.into();
         self
     }
 
     /// Set the relations that exists under `DublinCoreExtension`.
-    pub fn relations(mut self, relations: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.relations = relations;
+    pub fn relations<V: Into<Vec<String>>>(mut self, relations: V) -> DublinCoreExtensionBuilder {
+        self.relations = relations.into();
         self
     }
 
     /// Set the rights that exists under `DublinCoreExtension`.
-    pub fn rights(mut self, rights: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.rights = rights;
+    pub fn rights<V: Into<Vec<String>>>(mut self, rights: V) -> DublinCoreExtensionBuilder {
+        self.rights = rights.into();
         self
     }
 
     /// Set the sources that exists under `DublinCoreExtension`.
-    pub fn sources(mut self, sources: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.sources = sources;
+    pub fn sources<V: Into<Vec<String>>>(mut self, sources: V) -> DublinCoreExtensionBuilder {
+        self.sources = sources.into();
         self
     }
 
     /// Set the subjects that exists under `DublinCoreExtension`.
-    pub fn subjects(mut self, subjects: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.subjects = subjects;
+    pub fn subjects<V: Into<Vec<String>>>(mut self, subjects: V) -> DublinCoreExtensionBuilder {
+        self.subjects = subjects.into();
         self
     }
 
     /// Set the titles that exists under `DublinCoreExtension`.
-    pub fn titles(mut self, titles: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.titles = titles;
+    pub fn titles<V: Into<Vec<String>>>(mut self, titles: V) -> DublinCoreExtensionBuilder {
+        self.titles = titles.into();
         self
     }
 
     /// Set the resource_types that exists under `DublinCoreExtension`.
-    pub fn resource_types(mut self, resource_types: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.resource_types = resource_types;
+    pub fn resource_types<V>(mut self, resource_types: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.resource_types = resource_types.into();
         self
     }
 

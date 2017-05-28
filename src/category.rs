@@ -55,7 +55,7 @@ impl Category {
     /// let domain_string = "http://jupiterbroadcasting.com/";
     ///
     /// let category = CategoryBuilder::new()
-    ///     .domain(Some(domain_string.to_string()))
+    ///     .domain(domain_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(domain_string), category.domain());
@@ -159,10 +159,10 @@ impl CategoryBuilder {
     /// use rss::CategoryBuilder;
     ///
     /// let category_builder = CategoryBuilder::new()
-    ///     .domain(Some("http://www.example.com".to_string()));
+    ///     .domain("http://www.example.com".to_string());
     /// ```
-    pub fn domain(mut self, domain: Option<String>) -> CategoryBuilder {
-        self.domain = domain;
+    pub fn domain<O: Into<Option<String>>>(mut self, domain: O) -> CategoryBuilder {
+        self.domain = domain.into();
         self
     }
 
@@ -174,7 +174,7 @@ impl CategoryBuilder {
     /// use rss::CategoryBuilder;
     ///
     /// let category_builder = CategoryBuilder::new()
-    ///         .domain(Some("http://www.example.com".to_string()))
+    ///         .domain("http://www.example.com".to_string())
     ///         .name("Podcast")
     ///         .validate()
     ///         .unwrap()

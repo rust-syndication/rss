@@ -30,7 +30,7 @@ impl ITunesOwner {
     /// let name = "name";
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .name(Some(name.to_string()))
+    ///     .name(name.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(name), owner.name());
@@ -61,7 +61,7 @@ impl ITunesOwner {
     /// let email = "email@example.com";
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some(email.to_string()))
+    ///     .email(email.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(email), owner.email());
@@ -131,10 +131,10 @@ impl ITunesOwnerBuilder {
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let owner_builder = ITunesOwnerBuilder::new()
-    ///     .name(Some("name".to_string()));
+    ///     .name("name".to_string());
     /// ```
-    pub fn name(mut self, name: Option<String>) -> ITunesOwnerBuilder {
-        self.name = name;
+    pub fn name<V: Into<Option<String>>>(mut self, name: V) -> ITunesOwnerBuilder {
+        self.name = name.into();
         self
     }
 
@@ -146,10 +146,10 @@ impl ITunesOwnerBuilder {
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let owner_builder = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()));
+    ///     .email("email@example.com".to_string());
     /// ```
-    pub fn email(mut self, email: Option<String>) -> ITunesOwnerBuilder {
-        self.email = email;
+    pub fn email<V: Into<Option<String>>>(mut self, email: V) -> ITunesOwnerBuilder {
+        self.email = email.into();
         self
     }
 
@@ -161,8 +161,8 @@ impl ITunesOwnerBuilder {
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()))
-    ///     .name(Some("name".to_string()))
+    ///     .email("email@example.com".to_string())
+    ///     .name("name".to_string())
     ///     .finalize();
     /// ```
     pub fn finalize(self) -> ITunesOwner {

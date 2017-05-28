@@ -67,7 +67,7 @@ impl Item {
     /// let title_string = "Making Music with Linux | LAS 408";
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some(title_string.to_string()))
+    ///     .title(title_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(title_string), item.title());
@@ -95,7 +95,7 @@ impl Item {
     ///
     /// let link_string = "http://www.jupiterbroadcasting.com/";
     /// let item = ItemBuilder::new()
-    ///     .link(Some(link_string.to_string()))
+    ///     .link(link_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(link_string), item.link());
@@ -124,7 +124,7 @@ impl Item {
     /// let description_string = "This is a test description";
     ///
     /// let item = ItemBuilder::new()
-    ///     .description(Some(description_string.to_string()))
+    ///     .description(description_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(description_string), item.description());
@@ -153,7 +153,7 @@ impl Item {
     /// let author_string = "Chris Fisher";
     ///
     /// let item = ItemBuilder::new()
-    ///     .author(Some(author_string.to_string()))
+    ///     .author(author_string.to_string())
     ///     .finalize();
     ///
     /// assert_eq!(Some(author_string), item.author());
@@ -185,7 +185,7 @@ impl Item {
     ///     .finalize();
     ///
     /// let category_2 = CategoryBuilder::new()
-    ///     .domain(Some("http://jupiterbroadcasting.com".to_string()))
+    ///     .domain("http://jupiterbroadcasting.com".to_string())
     ///     .name("Podcast")
     ///     .finalize();
     ///
@@ -211,7 +211,7 @@ impl Item {
     /// let comments_string = "http://example.com/comments";
     ///
     /// let item = ItemBuilder::new()
-    ///     .comments(Some(comments_string.to_string()))
+    ///     .comments(comments_string.to_string())
     ///     .finalize();
     ///
     /// let comments_option =  item.comments();
@@ -250,7 +250,7 @@ impl Item {
     ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
-    ///     .enclosure(Some(enclosure))
+    ///     .enclosure(enclosure)
     ///     .finalize();
     ///
     /// assert!(item.enclosure().is_some());
@@ -282,7 +282,7 @@ impl Item {
     ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
-    ///     .guid(Some(guid))
+    ///     .guid(guid)
     ///     .finalize();
     /// assert!(item.guid().is_some())
     /// ```
@@ -310,7 +310,7 @@ impl Item {
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
     /// let item = ItemBuilder::new()
-    ///     .pub_date(Some(pub_date.to_string()))
+    ///     .pub_date(pub_date.to_string())
     ///     .finalize();
     ///
     /// let local = item.pub_date();
@@ -344,7 +344,7 @@ impl Item {
     ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
-    ///     .source(Some(source))
+    ///     .source(source)
     ///     .finalize();
     ///
     /// assert!(item.source().is_some())
@@ -371,21 +371,21 @@ impl Item {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let itunes_item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_string()))
-    ///     .block(Some("block".to_string()))
-    ///     .image(Some("image".to_string()))
-    ///     .duration(Some("duration".to_string()))
-    ///     .explicit(Some("explicit".to_string()))
-    ///     .closed_captioned(Some("closed_captioned".to_string()))
-    ///     .order(Some("order".to_string()))
-    ///     .subtitle(Some("subtitle".to_string()))
-    ///     .summary(Some("summary".to_string()))
-    ///     .keywords(Some("keywords".to_string()))
+    ///     .author("author".to_string())
+    ///     .block("block".to_string())
+    ///     .image("image".to_string())
+    ///     .duration("duration".to_string())
+    ///     .explicit("explicit".to_string())
+    ///     .closed_captioned("closed_captioned".to_string())
+    ///     .order("order".to_string())
+    ///     .subtitle("subtitle".to_string())
+    ///     .summary("summary".to_string())
+    ///     .keywords("keywords".to_string())
     ///     .finalize();
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
-    ///     .itunes_ext(Some(itunes_item))
+    ///     .title("Making Music with Linux | LAS 408".to_string())
+    ///     .itunes_ext(itunes_item)
     ///     .finalize();
     ///
     /// assert!(item.itunes_ext().is_some());
@@ -395,7 +395,7 @@ impl Item {
     /// use rss::{ItemBuilder, Item};
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
+    ///     .title("Making Music with Linux | LAS 408".to_string())
     ///     .itunes_ext(None)
     ///     .finalize();
     ///
@@ -603,10 +603,10 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_string()));
+    ///     .title("Making Music with Linux | LAS 408".to_string());
     /// ```
-    pub fn title(mut self, title: Option<String>) -> ItemBuilder {
-        self.title = title;
+    pub fn title<V: Into<Option<String>>>(mut self, title: V) -> ItemBuilder {
+        self.title = title.into();
         self
     }
 
@@ -619,10 +619,10 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .link(Some("http://www.jupiterbroadcasting.com".to_string()));
+    ///     .link("http://www.jupiterbroadcasting.com".to_string());
     /// ```
-    pub fn link(mut self, link: Option<String>) -> ItemBuilder {
-        self.link = link;
+    pub fn link<V: Into<Option<String>>>(mut self, link: V) -> ItemBuilder {
+        self.link = link.into();
         self
     }
 
@@ -635,10 +635,10 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .description(Some("This is a test description".to_string()));
+    ///     .description("This is a test description".to_string());
     /// ```
-    pub fn description(mut self, description: Option<String>) -> ItemBuilder {
-        self.description = description;
+    pub fn description<V: Into<Option<String>>>(mut self, description: V) -> ItemBuilder {
+        self.description = description.into();
         self
     }
 
@@ -651,10 +651,10 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .author(Some("Chris Fisher".to_string()));
+    ///     .author("Chris Fisher".to_string());
     /// ```
-    pub fn author(mut self, author: Option<String>) -> ItemBuilder {
-        self.author = author;
+    pub fn author<V: Into<Option<String>>>(mut self, author: V) -> ItemBuilder {
+        self.author = author.into();
         self
     }
 
@@ -672,8 +672,8 @@ impl ItemBuilder {
     /// let item_builder = ItemBuilder::new()
     ///     .categories(vec![category]);
     /// ```
-    pub fn categories(mut self, categories: Vec<Category>) -> ItemBuilder {
-        self.categories = categories;
+    pub fn categories<V: Into<Vec<Category>>>(mut self, categories: V) -> ItemBuilder {
+        self.categories = categories.into();
         self
     }
 
@@ -686,10 +686,10 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .comments(Some("A comment".to_string()));
+    ///     .comments("A comment".to_string());
     /// ```
-    pub fn comments(mut self, comments: Option<String>) -> ItemBuilder {
-        self.comments = comments;
+    pub fn comments<V: Into<Option<String>>>(mut self, comments: V) -> ItemBuilder {
+        self.comments = comments.into();
         self
     }
 
@@ -710,10 +710,10 @@ impl ItemBuilder {
     ///     .finalize();
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .enclosure(Some(enclosure));
+    ///     .enclosure(enclosure);
     /// ```
-    pub fn enclosure(mut self, enclosure: Option<Enclosure>) -> ItemBuilder {
-        self.enclosure = enclosure;
+    pub fn enclosure<V: Into<Option<Enclosure>>>(mut self, enclosure: V) -> ItemBuilder {
+        self.enclosure = enclosure.into();
         self
     }
 
@@ -729,10 +729,10 @@ impl ItemBuilder {
     ///     .finalize();
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .guid(Some(guid));
+    ///     .guid(guid);
     /// ```
-    pub fn guid(mut self, guid: Option<Guid>) -> ItemBuilder {
-        self.guid = guid;
+    pub fn guid<V: Into<Option<Guid>>>(mut self, guid: V) -> ItemBuilder {
+        self.guid = guid.into();
         self
     }
 
@@ -745,10 +745,10 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .pub_date(Some("Sun, 13 Mar 2016 20:02:02-0700".to_string()));
+    ///     .pub_date("Sun, 13 Mar 2016 20:02:02-0700".to_string());
     /// ```
-    pub fn pub_date(mut self, pub_date: Option<String>) -> ItemBuilder {
-        self.pub_date = pub_date;
+    pub fn pub_date<V: Into<Option<String>>>(mut self, pub_date: V) -> ItemBuilder {
+        self.pub_date = pub_date.into();
         self
     }
 
@@ -765,10 +765,10 @@ impl ItemBuilder {
     ///     .finalize();
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .source(Some(source));
+    ///     .source(source);
     /// ```
-    pub fn source(mut self, source: Option<Source>) -> ItemBuilder {
-        self.source = source;
+    pub fn source<V: Into<Option<Source>>>(mut self, source: V) -> ItemBuilder {
+        self.source = source.into();
         self
     }
 
@@ -782,41 +782,45 @@ impl ItemBuilder {
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let itunes_item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_string()))
-    ///     .block(Some("block".to_string()))
-    ///     .image(Some("image".to_string()))
-    ///     .duration(Some("duration".to_string()))
-    ///     .explicit(Some("explicit".to_string()))
-    ///     .closed_captioned(Some("closed_captioned".to_string()))
-    ///     .order(Some("order".to_string()))
-    ///     .subtitle(Some("subtitle".to_string()))
-    ///     .summary(Some("summary".to_string()))
-    ///     .keywords(Some("keywords".to_string()))
+    ///     .author("author".to_string())
+    ///     .block("block".to_string())
+    ///     .image("image".to_string())
+    ///     .duration("duration".to_string())
+    ///     .explicit("explicit".to_string())
+    ///     .closed_captioned("closed_captioned".to_string())
+    ///     .order("order".to_string())
+    ///     .subtitle("subtitle".to_string())
+    ///     .summary("summary".to_string())
+    ///     .keywords("keywords".to_string())
     ///     .finalize();
     ///
     /// let item_builder = ItemBuilder::new()
-    ///     .itunes_ext(Some(itunes_item));
+    ///     .itunes_ext(itunes_item);
     /// ```
-    pub fn itunes_ext(mut self, itunes_ext: Option<ITunesItemExtension>) -> ItemBuilder {
-        self.itunes_ext = itunes_ext;
+    pub fn itunes_ext<V>(mut self, itunes_ext: V) -> ItemBuilder
+        where V: Into<Option<ITunesItemExtension>>
+    {
+        self.itunes_ext = itunes_ext.into();
         self
     }
 
     /// Set the optional dublin_core_ext that exists under `Item`.
-    pub fn dublin_core_ext(mut self, dublin_core_ext: Option<DublinCoreExtension>) -> ItemBuilder {
-        self.dublin_core_ext = dublin_core_ext;
+    pub fn dublin_core_ext<V>(mut self, dublin_core_ext: V) -> ItemBuilder
+        where V: Into<Option<DublinCoreExtension>>
+    {
+        self.dublin_core_ext = dublin_core_ext.into();
         self
     }
 
     /// Set the extensions that exists under `Item`.
-    pub fn extensions(mut self, extensions: ExtensionMap) -> ItemBuilder {
-        self.extensions = extensions;
+    pub fn extensions<V: Into<ExtensionMap>>(mut self, extensions: V) -> ItemBuilder {
+        self.extensions = extensions.into();
         self
     }
 
     /// Set the optional content that exists under `Item`.
-    pub fn content(mut self, content: Option<String>) -> ItemBuilder {
-        self.content = content;
+    pub fn content<V: Into<Option<String>>>(mut self, content: V) -> ItemBuilder {
+        self.content = content.into();
         self
     }
 
@@ -828,8 +832,8 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
-    ///     .link(Some("http://www.jupiterbroadcasting.com".to_string()))
+    ///     .title("Making Music with Linux | LAS 408".to_string())
+    ///     .link("http://www.jupiterbroadcasting.com".to_string())
     ///     .description(None)
     ///     .author(None)
     ///     .categories(Vec::new())
@@ -867,8 +871,8 @@ impl ItemBuilder {
     /// use rss::ItemBuilder;
     ///
     /// let item = ItemBuilder::new()
-    ///     .title(Some("Making Music with Linux | LAS 408".to_string()))
-    ///     .link(Some("http://www.jupiterbroadcasting.com".to_string()))
+    ///     .title("Making Music with Linux | LAS 408".to_string())
+    ///     .link("http://www.jupiterbroadcasting.com".to_string())
     ///     .description(None)
     ///     .author(None)
     ///     .categories(Vec::new())

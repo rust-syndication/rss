@@ -116,20 +116,22 @@ impl ExtensionBuilder {
     }
 
     /// Get the value that exists under `Extension`.
-    pub fn value(mut self, value: Option<String>) -> ExtensionBuilder {
-        self.value = value;
+    pub fn value<V: Into<Option<String>>>(mut self, value: V) -> ExtensionBuilder {
+        self.value = value.into();
         self
     }
 
     /// Get the attrs that exists under `Extension`.
-    pub fn attrs(mut self, attrs: HashMap<String, String>) -> ExtensionBuilder {
-        self.attrs = attrs;
+    pub fn attrs<V: Into<HashMap<String, String>>>(mut self, attrs: V) -> ExtensionBuilder {
+        self.attrs = attrs.into();
         self
     }
 
     /// Get the children that exists under `Extension`.
-    pub fn children(mut self, children: HashMap<String, Vec<Extension>>) -> ExtensionBuilder {
-        self.children = children;
+    pub fn children<V>(mut self, children: V) -> ExtensionBuilder
+        where V: Into<HashMap<String, Vec<Extension>>>
+    {
+        self.children = children.into();
         self
     }
 
