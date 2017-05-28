@@ -7,122 +7,65 @@
 
 use error::Error;
 use extension::{Extension, ExtensionBuilder, ExtensionMap};
-use quick_xml::{Element, Event, XmlReader};
+use quick_xml::events::Event;
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
 use std::collections::HashMap;
 use std::io::BufRead;
 use std::str;
 
 pub trait FromXml: Sized {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error>;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, atts: Attributes) -> Result<Self, Error>;
 }
 
-macro_rules! try_reader {
-    ($e:expr, $reader:ident) => (match $e {
-        Ok(v) => v,
-        Err(err) => return (Err(err.into()), $reader),
-    })
-}
-
-macro_rules! element_text {
-    ($reader:ident) => ({
-        let text = ::fromxml::element_text($reader);
-        $reader = text.1;
-        try!(text.0)
-    })
-}
-
-macro_rules! skip_element {
-    ($reader:ident) => ({
-        let result = ::fromxml::skip_element($reader);
-        $reader = result.1;
-        try!(result.0)
-    })
-}
-
-macro_rules! parse_extension {
-    ($reader:ident, $element:ident, $ns:ident, $name:ident, $extensions:expr) => ({
-        let result = ::fromxml::parse_extension($reader, &$element, $ns, $name, &mut $extensions);
-        $reader = result.1;
-        try!(result.0)
-    })
-}
-
-pub fn element_text<R: BufRead>(mut reader: XmlReader<R>)
-                                -> (Result<Option<String>, Error>, XmlReader<R>) {
+pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>, Error> {
     let mut content: Option<String> = None;
+    let mut buf = Vec::new();
+    let mut skip_buf = Vec::new();
 
-    while let Some(e) = reader.next() {
-        match e {
-            Ok(Event::Start(_)) => {
-                let result = skip_element(reader);
-                reader = result.1;
-                try_reader!(result.0, reader);
+    loop {
+        match reader.read_event(&mut buf) {
+            Ok(Event::Start(element)) => {
+                reader.read_to_end(element.name(), &mut skip_buf)?;
             }
             Ok(Event::End(_)) => {
                 break;
             }
             Ok(Event::CData(element)) => {
-                let text = element.content();
-                content = Some(try_reader!(str::from_utf8(text), reader).to_string());
+                let text = reader.decode(&*element).into_owned();
+                content = Some(text);
             }
             Ok(Event::Text(element)) => {
-                let text = try_reader!(element.unescaped_content(), reader);
-                content = Some(try_reader!(String::from_utf8(text.into_owned()), reader));
+                let text = element.unescape_and_decode(&reader)?;
+                content = Some(text);
             }
-            Err(err) => return (Err(err.into()), reader),
+            Ok(Event::Eof) => break,
+            Err(err) => return Err(err.into()),
             _ => {}
         }
+        buf.clear();
     }
 
-    (Ok(content), reader)
+    Ok(content)
 }
 
-pub fn skip_element<R: BufRead>(mut reader: XmlReader<R>) -> (Result<(), Error>, XmlReader<R>) {
-    while let Some(e) = reader.next() {
-        match e {
-            Ok(Event::Start(_)) => {
-                let result = skip_element(reader);
-                reader = result.1;
-                try_reader!(result.0, reader);
-            }
-            Ok(Event::End(_)) => {
-                return (Ok(()), reader);
-            }
-            Err(err) => return (Err(err.into()), reader),
-            _ => {}
-        }
+pub fn extension_name(element_name: &[u8]) -> Option<(&[u8], &[u8])> {
+    let mut split = element_name.splitn(2, |b| *b == b':');
+    match split.next() {
+        Some(b"") | Some(b"rss") | Some(b"rdf") | None => None,
+        Some(ns) => split.next().map(|name| (ns, name)),
     }
-
-    (Err(Error::EOF), reader)
 }
 
-pub fn extension_name(element: &Element) -> Option<(&[u8], &[u8])> {
-    let split = element.name().splitn(2, |b| *b == b':').collect::<Vec<_>>();
-
-    if split.len() == 2 {
-        let ns = unsafe { split.get_unchecked(0) };
-        if ns != b"" && ns != b"rss" && ns != b"rdf" {
-            return Some((ns, unsafe { split.get_unchecked(1) }));
-        }
-    }
-
-    None
-}
-
-pub fn parse_extension<R: BufRead>(mut reader: XmlReader<R>,
-                                   element: &Element,
+pub fn parse_extension<R: BufRead>(reader: &mut Reader<R>,
+                                   atts: Attributes,
                                    ns: &[u8],
                                    name: &[u8],
                                    extensions: &mut ExtensionMap)
-                                   -> (Result<(), Error>, XmlReader<R>) {
-    let ns = try_reader!(str::from_utf8(ns), reader);
-    let name = try_reader!(str::from_utf8(name), reader);
-
-    let ext = parse_extension_element(reader, element);
-    reader = ext.1;
-    let ext = try_reader!(ext.0, reader);
+                                   -> Result<(), Error> {
+    let ns = str::from_utf8(ns)?;
+    let name = str::from_utf8(name)?;
+    let ext = parse_extension_element(reader, atts)?;
 
     if !extensions.contains_key(ns) {
         extensions.insert(ns.to_string(), HashMap::new());
@@ -146,39 +89,30 @@ pub fn parse_extension<R: BufRead>(mut reader: XmlReader<R>,
         map.insert(name.to_string(), vec![ext]);
     }
 
-    (Ok(()), reader)
+    Ok(())
 }
 
-fn parse_extension_element<R: BufRead>(mut reader: XmlReader<R>,
-                                       element: &Element)
-                                       -> (Result<Extension, Error>, XmlReader<R>) {
+fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
+                                       mut atts: Attributes)
+                                       -> Result<Extension, Error> {
     let mut children = HashMap::<String, Vec<Extension>>::new();
     let mut attrs = HashMap::<String, String>::new();
     let mut content = None;
+    let mut buf = Vec::new();
 
-    for attr in element.attributes().with_checks(false).unescaped() {
+    for attr in atts.with_checks(false) {
         if let Ok(attr) = attr {
-            let key = try_reader!(str::from_utf8(attr.0), reader);
-            let value = try_reader!(str::from_utf8(&attr.1), reader);
-            attrs.insert(key.to_string(), value.to_string());
+            let key = str::from_utf8(attr.key)?;
+            let value = attr.unescape_and_decode_value(&reader)?;
+            attrs.insert(key.to_string(), value);
         }
     }
 
-    while let Some(e) = reader.next() {
-        match e {
+    loop {
+        match reader.read_event(&mut buf) {
             Ok(Event::Start(element)) => {
-                let child = parse_extension_element(reader, &element);
-                reader = child.1;
-                let ext = try_reader!(child.0, reader);
-
-                let name = {
-                    let split = element.name().splitn(2, |b| *b == b':').collect::<Vec<_>>();
-                    if split.len() == 2 {
-                        try_reader!(str::from_utf8(unsafe { split.get_unchecked(1) }), reader)
-                    } else {
-                        try_reader!(str::from_utf8(unsafe { split.get_unchecked(0) }), reader)
-                    }
-                };
+                let ext = parse_extension_element(reader, element.attributes())?;
+                let name = str::from_utf8(element.local_name())?;
 
                 let ext = {
                     if let Some(list) = children.get_mut(name) {
@@ -194,26 +128,25 @@ fn parse_extension_element<R: BufRead>(mut reader: XmlReader<R>,
                 }
             }
             Ok(Event::End(element)) => {
-                return (ExtensionBuilder::new()
-                            .name(try_reader!(str::from_utf8(element.name()), reader))
-                            .value(content)
-                            .attrs(attrs)
-                            .children(children)
-                            .finalize(),
-                        reader);
+                return ExtensionBuilder::new()
+                           .name(&*reader.decode(element.name()))
+                           .value(content)
+                           .attrs(attrs)
+                           .children(children)
+                           .finalize();
             }
             Ok(Event::CData(element)) => {
-                let text = element.content();
-                content = Some(try_reader!(str::from_utf8(text), reader).to_string());
+                content = Some(reader.decode(&element).into_owned());
             }
             Ok(Event::Text(element)) => {
-                let text = try_reader!(element.unescaped_content(), reader);
-                content = Some(try_reader!(String::from_utf8(text.into_owned()), reader));
+                content = Some(element.unescape_and_decode(&reader)?);
             }
-            Err(err) => return (Err(err.into()), reader),
+            Ok(Event::Eof) => break,
+            Err(err) => return Err(err.into()),
             _ => {}
         }
+        buf.clear();
     }
 
-    (Err(Error::EOF), reader)
+    Err(Error::EOF)
 }

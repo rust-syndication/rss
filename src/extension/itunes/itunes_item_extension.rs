@@ -9,10 +9,11 @@ use super::parse_image;
 use error::Error;
 use extension::Extension;
 use extension::remove_extension_value;
-use quick_xml::{Element, Event, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::writer::Writer;
 use std::collections::HashMap;
-use toxml::{ToXml, XmlWriterExt};
+use toxml::{ToXml, WriterExt};
 
 /// An iTunes item element extension.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -398,7 +399,7 @@ impl ITunesItemExtension {
 }
 
 impl ToXml for ITunesItemExtension {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         if let Some(author) = self.author.as_ref() {
             writer.write_text_element(b"itunes:author", author)?;
         }
@@ -408,15 +409,11 @@ impl ToXml for ITunesItemExtension {
         }
 
         if let Some(image) = self.image.as_ref() {
-            let element = Element::new(b"itunes:image");
-            writer
-                .write(Event::Start({
-                                        let mut element = element.clone();
-                                        element.extend_attributes(::std::iter::once((b"href",
-                                                                                     image)));
-                                        element
-                                    }))?;
-            writer.write(Event::End(element))?;
+            let name = b"itunes:image";
+            let mut element = BytesStart::borrowed(name, name.len());
+            element.push_attribute(("href", &**image));
+            writer.write_event(Event::Start(element))?;
+            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         }
 
         if let Some(duration) = self.duration.as_ref() {

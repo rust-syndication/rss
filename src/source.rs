@@ -6,9 +6,12 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use fromxml::FromXml;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use fromxml::{FromXml, element_text};
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use toxml::ToXml;
 use url::Url;
 
@@ -67,47 +70,44 @@ impl Source {
 }
 
 impl FromXml for Source {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
+                                       mut atts: Attributes)
+                                       -> Result<Self, Error> {
         let mut url = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
-                if attr.0 == b"url" {
-                    url = Some(String::from_utf8(attr.1.into_owned())?);
+                if attr.key == b"url" {
+                    url = Some(attr.unescape_and_decode_value(&reader)?);
                     break;
                 }
             }
         }
 
         let url = url.unwrap_or_default();
-        let content = element_text!(reader);
+        let content = element_text(reader)?;
 
-        Ok((Source {
-                url: url,
-                title: content,
-            },
-            reader))
+        Ok(Source {
+               url: url,
+               title: content,
+           })
     }
 }
 
 impl ToXml for Source {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"source");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"source";
+        let mut element = BytesStart::borrowed(name, name.len());
+        element.push_attribute(("url", &*self.url));
 
-        writer
-            .write(Event::Start({
-                let mut element = element.clone();
-                element.extend_attributes(::std::iter::once((b"url", self.url.as_str())));
-                element
-            }))?;
+        writer.write_event(Event::Start(element))?;
 
-        if let Some(text) = self.title.as_ref().map(|s| s.as_str()) {
-            writer.write(Event::Text(Element::new(text)))?;
+        if let Some(text) = self.title.as_ref().map(|s| s.as_bytes()) {
+            writer.write_event(Event::Text(BytesText::borrowed(text)))?;
         }
 
-        writer.write(Event::End(element))
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 

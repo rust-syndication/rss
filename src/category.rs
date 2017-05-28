@@ -5,10 +5,14 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
+
 use error::Error;
-use fromxml::FromXml;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use fromxml::{FromXml, element_text};
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use toxml::ToXml;
 use url::Url;
 
@@ -76,47 +80,41 @@ impl Category {
 }
 
 impl FromXml for Category {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
+                                       mut atts: Attributes)
+                                       -> Result<Self, Error> {
         let mut domain = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
-                if attr.0 == b"domain" {
-                    domain = Some(String::from_utf8(attr.1.into_owned())?);
+                if attr.key == b"domain" {
+                    domain = Some(attr.unescape_and_decode_value(&reader)?);
                     break;
                 }
             }
         }
 
-        let content = element_text!(reader).unwrap_or_default();
+        let content = element_text(reader)?.unwrap_or_default();
 
-        Ok((Category {
-                name: content,
-                domain: domain,
-            },
-            reader))
+        Ok(Category {
+               name: content,
+               domain: domain,
+           })
     }
 }
 
 impl ToXml for Category {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"category");
-
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"category";
+        let mut element = BytesStart::borrowed(name, name.len());
+        if let Some(ref domain) = self.domain {
+            element.push_attribute(("domain", &**domain));
+        }
+        writer.write_event(Event::Start(element))?;
         writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
-                                    if let Some(ref domain) = self.domain {
-                                        element.extend_attributes(::std::iter::once((b"domain",
-                                                                                     domain)));
-                                    }
-                                    element
-                                }))?;
-
-        writer.write(Event::Text(Element::new(self.name.as_str())))?;
-
-        writer.write(Event::End(element))
+            .write_event(Event::Text(BytesText::borrowed(self.name.as_bytes())))?;
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 

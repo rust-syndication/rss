@@ -6,9 +6,10 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use error::Error;
-use quick_xml::{Element, Event, XmlWriter};
-use quick_xml::error::Error as XmlError;
-use toxml::{ToXml, XmlWriterExt};
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::writer::Writer;
+use toxml::{ToXml, WriterExt};
 
 /// The contact information for the owner of an iTunes podcast.
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -87,10 +88,11 @@ impl ITunesOwner {
 }
 
 impl ToXml for ITunesOwner {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"itunes:owner");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"itunes:owner";
 
-        writer.write(Event::Start(element.clone()))?;
+        writer
+            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         if let Some(name) = self.name.as_ref() {
             writer.write_text_element(b"name", name)?;
@@ -100,7 +102,8 @@ impl ToXml for ITunesOwner {
             writer.write_text_element(b"email", email)?;
         }
 
-        writer.write(Event::End(element))
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 

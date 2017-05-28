@@ -294,7 +294,6 @@ fn read_extension() {
                Some(vec![Some("Child 1"), Some("Child 2")]));
 }
 
-
 #[test]
 fn read_itunes() {
     let input = include_str!("data/itunes.xml");

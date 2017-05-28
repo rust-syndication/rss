@@ -8,10 +8,10 @@
 use error::Error;
 use extension::Extension;
 use extension::remove_extension_values;
-use quick_xml::XmlWriter;
-use quick_xml::error::Error as XmlError;
+use quick_xml::Writer;
+use quick_xml::errors::Error as XmlError;
 use std::collections::HashMap;
-use toxml::{ToXml, XmlWriterExt};
+use toxml::{ToXml, WriterExt};
 
 /// The Dublin Core XML namespace.
 pub static NAMESPACE: &'static str = "http://purl.org/dc/elements/1.1/";
@@ -153,7 +153,7 @@ impl DublinCoreExtension {
 }
 
 impl ToXml for DublinCoreExtension {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         writer
             .write_text_elements(b"dc:contributor", &self.contributors)?;
         writer.write_text_elements(b"dc:coverage", &self.coverages)?;
@@ -256,7 +256,7 @@ impl DublinCoreExtensionBuilder {
         self
     }
 
-    /// Set the formats that exists under `DublinCoreExtension`.
+    /// Get the formats that exists under `DublinCoreExtension`.
     pub fn formats(mut self, formats: Vec<String>) -> DublinCoreExtensionBuilder {
         self.formats = formats;
         self

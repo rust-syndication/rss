@@ -8,8 +8,11 @@
 use error::Error;
 use fromxml::FromXml;
 use mime::Mime;
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::{Event, BytesStart};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
 use toxml::ToXml;
 use url::Url;
 
@@ -100,62 +103,67 @@ impl Enclosure {
 }
 
 impl FromXml for Enclosure {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       element: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
+                                       mut atts: Attributes)
+                                       -> Result<Self, Error> {
         let mut url = None;
         let mut length = None;
         let mut mime_type = None;
 
-        for attr in element.attributes().with_checks(false).unescaped() {
+        for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
-                match attr.0 {
+                match attr.key {
                     b"url" if url.is_none() => {
-                        url = Some(String::from_utf8(attr.1.into_owned())?);
+                        url = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     b"length" if length.is_none() => {
-                        length = Some(String::from_utf8(attr.1.into_owned())?);
+                        length = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     b"type" if mime_type.is_none() => {
-                        mime_type = Some(String::from_utf8(attr.1.into_owned())?);
+                        mime_type = Some(attr.unescape_and_decode_value(&reader)?);
                     }
                     _ => {}
                 }
             }
         }
 
-        skip_element!(reader);
+        let mut depth = 1;
+        let mut buf = Vec::new();
+        while depth > 0 {
+            match reader.read_event(&mut buf) {
+                Ok(Event::Start(_)) => depth += 1,
+                Ok(Event::End(_)) => depth -= 1,
+                Ok(Event::Eof) => break,
+                Err(e) => return Err(e.into()),
+                _ => {}
+            }
+        }
 
         let url = url.unwrap_or_default();
         let length = length.unwrap_or_default();
         let mime_type = mime_type.unwrap_or_default();
 
-        Ok((Enclosure {
-                url: url,
-                length: length,
-                mime_type: mime_type,
-            },
-            reader))
+        Ok(Enclosure {
+               url: url,
+               length: length,
+               mime_type: mime_type,
+           })
     }
 }
 
 impl ToXml for Enclosure {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"enclosure");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"enclosure";
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
+        let mut element = BytesStart::borrowed(name, name.len());
 
-                                    let attrs = &[(b"url" as &[u8], &self.url),
-                                                  (b"length", &self.length),
-                                                  (b"type", &self.mime_type)];
-                                    element.extend_attributes(attrs.into_iter().map(|v| *v));
+        let attrs = &[(b"url" as &[u8], self.url.as_bytes()),
+                      (b"length", self.length.as_bytes()),
+                      (b"type", self.mime_type.as_bytes())];
+        element.extend_attributes(attrs.into_iter().map(|v| *v));
 
-                                    element
-                                }))?;
-
-        writer.write(Event::End(element))
+        writer.write_event(Event::Empty(element))?;
+        Ok(())
     }
 }
 

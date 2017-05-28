@@ -13,18 +13,21 @@ use error::Error;
 use extension::{self, ExtensionMap};
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesChannelExtension;
-use fromxml::{self, FromXml};
+use fromxml::{self, FromXml, parse_extension, element_text};
 use guid::GuidBuilder;
 use image::{Image, ImageBuilder};
 use item::{Item, ItemBuilder};
-use quick_xml::{Element, Event, XmlReader, XmlWriter};
-use quick_xml::error::Error as XmlError;
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::attributes::Attributes;
+use quick_xml::errors::Error as XmlError;
 use source::SourceBuilder;
 use std::collections::HashMap;
 use std::i64;
 use std::str::{self, FromStr};
 use textinput::{TextInput, TextInputBuilder};
-use toxml::{ToXml, XmlWriterExt};
+use toxml::{ToXml, WriterExt};
 use url::Url;
 
 /// A representation of the `<channel>` element.
@@ -908,35 +911,29 @@ impl Channel {
     /// let channel = Channel::read_from(reader).unwrap();
     /// ```
     pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
-        let mut reader = XmlReader::from_reader(reader).trim_text(true);
+        let mut reader = Reader::from_reader(reader);
+        reader.trim_text(true).expand_empty_elements(true);
         let mut in_rss = false;
         let mut namespaces = HashMap::new();
+        let mut buf = Vec::new();
+        let mut skip_buf = Vec::new();
 
-        while let Some(e) = reader.next() {
-            match e {
+        loop {
+            match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"rss" if !in_rss => {
                             for attr in element.attributes().with_checks(false) {
                                 if let Ok(attr) = attr {
-                                    let split =
-                                        attr.0.splitn(2, |b| *b == b':').collect::<Vec<_>>();
-                                    if split.len() != 2 {
+
+                                    if !attr.key.starts_with(b"xmlns:") ||
+                                       attr.key == b"xmlns:itunes" ||
+                                       attr.key == b"xmlns:dc" {
                                         continue;
                                     }
 
-                                    let ns = unsafe { split.get_unchecked(0) };
-                                    if ns != b"xmlns" {
-                                        continue;
-                                    }
-
-                                    let name = unsafe { split.get_unchecked(1) };
-                                    if name == b"itunes" || name == b"dc" {
-                                        continue;
-                                    }
-
-                                    let key = str::from_utf8(name)?.to_string();
-                                    let value = str::from_utf8(attr.1)?.to_string();
+                                    let key = str::from_utf8(&attr.key[6..])?.to_string();
+                                    let value = attr.unescape_and_decode_value(&reader)?;
                                     namespaces.insert(key, value);
                                 }
                             }
@@ -944,17 +941,19 @@ impl Channel {
                             in_rss = true;
                         }
                         b"channel" if in_rss => {
-                            let mut channel = Channel::from_xml(reader, element).map(|v| v.0)?;
+                            let mut channel = Channel::from_xml(&mut reader, element.attributes())?;
                             channel.namespaces = namespaces;
                             return Ok(channel);
                         }
-                        _ => skip_element!(reader),
+                        name => reader.read_to_end(name, &mut skip_buf)?,
                     }
                 }
                 Ok(Event::End(_)) => in_rss = false,
+                Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
             }
+            buf.clear();
         }
 
         Err(Error::EOF)
@@ -970,60 +969,47 @@ impl Channel {
     /// channel.write_to(writer).unwrap();
     /// ```
     pub fn write_to<W: ::std::io::Write>(&self, writer: W) -> Result<W, Error> {
-        let mut writer = ::quick_xml::XmlWriter::new(writer);
+        let mut writer = ::quick_xml::Writer::new(writer);
 
-        let element = Element::new(b"rss");
+        let name = b"rss";
+        let mut element = BytesStart::borrowed(name, name.len());
+        element.push_attribute(("version", "2.0"));
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
-                                    element.extend_attributes(::std::iter::once((b"version",
-                                                                                 b"2.0")));
+        let mut itunes_ns = self.itunes_ext.is_some();
+        let mut dc_ns = self.dublin_core_ext.is_some();
 
-                                    let mut itunes_ns = self.itunes_ext.is_some();
-                                    let mut dc_ns = self.dublin_core_ext.is_some();
-
-                                    if !itunes_ns || dc_ns {
-                                        for item in &self.items {
-                                            if !itunes_ns {
-                                                itunes_ns = item.itunes_ext().is_some();
-                                            }
-
-                                            if !dc_ns {
-                                                dc_ns = item.dublin_core_ext().is_some();
-                                            }
-
-                                            if itunes_ns && dc_ns {
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    if itunes_ns {
-                    element.extend_attributes(::std::iter::once((b"xmlns:itunes",
-                                                                 extension::itunes::NAMESPACE)));
+        if !itunes_ns || !dc_ns {
+            for item in &self.items {
+                if !itunes_ns {
+                    itunes_ns = item.itunes_ext().is_some();
                 }
 
-                                    if dc_ns {
-                    element
-                        .extend_attributes(::std::iter::once((b"xmlns:dc",
-                                                              extension::dublincore::NAMESPACE)));
+                if !dc_ns {
+                    dc_ns = item.dublin_core_ext().is_some();
                 }
 
-                                    element.extend_attributes(self.namespaces
-                                                                  .iter()
-                                                                  .map(|(name, url)| {
-                                                                           (format!("xmlns:{}",
-                                                                                    name),
-                                                                            url)
-                                                                       }));
+                if itunes_ns && dc_ns {
+                    break;
+                }
+            }
+        }
 
-                                    element
-                                }))?;
+        if itunes_ns {
+            element.push_attribute(("xmlns:itunes", extension::itunes::NAMESPACE));
+        }
+
+        if dc_ns {
+            element.push_attribute(("xmlns:dc", extension::dublincore::NAMESPACE));
+        }
+        for (name, url) in &self.namespaces {
+            element.push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
+        }
+
+        writer.write_event(Event::Start(element))?;
 
         self.to_xml(&mut writer)?;
 
-        writer.write(Event::End(element))?;
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
 
         Ok(writer.into_inner())
     }
@@ -1300,113 +1286,118 @@ impl ToString for Channel {
 }
 
 impl FromXml for Channel {
-    fn from_xml<R: ::std::io::BufRead>(mut reader: XmlReader<R>,
-                                       _: Element)
-                                       -> Result<(Self, XmlReader<R>), Error> {
+    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
+                                       _: Attributes)
+                                       -> Result<Self, Error> {
         let mut channel = Channel::default();
+        let mut buf = Vec::new();
+        let mut skip_buf = Vec::new();
 
-        while let Some(e) = reader.next() {
-            match e {
+        loop {
+            match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
                         b"category" => {
-                            let (category, reader_) = Category::from_xml(reader, element)?;
-                            reader = reader_;
+                            let category = Category::from_xml(reader, element.attributes())?;
                             channel.categories.push(category);
                         }
                         b"cloud" => {
-                            let (cloud, reader_) = Cloud::from_xml(reader, element)?;
-                            reader = reader_;
+                            let cloud = Cloud::from_xml(reader, element.attributes())?;
                             channel.cloud = Some(cloud);
                         }
                         b"image" => {
-                            let (image, reader_) = Image::from_xml(reader, element)?;
-                            reader = reader_;
+                            let image = Image::from_xml(reader, element.attributes())?;
                             channel.image = Some(image);
                         }
                         b"textInput" => {
-                            let (text_input, reader_) = TextInput::from_xml(reader, element)?;
-                            reader = reader_;
+                            let text_input = TextInput::from_xml(reader, element.attributes())?;
                             channel.text_input = Some(text_input);
                         }
                         b"item" => {
-                            let (item, reader_) = Item::from_xml(reader, element)?;
-                            reader = reader_;
+                            let item = Item::from_xml(reader, element.attributes())?;
                             channel.items.push(item);
                         }
                         b"title" => {
-                            if let Some(content) = element_text!(reader) {
+                            if let Some(content) = element_text(reader)? {
                                 channel.title = content;
                             }
                         }
                         b"link" => {
-                            if let Some(content) = element_text!(reader) {
+                            if let Some(content) = element_text(reader)? {
                                 channel.link = content;
                             }
                         }
                         b"description" => {
-                            if let Some(content) = element_text!(reader) {
+                            if let Some(content) = element_text(reader)? {
                                 channel.description = content;
                             }
                         }
-                        b"language" => channel.language = element_text!(reader),
-                        b"copyright" => channel.copyright = element_text!(reader),
+                        b"language" => channel.language = element_text(reader)?,
+                        b"copyright" => channel.copyright = element_text(reader)?,
                         b"managingEditor" => {
-                            channel.managing_editor = element_text!(reader);
+                            channel.managing_editor = element_text(reader)?;
                         }
-                        b"webMaster" => channel.webmaster = element_text!(reader),
-                        b"pubDate" => channel.pub_date = element_text!(reader),
+                        b"webMaster" => channel.webmaster = element_text(reader)?,
+                        b"pubDate" => channel.pub_date = element_text(reader)?,
                         b"lastBuildDate" => {
-                            channel.last_build_date = element_text!(reader);
+                            channel.last_build_date = element_text(reader)?;
                         }
-                        b"generator" => channel.generator = element_text!(reader),
-                        b"docs" => channel.docs = element_text!(reader),
-                        b"ttl" => channel.ttl = element_text!(reader),
+                        b"generator" => channel.generator = element_text(reader)?,
+                        b"docs" => channel.docs = element_text(reader)?,
+                        b"ttl" => channel.ttl = element_text(reader)?,
                         b"skipHours" => {
-                            while let Some(e) = reader.next() {
-                                match e {
+                            loop {
+                                skip_buf.clear();
+                                match reader.read_event(&mut skip_buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"hour" {
-                                            if let Some(content) = element_text!(reader) {
+                                            if let Some(content) = element_text(reader)? {
                                                 channel.skip_hours.push(content);
                                             }
                                         } else {
-                                            skip_element!(reader);
+                                            reader.read_to_end(element.name(), &mut Vec::new())?;
                                         }
                                     }
                                     Ok(Event::End(_)) => {
                                         break;
                                     }
+                                    Ok(Event::Eof) => break,
                                     Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
                             }
                         }
                         b"skipDays" => {
-                            while let Some(e) = reader.next() {
-                                match e {
+                            loop {
+                                skip_buf.clear();
+                                match reader.read_event(&mut skip_buf) {
                                     Ok(Event::Start(element)) => {
                                         if element.name() == b"day" {
-                                            if let Some(content) = element_text!(reader) {
+                                            if let Some(content) = element_text(reader)? {
                                                 channel.skip_days.push(content);
                                             }
                                         } else {
-                                            skip_element!(reader);
+                                            reader.read_to_end(element.name(), &mut Vec::new())?;
                                         }
                                     }
                                     Ok(Event::End(_)) => {
                                         break;
                                     }
+                                    Ok(Event::Eof) => break,
                                     Err(err) => return Err(err.into()),
                                     _ => {}
                                 }
                             }
                         }
-                        _ => {
-                            if let Some((ns, name)) = fromxml::extension_name(&element) {
-                                parse_extension!(reader, element, ns, name, channel.extensions);
+                        n => {
+                            if let Some((ns, name)) = fromxml::extension_name(element.name()) {
+                                parse_extension(reader,
+                                                element.attributes(),
+                                                ns,
+                                                name,
+                                                &mut channel.extensions)?;
                             } else {
-                                skip_element!(reader);
+                                reader.read_to_end(n, &mut skip_buf)?;
                             }
                         }
                     }
@@ -1422,11 +1413,13 @@ impl FromXml for Channel {
                         }
                     }
 
-                    return Ok((channel, reader));
+                    return Ok(channel);
                 }
+                Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
             }
+            buf.clear();
         }
 
         Err(Error::EOF)
@@ -1434,10 +1427,11 @@ impl FromXml for Channel {
 }
 
 impl ToXml for Channel {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut XmlWriter<W>) -> Result<(), XmlError> {
-        let element = Element::new(b"channel");
+    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        let name = b"channel";
 
-        writer.write(Event::Start(element.clone()))?;
+        writer
+            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"title", &self.title)?;
         writer.write_text_element(b"link", &self.link)?;
@@ -1497,21 +1491,23 @@ impl ToXml for Channel {
         }
 
         if !self.skip_hours.is_empty() {
-            let element = Element::new(b"skipHours");
-            writer.write(Event::Start(element.clone()))?;
+            let name = b"skipHours";
+            writer
+                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for hour in &self.skip_hours {
                 writer.write_text_element(b"hour", hour)?;
             }
-            writer.write(Event::End(element))?;
+            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         }
 
         if !self.skip_days.is_empty() {
-            let element = Element::new(b"skipDays");
-            writer.write(Event::Start(element.clone()))?;
+            let name = b"skipDays";
+            writer
+                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for day in &self.skip_days {
                 writer.write_text_element(b"day", day)?;
             }
-            writer.write(Event::End(element))?;
+            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         }
 
         writer.write_objects(&self.items)?;
@@ -1532,7 +1528,8 @@ impl ToXml for Channel {
             ext.to_xml(writer)?;
         }
 
-        writer.write(Event::End(element))
+        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        Ok(())
     }
 }
 
