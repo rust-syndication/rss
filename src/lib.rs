@@ -43,23 +43,6 @@
 //!             .title("The Linux Action Show! OGG")
 //!             .link("http://www.jupiterbroadcasting.com")
 //!             .description(description.as_ref())
-//!             .language(None)
-//!             .copyright(None)
-//!             .managing_editor(None)
-//!             .webmaster(None)
-//!             .pub_date(None)
-//!             .last_build_date(None)
-//!             .categories(Vec::new())
-//!             .generator(None)
-//!             .docs(None)
-//!             .cloud(None)
-//!             .ttl(None)
-//!             .image(Some(image))
-//!             .rating(None)
-//!             .text_input(None)
-//!             .skip_hours(Vec::new())
-//!             .skip_days(Vec::new())
-//!             .items(Vec::new())
 //!             .finalize()
 //!             .unwrap();
 //! }
@@ -83,11 +66,11 @@
 //!
 //! A channel can be read from an url.
 //!
-//! To enable this functionality you must define the following in the Cargo.toml.
+//! To enable this functionality you must enable the from_url feature in your Cargo.toml.
 //!
 //! ```toml
 //! [dependencies]
-//! rss = [version = "*", features = ["from_url"]
+//! rss = { version = "*", features = ["from_url"] }
 //! ```
 //!
 //! # Examples

@@ -875,11 +875,12 @@ impl Channel {
 impl Channel {
     /// Construct a `Channel` from a url string.
     ///
-    /// Note: from_url can only be used defining the rss dependency in the Cargo.toml as follows:
+    /// Note: from_url can only be used by enabling the from_url feature in your
+    /// Cargo.toml as follows:
     ///
     /// ```toml
     /// [dependencies]
-    /// rss = [version = "*", features = ["from_url"]
+    /// rss = { version = "*", features = ["from_url"] }
     /// ```
     ///
     /// # Examples
@@ -981,52 +982,45 @@ impl Channel {
 
         let element = Element::new(b"rss");
 
-        writer
-            .write(Event::Start({
-                                    let mut element = element.clone();
-                                    element.extend_attributes(::std::iter::once((b"version",
-                                                                                 b"2.0")));
+        writer.write(Event::Start({
+                let mut element = element.clone();
+                element.extend_attributes(::std::iter::once((b"version", b"2.0")));
 
-                                    let mut itunes_ns = self.itunes_ext.is_some();
-                                    let mut dc_ns = self.dublin_core_ext.is_some();
+                let mut itunes_ns = self.itunes_ext.is_some();
+                let mut dc_ns = self.dublin_core_ext.is_some();
 
-                                    if !itunes_ns || dc_ns {
-                                        for item in &self.items {
-                                            if !itunes_ns {
-                                                itunes_ns = item.itunes_ext().is_some();
-                                            }
+                if !itunes_ns || dc_ns {
+                    for item in &self.items {
+                        if !itunes_ns {
+                            itunes_ns = item.itunes_ext().is_some();
+                        }
 
-                                            if !dc_ns {
-                                                dc_ns = item.dublin_core_ext().is_some();
-                                            }
+                        if !dc_ns {
+                            dc_ns = item.dublin_core_ext().is_some();
+                        }
 
-                                            if itunes_ns && dc_ns {
-                                                break;
-                                            }
-                                        }
-                                    }
+                        if itunes_ns && dc_ns {
+                            break;
+                        }
+                    }
+                }
 
-                                    if itunes_ns {
+                if itunes_ns {
                     element.extend_attributes(::std::iter::once((b"xmlns:itunes",
                                                                  extension::itunes::NAMESPACE)));
                 }
 
-                                    if dc_ns {
-                    element
-                        .extend_attributes(::std::iter::once((b"xmlns:dc",
+                if dc_ns {
+                    element.extend_attributes(::std::iter::once((b"xmlns:dc",
                                                               extension::dublincore::NAMESPACE)));
                 }
 
-                                    element.extend_attributes(self.namespaces
-                                                                  .iter()
-                                                                  .map(|(name, url)| {
-                                                                           (format!("xmlns:{}",
-                                                                                    name),
-                                                                            url)
-                                                                       }));
+                element.extend_attributes(self.namespaces
+                    .iter()
+                    .map(|(name, url)| (format!("xmlns:{}", name), url)));
 
-                                    element
-                                }))?;
+                element
+            }))?;
 
         self.to_xml(&mut writer)?;
 
@@ -1055,14 +1049,13 @@ impl Channel {
         let cloud = match self.cloud() {
             None => None,
             Some(val) => {
-                Some(CloudBuilder::new()
-                         .domain(val.domain())
-                         .port(i64::from_str(val.port())?)
-                         .path(val.path())
-                         .register_procedure(val.register_procedure())
-                         .protocol(val.protocol())
-                         .validate()?
-                         .finalize()?)
+                Some(CloudBuilder::new().domain(val.domain())
+                    .port(i64::from_str(val.port())?)
+                    .path(val.path())
+                    .register_procedure(val.register_procedure())
+                    .protocol(val.protocol())
+                    .validate()?
+                    .finalize()?)
             }
         };
 
@@ -1073,11 +1066,10 @@ impl Channel {
                 Some(val) => Some(val.to_string()),
             };
 
-            channel_cat.push(CategoryBuilder::new()
-                                 .name(cat.name())
-                                 .domain(domain)
-                                 .validate()?
-                                 .finalize()?);
+            channel_cat.push(CategoryBuilder::new().name(cat.name())
+                .domain(domain)
+                .validate()?
+                .finalize()?);
         }
 
         let mut skip_hours: Vec<i64> = Vec::new();
@@ -1103,28 +1095,26 @@ impl Channel {
                     Some(dval) => Some(dval.to_string()),
                 };
 
-                Some(ImageBuilder::new()
-                         .url(val.url())
-                         .title(val.title())
-                         .link(val.link())
-                         .width(width)
-                         .height(height)
-                         .description(description)
-                         .validate()?
-                         .finalize()?)
+                Some(ImageBuilder::new().url(val.url())
+                    .title(val.title())
+                    .link(val.link())
+                    .width(width)
+                    .height(height)
+                    .description(description)
+                    .validate()?
+                    .finalize()?)
             }
         };
 
         let text_input = match self.text_input() {
             None => None,
             Some(val) => {
-                Some(TextInputBuilder::new()
-                         .title(val.title())
-                         .description(val.description())
-                         .name(val.name())
-                         .link(val.link())
-                         .validate()?
-                         .finalize()?)
+                Some(TextInputBuilder::new().title(val.title())
+                    .description(val.description())
+                    .name(val.name())
+                    .link(val.link())
+                    .validate()?
+                    .finalize()?)
             }
         };
 
@@ -1137,32 +1127,29 @@ impl Channel {
                     Some(val) => Some(val.to_string()),
                 };
 
-                item_cat.push(CategoryBuilder::new()
-                                  .name(cat.name())
-                                  .domain(domain)
-                                  .validate()?
-                                  .finalize()?);
+                item_cat.push(CategoryBuilder::new().name(cat.name())
+                    .domain(domain)
+                    .validate()?
+                    .finalize()?);
             }
 
             let enclosure = match item.enclosure() {
                 None => None,
                 Some(eval) => {
-                    Some(EnclosureBuilder::new()
-                             .url(eval.url())
-                             .length(i64::from_str(eval.length())?)
-                             .mime_type(eval.mime_type())
-                             .validate()?
-                             .finalize()?)
+                    Some(EnclosureBuilder::new().url(eval.url())
+                        .length(i64::from_str(eval.length())?)
+                        .mime_type(eval.mime_type())
+                        .validate()?
+                        .finalize()?)
                 }
             };
 
             let guid = match item.guid() {
                 None => None,
                 Some(gval) => {
-                    Some(GuidBuilder::new()
-                             .value(gval.value())
-                             .is_permalink(Some(gval.is_permalink()))
-                             .finalize()?)
+                    Some(GuidBuilder::new().value(gval.value())
+                        .is_permalink(Some(gval.is_permalink()))
+                        .finalize()?)
                 }
             };
 
@@ -1174,11 +1161,10 @@ impl Channel {
                         Some(tval) => Some(tval.to_string()),
                     };
 
-                    Some(SourceBuilder::new()
-                             .url(sval.url())
-                             .title(title)
-                             .validate()?
-                             .finalize()?)
+                    Some(SourceBuilder::new().url(sval.url())
+                        .title(title)
+                        .validate()?
+                        .finalize()?)
                 }
             };
 
@@ -1212,19 +1198,18 @@ impl Channel {
                 Some(val) => Some(val.to_string()),
             };
 
-            items.push(ItemBuilder::new()
-                           .title(title)
-                           .link(link)
-                           .description(description)
-                           .author(author)
-                           .pub_date(pub_date)
-                           .comments(comments)
-                           .categories(item_cat)
-                           .enclosure(enclosure)
-                           .guid(guid)
-                           .source(source)
-                           .validate()?
-                           .finalize()?);
+            items.push(ItemBuilder::new().title(title)
+                .link(link)
+                .description(description)
+                .author(author)
+                .pub_date(pub_date)
+                .comments(comments)
+                .categories(item_cat)
+                .enclosure(enclosure)
+                .guid(guid)
+                .source(source)
+                .validate()?
+                .finalize()?);
         }
 
         let ttl = match self.ttl() {
@@ -1448,8 +1433,7 @@ impl ToXml for Channel {
 
         writer.write_text_element(b"title", &self.title)?;
         writer.write_text_element(b"link", &self.link)?;
-        writer
-            .write_text_element(b"description", &self.description)?;
+        writer.write_text_element(b"description", &self.description)?;
 
         if let Some(language) = self.language.as_ref() {
             writer.write_text_element(b"language", language)?;
@@ -1460,8 +1444,7 @@ impl ToXml for Channel {
         }
 
         if let Some(managing_editor) = self.managing_editor.as_ref() {
-            writer
-                .write_text_element(b"managingEditor", managing_editor)?;
+            writer.write_text_element(b"managingEditor", managing_editor)?;
         }
 
         if let Some(webmaster) = self.webmaster.as_ref() {
@@ -1473,8 +1456,7 @@ impl ToXml for Channel {
         }
 
         if let Some(last_build_date) = self.last_build_date.as_ref() {
-            writer
-                .write_text_element(b"lastBuildDate", last_build_date)?;
+            writer.write_text_element(b"lastBuildDate", last_build_date)?;
         }
 
         writer.write_objects(&self.categories)?;
@@ -2106,10 +2088,10 @@ impl ChannelBuilder {
         for hour in self.skip_hours.as_slice() {
             if *hour < 0 {
                 return Err(Error::Validation("Channel Skip Hour cannot be a negative value."
-                                                 .to_string()));
+                    .to_string()));
             } else if *hour > 23 {
                 return Err(Error::Validation("Channel Skip Hour cannot be greater than 23."
-                                                 .to_string()));
+                    .to_string()));
             }
         }
 
@@ -2168,31 +2150,31 @@ impl ChannelBuilder {
         };
 
         Ok(Channel {
-               title: self.title,
-               link: self.link,
-               description: self.description,
-               language: self.language,
-               copyright: self.copyright,
-               managing_editor: self.managing_editor,
-               webmaster: self.webmaster,
-               pub_date: self.pub_date,
-               last_build_date: self.last_build_date,
-               categories: self.categories,
-               generator: self.generator,
-               docs: self.docs,
-               cloud: self.cloud,
-               ttl: ttl,
-               image: self.image,
-               rating: self.rating,
-               text_input: self.text_input,
-               skip_hours: skip_hours,
-               skip_days: self.skip_days,
-               items: self.items,
-               itunes_ext: self.itunes_ext,
-               dublin_core_ext: self.dublin_core_ext,
-               extensions: self.extensions,
-               namespaces: self.namespaces,
-           })
+            title: self.title,
+            link: self.link,
+            description: self.description,
+            language: self.language,
+            copyright: self.copyright,
+            managing_editor: self.managing_editor,
+            webmaster: self.webmaster,
+            pub_date: self.pub_date,
+            last_build_date: self.last_build_date,
+            categories: self.categories,
+            generator: self.generator,
+            docs: self.docs,
+            cloud: self.cloud,
+            ttl: ttl,
+            image: self.image,
+            rating: self.rating,
+            text_input: self.text_input,
+            skip_hours: skip_hours,
+            skip_days: self.skip_days,
+            items: self.items,
+            itunes_ext: self.itunes_ext,
+            dublin_core_ext: self.dublin_core_ext,
+            extensions: self.extensions,
+            namespaces: self.namespaces,
+        })
     }
 }
 
