@@ -157,19 +157,19 @@ impl FromXml for Cloud {
             if let Ok(att) = attr {
                 match att.key {
                     b"domain" if domain.is_none() => {
-                        domain = Some(att.unescape_and_decode_value(&reader)?);
+                        domain = Some(att.unescape_and_decode_value(reader)?);
                     }
                     b"port" if port.is_none() => {
-                        port = Some(att.unescape_and_decode_value(&reader)?);
+                        port = Some(att.unescape_and_decode_value(reader)?);
                     }
                     b"path" if path.is_none() => {
-                        path = Some(att.unescape_and_decode_value(&reader)?);
+                        path = Some(att.unescape_and_decode_value(reader)?);
                     }
                     b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure = Some(att.unescape_and_decode_value(&reader)?);
+                        register_procedure = Some(att.unescape_and_decode_value(reader)?);
                     }
                     b"protocol" if protocol.is_none() => {
-                        protocol = Some(att.unescape_and_decode_value(&reader)?);
+                        protocol = Some(att.unescape_and_decode_value(reader)?);
                     }
                     _ => {}
                 }
@@ -274,7 +274,6 @@ impl CloudBuilder {
     /// cloud_builder.port(80);
     /// ```
     pub fn port(mut self, port: i64) -> CloudBuilder {
-
         self.port = port;
         self
     }

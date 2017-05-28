@@ -114,13 +114,13 @@ impl FromXml for Enclosure {
             if let Ok(attr) = attr {
                 match attr.key {
                     b"url" if url.is_none() => {
-                        url = Some(attr.unescape_and_decode_value(&reader)?);
+                        url = Some(attr.unescape_and_decode_value(reader)?);
                     }
                     b"length" if length.is_none() => {
-                        length = Some(attr.unescape_and_decode_value(&reader)?);
+                        length = Some(attr.unescape_and_decode_value(reader)?);
                     }
                     b"type" if mime_type.is_none() => {
-                        mime_type = Some(attr.unescape_and_decode_value(&reader)?);
+                        mime_type = Some(attr.unescape_and_decode_value(reader)?);
                     }
                     _ => {}
                 }

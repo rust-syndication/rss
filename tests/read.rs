@@ -254,22 +254,22 @@ fn read_extension() {
                "http://example.com/");
     assert_eq!(channel.namespaces().len(), 1);
 
-    assert_eq!(get_extension_values(&channel
-                                         .items()
-                                         .get(0)
-                                         .unwrap()
-                                         .extensions()
-                                         .get("ext")
-                                         .unwrap(),
+    assert_eq!(get_extension_values(channel
+                                        .items()
+                                        .get(0)
+                                        .unwrap()
+                                        .extensions()
+                                        .get("ext")
+                                        .unwrap(),
                                     "creator"),
                Some(vec!["Creator Name"]));
-    assert_eq!(get_extension_values(&channel
-                                         .items()
-                                         .get(0)
-                                         .unwrap()
-                                         .extensions()
-                                         .get("ext")
-                                         .unwrap(),
+    assert_eq!(get_extension_values(channel
+                                        .items()
+                                        .get(0)
+                                        .unwrap()
+                                        .extensions()
+                                        .get("ext")
+                                        .unwrap(),
                                     "contributor"),
                Some(vec!["Contributor 1", "Contributor 2"]));
     assert_eq!(channel
@@ -507,15 +507,15 @@ fn read_dublincore() {
                    vec!["Type"]);
     }
 
-    test_ext(&channel
-                  .dublin_core_ext()
-                  .as_ref()
-                  .expect("dc extension missing"));
-    test_ext(&channel
-                  .items()
-                  .get(0)
-                  .unwrap()
-                  .dublin_core_ext()
-                  .as_ref()
-                  .expect("ds extension missing"));
+    test_ext(channel
+                 .dublin_core_ext()
+                 .as_ref()
+                 .expect("dc extension missing"));
+    test_ext(channel
+                 .items()
+                 .get(0)
+                 .unwrap()
+                 .dublin_core_ext()
+                 .as_ref()
+                 .expect("ds extension missing"));
 }

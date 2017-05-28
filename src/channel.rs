@@ -1286,7 +1286,7 @@ impl Channel {
 
 impl ToString for Channel {
     fn to_string(&self) -> String {
-        let buf = self.write_to(Vec::new()).unwrap_or(Vec::new());
+        let buf = self.write_to(Vec::new()).unwrap_or_default();
         // this unwrap should be safe since the bytes written from the Channel are all valid utf8
         String::from_utf8(buf).unwrap()
     }

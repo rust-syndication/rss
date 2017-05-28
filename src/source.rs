@@ -78,7 +78,7 @@ impl FromXml for Source {
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"url" {
-                    url = Some(attr.unescape_and_decode_value(&reader)?);
+                    url = Some(attr.unescape_and_decode_value(reader)?);
                     break;
                 }
             }

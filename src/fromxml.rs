@@ -33,7 +33,7 @@ pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>
                 content = Some(text);
             }
             Event::Text(element) => {
-                let text = element.unescape_and_decode(&reader)?;
+                let text = element.unescape_and_decode(reader)?;
                 content = Some(text);
             }
             Event::End(_) | Event::Eof => break,
@@ -99,7 +99,7 @@ fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
     for attr in atts.with_checks(false) {
         if let Ok(attr) = attr {
             let key = str::from_utf8(attr.key)?;
-            let value = attr.unescape_and_decode_value(&reader)?;
+            let value = attr.unescape_and_decode_value(reader)?;
             attrs.insert(key.to_string(), value);
         }
     }
@@ -135,7 +135,7 @@ fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
                 content = Some(reader.decode(&element).into_owned());
             }
             Event::Text(element) => {
-                content = Some(element.unescape_and_decode(&reader)?);
+                content = Some(element.unescape_and_decode(reader)?);
             }
             Event::Eof => break,
             _ => {}
