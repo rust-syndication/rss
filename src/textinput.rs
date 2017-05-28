@@ -125,8 +125,8 @@ impl FromXml for TextInput {
         let mut skip_buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(element)) => {
+            match reader.read_event(&mut buf)? {
+                Event::Start(element) => {
                     match element.name() {
                         b"title" => title = element_text(reader)?,
                         b"description" => description = element_text(reader)?,
@@ -135,7 +135,7 @@ impl FromXml for TextInput {
                         n => reader.read_to_end(n, &mut skip_buf)?,
                     }
                 }
-                Ok(Event::End(_)) => {
+                Event::End(_) => {
                     let title = title.unwrap_or_default();
                     let description = description.unwrap_or_default();
                     let name = name.unwrap_or_default();
@@ -148,8 +148,7 @@ impl FromXml for TextInput {
                                   link: link,
                               });
                 }
-                Ok(Event::Eof) => break,
-                Err(err) => return Err(err.into()),
+                Event::Eof => break,
                 _ => {}
             }
             buf.clear();

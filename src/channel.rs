@@ -927,8 +927,8 @@ impl Channel {
         let mut skip_buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(element)) => {
+            match reader.read_event(&mut buf)? {
+                Event::Start(element) => {
                     match element.name() {
                         b"rss" if !in_rss => {
                             for attr in element.attributes().with_checks(false) {
@@ -956,9 +956,8 @@ impl Channel {
                         name => reader.read_to_end(name, &mut skip_buf)?,
                     }
                 }
-                Ok(Event::End(_)) => in_rss = false,
-                Ok(Event::Eof) => break,
-                Err(err) => return Err(err.into()),
+                Event::End(_) => in_rss = false,
+                Event::Eof => break,
                 _ => {}
             }
             buf.clear();
@@ -1302,8 +1301,8 @@ impl FromXml for Channel {
         let mut skip_buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(element)) => {
+            match reader.read_event(&mut buf)? {
+                Event::Start(element) => {
                     match element.name() {
                         b"category" => {
                             let category = Category::from_xml(reader, element.attributes())?;
@@ -1356,8 +1355,8 @@ impl FromXml for Channel {
                         b"skipHours" => {
                             loop {
                                 skip_buf.clear();
-                                match reader.read_event(&mut skip_buf) {
-                                    Ok(Event::Start(element)) => {
+                                match reader.read_event(&mut skip_buf)? {
+                                    Event::Start(element) => {
                                         if element.name() == b"hour" {
                                             if let Some(content) = element_text(reader)? {
                                                 channel.skip_hours.push(content);
@@ -1366,11 +1365,7 @@ impl FromXml for Channel {
                                             reader.read_to_end(element.name(), &mut Vec::new())?;
                                         }
                                     }
-                                    Ok(Event::End(_)) => {
-                                        break;
-                                    }
-                                    Ok(Event::Eof) => break,
-                                    Err(err) => return Err(err.into()),
+                                    Event::End(_) | Event::Eof => break,
                                     _ => {}
                                 }
                             }
@@ -1378,8 +1373,8 @@ impl FromXml for Channel {
                         b"skipDays" => {
                             loop {
                                 skip_buf.clear();
-                                match reader.read_event(&mut skip_buf) {
-                                    Ok(Event::Start(element)) => {
+                                match reader.read_event(&mut skip_buf)? {
+                                    Event::Start(element) => {
                                         if element.name() == b"day" {
                                             if let Some(content) = element_text(reader)? {
                                                 channel.skip_days.push(content);
@@ -1388,11 +1383,7 @@ impl FromXml for Channel {
                                             reader.read_to_end(element.name(), &mut Vec::new())?;
                                         }
                                     }
-                                    Ok(Event::End(_)) => {
-                                        break;
-                                    }
-                                    Ok(Event::Eof) => break,
-                                    Err(err) => return Err(err.into()),
+                                    Event::End(_) | Event::Eof => break,
                                     _ => {}
                                 }
                             }
@@ -1410,7 +1401,7 @@ impl FromXml for Channel {
                         }
                     }
                 }
-                Ok(Event::End(_)) => {
+                Event::End(_) => {
                     if !channel.extensions.is_empty() {
                         if let Some(map) = channel.extensions.remove("itunes") {
                             channel.itunes_ext = Some(ITunesChannelExtension::from_map(map)?);
@@ -1423,8 +1414,7 @@ impl FromXml for Channel {
 
                     return Ok(channel);
                 }
-                Ok(Event::Eof) => break,
-                Err(err) => return Err(err.into()),
+                Event::Eof => break,
                 _ => {}
             }
             buf.clear();

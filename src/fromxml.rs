@@ -24,23 +24,19 @@ pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>
     let mut skip_buf = Vec::new();
 
     loop {
-        match reader.read_event(&mut buf) {
-            Ok(Event::Start(element)) => {
+        match reader.read_event(&mut buf)? {
+            Event::Start(element) => {
                 reader.read_to_end(element.name(), &mut skip_buf)?;
             }
-            Ok(Event::End(_)) => {
-                break;
-            }
-            Ok(Event::CData(element)) => {
+            Event::CData(element) => {
                 let text = reader.decode(&*element).into_owned();
                 content = Some(text);
             }
-            Ok(Event::Text(element)) => {
+            Event::Text(element) => {
                 let text = element.unescape_and_decode(&reader)?;
                 content = Some(text);
             }
-            Ok(Event::Eof) => break,
-            Err(err) => return Err(err.into()),
+            Event::End(_) | Event::Eof => break,
             _ => {}
         }
         buf.clear();
@@ -109,8 +105,8 @@ fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
     }
 
     loop {
-        match reader.read_event(&mut buf) {
-            Ok(Event::Start(element)) => {
+        match reader.read_event(&mut buf)? {
+            Event::Start(element) => {
                 let ext = parse_extension_element(reader, element.attributes())?;
                 let name = str::from_utf8(element.local_name())?;
 
@@ -127,7 +123,7 @@ fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
                     children.insert(name.to_string(), vec![ext]);
                 }
             }
-            Ok(Event::End(element)) => {
+            Event::End(element) => {
                 return ExtensionBuilder::new()
                            .name(&*reader.decode(element.name()))
                            .value(content)
@@ -135,14 +131,13 @@ fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
                            .children(children)
                            .finalize();
             }
-            Ok(Event::CData(element)) => {
+            Event::CData(element) => {
                 content = Some(reader.decode(&element).into_owned());
             }
-            Ok(Event::Text(element)) => {
+            Event::Text(element) => {
                 content = Some(element.unescape_and_decode(&reader)?);
             }
-            Ok(Event::Eof) => break,
-            Err(err) => return Err(err.into()),
+            Event::Eof => break,
             _ => {}
         }
         buf.clear();

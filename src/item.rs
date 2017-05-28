@@ -456,8 +456,8 @@ impl FromXml for Item {
         let mut buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(element)) => {
+            match reader.read_event(&mut buf)? {
+                Event::Start(element) => {
                     match element.name() {
                         b"category" => {
                             let category = Category::from_xml(reader, element.attributes())?;
@@ -495,7 +495,7 @@ impl FromXml for Item {
                         }
                     }
                 }
-                Ok(Event::End(_)) => {
+                Event::End(_) => {
                     if !item.extensions.is_empty() {
                         if let Some(map) = item.extensions.remove("itunes") {
                             item.itunes_ext = Some(ITunesItemExtension::from_map(map));
@@ -508,8 +508,7 @@ impl FromXml for Item {
 
                     return Ok(item);
                 }
-                Ok(Event::Eof) => break,
-                Err(err) => return Err(err.into()),
+                Event::Eof => break,
                 _ => {}
             }
             buf.clear();

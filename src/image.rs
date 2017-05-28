@@ -263,8 +263,8 @@ impl FromXml for Image {
         let mut skip_buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(element)) => {
+            match reader.read_event(&mut buf)? {
+                Event::Start(element) => {
                     match element.name() {
                         b"url" => url = element_text(reader)?,
                         b"title" => title = element_text(reader)?,
@@ -275,7 +275,7 @@ impl FromXml for Image {
                         n => reader.read_to_end(n, &mut skip_buf)?,
                     }
                 }
-                Ok(Event::End(_)) => {
+                Event::End(_) => {
                     let url = url.unwrap_or_default();
                     let title = title.unwrap_or_default();
                     let link = link.unwrap_or_default();
@@ -289,8 +289,7 @@ impl FromXml for Image {
                                   description: description,
                               });
                 }
-                Ok(Event::Eof) => break,
-                Err(err) => return Err(err.into()),
+                Event::Eof => break,
                 _ => {}
             }
             buf.clear();

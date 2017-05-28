@@ -130,11 +130,10 @@ impl FromXml for Enclosure {
         let mut depth = 1;
         let mut buf = Vec::new();
         while depth > 0 {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(_)) => depth += 1,
-                Ok(Event::End(_)) => depth -= 1,
-                Ok(Event::Eof) => break,
-                Err(e) => return Err(e.into()),
+            match reader.read_event(&mut buf)? {
+                Event::Start(_) => depth += 1,
+                Event::End(_) => depth -= 1,
+                Event::Eof => break,
                 _ => {}
             }
         }
