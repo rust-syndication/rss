@@ -477,26 +477,22 @@ impl ImageBuilder {
         Url::parse(self.url.as_str())?;
         Url::parse(self.link.as_str())?;
 
-        let width_opt = self.width;
-        if width_opt.is_some() {
-            let width = width_opt.unwrap();
+        if let Some(width) = self.width {
             if width > 144 {
-                return Err(Error::Validation("Image width cannot be greater than 144."
+                return Err(Error::Validation("Image Width cannot be greater than 144."
                                                  .to_string()));
             } else if width < 0 {
-                return Err(Error::Validation("Image width cannot be a negative value."
+                return Err(Error::Validation("Image Width cannot be a negative value."
                                                  .to_string()));
             }
         }
 
-        let height_opt = self.height;
-        if height_opt.is_some() {
-            let height = height_opt.unwrap();
+        if let Some(height) = self.height {
             if height > 144 {
-                return Err(Error::Validation("Image height cannot be greater than 400."
+                return Err(Error::Validation("Image Height cannot be greater than 400."
                                                  .to_string()));
             } else if height < 0 {
-                return Err(Error::Validation("Image height cannot be a negative value."
+                return Err(Error::Validation("Image Height cannot be a negative value."
                                                  .to_string()));
             }
         }

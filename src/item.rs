@@ -882,11 +882,6 @@ impl ItemBuilder {
     ///     .finalize().unwrap();
     /// ```
     pub fn validate(self) -> Result<ItemBuilder, Error> {
-        if self.title.is_none() && self.description.is_none() {
-            return Err(Error::Validation("Either Title or Description must have a value."
-                                             .to_string()));
-        }
-
         if let Some(ref link) = self.link {
             Url::parse(link.as_str())?;
         }

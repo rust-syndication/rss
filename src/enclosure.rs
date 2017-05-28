@@ -263,7 +263,7 @@ impl EnclosureBuilder {
         let mime = self.mime_type.parse::<Mime>();
 
         if mime.is_err() {
-            return Err(Error::Validation(format!("Error: {:?}", mime.unwrap_err())));
+            return Err(Error::Validation(format!("Enclosure Mime Type is invalid: {:?}", mime.unwrap_err())));
         }
 
         if self.length < 0 {

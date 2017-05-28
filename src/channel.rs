@@ -2085,7 +2085,7 @@ impl ChannelBuilder {
         }
 
         for day in self.skip_days.as_slice() {
-            match Day::from_str(day.as_str()) {
+            match SkipDay::from_str(day.as_str()) {
                 Ok(_) => (),
                 Err(err) => return Err(Error::Validation(err.to_string())),
             };
@@ -2102,7 +2102,7 @@ impl ChannelBuilder {
         }
 
         if self.ttl.is_some() && self.ttl.unwrap() < 0 {
-            return Err(Error::Validation("Channel ttl cannot be a negative value.".to_string()));
+            return Err(Error::Validation("Channel TTL cannot be a negative value.".to_string()));
         }
 
         Ok(self)
@@ -2185,7 +2185,7 @@ impl ChannelBuilder {
 }
 
 /// Enumerations of protocols for `SkipDays`.
-enum Day {
+enum SkipDay {
     /// Monday
     Monday,
 
@@ -2208,20 +2208,20 @@ enum Day {
     Sunday,
 }
 
-impl FromStr for Day {
+impl FromStr for SkipDay {
     type Err = &'static str;
 
-    /// Convert `&str` to `Day`.
+    /// Convert `&str` to `SkipDay`.
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "Monday" => Ok(Day::Monday),
-            "Tuesday" => Ok(Day::Tuesday),
-            "Wednesday" => Ok(Day::Wednesday),
-            "Thursday" => Ok(Day::Thursday),
-            "Friday" => Ok(Day::Friday),
-            "Saturday" => Ok(Day::Saturday),
-            "Sunday" => Ok(Day::Sunday),
-            _ => Err("not a valid value"),
+            "Monday" => Ok(SkipDay::Monday),
+            "Tuesday" => Ok(SkipDay::Tuesday),
+            "Wednesday" => Ok(SkipDay::Wednesday),
+            "Thursday" => Ok(SkipDay::Thursday),
+            "Friday" => Ok(SkipDay::Friday),
+            "Saturday" => Ok(SkipDay::Saturday),
+            "Sunday" => Ok(SkipDay::Sunday),
+            _ => Err("Skip Day is not not a valid value"),
         }
     }
 }

@@ -411,7 +411,7 @@ impl FromStr for CloudProtocol {
             "http-post" => Ok(CloudProtocol::HttpPost),
             "xml-rpc" => Ok(CloudProtocol::XmlRpc),
             "soap" => Ok(CloudProtocol::Soap),
-            _ => Err("not a valid value"),
+            _ => Err("Cloud Protocol is not a valid value"),
         }
     }
 }
