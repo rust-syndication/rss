@@ -5,6 +5,144 @@ use rss::extension::dublincore::DublinCoreExtension;
 use rss::extension::get_extension_values;
 
 #[test]
+fn read_rss090() {
+    let input = include_str!("data/rss090.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "Mozilla Dot Org");
+    assert_eq!(channel.link(), "http://www.mozilla.org");
+    assert_eq!(channel.description(),
+               "the Mozilla Organization\n      web site");
+
+    let image = channel.image().unwrap();
+    assert_eq!(image.title(), "Mozilla");
+    assert_eq!(image.url(), "http://www.mozilla.org/images/moz.gif");
+    assert_eq!(image.link(), "http://www.mozilla.org");
+
+    assert_eq!(channel.items().len(), 5);
+
+    let item = channel.items().get(0).unwrap();
+    assert_eq!(item.title(), Some("New Status Updates"));
+    assert_eq!(item.link(), Some("http://www.mozilla.org/status/"));
+}
+
+#[test]
+fn read_rss091() {
+    let input = include_str!("data/rss091.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "WriteTheWeb");
+    assert_eq!(channel.link(), "http://writetheweb.com");
+    assert_eq!(channel.description(), "News for web users that write back");
+    assert_eq!(channel.language(), Some("en-us"));
+    assert_eq!(channel.copyright(),
+               Some("Copyright 2000, WriteTheWeb team."));
+    assert_eq!(channel.managing_editor(), Some("editor@writetheweb.com"));
+    assert_eq!(channel.webmaster(), Some("webmaster@writetheweb.com"));
+
+    let image = channel.image().unwrap();
+    assert_eq!(image.title(), "WriteTheWeb");
+    assert_eq!(image.url(),
+               "http://writetheweb.com/images/mynetscape88.gif");
+    assert_eq!(image.link(), "http://writetheweb.com");
+    assert_eq!(image.width(), Some("88"));
+    assert_eq!(image.height(), Some("31"));
+    assert_eq!(image.description(),
+               Some("News for web users that write back"));
+
+    assert_eq!(channel.items().len(), 6);
+
+    let item = channel.items().get(0).unwrap();
+    assert_eq!(item.title(), Some("Giving the world a pluggable Gnutella"));
+    assert_eq!(item.link(), Some("http://writetheweb.com/read.php?item=24"));
+    assert_eq!(item.description(),
+               Some("WorldOS is a framework on which to build programs that work like Freenet or \
+                    Gnutella -allowing distributed applications using peer-to-peer routing."));
+}
+
+#[test]
+fn read_rss092() {
+    let input = include_str!("data/rss092.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "Dave Winer: Grateful Dead");
+    assert_eq!(channel.link(),
+               "http://www.scripting.com/blog/categories/gratefulDead.html");
+    assert_eq!(channel.description(),
+               "A high-fidelity Grateful Dead song every day. This is where we're experimenting \
+               with enclosures on RSS news items that download when you're not using your \
+               computer. If it works (it will) it will be the end of the Click-And-Wait \
+               multimedia experience on the Internet.");
+    assert_eq!(channel.last_build_date(),
+               Some("Fri, 13 Apr 2001 19:23:02 GMT"));
+    assert_eq!(channel.docs(), Some("http://backend.userland.com/rss092"));
+    assert_eq!(channel.managing_editor(),
+               Some("dave@userland.com (Dave Winer)"));
+    assert_eq!(channel.webmaster(), Some("dave@userland.com (Dave Winer)"));
+
+    let cloud = channel.cloud().unwrap();
+    assert_eq!(cloud.domain(), "data.ourfavoritesongs.com");
+    assert_eq!(cloud.port(), "80");
+    assert_eq!(cloud.path(), "/RPC2");
+    assert_eq!(cloud.register_procedure(),
+               "ourFavoriteSongs.rssPleaseNotify");
+    assert_eq!(cloud.protocol(), "xml-rpc");
+
+    assert_eq!(channel.items().len(), 22);
+
+    let item = channel.items().get(0).unwrap();
+    assert_eq!(item.description(),
+               Some("It's been a few days since I added a song to the Grateful Dead channel. Now \
+                    that there are all these new Radio users, many of whom are tuned into this \
+                    channel (it's #16 on the hotlist of upstreaming Radio users, there's no way \
+                             of knowing how many non-upstreaming users are subscribing, have to \
+                             do something about this..). Anyway, tonight's song is a live \
+                    version of Weather Report Suite from Dick's Picks Volume 7. It's wistful \
+                    music. Of course a beautiful song, oft-quoted here on Scripting News. <i>A \
+                    little change, the wind and rain.</i>"));
+
+    let enclosure = item.enclosure().unwrap();
+    assert_eq!(enclosure.url(),
+               "http://www.scripting.com/mp3s/weatherReportDicksPicsVol7.mp3");
+    assert_eq!(enclosure.length(), "6182912");
+    assert_eq!(enclosure.mime_type(), "audio/mpeg");
+}
+
+#[test]
+fn read_rss1() {
+    let input = include_str!("data/rss1.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "XML.com");
+    assert_eq!(channel.link(), "http://xml.com/pub");
+    assert_eq!(channel.description(),
+               "XML.com features a rich mix of information and services \n      \
+               for the XML community.");
+
+    let image = channel.image().unwrap();
+    assert_eq!(image.title(), "XML.com");
+    assert_eq!(image.url(), "http://xml.com/universal/images/xml_tiny.gif");
+    assert_eq!(image.link(), "http://www.xml.com");
+
+    let text_input = channel.text_input().unwrap();
+    assert_eq!(text_input.title(), "Search XML.com");
+    assert_eq!(text_input.description(), "Search XML.com's XML collection");
+    assert_eq!(text_input.name(), "s");
+    assert_eq!(text_input.link(), "http://search.xml.com");
+
+    assert_eq!(channel.items().len(), 2);
+
+    let item = channel.items().get(0).unwrap();
+    assert_eq!(item.title(), Some("Processing Inclusions with XSLT"));
+    assert_eq!(item.link(),
+               Some("http://xml.com/pub/2000/08/09/xslt/xslt.html"));
+    assert_eq!(item.description(),
+               Some("Processing document inclusions with general XML tools can be \n     \
+                    problematic. This article proposes a way of preserving inclusion \n     \
+                    information through SAX-based processing."));
+}
+
+#[test]
 fn read_channel() {
     let input = include_str!("data/channel.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");

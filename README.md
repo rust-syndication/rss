@@ -5,7 +5,17 @@
 
 Library for serializing the RSS web content syndication format.
 
-This library provides a complete implementation of the RSS 2.0 specification.
+### Supported Versions
+
+Reading from the following RSS versions is supported:
+
+* RSS 0.90
+* RSS 0.91
+* RSS 0.92
+* RSS 1.0
+* RSS 2.0
+
+Writing support is limited to RSS 2.0.
 
 ### Documentation
 
@@ -18,7 +28,7 @@ Add the dependency to your `Cargo.toml`.
 
 ```toml
 [dependencies]
-rss = "0.4"
+rss = "0.5"
 ```
 
 The package includes a single crate named `rss`.

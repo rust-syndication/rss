@@ -913,42 +913,74 @@ impl Channel {
     pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
         let mut reader = Reader::from_reader(reader);
         reader.trim_text(true).expand_empty_elements(true);
-        let mut in_rss = false;
         let mut namespaces = HashMap::new();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();
+
+        let mut channel: Option<Channel> = None;
+
+        // for parsing RSS 0.9, 1.0 feeds
+        let mut items: Option<Vec<Item>> = None;
+        let mut image: Option<Image> = None;
+        let mut text_input: Option<TextInput> = None;
+
+        // find opening element
+        loop {
+            match reader.read_event(&mut buf)? {
+                Event::Start(element) => {
+                    if element.name() == b"rss" || element.name() == b"rdf:RDF" {
+                        for attr in element.attributes().with_checks(false) {
+                            if let Ok(attr) = attr {
+
+                                if !attr.key.starts_with(b"xmlns:") ||
+                                   attr.key == b"xmlns:itunes" ||
+                                   attr.key == b"xmlns:dc" {
+                                    continue;
+                                }
+
+                                let key = str::from_utf8(&attr.key[6..])?.to_string();
+                                let value = attr.unescape_and_decode_value(&reader)?;
+                                namespaces.insert(key, value);
+                            }
+                        }
+
+                        break;
+                    } else {
+                        return Err(Error::InvalidStartTag);
+                    }
+                }
+                Event::Eof => return Err(Error::EOF),
+                _ => continue,
+            }
+        }
 
         loop {
             match reader.read_event(&mut buf) {
                 Ok(Event::Start(element)) => {
                     match element.name() {
-                        b"rss" if !in_rss => {
-                            for attr in element.attributes().with_checks(false) {
-                                if let Ok(attr) = attr {
-
-                                    if !attr.key.starts_with(b"xmlns:") ||
-                                       attr.key == b"xmlns:itunes" ||
-                                       attr.key == b"xmlns:dc" {
-                                        continue;
-                                    }
-
-                                    let key = str::from_utf8(&attr.key[6..])?.to_string();
-                                    let value = attr.unescape_and_decode_value(&reader)?;
-                                    namespaces.insert(key, value);
-                                }
-                            }
-
-                            in_rss = true;
+                        b"channel" => {
+                            let inner = Channel::from_xml(&mut reader, element.attributes())?;
+                            channel = Some(inner);
                         }
-                        b"channel" if in_rss => {
-                            let mut channel = Channel::from_xml(&mut reader, element.attributes())?;
-                            channel.namespaces = namespaces;
-                            return Ok(channel);
+                        b"item" => {
+                            let item = Item::from_xml(&mut reader, element.attributes())?;
+                            if items.is_none() {
+                                items = Some(Vec::new());
+                            }
+                            items.as_mut().unwrap().push(item);
+                        }
+                        b"image" => {
+                            let inner = Image::from_xml(&mut reader, element.attributes())?;
+                            image = Some(inner);
+                        }
+                        b"textinput" => {
+                            let inner = TextInput::from_xml(&mut reader, element.attributes())?;
+                            text_input = Some(inner);
                         }
                         name => reader.read_to_end(name, &mut skip_buf)?,
                     }
                 }
-                Ok(Event::End(_)) => in_rss = false,
+                Ok(Event::End(_)) => break,
                 Ok(Event::Eof) => break,
                 Err(err) => return Err(err.into()),
                 _ => {}
@@ -956,7 +988,25 @@ impl Channel {
             buf.clear();
         }
 
-        Err(Error::EOF)
+        if let Some(mut channel) = channel {
+            if let Some(mut items) = items {
+                channel.items.append(&mut items);
+            }
+
+            if image.is_some() {
+                channel.image = image;
+            }
+
+            if text_input.is_some() {
+                channel.text_input = text_input;
+            }
+
+            channel.namespaces = namespaces;
+
+            Ok(channel)
+        } else {
+            Err(Error::EOF)
+        }
     }
 
     /// Attempt to write the RSS channel as XML to the speficied writer.
