@@ -878,6 +878,14 @@ impl Channel {
 impl Channel {
     /// Construct a `Channel` from a url string.
     ///
+    /// Note: from_url can only be used by enabling the from_url feature in your
+    /// Cargo.toml as follows:
+    ///
+    /// ```toml
+    /// [dependencies]
+    /// rss = { version = "*", features = ["from_url"] }
+    /// ```
+    ///
     /// # Examples
     ///
     /// ```
