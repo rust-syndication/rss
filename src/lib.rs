@@ -22,37 +22,31 @@
 //!
 //! use rss::{ChannelBuilder, ImageBuilder};
 //!
-//! fn main()
-//! {
-//!     let image = ImageBuilder::new()
-//!             .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-//!             .title("LAS 300 Logo")
-//!             .link("http://www.jupiterbroadcasting.com")
-//!             .width(Some(88))
-//!             .height(Some(88))
-//!             .description(Some("This is a test".to_string()))
-//!             .finalize()
-//!             .unwrap();
+//! fn main() {
+//!     let image = ImageBuilder::default()
+//!         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
+//!         .title("LAS 300 Logo")
+//!         .link("http://www.jupiterbroadcasting.com")
+//!         .finalize();
 //!
-//!     let description = "Ogg Vorbis audio versions of The Linux ".to_string()
-//!     + "Action Show! A show that covers everything geeks care about in the "
-//!     + "computer industry. Get a solid dose of Linux, gadgets, news events "
-//!     + "and much more!";
+//!     let description = "Ogg Vorbis audio versions of The Linux Action Show! A show that \
+//!         covers everything geeks care about in the computer industry. Get a solid dose of \
+//!         Linux, gadgets, news events and much more!";
 //!
-//!     let channel = ChannelBuilder::new()
-//!             .title("The Linux Action Show! OGG")
-//!             .link("http://www.jupiterbroadcasting.com")
-//!             .description(description.as_ref())
-//!             .finalize()
-//!             .unwrap();
+//!     let channel = ChannelBuilder::default()
+//!         .title("The Linux Action Show! OGG")
+//!         .link("http://www.jupiterbroadcasting.com")
+//!         .description(description.as_ref())
+//!         .image(image)
+//!         .finalize();
 //! }
 //! ```
 //!
 //! # Reading
 //!
-//! A channel can be read from any object that implements the `BufRead` trait.
+//! ## From a `BufRead`
 //!
-//! ## Example
+//! A channel can be read from any object that implements the `BufRead` trait.
 //!
 //! ```rust,no_run
 //! use std::fs::File;
@@ -63,25 +57,23 @@
 //! let reader = BufReader::new(file);
 //! let channel = Channel::read_from(reader).unwrap();
 //! ```
+//! ## From a URL
 //!
-//! A channel can be read from an url.
+//! A channel can also be read from a URL.
 //!
-//! To enable this functionality you must enable the from_url feature in your Cargo.toml.
+//! To enable this functionality you must enable the `from_url` feature in your Cargo.toml.
 //!
 //! ```toml
 //! [dependencies]
 //! rss = { version = "*", features = ["from_url"] }
 //! ```
 //!
-//! # Examples
-//!
-//! ```
+//! ```ignore
 //! extern crate rss;
 //!
 //! use rss::Channel;
 //!
-//! fn main()
-//! {
+//! fn main() {
 //!     let url = "https://feedpress.me/usererror.xml";
 //!     let channel = Channel::from_url(url).unwrap();
 //! }
@@ -123,8 +115,7 @@
 //!
 //! use rss::Channel;
 //!
-//! fn main()
-//! {
+//! fn main() {
 //!     let input = include_str!("tests/data/rss2sample.xml");
 //!
 //!     let channel = input.parse::<Channel>().unwrap();
@@ -139,18 +130,12 @@
 //!
 //! use rss::ImageBuilder;
 //!
-//! fn main()
-//! {
-//!     let image = ImageBuilder::new()
+//! fn main() {
+//!     let builder = ImageBuilder::default()
 //!             .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
 //!             .title("LAS 300 Logo")
 //!             .link("http://www.jupiterbroadcasting.com")
-//!             .width(Some(88))
-//!             .height(Some(88))
-//!             .description(Some("This is a test".to_string()))
 //!             .validate()
-//!             .unwrap()
-//!             .finalize()
 //!             .unwrap();
 //! }
 //! ```

@@ -24,26 +24,25 @@ pub struct Guid {
 }
 
 impl Guid {
-    /// Get the permalink that exists under `Guid`.
+    /// Return whether this `Guid` is a permalink.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{GuidBuilder, Guid};
+    /// use rss::GuidBuilder;
     ///
-    /// let guid = GuidBuilder::new()
-    ///     .is_permalink(None)
+    /// let guid = GuidBuilder::default()
     ///     .finalize();
     ///
     /// assert!(guid.is_permalink());
     /// ```
     ///
     /// ```
-    /// use rss::{GuidBuilder, Guid};
+    /// use rss::GuidBuilder;
     ///
     /// let permalink = true;
     ///
-    /// let guid = GuidBuilder::new()
+    /// let guid = GuidBuilder::default()
     ///     .is_permalink(permalink)
     ///     .finalize();
     ///
@@ -51,11 +50,11 @@ impl Guid {
     /// ```
     ///
     /// ```
-    /// use rss::{GuidBuilder, Guid};
+    /// use rss::GuidBuilder;
     ///
     /// let permalink = false;
     ///
-    /// let guid = GuidBuilder::new()
+    /// let guid = GuidBuilder::default()
     ///     .is_permalink(permalink)
     ///     .finalize();
     ///
@@ -65,19 +64,20 @@ impl Guid {
         self.is_permalink
     }
 
-    /// Get the guid that exists under `Guid`.
+    /// Return the value of this `Guid`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{GuidBuilder, Guid};
+    /// use rss::GuidBuilder;
     ///
-    /// let guid = "9DE46946-2F90-4D5D-9047-7E9165C16E7C";
-    /// let guid_obj = GuidBuilder::new()
-    ///     .value(guid)
+    /// let value = "9DE46946-2F90-4D5D-9047-7E9165C16E7C";
+    ///
+    /// let guid = GuidBuilder::default()
+    ///     .value(value)
     ///     .finalize();
     ///
-    /// assert_eq!(guid, guid_obj.value());
+    /// assert_eq!(value, guid.value());
     /// ```
     pub fn value(&self) -> &str {
         self.value.as_str()
@@ -136,7 +136,7 @@ impl ToXml for Guid {
     }
 }
 
-/// This `GuidBuilder` struct creates the `Guid`.
+/// A builder used to create an `Guid`.
 #[derive(Debug, Clone, Default)]
 pub struct GuidBuilder {
     is_permalink: Option<bool>,
@@ -144,59 +144,48 @@ pub struct GuidBuilder {
 }
 
 impl GuidBuilder {
-    /// Construct a new `GuidBuilder` and return default values.
+    /// Set whether this `Guid` is a permalink.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::GuidBuilder;
     ///
-    /// let guid_builder = GuidBuilder::new();
-    /// ```
-    pub fn new() -> GuidBuilder {
-        GuidBuilder::default()
-    }
-
-    /// Set the optional permalink that exists under `Guid`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::GuidBuilder;
-    ///
-    /// let guid_builder = GuidBuilder::new()
+    /// let builder = GuidBuilder::default()
     ///     .is_permalink(false);
     /// ```
-    pub fn is_permalink<V: Into<Option<bool>>>(mut self, is_permalink: V) -> GuidBuilder {
-        self.is_permalink = is_permalink.into();
+    pub fn is_permalink(mut self, is_permalink: bool) -> GuidBuilder {
+        self.is_permalink = Some(is_permalink);
         self
     }
 
-    /// Set the guid that exists under `Guid`.
+    /// Set the value of this `Guid`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::GuidBuilder;
     ///
-    /// let guid_builder = GuidBuilder::new()
+    /// let builder = GuidBuilder::default()
     ///     .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C");
     /// ```
-    pub fn value<S: Into<String>>(mut self, value: S) -> GuidBuilder {
+    pub fn value<S>(mut self, value: S) -> GuidBuilder
+        where S: Into<String>
+    {
         self.value = value.into();
         self
     }
 
-    /// Construct the `Guid` from the `GuidBuilder`.
+    /// Construct the `Guid` from this `GuidBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::GuidBuilder;
     ///
-    /// let guid = GuidBuilder::new()
-    ///         .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C")
+    /// let guid = GuidBuilder::default()
     ///         .is_permalink(true)
+    ///         .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C")
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Guid {

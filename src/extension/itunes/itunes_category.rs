@@ -22,16 +22,16 @@ pub struct ITunesCategory {
 }
 
 impl ITunesCategory {
-    /// Get the text that exists under `ITunesCategory`.
+    /// Return the name of this category.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesCategory};
+    /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let text = "text";
+    /// let text = "category";
     ///
-    /// let category = ITunesCategoryBuilder::new()
+    /// let category = ITunesCategoryBuilder::default()
     ///     .text(text)
     ///     .finalize();
     ///
@@ -41,20 +41,19 @@ impl ITunesCategory {
         self.text.as_str()
     }
 
-
-    /// Get the optional subcategory that exists under `ITunesCategory`.
+    /// Return the subcategory for this category.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesCategory};
+    /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
+    /// let subcategory = ITunesCategoryBuilder::default()
+    ///     .text("subcategory")
     ///     .finalize();
     ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
+    /// let category = ITunesCategoryBuilder::default()
+    ///     .text("category")
     ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
@@ -62,10 +61,9 @@ impl ITunesCategory {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesCategory};
+    /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
+    /// let category = ITunesCategoryBuilder::default()
     ///     .subcategory(None)
     ///     .finalize();
     ///
@@ -92,7 +90,7 @@ impl ToXml for ITunesCategory {
     }
 }
 
-/// This `ITunesCategoryBuilder` struct creates the `ITunesCategory`.
+/// A builder used to create an `ITunesCategory`.
 #[derive(Debug, Clone, Default)]
 pub struct ITunesCategoryBuilder {
     text: String,
@@ -100,46 +98,36 @@ pub struct ITunesCategoryBuilder {
 }
 
 impl ITunesCategoryBuilder {
-    /// Construct a new `ITunesCategoryBuilder` and return default values.
+    /// Set the name of the category.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let category_builder = ITunesCategoryBuilder::new();
+    /// let builder = ITunesCategoryBuilder::default()
+    ///     .text("category");
     /// ```
-    pub fn new() -> ITunesCategoryBuilder {
-        ITunesCategoryBuilder::default()
-    }
-
-    /// Set the text that exists uner `ITunesCategory`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesCategoryBuilder;
-    ///
-    /// let category_builder = ITunesCategoryBuilder::new()
-    ///     .text("text");
-    /// ```
-    pub fn text<S: Into<String>>(mut self, text: S) -> ITunesCategoryBuilder {
+    pub fn text<S>(mut self, text: S) -> ITunesCategoryBuilder
+        where S: Into<String>
+    {
         self.text = text.into();
         self
     }
 
-    /// Set the optional subcategory that exists uner `ITunesCategory`.
+    /// Set the subcategory for the category.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
+    /// let subcategory = ITunesCategoryBuilder::default()
+    ///     .text("subcategory")
     ///     .finalize();
     ///
-    /// let category_builder = ITunesCategoryBuilder::new()
+    /// let builder = ITunesCategoryBuilder::default()
+    ///     .text("category")
     ///     .subcategory(Box::new(subcategory));
     /// ```
     pub fn subcategory<V>(mut self, subcategory: V) -> ITunesCategoryBuilder
@@ -149,20 +137,15 @@ impl ITunesCategoryBuilder {
         self
     }
 
-    /// Construct the `ITunesCategory` from the `ITunesCategoryBuilder`.
+    /// Construct the `ITunesCategory` from this `ITunesCategoryBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .finalize();
-    ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .subcategory(Box::new(subcategory))
+    /// let category = ITunesCategoryBuilder::default()
+    ///     .text("category")
     ///     .finalize();
     /// ```
     pub fn finalize(self) -> ITunesCategory {

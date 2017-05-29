@@ -33,20 +33,17 @@ pub struct Image {
 }
 
 impl Image {
-    /// Get the url that exists under `Image`.
+    /// Return the URL for this `Image`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ImageBuilder, Image};
+    /// use rss::ImageBuilder;
     ///
     /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
     ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///     .url(url)
-    ///     .link(link)
     ///     .finalize();
     ///
     /// assert_eq!(url, image.url());
@@ -55,24 +52,17 @@ impl Image {
         self.url.as_str()
     }
 
-
-    /// Get the title that exists under `Image`.
+    /// Return the title for this `Image`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ImageBuilder, Image};
+    /// use rss::ImageBuilder;
     ///
     /// let title = "LAS 300 Logo";
     ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///     .title(title)
-    ///     .url(url)
-    ///     .link(link)
     ///     .finalize();
     ///
     /// assert_eq!(title, image.title());
@@ -81,20 +71,16 @@ impl Image {
         self.title.as_str()
     }
 
-
-    /// Get the link that exists under `Image`.
+    /// Return the link that this `Image` directs to.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ImageBuilder, Image};
-    ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
+    /// use rss::ImageBuilder;
     ///
     /// let link = "http://www.jupiterbroadcasting.com/";
     ///
-    /// let image = ImageBuilder::new()
-    ///     .url(url)
+    /// let image = ImageBuilder::default()
     ///     .link(link)
     ///     .finalize();
     ///
@@ -104,88 +90,40 @@ impl Image {
         self.link.as_str()
     }
 
-
-    /// Get the width that exists under `Image`.
+    /// Return the width of this `Image`.
+    ///
+    /// If this is `None` the default value should be considered to be `80`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ImageBuilder, Image};
+    /// use rss::ImageBuilder;
     ///
-    /// let default: i64 = 88;
+    /// let width = 60;
     ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
-    ///     .width(None)
-    ///     .url(url)
-    ///     .link(link)
-    ///     .finalize();
-    ///
-    /// assert_eq!(default.to_string(), image.width().unwrap());
-    /// ```
-    ///
-    /// ```
-    /// use rss::{ImageBuilder, Image};
-    ///
-    /// let width: i64 = 60;
-    ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///     .width(width)
-    ///     .url(url)
-    ///     .link(link)
     ///     .finalize();
     ///
     /// assert_eq!(Some(width.to_string().as_str()), image.width());
-    /// ```
-    ///
     /// ```
     pub fn width(&self) -> Option<&str> {
         self.width.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the height that exists under `Image`.
+    /// Return the height of this `Image`.
+    ///
+    /// If this is `None` the default value should be considered to be `31`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ImageBuilder, Image};
+    /// use rss::ImageBuilder;
     ///
-    /// let default: i64 = 31;
+    /// let height = 60;
     ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
-    ///     .height(None)
-    ///     .url(url)
-    ///     .link(link)
-    ///     .finalize();
-    ///
-    /// assert_eq!(default.to_string(), image.height().unwrap());
-    /// ```
-    ///
-    /// ```
-    /// use rss::{ImageBuilder, Image};
-    ///
-    /// let height: i64 = 60;
-    ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///     .height(height)
-    ///     .url(url)
-    ///     .link(link)
     ///     .finalize();
     ///
     /// assert_eq!(Some(height.to_string().as_str()), image.height());
@@ -194,46 +132,30 @@ impl Image {
         self.height.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the description that exists under `Image`.
+    /// Return the description of this `Image`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ImageBuilder, Image};
+    /// use rss::ImageBuilder;
     ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///     .description(None)
-    ///     .url(url)
-    ///     .link(link)
     ///     .finalize();
     ///
     /// assert!(image.description().is_none());
     /// ```
     ///
     /// ```
-    /// use rss::{ImageBuilder, Image};
+    /// use rss::ImageBuilder;
     ///
-    /// let description_string = "This is a test";
+    /// let description = "This is a test";
     ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com";
-    ///
-    /// let image = ImageBuilder::new()
-    ///     .description(description_string.to_string())
-    ///     .url(url)
-    ///     .link(link)
+    /// let image = ImageBuilder::default()
+    ///     .description(description.to_string())
     ///     .finalize();
     ///
-    /// let description_option = image.description();
-    /// assert!(description_option.is_some());
-    ///
-    /// assert_eq!(Some(description_string), image.description());
+    /// assert_eq!(Some(description), image.description());
     /// ```
     pub fn description(&self) -> Option<&str> {
         self.description.as_ref().map(|s| s.as_str())
@@ -314,8 +236,8 @@ impl ToXml for Image {
     }
 }
 
-/// This `ImageBuilder` struct creates the `Image`.
-#[derive(Debug, Clone, Default)]
+/// A builder used to create an `Image`.
+#[derive(Debug, Default, Clone)]
 pub struct ImageBuilder {
     url: String,
     title: String,
@@ -326,133 +248,122 @@ pub struct ImageBuilder {
 }
 
 impl ImageBuilder {
-    /// Construct a new `ImageBuilder` and return default values.
+    /// Set URL for the `Image`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image_builder = ImageBuilder::new();
-    /// ```
-    pub fn new() -> ImageBuilder {
-        ImageBuilder::default()
-    }
-
-
-    /// Set the url that exists under `Image`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let image_builder = ImageBuilder::new()
+    /// let builder = ImageBuilder::default()
     ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg");
     /// ```
-    pub fn url<S: Into<String>>(mut self, url: S) -> ImageBuilder {
+    pub fn url<S>(mut self, url: S) -> ImageBuilder
+        where S: Into<String>
+    {
         self.url = url.into();
         self
     }
 
-
-    /// Set the title that exists under `Image`.
+    /// Set the title for the `Image`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image_builder = ImageBuilder::new()
+    /// let builder = ImageBuilder::default()
     ///     .title("LAS 300 Logo");
     /// ```
-    pub fn title<S: Into<String>>(mut self, title: S) -> ImageBuilder {
+    pub fn title<S>(mut self, title: S) -> ImageBuilder
+        where S: Into<String>
+    {
         self.title = title.into();
         self
     }
 
-
-    /// Set the link that exists under `Image`.
+    /// Set the link that the `Image` directs to.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image_builder = ImageBuilder::new()
+    /// let builder = ImageBuilder::default()
     ///     .link("http://www.jupiterbroadcasting.com/");
     /// ```
-    pub fn link<S: Into<String>>(mut self, link: S) -> ImageBuilder {
+    pub fn link<S>(mut self, link: S) -> ImageBuilder
+        where S: Into<String>
+    {
         self.link = link.into();
         self
     }
 
-
-    /// Set the width that exists under `Image`.
+    /// Set width of the `Image`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image_builder = ImageBuilder::new()
+    /// let builder = ImageBuilder::default()
     ///     .width(88);
     /// ```
-    pub fn width<V: Into<Option<i64>>>(mut self, width: V) -> ImageBuilder {
+    pub fn width<V>(mut self, width: V) -> ImageBuilder
+        where V: Into<Option<i64>>
+    {
         self.width = width.into();
         self
     }
 
-
-    /// Set the height that exists under `Image`.
+    /// Set the height of the `Image`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image_builder = ImageBuilder::new()
+    /// let builder = ImageBuilder::default()
     ///     .height(88);
     /// ```
-    pub fn height<V: Into<Option<i64>>>(mut self, height: V) -> ImageBuilder {
+    pub fn height<V>(mut self, height: V) -> ImageBuilder
+        where V: Into<Option<i64>>
+    {
         self.height = height.into();
         self
     }
 
-
-    /// Set the description that exists under `Image`.
+    /// Set the description of the `Image`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image_builder = ImageBuilder::new()
+    /// let builder = ImageBuilder::default()
     ///     .description("This is a test".to_string());
     /// ```
-    pub fn description<V: Into<Option<String>>>(mut self, description: V) -> ImageBuilder {
+    pub fn description<V>(mut self, description: V) -> ImageBuilder
+        where V: Into<Option<String>>
+    {
         self.description = description.into();
         self
     }
 
 
-    /// Validate the contents of `Image`.
+    /// Validate the contents of this `ImageBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
     ///         .title("LAS 300 Logo")
     ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .width(88)
-    ///         .height(88)
-    ///         .description("This is a test".to_string())
     ///         .validate()
-    ///         .unwrap()
-    ///         .finalize();
+    ///         .unwrap();
     /// ```
     pub fn validate(self) -> Result<ImageBuilder, Error> {
         if !self.url.ends_with(".jpeg") && !self.url.ends_with(".jpg") &&
@@ -488,20 +399,17 @@ impl ImageBuilder {
     }
 
 
-    /// Construct the `Image` from the `ImageBuilder`.
+    /// Construct the `Image` from this `ImageBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ImageBuilder;
     ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
     ///         .title("LAS 300 Logo")
     ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .width(88)
-    ///         .height(88)
-    ///         .description("This is a test".to_string())
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Image {
@@ -509,8 +417,8 @@ impl ImageBuilder {
             url: self.url,
             title: self.title,
             link: self.link,
-            width: Some(self.width.unwrap_or(88).to_string()),
-            height: Some(self.height.unwrap_or(31).to_string()),
+            width: self.width.map(|n| n.to_string()),
+            height: self.height.map(|n| n.to_string()),
             description: self.description,
         }
     }

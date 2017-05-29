@@ -84,79 +84,76 @@ pub struct Channel {
 }
 
 impl Channel {
-    /// Get the title that exists under `Channel`.
+    /// Return the title of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let title = "The Linux Action Show! OGG";
+    /// let title = "The Linux Action Show! OGG".to_string();
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .title(title)
+    /// let channel = ChannelBuilder::default()
+    ///     .title(title.as_str())
     ///     .finalize();
     ///
-    /// assert_eq!(title.to_string(), channel.title());
+    /// assert_eq!(title, channel.title());
     /// ```
     pub fn title(&self) -> &str {
         self.title.as_str()
     }
 
-
-    /// Get the link that exists under `Channel`.
+    /// Return the web site URL for this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let link = "http://www.jupiterbroadcasting.com/";
+    /// let link = "http://www.jupiterbroadcasting.com/".to_string();
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .link(link)
+    /// let channel = ChannelBuilder::default()
+    ///     .link(link.as_str())
     ///     .finalize();
     ///
-    /// assert_eq!(link.to_string(), channel.link());
+    /// assert_eq!(link, channel.link());
     /// ```
     pub fn link(&self) -> &str {
         self.link.as_str()
     }
 
-
-    /// Get the description that exists under `Channel`.
+    /// Return the description of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux ".to_string()
-    /// + "Action Show! A show that covers everything geeks care about in the "
-    /// + "computer industry. Get a solid dose of Linux, gadgets, news events "
-    /// + "and much more!";
+    /// let description = "Ogg Vorbis audio versions of The Linux \
+    ///     Action Show! A show that covers everything geeks care about in the \
+    ///     computer industry. Get a solid dose of Linux, gadgets, news events \
+    ///     and much more!".to_string();
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .description(description.as_ref())
+    /// let channel = ChannelBuilder::default()
+    ///     .description(description.as_str())
     ///     .finalize();
     ///
-    /// assert_eq!(description.to_string(), channel.description());
+    /// assert_eq!(description, channel.description());
     /// ```
     pub fn description(&self) -> &str {
         self.description.as_str()
     }
 
-
-    /// Get the optional language that exists under `Channel`.
+    /// Return the langauge of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let language_string = "en";
+    /// let language_string = "en-US";
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .language(language_string.to_string())
     ///     .finalize();
     ///
@@ -164,9 +161,9 @@ impl Channel {
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .language(None)
     ///     .finalize();
     ///
@@ -176,28 +173,26 @@ impl Channel {
         self.language.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional copyright that exists under `Channel`.
+    /// Return the copyright notice for the content of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let copyright_string =
-    ///     "Copyright 2002, Spartanburg Herald-Journal";
+    /// let copyright = "Copyright 2002, Spartanburg Herald-Journal";
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .copyright(copyright_string.to_string())
+    /// let channel = ChannelBuilder::default()
+    ///     .copyright(copyright.to_string())
     ///     .finalize();
     ///
-    /// assert_eq!(Some(copyright_string), channel.copyright());
+    /// assert_eq!(Some(copyright), channel.copyright());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .copyright(None)
     ///     .finalize();
     ///
@@ -207,28 +202,26 @@ impl Channel {
         self.copyright.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional managing editor that exists under `Channel`.
+    /// Return the email address for the managing editor of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let managing_editor_string =
-    ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
+    /// let managing_editor = "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .managing_editor(managing_editor_string.to_string())
+    /// let channel = ChannelBuilder::default()
+    ///     .managing_editor(managing_editor.to_string())
     ///     .finalize();
     ///
-    /// assert_eq!(Some(managing_editor_string), channel.managing_editor());
+    /// assert_eq!(Some(managing_editor), channel.managing_editor());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .managing_editor(None)
     ///     .finalize();
     ///
@@ -238,27 +231,26 @@ impl Channel {
         self.managing_editor.as_ref().map(|s| s.as_str())
     }
 
-    /// Get the optional web master that exists under `Channel`.
+    /// Return the email address for webmaster of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let webmaster_string =
-    ///     "chris@jupiterbroadcasting.com (Chris Fisher)";
+    /// let webmaster = "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .webmaster(webmaster_string.to_string())
+    /// let channel = ChannelBuilder::default()
+    ///     .webmaster(webmaster.to_string())
     ///     .finalize();
     ///
-    /// assert_eq!(Some(webmaster_string), channel.webmaster());
+    /// assert_eq!(Some(webmaster), channel.webmaster());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .webmaster(None)
     ///     .finalize();
     ///
@@ -268,17 +260,16 @@ impl Channel {
         self.webmaster.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional pub date that exists under `Channel`.
+    /// Return the publication date for the content of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
     /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .pub_date(pub_date.to_string())
     ///     .finalize();
     ///
@@ -286,9 +277,9 @@ impl Channel {
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .pub_date(None)
     ///     .finalize();
     ///
@@ -298,30 +289,26 @@ impl Channel {
         self.pub_date.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional last build date that exists under `Channel`.
+    /// Return the time that the content of this `Channel` was last changed.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
     /// let last_build_date = "Sun, 13 Mar 2016 20:02:02 -0700";
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .last_build_date(last_build_date.to_string())
     ///     .finalize();
-    ///
-    /// let local = channel.last_build_date();
-    /// assert!(local.is_some());
     ///
     /// assert_eq!(Some(last_build_date), channel.last_build_date());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .last_build_date(None)
     ///     .finalize();
     ///
@@ -331,40 +318,30 @@ impl Channel {
         self.last_build_date.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the categories that exists under `Channel`.
+    /// Return the categories that this `Channel` belongs to.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel, CategoryBuilder};
+    /// use rss::{ChannelBuilder, CategoryBuilder};
     ///
-    /// let category_1 = CategoryBuilder::new()
-    ///     .domain(None)
-    ///     .name("Media")
-    ///     .finalize();
-    ///
-    /// let category_2 = CategoryBuilder::new()
-    ///     .domain("http://jupiterbroadcasting.com".to_string())
+    /// let category = CategoryBuilder::default()
     ///     .name("Podcast")
     ///     .finalize();
     ///
-    /// let categories_vec = vec![category_1, category_2];
+    /// let categories = vec![category];
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .categories(categories_vec.clone())
+    /// let channel = ChannelBuilder::default()
+    ///     .categories(categories.clone())
     ///     .finalize();
     ///
-    /// let categories = channel.categories();
-    /// assert!(!categories.is_empty());
-    ///
-    /// assert_eq!(categories_vec.clone().len(), categories.len());
+    /// assert_eq!(categories.as_slice(), channel.categories());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .categories(Vec::new())
     ///     .finalize();
     ///
@@ -374,28 +351,27 @@ impl Channel {
         &self.categories
     }
 
-
-    /// Get the optional generator that exists under `Channel`.
+    /// Return the name of the program used to generate the contents of this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let generator_string = "Feeder 2.5.12(2294); Mac OS X Version 10.9.5 (Build 13F34)
-    /// http://reinventedsoftware.com/feeder/";
+    /// let generator = "Feeder 2.5.12(2294); Mac OS X Version 10.9.5 (Build 13F34) \
+    ///     http://reinventedsoftware.com/feeder/";
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .generator(generator_string.to_string())
+    /// let channel = ChannelBuilder::default()
+    ///     .generator(generator.to_string())
     ///     .finalize();
     ///
-    /// assert_eq!(Some(generator_string), channel.generator());
+    /// assert_eq!(Some(generator), channel.generator());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .generator(None)
     ///     .finalize();
     ///
@@ -405,30 +381,26 @@ impl Channel {
         self.generator.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional docs that exists under `Channel`.
+    /// Return a URL that points to the documentation of the RSS format used in this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let docs_string = "http://blogs.law.harvard.edu/tech/rss/";
+    /// let docs = "http://blogs.law.harvard.edu/tech/rss/";
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .docs(docs_string.to_string())
+    /// let channel = ChannelBuilder::default()
+    ///     .docs(docs.to_string())
     ///     .finalize();
     ///
-    /// let docs_option = channel.docs();
-    /// assert!(docs_option.is_some());
-    ///
-    /// assert_eq!(Some(docs_string), channel.docs());
+    /// assert_eq!(Some(docs), channel.docs());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .docs(None)
     ///     .finalize();
     ///
@@ -438,14 +410,15 @@ impl Channel {
         self.docs.as_ref().map(|s| s.as_str())
     }
 
-    /// Get the optional cloud that exists under `Channel`.
+    /// Return the information used to register with a cloud for notifications of updates to the
+    /// `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel, CloudBuilder};
+    /// use rss::{ChannelBuilder, CloudBuilder};
     ///
-    /// let cloud = CloudBuilder::new()
+    /// let cloud = CloudBuilder::default()
     ///     .domain("http://rpc.sys.com/")
     ///     .port(80)
     ///     .path("/RPC2")
@@ -453,7 +426,7 @@ impl Channel {
     ///     .protocol("soap")
     ///     .finalize();
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .cloud(cloud)
     ///     .finalize();
     ///
@@ -461,9 +434,9 @@ impl Channel {
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .cloud(None)
     ///     .finalize();
     ///
@@ -473,27 +446,27 @@ impl Channel {
         self.cloud.as_ref()
     }
 
-
-    /// Get the optional ttl that exists under `Channel`.
+    /// Return the time to live of this `Channel`. This indicates the number of minutes the
+    /// `Channel` can be cached before needing to be refreshed.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let ttl_num = 60;
+    /// let ttl = 60;
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .ttl(ttl_num)
+    /// let channel = ChannelBuilder::default()
+    ///     .ttl(ttl)
     ///     .finalize();
     ///
-    /// assert_eq!(Some(ttl_num.to_string().as_str()), channel.ttl());
+    /// assert_eq!(Some(ttl.to_string().as_str()), channel.ttl());
     /// ```
     ///
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .ttl(None)
     ///     .finalize();
     ///
@@ -503,37 +476,29 @@ impl Channel {
         self.ttl.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional image that exists under `Channel`.
+    /// Return the image to be displayed with this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel, ImageBuilder};
+    /// use rss::{ChannelBuilder, ImageBuilder};
     ///
-    /// let image = ImageBuilder::new()
-    ///     .link("http://www.jupiterbroadcasting.com")
+    /// let image = ImageBuilder::default()
     ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    ///     .title("LAS 300 Logo")
-    ///     .height(None)
-    ///     .width(None)
-    ///     .description(None)
     ///     .finalize();
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .image(image)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.image().is_some());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .image(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.image().is_none());
@@ -542,17 +507,15 @@ impl Channel {
         self.image.as_ref()
     }
 
-
-    /// Get the optional rating that exists under `Channel`.
+    /// Return the [PICS](https://www.w3.org/PICS/) rating for this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .rating(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.rating().is_none());
@@ -561,35 +524,32 @@ impl Channel {
         self.rating.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional text input that exists under `Channel`.
+    /// Return the information for a text box to be displayed with this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel, TextInputBuilder};
+    /// use rss::{ChannelBuilder, TextInputBuilder};
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///     .title("Enter Comment")
     ///     .description("Provided Feedback")
     ///     .name("Comment")
     ///     .link("http://www.example.com/feedback")
     ///     .finalize();
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .text_input(text_input)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.text_input().is_some());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .text_input(None)
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.text_input().is_none());
@@ -598,37 +558,28 @@ impl Channel {
         self.text_input.as_ref()
     }
 
-    /// Get the skip hours that exists under `Channel`.
+    /// Return the hours that aggregators can skip for refreshing content.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let skip_hours_vec: Vec<i64> = vec![6,7,8,14,22];
+    /// let skip_hours = vec![6, 7, 8, 14, 22];
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .skip_hours(skip_hours_vec.clone())
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    /// let channel = ChannelBuilder::default()
+    ///     .skip_hours(skip_hours.clone())
     ///     .finalize();
     ///
-    /// let skip_hours  = channel.skip_hours();
-    /// assert!(!skip_hours.is_empty());
-    ///
-    /// let len = skip_hours_vec.clone().len();
-    /// assert_eq!(len, skip_hours.len());
-    ///
-    /// for x in 0..len {
-    ///     assert_eq!(skip_hours_vec[x].to_string(), skip_hours[x]);
-    /// }
+    /// let skip_hours_str = skip_hours.iter().map(|n| n.to_string()).collect::<Vec<_>>();
+    /// assert_eq!(skip_hours_str.as_slice(), channel.skip_hours());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .skip_hours(Vec::new())
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.skip_hours().is_empty());
@@ -637,39 +588,27 @@ impl Channel {
         &self.skip_hours
     }
 
-
-    /// Get the skip days that exists under `Channel`.
+    /// Return the days that aggregators can skip for refreshing content.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let skip_days_vec: Vec<String> = vec!["Monday".to_string(), "Sunday".to_string(),
-    ///     "Thursday".to_string(), "Wednesday".to_string()];
+    /// let skip_days = vec!["Monday".to_string(), "Sunday".to_string()];
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .skip_days(skip_days_vec.clone())
-    ///     .link("http://www.jupiterbroadcasting.com/")
+    /// let channel = ChannelBuilder::default()
+    ///     .skip_days(skip_days.clone())
     ///     .finalize();
     ///
-    /// let skip_days = channel.skip_days();
-    /// assert!(!skip_days.is_empty());
-    ///
-    /// let len = skip_days_vec.clone().len();
-    /// assert_eq!(len, skip_days.len());
-    ///
-    /// for x in 0..len {
-    ///     assert_eq!(skip_days_vec[x], skip_days[x].clone());
-    /// }
+    /// assert_eq!(skip_days.as_slice(), channel.skip_days());
     /// ```
     ///
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .skip_days(Vec::new())
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.skip_days().is_empty());
@@ -678,69 +617,33 @@ impl Channel {
         &self.skip_days
     }
 
-
-    /// Get the items that exists under `Channel`.
+    /// Return the `Item`s in this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel, ItemBuilder};
-    ///
-    /// let link = "http://www.jupiterbroadcasting.com/97561/making-music-with-linux-las-408/"
-    ///     .to_string();
-    ///
-    /// let description = "<![CDATA[<p>In special Rasberry Pi 3 \
-    ///     edition of the show we look at the new hardware, review & chat with \
-    ///     Mycroft CTO Ryan Sipes on how important the Raspberry Pi is for \
-    ///     development of their open artificial intelligence platform & get \
-    ///     the latest news.</p><p>Plus replacing Spotify on Linux, the new \
-    ///     Microsoft lock-in, our hosts face a moral quandary & more!</p>]]>".to_string();
+    /// use rss::{ChannelBuilder, ItemBuilder};
     ///
     /// let title = "Making Music with Linux | LAS 408".to_string();
     ///
-    /// let item_1 = ItemBuilder::new()
+    /// let item = ItemBuilder::default()
     ///     .title(title)
-    ///     .link(link)
-    ///     .description(None)
-    ///     .author(None)
-    ///     .categories(Vec::new())
-    ///     .enclosure(None)
-    ///     .guid(None)
-    ///     .pub_date(None)
-    ///     .source(None)
     ///     .finalize();
     ///
-    /// let item_2 = ItemBuilder::new()
-    ///     .title(None)
-    ///     .link(None)
-    ///     .description(description)
-    ///     .author(None)
-    ///     .categories(Vec::new())
-    ///     .enclosure(None)
-    ///     .guid(None)
-    ///     .pub_date(None)
-    ///     .source(None)
+    /// let items = vec![item];
+    ///
+    /// let channel = ChannelBuilder::default()
+    ///     .items(items.clone())
     ///     .finalize();
     ///
-    /// let items_vec = vec![item_1, item_2];
-    ///
-    /// let channel = ChannelBuilder::new()
-    ///     .items(items_vec.clone())
-    ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize();
-    ///
-    /// let items = channel.items();
-    /// assert!(!items.is_empty());
-    ///
-    /// assert_eq!(items_vec.clone().len(), items.len());
+    /// assert_eq!(items.as_slice(), channel.items());
     /// ```
     ///
     /// ```
     /// use rss::{ChannelBuilder, Channel};
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .items(Vec::new())
-    ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
     /// assert!(channel.items().is_empty());
@@ -749,57 +652,29 @@ impl Channel {
         &self.items
     }
 
-
-    /// Get the optional `ITunesChannelExtension` under `Channel`.
+    /// Return the `ITunesChannelExtension` for this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder,
-    /// ITunesOwnerBuilder, ITunesCategoryBuilder};
+    /// use rss::ChannelBuilder;
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder};
     ///
-    /// let owner = ITunesOwnerBuilder::new()
-    ///     .email("email@example.com".to_string())
-    ///     .name("name".to_string())
-    ///     .finalize();
-    ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .finalize();
-    ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .subcategory(Box::new(subcategory))
-    ///     .finalize();
-    ///
-    /// let categories = vec![category];
-    ///
-    /// let itunes_channel = ITunesChannelExtensionBuilder::new()
+    /// let itunes_ext = ITunesChannelExtensionBuilder::default()
     ///     .author("author".to_string())
-    ///     .block("block".to_string())
-    ///     .image("image".to_string())
-    ///     .explicit("explicit".to_string())
-    ///     .subtitle("subtitle".to_string())
-    ///     .summary("summary".to_string())
-    ///     .keywords("keywords".to_string())
-    ///     .new_feed_url("new_feed_url".to_string())
-    ///     .complete("complete".to_string())
-    ///     .owner(owner)
-    ///     .categories(categories)
     ///     .finalize();
     ///
-    /// let channel = ChannelBuilder::new()
-    ///     .itunes_ext(itunes_channel)
+    /// let channel = ChannelBuilder::default()
+    ///     .itunes_ext(itunes_ext)
     ///     .finalize();
     ///
     /// assert!(channel.itunes_ext().is_some());
     /// ```
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::ChannelBuilder;
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///     .itunes_ext(None)
     ///     .finalize();
     ///
@@ -809,17 +684,17 @@ impl Channel {
         self.itunes_ext.as_ref()
     }
 
-    /// Get the optional `DublinCoreExtension` under `Channel`.
+    /// Return the `DublinCoreExtension` for this `Channel`.
     pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
         self.dublin_core_ext.as_ref()
     }
 
-    /// Get the `ExtensionMap` under `Channel`.
+    /// Return the extensions for this `Channel`.
     pub fn extensions(&self) -> &ExtensionMap {
         &self.extensions
     }
 
-    /// Get the namespaces under `Channel`.
+    /// Return the namespaces for this `Channel`.
     pub fn namespaces(&self) -> &HashMap<String, String> {
         &self.namespaces
     }
@@ -971,27 +846,22 @@ impl Channel {
         Ok(writer.into_inner())
     }
 
-    /// Validate `Channel`
+    /// Validate the contents of this `Channel`.
     ///
     /// ## Examples
-    /// ```
-    /// extern crate rss;
     ///
+    /// ```
     /// use rss::Channel;
     ///
-    /// fn main()
-    /// {
-    ///     let input = include_str!("tests/data/rss2sample.xml");
-    ///
-    ///     let channel = input.parse::<Channel>().unwrap();
-    ///     channel.validate().unwrap();
-    /// }
+    /// let input = include_str!("tests/data/rss2sample.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// channel.validate().unwrap();
     /// ```
     pub fn validate(&self) -> Result<Channel, Error> {
         let cloud = match self.cloud() {
             None => None,
             Some(val) => {
-                Some(CloudBuilder::new()
+                Some(CloudBuilder::default()
                          .domain(val.domain())
                          .port(i64::from_str(val.port())?)
                          .path(val.path())
@@ -1004,7 +874,7 @@ impl Channel {
 
         let mut categories = Vec::new();
         for cat in self.categories() {
-            categories.push(CategoryBuilder::new()
+            categories.push(CategoryBuilder::default()
                                 .name(cat.name())
                                 .domain(cat.domain().map(|s| s.into()))
                                 .validate()?
@@ -1034,7 +904,7 @@ impl Channel {
                     Some(dval) => Some(dval.to_string()),
                 };
 
-                Some(ImageBuilder::new()
+                Some(ImageBuilder::default()
                          .url(val.url())
                          .title(val.title())
                          .link(val.link())
@@ -1049,7 +919,7 @@ impl Channel {
         let text_input = match self.text_input() {
             None => None,
             Some(val) => {
-                Some(TextInputBuilder::new()
+                Some(TextInputBuilder::default()
                          .title(val.title())
                          .description(val.description())
                          .name(val.name())
@@ -1064,7 +934,7 @@ impl Channel {
         for item in self.items() {
             let mut categories = Vec::new();
             for cat in item.categories() {
-                categories.push(CategoryBuilder::new()
+                categories.push(CategoryBuilder::default()
                                     .name(cat.name())
                                     .domain(cat.domain().map(|s| s.into()))
                                     .validate()?
@@ -1074,7 +944,7 @@ impl Channel {
             let enclosure = match item.enclosure() {
                 None => None,
                 Some(eval) => {
-                    Some(EnclosureBuilder::new()
+                    Some(EnclosureBuilder::default()
                              .url(eval.url())
                              .length(i64::from_str(eval.length())?)
                              .mime_type(eval.mime_type())
@@ -1086,7 +956,7 @@ impl Channel {
             let guid = match item.guid() {
                 None => None,
                 Some(gval) => {
-                    Some(GuidBuilder::new()
+                    Some(GuidBuilder::default()
                              .value(gval.value())
                              .is_permalink(gval.is_permalink())
                              .finalize())
@@ -1101,7 +971,7 @@ impl Channel {
                         Some(tval) => Some(tval.to_string()),
                     };
 
-                    Some(SourceBuilder::new()
+                    Some(SourceBuilder::default()
                              .url(sval.url())
                              .title(title)
                              .validate()?
@@ -1139,7 +1009,7 @@ impl Channel {
                 Some(val) => Some(val.to_string()),
             };
 
-            items.push(ItemBuilder::new()
+            items.push(ItemBuilder::default()
                            .title(title)
                            .link(link)
                            .description(description)
@@ -1199,7 +1069,7 @@ impl Channel {
             Some(val) => Some(val.to_string()),
         };
 
-        Ok(ChannelBuilder::new()
+        Ok(ChannelBuilder::default()
                .title(self.title())
                .link(self.link())
                .description(self.description())
@@ -1481,7 +1351,7 @@ impl FromStr for Channel {
     }
 }
 
-/// This `ChannelBuilder` struct creates the `Channel`.
+/// A builder used to create a `Channel`.
 #[derive(Debug, Clone, Default)]
 pub struct ChannelBuilder {
     title: String,
@@ -1511,53 +1381,41 @@ pub struct ChannelBuilder {
 }
 
 impl ChannelBuilder {
-    /// Construct a new `ChannelBuilder` and return default values.
+    /// Set the title of the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new();
-    /// ```
-    pub fn new() -> ChannelBuilder {
-        ChannelBuilder::default()
-    }
-
-
-    /// Set the title that exists under `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .title("The Linux Action Show! OGG");
     /// ```
-    pub fn title<S: Into<String>>(mut self, title: S) -> ChannelBuilder {
+    pub fn title<S>(mut self, title: S) -> ChannelBuilder
+        where S: Into<String>
+    {
         self.title = title.into();
         self
     }
 
-
-    /// Set the link that exists under `Channel`.
+    /// Set the web site URL for the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .link("http://www.jupiterbroadcasting.com");
     /// ```
-    pub fn link<S: Into<String>>(mut self, link: S) -> ChannelBuilder {
+    pub fn link<S>(mut self, link: S) -> ChannelBuilder
+        where S: Into<String>
+    {
         self.link = link.into();
         self
     }
 
-
-    /// Set the description that exists under `Channel`.
+    /// Set the description of the `Channel`.
     ///
     /// # Examples
     ///
@@ -1569,55 +1427,58 @@ impl ChannelBuilder {
     ///     computer industry. Get a solid dose of Linux, gadgets, news events \
     ///     and much more!".to_string();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .description(description);
     /// ```
-    pub fn description<S: Into<String>>(mut self, description: S) -> ChannelBuilder {
+    pub fn description<S>(mut self, description: S) -> ChannelBuilder
+        where S: Into<String>
+    {
         self.description = description.into();
         self
     }
 
-
-    /// Set the optional language that exists under `Channel`.
+    /// Set the language of the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .language("en".to_string());
     /// ```
-    pub fn language<V: Into<Option<String>>>(mut self, language: V) -> ChannelBuilder {
+    pub fn language<V>(mut self, language: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
         self.language = language.into();
         self
     }
 
-
-    /// Set the optional copyright that exists under `Channel`.
+    /// Set the copyright notice for the content of the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .copyright("Copyright 2002, Spartanburg Herald-Journal".to_string());
     /// ```
-    pub fn copyright<V: Into<Option<String>>>(mut self, copyright: V) -> ChannelBuilder {
+    pub fn copyright<V>(mut self, copyright: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
         self.copyright = copyright.into();
         self
     }
 
-
-    /// Set the optional managing editor that exists under `Channel`.
+    /// Set the email address for the managing editor of the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .managing_editor("chris@jupiterbroadcasting.com (Chris Fisher)".to_string());
     /// ```
     pub fn managing_editor<V>(mut self, managing_editor: V) -> ChannelBuilder
@@ -1627,47 +1488,48 @@ impl ChannelBuilder {
         self
     }
 
-
-    /// Set the optional web master that exists under `Channel`.
+    /// Set the email address for the webmaster of the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .webmaster("chris@jupiterbroadcasting.com (Chris Fisher)".to_string());
     /// ```
-    pub fn webmaster<V: Into<Option<String>>>(mut self, webmaster: V) -> ChannelBuilder {
+    pub fn webmaster<V>(mut self, webmaster: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
         self.webmaster = webmaster.into();
         self
     }
 
-
-    /// Set the optional pub date that exists under `Channel`.
+    /// Set the publication date for the content of the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .pub_date("Sun, 13 Mar 2016 20:02:02 -0700".to_string());
     /// ```
-    pub fn pub_date<V: Into<Option<String>>>(mut self, pub_date: V) -> ChannelBuilder {
+    pub fn pub_date<V>(mut self, pub_date: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
         self.pub_date = pub_date.into();
         self
     }
 
-
-    /// Set the optional last build date that exists under `Channel`.
+    /// Set the time that the content of the `Channel` was last changed.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .last_build_date("Sun, 13 Mar 2016 20:02:02 -0700".to_string());
     /// ```
     pub fn last_build_date<V>(mut self, last_build_date: V) -> ChannelBuilder
@@ -1677,27 +1539,28 @@ impl ChannelBuilder {
         self
     }
 
-
-    /// Set the optional categories that exists under `Channel`.
+    /// Set the categories that the `Channel` belongs to.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::{ChannelBuilder, CategoryBuilder};
     ///
-    /// let category = CategoryBuilder::new()
+    /// let category = CategoryBuilder::default()
+    ///     .name("Podcast")
     ///     .finalize();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .categories(vec![category]);
     /// ```
-    pub fn categories<V: Into<Vec<Category>>>(mut self, categories: V) -> ChannelBuilder {
+    pub fn categories<V>(mut self, categories: V) -> ChannelBuilder
+        where V: Into<Vec<Category>>
+    {
         self.categories = categories.into();
         self
     }
 
-
-    /// Set the optional generator that exists under `Channel`.
+    /// Set the name of the program used to generate the contents of the `Channel`.
     ///
     /// # Examples
     ///
@@ -1707,177 +1570,189 @@ impl ChannelBuilder {
     /// let generator = "Feeder 2.5.12(2294); Mac OS X Version 10.9.5 (Build 13F34) \
     ///     http://reinventedsoftware.com/feeder/".to_string();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .generator(generator);
     /// ```
-    pub fn generator<V: Into<Option<String>>>(mut self, generator: V) -> ChannelBuilder {
+    pub fn generator<V>(mut self, generator: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
         self.generator = generator.into();
         self
     }
 
-
-    /// Set the optional docs that exists under `Channel`.
+    /// Set the URL that points to the documentation of the RSS format used in the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .docs("http://blogs.law.harvard.edu/tech/rss/".to_string());
     /// ```
-    pub fn docs<V: Into<Option<String>>>(mut self, docs: V) -> ChannelBuilder {
+    pub fn docs<V>(mut self, docs: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
         self.docs = docs.into();
         self
     }
 
-
-    /// Set the optional cloud that exists under `Channel`.
+    /// Set the information used to register with a cloud for notifications of updates to the
+    /// `Channel`
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::{ChannelBuilder, CloudBuilder};
     ///
-    /// let cloud = CloudBuilder::new()
+    /// let cloud = CloudBuilder::default()
     ///     .domain("http://rpc.sys.com/")
     ///     .protocol("soap")
     ///     .finalize();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .cloud(cloud);
     /// ```
-    pub fn cloud<V: Into<Option<Cloud>>>(mut self, cloud: V) -> ChannelBuilder {
+    pub fn cloud<V>(mut self, cloud: V) -> ChannelBuilder
+        where V: Into<Option<Cloud>>
+    {
         self.cloud = cloud.into();
         self
     }
 
-
-    /// Set the optional ttl that exists under `Channel`.
+    /// Set the time to live of the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .ttl(60);
     /// ```
-    pub fn ttl<V: Into<Option<i64>>>(mut self, ttl: V) -> ChannelBuilder {
+    pub fn ttl<V>(mut self, ttl: V) -> ChannelBuilder
+        where V: Into<Option<i64>>
+    {
         self.ttl = ttl.into();
         self
     }
 
-
-    /// Set the optional image that exists under `Channel`.
+    /// Set the image to be display with the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::{ChannelBuilder, ImageBuilder};
     ///
-    /// let image = ImageBuilder::new()
+    /// let image = ImageBuilder::default()
     ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
     ///     .link("http://www.jupiterbroadcasting.com/")
     ///     .finalize();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .image(image);
     /// ```
-    pub fn image<V: Into<Option<Image>>>(mut self, image: V) -> ChannelBuilder {
+    pub fn image<V>(mut self, image: V) -> ChannelBuilder
+        where V: Into<Option<Image>>
+    {
         self.image = image.into();
         self
     }
 
-    /// Set the optional rating that exists under `Channel`.
+    /// Set the [PICS](https://www.w3.org/PICS/) rating for the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .rating("PG-13".to_string());
     /// ```
-    pub fn rating<V: Into<Option<String>>>(mut self, rating: V) -> ChannelBuilder {
+    pub fn rating<V>(mut self, rating: V) -> ChannelBuilder
+        where V: Into<Option<String>>
+    {
         self.rating = rating.into();
         self
     }
 
-
-    /// Set the optional text input that exists under `Channel`.
+    /// Set the information for a text box to be displayed with the `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::{ChannelBuilder, TextInputBuilder};
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///     .link("http://www.example.com/feedback")
     ///     .finalize();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .text_input(text_input);
     /// ```
-    pub fn text_input<V: Into<Option<TextInput>>>(mut self, text_input: V) -> ChannelBuilder {
+    pub fn text_input<V>(mut self, text_input: V) -> ChannelBuilder
+        where V: Into<Option<TextInput>>
+    {
         self.text_input = text_input.into();
         self
     }
 
-
-    /// Set the optional skipdays that exists under `Channel`.
+    /// Set the hours that aggregators can skip for refreshing content.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .skip_hours(vec![0, 12, 18]);
     /// ```
-    pub fn skip_hours<V: Into<Vec<i64>>>(mut self, skip_hours: V) -> ChannelBuilder {
+    pub fn skip_hours<V>(mut self, skip_hours: V) -> ChannelBuilder
+        where V: Into<Vec<i64>>
+    {
         self.skip_hours = skip_hours.into();
         self
     }
 
-
-    /// Set the optional skipdays that exists under `Channel`.
+    /// Set the days that aggregators can skip for refreshing content.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .skip_days(vec!["Monday".to_string(), "Tuesday".to_string()]);
     /// ```
-    pub fn skip_days<V: Into<Vec<String>>>(mut self, skip_days: V) -> ChannelBuilder {
+    pub fn skip_days<V>(mut self, skip_days: V) -> ChannelBuilder
+        where V: Into<Vec<String>>
+    {
         self.skip_days = skip_days.into();
         self
     }
 
-
-    /// Set the optional items that exists under `Channel`.
+    /// Set the `Item`s in this `Channel`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::{ChannelBuilder, ItemBuilder};
     ///
-    /// let item = ItemBuilder::new()
+    /// let item = ItemBuilder::default()
     ///     .title("Making Music with Linux | LAS 408".to_string())
     ///     .finalize();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .items(vec![item]);
     /// ```
-    pub fn items<V: Into<Vec<Item>>>(mut self, items: V) -> ChannelBuilder {
+    pub fn items<V>(mut self, items: V) -> ChannelBuilder
+        where V: Into<Vec<Item>>
+    {
         self.items = items.into();
         self
     }
 
-
-    /// Set the optional itunes channel extension that exists under `Channel`.
+    /// Set the `ITunesChannelExtension` for the `Channel`.
     ///
     /// # Examples
     ///
@@ -1886,21 +1761,21 @@ impl ChannelBuilder {
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesOwnerBuilder,
     ///     ITunesCategoryBuilder};
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .email("email@example.com".to_string())
     ///     .name("name".to_string())
     ///     .finalize();
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
+    /// let subcategory = ITunesCategoryBuilder::default()
     ///     .text("text")
     ///     .finalize();
     ///
-    /// let category = ITunesCategoryBuilder::new()
+    /// let category = ITunesCategoryBuilder::default()
     ///     .text("text")
     ///     .subcategory(Box::new(subcategory))
     ///     .finalize();
     ///
-    /// let itunes_channel = ITunesChannelExtensionBuilder::new()
+    /// let itunes_channel = ITunesChannelExtensionBuilder::default()
     ///     .author("author".to_string())
     ///     .block("block".to_string())
     ///     .image("image".to_string())
@@ -1914,7 +1789,7 @@ impl ChannelBuilder {
     ///     .categories(vec![category])
     ///     .finalize();
     ///
-    /// let channel_builder = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///     .itunes_ext(itunes_channel);
     /// ```
     pub fn itunes_ext<V>(mut self, itunes_ext: V) -> ChannelBuilder
@@ -1924,7 +1799,7 @@ impl ChannelBuilder {
         self
     }
 
-    /// Set the optional dublin_core_ext that exists under `Channel`.
+    /// Set the `DublinCoreExtension` for the `Channel`.
     pub fn dublin_core_ext<V>(mut self, dublin_core_ext: V) -> ChannelBuilder
         where V: Into<Option<DublinCoreExtension>>
     {
@@ -1932,55 +1807,40 @@ impl ChannelBuilder {
         self
     }
 
-    /// Set the extensions that exists under `Channel`.
-    pub fn extensions<V: Into<ExtensionMap>>(mut self, extensions: V) -> ChannelBuilder {
+    /// Set the extensions for the `Channel`.
+    pub fn extensions<V>(mut self, extensions: V) -> ChannelBuilder
+        where V: Into<ExtensionMap>
+    {
         self.extensions = extensions.into();
         self
     }
 
-    /// Set the namespaces that exists under `Channel`.
-    pub fn namespaces<V: Into<HashMap<String, String>>>(mut self, namespaces: V) -> ChannelBuilder {
+    /// Set the namespaces for the `Channel`.
+    pub fn namespaces<V>(mut self, namespaces: V) -> ChannelBuilder
+        where V: Into<HashMap<String, String>>
+    {
         self.namespaces = namespaces.into();
         self
     }
 
-
-    /// Validate the contents of `Channel`.
+    /// Validate the contents of this `ChannelBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux ".to_string()
-    /// + "Action Show! A show that covers everything geeks care about in the "
-    /// + "computer industry. Get a solid dose of Linux, gadgets, news events "
-    /// + "and much more!";
+    /// let description = "Ogg Vorbis audio versions of The Linux \
+    ///     Action Show! A show that covers everything geeks care about in the \
+    ///     computer industry. Get a solid dose of Linux, gadgets, news events \
+    ///     and much more!";
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let builder = ChannelBuilder::default()
     ///         .title("The Linux Action Show! OGG")
     ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .description(description.as_ref())
-    ///         .language(None)
-    ///         .copyright(None)
-    ///         .managing_editor(None)
-    ///         .webmaster(None)
-    ///         .pub_date(None)
-    ///         .last_build_date(None)
-    ///         .categories(Vec::new())
-    ///         .generator(None)
-    ///         .docs(None)
-    ///         .cloud(None)
-    ///         .ttl(None)
-    ///         .image(None)
-    ///         .rating(None)
-    ///         .text_input(None)
-    ///         .skip_hours(Vec::new())
-    ///         .skip_days(Vec::new())
-    ///         .items(Vec::new())
+    ///         .description(description)
     ///         .validate()
-    ///         .unwrap()
-    ///         .finalize();
+    ///         .unwrap();
     /// ```
     pub fn validate(self) -> Result<ChannelBuilder, Error> {
         Url::parse(self.link.as_str())?;
@@ -2021,40 +1881,22 @@ impl ChannelBuilder {
         Ok(self)
     }
 
-
-    /// Construct the `Channel` from the `ChannelBuilder`.
+    /// Construct the `Channel` from this `ChannelBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux \n
+    /// let description = "Ogg Vorbis audio versions of The Linux \
     ///     Action Show! A show that covers everything geeks care about in the \
     ///     computer industry. Get a solid dose of Linux, gadgets, news events \
     ///     and much more!";
     ///
-    /// let channel = ChannelBuilder::new()
+    /// let channel = ChannelBuilder::default()
     ///         .title("The Linux Action Show! OGG")
     ///         .link("http://www.jupiterbroadcasting.com")
     ///         .description(description)
-    ///         .language(None)
-    ///         .copyright(None)
-    ///         .managing_editor(None)
-    ///         .webmaster(None)
-    ///         .pub_date(None)
-    ///         .last_build_date(None)
-    ///         .categories(Vec::new())
-    ///         .generator(None)
-    ///         .docs(None)
-    ///         .cloud(None)
-    ///         .ttl(None)
-    ///         .image(None)
-    ///         .rating(None)
-    ///         .text_input(None)
-    ///         .skip_hours(Vec::new())
-    ///         .skip_days(Vec::new())
-    ///         .items(Vec::new())
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Channel {
@@ -2087,26 +1929,20 @@ impl ChannelBuilder {
     }
 }
 
-/// Enumerations of protocols for `SkipDays`.
+/// Enumerations of values for `SkipDays`.
 enum SkipDay {
     /// Monday
     Monday,
-
     /// Tuesday
     Tuesday,
-
     /// Wednesday
     Wednesday,
-
     /// Thursday
     Thursday,
-
     /// Friday
     Friday,
-
     /// Saturday
     Saturday,
-
     /// Sunday
     Sunday,
 }

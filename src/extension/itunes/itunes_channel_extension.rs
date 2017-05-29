@@ -50,374 +50,328 @@ pub struct ITunesChannelExtension {
 }
 
 impl ITunesChannelExtension {
-    /// Get the optional author that exists under `ITunesChannelExtension`.
+    /// Return the author of this podcast.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let author = "author".to_string();
+    /// let author = "author";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .author(author.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .author(author.to_string())
     ///     .finalize();
     ///
-    /// let author_opt = channel.author();
-    /// assert!(author_opt.is_some());
-    ///
-    /// assert_eq!(author.clone(), author_opt.unwrap());
+    /// assert_eq!(Some(author), ext.author());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .author(None)
     ///     .finalize();
     ///
-    /// let author_opt = channel.author();
-    /// assert!(author_opt.is_none());
+    /// assert!(ext.author().is_none());
     /// ```
     pub fn author(&self) -> Option<&str> {
         self.author.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional block that exists under `ITunesChannelExtension`.
+    /// Return whether the podcast should be blocked from appearing in the iTunes Store.
+    ///
+    /// A value of `Yes` indicates that the podcast should not show up in the iTunes Store. All
+    /// other values are ignored.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let block = "block".to_string();
+    /// let block = "Yes";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .block(block.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .block(block.to_string())
     ///     .finalize();
     ///
-    /// let block_opt = channel.block();
-    /// assert!(block_opt.is_some());
-    ///
-    /// assert_eq!(block.clone(), block_opt.unwrap());
+    /// assert_eq!(Some(block), ext.block());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .block(None)
     ///     .finalize();
     ///
-    /// let block_opt = channel.block();
-    /// assert!(block_opt.is_none());
+    /// assert!(ext.block().is_none());
     /// ```
     pub fn block(&self) -> Option<&str> {
         self.block.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the categories that exists under `ITunesChannelExtension`.
+    /// Return the iTunes categories that the podcast belongs to.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension,
-    ///     ITunesCategoryBuilder};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesCategoryBuilder};
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
+    /// let category = ITunesCategoryBuilder::default()
+    ///     .text("category")
     ///     .finalize();
     ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .subcategory(Box::new(subcategory))
+    /// let categories = vec![category];
+    ///
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .categories(categories.clone())
     ///     .finalize();
     ///
-    /// let categories_vec = vec![category];
-    ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .categories(categories_vec)
-    ///     .finalize();
-    ///
-    /// let categories = channel.categories();
-    /// assert!(!categories.is_empty());
+    /// assert_eq!(categories, ext.categories());
     /// ```
     pub fn categories(&self) -> &[ITunesCategory] {
         &self.categories
     }
 
-
-    /// Get the optional image that exists under `ITunesChannelExtension`.
+    /// Return the artwork URL for the podcast.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let image = "image".to_string();
+    /// let image = "http://example.com/image.png";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .image(image.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .image(image.to_string())
     ///     .finalize();
     ///
-    /// let image_opt = channel.image();
-    /// assert!(image_opt.is_some());
-    ///
-    /// assert_eq!(image, image_opt.unwrap());
+    /// assert_eq!(Some(image), ext.image());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .image(None)
     ///     .finalize();
     ///
-    /// let image_opt = channel.image();
-    /// assert!(image_opt.is_none());
+    /// assert!(ext.image().is_none());
     /// ```
     pub fn image(&self) -> Option<&str> {
         self.image.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional explicit that exists under `ITunesChannelExtension`.
+    /// Return whether the podcast contains explicit content.
+    ///
+    /// A value of `Yes`, `Explicit`, or `True` indicates that the podcast contains explicit
+    /// content. A value of `Clean`, `No`, `False` inidicates that none of the episodes contain
+    /// explicit content.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let explicit = "explicit".to_string();
+    /// let explicit = "Yes";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .explicit(explicit.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .explicit(explicit.to_string())
     ///     .finalize();
     ///
-    /// let explicit_opt = channel.explicit();
-    /// assert!(explicit_opt.is_some());
-    ///
-    /// assert_eq!(explicit.clone(), explicit_opt.unwrap());
+    /// assert_eq!(Some(explicit), ext.explicit());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .explicit(None)
     ///     .finalize();
     ///
-    /// let explicit_opt = channel.explicit();
-    /// assert!(explicit_opt.is_none());
+    /// assert!(ext.explicit().is_none());
     /// ```
     pub fn explicit(&self) -> Option<&str> {
         self.explicit.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional complete that exists under `ITunesChannelExtension`.
+    /// Return whether the podcast is complete and no new episodes will be posted.
+    ///
+    /// A value of `Yes` indicates that the podcast is complete.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let complete = "complete".to_string();
+    /// let complete = "Yes";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .complete(complete.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .complete(complete.to_string())
     ///     .finalize();
     ///
-    /// let complete_opt = channel.complete();
-    /// assert!(complete_opt.is_some());
-    ///
-    /// assert_eq!(complete.clone(), complete_opt.unwrap());
+    /// assert_eq!(Some(complete), ext.complete());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .complete(None)
     ///     .finalize();
     ///
-    /// let complete_opt = channel.complete();
-    /// assert!(complete_opt.is_none());
+    /// assert!(ext.complete().is_none());
     /// ```
     pub fn complete(&self) -> Option<&str> {
         self.complete.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional new_feed_url that exists under
-    /// `ITunesChannelExtension`.
+    /// Return the new feed URL for this podcast.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let new_feed_url = "new_feed_url".to_string();
+    /// let url = "http://example.com/feed";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .new_feed_url(new_feed_url.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .new_feed_url(url.to_string())
     ///     .finalize();
     ///
-    /// let new_feed_url_opt = channel.new_feed_url();
-    /// assert!(new_feed_url_opt.is_some());
-    ///
-    /// assert_eq!(new_feed_url.clone(), new_feed_url_opt.unwrap());
+    /// assert_eq!(Some(url), ext.new_feed_url());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .new_feed_url(None)
     ///     .finalize();
     ///
-    /// let new_feed_url_opt = channel.new_feed_url();
-    /// assert!(new_feed_url_opt.is_none());
+    /// assert!(ext.new_feed_url().is_none());
     /// ```
     pub fn new_feed_url(&self) -> Option<&str> {
         self.new_feed_url.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional owner that exists under `ITunesChannelExtension`.
+    /// Return the contact information for the owner of this podcast.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension,
-    ///     ITunesOwnerBuilder};
+    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesOwnerBuilder};
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .email("email@example.com".to_string())
     ///     .name("name".to_string())
     ///     .finalize();
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .owner(owner)
     ///     .finalize();
     ///
-    /// let owner_opt = channel.owner();
-    /// assert!(owner_opt.is_some());
+    /// assert!(ext.owner().is_some());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .owner(None)
     ///     .finalize();
     ///
-    /// let owner_opt = channel.owner();
-    /// assert!(owner_opt.is_none());
+    /// assert!(ext.owner().is_none());
     /// ```
     pub fn owner(&self) -> Option<&ITunesOwner> {
         self.owner.as_ref()
     }
 
-
-    /// Get the optional subtitle that exists under `ITunesChannelExtension`.
+    /// Return the description of this podcast.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let subtitle = "subtitle".to_string();
+    /// let subtitle = "description";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .subtitle(subtitle.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .subtitle(subtitle.to_string())
     ///     .finalize();
     ///
-    /// let subtitle_opt = channel.subtitle();
-    /// assert!(subtitle_opt.is_some());
-    ///
-    /// assert_eq!(subtitle.clone(), subtitle_opt.unwrap());
+    /// assert_eq!(Some(subtitle), ext.subtitle())
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .subtitle(None)
     ///     .finalize();
     ///
-    /// let subtitle_opt = channel.subtitle();
-    /// assert!(subtitle_opt.is_none());
+    /// assert!(ext.subtitle().is_none());
     /// ```
     pub fn subtitle(&self) -> Option<&str> {
         self.subtitle.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional summary that exists under `ITunesChannelExtension`.
+    /// Return the summary for this podcast.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let summary = "summary".to_string();
+    /// let summary = "summary";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .summary(summary.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .summary(summary.to_string())
     ///     .finalize();
     ///
-    /// let summary_opt = channel.summary();
-    /// assert!(summary_opt.is_some());
-    ///
-    /// assert_eq!(summary.clone(), summary_opt.unwrap());
+    /// assert_eq!(Some(summary), ext.summary());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .summary(None)
     ///     .finalize();
     ///
-    /// let summary_opt = channel.summary();
-    /// assert!(summary_opt.is_none());
+    /// assert!(ext.summary().is_none());
     /// ```
     pub fn summary(&self) -> Option<&str> {
         self.summary.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional keywords that exists under `ITunesChannelExtension`.
+    /// Return the keywords for this podcast.
+    ///
+    /// The string contains a comma separated list of keywords.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let keywords = "keywords".to_string();
+    /// let keywords = "keyword1,keyword2";
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .keywords(keywords.clone())
+    /// let ext = ITunesChannelExtensionBuilder::default()
+    ///     .keywords(keywords.to_string())
     ///     .finalize();
     ///
-    /// let keywords_opt = channel.keywords();
-    /// assert!(keywords_opt.is_some());
-    ///
-    /// assert_eq!(keywords.clone(), keywords_opt.unwrap());
+    /// assert_eq!(Some(keywords), ext.keywords());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesChannelExtension};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .keywords(None)
     ///     .finalize();
     ///
-    /// let keywords_opt = channel.keywords();
-    /// assert!(keywords_opt.is_none());
+    /// assert!(ext.keywords().is_none());
     /// ```
     pub fn keywords(&self) -> Option<&str> {
         self.keywords.as_ref().map(|s| s.as_str())
@@ -495,8 +449,7 @@ impl ToXml for ITunesChannelExtension {
     }
 }
 
-/// This `ITunesChannelExtensionBuilder` struct creates the
-/// `ITunesChannelExtension`.
+/// A builder used to create an `ITunesChannelExtension`.
 #[derive(Debug, Clone, Default)]
 pub struct ITunesChannelExtensionBuilder {
     author: Option<String>,
@@ -513,67 +466,50 @@ pub struct ITunesChannelExtensionBuilder {
 }
 
 impl ITunesChannelExtensionBuilder {
-    /// Construct a new `ITunesChannelExtension` and return default values.
-    ///
-    /// # Examples
+    /// Set the author of the podcast.
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new();
-    /// ```
-    pub fn new() -> ITunesChannelExtensionBuilder {
-        ITunesChannelExtensionBuilder::default()
-    }
-
-
-    /// Set the optional author that exists under `ITunesChannelExtension`.
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
-    ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    /// let builder = ITunesChannelExtensionBuilder::default()
     ///     .author("author".to_string());
     /// ```
-    pub fn author<V: Into<Option<String>>>(mut self, author: V) -> ITunesChannelExtensionBuilder {
+    pub fn author<V>(mut self, author: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
         self.author = author.into();
         self
     }
 
-
-    /// Set the optional block that exists under `ITunesChannelExtension`.
+    /// Set whether the podcast should be blocked from appearing in the iTunes Store.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .block("block".to_string());
+    /// let builder = ITunesChannelExtensionBuilder::default()
+    ///     .block("Yes".to_string());
     /// ```
-    pub fn block<V: Into<Option<String>>>(mut self, block: V) -> ITunesChannelExtensionBuilder {
+    pub fn block<V>(mut self, block: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
         self.block = block.into();
         self
     }
 
-
-    /// Set the categories that exists under `ITunesChannelExtension`.
+    /// Set the iTunes categories that the podcast belongs to.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesChannelExtensionBuilder};
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
+    /// let category = ITunesCategoryBuilder::default()
+    ///     .text("category")
     ///     .finalize();
     ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .subcategory(Box::new(subcategory))
-    ///     .finalize();
-    ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    /// let builder = ITunesChannelExtensionBuilder::default()
     ///     .categories(vec![category]);
     /// ```
     pub fn categories<V>(mut self, categories: V) -> ITunesChannelExtensionBuilder
@@ -583,32 +519,32 @@ impl ITunesChannelExtensionBuilder {
         self
     }
 
-
-    /// Set the optional image that exists under `ITunesChannelExtension`.
+    /// Set the artwork URL for the podcast.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .image("image".to_string());
+    /// let builder = ITunesChannelExtensionBuilder::default()
+    ///     .image("http://example.com/image.png".to_string());
     /// ```
-    pub fn image<V: Into<Option<String>>>(mut self, image: V) -> ITunesChannelExtensionBuilder {
+    pub fn image<V>(mut self, image: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
         self.image = image.into();
         self
     }
 
-
-    /// Set the optional explicit that exists under `ITunesChannelExtension`.
+    /// Set whether the podcast contains explicit content.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .explicit("explicit".to_string());
+    /// let builder = ITunesChannelExtensionBuilder::default()
+    ///     .explicit("Yes".to_string());
     /// ```
     pub fn explicit<V>(mut self, explicit: V) -> ITunesChannelExtensionBuilder
         where V: Into<Option<String>>
@@ -617,16 +553,15 @@ impl ITunesChannelExtensionBuilder {
         self
     }
 
-
-    /// Set the optional complete that exists under `ITunesChannelExtension`.
+    /// Set whether the podcast is complete and no new episodes will be posted.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .complete("complete".to_string());
+    /// let builder = ITunesChannelExtensionBuilder::default()
+    ///     .complete("Yes".to_string());
     /// ```
     pub fn complete<V>(mut self, complete: V) -> ITunesChannelExtensionBuilder
         where V: Into<Option<String>>
@@ -635,16 +570,15 @@ impl ITunesChannelExtensionBuilder {
         self
     }
 
-
-    /// Set the optional new_feed_url that exists under `ITunesChannelExtension`.
+    /// Set the new feed URL for the podcast.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .new_feed_url("new_feed_url".to_string());
+    /// let builder = ITunesChannelExtensionBuilder::default()
+    ///     .new_feed_url("http://example.com/feed".to_string());
     /// ```
     pub fn new_feed_url<V>(mut self, new_feed_url: V) -> ITunesChannelExtensionBuilder
         where V: Into<Option<String>>
@@ -653,20 +587,19 @@ impl ITunesChannelExtensionBuilder {
         self
     }
 
-
-    /// Set the optional owner that exists under `ITunesChannelExtension`.
+    /// Set the contact information for the owner of the podcast.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesOwnerBuilder};
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .email("email@example.com".to_string())
     ///     .name("name".to_string())
     ///     .finalize();
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    /// let builder = ITunesChannelExtensionBuilder::default()
     ///     .owner(owner);
     /// ```
     pub fn owner<V>(mut self, owner: V) -> ITunesChannelExtensionBuilder
@@ -676,16 +609,15 @@ impl ITunesChannelExtensionBuilder {
         self
     }
 
-
-    /// Set the optional subtitle that exists under `ITunesChannelExtension`.
+    /// Set the description of the podcast.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .subtitle("subtitle".to_string());
+    /// let builder = ITunesChannelExtensionBuilder::default()
+    ///     .subtitle("description".to_string());
     /// ```
     pub fn subtitle<V>(mut self, subtitle: V) -> ITunesChannelExtensionBuilder
         where V: Into<Option<String>>
@@ -694,32 +626,34 @@ impl ITunesChannelExtensionBuilder {
         self
     }
 
-
-    /// Set the optional summary that exists under `ITunesChannelExtension`.
+    /// Set the summary for the podcast.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
+    /// let builder = ITunesChannelExtensionBuilder::default()
     ///     .summary("summary".to_string());
     /// ```
-    pub fn summary<V: Into<Option<String>>>(mut self, summary: V) -> ITunesChannelExtensionBuilder {
+    pub fn summary<V>(mut self, summary: V) -> ITunesChannelExtensionBuilder
+        where V: Into<Option<String>>
+    {
         self.summary = summary.into();
         self
     }
 
-
-    /// Set the optional keywords that exists under `ITunesChannelExtension`.
+    /// Set the keywords for the podcast.
+    ///
+    /// The string should be a comma separated list of keywords.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
-    /// let channel_builder = ITunesChannelExtensionBuilder::new()
-    ///     .keywords("keywords".to_string());
+    /// let builder = ITunesChannelExtensionBuilder::default()
+    ///     .keywords("keyword1,keyword2".to_string());
     /// ```
     pub fn keywords<V>(mut self, keywords: V) -> ITunesChannelExtensionBuilder
         where V: Into<Option<String>>
@@ -728,8 +662,7 @@ impl ITunesChannelExtensionBuilder {
         self
     }
 
-
-    /// Construct the `ITunesChannelExtension` from the `ITunesChannelExtensionBuilder`.
+    /// Construct the `ITunesChannelExtension` from this `ITunesChannelExtensionBuilder`.
     ///
     /// # Examples
     ///
@@ -737,34 +670,13 @@ impl ITunesChannelExtensionBuilder {
     /// use rss::extension::itunes::{ITunesCategoryBuilder, ITunesChannelExtensionBuilder,
     ///     ITunesOwnerBuilder};
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .email("email@example.com".to_string())
     ///     .name("name".to_string())
     ///     .finalize();
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .finalize();
-    ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .subcategory(Box::new(subcategory))
-    ///     .finalize();
-    ///
-    /// let categories = vec![category];
-    ///
-    /// let channel = ITunesChannelExtensionBuilder::new()
-    ///     .author("author".to_string())
-    ///     .block("block".to_string())
-    ///     .image("image".to_string())
-    ///     .explicit("explicit".to_string())
-    ///     .subtitle("subtitle".to_string())
-    ///     .summary("summary".to_string())
-    ///     .keywords("keywords".to_string())
-    ///     .new_feed_url("new_feed_url".to_string())
-    ///     .complete("complete".to_string())
+    /// let ext = ITunesChannelExtensionBuilder::default()
     ///     .owner(owner)
-    ///     .categories(categories)
     ///     .finalize();
     /// ```
     pub fn finalize(self) -> ITunesChannelExtension {

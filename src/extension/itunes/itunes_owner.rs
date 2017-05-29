@@ -15,21 +15,21 @@ use toxml::{ToXml, WriterExt};
 pub struct ITunesOwner {
     /// The name of the owner.
     name: Option<String>,
-    /// The email of the email.
+    /// The email of the owner.
     email: Option<String>,
 }
 
 impl ITunesOwner {
-    /// Get the optional name that exists under `ITunesOwner`.
+    /// Return the name of this owner.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let name = "name";
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .name(name.to_string())
     ///     .finalize();
     ///
@@ -37,30 +37,28 @@ impl ITunesOwner {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .name(None)
     ///     .finalize();
     ///
-    /// let name_opt = owner.name();
-    /// assert!(name_opt.is_none());
+    /// assert!(owner.name().is_none());
     /// ```
     pub fn name(&self) -> Option<&str> {
         self.name.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional email that exists under `ITunesOwner`.
+    /// Return the email of this owner.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let email = "email@example.com";
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .email(email.to_string())
     ///     .finalize();
     ///
@@ -68,14 +66,13 @@ impl ITunesOwner {
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .email(None)
     ///     .finalize();
     ///
-    /// let email_opt = owner.email();
-    /// assert!(email_opt.is_none());
+    /// assert!(owner.email().is_none());
     /// ```
     pub fn email(&self) -> Option<&str> {
         self.email.as_ref().map(|s| s.as_str())
@@ -102,7 +99,7 @@ impl ToXml for ITunesOwner {
     }
 }
 
-/// This `ITunesOwnerBuilder` struct creates the `ITunesOwner`.
+/// A builder used to create an `ITunesOwner`.
 #[derive(Debug, Clone, Default)]
 pub struct ITunesOwnerBuilder {
     name: Option<String>,
@@ -110,27 +107,14 @@ pub struct ITunesOwnerBuilder {
 }
 
 impl ITunesOwnerBuilder {
-    /// Construct a new `ITunesOwnerBuilder` and return default values.
+    /// Set the name of the owner.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner_builder = ITunesOwnerBuilder::new();
-    /// ```
-    pub fn new() -> ITunesOwnerBuilder {
-        ITunesOwnerBuilder::default()
-    }
-
-    /// Set the optional name that exists under `ITunesOwner`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
-    ///
-    /// let owner_builder = ITunesOwnerBuilder::new()
+    /// let builder = ITunesOwnerBuilder::default()
     ///     .name("name".to_string());
     /// ```
     pub fn name<V: Into<Option<String>>>(mut self, name: V) -> ITunesOwnerBuilder {
@@ -138,14 +122,14 @@ impl ITunesOwnerBuilder {
         self
     }
 
-    /// Set the optional email that exists under `ITunesOwner`.
+    /// Set the email of the owner.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner_builder = ITunesOwnerBuilder::new()
+    /// let builder = ITunesOwnerBuilder::default()
     ///     .email("email@example.com".to_string());
     /// ```
     pub fn email<V: Into<Option<String>>>(mut self, email: V) -> ITunesOwnerBuilder {
@@ -153,16 +137,16 @@ impl ITunesOwnerBuilder {
         self
     }
 
-    /// Construct the `ITunesOwner` from the `ITunesOwnerBuilder`.
+    /// Construct the `ITunesOwner` from this `ITunesOwnerBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner = ITunesOwnerBuilder::new()
-    ///     .email("email@example.com".to_string())
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .name("name".to_string())
+    ///     .email("email@example.com".to_string())
     ///     .finalize();
     /// ```
     pub fn finalize(self) -> ITunesOwner {

@@ -37,22 +37,24 @@ pub struct Extension {
 }
 
 impl Extension {
-    /// Get the name that exists under `Extension`.
+    /// Return the qualified name of the extension element.
     pub fn name(&self) -> &str {
         self.name.as_str()
     }
 
-    /// Get the value that exists under `Extension`.
+    /// Return the content of the extension element.
     pub fn value(&self) -> Option<&str> {
         self.value.as_ref().map(|s| s.as_str())
     }
 
-    /// Get the attrs that exists under `Extension`.
+    /// Return the attributes for the extension element.
     pub fn attrs(&self) -> &HashMap<String, String> {
         &self.attrs
     }
 
-    /// Get the children that exists under `Extension`.
+    /// Return the children of the extension element.
+    ///
+    /// This is a map of local names to child elements.
     pub fn children(&self) -> &HashMap<String, Vec<Extension>> {
         &self.children
     }
@@ -96,38 +98,31 @@ pub struct ExtensionBuilder {
 }
 
 impl ExtensionBuilder {
-    /// Construct a new `ExtensionBuilder` and return default values.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::ExtensionBuilder;
-    ///
-    /// let extension_builder = ExtensionBuilder::new();
-    /// ```
-    pub fn new() -> ExtensionBuilder {
-        ExtensionBuilder::default()
-    }
-
-    /// Get the name that exists under `Extension`.
-    pub fn name<S: Into<String>>(mut self, name: S) -> ExtensionBuilder {
+    /// Set the qualified name of the extension element.
+    pub fn name<S>(mut self, name: S) -> ExtensionBuilder
+        where S: Into<String>
+    {
         self.name = name.into();
         self
     }
 
-    /// Get the value that exists under `Extension`.
-    pub fn value<V: Into<Option<String>>>(mut self, value: V) -> ExtensionBuilder {
+    /// Set the content of the extension element.
+    pub fn value<V>(mut self, value: V) -> ExtensionBuilder
+        where V: Into<Option<String>>
+    {
         self.value = value.into();
         self
     }
 
-    /// Get the attrs that exists under `Extension`.
-    pub fn attrs<V: Into<HashMap<String, String>>>(mut self, attrs: V) -> ExtensionBuilder {
+    /// Set the attributes for the extension element.
+    pub fn attrs<V>(mut self, attrs: V) -> ExtensionBuilder
+        where V: Into<HashMap<String, String>>
+    {
         self.attrs = attrs.into();
         self
     }
 
-    /// Get the children that exists under `Extension`.
+    /// Set the children of the extension element.
     pub fn children<V>(mut self, children: V) -> ExtensionBuilder
         where V: Into<HashMap<String, Vec<Extension>>>
     {
@@ -135,7 +130,7 @@ impl ExtensionBuilder {
         self
     }
 
-    /// Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
+    /// Construct the `ExtensionBuilder` from this `ExtensionBuilderBuilder`.
     pub fn finalize(self) -> Extension {
         Extension {
             name: self.name,

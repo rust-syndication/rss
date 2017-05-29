@@ -124,7 +124,7 @@ fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
                 }
             }
             Event::End(element) => {
-                return Ok(ExtensionBuilder::new()
+                return Ok(ExtensionBuilder::default()
                               .name(&*reader.decode(element.name()))
                               .value(content)
                               .attrs(attrs)
