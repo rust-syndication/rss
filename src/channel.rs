@@ -129,10 +129,7 @@ impl Channel {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux \
-    ///     Action Show! A show that covers everything geeks care about in the \
-    ///     computer industry. Get a solid dose of Linux, gadgets, news events \
-    ///     and much more!".to_string();
+    /// let description = "Ogg Vorbis audio versions of The Linux Action Show!".to_string();
     ///
     /// let channel = ChannelBuilder::default()
     ///     .description(description.as_str())
@@ -1422,13 +1419,8 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux \
-    ///     Action Show! A show that covers everything geeks care about in the \
-    ///     computer industry. Get a solid dose of Linux, gadgets, news events \
-    ///     and much more!".to_string();
-    ///
     /// let builder = ChannelBuilder::default()
-    ///     .description(description);
+    ///     .description("Ogg Vorbis audio versions of The Linux Action Show!");
     /// ```
     pub fn description<S>(mut self, description: S) -> ChannelBuilder
         where S: Into<String>
@@ -1830,15 +1822,10 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux \
-    ///     Action Show! A show that covers everything geeks care about in the \
-    ///     computer industry. Get a solid dose of Linux, gadgets, news events \
-    ///     and much more!";
-    ///
     /// let builder = ChannelBuilder::default()
     ///         .title("The Linux Action Show! OGG")
     ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .description(description)
+    ///         .description("Ogg Vorbis audio versions of The Linux Action Show!")
     ///         .validate()
     ///         .unwrap();
     /// ```
@@ -1888,15 +1875,10 @@ impl ChannelBuilder {
     /// ```
     /// use rss::ChannelBuilder;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux \
-    ///     Action Show! A show that covers everything geeks care about in the \
-    ///     computer industry. Get a solid dose of Linux, gadgets, news events \
-    ///     and much more!";
-    ///
     /// let channel = ChannelBuilder::default()
     ///         .title("The Linux Action Show! OGG")
     ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .description(description)
+    ///         .description("Ogg Vorbis audio versions of The Linux Action Show!")
     ///         .finalize();
     /// ```
     pub fn finalize(self) -> Channel {

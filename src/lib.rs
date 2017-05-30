@@ -6,41 +6,9 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 #![warn(missing_docs)]
-#![allow(unknown_lints, while_let_on_iterator)]
 #![doc(html_root_url = "https://docs.rs/rss/")]
 
 //! Library for serializing the RSS web content syndication format.
-//!
-//! # Building
-//!
-//! A channel can be built using the Builder functions.
-//!
-//! ## Example
-//!
-//! ```
-//! extern crate rss;
-//!
-//! use rss::{ChannelBuilder, ImageBuilder};
-//!
-//! fn main() {
-//!     let image = ImageBuilder::default()
-//!         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-//!         .title("LAS 300 Logo")
-//!         .link("http://www.jupiterbroadcasting.com")
-//!         .finalize();
-//!
-//!     let description = "Ogg Vorbis audio versions of The Linux Action Show! A show that \
-//!         covers everything geeks care about in the computer industry. Get a solid dose of \
-//!         Linux, gadgets, news events and much more!";
-//!
-//!     let channel = ChannelBuilder::default()
-//!         .title("The Linux Action Show! OGG")
-//!         .link("http://www.jupiterbroadcasting.com")
-//!         .description(description.as_ref())
-//!         .image(image)
-//!         .finalize();
-//! }
-//! ```
 //!
 //! # Reading
 //!
@@ -48,12 +16,12 @@
 //!
 //! A channel can be read from any object that implements the `BufRead` trait.
 //!
-//! ```rust,no_run
+//! ```rust
 //! use std::fs::File;
 //! use std::io::BufReader;
 //! use rss::Channel;
 //!
-//! let file = File::open("example.xml").unwrap();
+//! let file = File::open("tests/data/rss2sample.xml").unwrap();
 //! let reader = BufReader::new(file);
 //! let channel = Channel::read_from(reader).unwrap();
 //! ```
@@ -69,14 +37,9 @@
 //! ```
 //!
 //! ```ignore
-//! extern crate rss;
-//!
 //! use rss::Channel;
 //!
-//! fn main() {
-//!     let url = "https://feedpress.me/usererror.xml";
-//!     let channel = Channel::from_url(url).unwrap();
-//! }
+//! let channel = Channel::from_url("https://feedpress.me/usererror.xml").unwrap();
 //! ```
 //!
 //! # Writing
@@ -88,12 +51,12 @@
 //!
 //! ## Example
 //!
-//! ```rust,no_run
+//! ```rust
 //! use std::fs::File;
 //! use std::io::{BufReader, sink};
 //! use rss::Channel;
 //!
-//! let file = File::open("example.xml").unwrap();
+//! let file = File::open("tests/data/rss2sample.xml").unwrap();
 //! let reader = BufReader::new(file);
 //! let channel = Channel::read_from(reader).unwrap();
 //!
@@ -104,40 +67,64 @@
 //! let string = channel.to_string();
 //! ```
 //!
+//! # Creation
+//!
+//! A channel can be created using the Builder functions.
+//!
+//! ## Example
+//!
+//! ```
+//! use rss::{ChannelBuilder, ImageBuilder};
+//!
+//! let image = ImageBuilder::default()
+//!     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
+//!     .title("LAS 300 Logo")
+//!     .link("http://www.jupiterbroadcasting.com")
+//!     .finalize();
+//!
+//! let channel = ChannelBuilder::default()
+//!     .title("The Linux Action Show! OGG")
+//!     .link("http://www.jupiterbroadcasting.com")
+//!     .description("Ogg Vorbis audio versions of The Linux Action Show!")
+//!     .image(image)
+//!     .finalize();
+//! ```
+//!
 //! # Validation
 //!
-//! A channel can be validated by means of the channel or by the builders.
+//! Validation can be performed using either a `Channel` or a builder.
+//!
+//! The the following checks are performed during validation:
+//!
+//! * Ensures that integer properties can be parsed from their string representaiton in to
+//! integers
+//! * Ensures that the integer properties are within their valid range according to the RSS 2.0
+//! specification
+//! * Ensures that URL properties can be parsed 
+//! * Ensures that string properties where only certain values are allowed fall within those
+//! valid values
 //!
 //! ## Example
 //!
 //! ```
-//! extern crate rss;
-//!
 //! use rss::Channel;
 //!
-//! fn main() {
-//!     let input = include_str!("tests/data/rss2sample.xml");
-//!
-//!     let channel = input.parse::<Channel>().unwrap();
-//!     channel.validate().unwrap();
-//! }
+//! let input = include_str!("tests/data/rss2sample.xml");
+//! let channel = input.parse::<Channel>().unwrap();
+//! channel.validate().unwrap();
 //! ```
 //!
 //! ## Example
 //!
 //! ```
-//! extern crate rss;
-//!
 //! use rss::ImageBuilder;
 //!
-//! fn main() {
-//!     let builder = ImageBuilder::default()
-//!             .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-//!             .title("LAS 300 Logo")
-//!             .link("http://www.jupiterbroadcasting.com")
-//!             .validate()
-//!             .unwrap();
-//! }
+//! let builder = ImageBuilder::default()
+//!     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
+//!     .title("LAS 300 Logo")
+//!     .link("http://www.jupiterbroadcasting.com")
+//!     .validate()
+//!     .unwrap();
 //! ```
 extern crate quick_xml;
 extern crate chrono;
@@ -147,7 +134,6 @@ extern crate mime;
 #[cfg(feature = "from_url")]
 extern crate reqwest;
 
-#[macro_use]
 mod fromxml;
 mod toxml;
 
