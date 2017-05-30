@@ -100,7 +100,7 @@
 //! integers
 //! * Ensures that the integer properties are within their valid range according to the RSS 2.0
 //! specification
-//! * Ensures that URL properties can be parsed 
+//! * Ensures that URL properties can be parsed
 //! * Ensures that string properties where only certain values are allowed fall within those
 //! valid values
 //!
