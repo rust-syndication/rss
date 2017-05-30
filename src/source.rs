@@ -25,19 +25,18 @@ pub struct Source {
 }
 
 impl Source {
-    /// Get the url that exists under `Source`.
+    /// Return the URL for this `Source`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{SourceBuilder, Source};
+    /// use rss::SourceBuilder;
     ///
     /// let url = "http://www.tomalak.org/links2.xml";
     ///
-    /// let source = SourceBuilder::new()
+    /// let source = SourceBuilder::default()
     ///     .url(url)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(url, source.url());
     /// ```
@@ -45,24 +44,20 @@ impl Source {
         self.url.as_str()
     }
 
-    /// Get the source that exists under `Source`.
+    /// Return the title of this `Source`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{SourceBuilder, Source};
+    /// use rss::SourceBuilder;
     ///
     /// let title = "Tomalak's Realm";
     ///
-    /// let url = "http://www.tomalak.org/links2.xml";
+    /// let source = SourceBuilder::default()
+    ///     .title(title.to_string())
+    ///     .finalize();
     ///
-    /// let source_obj = SourceBuilder::new()
-    ///     .title(Some(title.to_string()))
-    ///     .url(url)
-    ///     .finalize()
-    ///     .unwrap();
-    ///
-    /// assert_eq!(Some(title), source_obj.title());
+    /// assert_eq!(Some(title), source.title());
     /// ```
     pub fn title(&self) -> Option<&str> {
         self.title.as_ref().map(|s| s.as_str())
@@ -78,17 +73,16 @@ impl FromXml for Source {
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"url" {
-                    url = Some(attr.unescape_and_decode_value(&reader)?);
+                    url = Some(attr.unescape_and_decode_value(reader)?);
                     break;
                 }
             }
         }
 
-        let url = url.unwrap_or_default();
         let content = element_text(reader)?;
 
         Ok(Source {
-               url: url,
+               url: url.unwrap_or_default(),
                title: content,
            })
     }
@@ -111,7 +105,7 @@ impl ToXml for Source {
     }
 }
 
-/// This `SourceBuilder` struct creates the `Source`.
+/// A builder used to create a `Source`.
 #[derive(Debug, Clone, Default)]
 pub struct SourceBuilder {
     url: String,
@@ -119,65 +113,50 @@ pub struct SourceBuilder {
 }
 
 impl SourceBuilder {
-    /// Construct a new `SourceBuilder` and return default values.
+    /// Set the URL for the `Source`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::SourceBuilder;
     ///
-    /// let source_builder = SourceBuilder::new();
+    /// let builder = SourceBuilder::default()
+    ///     .url("http://www.example.com/source");
     /// ```
-    pub fn new() -> SourceBuilder {
-        SourceBuilder::default()
-    }
-
-
-    /// Set the url that exists under `Source`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::SourceBuilder;
-    ///
-    /// let mut source_builder = SourceBuilder::new();
-    /// source_builder.url("http://www.example.com/source");
-    /// ```
-    pub fn url(mut self, url: &str) -> SourceBuilder {
-        self.url = url.to_string();
+    pub fn url<S>(mut self, url: S) -> SourceBuilder
+        where S: Into<String>
+    {
+        self.url = url.into();
         self
     }
 
-
-    /// Set the source that exists under `Source`.
+    /// Set the title of the `Source`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::SourceBuilder;
     ///
-    /// let mut source_builder = SourceBuilder::new();
-    /// source_builder.title(Some("Test".to_string()));
+    /// let builder = SourceBuilder::default()
+    ///     .title("Test".to_string());
     /// ```
-    pub fn title(mut self, title: Option<String>) -> SourceBuilder {
-        self.title = title;
+    pub fn title<V>(mut self, title: V) -> SourceBuilder
+        where V: Into<Option<String>>
+    {
+        self.title = title.into();
         self
     }
 
-
-    /// Validate the contents of `Source`.
+    /// Validate the contents of this `SourceBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::SourceBuilder;
     ///
-    /// let source = SourceBuilder::new()
+    /// let source = SourceBuilder::default()
     ///     .url("http://www.example.com/source")
-    ///     .title(None)
     ///     .validate()
-    ///     .unwrap()
-    ///     .finalize()
     ///     .unwrap();
     /// ```
     pub fn validate(self) -> Result<SourceBuilder, Error> {
@@ -186,24 +165,21 @@ impl SourceBuilder {
         Ok(self)
     }
 
-
-    /// Construct the `Source` from the `SourceBuilder`.
+    /// Construct the `Source` from this `SourceBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::SourceBuilder;
     ///
-    /// let source = SourceBuilder::new()
+    /// let source = SourceBuilder::default()
     ///     .url("http://www.example.com/source")
-    ///     .title(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Source, Error> {
-        Ok(Source {
-               url: self.url,
-               title: self.title,
-           })
+    pub fn finalize(self) -> Source {
+        Source {
+            url: self.url,
+            title: self.title,
+        }
     }
 }

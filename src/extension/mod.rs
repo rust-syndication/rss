@@ -5,8 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::writer::Writer;
@@ -39,22 +37,24 @@ pub struct Extension {
 }
 
 impl Extension {
-    /// Get the name that exists under `Extension`.
+    /// Return the qualified name of the extension element.
     pub fn name(&self) -> &str {
         self.name.as_str()
     }
 
-    /// Get the value that exists under `Extension`.
+    /// Return the content of the extension element.
     pub fn value(&self) -> Option<&str> {
         self.value.as_ref().map(|s| s.as_str())
     }
 
-    /// Get the attrs that exists under `Extension`.
+    /// Return the attributes for the extension element.
     pub fn attrs(&self) -> &HashMap<String, String> {
         &self.attrs
     }
 
-    /// Get the children that exists under `Extension`.
+    /// Return the children of the extension element.
+    ///
+    /// This is a map of local names to child elements.
     pub fn children(&self) -> &HashMap<String, Vec<Extension>> {
         &self.children
     }
@@ -98,51 +98,46 @@ pub struct ExtensionBuilder {
 }
 
 impl ExtensionBuilder {
-    // Construct a new `DublinCoreExtensionBuilder` and return default values.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::ExtensionBuilder;
-    ///
-    /// let extension_builder = ExtensionBuilder::new();
-    /// ```
-    pub fn new() -> ExtensionBuilder {
-        ExtensionBuilder::default()
-    }
-
-    /// Get the name that exists under `Extension`.
-    pub fn name(mut self, name: &str) -> ExtensionBuilder {
-        self.name = name.to_string();
+    /// Set the qualified name of the extension element.
+    pub fn name<S>(mut self, name: S) -> ExtensionBuilder
+        where S: Into<String>
+    {
+        self.name = name.into();
         self
     }
 
-    /// Get the value that exists under `Extension`.
-    pub fn value(mut self, value: Option<String>) -> ExtensionBuilder {
-        self.value = value;
+    /// Set the content of the extension element.
+    pub fn value<V>(mut self, value: V) -> ExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.value = value.into();
         self
     }
 
-    /// Get the attrs that exists under `Extension`.
-    pub fn attrs(mut self, attrs: HashMap<String, String>) -> ExtensionBuilder {
-        self.attrs = attrs;
+    /// Set the attributes for the extension element.
+    pub fn attrs<V>(mut self, attrs: V) -> ExtensionBuilder
+        where V: Into<HashMap<String, String>>
+    {
+        self.attrs = attrs.into();
         self
     }
 
-    /// Get the children that exists under `Extension`.
-    pub fn children(mut self, children: HashMap<String, Vec<Extension>>) -> ExtensionBuilder {
-        self.children = children;
+    /// Set the children of the extension element.
+    pub fn children<V>(mut self, children: V) -> ExtensionBuilder
+        where V: Into<HashMap<String, Vec<Extension>>>
+    {
+        self.children = children.into();
         self
     }
 
-    /// Construct the `ExtensionBuilder` from the `ExtensionBuilderBuilder`.
-    pub fn finalize(self) -> Result<Extension, Error> {
-        Ok(Extension {
-               name: self.name,
-               value: self.value,
-               attrs: self.attrs,
-               children: self.children,
-           })
+    /// Construct the `ExtensionBuilder` from this `ExtensionBuilderBuilder`.
+    pub fn finalize(self) -> Extension {
+        Extension {
+            name: self.name,
+            value: self.value,
+            attrs: self.attrs,
+            children: self.children,
+        }
     }
 }
 

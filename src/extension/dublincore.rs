@@ -5,7 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
 use extension::Extension;
 use extension::remove_extension_values;
 use quick_xml::Writer;
@@ -53,77 +52,77 @@ pub struct DublinCoreExtension {
 }
 
 impl DublinCoreExtension {
-    /// Get the contributors that exists under `DublinCoreExtension`.
+    /// Return the contributors for this `DublinCoreExtension`.
     pub fn contributors(&self) -> &[String] {
         &self.contributors
     }
 
-    /// Get the coverages that exists under `DublinCoreExtension`.
+    /// Return the coverages for this `DublinCoreExtension`.
     pub fn coverages(&self) -> &[String] {
         &self.coverages
     }
 
-    /// Get the creators that exists under `DublinCoreExtension`.
+    /// Return the creators for this `DublinCoreExtension`.
     pub fn creators(&self) -> &[String] {
         &self.creators
     }
 
-    /// Get the dates that exists under `DublinCoreExtension`.
+    /// Return the dates for this `DublinCoreExtension`.
     pub fn dates(&self) -> &[String] {
         &self.dates
     }
 
-    /// Get the descriptions that exists under `DublinCoreExtension`.
+    /// Return the descriptions for this `DublinCoreExtension`.
     pub fn descriptions(&self) -> &[String] {
         &self.descriptions
     }
 
-    /// Get the formats that exists under `DublinCoreExtension`.
+    /// Return the formats for this `DublinCoreExtension`.
     pub fn formats(&self) -> &[String] {
         &self.formats
     }
 
-    /// Get the identifiers that exists under `DublinCoreExtension`.
+    /// Return the identifiers for this `DublinCoreExtension`.
     pub fn identifiers(&self) -> &[String] {
         &self.identifiers
     }
 
-    /// Get the languages that exists under `DublinCoreExtension`.
+    /// Return the languages for this `DublinCoreExtension`.
     pub fn languages(&self) -> &[String] {
         &self.languages
     }
 
-    /// Get the publishers that exists under `DublinCoreExtension`.
+    /// Return the publishers for this `DublinCoreExtension`.
     pub fn publishers(&self) -> &[String] {
         &self.publishers
     }
 
-    /// Get the relations that exists under `DublinCoreExtension`.
+    /// Return the relations for this `DublinCoreExtension`.
     pub fn relations(&self) -> &[String] {
         &self.relations
     }
 
-    /// Get the rights that exists under `DublinCoreExtension`.
+    /// Return the rights for this `DublinCoreExtension`.
     pub fn rights(&self) -> &[String] {
         &self.rights
     }
 
-    /// Get the sources that exists under `DublinCoreExtension`.
+    /// Return the sources for this `DublinCoreExtension`.
     pub fn sources(&self) -> &[String] {
         &self.sources
     }
 
-    /// Get the subjects that exists under `DublinCoreExtension`.
+    /// Return the subjects for this `DublinCoreExtension`.
     pub fn subjects(&self) -> &[String] {
         &self.subjects
     }
 
-    /// Get the titles that exists under `DublinCoreExtension`.
+    /// Return the titles for this `DublinCoreExtension`.
     pub fn titles(&self) -> &[String] {
         &self.titles
     }
 
-    /// Get the resource_types that exists under `DublinCoreExtension`.
+    /// Return the resource_types for this `DublinCoreExtension`.
     pub fn resource_types(&self) -> &[String] {
         &self.resource_types
     }
@@ -176,7 +175,7 @@ impl ToXml for DublinCoreExtension {
     }
 }
 
-/// This `DublinCoreExtensionBuilder` struct creates the `DublinCoreExtension`.
+/// A builder used to create a `DublinCoreExtension`.
 #[derive(Debug, Default, Clone)]
 pub struct DublinCoreExtensionBuilder {
     /// An entity responsible for making contributions to the resource.
@@ -213,127 +212,144 @@ pub struct DublinCoreExtensionBuilder {
 }
 
 impl DublinCoreExtensionBuilder {
-    /// Construct a new `DublinCoreExtensionBuilder` and return default values.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::dublincore::DublinCoreExtensionBuilder;
-    ///
-    /// let dublin_builder = DublinCoreExtensionBuilder::new();
-    /// ```
-    pub fn new() -> DublinCoreExtensionBuilder {
-        DublinCoreExtensionBuilder::default()
-    }
-
-    /// Set the contributors that exists under `DublinCoreExtension`.
-    pub fn contributors(mut self, contributors: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.contributors = contributors;
+    /// Set the contributors for the `DublinCoreExtension`.
+    pub fn contributors<V>(mut self, contributors: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.contributors = contributors.into();
         self
     }
 
-    /// Set the coverages that exists under `DublinCoreExtension`.
-    pub fn coverages(mut self, coverages: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.coverages = coverages;
+    /// Set the coverages for the `DublinCoreExtension`.
+    pub fn coverages<V>(mut self, coverages: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.coverages = coverages.into();
         self
     }
 
-    /// Set the creators that exists under `DublinCoreExtension`.
-    pub fn creators(mut self, creators: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.creators = creators;
+    /// Set the creators for the `DublinCoreExtension`.
+    pub fn creators<V>(mut self, creators: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.creators = creators.into();
         self
     }
 
-    /// Set the dates that exists under `DublinCoreExtension`.
-    pub fn dates(mut self, dates: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.dates = dates;
+    /// Set the dates for the `DublinCoreExtension`.
+    pub fn dates<V>(mut self, dates: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.dates = dates.into();
         self
     }
 
-    /// Set the descriptions that exists under `DublinCoreExtension`.
-    pub fn descriptions(mut self, descriptions: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.descriptions = descriptions;
+    /// Set the descriptions for the `DublinCoreExtension`.
+    pub fn descriptions<V>(mut self, descriptions: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.descriptions = descriptions.into();
         self
     }
 
-    /// Get the formats that exists under `DublinCoreExtension`.
-    pub fn formats(mut self, formats: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.formats = formats;
+    /// Set the formats for the `DublinCoreExtension`.
+    pub fn formats<V>(mut self, formats: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.formats = formats.into();
         self
     }
 
-    /// Set the identifiers that exists under `DublinCoreExtension`.
-    pub fn identifiers(mut self, identifiers: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.identifiers = identifiers;
+    /// Set the identifiers for the `DublinCoreExtension`.
+    pub fn identifiers<V>(mut self, identifiers: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.identifiers = identifiers.into();
         self
     }
 
-    /// Set the languages that exists under `DublinCoreExtension`.
-    pub fn languages(mut self, languages: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.languages = languages;
+    /// Set the languages for the `DublinCoreExtension`.
+    pub fn languages<V>(mut self, languages: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.languages = languages.into();
         self
     }
 
-    /// Set the publishers that exists under `DublinCoreExtension`.
-    pub fn publishers(mut self, publishers: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.publishers = publishers;
+    /// Set the publishers for the `DublinCoreExtension`.
+    pub fn publishers<V>(mut self, publishers: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.publishers = publishers.into();
         self
     }
 
-    /// Set the relations that exists under `DublinCoreExtension`.
-    pub fn relations(mut self, relations: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.relations = relations;
+    /// Set the relations for the `DublinCoreExtension`.
+    pub fn relations<V>(mut self, relations: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.relations = relations.into();
         self
     }
 
-    /// Set the rights that exists under `DublinCoreExtension`.
-    pub fn rights(mut self, rights: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.rights = rights;
+    /// Set the rights for the `DublinCoreExtension`.
+    pub fn rights<V>(mut self, rights: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.rights = rights.into();
         self
     }
 
-    /// Set the sources that exists under `DublinCoreExtension`.
-    pub fn sources(mut self, sources: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.sources = sources;
+    /// Set the sources for the `DublinCoreExtension`.
+    pub fn sources<V>(mut self, sources: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.sources = sources.into();
         self
     }
 
-    /// Set the subjects that exists under `DublinCoreExtension`.
-    pub fn subjects(mut self, subjects: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.subjects = subjects;
+    /// Set the subjects for the `DublinCoreExtension`.
+    pub fn subjects<V>(mut self, subjects: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.subjects = subjects.into();
         self
     }
 
-    /// Set the titles that exists under `DublinCoreExtension`.
-    pub fn titles(mut self, titles: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.titles = titles;
+    /// Set the titles for the `DublinCoreExtension`.
+    pub fn titles<V>(mut self, titles: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.titles = titles.into();
         self
     }
 
-    /// Set the resource_types that exists under `DublinCoreExtension`.
-    pub fn resource_types(mut self, resource_types: Vec<String>) -> DublinCoreExtensionBuilder {
-        self.resource_types = resource_types;
+    /// Set the resource_types for the `DublinCoreExtension`.
+    pub fn resource_types<V>(mut self, resource_types: V) -> DublinCoreExtensionBuilder
+        where V: Into<Vec<String>>
+    {
+        self.resource_types = resource_types.into();
         self
     }
 
-    /// Construct the `DublinCoreExtension` from the `DublinCoreExtensionBuilder`.
-    pub fn finalize(self) -> Result<DublinCoreExtension, Error> {
-        Ok(DublinCoreExtension {
-               contributors: self.contributors,
-               coverages: self.coverages,
-               creators: self.creators,
-               dates: self.dates,
-               descriptions: self.descriptions,
-               formats: self.formats,
-               identifiers: self.identifiers,
-               languages: self.languages,
-               publishers: self.publishers,
-               relations: self.relations,
-               rights: self.rights,
-               sources: self.sources,
-               subjects: self.subjects,
-               titles: self.titles,
-               resource_types: self.resource_types,
-           })
+    /// Construct the `DublinCoreExtension` from this `DublinCoreExtensionBuilder`.
+    pub fn finalize(self) -> DublinCoreExtension {
+        DublinCoreExtension {
+            contributors: self.contributors,
+            coverages: self.coverages,
+            creators: self.creators,
+            dates: self.dates,
+            descriptions: self.descriptions,
+            formats: self.formats,
+            identifiers: self.identifiers,
+            languages: self.languages,
+            publishers: self.publishers,
+            relations: self.relations,
+            rights: self.rights,
+            sources: self.sources,
+            subjects: self.subjects,
+            titles: self.titles,
+            resource_types: self.resource_types,
+        }
     }
 }

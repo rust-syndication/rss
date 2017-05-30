@@ -5,7 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::writer::Writer;
@@ -16,71 +15,64 @@ use toxml::{ToXml, WriterExt};
 pub struct ITunesOwner {
     /// The name of the owner.
     name: Option<String>,
-    /// The email of the email.
+    /// The email of the owner.
     email: Option<String>,
 }
 
 impl ITunesOwner {
-    /// Get the optional name that exists under `ITunesOwner`.
+    /// Return the name of this owner.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let name = "name";
     ///
-    /// let owner = ITunesOwnerBuilder::new()
-    ///     .name(Some(name.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let owner = ITunesOwnerBuilder::default()
+    ///     .name(name.to_string())
+    ///     .finalize();
     ///
     /// assert_eq!(Some(name), owner.name());
     /// ```
     ///
-    // ```
-    /// use feed::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// ```
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .name(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let name_opt = owner.name();
-    /// assert!(name_opt.is_none());
+    /// assert!(owner.name().is_none());
     /// ```
     pub fn name(&self) -> Option<&str> {
         self.name.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional email that exists under `ITunesOwner`.
+    /// Return the email of this owner.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
     /// let email = "email@example.com";
     ///
-    /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some(email.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let owner = ITunesOwnerBuilder::default()
+    ///     .email(email.to_string())
+    ///     .finalize();
     ///
     /// assert_eq!(Some(email), owner.email());
     /// ```
     ///
-    // ```
-    /// use feed::extension::itunes::{ITunesOwnerBuilder, ITunesOwner};
+    /// ```
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner = ITunesOwnerBuilder::new()
+    /// let owner = ITunesOwnerBuilder::default()
     ///     .email(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let email_opt = owner.email();
-    /// assert!(email_opt.is_none());
+    /// assert!(owner.email().is_none());
     /// ```
     pub fn email(&self) -> Option<&str> {
         self.email.as_ref().map(|s| s.as_str())
@@ -107,7 +99,7 @@ impl ToXml for ITunesOwner {
     }
 }
 
-/// This `ITunesOwnerBuilder` struct creates the `ITunesOwner`.
+/// A builder used to create an `ITunesOwner`.
 #[derive(Debug, Clone, Default)]
 pub struct ITunesOwnerBuilder {
     name: Option<String>,
@@ -115,66 +107,52 @@ pub struct ITunesOwnerBuilder {
 }
 
 impl ITunesOwnerBuilder {
-    /// Construct a new `ITunesOwnerBuilder` and return default values.
+    /// Set the name of the owner.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner_builder = ITunesOwnerBuilder::new();
+    /// let builder = ITunesOwnerBuilder::default()
+    ///     .name("name".to_string());
     /// ```
-    pub fn new() -> ITunesOwnerBuilder {
-        ITunesOwnerBuilder::default()
-    }
-
-    /// Set the optional name that exists under `ITunesOwner`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
-    ///
-    /// let mut owner_builder = ITunesOwnerBuilder::new();
-    /// owner_builder.name(Some("name".to_string()));
-    /// ```
-    pub fn name(mut self, name: Option<String>) -> ITunesOwnerBuilder {
-        self.name = name;
+    pub fn name<V: Into<Option<String>>>(mut self, name: V) -> ITunesOwnerBuilder {
+        self.name = name.into();
         self
     }
 
-    /// Set the optional email that exists under `ITunesOwner`.
+    /// Set the email of the owner.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let mut owner_builder = ITunesOwnerBuilder::new();
-    /// owner_builder.email(Some("email@example.com".to_string()));
+    /// let builder = ITunesOwnerBuilder::default()
+    ///     .email("email@example.com".to_string());
     /// ```
-    pub fn email(mut self, email: Option<String>) -> ITunesOwnerBuilder {
-        self.email = email;
+    pub fn email<V: Into<Option<String>>>(mut self, email: V) -> ITunesOwnerBuilder {
+        self.email = email.into();
         self
     }
 
-    /// Construct the `ITunesOwner` from the `ITunesOwnerBuilder`.
+    /// Construct the `ITunesOwner` from this `ITunesOwnerBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesOwnerBuilder;
     ///
-    /// let owner = ITunesOwnerBuilder::new()
-    ///     .email(Some("email@example.com".to_string()))
-    ///     .name(Some("name".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let owner = ITunesOwnerBuilder::default()
+    ///     .name("name".to_string())
+    ///     .email("email@example.com".to_string())
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<ITunesOwner, Error> {
-        Ok(ITunesOwner {
-               name: self.name,
-               email: self.email,
-           })
+    pub fn finalize(self) -> ITunesOwner {
+        ITunesOwner {
+            name: self.name,
+            email: self.email,
+        }
     }
 }

@@ -29,20 +29,18 @@ pub struct TextInput {
 }
 
 impl TextInput {
-    /// Get the title that exists under `TextInput`.
+    /// Return the title for this `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{TextInputBuilder, TextInput};
+    /// use rss::TextInputBuilder;
     ///
     /// let title = "Enter Comment";
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///     .title(title)
-    ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(title, text_input.title());
     /// ```
@@ -50,20 +48,18 @@ impl TextInput {
         self.title.as_str()
     }
 
-    /// Get the description that exists under `TextInput`.
+    /// Return the description of this `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{TextInputBuilder, TextInput};
+    /// use rss::TextInputBuilder;
     ///
     /// let description = "Provided Feedback";
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///     .description(description)
-    ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(description, text_input.description());
     /// ```
@@ -71,20 +67,18 @@ impl TextInput {
         self.description.as_str()
     }
 
-    /// Get the name that exists under `TextInput`.
+    /// Return the name of this `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{TextInputBuilder, TextInput};
+    /// use rss::TextInputBuilder;
     ///
     /// let name = "Comment";
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///     .name(name)
-    ///     .link("http://www.example.com/feedback")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(name, text_input.name());
     /// ```
@@ -92,19 +86,18 @@ impl TextInput {
         self.name.as_str()
     }
 
-    /// Get the link that exists under `TextInput`.
+    /// Return the submission URL for this `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{TextInputBuilder, TextInput};
+    /// use rss::TextInputBuilder;
     ///
     /// let link = "http://www.example.com/feedback";
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///     .link(link)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(link, text_input.link());
     /// ```
@@ -125,8 +118,8 @@ impl FromXml for TextInput {
         let mut skip_buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(element)) => {
+            match reader.read_event(&mut buf)? {
+                Event::Start(element) => {
                     match element.name() {
                         b"title" => title = element_text(reader)?,
                         b"description" => description = element_text(reader)?,
@@ -135,7 +128,7 @@ impl FromXml for TextInput {
                         n => reader.read_to_end(n, &mut skip_buf)?,
                     }
                 }
-                Ok(Event::End(_)) => {
+                Event::End(_) => {
                     let title = title.unwrap_or_default();
                     let description = description.unwrap_or_default();
                     let name = name.unwrap_or_default();
@@ -148,8 +141,7 @@ impl FromXml for TextInput {
                                   link: link,
                               });
                 }
-                Ok(Event::Eof) => break,
-                Err(err) => return Err(err.into()),
+                Event::Eof => break,
                 _ => {}
             }
             buf.clear();
@@ -177,7 +169,7 @@ impl ToXml for TextInput {
     }
 }
 
-/// This `TextInputBuilder` struct creates the `TextInput`.
+/// A builder used to create a `TextInput`.
 #[derive(Debug, Clone, Default)]
 pub struct TextInputBuilder {
     title: String,
@@ -187,94 +179,87 @@ pub struct TextInputBuilder {
 }
 
 impl TextInputBuilder {
-    /// Construct a new `TextInputBuilder` and return default values.
+    /// Set the title for the `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let text_input_builder = TextInputBuilder::new();
+    /// let builder = TextInputBuilder::default()
+    ///     .title("Title");
     /// ```
-    pub fn new() -> TextInputBuilder {
-        TextInputBuilder::default()
-    }
-
-    /// Set the title that exists under `TextInput`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::TextInputBuilder;
-    ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.title("Title");
-    /// ```
-    pub fn title(mut self, title: &str) -> TextInputBuilder {
-        self.title = title.to_string();
+    pub fn title<S>(mut self, title: S) -> TextInputBuilder
+        where S: Into<String>
+    {
+        self.title = title.into();
         self
     }
 
-    /// Set the description that exists under `TextInput`.
+    /// Set the description of the `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.description("This is a test description.");
+    /// let builder = TextInputBuilder::default()
+    ///     .description("This is a test description.");
     /// ```
-    pub fn description(mut self, description: &str) -> TextInputBuilder {
-        self.description = description.to_string();
+    pub fn description<S>(mut self, description: S) -> TextInputBuilder
+        where S: Into<String>
+    {
+        self.description = description.into();
         self
     }
 
-    /// Set the name that exists under `TextInput`.
+    /// Set the name of the `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.name("Comments");
+    /// let builder = TextInputBuilder::default()
+    ///     .name("Comments");
     /// ```
-    pub fn name(mut self, name: &str) -> TextInputBuilder {
-        self.name = name.to_string();
+    pub fn name<S>(mut self, name: S) -> TextInputBuilder
+        where S: Into<String>
+    {
+        self.name = name.into();
         self
     }
 
-    /// Set the link that exists under `TextInput`.
+    /// Set the submission URL for the `TextInput`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let mut text_input_builder = TextInputBuilder::new();
-    /// text_input_builder.link("http://www.example.com/feedback");
+    /// let builder = TextInputBuilder::default()
+    ///     .link("http://www.example.com/feedback");
     /// ```
-    pub fn link(mut self, link: &str) -> TextInputBuilder {
-        self.link = link.to_string();
+    pub fn link<S>(mut self, link: S) -> TextInputBuilder
+        where S: Into<String>
+    {
+        self.link = link.into();
         self
     }
 
-    /// Validate the contents of `TextInput`.
+    /// Validate the contents of this `TextInputBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///         .title("Title")
     ///         .description("This is a test description.")
     ///         .name("Comments")
     ///         .link("http://www.example.com/feedback")
     ///         .validate()
-    ///         .unwrap()
-    ///         .finalize()
     ///         .unwrap();
     /// ```
     pub fn validate(self) -> Result<TextInputBuilder, Error> {
@@ -283,27 +268,26 @@ impl TextInputBuilder {
         Ok(self)
     }
 
-    /// Construct the `TextInput` from the `TextInputBuilder`.
+    /// Construct the `TextInput` from this `TextInputBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::TextInputBuilder;
     ///
-    /// let text_input = TextInputBuilder::new()
+    /// let text_input = TextInputBuilder::default()
     ///         .title("Title")
     ///         .description("This is a test description.")
     ///         .name("Comments")
     ///         .link("http://www.example.com/feedback")
-    ///         .finalize()
-    ///         .unwrap();
+    ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<TextInput, Error> {
-        Ok(TextInput {
-               title: self.title,
-               description: self.description,
-               name: self.name,
-               link: self.link,
-           })
+    pub fn finalize(self) -> TextInput {
+        TextInput {
+            title: self.title,
+            description: self.description,
+            name: self.name,
+            link: self.link,
+        }
     }
 }

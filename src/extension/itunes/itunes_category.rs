@@ -5,7 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::writer::Writer;
@@ -23,20 +22,18 @@ pub struct ITunesCategory {
 }
 
 impl ITunesCategory {
-    /// Get the text that exists under `ITunesCategory`.
+    /// Return the name of this category.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesCategory};
+    /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let text = "text";
+    /// let text = "category";
     ///
-    /// let category = ITunesCategoryBuilder::new()
+    /// let category = ITunesCategoryBuilder::default()
     ///     .text(text)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(text, category.text())
     /// ```
@@ -44,38 +41,31 @@ impl ITunesCategory {
         self.text.as_str()
     }
 
-
-    /// Get the optional subcategory that exists under `ITunesCategory`.
+    /// Return the subcategory for this category.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesCategory};
+    /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
+    /// let subcategory = ITunesCategoryBuilder::default()
+    ///     .text("subcategory")
+    ///     .finalize();
     ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
-    ///     .finalize()
-    ///     .unwrap();;
+    /// let category = ITunesCategoryBuilder::default()
+    ///     .text("category")
+    ///     .subcategory(Box::new(subcategory))
+    ///     .finalize();
     ///
     /// assert!(category.subcategory().is_some());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesCategoryBuilder,
-    /// ITunesCategory};
+    /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
+    /// let category = ITunesCategoryBuilder::default()
     ///     .subcategory(None)
-    ///     .finalize()
-    ///     .unwrap();;
+    ///     .finalize();
     ///
     /// assert!(category.subcategory().is_none());
     /// ```
@@ -100,7 +90,7 @@ impl ToXml for ITunesCategory {
     }
 }
 
-/// This `ITunesCategoryBuilder` struct creates the `ITunesCategory`.
+/// A builder used to create an `ITunesCategory`.
 #[derive(Debug, Clone, Default)]
 pub struct ITunesCategoryBuilder {
     text: String,
@@ -108,78 +98,60 @@ pub struct ITunesCategoryBuilder {
 }
 
 impl ITunesCategoryBuilder {
-    /// Construct a new `ITunesCategoryBuilder` and return default values.
+    /// Set the name of the category.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let category_builder = ITunesCategoryBuilder::new();
+    /// let builder = ITunesCategoryBuilder::default()
+    ///     .text("category");
     /// ```
-    pub fn new() -> ITunesCategoryBuilder {
-        ITunesCategoryBuilder::default()
-    }
-
-    /// Set the text that exists uner `ITunesCategory`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesCategoryBuilder;
-    ///
-    /// let mut category_builder = ITunesCategoryBuilder::new();
-    /// category_builder.text("text");
-    /// ```
-    pub fn text(mut self, text: &str) -> ITunesCategoryBuilder {
-        self.text = text.to_string();
+    pub fn text<S>(mut self, text: S) -> ITunesCategoryBuilder
+        where S: Into<String>
+    {
+        self.text = text.into();
         self
     }
 
-    /// Set the optional subcategory that exists uner `ITunesCategory`.
+    /// Set the subcategory for the category.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
+    /// let subcategory = ITunesCategoryBuilder::default()
+    ///     .text("subcategory")
+    ///     .finalize();
     ///
-    /// let mut category_builder = ITunesCategoryBuilder::new();
-    /// category_builder.subcategory(Some(Box::new(subcategory)));
+    /// let builder = ITunesCategoryBuilder::default()
+    ///     .text("category")
+    ///     .subcategory(Box::new(subcategory));
     /// ```
-    pub fn subcategory(mut self,
-                       subcategory: Option<Box<ITunesCategory>>)
-                       -> ITunesCategoryBuilder {
-        self.subcategory = subcategory;
+    pub fn subcategory<V>(mut self, subcategory: V) -> ITunesCategoryBuilder
+        where V: Into<Option<Box<ITunesCategory>>>
+    {
+        self.subcategory = subcategory.into();
         self
     }
 
-    /// Construct the `ITunesCategory` from the `ITunesCategoryBuilder`.
+    /// Construct the `ITunesCategory` from this `ITunesCategoryBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesCategoryBuilder;
     ///
-    /// let subcategory = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .finalize()
-    ///     .unwrap();
-    ///
-    /// let category = ITunesCategoryBuilder::new()
-    ///     .text("text")
-    ///     .subcategory(Some(Box::new(subcategory)))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let category = ITunesCategoryBuilder::default()
+    ///     .text("category")
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<ITunesCategory, Error> {
-        Ok(ITunesCategory {
-               text: self.text,
-               subcategory: self.subcategory,
-           })
+    pub fn finalize(self) -> ITunesCategory {
+        ITunesCategory {
+            text: self.text,
+            subcategory: self.subcategory,
+        }
     }
 }
