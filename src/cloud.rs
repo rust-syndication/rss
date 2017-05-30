@@ -89,7 +89,7 @@ impl Cloud {
         self.path.as_str()
     }
 
-    /// Return the register procedure for the`Cloud`.
+    /// Return the register procedure for this `Cloud`.
     ///
     /// # Examples
     ///
@@ -212,19 +212,6 @@ pub struct CloudBuilder {
 }
 
 impl CloudBuilder {
-    /// Create a new `CloudBuilder` with default values.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let builder = CloudBuilder::default();
-    /// ```
-    pub fn new() -> CloudBuilder {
-        CloudBuilder::default()
-    }
-
     /// Set the domain for the `Cloud`.
     ///
     /// # Examples
@@ -274,7 +261,7 @@ impl CloudBuilder {
         self
     }
 
-    /// Set the register procedure for the`Cloud`.
+    /// Set the register procedure for the `Cloud`.
     ///
     /// # Examples
     ///

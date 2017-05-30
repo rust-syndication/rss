@@ -658,7 +658,7 @@ impl Channel {
     ///
     /// ```
     /// use rss::ChannelBuilder;
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder};
+    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
     ///
     /// let itunes_ext = ITunesChannelExtensionBuilder::default()
     ///     .author("author".to_string())
@@ -1960,7 +1960,7 @@ impl FromStr for SkipDay {
             "Friday" => Ok(SkipDay::Friday),
             "Saturday" => Ok(SkipDay::Saturday),
             "Sunday" => Ok(SkipDay::Sunday),
-            _ => Err("Skip Day is not not a valid value"),
+            _ => Err("Skip Day is not a valid value"),
         }
     }
 }
