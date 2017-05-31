@@ -6,7 +6,6 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use super::parse_image;
-use error::Error;
 use extension::Extension;
 use extension::remove_extension_value;
 use quick_xml::errors::Error as XmlError;
@@ -47,333 +46,286 @@ pub struct ITunesItemExtension {
 }
 
 impl ITunesItemExtension {
-    /// Get the optional author that exists under `ITunesItemExtension`.
+    /// Return the author of this podcast episode.
+    ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let author = "author";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some(author.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .author(author.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(author), item.author());
+    /// assert_eq!(Some(author), ext.author());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .author(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let author_opt = item.author();
-    /// assert!(author_opt.is_none());
+    /// assert!(ext.author().is_none());
     /// ```
     pub fn author(&self) -> Option<&str> {
         self.author.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional block that exists under `ITunesItemExtension`.
+    /// Return whether this podcast episode should be blocked from appearing in the iTunes Store.
+    ///
+    /// A value of `Yes` indicates that the podcast should not show up in the iTunes Store. All
+    /// other values are ignored.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let block = "block";
+    /// let block = "Yes";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .block(Some(block.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .block(block.to_string())
+    ///     .finalize();
     ///
-    ///
-    /// assert_eq!(Some(block), item.block());
+    /// assert_eq!(Some(block), ext.block());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .block(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let block_opt = item.block();
-    /// assert!(block_opt.is_none());
+    /// assert!(ext.block().is_none());
     /// ```
     pub fn block(&self) -> Option<&str> {
         self.block.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional image that exists under `ITunesItemExtension`.
+    /// Return the artwork URL for this podcast episode.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let image = "image";
+    /// let image = "http://example.com/image.png";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .image(Some(image.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .image(image.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(image), item.image());
+    /// assert_eq!(Some(image), ext.image());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .image(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let image_opt = item.image();
-    /// assert!(image_opt.is_none());
+    /// assert!(ext.image().is_none());
     /// ```
     pub fn image(&self) -> Option<&str> {
         self.image.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional duration that exists under `ITunesItemExtension`.
+    /// Return the duration of this podcast episode.
+    ///
+    /// The duration should be in one of the following formats: HH:MM:SS, H:MM:SS, MM:SS, M:SS.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let duration = "duration";
+    /// let duration = "50:03";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .duration(Some(duration.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .duration(duration.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(duration), item.duration());
+    /// assert_eq!(Some(duration), ext.duration());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .duration(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let duration_opt = item.duration();
-    /// assert!(duration_opt.is_none());
+    /// assert!(ext.duration().is_none());
     /// ```
     pub fn duration(&self) -> Option<&str> {
         self.duration.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional explicit that exists under `ITunesItemExtension`.
+    /// Return whether this podcast episode contains explicit content.
+    ///
+    /// A value of `Yes`, `Explicit`, or `True` indicates that the episode contains explicit
+    /// content. A value of `Clean`, `No`, `False` inidicates that episode does not contain
+    /// explicit content.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let explicit = "explicit";
+    /// let explicit = "Yes";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .explicit(Some(explicit.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .explicit(explicit.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(explicit), item.explicit());
+    /// assert_eq!(Some(explicit), ext.explicit());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .explicit(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let explicit_opt = item.explicit();
-    /// assert!(explicit_opt.is_none());
+    /// assert!(ext.explicit().is_none());
     /// ```
     pub fn explicit(&self) -> Option<&str> {
         self.explicit.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional closed_captioned that exists under
-    /// `ITunesItemExtension`.
+    /// Return whether this podcast episode contains embedded closed captioning.
+    ///
+    /// A value of `Yes` indicates that it does. Any other value indicates that it does not.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let closed_captioned = "closed_captioned";
+    /// let closed_captioned = "Yes";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .closed_captioned(Some(closed_captioned.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .closed_captioned(closed_captioned.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(closed_captioned), item.closed_captioned());
+    /// assert_eq!(Some(closed_captioned), ext.closed_captioned());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .closed_captioned(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let closed_captioned_opt = item.closed_captioned();
-    /// assert!(closed_captioned_opt.is_none());
+    /// assert!(ext.closed_captioned().is_none());
     /// ```
     pub fn closed_captioned(&self) -> Option<&str> {
         self.closed_captioned.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional order that exists under `ITunesItemExtension`.
+    /// Return the value used to override the default sorting order for episodes.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let order = "order";
+    /// let order = "0";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .order(Some(order.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .order(order.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(order), item.order());
+    /// assert_eq!(Some(order), ext.order());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .order(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let order_opt = item.order();
-    /// assert!(order_opt.is_none());
+    /// assert!(ext.order().is_none());
     /// ```
     pub fn order(&self) -> Option<&str> {
         self.order.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional subtitle that exists under `ITunesItemExtension`.
+    /// Return the description of this podcast episode.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let subtitle = "subtitle";
+    /// let subtitle = "description";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .subtitle(Some(subtitle.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .subtitle(subtitle.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(subtitle), item.subtitle());
+    /// assert_eq!(Some(subtitle), ext.subtitle());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .subtitle(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let subtitle_opt = item.subtitle();
-    /// assert!(subtitle_opt.is_none());
+    /// assert!(ext.subtitle().is_none());
     /// ```
     pub fn subtitle(&self) -> Option<&str> {
         self.subtitle.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional summary that exists under `ITunesItemExtension`.
+    /// Return the summary for this podcast episode.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
     /// let summary = "summary";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .summary(Some(summary.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .summary(summary.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(summary), item.summary());
+    /// assert_eq!(Some(summary), ext.summary());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .summary(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let summary_opt = item.summary();
-    /// assert!(summary_opt.is_none());
+    /// assert!(ext.summary().is_none());
     /// ```
     pub fn summary(&self) -> Option<&str> {
         self.summary.as_ref().map(|s| s.as_str())
     }
 
-
-    /// Get the optional keywords that exists under `ITunesItemExtension`.
+    /// Return the keywords for this podcast episode.
+    ///
+    /// The string contains a comma separated list of keywords.
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let keywords = "keywords";
+    /// let keywords = "keyword1,keyword2";
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .keywords(Some(keywords.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .keywords(keywords.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(keywords), item.keywords());
+    /// assert_eq!(Some(keywords), ext.keywords());
     /// ```
     ///
     /// ```
-    /// use rss::extension::itunes::{ITunesItemExtensionBuilder,
-    /// ITunesItemExtension};
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
+    /// let ext = ITunesItemExtensionBuilder::default()
     ///     .keywords(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let keywords_opt = item.keywords();
-    /// assert!(keywords_opt.is_none());
+    /// assert!(ext.keywords().is_none());
     /// ```
     pub fn keywords(&self) -> Option<&str> {
         self.keywords.as_ref().map(|s| s.as_str())
@@ -449,8 +401,7 @@ impl ToXml for ITunesItemExtension {
     }
 }
 
-/// This `ITunesItemExtensionBuilder` struct creates the
-/// `ITunesChannelExtension`.
+/// A builder used to create an `ITunesItemExtension`.
 #[derive(Debug, Clone, Default)]
 pub struct ITunesItemExtensionBuilder {
     author: Option<String>,
@@ -466,217 +417,201 @@ pub struct ITunesItemExtensionBuilder {
 }
 
 impl ITunesItemExtensionBuilder {
-    /// Construct a new `ITunesItemExtensionBuilder` and return default values.
+    /// Set the author of the podcast episode.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item_builder = ITunesItemExtensionBuilder::new();
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .author("author".to_string());
     /// ```
-    pub fn new() -> ITunesItemExtensionBuilder {
-        ITunesItemExtensionBuilder::default()
-    }
-
-
-    /// Set the optional author that exists under `ITunesItemExtension`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
-    ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.author(Some("author".to_string()));
-    /// ```
-    pub fn author(mut self, author: Option<String>) -> ITunesItemExtensionBuilder {
-        self.author = author;
+    pub fn author<V>(mut self, author: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.author = author.into();
         self
     }
 
-
-    /// Set the optional block that exists under `ITunesItemExtension`.
+    /// Set whether the podcast episode should be blocked from appearing in the iTunes Store.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.block(Some("block".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .block("Yes".to_string());
     /// ```
-    pub fn block(mut self, block: Option<String>) -> ITunesItemExtensionBuilder {
-        self.block = block;
+    pub fn block<V>(mut self, block: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.block = block.into();
         self
     }
 
-
-    /// Set the optional image that exists under `ITunesItemExtension`.
+    /// Set the artwork URL for the podcast episode.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.image(Some("image".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .image("http://example.com/image.png".to_string());
     /// ```
-    pub fn image(mut self, image: Option<String>) -> ITunesItemExtensionBuilder {
-        self.image = image;
+    pub fn image<V>(mut self, image: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.image = image.into();
         self
     }
 
-
-    /// Set the optional duration that exists under `ITunesItemExtension`.
+    /// Set the duration of the podcast episode.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.duration(Some("duration".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .duration("50:03".to_string());
     /// ```
-    pub fn duration(mut self, duration: Option<String>) -> ITunesItemExtensionBuilder {
-        self.duration = duration;
+    pub fn duration<V>(mut self, duration: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.duration = duration.into();
         self
     }
 
-
-    /// Set the optional explicit that exists under `ITunesItemExtension`.
+    /// Set whether the podcast episode contains explicit content.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.explicit(Some("explicit".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .explicit("Yes".to_string());
     /// ```
-    pub fn explicit(mut self, explicit: Option<String>) -> ITunesItemExtensionBuilder {
-        self.explicit = explicit;
+    pub fn explicit<V>(mut self, explicit: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.explicit = explicit.into();
         self
     }
 
-
-    /// Set the optional closed_captioned that exists under
-    /// `ITunesItemExtension`.
+    /// Set whether the podcast episode contains embedded closed captioning.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.closed_captioned(Some("closed_captioned".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .closed_captioned("Yes".to_string());
     /// ```
-    pub fn closed_captioned(mut self,
-                            closed_captioned: Option<String>)
-                            -> ITunesItemExtensionBuilder {
-        self.closed_captioned = closed_captioned;
+    pub fn closed_captioned<V>(mut self, closed_captioned: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.closed_captioned = closed_captioned.into();
         self
     }
 
-
-    /// Set the optional order that exists under `ITunesItemExtension`.
+    /// Set the value used to override the default sorting order for episodes.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.order(Some("order".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .order("0".to_string());
     /// ```
-    pub fn order(mut self, order: Option<String>) -> ITunesItemExtensionBuilder {
-        self.order = order;
+    pub fn order<V>(mut self, order: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.order = order.into();
         self
     }
 
-
-    /// Set the optional subtitle that exists under `ITunesItemExtension`.
+    /// Set the description of the podcast episode.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.subtitle(Some("subtitle".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .subtitle("description".to_string());
     /// ```
-    pub fn subtitle(mut self, subtitle: Option<String>) -> ITunesItemExtensionBuilder {
-        self.subtitle = subtitle;
+    pub fn subtitle<V>(mut self, subtitle: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.subtitle = subtitle.into();
         self
     }
 
-
-    /// Set the optional summary that exists under `ITunesItemExtension`.
+    /// Set the summary for the podcast episode.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.summary(Some("summary".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .summary("summary".to_string());
     /// ```
-    pub fn summary(mut self, summary: Option<String>) -> ITunesItemExtensionBuilder {
-        self.summary = summary;
+    pub fn summary<V>(mut self, summary: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.summary = summary.into();
         self
     }
 
-
-    /// Set the optional keywords that exists under `ITunesItemExtension`.
+    /// Set the keywords for the podcast episode.
+    ///
+    /// The string should be a comma separated list of keywords.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let mut item_builder = ITunesItemExtensionBuilder::new();
-    /// item_builder.keywords(Some("keywords".to_string()));
+    /// let builder = ITunesItemExtensionBuilder::default()
+    ///     .keywords("keyword1,keyword2".to_string());
     /// ```
-    pub fn keywords(mut self, keywords: Option<String>) -> ITunesItemExtensionBuilder {
-        self.keywords = keywords;
+    pub fn keywords<V>(mut self, keywords: V) -> ITunesItemExtensionBuilder
+        where V: Into<Option<String>>
+    {
+        self.keywords = keywords.into();
         self
     }
 
-
-    /// Construct the `ITunesItemExtension` from the
-    /// `ITunesItemExtensionBuilder`.
+    /// Construct the `ITunesItemExtension` from this `ITunesItemExtensionBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::extension::itunes::ITunesItemExtensionBuilder;
     ///
-    /// let item = ITunesItemExtensionBuilder::new()
-    ///     .author(Some("author".to_string()))
-    ///     .block(Some("block".to_string()))
-    ///     .image(Some("image".to_string()))
-    ///     .duration(Some("duration".to_string()))
-    ///     .explicit(Some("explicit".to_string()))
-    ///     .closed_captioned(Some("closed_captioned".to_string()))
-    ///     .order(Some("order".to_string()))
-    ///     .subtitle(Some("subtitle".to_string()))
-    ///     .summary(Some("summary".to_string()))
-    ///     .keywords(Some("keywords".to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let ext = ITunesItemExtensionBuilder::default()
+    ///     .author("author".to_string())
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<ITunesItemExtension, Error> {
-        Ok(ITunesItemExtension {
-               author: self.author,
-               block: self.block,
-               image: self.image,
-               duration: self.duration,
-               explicit: self.explicit,
-               closed_captioned: self.closed_captioned,
-               order: self.order,
-               subtitle: self.subtitle,
-               summary: self.summary,
-               keywords: self.keywords,
-           })
+    pub fn finalize(self) -> ITunesItemExtension {
+        ITunesItemExtension {
+            author: self.author,
+            block: self.block,
+            image: self.image,
+            duration: self.duration,
+            explicit: self.explicit,
+            closed_captioned: self.closed_captioned,
+            order: self.order,
+            subtitle: self.subtitle,
+            summary: self.summary,
+            keywords: self.keywords,
+        }
     }
 }

@@ -13,8 +13,8 @@ before_script:
 script:
   - |
       cargo fmt -- --write-mode=diff &&
-      travis-cargo build &&
-      travis-cargo test &&
+      cargo build --features from_url &&
+      cargo test --features from_url &&
       travis-cargo --only stable doc
 after_success:
   - travis-cargo --only stable doc-upload

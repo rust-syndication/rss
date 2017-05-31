@@ -28,21 +28,19 @@ pub struct Enclosure {
 }
 
 impl Enclosure {
-    /// Get the url that exists under `Enclosure`.
+    /// Return the URL for this `Enclosure`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{EnclosureBuilder, Enclosure};
+    /// use rss::EnclosureBuilder;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
-    /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/traffic.libsyn.com/jnite/\
+    ///     linuxactionshowep408.ogg";
     ///
-    /// let enclosure = EnclosureBuilder::new()
-    ///     .url(url.as_ref())
-    ///     .mime_type("audio/ogg")
-    ///     .finalize()
-    ///     .unwrap();
+    /// let enclosure = EnclosureBuilder::default()
+    ///     .url(url)
+    ///     .finalize();
     ///
     /// assert_eq!(url, enclosure.url())
     /// ```
@@ -50,25 +48,18 @@ impl Enclosure {
         self.url.as_str()
     }
 
-
-    /// Get the length that exists under `Enclosure`.
+    /// Return the content length for this `Enclosure`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{EnclosureBuilder, Enclosure};
+    /// use rss::EnclosureBuilder;
     ///
-    /// let length: i64 = 70772893;
+    /// let length = 70772893;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
-    /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
-    ///
-    /// let enclosure = EnclosureBuilder::new()
-    ///     .url(url.as_str())
+    /// let enclosure = EnclosureBuilder::default()
     ///     .length(length)
-    ///     .mime_type("audio/ogg")
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
     /// assert_eq!(length.to_string(), enclosure.length())
     /// ```
@@ -76,26 +67,20 @@ impl Enclosure {
         self.length.as_str()
     }
 
-
-    /// Get the enclosure type that exists under `Enclosure`.
+    /// Return the content MIME type for this `Enclosure`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{EnclosureBuilder, Enclosure};
+    /// use rss::EnclosureBuilder;
     ///
-    /// let enclosure_type = "audio/ogg";
+    /// let mime_type = "audio/ogg";
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
-    /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
+    /// let enclosure = EnclosureBuilder::default()
+    ///     .mime_type(mime_type)
+    ///     .finalize();
     ///
-    /// let enclosure = EnclosureBuilder::new()
-    ///     .url(url.as_str())
-    ///     .mime_type(enclosure_type)
-    ///     .finalize()
-    ///     .unwrap();
-    ///
-    /// assert_eq!(enclosure_type, enclosure.mime_type())
+    /// assert_eq!(mime_type, enclosure.mime_type())
     /// ```
     pub fn mime_type(&self) -> &str {
         self.mime_type.as_str()
@@ -114,13 +99,13 @@ impl FromXml for Enclosure {
             if let Ok(attr) = attr {
                 match attr.key {
                     b"url" if url.is_none() => {
-                        url = Some(attr.unescape_and_decode_value(&reader)?);
+                        url = Some(attr.unescape_and_decode_value(reader)?);
                     }
                     b"length" if length.is_none() => {
-                        length = Some(attr.unescape_and_decode_value(&reader)?);
+                        length = Some(attr.unescape_and_decode_value(reader)?);
                     }
                     b"type" if mime_type.is_none() => {
-                        mime_type = Some(attr.unescape_and_decode_value(&reader)?);
+                        mime_type = Some(attr.unescape_and_decode_value(reader)?);
                     }
                     _ => {}
                 }
@@ -130,23 +115,18 @@ impl FromXml for Enclosure {
         let mut depth = 1;
         let mut buf = Vec::new();
         while depth > 0 {
-            match reader.read_event(&mut buf) {
-                Ok(Event::Start(_)) => depth += 1,
-                Ok(Event::End(_)) => depth -= 1,
-                Ok(Event::Eof) => break,
-                Err(e) => return Err(e.into()),
+            match reader.read_event(&mut buf)? {
+                Event::Start(_) => depth += 1,
+                Event::End(_) => depth -= 1,
+                Event::Eof => break,
                 _ => {}
             }
         }
 
-        let url = url.unwrap_or_default();
-        let length = length.unwrap_or_default();
-        let mime_type = mime_type.unwrap_or_default();
-
         Ok(Enclosure {
-               url: url,
-               length: length,
-               mime_type: mime_type,
+               url: url.unwrap_or_default(),
+               length: length.unwrap_or_default(),
+               mime_type: mime_type.unwrap_or_default(),
            })
     }
 }
@@ -167,7 +147,7 @@ impl ToXml for Enclosure {
     }
 }
 
-/// This `EnclosureBuilder` struct creates the `Enclosure`.
+/// A builder used to create an `Enclosure`.
 #[derive(Debug, Clone, Default)]
 pub struct EnclosureBuilder {
     url: String,
@@ -176,87 +156,74 @@ pub struct EnclosureBuilder {
 }
 
 impl EnclosureBuilder {
-    /// Construct a new `EnclosureBuilder` and return default values.
+    /// Set the URL for the `Enclosure`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let enclosure_builder = EnclosureBuilder::new();
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/traffic.libsyn.com/jnite\
+    ///     /linuxactionshowep408.ogg";
+    ///
+    /// let builder = EnclosureBuilder::default()
+    ///     .url(url);
     /// ```
-    pub fn new() -> EnclosureBuilder {
-        EnclosureBuilder::default()
-    }
-
-
-    /// Set the url that exists under `Enclosure`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::EnclosureBuilder;
-    ///
-    /// let url = "http://www.podtrac.com/pts/".to_string()
-    /// + "redirect.ogg/traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
-    ///
-    /// let mut enclosure_builder = EnclosureBuilder::new();
-    /// enclosure_builder.url(url.as_ref());
-    /// ```
-    pub fn url(mut self, url: &str) -> EnclosureBuilder {
-        self.url = url.to_string();
+    pub fn url<S>(mut self, url: S) -> EnclosureBuilder
+        where S: Into<String>
+    {
+        self.url = url.into();
         self
     }
 
-
-    /// Set the length that exists under `Enclosure`.
+    /// Set the content length for the `Enclosure`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let mut enclosure_builder = EnclosureBuilder::new();
-    /// enclosure_builder.length(70772893);
+    /// let builder = EnclosureBuilder::default()
+    ///     .length(70772893);
     /// ```
     pub fn length(mut self, length: i64) -> EnclosureBuilder {
         self.length = length;
         self
     }
 
-
-    /// Set the enclosure_type that exists under `Enclosure`.
+    /// Set the content MIME type for the `Enclosure`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let mut enclosure_builder = EnclosureBuilder::new();
-    /// enclosure_builder.mime_type("audio/ogg");
+    /// let builder = EnclosureBuilder::default()
+    ///     .mime_type("audio/ogg");
     /// ```
-    pub fn mime_type(mut self, mime_type: &str) -> EnclosureBuilder {
-        self.mime_type = mime_type.to_string();
+    pub fn mime_type<S>(mut self, mime_type: S) -> EnclosureBuilder
+        where S: Into<String>
+    {
+        self.mime_type = mime_type.into();
         self
     }
 
-
-    /// Validate the contents of `Enclosure`.
+    /// Validate the contents of this `EnclosureBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
-    /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/traffic.libsyn.com/jnite/\
+    ///     linuxactionshowep408.ogg";
     ///
-    /// let enclosure = EnclosureBuilder::new()
-    ///         .url(url.as_ref())
+    /// let enclosure = EnclosureBuilder::default()
+    ///         .url(url)
     ///         .length(70772893)
     ///         .mime_type("audio/ogg")
-    ///         .validate().unwrap()
-    ///         .finalize().unwrap();
+    ///         .validate()
+    ///         .unwrap();
     /// ```
     pub fn validate(self) -> Result<EnclosureBuilder, Error> {
         Url::parse(self.url.as_str())?;
@@ -264,7 +231,8 @@ impl EnclosureBuilder {
         let mime = self.mime_type.parse::<Mime>();
 
         if mime.is_err() {
-            return Err(Error::Validation(format!("Error: {:?}", mime.unwrap_err())));
+            return Err(Error::Validation(format!("Enclosure Mime Type is invalid: {:?}",
+                                                 mime.unwrap_err())));
         }
 
         if self.length < 0 {
@@ -275,30 +243,27 @@ impl EnclosureBuilder {
         Ok(self)
     }
 
-
-    /// Construct the `Enclosure` from the `EnclosureBuilder`.
+    /// Construct the `Enclosure` from this `EnclosureBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::EnclosureBuilder;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/".to_string()
-    /// + "traffic.libsyn.com/jnite/linuxactionshowep408.ogg";
+    /// let url = "http://www.podtrac.com/pts/redirect.ogg/traffic.libsyn.com/jnite/\
+    ///     linuxactionshowep408.ogg";
     ///
-    /// let enclosure = EnclosureBuilder::new()
-    ///         .url(url.as_ref())
+    /// let enclosure = EnclosureBuilder::default()
+    ///         .url(url)
     ///         .length(70772893)
     ///         .mime_type("audio/ogg")
     ///         .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Enclosure, Error> {
-        let length = self.length.to_string();
-
-        Ok(Enclosure {
-               url: self.url,
-               length: length,
-               mime_type: self.mime_type,
-           })
+    pub fn finalize(self) -> Enclosure {
+        Enclosure {
+            url: self.url,
+            length: self.length.to_string(),
+            mime_type: self.mime_type,
+        }
     }
 }

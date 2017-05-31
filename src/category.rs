@@ -5,7 +5,6 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-
 use error::Error;
 use fromxml::{FromXml, element_text};
 use quick_xml::errors::Error as XmlError;
@@ -26,53 +25,49 @@ pub struct Category {
 }
 
 impl Category {
-    /// Get the category that exists under `Category`.
+    /// Return the name of this `Category`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{CategoryBuilder, Category};
+    /// use rss::CategoryBuilder;
     ///
-    /// let category = "podcast";
+    /// let name = "Podcast";
     ///
-    /// let category_obj = CategoryBuilder::new()
-    ///     .name(category)
-    ///     .finalize()
-    ///     .unwrap();
+    /// let category = CategoryBuilder::default()
+    ///     .name(name)
+    ///     .finalize();
     ///
-    /// assert_eq!(category, category_obj.name());
+    /// assert_eq!(name, category.name());
     /// ```
     pub fn name(&self) -> &str {
         self.name.as_str()
     }
 
-    /// Get the optional domain that exists under `Category`.
+    /// Return the domain of this `Category`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{CategoryBuilder, Category};
+    /// use rss::CategoryBuilder;
     ///
-    /// let domain_string = "http://jupiterbroadcasting.com/";
+    /// let domain = "http://jupiterbroadcasting.com/";
     ///
-    /// let category = CategoryBuilder::new()
-    ///     .domain(Some(domain_string.to_string()))
-    ///     .finalize()
-    ///     .unwrap();
+    /// let category = CategoryBuilder::default()
+    ///     .domain(domain.to_string())
+    ///     .finalize();
     ///
-    /// assert_eq!(Some(domain_string), category.domain());
+    /// assert_eq!(Some(domain), category.domain());
     /// ```
     ///
     /// ```
-    /// use rss::{CategoryBuilder, Category};
+    /// use rss::CategoryBuilder;
     ///
-    /// let category = CategoryBuilder::new()
+    /// let category = CategoryBuilder::default()
     ///     .domain(None)
-    ///     .finalize()
-    ///     .unwrap();
+    ///     .finalize();
     ///
-    /// let domain_option = category.domain();
-    /// assert!(domain_option.is_none());
+    /// assert!(category.domain().is_none());
     /// ```
     pub fn domain(&self) -> Option<&str> {
         self.domain.as_ref().map(|s| s.as_str())
@@ -88,7 +83,7 @@ impl FromXml for Category {
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"domain" {
-                    domain = Some(attr.unescape_and_decode_value(&reader)?);
+                    domain = Some(attr.unescape_and_decode_value(reader)?);
                     break;
                 }
             }
@@ -118,7 +113,7 @@ impl ToXml for Category {
     }
 }
 
-/// This `CategoryBuilder` struct creates the `Category`.
+/// A builder used to create a `Category`.
 #[derive(Debug, Clone, Default)]
 pub struct CategoryBuilder {
     name: String,
@@ -126,65 +121,53 @@ pub struct CategoryBuilder {
 }
 
 impl CategoryBuilder {
-    /// Construct a new `CategoryBuilder` and return default values.
+    /// Set the name of the `Category`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::CategoryBuilder;
     ///
-    /// let category_builder = CategoryBuilder::new();
+    /// let builder = CategoryBuilder::default()
+    ///     .name("Podcast");
     /// ```
-    pub fn new() -> CategoryBuilder {
-        CategoryBuilder::default()
-    }
-
-    /// Set the category that exists under `Category`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CategoryBuilder;
-    ///
-    /// let mut category_builder = CategoryBuilder::new();
-    /// category_builder.name("Podcast");
-    /// ```
-    pub fn name(mut self, name: &str) -> CategoryBuilder {
-        self.name = name.to_string();
+    pub fn name<S>(mut self, name: S) -> CategoryBuilder
+        where S: Into<String>
+    {
+        self.name = name.into();
         self
     }
 
-    /// Set the optional domain that exists under `Category`.
+    /// Set the domain for the `Category`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::CategoryBuilder;
     ///
-    /// let mut category_builder = CategoryBuilder::new();
-    /// category_builder.domain(Some("http://www.example.com".to_string()));
+    /// let builder = CategoryBuilder::default()
+    ///     .domain("http://www.example.com".to_string());
     /// ```
-    pub fn domain(mut self, domain: Option<String>) -> CategoryBuilder {
-        self.domain = domain;
+    pub fn domain<V>(mut self, domain: V) -> CategoryBuilder
+        where V: Into<Option<String>>
+    {
+        self.domain = domain.into();
         self
     }
 
-    /// Validate the contents of `Category`.
+    /// Validate the contents of this `CategoryBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::CategoryBuilder;
     ///
-    /// let category_builder = CategoryBuilder::new()
-    ///         .domain(Some("http://www.example.com".to_string()))
-    ///         .name("Podcast")
-    ///         .validate()
-    ///         .unwrap()
-    ///         .finalize()
-    ///         .unwrap();
+    /// let builder = CategoryBuilder::default()
+    ///     .name("Podcast")
+    ///     .domain("http://www.example.com".to_string())
+    ///     .validate()
+    ///     .unwrap();
     /// ```
-
     pub fn validate(self) -> Result<CategoryBuilder, Error> {
         if let Some(ref domain) = self.domain {
             Url::parse(domain)?;
@@ -193,23 +176,22 @@ impl CategoryBuilder {
         Ok(self)
     }
 
-    /// Construct the `Category` from the `CategoryBuilder`.
+    /// Construct the `Category` from this `CategoryBuilder`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::CategoryBuilder;
     ///
-    /// let category = CategoryBuilder::new()
-    ///         .name("Title")
-    ///         .domain(None)
-    ///         .finalize()
-    ///         .unwrap();
+    /// let category = CategoryBuilder::default()
+    ///     .name("Podcast")
+    ///     .domain("http://www.example.com".to_string())
+    ///     .finalize();
     /// ```
-    pub fn finalize(self) -> Result<Category, Error> {
-        Ok(Category {
-               name: self.name,
-               domain: self.domain,
-           })
+    pub fn finalize(self) -> Category {
+        Category {
+            name: self.name,
+            domain: self.domain,
+        }
     }
 }

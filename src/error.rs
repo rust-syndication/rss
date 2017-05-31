@@ -48,8 +48,8 @@ pub enum Error {
 impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
-            Error::Validation(ref err) => err,
-            Error::FromUrl(ref err) => err,
+            Error::Validation(ref s) |
+            Error::FromUrl(ref s) => s,
             Error::IO(ref err) => err.description(),
             #[cfg(feature = "from_url")]
             Error::ReqParsing(ref err) => err.description(),
@@ -83,17 +83,17 @@ impl StdError for Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            Error::Validation(ref err) => fmt::Display::fmt(err, f),
-            Error::FromUrl(ref err) => fmt::Display::fmt(err, f),
-            Error::IO(ref err) => fmt::Display::fmt(err, f),
+            Error::Validation(ref s) |
+            Error::FromUrl(ref s) => write!(f, "{}", s),
+            Error::IO(ref err) => err.fmt(f),
             #[cfg(feature = "from_url")]
-            Error::ReqParsing(ref err) => fmt::Display::fmt(err, f),
-            Error::IntParsing(ref err) => fmt::Display::fmt(err, f),
-            Error::DateParsing(ref err) => fmt::Display::fmt(err, f),
-            Error::UrlParsing(ref err) => fmt::Display::fmt(err, f),
-            Error::Utf8(ref err) => fmt::Display::fmt(err, f),
-            Error::XmlParsing(ref err, _) => fmt::Display::fmt(err, f),
-            Error::Xml(ref err) => fmt::Display::fmt(err, f),
+            Error::ReqParsing(ref err) => err.fmt(f),
+            Error::IntParsing(ref err) => err.fmt(f),
+            Error::DateParsing(ref err) => err.fmt(f),
+            Error::UrlParsing(ref err) => err.fmt(f),
+            Error::Utf8(ref err) => err.fmt(f),
+            Error::XmlParsing(ref err, _) => err.fmt(f),
+            Error::Xml(ref err) => err.fmt(f),
             Error::InvalidStartTag => write!(f, "the input did not begin with an rss tag"),
             Error::EOF => write!(f, "reached end of input without finding a complete channel"),
         }
@@ -148,7 +148,6 @@ impl From<::reqwest::Error> for Error {
         Error::ReqParsing(err)
     }
 }
-
 
 impl From<IOError> for Error {
     fn from(err: IOError) -> Error {

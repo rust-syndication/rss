@@ -111,27 +111,21 @@ fn write_dublincore() {
 
 #[test]
 fn verify_write_format() {
-    let item = ItemBuilder::new()
-        .itunes_ext(Some(extension::itunes::ITunesItemExtensionBuilder::new()
-                             .finalize()
-                             .unwrap()))
-        .dublin_core_ext(Some(extension::dublincore::DublinCoreExtensionBuilder::new()
-                                  .finalize()
-                                  .unwrap()))
-        .finalize()
-        .unwrap();
+    let item = ItemBuilder::default()
+        .itunes_ext(extension::itunes::ITunesItemExtensionBuilder::default().finalize())
+        .dublin_core_ext(extension::dublincore::DublinCoreExtensionBuilder::default().finalize())
+        .finalize();
 
     let mut namespaces: HashMap<String, String> = HashMap::new();
     namespaces.insert("ext".to_string(), "http://example.com/".to_string());
 
-    let channel = ChannelBuilder::new()
+    let channel = ChannelBuilder::default()
         .title("Title")
         .link("http://example.com/")
         .description("Description")
         .items(vec![item])
         .namespaces(namespaces)
-        .finalize()
-        .unwrap();
+        .finalize();
 
     let output = include_str!("data/verify_write_format.xml")
         .replace("\n", "")
