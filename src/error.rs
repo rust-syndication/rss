@@ -39,6 +39,8 @@ pub enum Error {
     XmlParsing(XmlError, usize),
     /// An XML error occurred.
     Xml(XmlError),
+    /// The input didn't begin with an opening rss tag.
+    InvalidStartTag,
     /// The end of the input was reached without finding a complete channel element.
     EOF,
 }
@@ -57,6 +59,7 @@ impl StdError for Error {
             Error::Utf8(ref err) => err.description(),
             Error::XmlParsing(ref err, _) => err.description(),
             Error::Xml(ref err) => err.description(),
+            Error::InvalidStartTag => "the input did not begin with an rss tag",
             Error::EOF => "reached end of input without finding a complete channel",
         }
     }
@@ -91,6 +94,7 @@ impl fmt::Display for Error {
             Error::Utf8(ref err) => err.fmt(f),
             Error::XmlParsing(ref err, _) => err.fmt(f),
             Error::Xml(ref err) => err.fmt(f),
+            Error::InvalidStartTag => write!(f, "the input did not begin with an rss tag"),
             Error::EOF => write!(f, "reached end of input without finding a complete channel"),
         }
     }
