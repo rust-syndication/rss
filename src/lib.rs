@@ -96,7 +96,7 @@
 //!
 //! The the following checks are performed during validation:
 //!
-//! * Ensures that integer properties can be parsed from their string representaiton into
+//! * Ensures that integer properties can be parsed from their string representation into
 //! integers
 //! * Ensures that the integer properties are within their valid range according to the RSS 2.0
 //! specification
