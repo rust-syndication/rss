@@ -28,7 +28,7 @@ Add the dependency to your `Cargo.toml`.
 
 ```toml
 [dependencies]
-rss = "0.5"
+rss = "0.6"
 ```
 
 The package includes a single crate named `rss`.
