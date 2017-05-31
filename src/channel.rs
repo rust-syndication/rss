@@ -1161,6 +1161,7 @@ impl FromXml for Channel {
                             channel.last_build_date = element_text(reader)?;
                         }
                         b"generator" => channel.generator = element_text(reader)?,
+                        b"rating" => channel.rating = element_text(reader)?,
                         b"docs" => channel.docs = element_text(reader)?,
                         b"ttl" => channel.ttl = element_text(reader)?,
                         b"skipHours" => {
@@ -1277,6 +1278,10 @@ impl ToXml for Channel {
 
         if let Some(generator) = self.generator.as_ref() {
             writer.write_text_element(b"generator", generator)?;
+        }
+
+        if let Some(rating) = self.rating.as_ref() {
+            writer.write_text_element(b"rating", rating)?;
         }
 
         if let Some(docs) = self.docs.as_ref() {
