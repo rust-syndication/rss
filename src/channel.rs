@@ -918,7 +918,7 @@ impl Channel {
             }
         };
 
-        let mut categories = Vec::new();
+        let mut categories = Vec::with_capacity(self.categories.len());
         for cat in self.categories() {
             categories.push(CategoryBuilder::default()
                                 .name(cat.name())
@@ -975,10 +975,10 @@ impl Channel {
             }
         };
 
-        let mut items = Vec::new();
+        let mut items = Vec::with_capacity(self.items.len());
 
         for item in self.items() {
-            let mut categories = Vec::new();
+            let mut categories = Vec::with_capacity(item.categories().len());
             for cat in item.categories() {
                 categories.push(CategoryBuilder::default()
                                     .name(cat.name())
