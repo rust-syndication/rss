@@ -101,6 +101,7 @@
 //! * Ensures that the integer properties are within their valid range according to the RSS 2.0
 //! specification
 //! * Ensures that URL properties can be parsed
+//! * Ensures that email is valid and does not come from a disposable email service
 //! * Ensures that string properties where only certain values are allowed fall within those
 //! valid values
 //!
@@ -129,6 +130,7 @@
 extern crate quick_xml;
 extern crate chrono;
 extern crate url;
+extern crate mailchecker;
 extern crate mime;
 
 #[cfg(feature = "from_url")]

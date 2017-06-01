@@ -14,6 +14,7 @@ use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesItemExtension;
 use fromxml::{self, FromXml, parse_extension, element_text};
 use guid::Guid;
+use mailchecker;
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::events::attributes::Attributes;
@@ -144,14 +145,14 @@ impl Item {
         self.description.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the author of this `Item`.
+    /// Return the email address for the author of this `Item`.
     ///
     /// # Examples
     ///
     /// ```
     /// use rss::ItemBuilder;
     ///
-    /// let author = "Chris Fisher";
+    /// let author = "chris@jupiterbroadcasting.com (Chris Fisher)";
     ///
     /// let item = ItemBuilder::default()
     ///     .author(author.to_string())
@@ -818,6 +819,14 @@ impl ItemBuilder {
 
         if let Some(ref pub_date) = self.pub_date {
             DateTime::parse_from_rfc2822(pub_date.as_str())?;
+        }
+
+        if let Some(ref author) = self.author {
+            let email: Vec<&str> = author.split(' ').collect();
+            if !mailchecker::is_valid(email.get(0).unwrap()) {
+                let msg = "Author contains an invalid or disposable email address.";
+                return Err(Error::Validation(msg.to_string()));
+            }
         }
 
         Ok(self)
