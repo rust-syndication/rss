@@ -121,6 +121,25 @@ pub struct CategoryBuilder {
 }
 
 impl CategoryBuilder {
+    /// Construct a new `CategoryBuilder` using the values from an existing `Category`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, CategoryBuilder};
+    ///
+    /// let input = include_str!("tests/data/category.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let category = channel.categories()[0].clone();
+    /// let builder = CategoryBuilder::from_category(category);
+    /// ```
+    pub fn from_category(category: Category) -> Self {
+        CategoryBuilder {
+            name: category.name,
+            domain: category.domain,
+        }
+    }
+
     /// Set the name of the `Category`.
     ///
     /// # Examples

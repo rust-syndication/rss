@@ -560,6 +560,37 @@ pub struct ItemBuilder {
 }
 
 impl ItemBuilder {
+    /// Construct a new `ItemBuilder` using the values from an existing `Item`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, ItemBuilder};
+    ///
+    /// let input = include_str!("tests/data/item.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let item = channel.items()[0].clone();
+    /// let builder = ItemBuilder::from_item(item);
+    /// ```
+    pub fn from_item(item: Item) -> Self {
+        ItemBuilder {
+            title: item.title,
+            link: item.link,
+            description: item.description,
+            author: item.author,
+            categories: item.categories,
+            comments: item.comments,
+            enclosure: item.enclosure,
+            guid: item.guid,
+            pub_date: item.pub_date,
+            source: item.source,
+            extensions: item.extensions,
+            itunes_ext: item.itunes_ext,
+            dublin_core_ext: item.dublin_core_ext,
+            content: item.content,
+        }
+    }
+
     /// Set the title of the `Item`.
     ///
     /// # Examples

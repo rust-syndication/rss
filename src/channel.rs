@@ -927,9 +927,9 @@ impl Channel {
                                 .finalize());
         }
 
-        let mut skip_hours = Vec::new();
+        let mut skip_hours = Vec::with_capacity(self.skip_hours.len());
         for hour in self.skip_hours() {
-            skip_hours.push(i64::from_str(hour.as_str())?);
+            skip_hours.push(hour.as_str().parse::<i64>()?);
         }
 
         let image = match self.image() {
@@ -1432,6 +1432,62 @@ pub struct ChannelBuilder {
 }
 
 impl ChannelBuilder {
+    /// Construct a new `ChannelBuilder` using the values from an existing `Channel`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, ChannelBuilder};
+    ///
+    /// let input = include_str!("tests/data/channel.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let builder = ChannelBuilder::from_channel(channel.clone()).unwrap();
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// If this function encounters an error while parsing `ttl` or `skip_hours` from a `String`
+    /// to an `i64` it will return an [`IntParsing`](/rss/enum.Error.html#variant.IntParsing)
+    /// error.
+    pub fn from_channel(channel: Channel) -> Result<Self, Error> {
+        let ttl = match channel.ttl {
+            Some(ttl) => Some(ttl.parse::<i64>()?),
+            None => None,
+        };
+
+        let mut skip_hours = Vec::with_capacity(channel.skip_hours.len());
+        for hour in channel.skip_hours {
+            skip_hours.push(hour.as_str().parse::<i64>()?);
+        }
+
+        Ok(ChannelBuilder {
+               title: channel.title,
+               link: channel.link,
+               description: channel.description,
+               language: channel.language,
+               copyright: channel.copyright,
+               managing_editor: channel.managing_editor,
+               webmaster: channel.webmaster,
+               pub_date: channel.pub_date,
+               last_build_date: channel.last_build_date,
+               categories: channel.categories,
+               generator: channel.generator,
+               docs: channel.docs,
+               cloud: channel.cloud,
+               ttl: ttl,
+               image: channel.image,
+               rating: channel.rating,
+               text_input: channel.text_input,
+               skip_hours: skip_hours,
+               skip_days: channel.skip_days,
+               items: channel.items,
+               extensions: channel.extensions,
+               itunes_ext: channel.itunes_ext,
+               dublin_core_ext: channel.dublin_core_ext,
+               namespaces: channel.namespaces,
+           })
+    }
+
     /// Set the title of the `Channel`.
     ///
     /// # Examples

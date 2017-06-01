@@ -417,6 +417,35 @@ pub struct ITunesItemExtensionBuilder {
 }
 
 impl ITunesItemExtensionBuilder {
+    /// Construct a new `ITunesItemExtensionBuilder` using the values from an existing
+    /// `ITunesItemExtension`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
+    ///
+    /// let input = include_str!("tests/data/itunes.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let extension = channel.items()[0].itunes_ext().unwrap().clone();
+    /// let builder = ITunesItemExtensionBuilder::from_extension(extension);
+    /// ```
+    pub fn from_extension(extension: ITunesItemExtension) -> Self {
+        ITunesItemExtensionBuilder {
+            author: extension.author,
+            block: extension.block,
+            image: extension.image,
+            duration: extension.duration,
+            explicit: extension.explicit,
+            closed_captioned: extension.closed_captioned,
+            order: extension.order,
+            subtitle: extension.subtitle,
+            summary: extension.summary,
+            keywords: extension.keywords,
+        }
+    }
+
     /// Set the author of the podcast episode.
     ///
     /// # Examples

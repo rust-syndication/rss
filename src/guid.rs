@@ -144,6 +144,25 @@ pub struct GuidBuilder {
 }
 
 impl GuidBuilder {
+    /// Construct a new `GuidBuilder` using the values from an existing `Guid`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, GuidBuilder};
+    ///
+    /// let input = include_str!("tests/data/guid.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let guid = channel.items()[0].guid().unwrap().clone();
+    /// let builder = GuidBuilder::from_guid(guid);
+    /// ```
+    pub fn from_guid(guid: Guid) -> Self {
+        GuidBuilder {
+            is_permalink: Some(guid.is_permalink()),
+            value: guid.value,
+        }
+    }
+
     /// Set whether this `Guid` is a permalink.
     ///
     /// # Examples

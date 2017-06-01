@@ -248,6 +248,45 @@ pub struct ImageBuilder {
 }
 
 impl ImageBuilder {
+    /// Construct a new `ImageBuilder` using the values from an existing `Image`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, ImageBuilder};
+    ///
+    /// let input = include_str!("tests/data/image.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let image = channel.image().unwrap().clone();
+    /// let builder = ImageBuilder::from_image(image).unwrap();
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// If this function encounters an error while parsing `width` or `height` from a `String` to
+    /// an `i64` it will return an
+    /// [`IntParsing`](/rss/enum.Error.html#variant.IntParsing) error.
+    pub fn from_image(image: Image) -> Result<Self, Error> {
+        let width = match image.width {
+            Some(width) => Some(width.parse::<i64>()?),
+            None => None,
+        };
+
+        let height = match image.height {
+            Some(height) => Some(height.parse::<i64>()?),
+            None => None,
+        };
+
+        Ok(ImageBuilder {
+               url: image.url,
+               title: image.title,
+               link: image.link,
+               width: width,
+               height: height,
+               description: image.description,
+           })
+    }
+
     /// Set URL for the `Image`.
     ///
     /// # Examples

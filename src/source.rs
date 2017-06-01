@@ -113,6 +113,25 @@ pub struct SourceBuilder {
 }
 
 impl SourceBuilder {
+    /// Construct a new `SourceBuilder` using the values from an existing `Source`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, SourceBuilder};
+    ///
+    /// let input = include_str!("tests/data/source.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let source = channel.items()[0].source().unwrap().clone();
+    /// let builder = SourceBuilder::from_source(source);
+    /// ```
+    pub fn from_source(source: Source) -> Self {
+        SourceBuilder {
+            url: source.url,
+            title: source.title,
+        }
+    }
+
     /// Set the URL for the `Source`.
     ///
     /// # Examples

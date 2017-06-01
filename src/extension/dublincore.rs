@@ -212,6 +212,40 @@ pub struct DublinCoreExtensionBuilder {
 }
 
 impl DublinCoreExtensionBuilder {
+    /// Construct a new `DublinCoreExtensionBuilder` using the values from an existing
+    /// `DublinCoreExtension`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::dublincore::DublinCoreExtensionBuilder;
+    ///
+    /// let input = include_str!("tests/data/dublincore.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let extension = channel.dublin_core_ext().unwrap().clone();
+    /// let builder = DublinCoreExtensionBuilder::from_extension(extension);
+    /// ```
+    pub fn from_extension(extension: DublinCoreExtension) -> Self {
+        DublinCoreExtensionBuilder {
+            contributors: extension.contributors,
+            coverages: extension.coverages,
+            creators: extension.creators,
+            dates: extension.dates,
+            descriptions: extension.descriptions,
+            formats: extension.formats,
+            identifiers: extension.identifiers,
+            languages: extension.languages,
+            publishers: extension.publishers,
+            relations: extension.relations,
+            rights: extension.rights,
+            sources: extension.sources,
+            subjects: extension.subjects,
+            titles: extension.titles,
+            resource_types: extension.resource_types,
+        }
+    }
+
     /// Set the contributors for the `DublinCoreExtension`.
     pub fn contributors<V>(mut self, contributors: V) -> DublinCoreExtensionBuilder
         where V: Into<Vec<String>>
