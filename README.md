@@ -72,8 +72,7 @@ let channel = Channel::from_url("https://feedpress.me/usererror.xml").unwrap();
 
 ## Writing
 
-A channel can be written to any object that implements the `Write` trait or converted to an
-XML string using the `ToString` trait.
+A channel can be written to any object that implements the `Write` trait or converted to an XML string using the `ToString` trait.
 
 **Note**: Writing a channel does not perform any escaping of XML entities.
 
