@@ -141,7 +141,7 @@ impl Channel {
         self.description.as_str()
     }
 
-    /// Return the langauge of this `Channel`.
+    /// Return the language of this `Channel`.
     ///
     /// # Examples
     ///

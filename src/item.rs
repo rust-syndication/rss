@@ -144,7 +144,7 @@ impl Item {
         self.description.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the author of this `Item`.
+    /// Return the email address of the author of this `Item`.
     ///
     /// # Examples
     ///
