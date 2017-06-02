@@ -48,7 +48,7 @@ impl Image {
     ///
     /// assert_eq!(url, image.url());
     /// ```
-    pub fn url(&self) -> &str() {
+    pub fn url(&self) -> &str {
         self.url.as_str()
     }
 

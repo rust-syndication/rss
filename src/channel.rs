@@ -17,6 +17,7 @@ use fromxml::{self, FromXml, parse_extension, element_text};
 use guid::GuidBuilder;
 use image::{Image, ImageBuilder};
 use item::{Item, ItemBuilder};
+use mailchecker;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
@@ -1896,6 +1897,22 @@ impl ChannelBuilder {
 
         if let Some(ref docs) = self.docs {
             Url::parse(docs.as_str())?;
+        }
+
+        if let Some(ref managing_editor) = self.managing_editor {
+            let email: Vec<&str> = managing_editor.split(' ').collect();
+            if !mailchecker::is_valid(email.get(0).unwrap()) {
+                let message = "Managing Editor contains an invalid or disposable email address.";
+                return Err(Error::Validation(message.to_string()));
+            }
+        }
+
+        if let Some(ref webmaster) = self.webmaster {
+            let email: Vec<&str> = webmaster.split(' ').collect();
+            if !mailchecker::is_valid(email.get(0).unwrap()) {
+                let message = "Webmaster contains an invalid or disposable email address.";
+                return Err(Error::Validation(message.to_string()));
+            }
         }
 
         for day in self.skip_days.as_slice() {
