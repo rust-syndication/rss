@@ -212,6 +212,33 @@ pub struct CloudBuilder {
 }
 
 impl CloudBuilder {
+    /// Construct a new `CloudBuilder` using the values from an existing `Cloud`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, CloudBuilder};
+    ///
+    /// let input = include_str!("tests/data/cloud.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let cloud = channel.cloud().unwrap().clone();
+    /// let builder = CloudBuilder::from_cloud(cloud).unwrap();
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// If this function encounters an error while parsing `port` from a `String` to an `i64` it
+    /// will return an [`IntParsing`](/rss/enum.Error.html#variant.IntParsing) error.
+    pub fn from_cloud(cloud: Cloud) -> Result<Self, Error> {
+        Ok(CloudBuilder {
+               domain: cloud.domain,
+               port: cloud.port.parse()?,
+               path: cloud.path,
+               register_procedure: cloud.register_procedure,
+               protocol: cloud.protocol,
+           })
+    }
+
     /// Set the domain for the `Cloud`.
     ///
     /// # Examples

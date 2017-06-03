@@ -179,6 +179,28 @@ pub struct TextInputBuilder {
 }
 
 impl TextInputBuilder {
+    /// Construct a new `TextInputBuilder` using the values from an existing `TextInput`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, TextInputBuilder};
+    ///
+    /// let input = include_str!("tests/data/textinput.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let text_input = channel.text_input().unwrap().clone();
+    /// let builder = TextInputBuilder::from_text_input(text_input);
+    /// ```
+    pub fn from_text_input(text_input: TextInput) -> Self {
+        TextInputBuilder {
+            title: text_input.title,
+            description: text_input.description,
+            name: text_input.name,
+            link: text_input.link,
+        }
+    }
+
+
     /// Set the title for the `TextInput`.
     ///
     /// # Examples

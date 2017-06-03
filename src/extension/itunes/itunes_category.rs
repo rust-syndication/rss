@@ -98,6 +98,26 @@ pub struct ITunesCategoryBuilder {
 }
 
 impl ITunesCategoryBuilder {
+    /// Construct a new `ITunesCategoryBuilder` using the values from an existing `ITunesCategory`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::itunes::ITunesCategoryBuilder;
+    ///
+    /// let input = include_str!("tests/data/itunes.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let category = channel.itunes_ext().unwrap().categories()[0].clone();
+    /// let builder = ITunesCategoryBuilder::from_category(category);
+    /// ```
+    pub fn from_category(category: ITunesCategory) -> Self {
+        ITunesCategoryBuilder {
+            text: category.text,
+            subcategory: category.subcategory,
+        }
+    }
+
     /// Set the name of the category.
     ///
     /// # Examples

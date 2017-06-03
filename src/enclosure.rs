@@ -156,6 +156,31 @@ pub struct EnclosureBuilder {
 }
 
 impl EnclosureBuilder {
+    /// Construct a new `EnclosureBuilder` using the values from an existing `Enclosure`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, EnclosureBuilder};
+    ///
+    /// let input = include_str!("tests/data/enclosure.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let enclosure = channel.items()[0].enclosure().unwrap().clone();
+    /// let builder = EnclosureBuilder::from_enclosure(enclosure).unwrap();
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// If this function encounters an error while parsing `length` from a `String` to an `i64` it
+    /// will return an [`IntParsing`](/rss/enum.Error.html#variant.IntParsing) error.
+    pub fn from_enclosure(enclosure: Enclosure) -> Result<Self, Error> {
+        Ok(EnclosureBuilder {
+               url: enclosure.url,
+               length: enclosure.length.parse()?,
+               mime_type: enclosure.mime_type,
+           })
+    }
+
     /// Set the URL for the `Enclosure`.
     ///
     /// # Examples

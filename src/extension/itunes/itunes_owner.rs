@@ -107,6 +107,26 @@ pub struct ITunesOwnerBuilder {
 }
 
 impl ITunesOwnerBuilder {
+    /// Construct a new `ITunesOwnerBuilder` using the values from an existing `ITunesOwner`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::itunes::ITunesOwnerBuilder;
+    ///
+    /// let input = include_str!("tests/data/itunes.xml");
+    /// let channel = input.parse::<Channel>().unwrap();
+    /// let owner = channel.itunes_ext().unwrap().owner().unwrap().clone();
+    /// let builder = ITunesOwnerBuilder::from_owner(owner);
+    /// ```
+    pub fn from_owner(owner: ITunesOwner) -> Self {
+        ITunesOwnerBuilder {
+            name: owner.name,
+            email: owner.email,
+        }
+    }
+
     /// Set the name of the owner.
     ///
     /// # Examples
