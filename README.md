@@ -64,7 +64,7 @@ To enable this functionality you must enable the `from_url` feature in your Carg
 rss = { version = "*", features = ["from_url"] }
 ```
 
-```ignore
+```rust
 use rss::Channel;
 
 let channel = Channel::from_url("https://feedpress.me/usererror.xml").unwrap();
@@ -100,7 +100,7 @@ A channel can be created using the Builder functions.
 
 ### Example
 
-```
+```rust
 use rss::{ChannelBuilder, ImageBuilder};
 
 let image = ImageBuilder::default()
@@ -130,7 +130,7 @@ The the following checks are performed during validation:
 
 ### Example
 
-```
+```rust
 use rss::Channel;
 
 let input = include_str!("tests/data/rss2sample.xml");
@@ -140,7 +140,7 @@ channel.validate().unwrap();
 
 ### Example
 
-```
+```rust
 use rss::ImageBuilder;
 
 let builder = ImageBuilder::default()
