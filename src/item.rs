@@ -401,9 +401,10 @@ impl Item {
 }
 
 impl FromXml for Item {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       _: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        _: Attributes,
+    ) -> Result<Self, Error> {
         let mut item = Item::default();
         let mut buf = Vec::new();
 
@@ -436,11 +437,13 @@ impl FromXml for Item {
                         b"content:encoded" => item.content = element_text(reader)?,
                         n => {
                             if let Some((ns, name)) = fromxml::extension_name(n) {
-                                parse_extension(reader,
-                                                element.attributes(),
-                                                ns,
-                                                name,
-                                                &mut item.extensions)?;
+                                parse_extension(
+                                    reader,
+                                    element.attributes(),
+                                    ns,
+                                    name,
+                                    &mut item.extensions,
+                                )?;
                             } else {
                                 reader.read_to_end(n, &mut Vec::new())?;
                             }
@@ -474,8 +477,9 @@ impl ToXml for Item {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"item";
 
-        writer
-            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
 
         if let Some(title) = self.title.as_ref() {
             writer.write_text_element(b"title", title)?;
@@ -602,7 +606,8 @@ impl ItemBuilder {
     ///     .title("Making Music with Linux | LAS 408".to_string());
     /// ```
     pub fn title<V>(mut self, title: V) -> ItemBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.title = title.into();
         self
@@ -619,7 +624,8 @@ impl ItemBuilder {
     ///     .link("http://www.jupiterbroadcasting.com".to_string());
     /// ```
     pub fn link<V>(mut self, link: V) -> ItemBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.link = link.into();
         self
@@ -636,7 +642,8 @@ impl ItemBuilder {
     ///     .description("This is a test description".to_string());
     /// ```
     pub fn description<V>(mut self, description: V) -> ItemBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.description = description.into();
         self
@@ -653,7 +660,8 @@ impl ItemBuilder {
     ///     .author("Chris Fisher".to_string());
     /// ```
     pub fn author<V>(mut self, author: V) -> ItemBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.author = author.into();
         self
@@ -673,7 +681,8 @@ impl ItemBuilder {
     ///     .categories(vec![category]);
     /// ```
     pub fn categories<V>(mut self, categories: V) -> ItemBuilder
-        where V: Into<Vec<Category>>
+    where
+        V: Into<Vec<Category>>,
     {
         self.categories = categories.into();
         self
@@ -690,7 +699,8 @@ impl ItemBuilder {
     ///     .comments("A comment".to_string());
     /// ```
     pub fn comments<V>(mut self, comments: V) -> ItemBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.comments = comments.into();
         self
@@ -715,7 +725,8 @@ impl ItemBuilder {
     ///     .enclosure(enclosure);
     /// ```
     pub fn enclosure<V>(mut self, enclosure: V) -> ItemBuilder
-        where V: Into<Option<Enclosure>>
+    where
+        V: Into<Option<Enclosure>>,
     {
         self.enclosure = enclosure.into();
         self
@@ -735,7 +746,8 @@ impl ItemBuilder {
     ///     .guid(guid);
     /// ```
     pub fn guid<V>(mut self, guid: V) -> ItemBuilder
-        where V: Into<Option<Guid>>
+    where
+        V: Into<Option<Guid>>,
     {
         self.guid = guid.into();
         self
@@ -752,7 +764,8 @@ impl ItemBuilder {
     ///     .pub_date("Sun, 13 Mar 2016 20:02:02-0700".to_string());
     /// ```
     pub fn pub_date<V>(mut self, pub_date: V) -> ItemBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.pub_date = pub_date.into();
         self
@@ -773,7 +786,8 @@ impl ItemBuilder {
     ///     .source(source);
     /// ```
     pub fn source<V>(mut self, source: V) -> ItemBuilder
-        where V: Into<Option<Source>>
+    where
+        V: Into<Option<Source>>,
     {
         self.source = source.into();
         self
@@ -795,7 +809,8 @@ impl ItemBuilder {
     ///     .itunes_ext(itunes_item);
     /// ```
     pub fn itunes_ext<V>(mut self, itunes_ext: V) -> ItemBuilder
-        where V: Into<Option<ITunesItemExtension>>
+    where
+        V: Into<Option<ITunesItemExtension>>,
     {
         self.itunes_ext = itunes_ext.into();
         self
@@ -803,7 +818,8 @@ impl ItemBuilder {
 
     /// Set the `DublinCoreExtension` for the `Item`.
     pub fn dublin_core_ext<V>(mut self, dublin_core_ext: V) -> ItemBuilder
-        where V: Into<Option<DublinCoreExtension>>
+    where
+        V: Into<Option<DublinCoreExtension>>,
     {
         self.dublin_core_ext = dublin_core_ext.into();
         self
@@ -811,7 +827,8 @@ impl ItemBuilder {
 
     /// Set the extensions for the `Item`.
     pub fn extensions<V>(mut self, extensions: V) -> ItemBuilder
-        where V: Into<ExtensionMap>
+    where
+        V: Into<ExtensionMap>,
     {
         self.extensions = extensions.into();
         self
@@ -819,7 +836,8 @@ impl ItemBuilder {
 
     /// Set the content of the `Item`.
     pub fn content<V>(mut self, content: V) -> ItemBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.content = content.into();
         self

@@ -37,8 +37,9 @@ fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
     element.attrs.remove("href")
 }
 
-fn parse_categories(map: &mut HashMap<String, Vec<Extension>>)
-                    -> Result<Vec<ITunesCategory>, Error> {
+fn parse_categories(
+    map: &mut HashMap<String, Vec<Extension>>,
+) -> Result<Vec<ITunesCategory>, Error> {
     let mut elements = match map.remove("category") {
         Some(elements) => elements,
         None => return Ok(Vec::new()),
@@ -52,19 +53,23 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>)
         let child = {
             if let Some(mut child) = elem.children.remove("category").map(|mut v| v.remove(0)) {
                 let text = child.attrs.remove("text").unwrap_or_default();
-                Some(Box::new(ITunesCategoryBuilder::default()
-                                  .text(text.as_str())
-                                  .subcategory(None)
-                                  .finalize()))
+                Some(Box::new(
+                    ITunesCategoryBuilder::default()
+                        .text(text.as_str())
+                        .subcategory(None)
+                        .finalize(),
+                ))
             } else {
                 None
             }
         };
 
-        categories.push(ITunesCategoryBuilder::default()
-                            .text(text.as_str())
-                            .subcategory(child)
-                            .finalize());
+        categories.push(
+            ITunesCategoryBuilder::default()
+                .text(text.as_str())
+                .subcategory(child)
+                .finalize(),
+        );
     }
 
     Ok(categories)
@@ -76,17 +81,17 @@ fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITune
         None => return Ok(None),
     };
 
-    let name = element
-        .children
-        .remove("name")
-        .and_then(|mut v| v.remove(0).value);
-    let email = element
-        .children
-        .remove("email")
-        .and_then(|mut v| v.remove(0).value);
+    let name = element.children.remove("name").and_then(
+        |mut v| v.remove(0).value,
+    );
+    let email = element.children.remove("email").and_then(
+        |mut v| v.remove(0).value,
+    );
 
-    Ok(Some(ITunesOwnerBuilder::default()
-                .name(name)
-                .email(email)
-                .finalize()))
+    Ok(Some(
+        ITunesOwnerBuilder::default()
+            .name(name)
+            .email(email)
+            .finalize(),
+    ))
 }

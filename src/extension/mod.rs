@@ -69,16 +69,18 @@ impl ToXml for Extension {
         writer.write_event(Event::Start(element))?;
 
         if let Some(value) = self.value.as_ref() {
-            writer
-                .write_event(Event::Text(BytesText::borrowed(value.as_bytes())))?;
+            writer.write_event(
+                Event::Text(BytesText::borrowed(value.as_bytes())),
+            )?;
         }
 
         for extension in self.children.values().flat_map(|extensions| extensions) {
             extension.to_xml(writer)?;
         }
 
-        writer
-            .write_event(Event::End(BytesEnd::borrowed(self.name.as_bytes())))?;
+        writer.write_event(
+            Event::End(BytesEnd::borrowed(self.name.as_bytes())),
+        )?;
         Ok(())
     }
 }
@@ -100,7 +102,8 @@ pub struct ExtensionBuilder {
 impl ExtensionBuilder {
     /// Set the qualified name of the extension element.
     pub fn name<S>(mut self, name: S) -> ExtensionBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.name = name.into();
         self
@@ -108,7 +111,8 @@ impl ExtensionBuilder {
 
     /// Set the content of the extension element.
     pub fn value<V>(mut self, value: V) -> ExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.value = value.into();
         self
@@ -116,7 +120,8 @@ impl ExtensionBuilder {
 
     /// Set the attributes for the extension element.
     pub fn attrs<V>(mut self, attrs: V) -> ExtensionBuilder
-        where V: Into<HashMap<String, String>>
+    where
+        V: Into<HashMap<String, String>>,
     {
         self.attrs = attrs.into();
         self
@@ -124,7 +129,8 @@ impl ExtensionBuilder {
 
     /// Set the children of the extension element.
     pub fn children<V>(mut self, children: V) -> ExtensionBuilder
-        where V: Into<HashMap<String, Vec<Extension>>>
+    where
+        V: Into<HashMap<String, Vec<Extension>>>,
     {
         self.children = children.into();
         self
@@ -142,9 +148,10 @@ impl ExtensionBuilder {
 }
 
 /// Get a reference to the value for the first extension with the specified key.
-pub fn get_extension_value<'a>(map: &'a HashMap<String, Vec<Extension>>,
-                               key: &str)
-                               -> Option<&'a str> {
+pub fn get_extension_value<'a>(
+    map: &'a HashMap<String, Vec<Extension>>,
+    key: &str,
+) -> Option<&'a str> {
     map.get(key)
         .and_then(|v| v.first())
         .and_then(|ext| ext.value.as_ref())
@@ -152,34 +159,35 @@ pub fn get_extension_value<'a>(map: &'a HashMap<String, Vec<Extension>>,
 }
 
 /// Remove and return the value for the first extension with the specified key.
-pub fn remove_extension_value(map: &mut HashMap<String, Vec<Extension>>,
-                              key: &str)
-                              -> Option<String> {
-    map.remove(key)
-        .map(|mut v| v.remove(0))
-        .and_then(|ext| ext.value)
+pub fn remove_extension_value(
+    map: &mut HashMap<String, Vec<Extension>>,
+    key: &str,
+) -> Option<String> {
+    map.remove(key).map(|mut v| v.remove(0)).and_then(
+        |ext| ext.value,
+    )
 }
 
 /// Get a reference to all values for the extensions with the specified key.
-pub fn get_extension_values<'a>(map: &'a HashMap<String, Vec<Extension>>,
-                                key: &str)
-                                -> Option<Vec<&'a str>> {
-    map.get(key)
-        .map(|v| {
-                 v.iter()
-                     .filter_map(|ext| ext.value.as_ref().map(|s| s.as_str()))
-                     .collect::<Vec<_>>()
-             })
+pub fn get_extension_values<'a>(
+    map: &'a HashMap<String, Vec<Extension>>,
+    key: &str,
+) -> Option<Vec<&'a str>> {
+    map.get(key).map(|v| {
+        v.iter()
+            .filter_map(|ext| ext.value.as_ref().map(|s| s.as_str()))
+            .collect::<Vec<_>>()
+    })
 }
 
 /// Remove and return all values for the extensions with the specified key.
-pub fn remove_extension_values(map: &mut HashMap<String, Vec<Extension>>,
-                               key: &str)
-                               -> Option<Vec<String>> {
-    map.remove(key)
-        .map(|v| {
-                 v.into_iter()
-                     .filter_map(|ext| ext.value)
-                     .collect::<Vec<_>>()
-             })
+pub fn remove_extension_values(
+    map: &mut HashMap<String, Vec<Extension>>,
+    key: &str,
+) -> Option<Vec<String>> {
+    map.remove(key).map(|v| {
+        v.into_iter()
+            .filter_map(|ext| ext.value)
+            .collect::<Vec<_>>()
+    })
 }

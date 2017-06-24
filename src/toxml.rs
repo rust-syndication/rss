@@ -20,46 +20,54 @@ impl<'a, T: ToXml> ToXml for &'a T {
 }
 
 pub trait WriterExt {
-    fn write_text_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(&mut self,
-                                                          name: N,
-                                                          text: T)
-                                                          -> Result<(), XmlError>;
+    fn write_text_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(
+        &mut self,
+        name: N,
+        text: T,
+    ) -> Result<(), XmlError>;
 
-    fn write_text_elements<N: AsRef<[u8]>, T: AsRef<[u8]>, I: IntoIterator<Item = T>>
-        (&mut self,
-         name: N,
-         values: I)
-         -> Result<(), XmlError>;
+    fn write_text_elements<N: AsRef<[u8]>, T: AsRef<[u8]>, I: IntoIterator<Item = T>>(
+        &mut self,
+        name: N,
+        values: I,
+    ) -> Result<(), XmlError>;
 
-    fn write_cdata_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(&mut self,
-                                                           name: N,
-                                                           text: T)
-                                                           -> Result<(), XmlError>;
+    fn write_cdata_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(
+        &mut self,
+        name: N,
+        text: T,
+    ) -> Result<(), XmlError>;
 
     fn write_object<T: ToXml>(&mut self, object: T) -> Result<(), XmlError>;
 
-    fn write_objects<T: ToXml, I: IntoIterator<Item = T>>(&mut self,
-                                                          objects: I)
-                                                          -> Result<(), XmlError>;
+    fn write_objects<T: ToXml, I: IntoIterator<Item = T>>(
+        &mut self,
+        objects: I,
+    ) -> Result<(), XmlError>;
 }
 
 impl<W: ::std::io::Write> WriterExt for Writer<W> {
-    fn write_text_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(&mut self,
-                                                          name: N,
-                                                          text: T)
-                                                          -> Result<(), XmlError> {
+    fn write_text_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(
+        &mut self,
+        name: N,
+        text: T,
+    ) -> Result<(), XmlError> {
         let name = name.as_ref();
-        self.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
-        self.write_event(Event::Text(BytesText::borrowed(text.as_ref())))?;
+        self.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
+        self.write_event(
+            Event::Text(BytesText::borrowed(text.as_ref())),
+        )?;
         self.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
 
-    fn write_text_elements<N: AsRef<[u8]>, T: AsRef<[u8]>, I: IntoIterator<Item = T>>
-        (&mut self,
-         name: N,
-         values: I)
-         -> Result<(), XmlError> {
+    fn write_text_elements<N: AsRef<[u8]>, T: AsRef<[u8]>, I: IntoIterator<Item = T>>(
+        &mut self,
+        name: N,
+        values: I,
+    ) -> Result<(), XmlError> {
         for value in values {
             self.write_text_element(&name, value)?;
         }
@@ -67,13 +75,18 @@ impl<W: ::std::io::Write> WriterExt for Writer<W> {
         Ok(())
     }
 
-    fn write_cdata_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(&mut self,
-                                                           name: N,
-                                                           text: T)
-                                                           -> Result<(), XmlError> {
+    fn write_cdata_element<N: AsRef<[u8]>, T: AsRef<[u8]>>(
+        &mut self,
+        name: N,
+        text: T,
+    ) -> Result<(), XmlError> {
         let name = name.as_ref();
-        self.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
-        self.write_event(Event::CData(BytesText::borrowed(text.as_ref())))?;
+        self.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
+        self.write_event(
+            Event::CData(BytesText::borrowed(text.as_ref())),
+        )?;
         self.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
@@ -83,9 +96,10 @@ impl<W: ::std::io::Write> WriterExt for Writer<W> {
         object.to_xml(self)
     }
 
-    fn write_objects<T: ToXml, I: IntoIterator<Item = T>>(&mut self,
-                                                          objects: I)
-                                                          -> Result<(), XmlError> {
+    fn write_objects<T: ToXml, I: IntoIterator<Item = T>>(
+        &mut self,
+        objects: I,
+    ) -> Result<(), XmlError> {
         for object in objects {
             object.to_xml(self)?;
         }

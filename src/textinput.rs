@@ -107,9 +107,10 @@ impl TextInput {
 }
 
 impl FromXml for TextInput {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       _: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        _: Attributes,
+    ) -> Result<Self, Error> {
         let mut title = None;
         let mut description = None;
         let mut name = None;
@@ -135,11 +136,11 @@ impl FromXml for TextInput {
                     let link = link.unwrap_or_default();
 
                     return Ok(TextInput {
-                                  title: title,
-                                  description: description,
-                                  name: name,
-                                  link: link,
-                              });
+                        title: title,
+                        description: description,
+                        name: name,
+                        link: link,
+                    });
                 }
                 Event::Eof => break,
                 _ => {}
@@ -155,12 +156,12 @@ impl ToXml for TextInput {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"textInput";
 
-        writer
-            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
 
         writer.write_text_element(b"title", &self.title)?;
-        writer
-            .write_text_element(b"description", &self.description)?;
+        writer.write_text_element(b"description", &self.description)?;
         writer.write_text_element(b"name", &self.name)?;
         writer.write_text_element(b"link", &self.link)?;
 
@@ -212,7 +213,8 @@ impl TextInputBuilder {
     ///     .title("Title");
     /// ```
     pub fn title<S>(mut self, title: S) -> TextInputBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.title = title.into();
         self
@@ -229,7 +231,8 @@ impl TextInputBuilder {
     ///     .description("This is a test description.");
     /// ```
     pub fn description<S>(mut self, description: S) -> TextInputBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.description = description.into();
         self
@@ -246,7 +249,8 @@ impl TextInputBuilder {
     ///     .name("Comments");
     /// ```
     pub fn name<S>(mut self, name: S) -> TextInputBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.name = name.into();
         self
@@ -263,7 +267,8 @@ impl TextInputBuilder {
     ///     .link("http://www.example.com/feedback");
     /// ```
     pub fn link<S>(mut self, link: S) -> TextInputBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.link = link.into();
         self

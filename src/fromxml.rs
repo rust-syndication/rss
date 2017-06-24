@@ -53,12 +53,13 @@ pub fn extension_name(element_name: &[u8]) -> Option<(&[u8], &[u8])> {
     }
 }
 
-pub fn parse_extension<R: BufRead>(reader: &mut Reader<R>,
-                                   atts: Attributes,
-                                   ns: &[u8],
-                                   name: &[u8],
-                                   extensions: &mut ExtensionMap)
-                                   -> Result<(), Error> {
+pub fn parse_extension<R: BufRead>(
+    reader: &mut Reader<R>,
+    atts: Attributes,
+    ns: &[u8],
+    name: &[u8],
+    extensions: &mut ExtensionMap,
+) -> Result<(), Error> {
     let ns = str::from_utf8(ns)?;
     let name = str::from_utf8(name)?;
     let ext = parse_extension_element(reader, atts)?;
@@ -88,9 +89,10 @@ pub fn parse_extension<R: BufRead>(reader: &mut Reader<R>,
     Ok(())
 }
 
-fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
-                                       mut atts: Attributes)
-                                       -> Result<Extension, Error> {
+fn parse_extension_element<R: BufRead>(
+    reader: &mut Reader<R>,
+    mut atts: Attributes,
+) -> Result<Extension, Error> {
     let mut children = HashMap::<String, Vec<Extension>>::new();
     let mut attrs = HashMap::<String, String>::new();
     let mut content = None;
@@ -124,12 +126,14 @@ fn parse_extension_element<R: BufRead>(reader: &mut Reader<R>,
                 }
             }
             Event::End(element) => {
-                return Ok(ExtensionBuilder::default()
-                              .name(&*reader.decode(element.name()))
-                              .value(content)
-                              .attrs(attrs)
-                              .children(children)
-                              .finalize());
+                return Ok(
+                    ExtensionBuilder::default()
+                        .name(&*reader.decode(element.name()))
+                        .value(content)
+                        .attrs(attrs)
+                        .children(children)
+                        .finalize(),
+                );
             }
             Event::CData(element) => {
                 content = Some(reader.decode(&element).into_owned());

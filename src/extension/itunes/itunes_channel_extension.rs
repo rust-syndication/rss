@@ -425,8 +425,10 @@ impl ToXml for ITunesChannelExtension {
         }
 
         if let Some(new_feed_url) = self.new_feed_url.as_ref() {
-            writer
-                .write_text_element(b"itunes:new-feed-url", new_feed_url)?;
+            writer.write_text_element(
+                b"itunes:new-feed-url",
+                new_feed_url,
+            )?;
         }
 
         if let Some(owner) = self.owner.as_ref() {
@@ -505,7 +507,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .author("author".to_string());
     /// ```
     pub fn author<V>(mut self, author: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.author = author.into();
         self
@@ -522,7 +525,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .block("Yes".to_string());
     /// ```
     pub fn block<V>(mut self, block: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.block = block.into();
         self
@@ -543,7 +547,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .categories(vec![category]);
     /// ```
     pub fn categories<V>(mut self, categories: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Vec<ITunesCategory>>
+    where
+        V: Into<Vec<ITunesCategory>>,
     {
         self.categories = categories.into();
         self
@@ -560,7 +565,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .image("http://example.com/image.png".to_string());
     /// ```
     pub fn image<V>(mut self, image: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.image = image.into();
         self
@@ -577,7 +583,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .explicit("Yes".to_string());
     /// ```
     pub fn explicit<V>(mut self, explicit: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.explicit = explicit.into();
         self
@@ -594,7 +601,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .complete("Yes".to_string());
     /// ```
     pub fn complete<V>(mut self, complete: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.complete = complete.into();
         self
@@ -611,7 +619,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .new_feed_url("http://example.com/feed".to_string());
     /// ```
     pub fn new_feed_url<V>(mut self, new_feed_url: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.new_feed_url = new_feed_url.into();
         self
@@ -633,7 +642,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .owner(owner);
     /// ```
     pub fn owner<V>(mut self, owner: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<ITunesOwner>>
+    where
+        V: Into<Option<ITunesOwner>>,
     {
         self.owner = owner.into();
         self
@@ -650,7 +660,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .subtitle("description".to_string());
     /// ```
     pub fn subtitle<V>(mut self, subtitle: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.subtitle = subtitle.into();
         self
@@ -667,7 +678,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .summary("summary".to_string());
     /// ```
     pub fn summary<V>(mut self, summary: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.summary = summary.into();
         self
@@ -686,7 +698,8 @@ impl ITunesChannelExtensionBuilder {
     ///     .keywords("keyword1,keyword2".to_string());
     /// ```
     pub fn keywords<V>(mut self, keywords: V) -> ITunesChannelExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.keywords = keywords.into();
         self

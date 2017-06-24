@@ -95,9 +95,10 @@ impl Default for Guid {
 }
 
 impl FromXml for Guid {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       mut atts: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        mut atts: Attributes,
+    ) -> Result<Self, Error> {
         let mut is_permalink = true;
 
         for attr in atts.with_checks(false) {
@@ -112,9 +113,9 @@ impl FromXml for Guid {
         let content = element_text(reader)?.unwrap_or_default();
 
         Ok(Guid {
-               value: content,
-               is_permalink: is_permalink,
-           })
+            value: content,
+            is_permalink: is_permalink,
+        })
     }
 }
 
@@ -128,8 +129,9 @@ impl ToXml for Guid {
 
         writer.write_event(Event::Start(element))?;
 
-        writer
-            .write_event(Event::Text(BytesText::borrowed(self.value.as_bytes())))?;
+        writer.write_event(Event::Text(
+            BytesText::borrowed(self.value.as_bytes()),
+        ))?;
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
@@ -189,7 +191,8 @@ impl GuidBuilder {
     ///     .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C");
     /// ```
     pub fn value<S>(mut self, value: S) -> GuidBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.value = value.into();
         self

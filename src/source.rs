@@ -65,9 +65,10 @@ impl Source {
 }
 
 impl FromXml for Source {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       mut atts: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        mut atts: Attributes,
+    ) -> Result<Self, Error> {
         let mut url = None;
 
         for attr in atts.with_checks(false) {
@@ -82,9 +83,9 @@ impl FromXml for Source {
         let content = element_text(reader)?;
 
         Ok(Source {
-               url: url.unwrap_or_default(),
-               title: content,
-           })
+            url: url.unwrap_or_default(),
+            title: content,
+        })
     }
 }
 
@@ -143,7 +144,8 @@ impl SourceBuilder {
     ///     .url("http://www.example.com/source");
     /// ```
     pub fn url<S>(mut self, url: S) -> SourceBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.url = url.into();
         self
@@ -160,7 +162,8 @@ impl SourceBuilder {
     ///     .title("Test".to_string());
     /// ```
     pub fn title<V>(mut self, title: V) -> SourceBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.title = title.into();
         self

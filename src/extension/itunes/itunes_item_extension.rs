@@ -377,8 +377,10 @@ impl ToXml for ITunesItemExtension {
         }
 
         if let Some(closed_captioned) = self.closed_captioned.as_ref() {
-            writer
-                .write_text_element(b"itunes:isClosedCaptioned", closed_captioned)?;
+            writer.write_text_element(
+                b"itunes:isClosedCaptioned",
+                closed_captioned,
+            )?;
         }
 
         if let Some(order) = self.order.as_ref() {
@@ -457,7 +459,8 @@ impl ITunesItemExtensionBuilder {
     ///     .author("author".to_string());
     /// ```
     pub fn author<V>(mut self, author: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.author = author.into();
         self
@@ -474,7 +477,8 @@ impl ITunesItemExtensionBuilder {
     ///     .block("Yes".to_string());
     /// ```
     pub fn block<V>(mut self, block: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.block = block.into();
         self
@@ -491,7 +495,8 @@ impl ITunesItemExtensionBuilder {
     ///     .image("http://example.com/image.png".to_string());
     /// ```
     pub fn image<V>(mut self, image: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.image = image.into();
         self
@@ -508,7 +513,8 @@ impl ITunesItemExtensionBuilder {
     ///     .duration("50:03".to_string());
     /// ```
     pub fn duration<V>(mut self, duration: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.duration = duration.into();
         self
@@ -525,7 +531,8 @@ impl ITunesItemExtensionBuilder {
     ///     .explicit("Yes".to_string());
     /// ```
     pub fn explicit<V>(mut self, explicit: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.explicit = explicit.into();
         self
@@ -542,7 +549,8 @@ impl ITunesItemExtensionBuilder {
     ///     .closed_captioned("Yes".to_string());
     /// ```
     pub fn closed_captioned<V>(mut self, closed_captioned: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.closed_captioned = closed_captioned.into();
         self
@@ -559,7 +567,8 @@ impl ITunesItemExtensionBuilder {
     ///     .order("0".to_string());
     /// ```
     pub fn order<V>(mut self, order: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.order = order.into();
         self
@@ -576,7 +585,8 @@ impl ITunesItemExtensionBuilder {
     ///     .subtitle("description".to_string());
     /// ```
     pub fn subtitle<V>(mut self, subtitle: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.subtitle = subtitle.into();
         self
@@ -593,7 +603,8 @@ impl ITunesItemExtensionBuilder {
     ///     .summary("summary".to_string());
     /// ```
     pub fn summary<V>(mut self, summary: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.summary = summary.into();
         self
@@ -612,7 +623,8 @@ impl ITunesItemExtensionBuilder {
     ///     .keywords("keyword1,keyword2".to_string());
     /// ```
     pub fn keywords<V>(mut self, keywords: V) -> ITunesItemExtensionBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.keywords = keywords.into();
         self

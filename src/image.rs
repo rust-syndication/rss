@@ -163,9 +163,10 @@ impl Image {
 }
 
 impl FromXml for Image {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       _: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        _: Attributes,
+    ) -> Result<Self, Error> {
         let mut url = None;
         let mut title = None;
         let mut link = None;
@@ -190,13 +191,13 @@ impl FromXml for Image {
                 }
                 Event::End(_) => {
                     return Ok(Image {
-                                  url: url.unwrap_or_default(),
-                                  title: title.unwrap_or_default(),
-                                  link: link.unwrap_or_default(),
-                                  width: width,
-                                  height: height,
-                                  description: description,
-                              });
+                        url: url.unwrap_or_default(),
+                        title: title.unwrap_or_default(),
+                        link: link.unwrap_or_default(),
+                        width: width,
+                        height: height,
+                        description: description,
+                    });
                 }
                 Event::Eof => break,
                 _ => {}
@@ -212,8 +213,9 @@ impl ToXml for Image {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"image";
 
-        writer
-            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
 
         writer.write_text_element(b"url", &self.url)?;
         writer.write_text_element(b"title", &self.title)?;
@@ -278,13 +280,13 @@ impl ImageBuilder {
         };
 
         Ok(ImageBuilder {
-               url: image.url,
-               title: image.title,
-               link: image.link,
-               width: width,
-               height: height,
-               description: image.description,
-           })
+            url: image.url,
+            title: image.title,
+            link: image.link,
+            width: width,
+            height: height,
+            description: image.description,
+        })
     }
 
     /// Set URL for the `Image`.
@@ -298,7 +300,8 @@ impl ImageBuilder {
     ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg");
     /// ```
     pub fn url<S>(mut self, url: S) -> ImageBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.url = url.into();
         self
@@ -315,7 +318,8 @@ impl ImageBuilder {
     ///     .title("LAS 300 Logo");
     /// ```
     pub fn title<S>(mut self, title: S) -> ImageBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.title = title.into();
         self
@@ -332,7 +336,8 @@ impl ImageBuilder {
     ///     .link("http://www.jupiterbroadcasting.com/");
     /// ```
     pub fn link<S>(mut self, link: S) -> ImageBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.link = link.into();
         self
@@ -349,7 +354,8 @@ impl ImageBuilder {
     ///     .width(88);
     /// ```
     pub fn width<V>(mut self, width: V) -> ImageBuilder
-        where V: Into<Option<i64>>
+    where
+        V: Into<Option<i64>>,
     {
         self.width = width.into();
         self
@@ -366,7 +372,8 @@ impl ImageBuilder {
     ///     .height(88);
     /// ```
     pub fn height<V>(mut self, height: V) -> ImageBuilder
-        where V: Into<Option<i64>>
+    where
+        V: Into<Option<i64>>,
     {
         self.height = height.into();
         self
@@ -383,7 +390,8 @@ impl ImageBuilder {
     ///     .description("This is a test".to_string());
     /// ```
     pub fn description<V>(mut self, description: V) -> ImageBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.description = description.into();
         self
@@ -406,9 +414,11 @@ impl ImageBuilder {
     /// ```
     pub fn validate(self) -> Result<ImageBuilder, Error> {
         if !self.url.ends_with(".jpeg") && !self.url.ends_with(".jpg") &&
-           !self.url.ends_with(".png") && !self.url.ends_with(".gif") {
-            return Err(Error::Validation("Image Url must end with .jpeg, .png, or .gif"
-                                             .to_string()));
+            !self.url.ends_with(".png") && !self.url.ends_with(".gif")
+        {
+            return Err(Error::Validation(
+                "Image Url must end with .jpeg, .png, or .gif".to_string(),
+            ));
         }
 
         Url::parse(self.url.as_str())?;
@@ -416,21 +426,25 @@ impl ImageBuilder {
 
         if let Some(width) = self.width {
             if width > 144 {
-                return Err(Error::Validation("Image Width cannot be greater than 144."
-                                                 .to_string()));
+                return Err(Error::Validation(
+                    "Image Width cannot be greater than 144.".to_string(),
+                ));
             } else if width < 0 {
-                return Err(Error::Validation("Image Width cannot be a negative value."
-                                                 .to_string()));
+                return Err(Error::Validation(
+                    "Image Width cannot be a negative value.".to_string(),
+                ));
             }
         }
 
         if let Some(height) = self.height {
             if height > 144 {
-                return Err(Error::Validation("Image Height cannot be greater than 400."
-                                                 .to_string()));
+                return Err(Error::Validation(
+                    "Image Height cannot be greater than 400.".to_string(),
+                ));
             } else if height < 0 {
-                return Err(Error::Validation("Image Height cannot be a negative value."
-                                                 .to_string()));
+                return Err(Error::Validation(
+                    "Image Height cannot be a negative value.".to_string(),
+                ));
             }
         }
 

@@ -130,9 +130,10 @@ impl Cloud {
 }
 
 impl FromXml for Cloud {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       mut atts: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        mut atts: Attributes,
+    ) -> Result<Self, Error> {
         let mut domain = None;
         let mut port = None;
         let mut path = None;
@@ -174,12 +175,12 @@ impl FromXml for Cloud {
         }
 
         Ok(Cloud {
-               domain: domain.unwrap_or_default(),
-               port: port.unwrap_or_default(),
-               path: path.unwrap_or_default(),
-               register_procedure: register_procedure.unwrap_or_default(),
-               protocol: protocol.unwrap_or_default(),
-           })
+            domain: domain.unwrap_or_default(),
+            port: port.unwrap_or_default(),
+            path: path.unwrap_or_default(),
+            register_procedure: register_procedure.unwrap_or_default(),
+            protocol: protocol.unwrap_or_default(),
+        })
 
     }
 }
@@ -189,11 +190,13 @@ impl ToXml for Cloud {
         let name = b"cloud";
         let mut element = BytesStart::borrowed(name, name.len());
 
-        let attrs = &[(b"domain" as &[u8], self.domain.as_bytes()),
-                      (b"port", self.port.as_bytes()),
-                      (b"path", self.path.as_bytes()),
-                      (b"registerProcedure", self.register_procedure.as_bytes()),
-                      (b"protocol", self.protocol.as_bytes())];
+        let attrs = &[
+            (b"domain" as &[u8], self.domain.as_bytes()),
+            (b"port", self.port.as_bytes()),
+            (b"path", self.path.as_bytes()),
+            (b"registerProcedure", self.register_procedure.as_bytes()),
+            (b"protocol", self.protocol.as_bytes()),
+        ];
         element.extend_attributes(attrs.into_iter().map(|v| *v));
 
         writer.write_event(Event::Empty(element))?;
@@ -231,12 +234,12 @@ impl CloudBuilder {
     /// will return an [`IntParsing`](/rss/enum.Error.html#variant.IntParsing) error.
     pub fn from_cloud(cloud: Cloud) -> Result<Self, Error> {
         Ok(CloudBuilder {
-               domain: cloud.domain,
-               port: cloud.port.parse()?,
-               path: cloud.path,
-               register_procedure: cloud.register_procedure,
-               protocol: cloud.protocol,
-           })
+            domain: cloud.domain,
+            port: cloud.port.parse()?,
+            path: cloud.path,
+            register_procedure: cloud.register_procedure,
+            protocol: cloud.protocol,
+        })
     }
 
     /// Set the domain for the `Cloud`.
@@ -250,7 +253,8 @@ impl CloudBuilder {
     ///     .domain("http://rpc.sys.com/");
     /// ```
     pub fn domain<S>(mut self, domain: S) -> CloudBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.domain = domain.into();
         self
@@ -282,7 +286,8 @@ impl CloudBuilder {
     ///     .path("/RPC2");
     /// ```
     pub fn path<S>(mut self, path: S) -> CloudBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.path = path.into();
         self
@@ -299,7 +304,8 @@ impl CloudBuilder {
     ///     .register_procedure("pingMe");
     /// ```
     pub fn register_procedure<S>(mut self, register_procedure: S) -> CloudBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.register_procedure = register_procedure.into();
         self
@@ -316,7 +322,8 @@ impl CloudBuilder {
     ///     .protocol("soap");
     /// ```
     pub fn protocol<S>(mut self, protocol: S) -> CloudBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.protocol = protocol.into();
         self
@@ -340,7 +347,9 @@ impl CloudBuilder {
     /// ```
     pub fn validate(self) -> Result<CloudBuilder, Error> {
         if self.port < 0 {
-            return Err(Error::Validation("Cloud Port cannot be a negative value".to_string()));
+            return Err(Error::Validation(
+                "Cloud Port cannot be a negative value".to_string(),
+            ));
         }
 
         Url::parse(self.domain.as_str())?;

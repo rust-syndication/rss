@@ -153,19 +153,27 @@ impl DublinCoreExtension {
 
 impl ToXml for DublinCoreExtension {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        writer
-            .write_text_elements(b"dc:contributor", &self.contributors)?;
+        writer.write_text_elements(
+            b"dc:contributor",
+            &self.contributors,
+        )?;
         writer.write_text_elements(b"dc:coverage", &self.coverages)?;
         writer.write_text_elements(b"dc:creator", &self.creators)?;
         writer.write_text_elements(b"dc:date", &self.dates)?;
-        writer
-            .write_text_elements(b"dc:description", &self.descriptions)?;
+        writer.write_text_elements(
+            b"dc:description",
+            &self.descriptions,
+        )?;
         writer.write_text_elements(b"dc:format", &self.formats)?;
-        writer
-            .write_text_elements(b"dc:identifier", &self.identifiers)?;
+        writer.write_text_elements(
+            b"dc:identifier",
+            &self.identifiers,
+        )?;
         writer.write_text_elements(b"dc:language", &self.languages)?;
-        writer
-            .write_text_elements(b"dc:publisher", &self.publishers)?;
+        writer.write_text_elements(
+            b"dc:publisher",
+            &self.publishers,
+        )?;
         writer.write_text_elements(b"dc:relation", &self.relations)?;
         writer.write_text_elements(b"dc:rights", &self.rights)?;
         writer.write_text_elements(b"dc:source", &self.sources)?;
@@ -248,7 +256,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the contributors for the `DublinCoreExtension`.
     pub fn contributors<V>(mut self, contributors: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.contributors = contributors.into();
         self
@@ -256,7 +265,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the coverages for the `DublinCoreExtension`.
     pub fn coverages<V>(mut self, coverages: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.coverages = coverages.into();
         self
@@ -264,7 +274,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the creators for the `DublinCoreExtension`.
     pub fn creators<V>(mut self, creators: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.creators = creators.into();
         self
@@ -272,7 +283,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the dates for the `DublinCoreExtension`.
     pub fn dates<V>(mut self, dates: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.dates = dates.into();
         self
@@ -280,7 +292,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the descriptions for the `DublinCoreExtension`.
     pub fn descriptions<V>(mut self, descriptions: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.descriptions = descriptions.into();
         self
@@ -288,7 +301,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the formats for the `DublinCoreExtension`.
     pub fn formats<V>(mut self, formats: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.formats = formats.into();
         self
@@ -296,7 +310,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the identifiers for the `DublinCoreExtension`.
     pub fn identifiers<V>(mut self, identifiers: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.identifiers = identifiers.into();
         self
@@ -304,7 +319,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the languages for the `DublinCoreExtension`.
     pub fn languages<V>(mut self, languages: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.languages = languages.into();
         self
@@ -312,7 +328,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the publishers for the `DublinCoreExtension`.
     pub fn publishers<V>(mut self, publishers: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.publishers = publishers.into();
         self
@@ -320,7 +337,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the relations for the `DublinCoreExtension`.
     pub fn relations<V>(mut self, relations: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.relations = relations.into();
         self
@@ -328,7 +346,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the rights for the `DublinCoreExtension`.
     pub fn rights<V>(mut self, rights: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.rights = rights.into();
         self
@@ -336,7 +355,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the sources for the `DublinCoreExtension`.
     pub fn sources<V>(mut self, sources: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.sources = sources.into();
         self
@@ -344,7 +364,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the subjects for the `DublinCoreExtension`.
     pub fn subjects<V>(mut self, subjects: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.subjects = subjects.into();
         self
@@ -352,7 +373,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the titles for the `DublinCoreExtension`.
     pub fn titles<V>(mut self, titles: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.titles = titles.into();
         self
@@ -360,7 +382,8 @@ impl DublinCoreExtensionBuilder {
 
     /// Set the resource_types for the `DublinCoreExtension`.
     pub fn resource_types<V>(mut self, resource_types: V) -> DublinCoreExtensionBuilder
-        where V: Into<Vec<String>>
+    where
+        V: Into<Vec<String>>,
     {
         self.resource_types = resource_types.into();
         self

@@ -88,9 +88,10 @@ impl Enclosure {
 }
 
 impl FromXml for Enclosure {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       mut atts: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        mut atts: Attributes,
+    ) -> Result<Self, Error> {
         let mut url = None;
         let mut length = None;
         let mut mime_type = None;
@@ -124,10 +125,10 @@ impl FromXml for Enclosure {
         }
 
         Ok(Enclosure {
-               url: url.unwrap_or_default(),
-               length: length.unwrap_or_default(),
-               mime_type: mime_type.unwrap_or_default(),
-           })
+            url: url.unwrap_or_default(),
+            length: length.unwrap_or_default(),
+            mime_type: mime_type.unwrap_or_default(),
+        })
     }
 }
 
@@ -137,9 +138,11 @@ impl ToXml for Enclosure {
 
         let mut element = BytesStart::borrowed(name, name.len());
 
-        let attrs = &[(b"url" as &[u8], self.url.as_bytes()),
-                      (b"length", self.length.as_bytes()),
-                      (b"type", self.mime_type.as_bytes())];
+        let attrs = &[
+            (b"url" as &[u8], self.url.as_bytes()),
+            (b"length", self.length.as_bytes()),
+            (b"type", self.mime_type.as_bytes()),
+        ];
         element.extend_attributes(attrs.into_iter().map(|v| *v));
 
         writer.write_event(Event::Empty(element))?;
@@ -175,10 +178,10 @@ impl EnclosureBuilder {
     /// will return an [`IntParsing`](/rss/enum.Error.html#variant.IntParsing) error.
     pub fn from_enclosure(enclosure: Enclosure) -> Result<Self, Error> {
         Ok(EnclosureBuilder {
-               url: enclosure.url,
-               length: enclosure.length.parse()?,
-               mime_type: enclosure.mime_type,
-           })
+            url: enclosure.url,
+            length: enclosure.length.parse()?,
+            mime_type: enclosure.mime_type,
+        })
     }
 
     /// Set the URL for the `Enclosure`.
@@ -195,7 +198,8 @@ impl EnclosureBuilder {
     ///     .url(url);
     /// ```
     pub fn url<S>(mut self, url: S) -> EnclosureBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.url = url.into();
         self
@@ -227,7 +231,8 @@ impl EnclosureBuilder {
     ///     .mime_type("audio/ogg");
     /// ```
     pub fn mime_type<S>(mut self, mime_type: S) -> EnclosureBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.mime_type = mime_type.into();
         self
@@ -256,13 +261,16 @@ impl EnclosureBuilder {
         let mime = self.mime_type.parse::<Mime>();
 
         if mime.is_err() {
-            return Err(Error::Validation(format!("Enclosure Mime Type is invalid: {:?}",
-                                                 mime.unwrap_err())));
+            return Err(Error::Validation(format!(
+                "Enclosure Mime Type is invalid: {:?}",
+                mime.unwrap_err()
+            )));
         }
 
         if self.length < 0 {
-            return Err(Error::Validation("Enclosure Length cannot be a negative value"
-                                             .to_string()));
+            return Err(Error::Validation(
+                "Enclosure Length cannot be a negative value".to_string(),
+            ));
         }
 
         Ok(self)

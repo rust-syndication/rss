@@ -129,7 +129,8 @@ impl ITunesCategoryBuilder {
     ///     .text("category");
     /// ```
     pub fn text<S>(mut self, text: S) -> ITunesCategoryBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.text = text.into();
         self
@@ -151,7 +152,8 @@ impl ITunesCategoryBuilder {
     ///     .subcategory(Box::new(subcategory));
     /// ```
     pub fn subcategory<V>(mut self, subcategory: V) -> ITunesCategoryBuilder
-        where V: Into<Option<Box<ITunesCategory>>>
+    where
+        V: Into<Option<Box<ITunesCategory>>>,
     {
         self.subcategory = subcategory.into();
         self

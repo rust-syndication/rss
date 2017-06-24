@@ -75,9 +75,10 @@ impl Category {
 }
 
 impl FromXml for Category {
-    fn from_xml<R: ::std::io::BufRead>(reader: &mut Reader<R>,
-                                       mut atts: Attributes)
-                                       -> Result<Self, Error> {
+    fn from_xml<R: ::std::io::BufRead>(
+        reader: &mut Reader<R>,
+        mut atts: Attributes,
+    ) -> Result<Self, Error> {
         let mut domain = None;
 
         for attr in atts.with_checks(false) {
@@ -92,9 +93,9 @@ impl FromXml for Category {
         let content = element_text(reader)?.unwrap_or_default();
 
         Ok(Category {
-               name: content,
-               domain: domain,
-           })
+            name: content,
+            domain: domain,
+        })
     }
 }
 
@@ -106,8 +107,9 @@ impl ToXml for Category {
             element.push_attribute(("domain", &**domain));
         }
         writer.write_event(Event::Start(element))?;
-        writer
-            .write_event(Event::Text(BytesText::borrowed(self.name.as_bytes())))?;
+        writer.write_event(
+            Event::Text(BytesText::borrowed(self.name.as_bytes())),
+        )?;
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
@@ -151,7 +153,8 @@ impl CategoryBuilder {
     ///     .name("Podcast");
     /// ```
     pub fn name<S>(mut self, name: S) -> CategoryBuilder
-        where S: Into<String>
+    where
+        S: Into<String>,
     {
         self.name = name.into();
         self
@@ -168,7 +171,8 @@ impl CategoryBuilder {
     ///     .domain("http://www.example.com".to_string());
     /// ```
     pub fn domain<V>(mut self, domain: V) -> CategoryBuilder
-        where V: Into<Option<String>>
+    where
+        V: Into<Option<String>>,
     {
         self.domain = domain.into();
         self

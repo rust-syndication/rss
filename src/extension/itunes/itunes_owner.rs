@@ -83,8 +83,9 @@ impl ToXml for ITunesOwner {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"itunes:owner";
 
-        writer
-            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
 
         if let Some(name) = self.name.as_ref() {
             writer.write_text_element(b"name", name)?;
