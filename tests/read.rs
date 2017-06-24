@@ -67,7 +67,7 @@ fn read_rss091() {
         item.description(),
         Some(
             "WorldOS is a framework on which to build programs that work like Freenet or \
-                    Gnutella -allowing distributed applications using peer-to-peer routing.",
+             Gnutella -allowing distributed applications using peer-to-peer routing.",
         )
     );
 }
@@ -85,9 +85,9 @@ fn read_rss092() {
     assert_eq!(
         channel.description(),
         "A high-fidelity Grateful Dead song every day. This is where we're experimenting \
-               with enclosures on RSS news items that download when you're not using your \
-               computer. If it works (it will) it will be the end of the Click-And-Wait \
-               multimedia experience on the Internet."
+         with enclosures on RSS news items that download when you're not using your \
+         computer. If it works (it will) it will be the end of the Click-And-Wait \
+         multimedia experience on the Internet."
     );
     assert_eq!(
         channel.last_build_date(),
@@ -117,13 +117,13 @@ fn read_rss092() {
         item.description(),
         Some(
             "It's been a few days since I added a song to the Grateful Dead channel. Now \
-                    that there are all these new Radio users, many of whom are tuned into this \
-                    channel (it's #16 on the hotlist of upstreaming Radio users, there's no way \
-                             of knowing how many non-upstreaming users are subscribing, have to \
-                             do something about this..). Anyway, tonight's song is a live \
-                    version of Weather Report Suite from Dick's Picks Volume 7. It's wistful \
-                    music. Of course a beautiful song, oft-quoted here on Scripting News. <i>A \
-                    little change, the wind and rain.</i>",
+             that there are all these new Radio users, many of whom are tuned into this \
+             channel (it's #16 on the hotlist of upstreaming Radio users, there's no way \
+             of knowing how many non-upstreaming users are subscribing, have to \
+             do something about this..). Anyway, tonight's song is a live \
+             version of Weather Report Suite from Dick's Picks Volume 7. It's wistful \
+             music. Of course a beautiful song, oft-quoted here on Scripting News. <i>A \
+             little change, the wind and rain.</i>",
         )
     );
 
@@ -146,7 +146,7 @@ fn read_rss1() {
     assert_eq!(
         channel.description(),
         "XML.com features a rich mix of information and services \n      \
-               for the XML community."
+         for the XML community."
     );
 
     let image = channel.image().unwrap();
@@ -172,8 +172,8 @@ fn read_rss1() {
         item.description(),
         Some(
             "Processing document inclusions with general XML tools can be \n     \
-                    problematic. This article proposes a way of preserving inclusion \n     \
-                    information through SAX-based processing.",
+             problematic. This article proposes a way of preserving inclusion \n     \
+             information through SAX-based processing.",
         )
     );
 }
@@ -248,17 +248,23 @@ fn read_source() {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     assert_eq!(
-        channel.items().get(0).unwrap().source().as_ref().map(
-            |v| v.url(),
-        ),
+        channel
+            .items()
+            .get(0,)
+            .unwrap()
+            .source()
+            .as_ref()
+            .map(|v| v.url(),),
         Some("http://example.com/feed/")
     );
     assert_eq!(
-        channel.items().get(0).unwrap().source().as_ref().and_then(
-            |v| {
-                v.title()
-            },
-        ),
+        channel
+            .items()
+            .get(0,)
+            .unwrap()
+            .source()
+            .as_ref()
+            .and_then(|v| { v.title() },),
         Some("Feed")
     );
 }
@@ -269,28 +275,44 @@ fn read_guid() {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     assert_eq!(
-        channel.items().get(0).unwrap().guid().as_ref().map(|v| {
-            v.is_permalink()
-        }),
+        channel
+            .items()
+            .get(0)
+            .unwrap()
+            .guid()
+            .as_ref()
+            .map(|v| { v.is_permalink() }),
         Some(false)
     );
     assert_eq!(
-        channel.items().get(0).unwrap().guid().as_ref().map(
-            |v| v.value(),
-        ),
+        channel
+            .items()
+            .get(0,)
+            .unwrap()
+            .guid()
+            .as_ref()
+            .map(|v| v.value(),),
         Some("abc")
     );
 
     assert_eq!(
-        channel.items().get(1).unwrap().guid().as_ref().map(|v| {
-            v.is_permalink()
-        }),
+        channel
+            .items()
+            .get(1)
+            .unwrap()
+            .guid()
+            .as_ref()
+            .map(|v| { v.is_permalink() }),
         Some(true)
     );
     assert_eq!(
-        channel.items().get(1).unwrap().guid().as_ref().map(
-            |v| v.value(),
-        ),
+        channel
+            .items()
+            .get(1,)
+            .unwrap()
+            .guid()
+            .as_ref()
+            .map(|v| v.value(),),
         Some("def")
     );
 }
@@ -301,27 +323,33 @@ fn read_enclosure() {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     assert_eq!(
-        channel.items().get(0).unwrap().enclosure().as_ref().map(
-            |v| {
-                v.url()
-            },
-        ),
+        channel
+            .items()
+            .get(0,)
+            .unwrap()
+            .enclosure()
+            .as_ref()
+            .map(|v| { v.url() },),
         Some("http://example.com/media.mp3")
     );
     assert_eq!(
-        channel.items().get(0).unwrap().enclosure().as_ref().map(
-            |v| {
-                v.length()
-            },
-        ),
+        channel
+            .items()
+            .get(0,)
+            .unwrap()
+            .enclosure()
+            .as_ref()
+            .map(|v| { v.length() },),
         Some("4992349")
     );
     assert_eq!(
-        channel.items().get(0).unwrap().enclosure().as_ref().map(
-            |v| {
-                v.mime_type()
-            },
-        ),
+        channel
+            .items()
+            .get(0,)
+            .unwrap()
+            .enclosure()
+            .as_ref()
+            .map(|v| { v.mime_type() },),
         Some("audio/mpeg")
     );
 }
@@ -558,15 +586,21 @@ fn read_itunes() {
         Some("http://example.com/feed/")
     );
     assert_eq!(
-        channel.itunes_ext().unwrap().owner().as_ref().and_then(
-            |v| v.name(),
-        ),
+        channel
+            .itunes_ext()
+            .unwrap()
+            .owner()
+            .as_ref()
+            .and_then(|v| v.name(),),
         Some("Name")
     );
     assert_eq!(
-        channel.itunes_ext().unwrap().owner().as_ref().and_then(
-            |v| v.email(),
-        ),
+        channel
+            .itunes_ext()
+            .unwrap()
+            .owner()
+            .as_ref()
+            .and_then(|v| v.email(),),
         Some("example@example.com")
     );
     assert_eq!(channel.itunes_ext().unwrap().subtitle(), Some("Subtitle"));
@@ -769,9 +803,12 @@ fn read_dublincore() {
         );
     }
 
-    test_ext(channel.dublin_core_ext().as_ref().expect(
-        "dc extension missing",
-    ));
+    test_ext(
+        channel
+            .dublin_core_ext()
+            .as_ref()
+            .expect("dc extension missing"),
+    );
     test_ext(
         channel
             .items()

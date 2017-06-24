@@ -425,10 +425,8 @@ impl ToXml for ITunesChannelExtension {
         }
 
         if let Some(new_feed_url) = self.new_feed_url.as_ref() {
-            writer.write_text_element(
-                b"itunes:new-feed-url",
-                new_feed_url,
-            )?;
+            writer
+                .write_text_element(b"itunes:new-feed-url", new_feed_url)?;
         }
 
         if let Some(owner) = self.owner.as_ref() {

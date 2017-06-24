@@ -1310,13 +1310,13 @@ impl ToXml for Channel {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"channel";
 
-        writer.write_event(
-            Event::Start(BytesStart::borrowed(name, name.len())),
-        )?;
+        writer
+            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"title", &self.title)?;
         writer.write_text_element(b"link", &self.link)?;
-        writer.write_text_element(b"description", &self.description)?;
+        writer
+            .write_text_element(b"description", &self.description)?;
 
         if let Some(language) = self.language.as_ref() {
             writer.write_text_element(b"language", language)?;
@@ -1327,10 +1327,8 @@ impl ToXml for Channel {
         }
 
         if let Some(managing_editor) = self.managing_editor.as_ref() {
-            writer.write_text_element(
-                b"managingEditor",
-                managing_editor,
-            )?;
+            writer
+                .write_text_element(b"managingEditor", managing_editor)?;
         }
 
         if let Some(webmaster) = self.webmaster.as_ref() {
@@ -1342,7 +1340,8 @@ impl ToXml for Channel {
         }
 
         if let Some(last_build_date) = self.last_build_date.as_ref() {
-            writer.write_text_element(b"lastBuildDate", last_build_date)?;
+            writer
+                .write_text_element(b"lastBuildDate", last_build_date)?;
         }
 
         writer.write_objects(&self.categories)?;
@@ -1377,9 +1376,8 @@ impl ToXml for Channel {
 
         if !self.skip_hours.is_empty() {
             let name = b"skipHours";
-            writer.write_event(
-                Event::Start(BytesStart::borrowed(name, name.len())),
-            )?;
+            writer
+                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for hour in &self.skip_hours {
                 writer.write_text_element(b"hour", hour)?;
             }
@@ -1388,9 +1386,8 @@ impl ToXml for Channel {
 
         if !self.skip_days.is_empty() {
             let name = b"skipDays";
-            writer.write_event(
-                Event::Start(BytesStart::borrowed(name, name.len())),
-            )?;
+            writer
+                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
             for day in &self.skip_days {
                 writer.write_text_element(b"day", day)?;
             }

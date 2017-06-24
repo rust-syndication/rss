@@ -1,4 +1,5 @@
 language: rust
+cache: cargo
 sudo: false
 
 rust:
@@ -7,15 +8,17 @@ rust:
   - stable
 
 before_script:
-  - pip install -v 'travis-cargo<0.2' --user
-  - (cargo install rustfmt || true)
   - export PATH=$HOME/.cargo/bin:$HOME/.local/bin:$PATH
+  - pip install -v 'travis-cargo<0.2' --user
+  - travis-cargo --only nightly install rustfmt-nightly -- --force
+
 script:
   - |
-      cargo fmt -- --write-mode=diff &&
+      travis-cargo --only nighlty fmt -- --write-mode=diff &&
       cargo build --features from_url &&
       cargo test --features from_url &&
       travis-cargo --only stable doc
+
 after_success:
   - travis-cargo --only stable doc-upload
 

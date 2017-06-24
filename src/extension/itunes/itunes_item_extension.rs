@@ -377,10 +377,8 @@ impl ToXml for ITunesItemExtension {
         }
 
         if let Some(closed_captioned) = self.closed_captioned.as_ref() {
-            writer.write_text_element(
-                b"itunes:isClosedCaptioned",
-                closed_captioned,
-            )?;
+            writer
+                .write_text_element(b"itunes:isClosedCaptioned", closed_captioned)?;
         }
 
         if let Some(order) = self.order.as_ref() {

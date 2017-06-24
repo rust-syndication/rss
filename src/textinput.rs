@@ -156,12 +156,12 @@ impl ToXml for TextInput {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"textInput";
 
-        writer.write_event(
-            Event::Start(BytesStart::borrowed(name, name.len())),
-        )?;
+        writer
+            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"title", &self.title)?;
-        writer.write_text_element(b"description", &self.description)?;
+        writer
+            .write_text_element(b"description", &self.description)?;
         writer.write_text_element(b"name", &self.name)?;
         writer.write_text_element(b"link", &self.link)?;
 
