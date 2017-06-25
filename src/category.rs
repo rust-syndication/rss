@@ -107,9 +107,8 @@ impl ToXml for Category {
             element.push_attribute(("domain", &**domain));
         }
         writer.write_event(Event::Start(element))?;
-        writer.write_event(
-            Event::Text(BytesText::borrowed(self.name.as_bytes())),
-        )?;
+        writer
+            .write_event(Event::Text(BytesText::borrowed(self.name.as_bytes())))?;
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }

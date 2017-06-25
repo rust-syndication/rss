@@ -153,27 +153,19 @@ impl DublinCoreExtension {
 
 impl ToXml for DublinCoreExtension {
     fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        writer.write_text_elements(
-            b"dc:contributor",
-            &self.contributors,
-        )?;
+        writer
+            .write_text_elements(b"dc:contributor", &self.contributors)?;
         writer.write_text_elements(b"dc:coverage", &self.coverages)?;
         writer.write_text_elements(b"dc:creator", &self.creators)?;
         writer.write_text_elements(b"dc:date", &self.dates)?;
-        writer.write_text_elements(
-            b"dc:description",
-            &self.descriptions,
-        )?;
+        writer
+            .write_text_elements(b"dc:description", &self.descriptions)?;
         writer.write_text_elements(b"dc:format", &self.formats)?;
-        writer.write_text_elements(
-            b"dc:identifier",
-            &self.identifiers,
-        )?;
+        writer
+            .write_text_elements(b"dc:identifier", &self.identifiers)?;
         writer.write_text_elements(b"dc:language", &self.languages)?;
-        writer.write_text_elements(
-            b"dc:publisher",
-            &self.publishers,
-        )?;
+        writer
+            .write_text_elements(b"dc:publisher", &self.publishers)?;
         writer.write_text_elements(b"dc:relation", &self.relations)?;
         writer.write_text_elements(b"dc:rights", &self.rights)?;
         writer.write_text_elements(b"dc:source", &self.sources)?;

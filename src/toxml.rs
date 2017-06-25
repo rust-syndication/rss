@@ -53,12 +53,8 @@ impl<W: ::std::io::Write> WriterExt for Writer<W> {
         text: T,
     ) -> Result<(), XmlError> {
         let name = name.as_ref();
-        self.write_event(
-            Event::Start(BytesStart::borrowed(name, name.len())),
-        )?;
-        self.write_event(
-            Event::Text(BytesText::borrowed(text.as_ref())),
-        )?;
+        self.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        self.write_event(Event::Text(BytesText::borrowed(text.as_ref())))?;
         self.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
@@ -81,12 +77,8 @@ impl<W: ::std::io::Write> WriterExt for Writer<W> {
         text: T,
     ) -> Result<(), XmlError> {
         let name = name.as_ref();
-        self.write_event(
-            Event::Start(BytesStart::borrowed(name, name.len())),
-        )?;
-        self.write_event(
-            Event::CData(BytesText::borrowed(text.as_ref())),
-        )?;
+        self.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        self.write_event(Event::CData(BytesText::borrowed(text.as_ref())))?;
         self.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }

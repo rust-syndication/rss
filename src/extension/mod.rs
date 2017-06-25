@@ -69,18 +69,16 @@ impl ToXml for Extension {
         writer.write_event(Event::Start(element))?;
 
         if let Some(value) = self.value.as_ref() {
-            writer.write_event(
-                Event::Text(BytesText::borrowed(value.as_bytes())),
-            )?;
+            writer
+                .write_event(Event::Text(BytesText::borrowed(value.as_bytes())))?;
         }
 
         for extension in self.children.values().flat_map(|extensions| extensions) {
             extension.to_xml(writer)?;
         }
 
-        writer.write_event(
-            Event::End(BytesEnd::borrowed(self.name.as_bytes())),
-        )?;
+        writer
+            .write_event(Event::End(BytesEnd::borrowed(self.name.as_bytes())))?;
         Ok(())
     }
 }
@@ -163,9 +161,9 @@ pub fn remove_extension_value(
     map: &mut HashMap<String, Vec<Extension>>,
     key: &str,
 ) -> Option<String> {
-    map.remove(key).map(|mut v| v.remove(0)).and_then(
-        |ext| ext.value,
-    )
+    map.remove(key)
+        .map(|mut v| v.remove(0))
+        .and_then(|ext| ext.value)
 }
 
 /// Get a reference to all values for the extensions with the specified key.
