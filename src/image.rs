@@ -5,20 +5,24 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-use fromxml::{FromXml, element_text};
+use std::io::{BufRead, Write};
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
-use toxml::{ToXml, WriterExt};
-use url::Url;
 
-/// A representation of the `<image>` element.
-#[derive(Debug, Default, Clone, PartialEq)]
+use error::Error;
+use fromxml::FromXml;
+use toxml::{ToXml, WriterExt};
+use util::element_text;
+
+/// Represents an image in an RSS feed
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct Image {
-    /// The URL of the channel image.
+    /// The URL of the image.
     url: String,
     /// A description of the image. This is used in the HTML `alt` attribute.
     title: String,
@@ -28,189 +32,242 @@ pub struct Image {
     width: Option<String>,
     /// The height of the image.
     height: Option<String>,
-    /// The text for the HTML `title` attribute.
+    /// The text for the HTML `title` attribute of the link formed around the image.
     description: Option<String>,
 }
 
 impl Image {
-    /// Return the URL for this `Image`.
+    /// Return the URL of this image.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ImageBuilder;
+    /// use rss::Image;
     ///
-    /// let url = "http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg";
-    ///
-    /// let image = ImageBuilder::default()
-    ///     .url(url)
-    ///     .finalize();
-    ///
-    /// assert_eq!(url, image.url());
+    /// let mut image = Image::default();
+    /// image.set_url("http://example.com/image.png");
+    /// assert_eq!(image.url(), "http://example.com/image.png");
     /// ```
     pub fn url(&self) -> &str {
         self.url.as_str()
     }
 
-    /// Return the title for this `Image`.
+    /// Set the URL of this image.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ImageBuilder;
+    /// use rss::Image;
     ///
-    /// let title = "LAS 300 Logo";
+    /// let mut image = Image::default();
+    /// image.set_url("http://example.com/image.png");
+    /// ```
+    pub fn set_url<V>(&mut self, url: V)
+    where
+        V: Into<String>,
+    {
+        self.url = url.into();
+    }
+
+    /// Return the description of this image.
     ///
-    /// let image = ImageBuilder::default()
-    ///     .title(title)
-    ///     .finalize();
+    /// This is used in the HTML `alt` attribute.
     ///
-    /// assert_eq!(title, image.title());
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_title("Example image");
+    /// assert_eq!(image.title(), "Example image");
     /// ```
     pub fn title(&self) -> &str {
         self.title.as_str()
     }
 
-    /// Return the link that this `Image` directs to.
+    /// Set the description of this image.
+    ///
+    /// This is used in the HTML `alt` attribute.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ImageBuilder;
+    /// use rss::Image;
     ///
-    /// let link = "http://www.jupiterbroadcasting.com/";
-    ///
-    /// let image = ImageBuilder::default()
-    ///     .link(link)
-    ///     .finalize();
-    ///
-    /// assert_eq!(link, image.link());
+    /// let mut image = Image::default();
+    /// image.set_title("Example image");
     /// ```
+    pub fn set_title<V>(&mut self, title: V)
+    where
+        V: Into<String>,
+    {
+        self.title = title.into();
+    }
+
+    /// Return the URL that this image links to.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_link("http://example.com");
+    /// assert_eq!(image.link(), "http://example.com");
     pub fn link(&self) -> &str {
         self.link.as_str()
     }
 
-    /// Return the width of this `Image`.
-    ///
-    /// If this is `None` the default value should be considered to be `80`.
+    /// Set the URL that this image links to.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ImageBuilder;
+    /// use rss::Image;
     ///
-    /// let width = 60;
+    /// let mut image = Image::default();
+    /// image.set_link("http://example.com");
+    pub fn set_link<V>(&mut self, link: V)
+    where
+        V: Into<String>,
+    {
+        self.link = link.into();
+    }
+
+    /// Return the width of this image.
     ///
-    /// let image = ImageBuilder::default()
-    ///     .width(width)
-    ///     .finalize();
+    /// If the width is `None` the default value should be considered to be `80`.
     ///
-    /// assert_eq!(Some(width.to_string().as_str()), image.width());
+    /// # Examples
+    ///
     /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_width("80".to_string());
+    /// assert_eq!(image.width(), Some("80"));
     pub fn width(&self) -> Option<&str> {
         self.width.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the height of this `Image`.
-    ///
-    /// If this is `None` the default value should be considered to be `31`.
+    /// Set the width of this image.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ImageBuilder;
+    /// use rss::Image;
     ///
-    /// let height = 60;
+    /// let mut image = Image::default();
+    /// image.set_width("80".to_string());
+    pub fn set_width<V>(&mut self, width: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.width = width.into();
+    }
+
+    /// Return the height of this image.
     ///
-    /// let image = ImageBuilder::default()
-    ///     .height(height)
-    ///     .finalize();
+    /// If the height is `None` the default value should be considered to be `31`.
     ///
-    /// assert_eq!(Some(height.to_string().as_str()), image.height());
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_height("31".to_string());
+    /// assert_eq!(image.height(), Some("31"));
     /// ```
     pub fn height(&self) -> Option<&str> {
         self.height.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the description of this `Image`.
+    /// Set the height of this image.
+    ///
+    /// If the height is `None` the default value should be considered to be `31`.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ImageBuilder;
+    /// use rss::Image;
     ///
-    /// let image = ImageBuilder::default()
-    ///     .description(None)
-    ///     .finalize();
-    ///
-    /// assert!(image.description().is_none());
+    /// let mut image = Image::default();
+    /// image.set_height("31".to_string());
     /// ```
+    pub fn set_height<V>(&mut self, height: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.height = height.into();
+    }
+
+    /// Return the title for the link formed around this image.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ImageBuilder;
+    /// use rss::Image;
     ///
-    /// let description = "This is a test";
-    ///
-    /// let image = ImageBuilder::default()
-    ///     .description(description.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(description), image.description());
+    /// let mut image = Image::default();
+    /// image.set_description("Example Title".to_string());
+    /// assert_eq!(image.description(), Some("Example Title"));
     /// ```
     pub fn description(&self) -> Option<&str> {
         self.description.as_ref().map(|s| s.as_str())
     }
+
+    /// Set the title for the link formed around this image.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_description("Example Title".to_string());
+    /// ```
+    pub fn set_description<V>(&mut self, description: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.description = description.into();
+    }
 }
 
 impl FromXml for Image {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        _: Attributes,
-    ) -> Result<Self, Error> {
-        let mut url = None;
-        let mut title = None;
-        let mut link = None;
-        let mut width = None;
-        let mut height = None;
-        let mut description = None;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+        let mut image = Image::default();
         let mut buf = Vec::new();
-        let mut skip_buf = Vec::new();
 
         loop {
             match reader.read_event(&mut buf)? {
                 Event::Start(element) => {
                     match element.name() {
-                        b"url" => url = element_text(reader)?,
-                        b"title" => title = element_text(reader)?,
-                        b"link" => link = element_text(reader)?,
-                        b"width" => width = element_text(reader)?,
-                        b"height" => height = element_text(reader)?,
-                        b"description" => description = element_text(reader)?,
-                        n => reader.read_to_end(n, &mut skip_buf)?,
+                        b"url" => image.url = element_text(reader)?.unwrap_or_default(),
+                        b"title" => image.title = element_text(reader)?.unwrap_or_default(),
+                        b"link" => image.link = element_text(reader)?.unwrap_or_default(),
+                        b"width" => image.width = element_text(reader)?,
+                        b"height" => image.height = element_text(reader)?,
+                        b"description" => image.description = element_text(reader)?,
+                        n => reader.read_to_end(n, &mut Vec::new())?,
                     }
                 }
-                Event::End(_) => {
-                    return Ok(Image {
-                        url: url.unwrap_or_default(),
-                        title: title.unwrap_or_default(),
-                        link: link.unwrap_or_default(),
-                        width: width,
-                        height: height,
-                        description: description,
-                    });
-                }
-                Event::Eof => break,
+                Event::End(_) => break,
+                Event::Eof => return Err(Error::Eof),
                 _ => {}
             }
+
             buf.clear();
         }
 
-        Err(Error::EOF)
+        Ok(image)
     }
 }
 
 impl ToXml for Image {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"image";
 
         writer
@@ -234,244 +291,5 @@ impl ToXml for Image {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
-    }
-}
-
-/// A builder used to create an `Image`.
-#[derive(Debug, Default, Clone)]
-pub struct ImageBuilder {
-    url: String,
-    title: String,
-    link: String,
-    width: Option<i64>,
-    height: Option<i64>,
-    description: Option<String>,
-}
-
-impl ImageBuilder {
-    /// Construct a new `ImageBuilder` using the values from an existing `Image`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, ImageBuilder};
-    ///
-    /// let input = include_str!("tests/data/image.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let image = channel.image().unwrap().clone();
-    /// let builder = ImageBuilder::from_image(image).unwrap();
-    /// ```
-    ///
-    /// # Errors
-    ///
-    /// If this function encounters an error while parsing `width` or `height` from a `String` to
-    /// an `i64` it will return an
-    /// [`IntParsing`](/rss/enum.Error.html#variant.IntParsing) error.
-    pub fn from_image(image: Image) -> Result<Self, Error> {
-        let width = match image.width {
-            Some(width) => Some(width.parse::<i64>()?),
-            None => None,
-        };
-
-        let height = match image.height {
-            Some(height) => Some(height.parse::<i64>()?),
-            None => None,
-        };
-
-        Ok(ImageBuilder {
-            url: image.url,
-            title: image.title,
-            link: image.link,
-            width: width,
-            height: height,
-            description: image.description,
-        })
-    }
-
-    /// Set URL for the `Image`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let builder = ImageBuilder::default()
-    ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg");
-    /// ```
-    pub fn url<S>(mut self, url: S) -> ImageBuilder
-    where
-        S: Into<String>,
-    {
-        self.url = url.into();
-        self
-    }
-
-    /// Set the title for the `Image`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let builder = ImageBuilder::default()
-    ///     .title("LAS 300 Logo");
-    /// ```
-    pub fn title<S>(mut self, title: S) -> ImageBuilder
-    where
-        S: Into<String>,
-    {
-        self.title = title.into();
-        self
-    }
-
-    /// Set the link that the `Image` directs to.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let builder = ImageBuilder::default()
-    ///     .link("http://www.jupiterbroadcasting.com/");
-    /// ```
-    pub fn link<S>(mut self, link: S) -> ImageBuilder
-    where
-        S: Into<String>,
-    {
-        self.link = link.into();
-        self
-    }
-
-    /// Set width of the `Image`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let builder = ImageBuilder::default()
-    ///     .width(88);
-    /// ```
-    pub fn width<V>(mut self, width: V) -> ImageBuilder
-    where
-        V: Into<Option<i64>>,
-    {
-        self.width = width.into();
-        self
-    }
-
-    /// Set the height of the `Image`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let builder = ImageBuilder::default()
-    ///     .height(88);
-    /// ```
-    pub fn height<V>(mut self, height: V) -> ImageBuilder
-    where
-        V: Into<Option<i64>>,
-    {
-        self.height = height.into();
-        self
-    }
-
-    /// Set the description of the `Image`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let builder = ImageBuilder::default()
-    ///     .description("This is a test".to_string());
-    /// ```
-    pub fn description<V>(mut self, description: V) -> ImageBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.description = description.into();
-        self
-    }
-
-
-    /// Validate the contents of this `ImageBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let image = ImageBuilder::default()
-    ///         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    ///         .title("LAS 300 Logo")
-    ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .validate()
-    ///         .unwrap();
-    /// ```
-    pub fn validate(self) -> Result<ImageBuilder, Error> {
-        if !self.url.ends_with(".jpeg") && !self.url.ends_with(".jpg") &&
-            !self.url.ends_with(".png") && !self.url.ends_with(".gif")
-        {
-            return Err(Error::Validation(
-                "Image Url must end with .jpeg, .png, or .gif".to_string(),
-            ));
-        }
-
-        Url::parse(self.url.as_str())?;
-        Url::parse(self.link.as_str())?;
-
-        if let Some(width) = self.width {
-            if width > 144 {
-                return Err(Error::Validation(
-                    "Image Width cannot be greater than 144.".to_string(),
-                ));
-            } else if width < 0 {
-                return Err(Error::Validation(
-                    "Image Width cannot be a negative value.".to_string(),
-                ));
-            }
-        }
-
-        if let Some(height) = self.height {
-            if height > 144 {
-                return Err(Error::Validation(
-                    "Image Height cannot be greater than 400.".to_string(),
-                ));
-            } else if height < 0 {
-                return Err(Error::Validation(
-                    "Image Height cannot be a negative value.".to_string(),
-                ));
-            }
-        }
-
-        Ok(self)
-    }
-
-
-    /// Construct the `Image` from this `ImageBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ImageBuilder;
-    ///
-    /// let image = ImageBuilder::default()
-    ///         .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    ///         .title("LAS 300 Logo")
-    ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .finalize();
-    /// ```
-    pub fn finalize(self) -> Image {
-        Image {
-            url: self.url,
-            title: self.title,
-            link: self.link,
-            width: self.width.map(|n| n.to_string()),
-            height: self.height.map(|n| n.to_string()),
-            description: self.description,
-        }
     }
 }

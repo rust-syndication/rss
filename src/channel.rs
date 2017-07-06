@@ -5,33 +5,33 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use category::{Category, CategoryBuilder};
-use chrono::DateTime;
-use cloud::{Cloud, CloudBuilder};
-use enclosure::EnclosureBuilder;
+use std::collections::HashMap;
+use std::io::{BufRead, Write};
+use std::str::{self, FromStr};
+
+use quick_xml::errors::Error as XmlError;
+use quick_xml::events::attributes::Attributes;
+use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::reader::Reader;
+use quick_xml::writer::Writer;
+
+use category::Category;
+use cloud::Cloud;
 use error::Error;
 use extension::{self, ExtensionMap};
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesChannelExtension;
-use fromxml::{self, FromXml, parse_extension, element_text};
-use guid::GuidBuilder;
-use image::{Image, ImageBuilder};
-use item::{Item, ItemBuilder};
-use quick_xml::reader::Reader;
-use quick_xml::writer::Writer;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
-use quick_xml::events::attributes::Attributes;
-use quick_xml::errors::Error as XmlError;
-use source::SourceBuilder;
-use std::collections::HashMap;
-use std::i64;
-use std::str::{self, FromStr};
-use textinput::{TextInput, TextInputBuilder};
+use extension::util::{extension_name, parse_extension};
+use fromxml::FromXml;
+use image::Image;
+use item::Item;
+use textinput::TextInput;
 use toxml::{ToXml, WriterExt};
-use url::Url;
+use util::element_text;
 
-/// A representation of the `<channel>` element.
-#[derive(Debug, Default, Clone, PartialEq)]
+/// Represents the channel of an RSS feed
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct Channel {
     /// The name of the channel.
     title: String,
@@ -47,13 +47,13 @@ pub struct Channel {
     managing_editor: Option<String>,
     /// The email address for the webmaster.
     webmaster: Option<String>,
-    /// The publication date for the content of the channel.
+    /// The publication date for the content of the channel as an RFC822 timestamp.
     pub_date: Option<String>,
-    /// The date that the contents of the channel last changed.
+    /// The date that the contents of the channel last changed as an RFC822 timestamp.
     last_build_date: Option<String>,
     /// The categories the channel belongs to.
     categories: Vec<Category>,
-    /// The program used to generate the channel.
+    /// A string indicating the program used to generate the channel.
     generator: Option<String>,
     /// A URL that points to the documentation for the RSS format.
     docs: Option<String>,
@@ -84,475 +84,534 @@ pub struct Channel {
 }
 
 impl Channel {
-    /// Return the title of this `Channel`.
+    /// Return the title of this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let title = "The Linux Action Show! OGG".to_string();
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .title(title.as_str())
-    ///     .finalize();
-    ///
-    /// assert_eq!(title, channel.title());
+    /// let mut channel = Channel::default();
+    /// channel.set_title("Channel Title");
+    /// assert_eq!(channel.title(), "Channel Title");
     /// ```
     pub fn title(&self) -> &str {
         self.title.as_str()
     }
 
-    /// Return the web site URL for this `Channel`.
+    /// Set the title of this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let link = "http://www.jupiterbroadcasting.com/".to_string();
+    /// let mut channel = Channel::default();
+    /// channel.set_title("Channel Title");
+    /// ```
+    pub fn set_title<V>(&mut self, title: V)
+    where
+        V: Into<String>,
+    {
+        self.title = title.into();
+    }
+
+    /// Return the URL for the website corresponding to this channel.
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .link(link.as_str())
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(link, channel.link());
+    /// ```
+    /// use rss::Channel;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_link("http://example.com");
+    /// assert_eq!(channel.link(), "http://example.com");
     /// ```
     pub fn link(&self) -> &str {
         self.link.as_str()
     }
 
-    /// Return the description of this `Channel`.
+    /// Set the URL for the website corresponding to this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let description = "Ogg Vorbis audio versions of The Linux Action Show!".to_string();
+    /// let mut channel = Channel::default();
+    /// channel.set_link("http://example.com");
+    /// ```
+    pub fn set_link<V>(&mut self, link: V)
+    where
+        V: Into<String>,
+    {
+        self.link = link.into();
+    }
+
+    /// Return the description of this channel.
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .description(description.as_str())
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(description, channel.description());
+    /// ```
+    /// use rss::Channel;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_description("Channel description");
+    /// assert_eq!(channel.description(), "Channel description");
     /// ```
     pub fn description(&self) -> &str {
         self.description.as_str()
     }
 
-    /// Return the language of this `Channel`.
+    /// Set the description of this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let language_string = "en-US";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .language(language_string.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(language_string), channel.language());
+    /// let mut channel = Channel::default();
+    /// channel.set_description("Channel description");
     /// ```
+    pub fn set_description<V>(&mut self, description: V)
+    where
+        V: Into<String>,
+    {
+        self.description = description.into();
+    }
+
+    /// Return the language of this channel.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .language(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.language().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_language("en-US".to_string());
+    /// assert_eq!(channel.language(), Some("en-US"));
     /// ```
     pub fn language(&self) -> Option<&str> {
         self.language.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the copyright notice for the content of this `Channel`.
+    /// Set the language of this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let copyright = "Copyright 2002, Spartanburg Herald-Journal";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .copyright(copyright.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(copyright), channel.copyright());
+    /// let mut channel = Channel::default();
+    /// channel.set_language("en-US".to_string());
     /// ```
+    pub fn set_language<V>(&mut self, language: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.language = language.into();
+    }
+
+    /// Return the copyright notice for this channel.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .copyright(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.copyright().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_copyright("© 2017 John Doe".to_string());
+    /// assert_eq!(channel.copyright(), Some("© 2017 John Doe"));
     /// ```
     pub fn copyright(&self) -> Option<&str> {
         self.copyright.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the email address for the managing editor of this `Channel`.
+    /// Set the copyright notice for this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let managing_editor = "chris@jupiterbroadcasting.com (Chris Fisher)";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .managing_editor(managing_editor.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(managing_editor), channel.managing_editor());
+    /// let mut channel = Channel::default();
+    /// channel.set_copyright("© 2017 John Doe".to_string());
     /// ```
+    pub fn set_copyright<V>(&mut self, copyright: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.copyright = copyright.into();
+    }
+
+    /// Return the email address for the managing editor of this channel.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .managing_editor(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.managing_editor().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_managing_editor("johndoe@example.com".to_string());
+    /// assert_eq!(channel.managing_editor(), Some("johndoe@example.com"));
     /// ```
     pub fn managing_editor(&self) -> Option<&str> {
         self.managing_editor.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the email address for webmaster of this `Channel`.
+    /// Set the email address for the managing editor of this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let webmaster = "chris@jupiterbroadcasting.com (Chris Fisher)";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .webmaster(webmaster.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(webmaster), channel.webmaster());
+    /// let mut channel = Channel::default();
+    /// channel.set_managing_editor("johndoe@example.com".to_string());
+    /// assert_eq!(channel.managing_editor(), Some("johndoe@example.com"));
     /// ```
+    pub fn set_managing_editor<V>(&mut self, managing_editor: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.managing_editor = managing_editor.into();
+    }
+
+    /// Return the email address for webmaster of this channel.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .webmaster(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.webmaster().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_webmaster("johndoe@example.com".to_string());
+    /// assert_eq!(channel.webmaster(), Some("johndoe@example.com"));
     /// ```
     pub fn webmaster(&self) -> Option<&str> {
         self.webmaster.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the publication date for the content of this `Channel`.
+    /// Set the email address for webmaster of this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .pub_date(pub_date.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(pub_date), channel.pub_date());
+    /// let mut channel = Channel::default();
+    /// channel.set_webmaster("johndoe@example.com".to_string());
     /// ```
+    pub fn set_webmaster<V>(&mut self, webmaster: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.webmaster = webmaster.into();
+    }
+
+    /// Return the publication date for the content of this channel as an RFC822 timestamp.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .pub_date(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.pub_date().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_pub_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
+    /// assert_eq!(channel.pub_date(), Some("Mon, 1 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
         self.pub_date.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the time that the content of this `Channel` was last changed.
+    /// Set the publication date for the content of this channel as an RFC822 timestamp.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let last_build_date = "Sun, 13 Mar 2016 20:02:02 -0700";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .last_build_date(last_build_date.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(last_build_date), channel.last_build_date());
+    /// let mut channel = Channel::default();
+    /// channel.set_pub_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
     /// ```
+    pub fn set_pub_date<V>(&mut self, pub_date: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.pub_date = pub_date.into();
+    }
+
+    /// Return the time that the content of this channel was last changed as an RFC822 timestamp.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .last_build_date(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.last_build_date().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_last_build_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
+    /// assert_eq!(channel.last_build_date(), Some("Mon, 1 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn last_build_date(&self) -> Option<&str> {
         self.last_build_date.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the categories that this `Channel` belongs to.
+    /// Set the time that the content of this channel was last changed as an RFC822 timestamp.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, CategoryBuilder};
+    /// use rss::Channel;
     ///
-    /// let category = CategoryBuilder::default()
-    ///     .name("Podcast")
-    ///     .finalize();
-    ///
-    /// let categories = vec![category];
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .categories(categories.clone())
-    ///     .finalize();
-    ///
-    /// assert_eq!(categories.as_slice(), channel.categories());
+    /// let mut channel = Channel::default();
+    /// channel.set_last_build_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
     /// ```
+    pub fn set_last_build_date<V>(&mut self, last_build_date: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.last_build_date = last_build_date.into();
+    }
+
+    /// Return the categories that this channel belongs to.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::{Channel, Category};
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .categories(Vec::new())
-    ///     .finalize();
-    ///
-    /// assert!(channel.categories().is_empty());
+    /// let mut channel = Channel::default();
+    /// channel.set_categories(vec![Category::default()]);
+    /// assert_eq!(channel.categories().len(), 1);
     /// ```
     pub fn categories(&self) -> &[Category] {
         &self.categories
     }
 
-    /// Return the name of the program used to generate the contents of this `Channel`.
+    /// Set the categories that this channel belongs to.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::{Channel, Category};
     ///
-    /// let generator = "Feeder 2.5.12(2294); Mac OS X Version 10.9.5 (Build 13F34) \
-    ///     http://reinventedsoftware.com/feeder/";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .generator(generator.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(generator), channel.generator());
+    /// let mut channel = Channel::default();
+    /// channel.set_categories(vec![Category::default()]);
     /// ```
+    pub fn set_categories<V>(&mut self, categories: V)
+    where
+        V: Into<Vec<Category>>,
+    {
+        self.categories = categories.into();
+    }
+
+    /// Return a string indicating the program used to generate the channel.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .generator(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.generator().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_generator("Program Name".to_string());
+    /// assert_eq!(channel.generator(), Some("Program Name"));
     /// ```
     pub fn generator(&self) -> Option<&str> {
         self.generator.as_ref().map(|s| s.as_str())
     }
 
-    /// Return a URL that points to the documentation of the RSS format used in this `Channel`.
+    /// Set a string indicating the program used to generate the channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let docs = "http://blogs.law.harvard.edu/tech/rss/";
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .docs(docs.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(docs), channel.docs());
+    /// let mut channel = Channel::default();
+    /// channel.set_generator("Program Name".to_string());
     /// ```
+    pub fn set_generator<V>(&mut self, generator: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.generator = generator.into();
+    }
+
+    /// Return a URL that points to the documentation of the RSS format used in this channel.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .docs(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.docs().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_docs("https://cyber.harvard.edu/rss/rss.html".to_string());
+    /// assert_eq!(channel.docs(), Some("https://cyber.harvard.edu/rss/rss.html"));
     /// ```
     pub fn docs(&self) -> Option<&str> {
         self.docs.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the information used to register with a cloud for notifications of updates to the
-    /// `Channel`.
+    /// Set a URL that points to the documentation of the RSS format used in this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, CloudBuilder};
+    /// use rss::Channel;
     ///
-    /// let cloud = CloudBuilder::default()
-    ///     .domain("http://rpc.sys.com/")
-    ///     .port(80)
-    ///     .path("/RPC2")
-    ///     .register_procedure("pingMe")
-    ///     .protocol("soap")
-    ///     .finalize();
+    /// let mut channel = Channel::default();
+    /// channel.set_docs("https://cyber.harvard.edu/rss/rss.html".to_string());
+    /// ```
+    pub fn set_docs<V>(&mut self, docs: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.docs = docs.into();
+    }
+
+    /// Return the information used to register with a cloud for notifications of updates to the
+    /// channel.
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .cloud(cloud)
-    ///     .finalize();
+    /// # Examples
     ///
+    /// ```
+    /// use rss::{Channel, Cloud};
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_cloud(Cloud::default());
     /// assert!(channel.cloud().is_some());
-    /// ```
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .cloud(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.cloud().is_none());
     /// ```
     pub fn cloud(&self) -> Option<&Cloud> {
         self.cloud.as_ref()
     }
 
-    /// Return the time to live of this `Channel`. This indicates the number of minutes the
-    /// `Channel` can be cached before needing to be refreshed.
+    /// Set the information used to register with a cloud for notifications of updates to the
+    /// channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::{Channel, Cloud};
     ///
-    /// let ttl = 60;
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .ttl(ttl)
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(ttl.to_string().as_str()), channel.ttl());
+    /// let mut channel = Channel::default();
+    /// channel.set_cloud(Cloud::default());
     /// ```
+    pub fn set_cloud<V>(&mut self, cloud: V)
+    where
+        V: Into<Option<Cloud>>,
+    {
+        self.cloud = cloud.into();
+    }
+
+    /// Return the time to live of this channel. This indicates the number of minutes the
+    /// channel can be cached before needing to be refreshed.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::Channel;
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .ttl(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.ttl().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_ttl("60".to_string());
+    /// assert_eq!(channel.ttl(), Some("60"));
     /// ```
     pub fn ttl(&self) -> Option<&str> {
         self.ttl.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the image to be displayed with this `Channel`.
+    /// Set the time to live of this channel. This indicates the number of minutes the
+    /// channel can be cached before needing to be refreshed.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, ImageBuilder};
+    /// use rss::Channel;
     ///
-    /// let image = ImageBuilder::default()
-    ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    ///     .finalize();
+    /// let mut channel = Channel::default();
+    /// channel.set_ttl("60".to_string());
+    /// ```
+    pub fn set_ttl<V>(&mut self, ttl: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.ttl = ttl.into();
+    }
+
+    /// Return the image to be displayed with this channel.
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .image(image)
-    ///     .finalize();
+    /// # Examples
     ///
+    /// ```
+    /// use rss::{Channel, Image};
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_image(Image::default());
     /// assert!(channel.image().is_some());
-    /// ```
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .image(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.image().is_none());
     /// ```
     pub fn image(&self) -> Option<&Image> {
         self.image.as_ref()
     }
 
-    /// Return the [PICS](https://www.w3.org/PICS/) rating for this `Channel`.
+    /// Set the image to be displayed with this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::{Channel, Image};
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .rating(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.rating().is_none());
+    /// let mut channel = Channel::default();
+    /// channel.set_image(Image::default());
     /// ```
+    pub fn set_image<V>(&mut self, image: V)
+    where
+        V: Into<Option<Image>>,
+    {
+        self.image = image.into();
+    }
+
+    /// Return the [PICS](https://www.w3.org/PICS/) rating for this channel.
     pub fn rating(&self) -> Option<&str> {
         self.rating.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the information for a text box to be displayed with this `Channel`.
+    /// Set the [PICS](https://www.w3.org/PICS/) rating for this channel.
+    pub fn set_rating<V>(&mut self, rating: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.rating = rating.into();
+    }
+
+    /// Return the information for a text box to be displayed with this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, TextInputBuilder};
+    /// use rss::{Channel, TextInput};
     ///
-    /// let text_input = TextInputBuilder::default()
-    ///     .title("Enter Comment")
-    ///     .description("Provided Feedback")
-    ///     .name("Comment")
-    ///     .link("http://www.example.com/feedback")
-    ///     .finalize();
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .text_input(text_input)
-    ///     .finalize();
-    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_text_input(TextInput::default());
     /// assert!(channel.text_input().is_some());
-    /// ```
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .text_input(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.text_input().is_none());
     /// ```
     pub fn text_input(&self) -> Option<&TextInput> {
         self.text_input.as_ref()
+    }
+
+    /// Set the information for a text box to be displayed with this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, TextInput};
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_text_input(TextInput::default());
+    /// ```
+    pub fn set_text_input<V>(&mut self, text_input: V)
+    where
+        V: Into<Option<TextInput>>,
+    {
+        self.text_input = text_input.into();
     }
 
     /// Return the hours that aggregators can skip for refreshing content.
@@ -560,29 +619,33 @@ impl Channel {
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
+    /// use rss::Channel;
     ///
     /// let skip_hours = vec![6, 7, 8, 14, 22];
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .skip_hours(skip_hours.clone())
-    ///     .finalize();
-    ///
-    /// let skip_hours_str = skip_hours.iter().map(|n| n.to_string()).collect::<Vec<_>>();
-    /// assert_eq!(skip_hours_str.as_slice(), channel.skip_hours());
-    /// ```
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .skip_hours(Vec::new())
-    ///     .finalize();
-    ///
-    /// assert!(channel.skip_hours().is_empty());
+    /// let mut channel = Channel::default();
+    /// channel.set_skip_hours(vec!["1".to_string()]);
+    /// assert_eq!(channel.skip_hours().len(), 1);
     /// ```
     pub fn skip_hours(&self) -> &[String] {
         &self.skip_hours
+    }
+
+    /// Set the hours that aggregators can skip for refreshing content.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_skip_hours(vec!["1".to_string()]);
+    /// ```
+    pub fn set_skip_hours<V>(&mut self, skip_hours: V)
+    where
+        V: Into<Vec<String>>,
+    {
+        self.skip_hours = skip_hours.into();
     }
 
     /// Return the days that aggregators can skip for refreshing content.
@@ -590,118 +653,223 @@ impl Channel {
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::Channel;
     ///
-    /// let skip_days = vec!["Monday".to_string(), "Sunday".to_string()];
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .skip_days(skip_days.clone())
-    ///     .finalize();
-    ///
-    /// assert_eq!(skip_days.as_slice(), channel.skip_days());
-    /// ```
-    ///
-    /// ```
-    /// use rss::{ChannelBuilder, Channel};
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .skip_days(Vec::new())
-    ///     .finalize();
-    ///
-    /// assert!(channel.skip_days().is_empty());
+    /// let mut channel = Channel::default();
+    /// channel.set_skip_days(vec!["Monday".to_string()]);
+    /// assert_eq!(channel.skip_days().len(), 1);
     /// ```
     pub fn skip_days(&self) -> &[String] {
         &self.skip_days
     }
 
-    /// Return the `Item`s in this `Channel`.
+    /// Set the days that aggregators can skip for refreshing content.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, ItemBuilder};
+    /// use rss::Channel;
     ///
-    /// let title = "Making Music with Linux | LAS 408".to_string();
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .title(title)
-    ///     .finalize();
-    ///
-    /// let items = vec![item];
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .items(items.clone())
-    ///     .finalize();
-    ///
-    /// assert_eq!(items.as_slice(), channel.items());
+    /// let mut channel = Channel::default();
+    /// channel.set_skip_days(vec!["Monday".to_string()]);
     /// ```
+    pub fn set_skip_days<V>(&mut self, skip_days: V)
+    where
+        V: Into<Vec<String>>,
+    {
+        self.skip_days = skip_days.into();
+    }
+
+    /// Return the items in this channel.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::{ChannelBuilder, Channel};
+    /// use rss::{Channel, Item};
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .items(Vec::new())
-    ///     .finalize();
-    ///
-    /// assert!(channel.items().is_empty());
+    /// let mut channel = Channel::default();
+    /// channel.set_items(vec![Item::default()]);
+    /// assert_eq!(channel.items().len(), 1);
     /// ```
     pub fn items(&self) -> &[Item] {
         &self.items
     }
 
-    /// Return the `ITunesChannelExtension` for this `Channel`.
+    /// Set the items in this channel.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ChannelBuilder;
-    /// use rss::extension::itunes::ITunesChannelExtensionBuilder;
+    /// use rss::{Channel, Item};
     ///
-    /// let itunes_ext = ITunesChannelExtensionBuilder::default()
-    ///     .author("author".to_string())
-    ///     .finalize();
+    /// let mut channel = Channel::default();
+    /// channel.set_items(vec![Item::default()]);
+    /// ```
+    pub fn set_items<V>(&mut self, items: V)
+    where
+        V: Into<Vec<Item>>,
+    {
+        self.items = items.into();
+    }
+
+    /// Return the iTunes extension for this channel.
     ///
-    /// let channel = ChannelBuilder::default()
-    ///     .itunes_ext(itunes_ext)
-    ///     .finalize();
+    /// # Examples
     ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::itunes::ITunesChannelExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_itunes_ext(ITunesChannelExtension::default());
     /// assert!(channel.itunes_ext().is_some());
-    /// ```
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///     .itunes_ext(None)
-    ///     .finalize();
-    ///
-    /// assert!(channel.itunes_ext().is_none());
     /// ```
     pub fn itunes_ext(&self) -> Option<&ITunesChannelExtension> {
         self.itunes_ext.as_ref()
     }
 
-    /// Return the `DublinCoreExtension` for this `Channel`.
+    /// Set the iTunes extension for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::itunes::ITunesChannelExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_itunes_ext(ITunesChannelExtension::default());
+    /// ```
+    pub fn set_itunes_ext<V>(&mut self, itunes_ext: V)
+    where
+        V: Into<Option<ITunesChannelExtension>>,
+    {
+        self.itunes_ext = itunes_ext.into();
+    }
+
+    /// Return the Dublin Core extension for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::dublincore::DublinCoreExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_dublin_core_ext(DublinCoreExtension::default());
+    /// assert!(channel.dublin_core_ext().is_some());
+    /// ```
     pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
         self.dublin_core_ext.as_ref()
     }
 
-    /// Return the extensions for this `Channel`.
+    /// Set the Dublin Core extension for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::dublincore::DublinCoreExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_dublin_core_ext(DublinCoreExtension::default());
+    /// ```
+    pub fn set_dublin_core_ext<V>(&mut self, dublin_core_ext: V)
+    where
+        V: Into<Option<DublinCoreExtension>>,
+    {
+        self.dublin_core_ext = dublin_core_ext.into();
+    }
+
+    /// Return the extensions for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::collections::HashMap;
+    /// use rss::Channel;
+    /// use rss::extension::{ExtensionMap, Extension};
+    ///
+    /// let extension = Extension::default();
+    ///
+    /// let mut item_map = HashMap::<String, Vec<Extension>>::new();
+    /// item_map.insert("ext:name".to_string(), vec![extension]);
+    ///
+    /// let mut extension_map = ExtensionMap::default();
+    /// extension_map.insert("ext".to_string(), item_map);
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_extensions(extension_map);
+    /// assert_eq!(channel.extensions()
+    ///                   .get("ext")
+    ///                   .and_then(|m| m.get("ext:name"))
+    ///                   .map(|v| v.len()),
+    ///            Some(1));
+    /// ```
     pub fn extensions(&self) -> &ExtensionMap {
         &self.extensions
     }
 
-    /// Return the namespaces for this `Channel`.
+    /// Set the extensions for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::ExtensionMap;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_extensions(ExtensionMap::default());
+    /// ```
+    pub fn set_extensions<V>(&mut self, extensions: V)
+    where
+        V: Into<ExtensionMap>,
+    {
+        self.extensions = extensions.into()
+    }
+
+    /// Return the namespaces for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::collections::HashMap;
+    /// use rss::Channel;
+    ///
+    /// let mut namespaces = HashMap::new();
+    /// namespaces.insert("ext".to_string(), "http://example.com".to_string());
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_namespaces(namespaces);
+    /// assert_eq!(channel.namespaces().get("ext").map(|s| s.as_str()), Some("http://example.com"));
+    /// ```
     pub fn namespaces(&self) -> &HashMap<String, String> {
         &self.namespaces
+    }
+
+    /// Set the namespaces for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::collections::HashMap;
+    /// use rss::Channel;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_namespaces(HashMap::new());
+    /// ```
+    pub fn set_namespaces<V>(&mut self, namespaces: V)
+    where
+        V: Into<HashMap<String, String>>,
+    {
+        self.namespaces = namespaces.into()
     }
 }
 
 impl Channel {
-    /// Construct a `Channel` from a url string.
+    /// Attempt to read an RSS channel from a URL.
     ///
-    /// Note: from_url can only be used by enabling the from_url feature in your
-    /// Cargo.toml as follows:
+    /// Note: The `from_url` method can only be used by enabling the `from_url` feature in
+    /// your `Cargo.toml` as follows:
     ///
     /// ```toml
     /// [dependencies]
@@ -711,15 +879,8 @@ impl Channel {
     /// # Examples
     ///
     /// ```
-    /// extern crate rss;
-    ///
     /// use rss::Channel;
-    ///
-    /// fn main()
-    /// {
-    ///     let url = "https://feedpress.me/usererror.xml";
-    ///     let channel = Channel::from_url(url).unwrap();
-    /// }
+    /// let channel = Channel::from_url("https://feedpress.me/usererror.xml");
     /// ```
     #[cfg(feature = "from_url")]
     pub fn from_url(url: &str) -> Result<Channel, Error> {
@@ -732,7 +893,7 @@ impl Channel {
         Ok(Channel::from_str(content.as_str())?)
     }
 
-    /// Attempt to read the RSS channel from the speficied reader.
+    /// Attempt to read an RSS channel from a reader.
     ///
     /// # Example
     ///
@@ -740,7 +901,7 @@ impl Channel {
     /// let reader: BufRead = ...;
     /// let channel = Channel::read_from(reader).unwrap();
     /// ```
-    pub fn read_from<R: ::std::io::BufRead>(reader: R) -> Result<Channel, Error> {
+    pub fn read_from<R: BufRead>(reader: R) -> Result<Channel, Error> {
         let mut reader = Reader::from_reader(reader);
         reader.trim_text(true).expand_empty_elements(true);
         let mut namespaces = HashMap::new();
@@ -780,7 +941,7 @@ impl Channel {
                         return Err(Error::InvalidStartTag);
                     }
                 }
-                Event::Eof => return Err(Error::EOF),
+                Event::Eof => return Err(Error::Eof),
                 _ => continue,
             }
         }
@@ -834,11 +995,11 @@ impl Channel {
 
             Ok(channel)
         } else {
-            Err(Error::EOF)
+            Err(Error::Eof)
         }
     }
 
-    /// Attempt to write the RSS channel as XML to the speficied writer.
+    /// Attempt to write the RSS channel as XML to a writer.
     ///
     /// # Example
     ///
@@ -847,7 +1008,7 @@ impl Channel {
     /// let writer: Write = ...;
     /// channel.write_to(writer).unwrap();
     /// ```
-    pub fn write_to<W: ::std::io::Write>(&self, writer: W) -> Result<W, Error> {
+    pub fn write_to<W: Write>(&self, writer: W) -> Result<W, Error> {
         let mut writer = ::quick_xml::Writer::new(writer);
 
         let name = b"rss";
@@ -892,274 +1053,6 @@ impl Channel {
 
         Ok(writer.into_inner())
     }
-
-    /// Validate the contents of this `Channel`.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rss::Channel;
-    ///
-    /// let input = include_str!("tests/data/rss2sample.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// channel.validate().unwrap();
-    /// ```
-    pub fn validate(&self) -> Result<Channel, Error> {
-        let cloud = match self.cloud() {
-            None => None,
-            Some(val) => {
-                Some(
-                    CloudBuilder::default()
-                        .domain(val.domain())
-                        .port(i64::from_str(val.port())?)
-                        .path(val.path())
-                        .register_procedure(val.register_procedure())
-                        .protocol(val.protocol())
-                        .validate()?
-                        .finalize(),
-                )
-            }
-        };
-
-        let mut categories = Vec::with_capacity(self.categories.len());
-        for cat in self.categories() {
-            categories.push(
-                CategoryBuilder::default()
-                    .name(cat.name())
-                    .domain(cat.domain().map(|s| s.into()))
-                    .validate()?
-                    .finalize(),
-            );
-        }
-
-        let mut skip_hours = Vec::with_capacity(self.skip_hours.len());
-        for hour in self.skip_hours() {
-            skip_hours.push(hour.as_str().parse::<i64>()?);
-        }
-
-        let image = match self.image() {
-            None => None,
-            Some(val) => {
-                let width = match val.width() {
-                    None => None,
-                    Some(wval) => Some(i64::from_str(wval)?),
-                };
-
-                let height = match val.height() {
-                    None => None,
-                    Some(hval) => Some(i64::from_str(hval)?),
-                };
-
-                let description = match val.description() {
-                    None => None,
-                    Some(dval) => Some(dval.to_string()),
-                };
-
-                Some(
-                    ImageBuilder::default()
-                        .url(val.url())
-                        .title(val.title())
-                        .link(val.link())
-                        .width(width)
-                        .height(height)
-                        .description(description)
-                        .validate()?
-                        .finalize(),
-                )
-            }
-        };
-
-        let text_input = match self.text_input() {
-            None => None,
-            Some(val) => {
-                Some(
-                    TextInputBuilder::default()
-                        .title(val.title())
-                        .description(val.description())
-                        .name(val.name())
-                        .link(val.link())
-                        .validate()?
-                        .finalize(),
-                )
-            }
-        };
-
-        let mut items = Vec::with_capacity(self.items.len());
-
-        for item in self.items() {
-            let mut categories = Vec::with_capacity(item.categories().len());
-            for cat in item.categories() {
-                categories.push(
-                    CategoryBuilder::default()
-                        .name(cat.name())
-                        .domain(cat.domain().map(|s| s.into()))
-                        .validate()?
-                        .finalize(),
-                );
-            }
-
-            let enclosure = match item.enclosure() {
-                None => None,
-                Some(eval) => {
-                    Some(
-                        EnclosureBuilder::default()
-                            .url(eval.url())
-                            .length(i64::from_str(eval.length())?)
-                            .mime_type(eval.mime_type())
-                            .validate()?
-                            .finalize(),
-                    )
-                }
-            };
-
-            let guid = match item.guid() {
-                None => None,
-                Some(gval) => {
-                    Some(
-                        GuidBuilder::default()
-                            .value(gval.value())
-                            .is_permalink(gval.is_permalink())
-                            .finalize(),
-                    )
-                }
-            };
-
-            let source = match item.source() {
-                None => None,
-                Some(sval) => {
-                    let title = match sval.title() {
-                        None => None,
-                        Some(tval) => Some(tval.to_string()),
-                    };
-
-                    Some(
-                        SourceBuilder::default()
-                            .url(sval.url())
-                            .title(title)
-                            .validate()?
-                            .finalize(),
-                    )
-                }
-            };
-
-            let title = match item.title() {
-                None => None,
-                Some(val) => Some(val.to_string()),
-            };
-
-            let link = match item.link() {
-                None => None,
-                Some(val) => Some(val.to_string()),
-            };
-
-            let description = match item.description() {
-                None => None,
-                Some(val) => Some(val.to_string()),
-            };
-
-            let author = match item.author() {
-                None => None,
-                Some(val) => Some(val.to_string()),
-            };
-
-            let pub_date = match item.pub_date() {
-                None => None,
-                Some(val) => Some(val.to_string()),
-            };
-
-            let comments = match item.comments() {
-                None => None,
-                Some(val) => Some(val.to_string()),
-            };
-
-            items.push(
-                ItemBuilder::default()
-                    .title(title)
-                    .link(link)
-                    .description(description)
-                    .author(author)
-                    .pub_date(pub_date)
-                    .comments(comments)
-                    .categories(categories)
-                    .enclosure(enclosure)
-                    .guid(guid)
-                    .source(source)
-                    .validate()?
-                    .finalize(),
-            );
-        }
-
-        let ttl = match self.ttl() {
-            None => None,
-            Some(val) => Some(i64::from_str(val)?),
-        };
-
-        let language = match self.language() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        let copyright = match self.copyright() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        let managing_editor = match self.managing_editor() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        let webmaster = match self.webmaster() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        let pub_date = match self.pub_date() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        let last_build_date = match self.last_build_date() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        let generator = match self.generator() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        let docs = match self.docs() {
-            None => None,
-            Some(val) => Some(val.to_string()),
-        };
-
-        Ok(
-            ChannelBuilder::default()
-                .title(self.title())
-                .link(self.link())
-                .description(self.description())
-                .language(language)
-                .copyright(copyright)
-                .managing_editor(managing_editor)
-                .webmaster(webmaster)
-                .pub_date(pub_date)
-                .last_build_date(last_build_date)
-                .generator(generator)
-                .docs(docs)
-                .rating(None)
-                .ttl(ttl)
-                .cloud(cloud)
-                .categories(categories)
-                .image(image)
-                .text_input(text_input)
-                .skip_hours(skip_hours)
-                .skip_days(self.skip_days().to_vec())
-                .items(items)
-                .validate()?
-                .finalize(),
-        )
-    }
 }
 
 impl ToString for Channel {
@@ -1171,10 +1064,7 @@ impl ToString for Channel {
 }
 
 impl FromXml for Channel {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        _: Attributes,
-    ) -> Result<Self, Error> {
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut channel = Channel::default();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();
@@ -1269,7 +1159,7 @@ impl FromXml for Channel {
                             }
                         }
                         n => {
-                            if let Some((ns, name)) = fromxml::extension_name(element.name()) {
+                            if let Some((ns, name)) = extension_name(element.name()) {
                                 parse_extension(
                                     reader,
                                     element.attributes(),
@@ -1283,31 +1173,30 @@ impl FromXml for Channel {
                         }
                     }
                 }
-                Event::End(_) => {
-                    if !channel.extensions.is_empty() {
-                        if let Some(map) = channel.extensions.remove("itunes") {
-                            channel.itunes_ext = Some(ITunesChannelExtension::from_map(map)?);
-                        }
-
-                        if let Some(map) = channel.extensions.remove("dc") {
-                            channel.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
-                        }
-                    }
-
-                    return Ok(channel);
-                }
-                Event::Eof => break,
+                Event::End(_) => break,
+                Event::Eof => return Err(Error::Eof),
                 _ => {}
             }
+
             buf.clear();
         }
 
-        Err(Error::EOF)
+        if !channel.extensions.is_empty() {
+            if let Some(map) = channel.extensions.remove("itunes") {
+                channel.itunes_ext = Some(ITunesChannelExtension::from_map(map)?);
+            }
+
+            if let Some(map) = channel.extensions.remove("dc") {
+                channel.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
+            }
+        }
+
+        Ok(channel)
     }
 }
 
 impl ToXml for Channel {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"channel";
 
         writer
@@ -1419,692 +1308,9 @@ impl ToXml for Channel {
 
 impl FromStr for Channel {
     type Err = Error;
+
     #[inline]
-    /// Attempt to read the RSS channel from the speficied str.
     fn from_str(s: &str) -> Result<Channel, Error> {
         Channel::read_from(s.as_bytes())
-    }
-}
-
-/// A builder used to create a `Channel`.
-#[derive(Debug, Clone, Default)]
-pub struct ChannelBuilder {
-    title: String,
-    link: String,
-    description: String,
-    language: Option<String>,
-    copyright: Option<String>,
-    managing_editor: Option<String>,
-    webmaster: Option<String>,
-    pub_date: Option<String>,
-    last_build_date: Option<String>,
-    categories: Vec<Category>,
-    generator: Option<String>,
-    docs: Option<String>,
-    cloud: Option<Cloud>,
-    ttl: Option<i64>,
-    image: Option<Image>,
-    rating: Option<String>,
-    text_input: Option<TextInput>,
-    skip_hours: Vec<i64>,
-    skip_days: Vec<String>,
-    items: Vec<Item>,
-    extensions: ExtensionMap,
-    itunes_ext: Option<ITunesChannelExtension>,
-    dublin_core_ext: Option<DublinCoreExtension>,
-    namespaces: HashMap<String, String>,
-}
-
-impl ChannelBuilder {
-    /// Construct a new `ChannelBuilder` using the values from an existing `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, ChannelBuilder};
-    ///
-    /// let input = include_str!("tests/data/channel.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let builder = ChannelBuilder::from_channel(channel.clone()).unwrap();
-    /// ```
-    ///
-    /// # Errors
-    ///
-    /// If this function encounters an error while parsing `ttl` or `skip_hours` from a `String`
-    /// to an `i64` it will return an [`IntParsing`](/rss/enum.Error.html#variant.IntParsing)
-    /// error.
-    pub fn from_channel(channel: Channel) -> Result<Self, Error> {
-        let ttl = match channel.ttl {
-            Some(ttl) => Some(ttl.parse::<i64>()?),
-            None => None,
-        };
-
-        let mut skip_hours = Vec::with_capacity(channel.skip_hours.len());
-        for hour in channel.skip_hours {
-            skip_hours.push(hour.as_str().parse::<i64>()?);
-        }
-
-        Ok(ChannelBuilder {
-            title: channel.title,
-            link: channel.link,
-            description: channel.description,
-            language: channel.language,
-            copyright: channel.copyright,
-            managing_editor: channel.managing_editor,
-            webmaster: channel.webmaster,
-            pub_date: channel.pub_date,
-            last_build_date: channel.last_build_date,
-            categories: channel.categories,
-            generator: channel.generator,
-            docs: channel.docs,
-            cloud: channel.cloud,
-            ttl: ttl,
-            image: channel.image,
-            rating: channel.rating,
-            text_input: channel.text_input,
-            skip_hours: skip_hours,
-            skip_days: channel.skip_days,
-            items: channel.items,
-            extensions: channel.extensions,
-            itunes_ext: channel.itunes_ext,
-            dublin_core_ext: channel.dublin_core_ext,
-            namespaces: channel.namespaces,
-        })
-    }
-
-    /// Set the title of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .title("The Linux Action Show! OGG");
-    /// ```
-    pub fn title<S>(mut self, title: S) -> ChannelBuilder
-    where
-        S: Into<String>,
-    {
-        self.title = title.into();
-        self
-    }
-
-    /// Set the web site URL for the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .link("http://www.jupiterbroadcasting.com");
-    /// ```
-    pub fn link<S>(mut self, link: S) -> ChannelBuilder
-    where
-        S: Into<String>,
-    {
-        self.link = link.into();
-        self
-    }
-
-    /// Set the description of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .description("Ogg Vorbis audio versions of The Linux Action Show!");
-    /// ```
-    pub fn description<S>(mut self, description: S) -> ChannelBuilder
-    where
-        S: Into<String>,
-    {
-        self.description = description.into();
-        self
-    }
-
-    /// Set the language of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .language("en".to_string());
-    /// ```
-    pub fn language<V>(mut self, language: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.language = language.into();
-        self
-    }
-
-    /// Set the copyright notice for the content of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .copyright("Copyright 2002, Spartanburg Herald-Journal".to_string());
-    /// ```
-    pub fn copyright<V>(mut self, copyright: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.copyright = copyright.into();
-        self
-    }
-
-    /// Set the email address for the managing editor of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .managing_editor("chris@jupiterbroadcasting.com (Chris Fisher)".to_string());
-    /// ```
-    pub fn managing_editor<V>(mut self, managing_editor: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.managing_editor = managing_editor.into();
-        self
-    }
-
-    /// Set the email address for the webmaster of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .webmaster("chris@jupiterbroadcasting.com (Chris Fisher)".to_string());
-    /// ```
-    pub fn webmaster<V>(mut self, webmaster: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.webmaster = webmaster.into();
-        self
-    }
-
-    /// Set the publication date for the content of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .pub_date("Sun, 13 Mar 2016 20:02:02 -0700".to_string());
-    /// ```
-    pub fn pub_date<V>(mut self, pub_date: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.pub_date = pub_date.into();
-        self
-    }
-
-    /// Set the time that the content of the `Channel` was last changed.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .last_build_date("Sun, 13 Mar 2016 20:02:02 -0700".to_string());
-    /// ```
-    pub fn last_build_date<V>(mut self, last_build_date: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.last_build_date = last_build_date.into();
-        self
-    }
-
-    /// Set the categories that the `Channel` belongs to.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{ChannelBuilder, CategoryBuilder};
-    ///
-    /// let category = CategoryBuilder::default()
-    ///     .name("Podcast")
-    ///     .finalize();
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .categories(vec![category]);
-    /// ```
-    pub fn categories<V>(mut self, categories: V) -> ChannelBuilder
-    where
-        V: Into<Vec<Category>>,
-    {
-        self.categories = categories.into();
-        self
-    }
-
-    /// Set the name of the program used to generate the contents of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let generator = "Feeder 2.5.12(2294); Mac OS X Version 10.9.5 (Build 13F34) \
-    ///     http://reinventedsoftware.com/feeder/".to_string();
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .generator(generator);
-    /// ```
-    pub fn generator<V>(mut self, generator: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.generator = generator.into();
-        self
-    }
-
-    /// Set the URL that points to the documentation of the RSS format used in the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .docs("http://blogs.law.harvard.edu/tech/rss/".to_string());
-    /// ```
-    pub fn docs<V>(mut self, docs: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.docs = docs.into();
-        self
-    }
-
-    /// Set the information used to register with a cloud for notifications of updates to the
-    /// `Channel`
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{ChannelBuilder, CloudBuilder};
-    ///
-    /// let cloud = CloudBuilder::default()
-    ///     .domain("http://rpc.sys.com/")
-    ///     .protocol("soap")
-    ///     .finalize();
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .cloud(cloud);
-    /// ```
-    pub fn cloud<V>(mut self, cloud: V) -> ChannelBuilder
-    where
-        V: Into<Option<Cloud>>,
-    {
-        self.cloud = cloud.into();
-        self
-    }
-
-    /// Set the time to live of the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .ttl(60);
-    /// ```
-    pub fn ttl<V>(mut self, ttl: V) -> ChannelBuilder
-    where
-        V: Into<Option<i64>>,
-    {
-        self.ttl = ttl.into();
-        self
-    }
-
-    /// Set the image to be display with the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{ChannelBuilder, ImageBuilder};
-    ///
-    /// let image = ImageBuilder::default()
-    ///     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    ///     .link("http://www.jupiterbroadcasting.com/")
-    ///     .finalize();
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .image(image);
-    /// ```
-    pub fn image<V>(mut self, image: V) -> ChannelBuilder
-    where
-        V: Into<Option<Image>>,
-    {
-        self.image = image.into();
-        self
-    }
-
-    /// Set the [PICS](https://www.w3.org/PICS/) rating for the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .rating("PG-13".to_string());
-    /// ```
-    pub fn rating<V>(mut self, rating: V) -> ChannelBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.rating = rating.into();
-        self
-    }
-
-    /// Set the information for a text box to be displayed with the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{ChannelBuilder, TextInputBuilder};
-    ///
-    /// let text_input = TextInputBuilder::default()
-    ///     .link("http://www.example.com/feedback")
-    ///     .finalize();
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .text_input(text_input);
-    /// ```
-    pub fn text_input<V>(mut self, text_input: V) -> ChannelBuilder
-    where
-        V: Into<Option<TextInput>>,
-    {
-        self.text_input = text_input.into();
-        self
-    }
-
-    /// Set the hours that aggregators can skip for refreshing content.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .skip_hours(vec![0, 12, 18]);
-    /// ```
-    pub fn skip_hours<V>(mut self, skip_hours: V) -> ChannelBuilder
-    where
-        V: Into<Vec<i64>>,
-    {
-        self.skip_hours = skip_hours.into();
-        self
-    }
-
-    /// Set the days that aggregators can skip for refreshing content.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .skip_days(vec!["Monday".to_string(), "Tuesday".to_string()]);
-    /// ```
-    pub fn skip_days<V>(mut self, skip_days: V) -> ChannelBuilder
-    where
-        V: Into<Vec<String>>,
-    {
-        self.skip_days = skip_days.into();
-        self
-    }
-
-    /// Set the `Item`s in this `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{ChannelBuilder, ItemBuilder};
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .title("Making Music with Linux | LAS 408".to_string())
-    ///     .finalize();
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .items(vec![item]);
-    /// ```
-    pub fn items<V>(mut self, items: V) -> ChannelBuilder
-    where
-        V: Into<Vec<Item>>,
-    {
-        self.items = items.into();
-        self
-    }
-
-    /// Set the `ITunesChannelExtension` for the `Channel`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    /// use rss::extension::itunes::{ITunesChannelExtensionBuilder, ITunesOwnerBuilder,
-    ///     ITunesCategoryBuilder};
-    ///
-    /// let owner = ITunesOwnerBuilder::default()
-    ///     .email("email@example.com".to_string())
-    ///     .name("name".to_string())
-    ///     .finalize();
-    ///
-    /// let subcategory = ITunesCategoryBuilder::default()
-    ///     .text("text")
-    ///     .finalize();
-    ///
-    /// let category = ITunesCategoryBuilder::default()
-    ///     .text("text")
-    ///     .subcategory(Box::new(subcategory))
-    ///     .finalize();
-    ///
-    /// let itunes_channel = ITunesChannelExtensionBuilder::default()
-    ///     .author("author".to_string())
-    ///     .block("block".to_string())
-    ///     .image("image".to_string())
-    ///     .explicit("explicit".to_string())
-    ///     .subtitle("subtitle".to_string())
-    ///     .summary("summary".to_string())
-    ///     .keywords("keywords".to_string())
-    ///     .new_feed_url("new_feed_url".to_string())
-    ///     .complete("complete".to_string())
-    ///     .owner(owner)
-    ///     .categories(vec![category])
-    ///     .finalize();
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///     .itunes_ext(itunes_channel);
-    /// ```
-    pub fn itunes_ext<V>(mut self, itunes_ext: V) -> ChannelBuilder
-    where
-        V: Into<Option<ITunesChannelExtension>>,
-    {
-        self.itunes_ext = itunes_ext.into();
-        self
-    }
-
-    /// Set the `DublinCoreExtension` for the `Channel`.
-    pub fn dublin_core_ext<V>(mut self, dublin_core_ext: V) -> ChannelBuilder
-    where
-        V: Into<Option<DublinCoreExtension>>,
-    {
-        self.dublin_core_ext = dublin_core_ext.into();
-        self
-    }
-
-    /// Set the extensions for the `Channel`.
-    pub fn extensions<V>(mut self, extensions: V) -> ChannelBuilder
-    where
-        V: Into<ExtensionMap>,
-    {
-        self.extensions = extensions.into();
-        self
-    }
-
-    /// Set the namespaces for the `Channel`.
-    pub fn namespaces<V>(mut self, namespaces: V) -> ChannelBuilder
-    where
-        V: Into<HashMap<String, String>>,
-    {
-        self.namespaces = namespaces.into();
-        self
-    }
-
-    /// Validate the contents of this `ChannelBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let builder = ChannelBuilder::default()
-    ///         .title("The Linux Action Show! OGG")
-    ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .description("Ogg Vorbis audio versions of The Linux Action Show!")
-    ///         .validate()
-    ///         .unwrap();
-    /// ```
-    pub fn validate(self) -> Result<ChannelBuilder, Error> {
-        Url::parse(self.link.as_str())?;
-
-        if let Some(ref pub_date) = self.pub_date {
-            DateTime::parse_from_rfc2822(pub_date.as_str())?;
-        }
-
-        if let Some(ref last_build_date) = self.last_build_date {
-            DateTime::parse_from_rfc2822(last_build_date.as_str())?;
-        }
-
-        if let Some(ref docs) = self.docs {
-            Url::parse(docs.as_str())?;
-        }
-
-        for day in self.skip_days.as_slice() {
-            match SkipDay::from_str(day.as_str()) {
-                Ok(_) => (),
-                Err(err) => return Err(Error::Validation(err.to_string())),
-            };
-        }
-
-        for hour in self.skip_hours.as_slice() {
-            if *hour < 0 {
-                return Err(Error::Validation(
-                    "Channel Skip Hour cannot be a negative value.".to_string(),
-                ));
-            } else if *hour > 23 {
-                return Err(Error::Validation(
-                    "Channel Skip Hour cannot be greater than 23.".to_string(),
-                ));
-            }
-        }
-
-        if self.ttl.is_some() && self.ttl.unwrap() < 0 {
-            return Err(Error::Validation(
-                "Channel TTL cannot be a negative value.".to_string(),
-            ));
-        }
-
-        Ok(self)
-    }
-
-    /// Construct the `Channel` from this `ChannelBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ChannelBuilder;
-    ///
-    /// let channel = ChannelBuilder::default()
-    ///         .title("The Linux Action Show! OGG")
-    ///         .link("http://www.jupiterbroadcasting.com")
-    ///         .description("Ogg Vorbis audio versions of The Linux Action Show!")
-    ///         .finalize();
-    /// ```
-    pub fn finalize(self) -> Channel {
-        Channel {
-            title: self.title,
-            link: self.link,
-            description: self.description,
-            language: self.language,
-            copyright: self.copyright,
-            managing_editor: self.managing_editor,
-            webmaster: self.webmaster,
-            pub_date: self.pub_date,
-            last_build_date: self.last_build_date,
-            categories: self.categories,
-            generator: self.generator,
-            docs: self.docs,
-            cloud: self.cloud,
-            ttl: self.ttl.map(|n| n.to_string()),
-            image: self.image,
-            rating: self.rating,
-            text_input: self.text_input,
-            skip_hours: self.skip_hours.into_iter().map(|n| n.to_string()).collect(),
-            skip_days: self.skip_days,
-            items: self.items,
-            itunes_ext: self.itunes_ext,
-            dublin_core_ext: self.dublin_core_ext,
-            extensions: self.extensions,
-            namespaces: self.namespaces,
-        }
-    }
-}
-
-/// Enumerations of values for `SkipDays`.
-enum SkipDay {
-    /// Monday
-    Monday,
-    /// Tuesday
-    Tuesday,
-    /// Wednesday
-    Wednesday,
-    /// Thursday
-    Thursday,
-    /// Friday
-    Friday,
-    /// Saturday
-    Saturday,
-    /// Sunday
-    Sunday,
-}
-
-impl FromStr for SkipDay {
-    type Err = &'static str;
-
-    /// Convert `&str` to `SkipDay`.
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "Monday" => Ok(SkipDay::Monday),
-            "Tuesday" => Ok(SkipDay::Tuesday),
-            "Wednesday" => Ok(SkipDay::Wednesday),
-            "Thursday" => Ok(SkipDay::Thursday),
-            "Friday" => Ok(SkipDay::Friday),
-            "Saturday" => Ok(SkipDay::Saturday),
-            "Sunday" => Ok(SkipDay::Sunday),
-            _ => Err("Skip Day is not a valid value"),
-        }
     }
 }

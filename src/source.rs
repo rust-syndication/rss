@@ -5,18 +5,22 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-use fromxml::{FromXml, element_text};
+use std::io::{BufRead, Write};
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
-use toxml::ToXml;
-use url::Url;
 
-/// A representation of the `<source>` element.
-#[derive(Debug, Default, Clone, PartialEq)]
+use error::Error;
+use fromxml::FromXml;
+use toxml::ToXml;
+use util::element_text;
+
+/// Represents the source of an RSS item
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct Source {
     /// The URL of the source.
     url: String,
@@ -25,72 +29,91 @@ pub struct Source {
 }
 
 impl Source {
-    /// Return the URL for this `Source`.
+    /// Return the URL of this source.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::SourceBuilder;
+    /// use rss::Source;
     ///
-    /// let url = "http://www.tomalak.org/links2.xml";
-    ///
-    /// let source = SourceBuilder::default()
-    ///     .url(url)
-    ///     .finalize();
-    ///
-    /// assert_eq!(url, source.url());
+    /// let mut source = Source::default();
+    /// source.set_url("http://example.com");
+    /// assert_eq!(source.url(), "http://example.com");
     /// ```
     pub fn url(&self) -> &str {
         self.url.as_str()
     }
 
-    /// Return the title of this `Source`.
+    /// Set the URL of this source.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::SourceBuilder;
+    /// use rss::Source;
     ///
-    /// let title = "Tomalak's Realm";
+    /// let mut source = Source::default();
+    /// source.set_url("http://example.com");
+    /// ```
+    pub fn set_url<V>(&mut self, url: V)
+    where
+        V: Into<String>,
+    {
+        self.url = url.into();
+    }
+
+    /// Return the title of this source.
     ///
-    /// let source = SourceBuilder::default()
-    ///     .title(title.to_string())
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(Some(title), source.title());
+    /// ```
+    /// use rss::Source;
+    ///
+    /// let mut source = Source::default();
+    /// source.set_title("Source Title".to_string());
+    /// assert_eq!(source.title(), Some("Source Title"));
     /// ```
     pub fn title(&self) -> Option<&str> {
         self.title.as_ref().map(|s| s.as_str())
     }
+
+    /// Set the title of this source.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Source;
+    ///
+    /// let mut source = Source::default();
+    /// source.set_title("Source Title".to_string());
+    /// ```
+    pub fn set_title<V>(&mut self, title: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.title = title.into();
+    }
 }
 
 impl FromXml for Source {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        mut atts: Attributes,
-    ) -> Result<Self, Error> {
-        let mut url = None;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+        let mut source = Source::default();
 
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"url" {
-                    url = Some(attr.unescape_and_decode_value(reader)?);
+                    source.url = attr.unescape_and_decode_value(reader)?;
                     break;
                 }
             }
         }
 
-        let content = element_text(reader)?;
-
-        Ok(Source {
-            url: url.unwrap_or_default(),
-            title: content,
-        })
+        source.title = element_text(reader)?;
+        Ok(source)
     }
 }
 
 impl ToXml for Source {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"source";
         let mut element = BytesStart::borrowed(name, name.len());
         element.push_attribute(("url", &*self.url));
@@ -103,105 +126,5 @@ impl ToXml for Source {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
-    }
-}
-
-/// A builder used to create a `Source`.
-#[derive(Debug, Clone, Default)]
-pub struct SourceBuilder {
-    url: String,
-    title: Option<String>,
-}
-
-impl SourceBuilder {
-    /// Construct a new `SourceBuilder` using the values from an existing `Source`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, SourceBuilder};
-    ///
-    /// let input = include_str!("tests/data/source.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let source = channel.items()[0].source().unwrap().clone();
-    /// let builder = SourceBuilder::from_source(source);
-    /// ```
-    pub fn from_source(source: Source) -> Self {
-        SourceBuilder {
-            url: source.url,
-            title: source.title,
-        }
-    }
-
-    /// Set the URL for the `Source`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::SourceBuilder;
-    ///
-    /// let builder = SourceBuilder::default()
-    ///     .url("http://www.example.com/source");
-    /// ```
-    pub fn url<S>(mut self, url: S) -> SourceBuilder
-    where
-        S: Into<String>,
-    {
-        self.url = url.into();
-        self
-    }
-
-    /// Set the title of the `Source`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::SourceBuilder;
-    ///
-    /// let builder = SourceBuilder::default()
-    ///     .title("Test".to_string());
-    /// ```
-    pub fn title<V>(mut self, title: V) -> SourceBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.title = title.into();
-        self
-    }
-
-    /// Validate the contents of this `SourceBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::SourceBuilder;
-    ///
-    /// let source = SourceBuilder::default()
-    ///     .url("http://www.example.com/source")
-    ///     .validate()
-    ///     .unwrap();
-    /// ```
-    pub fn validate(self) -> Result<SourceBuilder, Error> {
-        Url::parse(self.url.as_str())?;
-
-        Ok(self)
-    }
-
-    /// Construct the `Source` from this `SourceBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::SourceBuilder;
-    ///
-    /// let source = SourceBuilder::default()
-    ///     .url("http://www.example.com/source")
-    ///     .finalize();
-    /// ```
-    pub fn finalize(self) -> Source {
-        Source {
-            url: self.url,
-            title: self.title,
-        }
     }
 }

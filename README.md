@@ -67,7 +67,7 @@ rss = { version = "*", features = ["from_url"] }
 ```rust
 use rss::Channel;
 
-let channel = Channel::from_url("https://feedpress.me/usererror.xml").unwrap();
+let channel = Channel::from_url("http://example.com/feed.xml").unwrap();
 ```
 
 ## Writing
@@ -101,53 +101,13 @@ A channel can be created using the Builder functions.
 ### Example
 
 ```rust
-use rss::{ChannelBuilder, ImageBuilder};
-
-let image = ImageBuilder::default()
-    .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    .title("LAS 300 Logo")
-    .link("http://www.jupiterbroadcasting.com")
-    .finalize();
+use rss::ChannelBuilder;;
 
 let channel = ChannelBuilder::default()
-    .title("The Linux Action Show! OGG")
-    .link("http://www.jupiterbroadcasting.com")
-    .description("Ogg Vorbis audio versions of The Linux Action Show!")
-    .image(image)
-    .finalize();
-```
-
-## Validation
-
-Validation can be performed using either a `Channel` or a builder.
-
-The the following checks are performed during validation:
-
-* Ensures that integer properties can be parsed from their string representation into integers
-* Ensures that the integer properties are within their valid range according to the RSS 2.0 specification
-* Ensures that URL properties can be parsed
-* Ensures that string properties where only certain values are allowed fall within those valid values
-
-### Example
-
-```rust
-use rss::Channel;
-
-let input = include_str!("tests/data/rss2sample.xml");
-let channel = input.parse::<Channel>().unwrap();
-channel.validate().unwrap();
-```
-
-### Example
-
-```rust
-use rss::ImageBuilder;
-
-let builder = ImageBuilder::default()
-    .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    .title("LAS 300 Logo")
-    .link("http://www.jupiterbroadcasting.com")
-    .validate()
+    .title("Channel Title")
+    .link("http://example.com")
+    .description("An RSS feed.")
+    .build()
     .unwrap();
 ```
 

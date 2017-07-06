@@ -5,18 +5,22 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-use fromxml::{FromXml, element_text};
+use std::io::{BufRead, Write};
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
-use toxml::ToXml;
-use url::Url;
 
-/// A representation of the `<category>` element.
-#[derive(Debug, Default, Clone, PartialEq)]
+use error::Error;
+use fromxml::FromXml;
+use toxml::ToXml;
+use util::element_text;
+
+/// Represents a category in an RSS feed
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct Category {
     /// The name of the category.
     name: String,
@@ -25,82 +29,91 @@ pub struct Category {
 }
 
 impl Category {
-    /// Return the name of this `Category`.
+    /// Return the name of this category.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::CategoryBuilder;
+    /// use rss::Category;
     ///
-    /// let name = "Podcast";
-    ///
-    /// let category = CategoryBuilder::default()
-    ///     .name(name)
-    ///     .finalize();
-    ///
-    /// assert_eq!(name, category.name());
+    /// let mut category = Category::default();
+    /// category.set_name("Technology");
+    /// assert_eq!(category.name(), "Technology");
     /// ```
     pub fn name(&self) -> &str {
         self.name.as_str()
     }
 
-    /// Return the domain of this `Category`.
+    /// Set the name of this category.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::CategoryBuilder;
+    /// use rss::Category;
     ///
-    /// let domain = "http://jupiterbroadcasting.com/";
-    ///
-    /// let category = CategoryBuilder::default()
-    ///     .domain(domain.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(domain), category.domain());
+    /// let mut category = Category::default();
+    /// category.set_name("Technology");
     /// ```
+    pub fn set_name<V>(&mut self, name: V)
+    where
+        V: Into<String>,
+    {
+        self.name = name.into();
+    }
+
+    /// Return the domain of this category.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::CategoryBuilder;
+    /// use rss::Category;
     ///
-    /// let category = CategoryBuilder::default()
-    ///     .domain(None)
-    ///     .finalize();
-    ///
-    /// assert!(category.domain().is_none());
+    /// let mut category = Category::default();
+    /// category.set_domain("http://example.com".to_string());
+    /// assert_eq!(category.domain(), Some("http://example.com"));
     /// ```
     pub fn domain(&self) -> Option<&str> {
         self.domain.as_ref().map(|s| s.as_str())
     }
+
+    /// Set the domain of this category.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Category;
+    ///
+    /// let mut category = Category::default();
+    /// category.set_domain("http://example.com".to_string());
+    /// ```
+    pub fn set_domain<V>(&mut self, domain: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.domain = domain.into();
+    }
 }
 
 impl FromXml for Category {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        mut atts: Attributes,
-    ) -> Result<Self, Error> {
-        let mut domain = None;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+        let mut category = Category::default();
 
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"domain" {
-                    domain = Some(attr.unescape_and_decode_value(reader)?);
+                    category.domain = Some(attr.unescape_and_decode_value(reader)?);
                     break;
                 }
             }
         }
 
-        let content = element_text(reader)?.unwrap_or_default();
-
-        Ok(Category {
-            name: content,
-            domain: domain,
-        })
+        category.name = element_text(reader)?.unwrap_or_default();
+        Ok(category)
     }
 }
 
 impl ToXml for Category {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"category";
         let mut element = BytesStart::borrowed(name, name.len());
         if let Some(ref domain) = self.domain {
@@ -111,109 +124,5 @@ impl ToXml for Category {
             .write_event(Event::Text(BytesText::borrowed(self.name.as_bytes())))?;
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
-    }
-}
-
-/// A builder used to create a `Category`.
-#[derive(Debug, Clone, Default)]
-pub struct CategoryBuilder {
-    name: String,
-    domain: Option<String>,
-}
-
-impl CategoryBuilder {
-    /// Construct a new `CategoryBuilder` using the values from an existing `Category`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, CategoryBuilder};
-    ///
-    /// let input = include_str!("tests/data/category.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let category = channel.categories()[0].clone();
-    /// let builder = CategoryBuilder::from_category(category);
-    /// ```
-    pub fn from_category(category: Category) -> Self {
-        CategoryBuilder {
-            name: category.name,
-            domain: category.domain,
-        }
-    }
-
-    /// Set the name of the `Category`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CategoryBuilder;
-    ///
-    /// let builder = CategoryBuilder::default()
-    ///     .name("Podcast");
-    /// ```
-    pub fn name<S>(mut self, name: S) -> CategoryBuilder
-    where
-        S: Into<String>,
-    {
-        self.name = name.into();
-        self
-    }
-
-    /// Set the domain for the `Category`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CategoryBuilder;
-    ///
-    /// let builder = CategoryBuilder::default()
-    ///     .domain("http://www.example.com".to_string());
-    /// ```
-    pub fn domain<V>(mut self, domain: V) -> CategoryBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.domain = domain.into();
-        self
-    }
-
-    /// Validate the contents of this `CategoryBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CategoryBuilder;
-    ///
-    /// let builder = CategoryBuilder::default()
-    ///     .name("Podcast")
-    ///     .domain("http://www.example.com".to_string())
-    ///     .validate()
-    ///     .unwrap();
-    /// ```
-    pub fn validate(self) -> Result<CategoryBuilder, Error> {
-        if let Some(ref domain) = self.domain {
-            Url::parse(domain)?;
-        }
-
-        Ok(self)
-    }
-
-    /// Construct the `Category` from this `CategoryBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CategoryBuilder;
-    ///
-    /// let category = CategoryBuilder::default()
-    ///     .name("Podcast")
-    ///     .domain("http://www.example.com".to_string())
-    ///     .finalize();
-    /// ```
-    pub fn finalize(self) -> Category {
-        Category {
-            name: self.name,
-            domain: self.domain,
-        }
     }
 }

@@ -5,13 +5,17 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
+use std::io::Write;
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::writer::Writer;
+
 use toxml::{ToXml, WriterExt};
 
 /// The contact information for the owner of an iTunes podcast.
-#[derive(Debug, Default, Clone, PartialEq)]
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct ITunesOwner {
     /// The name of the owner.
     name: Option<String>,
@@ -20,67 +24,73 @@ pub struct ITunesOwner {
 }
 
 impl ITunesOwner {
-    /// Return the name of this owner.
+    /// Return the name of this person.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
+    /// use rss::extension::itunes::ITunesOwner;
     ///
-    /// let name = "name";
-    ///
-    /// let owner = ITunesOwnerBuilder::default()
-    ///     .name(name.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(name), owner.name());
-    /// ```
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
-    ///
-    /// let owner = ITunesOwnerBuilder::default()
-    ///     .name(None)
-    ///     .finalize();
-    ///
-    /// assert!(owner.name().is_none());
+    /// let mut owner = ITunesOwner::default();
+    /// owner.set_name("John Doe".to_string());
+    /// assert_eq!(owner.name(), Some("John Doe"));
     /// ```
     pub fn name(&self) -> Option<&str> {
         self.name.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the email of this owner.
+    /// Set the name of this person.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
+    /// use rss::extension::itunes::ITunesOwner;
     ///
-    /// let email = "email@example.com";
-    ///
-    /// let owner = ITunesOwnerBuilder::default()
-    ///     .email(email.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(email), owner.email());
+    /// let mut owner = ITunesOwner::default();
+    /// owner.set_name("John Doe".to_string());
     /// ```
+    pub fn set_name<V>(&mut self, name: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.name = name.into();
+    }
+
+    /// Return the email of this person.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
+    /// use rss::extension::itunes::ITunesOwner;
     ///
-    /// let owner = ITunesOwnerBuilder::default()
-    ///     .email(None)
-    ///     .finalize();
-    ///
-    /// assert!(owner.email().is_none());
+    /// let mut owner = ITunesOwner::default();
+    /// owner.set_email("johndoe@example.com".to_string());
+    /// assert_eq!(owner.email(), Some("johndoe@example.com"));
     /// ```
     pub fn email(&self) -> Option<&str> {
         self.email.as_ref().map(|s| s.as_str())
     }
+
+    /// Set the email of this person.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesOwner;
+    ///
+    /// let mut owner = ITunesOwner::default();
+    /// owner.set_email("johndoe@example.com".to_string());
+    /// ```
+    pub fn set_email<V>(&mut self, email: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.email = email.into();
+    }
 }
 
 impl ToXml for ITunesOwner {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"itunes:owner";
 
         writer
@@ -96,83 +106,5 @@ impl ToXml for ITunesOwner {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
-    }
-}
-
-/// A builder used to create an `ITunesOwner`.
-#[derive(Debug, Clone, Default)]
-pub struct ITunesOwnerBuilder {
-    name: Option<String>,
-    email: Option<String>,
-}
-
-impl ITunesOwnerBuilder {
-    /// Construct a new `ITunesOwnerBuilder` using the values from an existing `ITunesOwner`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::Channel;
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
-    ///
-    /// let input = include_str!("tests/data/itunes.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let owner = channel.itunes_ext().unwrap().owner().unwrap().clone();
-    /// let builder = ITunesOwnerBuilder::from_owner(owner);
-    /// ```
-    pub fn from_owner(owner: ITunesOwner) -> Self {
-        ITunesOwnerBuilder {
-            name: owner.name,
-            email: owner.email,
-        }
-    }
-
-    /// Set the name of the owner.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
-    ///
-    /// let builder = ITunesOwnerBuilder::default()
-    ///     .name("name".to_string());
-    /// ```
-    pub fn name<V: Into<Option<String>>>(mut self, name: V) -> ITunesOwnerBuilder {
-        self.name = name.into();
-        self
-    }
-
-    /// Set the email of the owner.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
-    ///
-    /// let builder = ITunesOwnerBuilder::default()
-    ///     .email("email@example.com".to_string());
-    /// ```
-    pub fn email<V: Into<Option<String>>>(mut self, email: V) -> ITunesOwnerBuilder {
-        self.email = email.into();
-        self
-    }
-
-    /// Construct the `ITunesOwner` from this `ITunesOwnerBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::extension::itunes::ITunesOwnerBuilder;
-    ///
-    /// let owner = ITunesOwnerBuilder::default()
-    ///     .name("name".to_string())
-    ///     .email("email@example.com".to_string())
-    ///     .finalize();
-    /// ```
-    pub fn finalize(self) -> ITunesOwner {
-        ITunesOwner {
-            name: self.name,
-            email: self.email,
-        }
     }
 }

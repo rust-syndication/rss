@@ -5,17 +5,22 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-use fromxml::{FromXml, element_text};
+use std::io::{BufRead, Write};
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
-use toxml::ToXml;
 
-/// A representation of the `<guid>` element.
-#[derive(Debug, Clone, PartialEq)]
+use error::Error;
+use fromxml::FromXml;
+use toxml::ToXml;
+use util::element_text;
+
+/// Represents the GUID of an RSS item
+#[derive(Debug, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct Guid {
     /// The value of the GUID.
     value: String,
@@ -24,63 +29,68 @@ pub struct Guid {
 }
 
 impl Guid {
-    /// Return whether this `Guid` is a permalink.
+    /// Return whether this GUID is a permalink.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::GuidBuilder;
+    /// use rss::Guid;
     ///
-    /// let guid = GuidBuilder::default()
-    ///     .finalize();
-    ///
+    /// let mut guid = Guid::default();
+    /// guid.set_permalink(true);
     /// assert!(guid.is_permalink());
-    /// ```
-    ///
-    /// ```
-    /// use rss::GuidBuilder;
-    ///
-    /// let permalink = true;
-    ///
-    /// let guid = GuidBuilder::default()
-    ///     .is_permalink(permalink)
-    ///     .finalize();
-    ///
-    /// assert_eq!(permalink, guid.is_permalink());
-    /// ```
-    ///
-    /// ```
-    /// use rss::GuidBuilder;
-    ///
-    /// let permalink = false;
-    ///
-    /// let guid = GuidBuilder::default()
-    ///     .is_permalink(permalink)
-    ///     .finalize();
-    ///
-    /// assert_eq!(permalink, guid.is_permalink());
     /// ```
     pub fn is_permalink(&self) -> bool {
         self.is_permalink
     }
 
-    /// Return the value of this `Guid`.
+    /// Set whether this GUID is a permalink.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::GuidBuilder;
+    /// use rss::Guid;
     ///
-    /// let value = "9DE46946-2F90-4D5D-9047-7E9165C16E7C";
+    /// let mut guid = Guid::default();
+    /// guid.set_permalink(true);
+    /// ```
+    pub fn set_permalink<V>(&mut self, is_permalink: V)
+    where
+        V: Into<bool>,
+    {
+        self.is_permalink = is_permalink.into()
+    }
+
+    /// Return the value of this GUID.
     ///
-    /// let guid = GuidBuilder::default()
-    ///     .value(value)
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(value, guid.value());
+    /// ```
+    /// use rss::Guid;
+    ///
+    /// let mut guid = Guid::default();
+    /// guid.set_value("00000000-0000-0000-0000-00000000000");
+    /// assert_eq!(guid.value(), "00000000-0000-0000-0000-00000000000");
     /// ```
     pub fn value(&self) -> &str {
         self.value.as_str()
+    }
+
+    /// Set the value of this GUID.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Guid;
+    ///
+    /// let mut guid = Guid::default();
+    /// guid.set_value("00000000-0000-0000-0000-00000000000");
+    /// ```
+    pub fn set_value<V>(&mut self, value: V)
+    where
+        V: Into<String>,
+    {
+        self.value = value.into();
     }
 }
 
@@ -95,32 +105,25 @@ impl Default for Guid {
 }
 
 impl FromXml for Guid {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        mut atts: Attributes,
-    ) -> Result<Self, Error> {
-        let mut is_permalink = true;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+        let mut guid = Guid::default();
 
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"isPermaLink" {
-                    is_permalink = attr.value != b"false";
+                    guid.is_permalink = attr.value != b"false";
                     break;
                 }
             }
         }
 
-        let content = element_text(reader)?.unwrap_or_default();
-
-        Ok(Guid {
-            value: content,
-            is_permalink: is_permalink,
-        })
+        guid.value = element_text(reader)?.unwrap_or_default();
+        Ok(guid)
     }
 }
 
 impl ToXml for Guid {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"guid";
         let mut element = BytesStart::borrowed(name, name.len());
         if !self.is_permalink {
@@ -134,85 +137,5 @@ impl ToXml for Guid {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
-    }
-}
-
-/// A builder used to create an `Guid`.
-#[derive(Debug, Clone, Default)]
-pub struct GuidBuilder {
-    is_permalink: Option<bool>,
-    value: String,
-}
-
-impl GuidBuilder {
-    /// Construct a new `GuidBuilder` using the values from an existing `Guid`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, GuidBuilder};
-    ///
-    /// let input = include_str!("tests/data/guid.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let guid = channel.items()[0].guid().unwrap().clone();
-    /// let builder = GuidBuilder::from_guid(guid);
-    /// ```
-    pub fn from_guid(guid: Guid) -> Self {
-        GuidBuilder {
-            is_permalink: Some(guid.is_permalink()),
-            value: guid.value,
-        }
-    }
-
-    /// Set whether this `Guid` is a permalink.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::GuidBuilder;
-    ///
-    /// let builder = GuidBuilder::default()
-    ///     .is_permalink(false);
-    /// ```
-    pub fn is_permalink(mut self, is_permalink: bool) -> GuidBuilder {
-        self.is_permalink = Some(is_permalink);
-        self
-    }
-
-    /// Set the value of this `Guid`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::GuidBuilder;
-    ///
-    /// let builder = GuidBuilder::default()
-    ///     .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C");
-    /// ```
-    pub fn value<S>(mut self, value: S) -> GuidBuilder
-    where
-        S: Into<String>,
-    {
-        self.value = value.into();
-        self
-    }
-
-    /// Construct the `Guid` from this `GuidBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::GuidBuilder;
-    ///
-    /// let guid = GuidBuilder::default()
-    ///         .is_permalink(true)
-    ///         .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C")
-    ///         .finalize();
-    /// ```
-    pub fn finalize(self) -> Guid {
-        Guid {
-            is_permalink: self.is_permalink.unwrap_or(true),
-            value: self.value,
-        }
     }
 }

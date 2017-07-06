@@ -39,7 +39,7 @@
 //! ```ignore
 //! use rss::Channel;
 //!
-//! let channel = Channel::from_url("https://feedpress.me/usererror.xml").unwrap();
+//! let channel = Channel::from_url("http://example.com/feed.xml").unwrap();
 //! ```
 //!
 //! # Writing
@@ -74,108 +74,57 @@
 //! ## Example
 //!
 //! ```
-//! use rss::{ChannelBuilder, ImageBuilder};
-//!
-//! let image = ImageBuilder::default()
-//!     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-//!     .title("LAS 300 Logo")
-//!     .link("http://www.jupiterbroadcasting.com")
-//!     .finalize();
+//! use rss::ChannelBuilder;
 //!
 //! let channel = ChannelBuilder::default()
-//!     .title("The Linux Action Show! OGG")
-//!     .link("http://www.jupiterbroadcasting.com")
-//!     .description("Ogg Vorbis audio versions of The Linux Action Show!")
-//!     .image(image)
-//!     .finalize();
-//! ```
-//!
-//! # Validation
-//!
-//! Validation can be performed using either a `Channel` or a builder.
-//!
-//! The the following checks are performed during validation:
-//!
-//! * Ensures that integer properties can be parsed from their string representation into
-//! integers
-//! * Ensures that the integer properties are within their valid range according to the RSS 2.0
-//! specification
-//! * Ensures that URL properties can be parsed
-//! * Ensures that string properties where only certain values are allowed fall within those
-//! valid values
-//!
-//! ## Example
-//!
-//! ```
-//! use rss::Channel;
-//!
-//! let input = include_str!("tests/data/rss2sample.xml");
-//! let channel = input.parse::<Channel>().unwrap();
-//! channel.validate().unwrap();
-//! ```
-//!
-//! ## Example
-//!
-//! ```
-//! use rss::ImageBuilder;
-//!
-//! let builder = ImageBuilder::default()
-//!     .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-//!     .title("LAS 300 Logo")
-//!     .link("http://www.jupiterbroadcasting.com")
-//!     .validate()
+//!     .title("Channel Title")
+//!     .link("http://example.com")
+//!     .description("An RSS feed.")
+//!     .build()
 //!     .unwrap();
 //! ```
+
+#[macro_use]
+extern crate derive_builder;
+
 extern crate quick_xml;
+
+#[cfg(feature = "validation")]
 extern crate chrono;
+#[cfg(feature = "validation")]
 extern crate url;
+#[cfg(feature = "validation")]
 extern crate mime;
 
 #[cfg(feature = "from_url")]
 extern crate reqwest;
 
+mod channel;
+mod category;
+mod cloud;
+mod enclosure;
+mod guid;
+mod image;
+mod item;
+mod source;
+mod textinput;
+
+mod error;
 mod fromxml;
 mod toxml;
-
-mod channel;
-pub use channel::Channel;
-pub use channel::ChannelBuilder;
-
-mod item;
-pub use item::Item;
-pub use item::ItemBuilder;
-
-mod category;
-pub use category::Category;
-pub use category::CategoryBuilder;
-
-mod guid;
-pub use guid::Guid;
-pub use guid::GuidBuilder;
-
-mod enclosure;
-pub use enclosure::Enclosure;
-pub use enclosure::EnclosureBuilder;
-
-mod source;
-pub use source::Source;
-pub use source::SourceBuilder;
-
-mod cloud;
-pub use cloud::Cloud;
-pub use cloud::CloudBuilder;
-
-mod image;
-pub use image::Image;
-pub use image::ImageBuilder;
-
-mod textinput;
-pub use textinput::TextInput;
-pub use textinput::TextInputBuilder;
+mod util;
 
 /// Types and functions for namespaced extensions.
 pub mod extension;
-pub use extension::Extension;
 
-mod error;
+pub use channel::{Channel, ChannelBuilder};
+pub use category::{Category, CategoryBuilder};
+pub use cloud::{Cloud, CloudBuilder};
+pub use enclosure::{Enclosure, EnclosureBuilder};
+pub use guid::{Guid, GuidBuilder};
+pub use image::{Image, ImageBuilder};
+pub use item::{Item, ItemBuilder};
+pub use source::{Source, SourceBuilder};
+pub use textinput::{TextInput, TextInputBuilder};
+
 pub use error::Error;

@@ -1,8 +1,19 @@
 extern crate rss;
 
+use std::collections::HashMap;
+
 use rss::Channel;
+use rss::extension::Extension;
 use rss::extension::dublincore::DublinCoreExtension;
-use rss::extension::get_extension_values;
+
+fn get_extension_values<'a>(
+    map: &'a HashMap<String, Vec<Extension>>,
+    key: &str,
+) -> Option<Vec<&'a str>> {
+    map.get(key).map(|v| {
+        v.iter().filter_map(|ext| ext.value()).collect::<Vec<_>>()
+    })
+}
 
 #[test]
 fn read_rss090() {
@@ -795,10 +806,7 @@ fn read_dublincore() {
             vec!["Title"]
         );
         assert_eq!(
-            dc.resource_types()
-                .iter()
-                .map(|s| s.as_str())
-                .collect::<Vec<_>>(),
+            dc.types().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
             vec!["Type"]
         );
     }
