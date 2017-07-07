@@ -26,7 +26,7 @@ use source::Source;
 use toxml::{ToXml, WriterExt};
 use util::element_text;
 
-/// Represents an item in an RSS feed
+/// Represents an item in an RSS feed.
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Item {

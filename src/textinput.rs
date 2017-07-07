@@ -18,7 +18,7 @@ use fromxml::FromXml;
 use toxml::{ToXml, WriterExt};
 use util::element_text;
 
-/// Represents a text input for an RSS channel
+/// Represents a text input for an RSS channel.
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct TextInput {

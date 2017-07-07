@@ -17,7 +17,7 @@ use error::Error;
 use fromxml::FromXml;
 use toxml::ToXml;
 
-/// Represents a cloud in an RSS feed
+/// Represents a cloud in an RSS feed.
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Cloud {

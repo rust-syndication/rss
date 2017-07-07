@@ -39,7 +39,7 @@ extern crate rss;
 
 ## Reading
 
-### From a `BufRead`
+### From a Reader
 
 A channel can be read from any object that implements the `BufRead` trait.
 
@@ -48,21 +48,15 @@ use std::fs::File;
 use std::io::BufReader;
 use rss::Channel;
 
-let file = File::open("tests/data/rss2sample.xml").unwrap();
-let reader = BufReader::new(file);
-let channel = Channel::read_from(reader).unwrap();
+let file = File::open("example.xml").unwrap();
+let channel = Channel::read_from(BufReader::new(file)).unwrap();
 ```
 
 ### From a URL
 
 A channel can also be read from a URL.
 
-To enable this functionality you must enable the `from_url` feature in your Cargo.toml.
-
-```toml
-[dependencies]
-rss = { version = "*", features = ["from_url"] }
-```
+**Note**: This requires enabling the `from_url` feature.
 
 ```rust
 use rss::Channel;
@@ -76,32 +70,20 @@ A channel can be written to any object that implements the `Write` trait or conv
 
 **Note**: Writing a channel does not perform any escaping of XML entities.
 
-### Example
-
 ```rust
-use std::fs::File;
-use std::io::{BufReader, sink};
 use rss::Channel;
 
-let file = File::open("tests/data/rss2sample.xml").unwrap();
-let reader = BufReader::new(file);
-let channel = Channel::read_from(reader).unwrap();
-
-// write to the channel to a writer
-channel.write_to(sink()).unwrap();
-
-// convert the channel to a string
-let string = channel.to_string();
+let channel = Channel::default();
+channel.write_to(::std::io::sink()).unwrap(); // // write to the channel to a writer
+let string = channel.to_string(); // convert the channel to a string
 ```
 
 ## Creation
 
-A channel can be created using the Builder functions.
-
-### Example
+Builder methods are provided to assist in the creation of channels.
 
 ```rust
-use rss::ChannelBuilder;;
+use rss::ChannelBuilder;
 
 let channel = ChannelBuilder::default()
     .title("Channel Title")
@@ -111,11 +93,25 @@ let channel = ChannelBuilder::default()
     .unwrap();
 ```
 
+## Validation
+
+Validation methods are provided to validate the contents of a channel against the RSS specification.
+
+**Note**: This requires enabling the `validation` feature.
+
+```rust
+use rss::Channel;
+use rss::validation::Validate;
+
+let channel = Channel::default();
+channel.validate().unwrap();
+```
+
 ## Extensions
 
 Elements which have non-default namespaces will be considered extensions. Extensions are stored in `Channel.extensions` and `Item.extensions`. 
 
-For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted to structs and stored in `Channel.itunes_ext`, `Channel.dublin_core_ext`, `Item.itunes_ext`, and `Item.dublin_core_ext`.
+For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted to structs and stored in as properties on channels and items.
 
 ## Invalid Feeds
 

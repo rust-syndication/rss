@@ -18,7 +18,7 @@ use fromxml::FromXml;
 use toxml::ToXml;
 use util::element_text;
 
-/// Represents the source of an RSS item
+/// Represents the source of an RSS item.
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Source {

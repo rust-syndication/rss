@@ -17,7 +17,7 @@ use error::Error;
 use fromxml::FromXml;
 use toxml::ToXml;
 
-/// Represents an enclosure in an RSS item
+/// Represents an enclosure in an RSS item.
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Enclosure {

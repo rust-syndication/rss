@@ -887,9 +887,7 @@ impl Channel {
         use std::io::Read;
 
         let mut content = String::new();
-
         ::reqwest::get(url)?.read_to_string(&mut content)?;
-
         Ok(Channel::from_str(content.as_str())?)
     }
 

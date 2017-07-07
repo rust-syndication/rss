@@ -18,7 +18,7 @@ use fromxml::FromXml;
 use toxml::ToXml;
 use util::element_text;
 
-/// Represents a category in an RSS feed
+/// Represents a category in an RSS feed.
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Category {

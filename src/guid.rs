@@ -18,7 +18,7 @@ use fromxml::FromXml;
 use toxml::ToXml;
 use util::element_text;
 
-/// Represents the GUID of an RSS item
+/// Represents the GUID of an RSS item.
 #[derive(Debug, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Guid {

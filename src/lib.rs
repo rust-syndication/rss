@@ -12,29 +12,24 @@
 //!
 //! # Reading
 //!
-//! ## From a `BufRead`
+//! ## From a Reader
 //!
 //! A channel can be read from any object that implements the `BufRead` trait.
 //!
-//! ```rust
+//! ```rust,no_run
 //! use std::fs::File;
 //! use std::io::BufReader;
 //! use rss::Channel;
 //!
-//! let file = File::open("tests/data/rss2sample.xml").unwrap();
-//! let reader = BufReader::new(file);
-//! let channel = Channel::read_from(reader).unwrap();
+//! let file = File::open("example.xml").unwrap();
+//! let channel = Channel::read_from(BufReader::new(file)).unwrap();
 //! ```
+//!
 //! ## From a URL
 //!
 //! A channel can also be read from a URL.
 //!
-//! To enable this functionality you must enable the `from_url` feature in your Cargo.toml.
-//!
-//! ```toml
-//! [dependencies]
-//! rss = { version = "*", features = ["from_url"] }
-//! ```
+//! **Note**: This requires enabling the `from_url` feature.
 //!
 //! ```ignore
 //! use rss::Channel;
@@ -49,29 +44,17 @@
 //!
 //! **Note**: Writing a channel does not perform any escaping of XML entities.
 //!
-//! ## Example
-//!
 //! ```rust
-//! use std::fs::File;
-//! use std::io::{BufReader, sink};
 //! use rss::Channel;
 //!
-//! let file = File::open("tests/data/rss2sample.xml").unwrap();
-//! let reader = BufReader::new(file);
-//! let channel = Channel::read_from(reader).unwrap();
-//!
-//! // write to the channel to a writer
-//! channel.write_to(sink()).unwrap();
-//!
-//! // convert the channel to a string
-//! let string = channel.to_string();
+//! let channel = Channel::default();
+//! channel.write_to(::std::io::sink()).unwrap(); // write to the channel to a writer
+//! let string = channel.to_string(); // convert the channel to a string
 //! ```
 //!
 //! # Creation
 //!
-//! A channel can be created using the Builder functions.
-//!
-//! ## Example
+//! Builder methods are provided to assist in the creation of channels.
 //!
 //! ```
 //! use rss::ChannelBuilder;
@@ -82,6 +65,21 @@
 //!     .description("An RSS feed.")
 //!     .build()
 //!     .unwrap();
+//! ```
+//!
+//! ## Validation
+//!
+//! Validation methods are provided to validate the contents of a channel against the
+//! RSS specification.
+//!
+//! **Note**: This requires enabling the `validation` feature.
+//!
+//! ```rust
+//! use rss::Channel;
+//! use rss::validation::Validate;
+//!
+//! let channel = Channel::default();
+//! channel.validate().unwrap();
 //! ```
 
 #[macro_use]
@@ -116,6 +114,10 @@ mod util;
 
 /// Types and functions for namespaced extensions.
 pub mod extension;
+
+/// Methods for validating RSS feeds.
+#[cfg(feature = "validation")]
+pub mod validation;
 
 pub use channel::{Channel, ChannelBuilder};
 pub use category::{Category, CategoryBuilder};

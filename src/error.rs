@@ -22,12 +22,12 @@ pub enum Error {
     InvalidStartTag,
     /// The end of the input was reached without finding a complete channel element.
     Eof,
-    /// An error while reading channel from a URL.
-    #[cfg(feature = "from_url")]
-    FromUrl(String),
     /// An error during the web request.
     #[cfg(feature = "from_url")]
     UrlRequest(::reqwest::Error),
+    /// An IO error.
+    #[cfg(feature = "from_url")]
+    Io(::std::io::Error),
 }
 
 impl StdError for Error {
@@ -38,9 +38,9 @@ impl StdError for Error {
             Error::InvalidStartTag => "the input did not begin with an rss tag",
             Error::Eof => "reached end of input without finding a complete channel",
             #[cfg(feature = "from_url")]
-            Error::FromUrl(ref s) => s,
-            #[cfg(feature = "from_url")]
             Error::UrlRequest(ref err) => err.description(),
+            #[cfg(feature = "from_url")]
+            Error::Io(ref err) => err.description(),
         }
     }
 
@@ -50,6 +50,8 @@ impl StdError for Error {
             Error::Xml(ref err) => Some(err),
             #[cfg(feature = "from_url")]
             Error::UrlRequest(ref err) => Some(err),
+            #[cfg(feature = "from_url")]
+            Error::Io(ref err) => Some(err),
             _ => None,
         }
     }
@@ -63,9 +65,9 @@ impl fmt::Display for Error {
             Error::InvalidStartTag => write!(f, "the input did not begin with an rss tag"),
             Error::Eof => write!(f, "reached end of input without finding a complete channel"),
             #[cfg(feature = "from_url")]
-            Error::FromUrl(ref s) => write!(f, "{}", s),
-            #[cfg(feature = "from_url")]
             Error::UrlRequest(ref err) => err.fmt(f),
+            #[cfg(feature = "from_url")]
+            Error::Io(ref err) => err.fmt(f),
         }
     }
 }
@@ -86,5 +88,12 @@ impl From<Utf8Error> for Error {
 impl From<::reqwest::Error> for Error {
     fn from(err: ::reqwest::Error) -> Error {
         Error::UrlRequest(err)
+    }
+}
+
+#[cfg(feature = "from_url")]
+impl From<::std::io::Error> for Error {
+    fn from(err: ::std::io::Error) -> Error {
+        Error::Io(err)
     }
 }
