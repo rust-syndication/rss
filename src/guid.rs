@@ -25,7 +25,7 @@ pub struct Guid {
     /// The value of the GUID.
     value: String,
     /// Indicates if the GUID is a permalink.
-    is_permalink: bool,
+    permalink: bool,
 }
 
 impl Guid {
@@ -41,7 +41,7 @@ impl Guid {
     /// assert!(guid.is_permalink());
     /// ```
     pub fn is_permalink(&self) -> bool {
-        self.is_permalink
+        self.permalink
     }
 
     /// Set whether this GUID is a permalink.
@@ -54,11 +54,11 @@ impl Guid {
     /// let mut guid = Guid::default();
     /// guid.set_permalink(true);
     /// ```
-    pub fn set_permalink<V>(&mut self, is_permalink: V)
+    pub fn set_permalink<V>(&mut self, permalink: V)
     where
         V: Into<bool>,
     {
-        self.is_permalink = is_permalink.into()
+        self.permalink = permalink.into()
     }
 
     /// Return the value of this GUID.
@@ -99,7 +99,7 @@ impl Default for Guid {
     fn default() -> Self {
         Guid {
             value: Default::default(),
-            is_permalink: true,
+            permalink: true,
         }
     }
 }
@@ -111,7 +111,7 @@ impl FromXml for Guid {
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"isPermaLink" {
-                    guid.is_permalink = attr.value != b"false";
+                    guid.permalink = attr.value != b"false";
                     break;
                 }
             }
@@ -126,7 +126,7 @@ impl ToXml for Guid {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"guid";
         let mut element = BytesStart::borrowed(name, name.len());
-        if !self.is_permalink {
+        if !self.permalink {
             element.push_attribute(("isPermaLink", "false"));
         }
 
