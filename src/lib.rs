@@ -74,7 +74,7 @@
 //!
 //! **Note**: This requires enabling the `validation` feature.
 //!
-//! ```rust
+//! ```rust,ignore
 //! use rss::Channel;
 //! use rss::validation::Validate;
 //!

@@ -6,6 +6,8 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use std::collections::HashSet;
+use std::error::Error as StdError;
+use std::fmt;
 use std::num::ParseIntError;
 
 use chrono::DateTime;
@@ -17,6 +19,7 @@ use url::Url;
 
 use {Category, Channel, Cloud, Enclosure, Image, Item, Source, TextInput};
 
+#[derive(Debug)]
 /// Errors that occur during validation.
 pub enum ValidationError {
     /// An error while parsing a string to a date.
@@ -29,6 +32,39 @@ pub enum ValidationError {
     MimeParsing(MimeParseError),
     /// A different validation error.
     Validation(String),
+}
+
+impl StdError for ValidationError {
+    fn description(&self) -> &str {
+        match *self {
+            ValidationError::DateParsing(ref err) => err.description(),
+            ValidationError::IntParsing(ref err) => err.description(),
+            ValidationError::UrlParsing(ref err) => err.description(),
+            ValidationError::MimeParsing(_) => "Unable to parse MIME type",
+            ValidationError::Validation(ref s) => s.as_str(),
+        }
+    }
+
+    fn cause(&self) -> Option<&StdError> {
+        match *self {
+            ValidationError::DateParsing(ref err) => Some(err),
+            ValidationError::IntParsing(ref err) => Some(err),
+            ValidationError::UrlParsing(ref err) => Some(err),
+            _ => None,
+        }
+    }
+}
+
+impl fmt::Display for ValidationError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            ValidationError::DateParsing(ref err) => err.fmt(f),
+            ValidationError::IntParsing(ref err) => err.fmt(f),
+            ValidationError::UrlParsing(ref err) => err.fmt(f),
+            ValidationError::MimeParsing(_) => write!(f, "Unable to parse MIME type"),
+            ValidationError::Validation(ref s) => write!(f, "{}", s),
+        }
+    }
 }
 
 impl From<DateParseError> for ValidationError {
