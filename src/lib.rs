@@ -112,7 +112,7 @@ mod fromxml;
 mod toxml;
 mod util;
 
-/// Types and functions for namespaced extensions.
+/// Types and methods for namespaced extensions.
 pub mod extension;
 
 /// Methods for validating RSS feeds.

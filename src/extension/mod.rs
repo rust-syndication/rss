@@ -15,11 +15,11 @@ use quick_xml::writer::Writer;
 
 use toxml::ToXml;
 
-/// Types and functions for
+/// Types and methods for
 /// [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions.
 pub mod itunes;
 
-/// Types and functions for [Dublin Core](http://dublincore.org/documents/dces/) extensions.
+/// Types and methods for [Dublin Core](http://dublincore.org/documents/dces/) extensions.
 pub mod dublincore;
 
 pub(crate) mod util;
