@@ -5,25 +5,20 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-use extension::Extension;
 use std::collections::HashMap;
 
+use error::Error;
+use extension::Extension;
+
 mod itunes_category;
-pub use extension::itunes::itunes_category::ITunesCategory;
-pub use extension::itunes::itunes_category::ITunesCategoryBuilder;
-
-mod itunes_owner;
-pub use extension::itunes::itunes_owner::ITunesOwner;
-pub use extension::itunes::itunes_owner::ITunesOwnerBuilder;
-
-mod itunes_item_extension;
-pub use extension::itunes::itunes_item_extension::ITunesItemExtension;
-pub use extension::itunes::itunes_item_extension::ITunesItemExtensionBuilder;
-
 mod itunes_channel_extension;
-pub use extension::itunes::itunes_channel_extension::ITunesChannelExtension;
-pub use extension::itunes::itunes_channel_extension::ITunesChannelExtensionBuilder;
+mod itunes_item_extension;
+mod itunes_owner;
+
+pub use self::itunes_category::*;
+pub use self::itunes_channel_extension::*;
+pub use self::itunes_item_extension::*;
+pub use self::itunes_owner::*;
 
 /// The iTunes XML namespace.
 pub static NAMESPACE: &'static str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
@@ -53,23 +48,18 @@ fn parse_categories(
         let child = {
             if let Some(mut child) = elem.children.remove("category").map(|mut v| v.remove(0)) {
                 let text = child.attrs.remove("text").unwrap_or_default();
-                Some(Box::new(
-                    ITunesCategoryBuilder::default()
-                        .text(text.as_str())
-                        .subcategory(None)
-                        .finalize(),
-                ))
+                let mut category = ITunesCategory::default();
+                category.set_text(text);
+                Some(Box::new(category))
             } else {
                 None
             }
         };
 
-        categories.push(
-            ITunesCategoryBuilder::default()
-                .text(text.as_str())
-                .subcategory(child)
-                .finalize(),
-        );
+        let mut category = ITunesCategory::default();
+        category.set_text(text);
+        category.set_subcategory(child);
+        categories.push(category);
     }
 
     Ok(categories)
@@ -85,15 +75,14 @@ fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITune
         .children
         .remove("name")
         .and_then(|mut v| v.remove(0).value);
+
     let email = element
         .children
         .remove("email")
         .and_then(|mut v| v.remove(0).value);
 
-    Ok(Some(
-        ITunesOwnerBuilder::default()
-            .name(name)
-            .email(email)
-            .finalize(),
-    ))
+    let mut owner = ITunesOwner::default();
+    owner.set_name(name);
+    owner.set_email(email);
+    Ok(Some(owner))
 }

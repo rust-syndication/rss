@@ -112,13 +112,10 @@ fn write_dublincore() {
 #[test]
 fn verify_write_format() {
     let item = ItemBuilder::default()
-        .itunes_ext(
-            extension::itunes::ITunesItemExtensionBuilder::default().finalize(),
-        )
-        .dublin_core_ext(
-            extension::dublincore::DublinCoreExtensionBuilder::default().finalize(),
-        )
-        .finalize();
+        .itunes_ext(extension::itunes::ITunesItemExtension::default())
+        .dublin_core_ext(extension::dublincore::DublinCoreExtension::default())
+        .build()
+        .unwrap();
 
     let mut namespaces: HashMap<String, String> = HashMap::new();
     namespaces.insert("ext".to_string(), "http://example.com/".to_string());
@@ -129,7 +126,8 @@ fn verify_write_format() {
         .description("Description")
         .items(vec![item])
         .namespaces(namespaces)
-        .finalize();
+        .build()
+        .unwrap();
 
     let output = include_str!("data/verify_write_format.xml")
         .replace("\n", "")

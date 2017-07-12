@@ -5,76 +5,53 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use chrono::ParseError as DateParseError;
-use quick_xml::errors::Error as XmlError;
 use std::error::Error as StdError;
 use std::fmt;
-use std::io::Error as IOError;
-use std::num::ParseIntError;
 use std::str::Utf8Error;
-use std::string::FromUtf8Error;
-use url::ParseError as UrlParseError;
+
+use quick_xml::errors::Error as XmlError;
 
 #[derive(Debug)]
-/// Types of errors that could occur while parsing an RSS feed.
+/// Errors that occur during parsing.
 pub enum Error {
-    /// An error occured during validation
-    Validation(String),
-    /// An error occured while reading channel from url.
-    FromUrl(String),
-    /// An error occured while reading url to string.
-    IO(IOError),
-    /// An error occurred during the web request.
-    #[cfg(feature = "from_url")]
-    ReqParsing(::reqwest::Error),
-    /// An error occured while parsing a str to i64.
-    IntParsing(ParseIntError),
-    /// An error occured during parsing dates from str.
-    DateParsing(DateParseError),
-    /// An error occurred while parsing a str to Url.
-    UrlParsing(UrlParseError),
-    /// An error occurred while converting bytes to UTF8.
+    /// An error while converting bytes to UTF8.
     Utf8(Utf8Error),
-    /// An XML parser error occurred at the specified byte offset.
-    XmlParsing(XmlError, usize),
-    /// An XML error occurred.
+    /// An XML parsing error.
     Xml(XmlError),
-    /// The input didn't begin with an opening rss tag.
+    /// The input didn't begin with an opening `<rss>` tag.
     InvalidStartTag,
     /// The end of the input was reached without finding a complete channel element.
-    EOF,
+    Eof,
+    /// An error during the web request.
+    #[cfg(feature = "from_url")]
+    UrlRequest(::reqwest::Error),
+    /// An IO error.
+    #[cfg(feature = "from_url")]
+    Io(::std::io::Error),
 }
 
 impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
-            Error::Validation(ref s) |
-            Error::FromUrl(ref s) => s,
-            Error::IO(ref err) => err.description(),
-            #[cfg(feature = "from_url")]
-            Error::ReqParsing(ref err) => err.description(),
-            Error::IntParsing(ref err) => err.description(),
-            Error::DateParsing(ref err) => err.description(),
-            Error::UrlParsing(ref err) => err.description(),
             Error::Utf8(ref err) => err.description(),
-            Error::XmlParsing(ref err, _) => err.description(),
             Error::Xml(ref err) => err.description(),
             Error::InvalidStartTag => "the input did not begin with an rss tag",
-            Error::EOF => "reached end of input without finding a complete channel",
+            Error::Eof => "reached end of input without finding a complete channel",
+            #[cfg(feature = "from_url")]
+            Error::UrlRequest(ref err) => err.description(),
+            #[cfg(feature = "from_url")]
+            Error::Io(ref err) => err.description(),
         }
     }
 
     fn cause(&self) -> Option<&StdError> {
         match *self {
-            Error::IO(ref err) => Some(err),
-            #[cfg(feature = "from_url")]
-            Error::ReqParsing(ref err) => Some(err),
-            Error::IntParsing(ref err) => Some(err),
-            Error::DateParsing(ref err) => Some(err),
-            Error::UrlParsing(ref err) => Some(err),
             Error::Utf8(ref err) => Some(err),
-            Error::XmlParsing(ref err, _) => Some(err),
             Error::Xml(ref err) => Some(err),
+            #[cfg(feature = "from_url")]
+            Error::UrlRequest(ref err) => Some(err),
+            #[cfg(feature = "from_url")]
+            Error::Io(ref err) => Some(err),
             _ => None,
         }
     }
@@ -83,26 +60,15 @@ impl StdError for Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            Error::Validation(ref s) |
-            Error::FromUrl(ref s) => write!(f, "{}", s),
-            Error::IO(ref err) => err.fmt(f),
-            #[cfg(feature = "from_url")]
-            Error::ReqParsing(ref err) => err.fmt(f),
-            Error::IntParsing(ref err) => err.fmt(f),
-            Error::DateParsing(ref err) => err.fmt(f),
-            Error::UrlParsing(ref err) => err.fmt(f),
             Error::Utf8(ref err) => err.fmt(f),
-            Error::XmlParsing(ref err, _) => err.fmt(f),
             Error::Xml(ref err) => err.fmt(f),
             Error::InvalidStartTag => write!(f, "the input did not begin with an rss tag"),
-            Error::EOF => write!(f, "reached end of input without finding a complete channel"),
+            Error::Eof => write!(f, "reached end of input without finding a complete channel"),
+            #[cfg(feature = "from_url")]
+            Error::UrlRequest(ref err) => err.fmt(f),
+            #[cfg(feature = "from_url")]
+            Error::Io(ref err) => err.fmt(f),
         }
-    }
-}
-
-impl From<(XmlError, usize)> for Error {
-    fn from(err: (XmlError, usize)) -> Error {
-        Error::XmlParsing(err.0, err.1)
     }
 }
 
@@ -118,39 +84,16 @@ impl From<Utf8Error> for Error {
     }
 }
 
-impl From<FromUtf8Error> for Error {
-    fn from(err: FromUtf8Error) -> Error {
-        Error::Utf8(err.utf8_error())
-    }
-}
-
-impl From<UrlParseError> for Error {
-    fn from(err: UrlParseError) -> Error {
-        Error::UrlParsing(err)
-    }
-}
-
-impl From<DateParseError> for Error {
-    fn from(err: DateParseError) -> Error {
-        Error::DateParsing(err)
-    }
-}
-
-impl From<ParseIntError> for Error {
-    fn from(err: ParseIntError) -> Error {
-        Error::IntParsing(err)
+#[cfg(feature = "from_url")]
+impl From<::reqwest::Error> for Error {
+    fn from(err: ::reqwest::Error) -> Error {
+        Error::UrlRequest(err)
     }
 }
 
 #[cfg(feature = "from_url")]
-impl From<::reqwest::Error> for Error {
-    fn from(err: ::reqwest::Error) -> Error {
-        Error::ReqParsing(err)
-    }
-}
-
-impl From<IOError> for Error {
-    fn from(err: IOError) -> Error {
-        Error::IO(err)
+impl From<::std::io::Error> for Error {
+    fn from(err: ::std::io::Error) -> Error {
+        Error::Io(err)
     }
 }

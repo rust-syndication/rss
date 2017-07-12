@@ -5,19 +5,21 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-use fromxml::FromXml;
+use std::io::{BufRead, Write};
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
-use std::str::FromStr;
-use toxml::ToXml;
-use url::Url;
 
-/// A representation of the `<cloud>` element.
-#[derive(Debug, Default, Clone, PartialEq)]
+use error::Error;
+use fromxml::FromXml;
+use toxml::ToXml;
+
+/// Represents a cloud in an RSS feed.
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct Cloud {
     /// The domain to register with.
     domain: String,
@@ -32,161 +34,202 @@ pub struct Cloud {
 }
 
 impl Cloud {
-    /// Return the domain for this `Cloud`.
+    /// Return the domain for this cloud.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::CloudBuilder;
+    /// use rss::Cloud;
     ///
-    /// let domain = "http://rpc.sys.com/";
-    ///
-    /// let cloud = CloudBuilder::default()
-    ///     .domain(domain)
-    ///     .finalize();
-    ///
-    /// assert_eq!(domain.to_string(), cloud.domain());
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_domain("http://example.com");
+    /// assert_eq!(cloud.domain(), "http://example.com");
     /// ```
     pub fn domain(&self) -> &str {
         self.domain.as_str()
     }
 
-    /// Return the port for this `Cloud`.
+    /// Set the domain for this cloud.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::CloudBuilder;
+    /// use rss::Cloud;
     ///
-    /// let port = 80;
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_domain("http://example.com");
+    /// ```
+    pub fn set_domain<V>(&mut self, domain: V)
+    where
+        V: Into<String>,
+    {
+        self.domain = domain.into();
+    }
+
+    /// Return the port for this cloud.
     ///
-    /// let cloud = CloudBuilder::default()
-    ///     .port(port)
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(port.to_string(), cloud.port());
+    /// ```
+    /// use rss::Cloud;
+    ///
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_port("80");
+    /// assert_eq!(cloud.port(), "80");
     /// ```
     pub fn port(&self) -> &str {
         self.port.as_str()
     }
 
-    /// Return the path for this `Cloud`.
+    /// Set the port for this cloud.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::CloudBuilder;
+    /// use rss::Cloud;
     ///
-    /// let path = "/RPC2";
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_port("80");
+    /// ```
+    pub fn set_port<V>(&mut self, port: V)
+    where
+        V: Into<String>,
+    {
+        self.port = port.into();
+    }
+
+    /// Return the path for this cloud.
     ///
-    /// let cloud = CloudBuilder::default()
-    ///     .path(path)
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(path, cloud.path());
+    /// ```
+    /// use rss::Cloud;
+    ///
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_port("/rpc");
+    /// assert_eq!(cloud.port(), "/rpc");
     /// ```
     pub fn path(&self) -> &str {
         self.path.as_str()
     }
 
-    /// Return the register procedure for this `Cloud`.
+    /// Set the path for this cloud.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{CloudBuilder, Cloud};
+    /// use rss::Cloud;
     ///
-    /// let register_procedure = "pingMe";
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_path("/rpc");
+    /// ```
+    pub fn set_path<V>(&mut self, path: V)
+    where
+        V: Into<String>,
+    {
+        self.path = path.into();
+    }
+
+    /// Return the register procedure for this cloud.
     ///
-    /// let cloud = CloudBuilder::default()
-    ///     .register_procedure(register_procedure)
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(register_procedure, cloud.register_procedure());
+    /// ```
+    /// use rss::Cloud;
+    ///
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_register_procedure("pingMe");
+    /// assert_eq!(cloud.register_procedure(), "pingMe");
     /// ```
     pub fn register_procedure(&self) -> &str {
         self.register_procedure.as_str()
     }
 
-    /// Return the protocol for this `Cloud`.
+    /// Set the register procedure for this cloud.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{CloudBuilder, Cloud};
+    /// use rss::Cloud;
     ///
-    /// let protocol = "soap";
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_register_procedure("pingMe");
+    /// ```
+    pub fn set_register_procedure<V>(&mut self, register_procedure: V)
+    where
+        V: Into<String>,
+    {
+        self.register_procedure = register_procedure.into();
+    }
+
+    /// Return the protocol for this cloud.
     ///
-    /// let cloud = CloudBuilder::default()
-    ///     .protocol(protocol)
-    ///     .domain("http://rpc.sys.com/")
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(protocol, cloud.protocol());
+    /// ```
+    /// use rss::Cloud;
+    ///
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_protocol("xml-rpc");
+    /// assert_eq!(cloud.protocol(), "xml-rpc");
     /// ```
     pub fn protocol(&self) -> &str {
         self.protocol.as_str()
     }
+
+    /// Set the protocol for this cloud.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Cloud;
+    ///
+    /// let mut cloud = Cloud::default();
+    /// cloud.set_protocol("xml-rpc");
+    /// ```
+    pub fn set_protocol<V>(&mut self, protocol: V)
+    where
+        V: Into<String>,
+    {
+        self.protocol = protocol.into();
+    }
 }
 
 impl FromXml for Cloud {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        mut atts: Attributes,
-    ) -> Result<Self, Error> {
-        let mut domain = None;
-        let mut port = None;
-        let mut path = None;
-        let mut register_procedure = None;
-        let mut protocol = None;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+        let mut cloud = Cloud::default();
 
         for attr in atts.with_checks(false) {
             if let Ok(att) = attr {
                 match att.key {
-                    b"domain" if domain.is_none() => {
-                        domain = Some(att.unescape_and_decode_value(reader)?);
+                    b"domain" => {
+                        cloud.domain = att.unescape_and_decode_value(reader)?;
                     }
-                    b"port" if port.is_none() => {
-                        port = Some(att.unescape_and_decode_value(reader)?);
+                    b"port" => {
+                        cloud.port = att.unescape_and_decode_value(reader)?;
                     }
-                    b"path" if path.is_none() => {
-                        path = Some(att.unescape_and_decode_value(reader)?);
+                    b"path" => {
+                        cloud.path = att.unescape_and_decode_value(reader)?;
                     }
-                    b"registerProcedure" if register_procedure.is_none() => {
-                        register_procedure = Some(att.unescape_and_decode_value(reader)?);
+                    b"registerProcedure" => {
+                        cloud.register_procedure = att.unescape_and_decode_value(reader)?;
                     }
-                    b"protocol" if protocol.is_none() => {
-                        protocol = Some(att.unescape_and_decode_value(reader)?);
+                    b"protocol" => {
+                        cloud.protocol = att.unescape_and_decode_value(reader)?;
                     }
                     _ => {}
                 }
             }
         }
 
-        let mut depth = 1;
-        let mut buf = Vec::new();
-        while depth > 0 {
-            match reader.read_event(&mut buf)? {
-                Event::Start(_) => depth += 1,
-                Event::End(_) => depth -= 1,
-                Event::Eof => break,
-                _ => {}
-            }
-        }
+        reader.read_to_end(b"cloud", &mut Vec::new())?;
 
-        Ok(Cloud {
-            domain: domain.unwrap_or_default(),
-            port: port.unwrap_or_default(),
-            path: path.unwrap_or_default(),
-            register_procedure: register_procedure.unwrap_or_default(),
-            protocol: protocol.unwrap_or_default(),
-        })
-
+        Ok(cloud)
     }
 }
 
 impl ToXml for Cloud {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"cloud";
         let mut element = BytesStart::borrowed(name, name.len());
 
@@ -201,214 +244,5 @@ impl ToXml for Cloud {
 
         writer.write_event(Event::Empty(element))?;
         Ok(())
-    }
-}
-
-/// A builder used to create a `Cloud`.
-#[derive(Debug, Clone, Default)]
-pub struct CloudBuilder {
-    domain: String,
-    port: i64,
-    path: String,
-    register_procedure: String,
-    protocol: String,
-}
-
-impl CloudBuilder {
-    /// Construct a new `CloudBuilder` using the values from an existing `Cloud`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, CloudBuilder};
-    ///
-    /// let input = include_str!("tests/data/cloud.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let cloud = channel.cloud().unwrap().clone();
-    /// let builder = CloudBuilder::from_cloud(cloud).unwrap();
-    /// ```
-    ///
-    /// # Errors
-    ///
-    /// If this function encounters an error while parsing `port` from a `String` to an `i64` it
-    /// will return an [`IntParsing`](/rss/enum.Error.html#variant.IntParsing) error.
-    pub fn from_cloud(cloud: Cloud) -> Result<Self, Error> {
-        Ok(CloudBuilder {
-            domain: cloud.domain,
-            port: cloud.port.parse()?,
-            path: cloud.path,
-            register_procedure: cloud.register_procedure,
-            protocol: cloud.protocol,
-        })
-    }
-
-    /// Set the domain for the `Cloud`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let builder = CloudBuilder::default()
-    ///     .domain("http://rpc.sys.com/");
-    /// ```
-    pub fn domain<S>(mut self, domain: S) -> CloudBuilder
-    where
-        S: Into<String>,
-    {
-        self.domain = domain.into();
-        self
-    }
-
-    /// Set the port for the `Cloud`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let builder = CloudBuilder::default()
-    ///     .port(80);
-    /// ```
-    pub fn port(mut self, port: i64) -> CloudBuilder {
-        self.port = port;
-        self
-    }
-
-    /// Set the path for the `Cloud`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let builder = CloudBuilder::default()
-    ///     .path("/RPC2");
-    /// ```
-    pub fn path<S>(mut self, path: S) -> CloudBuilder
-    where
-        S: Into<String>,
-    {
-        self.path = path.into();
-        self
-    }
-
-    /// Set the register procedure for the `Cloud`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let builder = CloudBuilder::default()
-    ///     .register_procedure("pingMe");
-    /// ```
-    pub fn register_procedure<S>(mut self, register_procedure: S) -> CloudBuilder
-    where
-        S: Into<String>,
-    {
-        self.register_procedure = register_procedure.into();
-        self
-    }
-
-    /// Set the protocol for the `Cloud`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let builder = CloudBuilder::default()
-    ///     .protocol("soap");
-    /// ```
-    pub fn protocol<S>(mut self, protocol: S) -> CloudBuilder
-    where
-        S: Into<String>,
-    {
-        self.protocol = protocol.into();
-        self
-    }
-
-    /// Validate the contents of this `CloudBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let builder = CloudBuilder::default()
-    ///         .domain("http://rpc.sys.com/")
-    ///         .port(80)
-    ///         .path("/RPC2")
-    ///         .register_procedure("pingMe")
-    ///         .protocol("soap")
-    ///         .validate()
-    ///         .unwrap();
-    /// ```
-    pub fn validate(self) -> Result<CloudBuilder, Error> {
-        if self.port < 0 {
-            return Err(Error::Validation(
-                "Cloud Port cannot be a negative value".to_string(),
-            ));
-        }
-
-        Url::parse(self.domain.as_str())?;
-
-        match CloudProtocol::from_str(self.protocol.as_str()) {
-            Ok(_) => (),
-            Err(err) => return Err(Error::Validation(err.to_string())),
-        };
-
-        Ok(self)
-    }
-
-    /// Construct the `Cloud` from this `CloudBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::CloudBuilder;
-    ///
-    /// let cloud = CloudBuilder::default()
-    ///         .domain("http://rpc.sys.com/")
-    ///         .port(80)
-    ///         .path("/RPC2")
-    ///         .register_procedure("pingMe")
-    ///         .protocol("soap")
-    ///         .finalize();
-    /// ```
-    pub fn finalize(self) -> Cloud {
-        Cloud {
-            domain: self.domain,
-            port: self.port.to_string(),
-            path: self.path,
-            register_procedure: self.register_procedure,
-            protocol: self.protocol,
-        }
-    }
-}
-
-/// Enumerations of protocols for `Cloud`.
-#[derive(Clone, Debug)]
-enum CloudProtocol {
-    /// http-post
-    HttpPost,
-    /// xml-rpc
-    XmlRpc,
-    /// soap
-    Soap,
-}
-
-impl FromStr for CloudProtocol {
-    type Err = &'static str;
-
-    // Convert `&str` to `CloudProtocol`.
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "http-post" => Ok(CloudProtocol::HttpPost),
-            "xml-rpc" => Ok(CloudProtocol::XmlRpc),
-            "soap" => Ok(CloudProtocol::Soap),
-            _ => Err("Cloud Protocol is not a valid value"),
-        }
     }
 }

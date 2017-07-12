@@ -39,7 +39,7 @@ extern crate rss;
 
 ## Reading
 
-### From a `BufRead`
+### From a Reader
 
 A channel can be read from any object that implements the `BufRead` trait.
 
@@ -48,26 +48,20 @@ use std::fs::File;
 use std::io::BufReader;
 use rss::Channel;
 
-let file = File::open("tests/data/rss2sample.xml").unwrap();
-let reader = BufReader::new(file);
-let channel = Channel::read_from(reader).unwrap();
+let file = File::open("example.xml").unwrap();
+let channel = Channel::read_from(BufReader::new(file)).unwrap();
 ```
 
 ### From a URL
 
 A channel can also be read from a URL.
 
-To enable this functionality you must enable the `from_url` feature in your Cargo.toml.
-
-```toml
-[dependencies]
-rss = { version = "*", features = ["from_url"] }
-```
+**Note**: This requires enabling the `from_url` feature.
 
 ```rust
 use rss::Channel;
 
-let channel = Channel::from_url("https://feedpress.me/usererror.xml").unwrap();
+let channel = Channel::from_url("http://example.com/feed.xml").unwrap();
 ```
 
 ## Writing
@@ -76,86 +70,48 @@ A channel can be written to any object that implements the `Write` trait or conv
 
 **Note**: Writing a channel does not perform any escaping of XML entities.
 
-### Example
-
 ```rust
-use std::fs::File;
-use std::io::{BufReader, sink};
 use rss::Channel;
 
-let file = File::open("tests/data/rss2sample.xml").unwrap();
-let reader = BufReader::new(file);
-let channel = Channel::read_from(reader).unwrap();
-
-// write to the channel to a writer
-channel.write_to(sink()).unwrap();
-
-// convert the channel to a string
-let string = channel.to_string();
+let channel = Channel::default();
+channel.write_to(::std::io::sink()).unwrap(); // // write to the channel to a writer
+let string = channel.to_string(); // convert the channel to a string
 ```
 
 ## Creation
 
-A channel can be created using the Builder functions.
-
-### Example
+Builder methods are provided to assist in the creation of channels.
 
 ```rust
-use rss::{ChannelBuilder, ImageBuilder};
-
-let image = ImageBuilder::default()
-    .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    .title("LAS 300 Logo")
-    .link("http://www.jupiterbroadcasting.com")
-    .finalize();
+use rss::ChannelBuilder;
 
 let channel = ChannelBuilder::default()
-    .title("The Linux Action Show! OGG")
-    .link("http://www.jupiterbroadcasting.com")
-    .description("Ogg Vorbis audio versions of The Linux Action Show!")
-    .image(image)
-    .finalize();
+    .title("Channel Title")
+    .link("http://example.com")
+    .description("An RSS feed.")
+    .build()
+    .unwrap();
 ```
 
 ## Validation
 
-Validation can be performed using either a `Channel` or a builder.
+Validation methods are provided to validate the contents of a channel against the RSS specification.
 
-The the following checks are performed during validation:
-
-* Ensures that integer properties can be parsed from their string representation into integers
-* Ensures that the integer properties are within their valid range according to the RSS 2.0 specification
-* Ensures that URL properties can be parsed
-* Ensures that string properties where only certain values are allowed fall within those valid values
-
-### Example
+**Note**: This requires enabling the `validation` feature.
 
 ```rust
 use rss::Channel;
+use rss::validation::Validate;
 
-let input = include_str!("tests/data/rss2sample.xml");
-let channel = input.parse::<Channel>().unwrap();
+let channel = Channel::default();
 channel.validate().unwrap();
-```
-
-### Example
-
-```rust
-use rss::ImageBuilder;
-
-let builder = ImageBuilder::default()
-    .url("http://jupiterbroadcasting.com/images/LAS-300-Badge.jpg")
-    .title("LAS 300 Logo")
-    .link("http://www.jupiterbroadcasting.com")
-    .validate()
-    .unwrap();
 ```
 
 ## Extensions
 
 Elements which have non-default namespaces will be considered extensions. Extensions are stored in `Channel.extensions` and `Item.extensions`. 
 
-For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted to structs and stored in `Channel.itunes_ext`, `Channel.dublin_core_ext`, `Item.itunes_ext`, and `Item.dublin_core_ext`.
+For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted to structs and stored in as properties on channels and items.
 
 ## Invalid Feeds
 

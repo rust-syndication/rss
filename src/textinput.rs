@@ -5,18 +5,22 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use error::Error;
-use fromxml::{FromXml, element_text};
+use std::io::{BufRead, Write};
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
-use toxml::{ToXml, WriterExt};
-use url::Url;
 
-/// A representation of the `<textInput>` element.
-#[derive(Debug, Default, Clone, PartialEq)]
+use error::Error;
+use fromxml::FromXml;
+use toxml::{ToXml, WriterExt};
+use util::element_text;
+
+/// Represents a text input for an RSS channel.
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct TextInput {
     /// The label of the Submit button for the text input.
     title: String,
@@ -29,131 +33,167 @@ pub struct TextInput {
 }
 
 impl TextInput {
-    /// Return the title for this `TextInput`.
+    /// Return the title for this text field.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::TextInputBuilder;
+    /// use rss::TextInput;
     ///
-    /// let title = "Enter Comment";
-    ///
-    /// let text_input = TextInputBuilder::default()
-    ///     .title(title)
-    ///     .finalize();
-    ///
-    /// assert_eq!(title, text_input.title());
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_title("Input Title");
+    /// assert_eq!(text_input.title(), "Input Title");
     /// ```
     pub fn title(&self) -> &str {
         self.title.as_str()
     }
 
-    /// Return the description of this `TextInput`.
+    /// Set the title for this text field.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::TextInputBuilder;
+    /// use rss::TextInput;
     ///
-    /// let description = "Provided Feedback";
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_title("Input Title");
+    /// ```
+    pub fn set_title<V>(&mut self, title: V)
+    where
+        V: Into<String>,
+    {
+        self.title = title.into();
+    }
+
+    /// Return the description of this text field.
     ///
-    /// let text_input = TextInputBuilder::default()
-    ///     .description(description)
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(description, text_input.description());
+    /// ```
+    /// use rss::TextInput;
+    ///
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_description("Input description");
+    /// assert_eq!(text_input.description(), "Input description");
     /// ```
     pub fn description(&self) -> &str {
         self.description.as_str()
     }
 
-    /// Return the name of this `TextInput`.
+    /// Set the description of this text field.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::TextInputBuilder;
+    /// use rss::TextInput;
     ///
-    /// let name = "Comment";
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_description("Input description");
+    /// ```
+    pub fn set_description<V>(&mut self, description: V)
+    where
+        V: Into<String>,
+    {
+        self.description = description.into();
+    }
+
+    /// Return the name of the text object in this input.
     ///
-    /// let text_input = TextInputBuilder::default()
-    ///     .name(name)
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(name, text_input.name());
+    /// ```
+    /// use rss::TextInput;
+    ///
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_name("Input name");
+    /// assert_eq!(text_input.name(), "Input name");
     /// ```
     pub fn name(&self) -> &str {
         self.name.as_str()
     }
 
-    /// Return the submission URL for this `TextInput`.
+    /// Set the name of the text object in this input.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::TextInputBuilder;
+    /// use rss::TextInput;
     ///
-    /// let link = "http://www.example.com/feedback";
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_name("Input name");;
+    /// ```
+    pub fn set_name<V>(&mut self, name: V)
+    where
+        V: Into<String>,
+    {
+        self.name = name.into();
+    }
+
+    /// Return the URL of the GCI script that processes the text input request.
     ///
-    /// let text_input = TextInputBuilder::default()
-    ///     .link(link)
-    ///     .finalize();
+    /// # Examples
     ///
-    /// assert_eq!(link, text_input.link());
+    /// ```
+    /// use rss::TextInput;
+    ///
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_link("http://example.com/submit");
+    /// assert_eq!(text_input.link(), "http://example.com/submit");
     /// ```
     pub fn link(&self) -> &str {
         self.link.as_str()
     }
+
+    /// Set the URL of the GCI script that processes the text input request.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::TextInput;
+    ///
+    /// let mut text_input = TextInput::default();
+    /// text_input.set_link("http://example.com/submit");
+    /// ```
+    pub fn set_link<V>(&mut self, link: V)
+    where
+        V: Into<String>,
+    {
+        self.link = link.into();
+    }
 }
 
 impl FromXml for TextInput {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        _: Attributes,
-    ) -> Result<Self, Error> {
-        let mut title = None;
-        let mut description = None;
-        let mut name = None;
-        let mut link = None;
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+        let mut text_input = TextInput::default();
         let mut buf = Vec::new();
-        let mut skip_buf = Vec::new();
 
         loop {
             match reader.read_event(&mut buf)? {
                 Event::Start(element) => {
                     match element.name() {
-                        b"title" => title = element_text(reader)?,
-                        b"description" => description = element_text(reader)?,
-                        b"name" => name = element_text(reader)?,
-                        b"link" => link = element_text(reader)?,
-                        n => reader.read_to_end(n, &mut skip_buf)?,
+                        b"title" => text_input.title = element_text(reader)?.unwrap_or_default(),
+                        b"description" => {
+                            text_input.description = element_text(reader)?.unwrap_or_default()
+                        }
+                        b"name" => text_input.name = element_text(reader)?.unwrap_or_default(),
+                        b"link" => text_input.link = element_text(reader)?.unwrap_or_default(),
+                        n => reader.read_to_end(n, &mut Vec::new())?,
                     }
                 }
-                Event::End(_) => {
-                    let title = title.unwrap_or_default();
-                    let description = description.unwrap_or_default();
-                    let name = name.unwrap_or_default();
-                    let link = link.unwrap_or_default();
-
-                    return Ok(TextInput {
-                        title: title,
-                        description: description,
-                        name: name,
-                        link: link,
-                    });
-                }
-                Event::Eof => break,
+                Event::End(_) => break,
+                Event::Eof => return Err(Error::Eof),
                 _ => {}
             }
+
             buf.clear();
         }
 
-        Err(Error::EOF)
+        Ok(text_input)
     }
 }
 
 impl ToXml for TextInput {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"textInput";
 
         writer
@@ -167,154 +207,5 @@ impl ToXml for TextInput {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
-    }
-}
-
-/// A builder used to create a `TextInput`.
-#[derive(Debug, Clone, Default)]
-pub struct TextInputBuilder {
-    title: String,
-    description: String,
-    name: String,
-    link: String,
-}
-
-impl TextInputBuilder {
-    /// Construct a new `TextInputBuilder` using the values from an existing `TextInput`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, TextInputBuilder};
-    ///
-    /// let input = include_str!("tests/data/textinput.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let text_input = channel.text_input().unwrap().clone();
-    /// let builder = TextInputBuilder::from_text_input(text_input);
-    /// ```
-    pub fn from_text_input(text_input: TextInput) -> Self {
-        TextInputBuilder {
-            title: text_input.title,
-            description: text_input.description,
-            name: text_input.name,
-            link: text_input.link,
-        }
-    }
-
-
-    /// Set the title for the `TextInput`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::TextInputBuilder;
-    ///
-    /// let builder = TextInputBuilder::default()
-    ///     .title("Title");
-    /// ```
-    pub fn title<S>(mut self, title: S) -> TextInputBuilder
-    where
-        S: Into<String>,
-    {
-        self.title = title.into();
-        self
-    }
-
-    /// Set the description of the `TextInput`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::TextInputBuilder;
-    ///
-    /// let builder = TextInputBuilder::default()
-    ///     .description("This is a test description.");
-    /// ```
-    pub fn description<S>(mut self, description: S) -> TextInputBuilder
-    where
-        S: Into<String>,
-    {
-        self.description = description.into();
-        self
-    }
-
-    /// Set the name of the `TextInput`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::TextInputBuilder;
-    ///
-    /// let builder = TextInputBuilder::default()
-    ///     .name("Comments");
-    /// ```
-    pub fn name<S>(mut self, name: S) -> TextInputBuilder
-    where
-        S: Into<String>,
-    {
-        self.name = name.into();
-        self
-    }
-
-    /// Set the submission URL for the `TextInput`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::TextInputBuilder;
-    ///
-    /// let builder = TextInputBuilder::default()
-    ///     .link("http://www.example.com/feedback");
-    /// ```
-    pub fn link<S>(mut self, link: S) -> TextInputBuilder
-    where
-        S: Into<String>,
-    {
-        self.link = link.into();
-        self
-    }
-
-    /// Validate the contents of this `TextInputBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::TextInputBuilder;
-    ///
-    /// let text_input = TextInputBuilder::default()
-    ///         .title("Title")
-    ///         .description("This is a test description.")
-    ///         .name("Comments")
-    ///         .link("http://www.example.com/feedback")
-    ///         .validate()
-    ///         .unwrap();
-    /// ```
-    pub fn validate(self) -> Result<TextInputBuilder, Error> {
-        Url::parse(self.link.as_str())?;
-
-        Ok(self)
-    }
-
-    /// Construct the `TextInput` from this `TextInputBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::TextInputBuilder;
-    ///
-    /// let text_input = TextInputBuilder::default()
-    ///         .title("Title")
-    ///         .description("This is a test description.")
-    ///         .name("Comments")
-    ///         .link("http://www.example.com/feedback")
-    ///         .finalize();
-    /// ```
-    pub fn finalize(self) -> TextInput {
-        TextInput {
-            title: self.title,
-            description: self.description,
-            name: self.name,
-            link: self.link,
-        }
     }
 }

@@ -5,26 +5,30 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use category::Category;
-use chrono::DateTime;
-use enclosure::Enclosure;
-use error::Error;
-use extension::ExtensionMap;
-use extension::dublincore::DublinCoreExtension;
-use extension::itunes::ITunesItemExtension;
-use fromxml::{self, FromXml, parse_extension, element_text};
-use guid::Guid;
+use std::io::{BufRead, Write};
+
 use quick_xml::errors::Error as XmlError;
 use quick_xml::events::{Event, BytesStart, BytesEnd};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
+
+use category::Category;
+use enclosure::Enclosure;
+use error::Error;
+use extension::ExtensionMap;
+use extension::dublincore::DublinCoreExtension;
+use extension::itunes::ITunesItemExtension;
+use extension::util::{extension_name, parse_extension};
+use fromxml::FromXml;
+use guid::Guid;
 use source::Source;
 use toxml::{ToXml, WriterExt};
-use url::Url;
+use util::element_text;
 
-/// A representation of the `<item>` element.
-#[derive(Debug, Default, Clone, PartialEq)]
+/// Represents an item in an RSS feed.
+#[derive(Debug, Default, Clone, PartialEq, Builder)]
+#[builder(setter(into), default)]
 pub struct Item {
     /// The title of the item.
     title: Option<String>,
@@ -42,7 +46,7 @@ pub struct Item {
     enclosure: Option<Enclosure>,
     /// A unique identifier for the item.
     guid: Option<Guid>,
-    /// The date the item was published.
+    /// The date the item was published as an RFC822 timestamp.
     pub_date: Option<String>,
     /// The RSS channel the item came from.
     source: Option<Source>,
@@ -57,354 +61,477 @@ pub struct Item {
 }
 
 impl Item {
-    /// Return the title of this `Item`.
+    /// Return the title of this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let title = "Making Music with Linux | LAS 408";
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .title(title.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(title), item.title());
-    /// ```
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .title(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.title().is_none());
+    /// let mut item = Item::default();
+    /// item.set_title("Item Title".to_string());
+    /// assert_eq!(item.title(), Some("Item Title"));
     /// ```
     pub fn title(&self) -> Option<&str> {
         self.title.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the URL for this `Item`.
+    /// Set the title of this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let link = "http://www.jupiterbroadcasting.com/";
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .link(link.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(link), item.link());
+    /// let mut item = Item::default();
+    /// item.set_title("Item Title".to_string());
     /// ```
+    pub fn set_title<V>(&mut self, title: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.title = title.into();
+    }
+
+    /// Return the URL of this item.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let item = ItemBuilder::default()
-    ///     .link(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.link().is_none());
+    /// let mut item = Item::default();
+    /// item.set_link("http://example.com".to_string());
+    /// assert_eq!(item.link(), Some("http://example.com"));
     /// ```
     pub fn link(&self) -> Option<&str> {
         self.link.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the description of this `Item`.
+    /// Set the URL of this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let description = "This is a test description";
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .description(description.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(description), item.description());
+    /// let mut item = Item::default();
+    /// item.set_link("http://example.com".to_string());
     /// ```
+    pub fn set_link<V>(&mut self, link: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.link = link.into();
+    }
+
+    /// Return the description of this item.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let item = ItemBuilder::default()
-    ///     .description(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.description().is_none());
+    /// let mut item = Item::default();
+    /// item.set_description("Item description".to_string());
+    /// assert_eq!(item.description(), Some("Item description"));
     /// ```
     pub fn description(&self) -> Option<&str> {
         self.description.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the email address of the author of this `Item`.
+    /// Return the description of this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let author = "Chris Fisher";
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .author(author.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(author), item.author());
+    /// let mut item = Item::default();
+    /// item.set_description("Item description".to_string());
     /// ```
+    pub fn set_description<V>(&mut self, description: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.description = description.into();
+    }
+
+    /// Return the email address for the author of this item.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let item = ItemBuilder::default()
-    ///     .author(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.author().is_none());
+    /// let mut item = Item::default();
+    /// item.set_author("John Doe".to_string());
+    /// assert_eq!(item.author(), Some("John Doe"));
     /// ```
     pub fn author(&self) -> Option<&str> {
         self.author.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the categories that this `Item` belongs to.
+    /// Set the email address for the author of this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{CategoryBuilder, ItemBuilder};
+    /// use rss::Item;
     ///
-    /// let category = CategoryBuilder::default()
-    ///     .name("Media")
-    ///     .finalize();
+    /// let mut item = Item::default();
+    /// item.set_author("John Doe".to_string());
+    /// ```
+    pub fn set_author<V>(&mut self, author: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.author = author.into();
+    }
+
+    /// Return the categories that this item belongs to.
     ///
-    /// let categories = vec![category];
+    /// # Examples
     ///
-    /// let item = ItemBuilder::default()
-    ///     .categories(categories.clone())
-    ///     .finalize();
+    /// ```
+    /// use rss::{Category, Item};
     ///
-    /// assert_eq!(categories, item.categories());
+    /// let mut item = Item::default();
+    /// item.set_categories(vec![Category::default()]);
+    /// assert_eq!(item.categories().len(), 1);
     /// ```
     pub fn categories(&self) -> &[Category] {
         &self.categories
     }
 
-    /// Return the URL for comments about this `Item`.
+    /// Set the categories that this item belongs to.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::{Category, Item};
     ///
-    /// let comments = "http://example.com/comments";
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .comments(comments.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(comments), item.comments());
+    /// let mut item = Item::default();
+    /// item.set_categories(vec![Category::default()]);
     /// ```
+    pub fn set_categories<V>(&mut self, categories: V)
+    where
+        V: Into<Vec<Category>>,
+    {
+        self.categories = categories.into();
+    }
+
+    /// Return the URL for comments about this item.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let item = ItemBuilder::default()
-    ///     .comments(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.comments().is_none());
+    /// let mut item = Item::default();
+    /// item.set_comments("http://example.com".to_string());
+    /// assert_eq!(item.comments(), Some("http://example.com"));
     /// ```
     pub fn comments(&self) -> Option<&str> {
         self.comments.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the enclosure information for this `Item`.
+    /// Set the URL for comments about this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{EnclosureBuilder, ItemBuilder};
+    /// use rss::Item;
     ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/traffic.libsyn.com/jnite/\
-    ///     linuxactionshowep408.ogg";
+    /// let mut item = Item::default();
+    /// item.set_comments("http://example.com".to_string());
+    /// ```
+    pub fn set_comments<V>(&mut self, comments: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.comments = comments.into();
+    }
+
+    /// Return the enclosure information for this item.
     ///
-    /// let enclosure = EnclosureBuilder::default()
-    ///     .url(url)
-    ///     .length(70772893)
-    ///     .mime_type("audio/ogg")
-    ///     .finalize();
+    /// # Examples
     ///
-    /// let item = ItemBuilder::default()
-    ///     .enclosure(enclosure)
-    ///     .finalize();
+    /// ```
+    /// use rss::{Enclosure, Item};
     ///
+    /// let mut item = Item::default();
+    /// item.set_enclosure(Enclosure::default());
     /// assert!(item.enclosure().is_some());
-    /// ```
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .enclosure(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.enclosure().is_none());
     /// ```
     pub fn enclosure(&self) -> Option<&Enclosure> {
         self.enclosure.as_ref()
     }
 
-    /// Return the GUID for this `Item`.
+    /// Set the enclosure information for this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{GuidBuilder, ItemBuilder};
+    /// use rss::{Enclosure, Item};
     ///
-    /// let guid = GuidBuilder::default()
-    ///     .value("9DE46946-2F90-4D5D-9047-7E9165C16E7C")
-    ///     .finalize();
+    /// let mut item = Item::default();
+    /// item.set_enclosure(Enclosure::default());
+    /// ```
+    pub fn set_enclosure<V>(&mut self, enclosure: V)
+    where
+        V: Into<Option<Enclosure>>,
+    {
+        self.enclosure = enclosure.into();
+    }
+
+    /// Return the GUID for this item.
     ///
-    /// let item = ItemBuilder::default()
-    ///     .guid(guid)
-    ///     .finalize();
+    /// # Examples
     ///
+    /// ```
+    /// use rss::{Guid, Item};
+    ///
+    /// let mut item = Item::default();
+    /// item.set_guid(Guid::default());
     /// assert!(item.guid().is_some())
-    /// ```
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .guid(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.guid().is_none());
     /// ```
     pub fn guid(&self) -> Option<&Guid> {
         self.guid.as_ref()
     }
 
-    /// Return the publication date for this `Item`.
+    /// Set the GUID for this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::{Guid, Item};
     ///
-    /// let pub_date = "Sun, 13 Mar 2016 20:02:02 -0700";
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .pub_date(pub_date.to_string())
-    ///     .finalize();
-    ///
-    /// assert_eq!(Some(pub_date), item.pub_date());
+    /// let mut item = Item::default();
+    /// item.set_guid(Guid::default());
     /// ```
+    pub fn set_guid<V>(&mut self, guid: V)
+    where
+        V: Into<Option<Guid>>,
+    {
+        self.guid = guid.into();
+    }
+
+    /// Return the publication date of this item as an RFC822 timestamp.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let item = ItemBuilder::default()
-    ///     .pub_date(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.pub_date().is_none());
+    /// let mut item = Item::default();
+    /// item.set_pub_date("Mon, 01 Jan 2017 12:00:00 GMT".to_string());
+    /// assert_eq!(item.pub_date(), Some("Mon, 01 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
         self.pub_date.as_ref().map(|s| s.as_str())
     }
 
-    /// Return the source URL for this `Item`.
+    /// Set the publication date of this item as an RFC822 timestamp.
+    ///
+    /// # Examples
+    ///
+    ///
+    /// ```
+    /// use rss::Item;
+    ///
+    /// let mut item = Item::default();
+    /// item.set_pub_date("Mon, 01 Jan 2017 12:00:00 GMT".to_string());
+    /// ```
+    pub fn set_pub_date<V>(&mut self, pub_date: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.pub_date = pub_date.into();
+    }
+
+    /// Return the source URL for this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::{ItemBuilder, SourceBuilder};
+    /// use rss::{Item, Source};
     ///
-    /// let source = SourceBuilder::default()
-    ///     .url("http://www.tomalak.org/links2.xml")
-    ///     .finalize();
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .source(source)
-    ///     .finalize();
-    ///
-    /// assert!(item.source().is_some())
-    /// ```
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .source(None)
-    ///     .finalize();
-    ///
-    /// assert!(item.source().is_none());
+    /// let mut item = Item::default();
+    /// item.set_source(Source::default());
+    /// assert!(item.source().is_some());
     /// ```
     pub fn source(&self) -> Option<&Source> {
         self.source.as_ref()
     }
 
-    /// Return the content of this `Item`.
-    pub fn content(&self) -> Option<&str> {
-        self.content.as_ref().map(|s| s.as_str())
-    }
-
-    /// Return the `ITunesItemExtension` for this `Item`.
+    /// Set the source URL for this item.
     ///
     /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
-    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
+    /// use rss::{Item, Source};
     ///
-    /// let itunes_item = ITunesItemExtensionBuilder::default()
-    ///     .author("author".to_string())
-    ///     .finalize();
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .itunes_ext(itunes_item)
-    ///     .finalize();
-    ///
-    /// assert!(item.itunes_ext().is_some())
+    /// let mut item = Item::default();
+    /// item.set_source(Source::default());
     /// ```
+    pub fn set_source<V>(&mut self, source: V)
+    where
+        V: Into<Option<Source>>,
+    {
+        self.source = source.into();
+    }
+
+    /// Return the content of this item.
+    ///
+    /// # Examples
     ///
     /// ```
-    /// use rss::ItemBuilder;
+    /// use rss::Item;
     ///
-    /// let item = ItemBuilder::default()
-    ///     .itunes_ext(None)
-    ///     .finalize();
+    /// let mut item = Item::default();
+    /// item.set_content("Item content".to_string());
+    /// assert_eq!(item.content(), Some("Item content"));
+    /// ```
+    pub fn content(&self) -> Option<&str> {
+        self.content.as_ref().map(|s| s.as_str())
+    }
+
+    /// Set the content of this item.
     ///
-    /// assert!(item.itunes_ext().is_none());
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Item;
+    ///
+    /// let mut item = Item::default();
+    /// item.set_content("Item content".to_string());
+    /// ```
+    pub fn set_content<V>(&mut self, content: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.content = content.into();
+    }
+
+    /// Return the iTunes extension for this item.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Item;
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut item = Item::default();
+    /// item.set_itunes_ext(ITunesItemExtension::default());
+    /// assert!(item.itunes_ext().is_some());
     /// ```
     pub fn itunes_ext(&self) -> Option<&ITunesItemExtension> {
         self.itunes_ext.as_ref()
     }
 
-    /// Return the `DublinCoreExtension` for this `Item`.
+    /// Set the iTunes extension for this item.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Item;
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut item = Item::default();
+    /// item.set_itunes_ext(ITunesItemExtension::default());
+    /// ```
+    pub fn set_itunes_ext<V>(&mut self, itunes_ext: V)
+    where
+        V: Into<Option<ITunesItemExtension>>,
+    {
+        self.itunes_ext = itunes_ext.into();
+    }
+
+    /// Return the Dublin Core extension for this item.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Item;
+    /// use rss::extension::dublincore::DublinCoreExtension;
+    ///
+    /// let mut item = Item::default();
+    /// item.set_dublin_core_ext(DublinCoreExtension::default());
+    /// assert!(item.dublin_core_ext().is_some());
+    /// ```
     pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
         self.dublin_core_ext.as_ref()
     }
 
-    /// Return the extensions for this `Item`.
+    /// Set the Dublin Core extension for this item.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Item;
+    /// use rss::extension::dublincore::DublinCoreExtension;
+    ///
+    /// let mut item = Item::default();
+    /// item.set_dublin_core_ext(DublinCoreExtension::default());
+    /// ```
+    pub fn set_dublin_core_ext<V>(&mut self, dublin_core_ext: V)
+    where
+        V: Into<Option<DublinCoreExtension>>,
+    {
+        self.dublin_core_ext = dublin_core_ext.into();
+    }
+
+    /// Return the extensions for this item.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::collections::HashMap;
+    /// use rss::Item;
+    /// use rss::extension::{ExtensionMap, Extension};
+    ///
+    /// let extension = Extension::default();
+    ///
+    /// let mut item_map = HashMap::<String, Vec<Extension>>::new();
+    /// item_map.insert("ext:name".to_string(), vec![extension]);
+    ///
+    /// let mut extension_map = ExtensionMap::default();
+    /// extension_map.insert("ext".to_string(), item_map);
+    ///
+    /// let mut item = Item::default();
+    /// item.set_extensions(extension_map);
+    /// assert_eq!(item.extensions()
+    ///                .get("ext")
+    ///                .and_then(|m| m.get("ext:name"))
+    ///                .map(|v| v.len()),
+    ///            Some(1));
+    /// ```
     pub fn extensions(&self) -> &ExtensionMap {
         &self.extensions
+    }
+
+    /// Set the extensions for this item.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Item;
+    /// use rss::extension::ExtensionMap;
+    ///
+    /// let mut item = Item::default();
+    /// item.set_extensions(ExtensionMap::default());
+    /// ```
+    pub fn set_extensions<V>(&mut self, extensions: V)
+    where
+        V: Into<ExtensionMap>,
+    {
+        self.extensions = extensions.into();
     }
 }
 
 impl FromXml for Item {
-    fn from_xml<R: ::std::io::BufRead>(
-        reader: &mut Reader<R>,
-        _: Attributes,
-    ) -> Result<Self, Error> {
+    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut item = Item::default();
         let mut buf = Vec::new();
 
@@ -436,7 +563,7 @@ impl FromXml for Item {
                         b"pubDate" => item.pub_date = element_text(reader)?,
                         b"content:encoded" => item.content = element_text(reader)?,
                         n => {
-                            if let Some((ns, name)) = fromxml::extension_name(n) {
+                            if let Some((ns, name)) = extension_name(n) {
                                 parse_extension(
                                     reader,
                                     element.attributes(),
@@ -450,31 +577,29 @@ impl FromXml for Item {
                         }
                     }
                 }
-                Event::End(_) => {
-                    if !item.extensions.is_empty() {
-                        if let Some(map) = item.extensions.remove("itunes") {
-                            item.itunes_ext = Some(ITunesItemExtension::from_map(map));
-                        }
-
-                        if let Some(map) = item.extensions.remove("dc") {
-                            item.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
-                        }
-                    }
-
-                    return Ok(item);
-                }
-                Event::Eof => break,
+                Event::End(_) => break,
+                Event::Eof => return Err(Error::Eof),
                 _ => {}
             }
             buf.clear();
         }
 
-        Err(Error::EOF)
+        if !item.extensions.is_empty() {
+            if let Some(map) = item.extensions.remove("itunes") {
+                item.itunes_ext = Some(ITunesItemExtension::from_map(map));
+            }
+
+            if let Some(map) = item.extensions.remove("dc") {
+                item.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
+            }
+        }
+
+        Ok(item)
     }
 }
 
 impl ToXml for Item {
-    fn to_xml<W: ::std::io::Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"item";
 
         writer
@@ -540,366 +665,5 @@ impl ToXml for Item {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
-    }
-}
-
-/// A builder used to create an `Item`.
-#[derive(Debug, Clone, Default)]
-pub struct ItemBuilder {
-    title: Option<String>,
-    link: Option<String>,
-    description: Option<String>,
-    author: Option<String>,
-    categories: Vec<Category>,
-    comments: Option<String>,
-    enclosure: Option<Enclosure>,
-    guid: Option<Guid>,
-    pub_date: Option<String>,
-    source: Option<Source>,
-    extensions: ExtensionMap,
-    itunes_ext: Option<ITunesItemExtension>,
-    dublin_core_ext: Option<DublinCoreExtension>,
-    content: Option<String>,
-}
-
-impl ItemBuilder {
-    /// Construct a new `ItemBuilder` using the values from an existing `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{Channel, ItemBuilder};
-    ///
-    /// let input = include_str!("tests/data/item.xml");
-    /// let channel = input.parse::<Channel>().unwrap();
-    /// let item = channel.items()[0].clone();
-    /// let builder = ItemBuilder::from_item(item);
-    /// ```
-    pub fn from_item(item: Item) -> Self {
-        ItemBuilder {
-            title: item.title,
-            link: item.link,
-            description: item.description,
-            author: item.author,
-            categories: item.categories,
-            comments: item.comments,
-            enclosure: item.enclosure,
-            guid: item.guid,
-            pub_date: item.pub_date,
-            source: item.source,
-            extensions: item.extensions,
-            itunes_ext: item.itunes_ext,
-            dublin_core_ext: item.dublin_core_ext,
-            content: item.content,
-        }
-    }
-
-    /// Set the title of the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .title("Making Music with Linux | LAS 408".to_string());
-    /// ```
-    pub fn title<V>(mut self, title: V) -> ItemBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.title = title.into();
-        self
-    }
-
-    /// Set the URL for the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .link("http://www.jupiterbroadcasting.com".to_string());
-    /// ```
-    pub fn link<V>(mut self, link: V) -> ItemBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.link = link.into();
-        self
-    }
-
-    /// Set the description of this `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .description("This is a test description".to_string());
-    /// ```
-    pub fn description<V>(mut self, description: V) -> ItemBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.description = description.into();
-        self
-    }
-
-    /// Set the author of the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .author("Chris Fisher".to_string());
-    /// ```
-    pub fn author<V>(mut self, author: V) -> ItemBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.author = author.into();
-        self
-    }
-
-    /// Set the categories that the `Item` belongs to.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{CategoryBuilder, ItemBuilder};
-    ///
-    /// let category = CategoryBuilder::default()
-    ///     .finalize();
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .categories(vec![category]);
-    /// ```
-    pub fn categories<V>(mut self, categories: V) -> ItemBuilder
-    where
-        V: Into<Vec<Category>>,
-    {
-        self.categories = categories.into();
-        self
-    }
-
-    /// Set the URL for comments about the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .comments("A comment".to_string());
-    /// ```
-    pub fn comments<V>(mut self, comments: V) -> ItemBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.comments = comments.into();
-        self
-    }
-
-    /// Set the enclosure information for the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{EnclosureBuilder, ItemBuilder};
-    ///
-    /// let url = "http://www.podtrac.com/pts/redirect.ogg/traffic.libsyn.com/jnite/\
-    ///     linuxactionshowep408.ogg";
-    ///
-    /// let enclosure = EnclosureBuilder::default()
-    ///     .url(url)
-    ///     .mime_type("audio/ogg")
-    ///     .finalize();
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .enclosure(enclosure);
-    /// ```
-    pub fn enclosure<V>(mut self, enclosure: V) -> ItemBuilder
-    where
-        V: Into<Option<Enclosure>>,
-    {
-        self.enclosure = enclosure.into();
-        self
-    }
-
-    /// Set the GUID for the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{GuidBuilder, ItemBuilder};
-    ///
-    /// let guid = GuidBuilder::default()
-    ///     .finalize();
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .guid(guid);
-    /// ```
-    pub fn guid<V>(mut self, guid: V) -> ItemBuilder
-    where
-        V: Into<Option<Guid>>,
-    {
-        self.guid = guid.into();
-        self
-    }
-
-    /// Set the publication date for the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .pub_date("Sun, 13 Mar 2016 20:02:02-0700".to_string());
-    /// ```
-    pub fn pub_date<V>(mut self, pub_date: V) -> ItemBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.pub_date = pub_date.into();
-        self
-    }
-
-    /// Set the source URL for the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::{ItemBuilder, SourceBuilder};
-    ///
-    /// let source = SourceBuilder::default()
-    ///     .url("http://www.tomalak.org/links2.xml")
-    ///     .finalize();
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .source(source);
-    /// ```
-    pub fn source<V>(mut self, source: V) -> ItemBuilder
-    where
-        V: Into<Option<Source>>,
-    {
-        self.source = source.into();
-        self
-    }
-
-    /// Set the `ITunesItemExtension` for the `Item`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    /// use rss::extension::itunes::ITunesItemExtensionBuilder;
-    ///
-    /// let itunes_item = ITunesItemExtensionBuilder::default()
-    ///     .author("author".to_string())
-    ///     .finalize();
-    ///
-    /// let builder = ItemBuilder::default()
-    ///     .itunes_ext(itunes_item);
-    /// ```
-    pub fn itunes_ext<V>(mut self, itunes_ext: V) -> ItemBuilder
-    where
-        V: Into<Option<ITunesItemExtension>>,
-    {
-        self.itunes_ext = itunes_ext.into();
-        self
-    }
-
-    /// Set the `DublinCoreExtension` for the `Item`.
-    pub fn dublin_core_ext<V>(mut self, dublin_core_ext: V) -> ItemBuilder
-    where
-        V: Into<Option<DublinCoreExtension>>,
-    {
-        self.dublin_core_ext = dublin_core_ext.into();
-        self
-    }
-
-    /// Set the extensions for the `Item`.
-    pub fn extensions<V>(mut self, extensions: V) -> ItemBuilder
-    where
-        V: Into<ExtensionMap>,
-    {
-        self.extensions = extensions.into();
-        self
-    }
-
-    /// Set the content of the `Item`.
-    pub fn content<V>(mut self, content: V) -> ItemBuilder
-    where
-        V: Into<Option<String>>,
-    {
-        self.content = content.into();
-        self
-    }
-
-    /// Validate the contents of this `ItemBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .title("Making Music with Linux | LAS 408".to_string())
-    ///     .link("http://www.jupiterbroadcasting.com".to_string())
-    ///     .validate()
-    ///     .unwrap();
-    /// ```
-    pub fn validate(self) -> Result<ItemBuilder, Error> {
-        if let Some(ref link) = self.link {
-            Url::parse(link.as_str())?;
-        }
-
-        if let Some(ref comments) = self.comments {
-            Url::parse(comments.as_str())?;
-        }
-
-        if let Some(ref pub_date) = self.pub_date {
-            DateTime::parse_from_rfc2822(pub_date.as_str())?;
-        }
-
-        Ok(self)
-    }
-
-
-    /// Construct the `Item` from this `ItemBuilder`.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use rss::ItemBuilder;
-    ///
-    /// let item = ItemBuilder::default()
-    ///     .title("Making Music with Linux | LAS 408".to_string())
-    ///     .link("http://www.jupiterbroadcasting.com".to_string())
-    ///     .finalize();
-    /// ```
-    pub fn finalize(self) -> Item {
-        Item {
-            title: self.title,
-            link: self.link,
-            description: self.description,
-            author: self.author,
-            categories: self.categories,
-            comments: self.comments,
-            enclosure: self.enclosure,
-            guid: self.guid,
-            pub_date: self.pub_date,
-            source: self.source,
-            extensions: self.extensions,
-            itunes_ext: self.itunes_ext,
-            dublin_core_ext: self.dublin_core_ext,
-            content: self.content,
-        }
     }
 }
