@@ -18,6 +18,7 @@ use fromxml::FromXml;
 use toxml::ToXml;
 
 /// Represents a cloud in an RSS feed.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Cloud {

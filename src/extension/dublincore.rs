@@ -20,6 +20,7 @@ use toxml::{ToXml, WriterExt};
 pub static NAMESPACE: &'static str = "http://purl.org/dc/elements/1.1/";
 
 /// A Dublin Core element extension.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct DublinCoreExtension {

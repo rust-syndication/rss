@@ -18,6 +18,7 @@ use fromxml::FromXml;
 use toxml::ToXml;
 
 /// Represents an enclosure in an RSS item.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Enclosure {

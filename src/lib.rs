@@ -87,6 +87,11 @@ extern crate derive_builder;
 
 extern crate quick_xml;
 
+#[cfg(feature = "serde")]
+#[macro_use]
+extern crate serde;
+#[cfg(feature = "serde")]
+
 #[cfg(feature = "validation")]
 extern crate chrono;
 #[cfg(feature = "validation")]
