@@ -240,7 +240,7 @@ impl ToXml for Cloud {
             (b"registerProcedure", self.register_procedure.as_bytes()),
             (b"protocol", self.protocol.as_bytes()),
         ];
-        element.extend_attributes(attrs.into_iter().map(|v| *v));
+        element.extend_attributes(attrs.into_iter().cloned());
 
         writer.write_event(Event::Empty(element))?;
         Ok(())

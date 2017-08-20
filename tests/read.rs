@@ -827,3 +827,19 @@ fn read_dublincore() {
             .expect("ds extension missing"),
     );
 }
+
+#[test]
+fn read_escaped() {
+    let input = r#"
+        <rss version="2.0">
+            <channel>
+                <title>My &lt;feed&gt;</title>
+            </channel>
+        </rss>
+    "#;
+    let channel = input.parse::<Channel>().unwrap();
+    assert_eq!("My <feed>", channel.title());
+    let output = channel.to_string();
+    let parsed_channel = output.parse::<Channel>().unwrap();
+    assert_eq!(channel, parsed_channel);
+}
