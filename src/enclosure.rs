@@ -165,7 +165,7 @@ impl ToXml for Enclosure {
             (b"length", self.length.as_bytes()),
             (b"type", self.mime_type.as_bytes()),
         ];
-        element.extend_attributes(attrs.into_iter().map(|v| *v));
+        element.extend_attributes(attrs.into_iter().cloned());
 
         writer.write_event(Event::Empty(element))?;
         Ok(())
