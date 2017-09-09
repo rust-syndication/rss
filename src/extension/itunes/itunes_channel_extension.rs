@@ -138,6 +138,7 @@ impl ITunesChannelExtension {
         &self.categories
     }
 
+    /// Return a mutable slice of the iTunes categories that the podcast belongs to.
     pub fn categories_mut(&mut self) -> &mut [ITunesCategory] {
         &mut self.categories
     }

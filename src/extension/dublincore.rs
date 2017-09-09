@@ -62,6 +62,7 @@ impl DublinCoreExtension {
         &self.contributors
     }
 
+    /// Return a mutable slice of the contributors to the resource.
     pub fn contributors_mut(&mut self) -> &mut [String] {
         &mut self.contributors
     }
@@ -80,6 +81,8 @@ impl DublinCoreExtension {
         &self.coverages
     }
 
+    /// Return a mutable slice of the spatial or temporal topics of the resource, the spatial
+    /// applicabilities of the resource, or the jurisdictions under which the resource is relevant.
     pub fn coverages_mut(&mut self) -> &mut [String] {
         &mut self.coverages
     }
@@ -98,6 +101,7 @@ impl DublinCoreExtension {
         &self.creators
     }
 
+    /// Return a mutable slice of the creators of the resource.
     pub fn creators_mut(&mut self) -> &mut [String] {
         &mut self.creators
     }
@@ -115,6 +119,7 @@ impl DublinCoreExtension {
         &self.dates
     }
 
+    /// Return a mutable slice of the times associated with the resource.
     pub fn dates_mut(&mut self) -> &mut [String] {
         &mut self.dates
     }
@@ -132,6 +137,7 @@ impl DublinCoreExtension {
         &self.descriptions
     }
 
+    /// Return a mutable slice of the descriptions of the resource.
     pub fn descriptions_mut(&mut self) -> &mut [String] {
         &mut self.descriptions
     }
@@ -149,6 +155,8 @@ impl DublinCoreExtension {
         &self.formats
     }
 
+    /// Return a mutable slice of the file formats, physical mediums, or
+    /// dimensions of the resource.
     pub fn formats_mut(&mut self) -> &mut [String] {
         &mut self.formats
     }
@@ -166,6 +174,7 @@ impl DublinCoreExtension {
         &self.identifiers
     }
 
+    /// Return a mutable slice of the identifiers of the resource.
     pub fn identifiers_mut(&mut self) -> &mut [String] {
         &mut self.identifiers
     }
@@ -183,6 +192,7 @@ impl DublinCoreExtension {
         &self.languages
     }
 
+    /// Return a mutable slice of the languages of the resource.
     pub fn languages_mut(&mut self) -> &mut [String] {
         &mut self.languages
     }
@@ -200,6 +210,7 @@ impl DublinCoreExtension {
         &self.publishers
     }
 
+    /// Return a mutable slice of the publishers of the resource.
     pub fn publishers_mut(&mut self) -> &mut [String] {
         &mut self.publishers
     }
@@ -217,6 +228,7 @@ impl DublinCoreExtension {
         &self.relations
     }
 
+    /// Return a mutable slice of the related resources.
     pub fn relations_mut(&mut self) -> &mut [String] {
         &mut self.relations
     }
@@ -234,6 +246,8 @@ impl DublinCoreExtension {
         &self.rights
     }
 
+    /// Return a mutable slice of the information about rights held in and over
+    /// the resource.
     pub fn rights_mut(&mut self) -> &mut [String] {
         &mut self.rights
     }
@@ -251,6 +265,7 @@ impl DublinCoreExtension {
         &self.sources
     }
 
+    /// Return a mutable slice of the sources of the resource.
     pub fn sources_mut(&mut self) -> &mut [String] {
         &mut self.sources
     }
@@ -268,6 +283,7 @@ impl DublinCoreExtension {
         &self.subjects
     }
 
+    /// Return a mutable slice of the subjects of the resource.
     pub fn subjects_mut(&mut self) -> &mut [String] {
         &mut self.subjects
     }
@@ -285,6 +301,7 @@ impl DublinCoreExtension {
         &self.titles
     }
 
+    /// Return a mutable slice of the titles of the resource.
     pub fn titles_mut(&mut self) -> &mut [String] {
         &mut self.titles
     }
@@ -302,6 +319,7 @@ impl DublinCoreExtension {
         &self.types
     }
 
+    /// Return a mutable slice of the natures or genres of the resource.
     pub fn types_mut(&mut self) -> &mut [String] {
         &mut self.types
     }
