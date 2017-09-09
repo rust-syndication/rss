@@ -204,6 +204,10 @@ impl Item {
         &self.categories
     }
 
+    pub fn categories_mut(&mut self) -> &mut [Category] {
+        &mut self.categories
+    }
+
     /// Set the categories that this item belongs to.
     ///
     /// # Examples

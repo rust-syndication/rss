@@ -388,6 +388,10 @@ impl Channel {
         &self.categories
     }
 
+    pub fn categories_mut(&mut self) -> &mut [Category] {
+        &mut self.categories
+    }
+
     /// Set the categories that this channel belongs to.
     ///
     /// # Examples
@@ -631,6 +635,10 @@ impl Channel {
         &self.skip_hours
     }
 
+    pub fn skip_hours_mut(&mut self) -> &mut [String] {
+        &mut self.skip_hours
+    }
+
     /// Set the hours that aggregators can skip for refreshing content.
     ///
     /// # Examples
@@ -663,6 +671,10 @@ impl Channel {
         &self.skip_days
     }
 
+    pub fn skip_days_mut(&mut self) -> &mut [String] {
+        &mut self.skip_days
+    }
+
     /// Set the days that aggregators can skip for refreshing content.
     ///
     /// # Examples
@@ -693,6 +705,10 @@ impl Channel {
     /// ```
     pub fn items(&self) -> &[Item] {
         &self.items
+    }
+
+    pub fn items_mut(&mut self) -> &mut [Item] {
+        &mut self.items
     }
 
     /// Set the items in this channel.
