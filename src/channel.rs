@@ -388,6 +388,11 @@ impl Channel {
         &self.categories
     }
 
+    /// Return a mutable slice of the categories that this channel belongs to.
+    pub fn categories_mut(&mut self) -> &mut [Category] {
+        &mut self.categories
+    }
+
     /// Set the categories that this channel belongs to.
     ///
     /// # Examples
@@ -631,6 +636,11 @@ impl Channel {
         &self.skip_hours
     }
 
+    /// Return a mutable slice of the hours that aggregators can skip for refreshing content.
+    pub fn skip_hours_mut(&mut self) -> &mut [String] {
+        &mut self.skip_hours
+    }
+
     /// Set the hours that aggregators can skip for refreshing content.
     ///
     /// # Examples
@@ -663,6 +673,11 @@ impl Channel {
         &self.skip_days
     }
 
+    /// Return a mutable slice of the days that aggregators can skip for refreshing content.
+    pub fn skip_days_mut(&mut self) -> &mut [String] {
+        &mut self.skip_days
+    }
+
     /// Set the days that aggregators can skip for refreshing content.
     ///
     /// # Examples
@@ -693,6 +708,11 @@ impl Channel {
     /// ```
     pub fn items(&self) -> &[Item] {
         &self.items
+    }
+
+    /// Return a mutable slice of the items in this channel.
+    pub fn items_mut(&mut self) -> &mut [Item] {
+        &mut self.items
     }
 
     /// Set the items in this channel.

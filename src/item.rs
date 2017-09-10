@@ -204,6 +204,11 @@ impl Item {
         &self.categories
     }
 
+    /// Return a mutable slice of the categories that this item belongs to.
+    pub fn categories_mut(&mut self) -> &mut [Category] {
+        &mut self.categories
+    }
+
     /// Set the categories that this item belongs to.
     ///
     /// # Examples

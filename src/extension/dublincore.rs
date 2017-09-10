@@ -62,6 +62,11 @@ impl DublinCoreExtension {
         &self.contributors
     }
 
+    /// Return a mutable slice of the contributors to the resource.
+    pub fn contributors_mut(&mut self) -> &mut [String] {
+        &mut self.contributors
+    }
+
     /// Set the contributors to the resource.
     pub fn set_contributors<V>(&mut self, contributors: V)
     where
@@ -74,6 +79,12 @@ impl DublinCoreExtension {
     /// resource, or the jurisdictions under which the resource is relevant.
     pub fn coverages(&self) -> &[String] {
         &self.coverages
+    }
+
+    /// Return a mutable slice of the spatial or temporal topics of the resource, the spatial
+    /// applicabilities of the resource, or the jurisdictions under which the resource is relevant.
+    pub fn coverages_mut(&mut self) -> &mut [String] {
+        &mut self.coverages
     }
 
     /// Set the spatial or temporal topics of the resource, the spatial applicabilities of the
@@ -90,6 +101,11 @@ impl DublinCoreExtension {
         &self.creators
     }
 
+    /// Return a mutable slice of the creators of the resource.
+    pub fn creators_mut(&mut self) -> &mut [String] {
+        &mut self.creators
+    }
+
     /// Set the creators of the resource.
     pub fn set_creators<V>(&mut self, creators: V)
     where
@@ -101,6 +117,11 @@ impl DublinCoreExtension {
     /// Return the times associated with the resource.
     pub fn dates(&self) -> &[String] {
         &self.dates
+    }
+
+    /// Return a mutable slice of the times associated with the resource.
+    pub fn dates_mut(&mut self) -> &mut [String] {
+        &mut self.dates
     }
 
     /// Set the times associated with the resource.
@@ -116,6 +137,11 @@ impl DublinCoreExtension {
         &self.descriptions
     }
 
+    /// Return a mutable slice of the descriptions of the resource.
+    pub fn descriptions_mut(&mut self) -> &mut [String] {
+        &mut self.descriptions
+    }
+
     /// Set the descriptions of the resource.
     pub fn set_descriptions<V>(&mut self, descriptions: V)
     where
@@ -127,6 +153,12 @@ impl DublinCoreExtension {
     /// Return the file formats, physical mediums, or dimensions of the resource.
     pub fn formats(&self) -> &[String] {
         &self.formats
+    }
+
+    /// Return a mutable slice of the file formats, physical mediums, or
+    /// dimensions of the resource.
+    pub fn formats_mut(&mut self) -> &mut [String] {
+        &mut self.formats
     }
 
     /// Set the file formats, physical mediums, or dimensions of the resource.
@@ -142,6 +174,11 @@ impl DublinCoreExtension {
         &self.identifiers
     }
 
+    /// Return a mutable slice of the identifiers of the resource.
+    pub fn identifiers_mut(&mut self) -> &mut [String] {
+        &mut self.identifiers
+    }
+
     /// Set the identifiers of the resource.
     pub fn set_identifiers<V>(&mut self, identifiers: V)
     where
@@ -153,6 +190,11 @@ impl DublinCoreExtension {
     /// Return the languages of the resource.
     pub fn languages(&self) -> &[String] {
         &self.languages
+    }
+
+    /// Return a mutable slice of the languages of the resource.
+    pub fn languages_mut(&mut self) -> &mut [String] {
+        &mut self.languages
     }
 
     /// Set the languages of the resource.
@@ -168,6 +210,11 @@ impl DublinCoreExtension {
         &self.publishers
     }
 
+    /// Return a mutable slice of the publishers of the resource.
+    pub fn publishers_mut(&mut self) -> &mut [String] {
+        &mut self.publishers
+    }
+
     /// Set the publishers of the resource.
     pub fn set_publishers<V>(&mut self, publishers: V)
     where
@@ -179,6 +226,11 @@ impl DublinCoreExtension {
     /// Return the related resources.
     pub fn relations(&self) -> &[String] {
         &self.relations
+    }
+
+    /// Return a mutable slice of the related resources.
+    pub fn relations_mut(&mut self) -> &mut [String] {
+        &mut self.relations
     }
 
     /// Set the related resources.
@@ -194,6 +246,12 @@ impl DublinCoreExtension {
         &self.rights
     }
 
+    /// Return a mutable slice of the information about rights held in and over
+    /// the resource.
+    pub fn rights_mut(&mut self) -> &mut [String] {
+        &mut self.rights
+    }
+
     /// Set the information about rights held in and over the resource.
     pub fn set_rights<V>(&mut self, rights: V)
     where
@@ -205,6 +263,11 @@ impl DublinCoreExtension {
     /// Return the sources of the resource.
     pub fn sources(&self) -> &[String] {
         &self.sources
+    }
+
+    /// Return a mutable slice of the sources of the resource.
+    pub fn sources_mut(&mut self) -> &mut [String] {
+        &mut self.sources
     }
 
     /// Set the sources of the resource.
@@ -220,6 +283,11 @@ impl DublinCoreExtension {
         &self.subjects
     }
 
+    /// Return a mutable slice of the subjects of the resource.
+    pub fn subjects_mut(&mut self) -> &mut [String] {
+        &mut self.subjects
+    }
+
     /// Set the topics of the resource.
     pub fn set_subjects<V>(&mut self, subjects: V)
     where
@@ -233,6 +301,11 @@ impl DublinCoreExtension {
         &self.titles
     }
 
+    /// Return a mutable slice of the titles of the resource.
+    pub fn titles_mut(&mut self) -> &mut [String] {
+        &mut self.titles
+    }
+
     /// Set the titles of the resource.
     pub fn set_titles<V>(&mut self, titles: V)
     where
@@ -244,6 +317,11 @@ impl DublinCoreExtension {
     /// Return the natures or genres of the resource.
     pub fn types(&self) -> &[String] {
         &self.types
+    }
+
+    /// Return a mutable slice of the natures or genres of the resource.
+    pub fn types_mut(&mut self) -> &mut [String] {
+        &mut self.types
     }
 
     /// set the natures or genres of the resource.
