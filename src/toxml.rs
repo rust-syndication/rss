@@ -25,12 +25,12 @@ pub trait WriterExt {
     fn write_text_element<N, T>(&mut self, name: N, text: T) -> Result<(), XmlError>
     where
         N: AsRef<[u8]>,
-        T: AsRef<[u8]>;
+        T: AsRef<str>;
 
     fn write_text_elements<N, T, I>(&mut self, name: N, values: I) -> Result<(), XmlError>
     where
         N: AsRef<[u8]>,
-        T: AsRef<[u8]>,
+        T: AsRef<str>,
         I: IntoIterator<Item = T>;
 
     fn write_cdata_element<N, T>(&mut self, name: N, text: T) -> Result<(), XmlError>
@@ -52,11 +52,11 @@ impl<W: Write> WriterExt for Writer<W> {
     fn write_text_element<N, T>(&mut self, name: N, text: T) -> Result<(), XmlError>
     where
         N: AsRef<[u8]>,
-        T: AsRef<[u8]>,
+        T: AsRef<str>,
     {
         let name = name.as_ref();
         self.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
-        self.write_event(Event::Text(BytesText::borrowed(text.as_ref())))?;
+        self.write_event(Event::Text(BytesText::from_str(text)))?;
         self.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
@@ -64,7 +64,7 @@ impl<W: Write> WriterExt for Writer<W> {
     fn write_text_elements<N, T, I>(&mut self, name: N, values: I) -> Result<(), XmlError>
     where
         N: AsRef<[u8]>,
-        T: AsRef<[u8]>,
+        T: AsRef<str>,
         I: IntoIterator<Item = T>,
     {
         for value in values {

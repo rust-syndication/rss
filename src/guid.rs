@@ -111,7 +111,7 @@ impl FromXml for Guid {
         for attr in atts.with_checks(false) {
             if let Ok(attr) = attr {
                 if attr.key == b"isPermaLink" {
-                    guid.permalink = attr.value != b"false";
+                    guid.permalink = &*attr.value != b"false";
                     break;
                 }
             }
