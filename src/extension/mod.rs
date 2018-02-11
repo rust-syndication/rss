@@ -28,6 +28,7 @@ pub(crate) mod util;
 pub type ExtensionMap = HashMap<String, HashMap<String, Vec<Extension>>>;
 
 /// A namespaced extension such as iTunes or Dublin Core.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct Extension {

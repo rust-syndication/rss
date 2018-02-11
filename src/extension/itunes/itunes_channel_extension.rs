@@ -20,6 +20,7 @@ use extension::util::remove_extension_value;
 use toxml::{ToXml, WriterExt};
 
 /// An iTunes channel element extension.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct ITunesChannelExtension {

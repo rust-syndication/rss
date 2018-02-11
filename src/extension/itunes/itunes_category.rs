@@ -14,6 +14,7 @@ use quick_xml::writer::Writer;
 use toxml::ToXml;
 
 /// A category for an iTunes podcast.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq, Builder)]
 #[builder(setter(into), default)]
 pub struct ITunesCategory {
