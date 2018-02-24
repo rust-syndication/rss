@@ -98,11 +98,11 @@ impl ToXml for ITunesOwner {
             .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         if let Some(name) = self.name.as_ref() {
-            writer.write_text_element(b"name", name)?;
+            writer.write_text_element(b"itunes:name", name)?;
         }
 
         if let Some(email) = self.email.as_ref() {
-            writer.write_text_element(b"email", email)?;
+            writer.write_text_element(b"itunes:email", email)?;
         }
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;

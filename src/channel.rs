@@ -1028,7 +1028,7 @@ impl Channel {
     /// channel.write_to(writer).unwrap();
     /// ```
     pub fn write_to<W: Write>(&self, writer: W) -> Result<W, Error> {
-        let mut writer = ::quick_xml::Writer::new(writer);
+        let mut writer = ::quick_xml::Writer::new_with_indent(writer, b' ', 2);
 
         let name = b"rss";
         let mut element = BytesStart::borrowed(name, name.len());
@@ -1302,8 +1302,6 @@ impl ToXml for Channel {
             writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         }
 
-        writer.write_objects(&self.items)?;
-
         for map in self.extensions.values() {
             for extensions in map.values() {
                 for extension in extensions {
@@ -1319,6 +1317,8 @@ impl ToXml for Channel {
         if let Some(ext) = self.dublin_core_ext.as_ref() {
             ext.to_xml(writer)?;
         }
+
+        writer.write_objects(&self.items)?;
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())

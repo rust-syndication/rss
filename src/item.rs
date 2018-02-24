@@ -620,7 +620,7 @@ impl ToXml for Item {
         }
 
         if let Some(description) = self.description.as_ref() {
-            writer.write_text_element(b"description", description)?;
+            writer.write_cdata_element(b"description", description)?;
         }
 
         if let Some(author) = self.author.as_ref() {
