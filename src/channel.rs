@@ -1018,18 +1018,7 @@ impl Channel {
         }
     }
 
-    /// Attempt to write the RSS channel as XML to a writer.
-    ///
-    /// # Example
-    ///
-    /// ```rust,ignore
-    /// let channel: Channel = ...;
-    /// let writer: Write = ...;
-    /// channel.write_to(writer).unwrap();
-    /// ```
-    pub fn write_to<W: Write>(&self, writer: W) -> Result<W, Error> {
-        let mut writer = ::quick_xml::Writer::new_with_indent(writer, b' ', 2);
-
+    fn write<W: Write>(&self, mut writer: Writer<W>) -> Result<W, Error> {
         let name = b"rss";
         let mut element = BytesStart::borrowed(name, name.len());
         element.push_attribute(("version", "2.0"));
@@ -1071,6 +1060,41 @@ impl Channel {
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
 
         Ok(writer.into_inner())
+    }
+
+    /// Attempt to write the RSS channel as XML to a writer.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let channel: Channel = ...;
+    /// let writer: Write = ...;
+    /// channel.write_to(writer).unwrap();
+    /// ```
+    pub fn write_to<W: Write>(&self, writer: W) -> Result<W, Error> {
+        self.write(::quick_xml::Writer::new(writer))
+    }
+
+    /// Attempt to write the RSS channel as pretty XML to a writer.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let channel: Channel = ...;
+    /// let writer: Write = ...;
+    /// channel.pretty_write_to(writer, b' ', 2).unwrap();
+    /// ```
+    pub fn pretty_write_to<W: Write>(
+        &self,
+        writer: W,
+        indent_char: u8,
+        indent_size: usize,
+    ) -> Result<W, Error> {
+        self.write(::quick_xml::Writer::new_with_indent(
+            writer,
+            indent_char,
+            indent_size,
+        ))
     }
 }
 
