@@ -91,8 +91,9 @@ impl ToXml for Extension {
         writer.write_event(Event::Start(element))?;
 
         if let Some(value) = self.value.as_ref() {
-            writer
-                .write_event(Event::Text(BytesText::borrowed(value.as_bytes())))?;
+            writer.write_event(
+                Event::Text(BytesText::borrowed(value.as_bytes())),
+            )?;
         }
 
         for extension in self.children.values().flat_map(|extensions| extensions) {

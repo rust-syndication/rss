@@ -71,15 +71,13 @@ fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITune
         None => return Ok(None),
     };
 
-    let name = element
-        .children
-        .remove("name")
-        .and_then(|mut v| v.remove(0).value);
+    let name = element.children.remove("name").and_then(
+        |mut v| v.remove(0).value,
+    );
 
-    let email = element
-        .children
-        .remove("email")
-        .and_then(|mut v| v.remove(0).value);
+    let email = element.children.remove("email").and_then(
+        |mut v| v.remove(0).value,
+    );
 
     let mut owner = ITunesOwner::default();
     owner.set_name(name);
