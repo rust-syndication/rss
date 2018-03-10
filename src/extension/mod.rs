@@ -9,9 +9,9 @@ use std::collections::HashMap;
 use std::io::Write;
 use std::str;
 
-use quick_xml::errors::Error as XmlError;
+use quick_xml::Error as XmlError;
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
-use quick_xml::writer::Writer;
+use quick_xml::Writer;
 
 use toxml::ToXml;
 
@@ -91,7 +91,7 @@ impl ToXml for Extension {
         writer.write_event(Event::Start(element))?;
 
         if let Some(value) = self.value.as_ref() {
-            writer.write_event(Event::Text(BytesText::borrowed(value.as_bytes())))?;
+            writer.write_event(Event::Text(BytesText::from_escaped(value.as_bytes())))?;
         }
 
         for extension in self.children.values().flat_map(|extensions| extensions) {

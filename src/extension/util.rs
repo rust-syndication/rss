@@ -11,7 +11,7 @@ use std::str;
 
 use quick_xml::events::Event;
 use quick_xml::events::attributes::Attributes;
-use quick_xml::reader::Reader;
+use quick_xml::Reader;
 
 use error::Error;
 use extension::{Extension, ExtensionMap};

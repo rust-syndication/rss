@@ -8,8 +8,8 @@
 use std::collections::HashMap;
 use std::io::Write;
 
-use quick_xml::errors::Error as XmlError;
-use quick_xml::writer::Writer;
+use quick_xml::Error as XmlError;
+use quick_xml::Writer;
 
 use extension::Extension;
 use extension::util::remove_extension_values;

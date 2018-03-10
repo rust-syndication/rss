@@ -8,7 +8,7 @@
 use std::io::BufRead;
 
 use quick_xml::events::Event;
-use quick_xml::reader::Reader;
+use quick_xml::Reader;
 
 use error::Error;
 

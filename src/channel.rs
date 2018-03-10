@@ -9,11 +9,11 @@ use std::collections::HashMap;
 use std::io::{BufRead, Write};
 use std::str::{self, FromStr};
 
-use quick_xml::errors::Error as XmlError;
+use quick_xml::Error as XmlError;
 use quick_xml::events::attributes::Attributes;
 use quick_xml::events::{BytesEnd, BytesStart, Event};
-use quick_xml::reader::Reader;
-use quick_xml::writer::Writer;
+use quick_xml::Reader;
+use quick_xml::Writer;
 
 use category::Category;
 use cloud::Cloud;

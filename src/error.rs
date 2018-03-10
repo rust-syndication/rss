@@ -9,8 +9,8 @@ use std::error::Error as StdError;
 use std::fmt;
 use std::str::Utf8Error;
 
-use failure;
-use quick_xml::errors::Error as XmlError;
+use failure::{self, Fail};
+use quick_xml::Error as XmlError;
 
 #[derive(Debug)]
 /// Errors that occur during parsing.
