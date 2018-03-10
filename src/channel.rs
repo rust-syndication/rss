@@ -1018,18 +1018,7 @@ impl Channel {
         }
     }
 
-    /// Attempt to write the RSS channel as XML to a writer.
-    ///
-    /// # Example
-    ///
-    /// ```rust,ignore
-    /// let channel: Channel = ...;
-    /// let writer: Write = ...;
-    /// channel.write_to(writer).unwrap();
-    /// ```
-    pub fn write_to<W: Write>(&self, writer: W) -> Result<W, Error> {
-        let mut writer = ::quick_xml::Writer::new(writer);
-
+    fn write<W: Write>(&self, mut writer: Writer<W>) -> Result<W, Error> {
         let name = b"rss";
         let mut element = BytesStart::borrowed(name, name.len());
         element.push_attribute(("version", "2.0"));
@@ -1071,6 +1060,41 @@ impl Channel {
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
 
         Ok(writer.into_inner())
+    }
+
+    /// Attempt to write the RSS channel as XML to a writer.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let channel: Channel = ...;
+    /// let writer: Write = ...;
+    /// channel.write_to(writer).unwrap();
+    /// ```
+    pub fn write_to<W: Write>(&self, writer: W) -> Result<W, Error> {
+        self.write(::quick_xml::Writer::new(writer))
+    }
+
+    /// Attempt to write the RSS channel as pretty XML to a writer.
+    ///
+    /// # Example
+    ///
+    /// ```rust,ignore
+    /// let channel: Channel = ...;
+    /// let writer: Write = ...;
+    /// channel.pretty_write_to(writer, b' ', 2).unwrap();
+    /// ```
+    pub fn pretty_write_to<W: Write>(
+        &self,
+        writer: W,
+        indent_char: u8,
+        indent_size: usize,
+    ) -> Result<W, Error> {
+        self.write(::quick_xml::Writer::new_with_indent(
+            writer,
+            indent_char,
+            indent_size,
+        ))
     }
 }
 
@@ -1218,13 +1242,13 @@ impl ToXml for Channel {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"channel";
 
-        writer
-            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
 
         writer.write_text_element(b"title", &self.title)?;
         writer.write_text_element(b"link", &self.link)?;
-        writer
-            .write_text_element(b"description", &self.description)?;
+        writer.write_text_element(b"description", &self.description)?;
 
         if let Some(language) = self.language.as_ref() {
             writer.write_text_element(b"language", language)?;
@@ -1235,8 +1259,10 @@ impl ToXml for Channel {
         }
 
         if let Some(managing_editor) = self.managing_editor.as_ref() {
-            writer
-                .write_text_element(b"managingEditor", managing_editor)?;
+            writer.write_text_element(
+                b"managingEditor",
+                managing_editor,
+            )?;
         }
 
         if let Some(webmaster) = self.webmaster.as_ref() {
@@ -1248,8 +1274,7 @@ impl ToXml for Channel {
         }
 
         if let Some(last_build_date) = self.last_build_date.as_ref() {
-            writer
-                .write_text_element(b"lastBuildDate", last_build_date)?;
+            writer.write_text_element(b"lastBuildDate", last_build_date)?;
         }
 
         writer.write_objects(&self.categories)?;
@@ -1284,8 +1309,9 @@ impl ToXml for Channel {
 
         if !self.skip_hours.is_empty() {
             let name = b"skipHours";
-            writer
-                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+            writer.write_event(
+                Event::Start(BytesStart::borrowed(name, name.len())),
+            )?;
             for hour in &self.skip_hours {
                 writer.write_text_element(b"hour", hour)?;
             }
@@ -1294,15 +1320,14 @@ impl ToXml for Channel {
 
         if !self.skip_days.is_empty() {
             let name = b"skipDays";
-            writer
-                .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+            writer.write_event(
+                Event::Start(BytesStart::borrowed(name, name.len())),
+            )?;
             for day in &self.skip_days {
                 writer.write_text_element(b"day", day)?;
             }
             writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         }
-
-        writer.write_objects(&self.items)?;
 
         for map in self.extensions.values() {
             for extensions in map.values() {
@@ -1319,6 +1344,8 @@ impl ToXml for Channel {
         if let Some(ext) = self.dublin_core_ext.as_ref() {
             ext.to_xml(writer)?;
         }
+
+        writer.write_objects(&self.items)?;
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())

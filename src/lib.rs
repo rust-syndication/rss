@@ -91,7 +91,6 @@ extern crate quick_xml;
 #[macro_use]
 extern crate serde;
 #[cfg(feature = "serde")]
-
 #[cfg(feature = "validation")]
 extern crate chrono;
 #[cfg(feature = "validation")]

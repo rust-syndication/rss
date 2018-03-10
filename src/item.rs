@@ -608,8 +608,9 @@ impl ToXml for Item {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"item";
 
-        writer
-            .write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(
+            Event::Start(BytesStart::borrowed(name, name.len())),
+        )?;
 
         if let Some(title) = self.title.as_ref() {
             writer.write_text_element(b"title", title)?;
@@ -620,7 +621,7 @@ impl ToXml for Item {
         }
 
         if let Some(description) = self.description.as_ref() {
-            writer.write_text_element(b"description", description)?;
+            writer.write_cdata_element(b"description", description)?;
         }
 
         if let Some(author) = self.author.as_ref() {

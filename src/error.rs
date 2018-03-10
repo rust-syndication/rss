@@ -34,7 +34,7 @@ impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
             Error::Utf8(ref err) => err.description(),
-            Error::Xml(ref err) => err.description(),
+            Error::Xml(_) => "xml error",
             Error::InvalidStartTag => "the input did not begin with an rss tag",
             Error::Eof => "reached end of input without finding a complete channel",
             #[cfg(feature = "from_url")]
@@ -47,7 +47,7 @@ impl StdError for Error {
     fn cause(&self) -> Option<&StdError> {
         match *self {
             Error::Utf8(ref err) => Some(err),
-            Error::Xml(ref err) => Some(err),
+            // Error::Xml(ref err) => Some(err.cause(),
             #[cfg(feature = "from_url")]
             Error::UrlRequest(ref err) => Some(err),
             #[cfg(feature = "from_url")]

@@ -259,23 +259,17 @@ fn read_source() {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     assert_eq!(
-        channel
-            .items()
-            .get(0,)
-            .unwrap()
-            .source()
-            .as_ref()
-            .map(|v| v.url(),),
+        channel.items().get(0).unwrap().source().as_ref().map(
+            |v| v.url(),
+        ),
         Some("http://example.com/feed/")
     );
     assert_eq!(
-        channel
-            .items()
-            .get(0,)
-            .unwrap()
-            .source()
-            .as_ref()
-            .and_then(|v| { v.title() },),
+        channel.items().get(0).unwrap().source().as_ref().and_then(
+            |v| {
+                v.title()
+            },
+        ),
         Some("Feed")
     );
 }
@@ -286,44 +280,28 @@ fn read_guid() {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     assert_eq!(
-        channel
-            .items()
-            .get(0)
-            .unwrap()
-            .guid()
-            .as_ref()
-            .map(|v| { v.is_permalink() }),
+        channel.items().get(0).unwrap().guid().as_ref().map(|v| {
+            v.is_permalink()
+        }),
         Some(false)
     );
     assert_eq!(
-        channel
-            .items()
-            .get(0,)
-            .unwrap()
-            .guid()
-            .as_ref()
-            .map(|v| v.value(),),
+        channel.items().get(0).unwrap().guid().as_ref().map(
+            |v| v.value(),
+        ),
         Some("abc")
     );
 
     assert_eq!(
-        channel
-            .items()
-            .get(1)
-            .unwrap()
-            .guid()
-            .as_ref()
-            .map(|v| { v.is_permalink() }),
+        channel.items().get(1).unwrap().guid().as_ref().map(|v| {
+            v.is_permalink()
+        }),
         Some(true)
     );
     assert_eq!(
-        channel
-            .items()
-            .get(1,)
-            .unwrap()
-            .guid()
-            .as_ref()
-            .map(|v| v.value(),),
+        channel.items().get(1).unwrap().guid().as_ref().map(
+            |v| v.value(),
+        ),
         Some("def")
     );
 }
@@ -334,33 +312,27 @@ fn read_enclosure() {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     assert_eq!(
-        channel
-            .items()
-            .get(0,)
-            .unwrap()
-            .enclosure()
-            .as_ref()
-            .map(|v| { v.url() },),
+        channel.items().get(0).unwrap().enclosure().as_ref().map(
+            |v| {
+                v.url()
+            },
+        ),
         Some("http://example.com/media.mp3")
     );
     assert_eq!(
-        channel
-            .items()
-            .get(0,)
-            .unwrap()
-            .enclosure()
-            .as_ref()
-            .map(|v| { v.length() },),
+        channel.items().get(0).unwrap().enclosure().as_ref().map(
+            |v| {
+                v.length()
+            },
+        ),
         Some("4992349")
     );
     assert_eq!(
-        channel
-            .items()
-            .get(0,)
-            .unwrap()
-            .enclosure()
-            .as_ref()
-            .map(|v| { v.mime_type() },),
+        channel.items().get(0).unwrap().enclosure().as_ref().map(
+            |v| {
+                v.mime_type()
+            },
+        ),
         Some("audio/mpeg")
     );
 }
@@ -597,21 +569,15 @@ fn read_itunes() {
         Some("http://example.com/feed/")
     );
     assert_eq!(
-        channel
-            .itunes_ext()
-            .unwrap()
-            .owner()
-            .as_ref()
-            .and_then(|v| v.name(),),
+        channel.itunes_ext().unwrap().owner().as_ref().and_then(
+            |v| v.name(),
+        ),
         Some("Name")
     );
     assert_eq!(
-        channel
-            .itunes_ext()
-            .unwrap()
-            .owner()
-            .as_ref()
-            .and_then(|v| v.email(),),
+        channel.itunes_ext().unwrap().owner().as_ref().and_then(
+            |v| v.email(),
+        ),
         Some("example@example.com")
     );
     assert_eq!(channel.itunes_ext().unwrap().subtitle(), Some("Subtitle"));
@@ -811,12 +777,9 @@ fn read_dublincore() {
         );
     }
 
-    test_ext(
-        channel
-            .dublin_core_ext()
-            .as_ref()
-            .expect("dc extension missing"),
-    );
+    test_ext(channel.dublin_core_ext().as_ref().expect(
+        "dc extension missing",
+    ));
     test_ext(
         channel
             .items()
