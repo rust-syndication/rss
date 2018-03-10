@@ -8,7 +8,7 @@
 use std::io::{BufRead, Write};
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
+use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
@@ -121,9 +121,7 @@ impl ToXml for Category {
             element.push_attribute(("domain", &**domain));
         }
         writer.write_event(Event::Start(element))?;
-        writer.write_event(
-            Event::Text(BytesText::borrowed(self.name.as_bytes())),
-        )?;
+        writer.write_event(Event::Text(BytesText::borrowed(self.name.as_bytes())))?;
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }

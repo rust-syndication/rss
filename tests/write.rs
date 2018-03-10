@@ -1,14 +1,14 @@
 extern crate rss;
 
-use rss::{Channel, ChannelBuilder, ItemBuilder, extension};
+use rss::{extension, Channel, ChannelBuilder, ItemBuilder};
 use std::collections::HashMap;
 
 macro_rules! test_write {
-    ($channel:ident) => ({
+    ($channel: ident) => {{
         let output = $channel.to_string();
         let parsed = output.parse::<Channel>().expect("failed to parse xml");
         assert_eq!($channel, parsed);
-    })
+    }};
 }
 
 #[test]

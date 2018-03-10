@@ -7,8 +7,8 @@
 
 #![feature(test)]
 
-extern crate test;
 extern crate rss;
+extern crate test;
 
 use rss::Channel;
 use std::io::sink;

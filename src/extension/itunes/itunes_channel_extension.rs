@@ -9,7 +9,7 @@ use std::collections::HashMap;
 use std::io::Write;
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart};
+use quick_xml::events::{BytesStart, Event};
 use quick_xml::writer::Writer;
 
 use super::{parse_categories, parse_image, parse_owner};
@@ -481,10 +481,7 @@ impl ToXml for ITunesChannelExtension {
         }
 
         if let Some(new_feed_url) = self.new_feed_url.as_ref() {
-            writer.write_text_element(
-                b"itunes:new-feed-url",
-                new_feed_url,
-            )?;
+            writer.write_text_element(b"itunes:new-feed-url", new_feed_url)?;
         }
 
         if let Some(owner) = self.owner.as_ref() {

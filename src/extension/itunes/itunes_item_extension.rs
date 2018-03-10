@@ -9,7 +9,7 @@ use std::collections::HashMap;
 use std::io::Write;
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::writer::Writer;
 
 use super::parse_image;
@@ -443,10 +443,7 @@ impl ToXml for ITunesItemExtension {
         }
 
         if let Some(closed_captioned) = self.closed_captioned.as_ref() {
-            writer.write_text_element(
-                b"itunes:isClosedCaptioned",
-                closed_captioned,
-            )?;
+            writer.write_text_element(b"itunes:isClosedCaptioned", closed_captioned)?;
         }
 
         if let Some(order) = self.order.as_ref() {

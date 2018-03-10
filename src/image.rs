@@ -8,7 +8,7 @@
 use std::io::{BufRead, Write};
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
@@ -244,17 +244,15 @@ impl FromXml for Image {
 
         loop {
             match reader.read_event(&mut buf)? {
-                Event::Start(element) => {
-                    match element.name() {
-                        b"url" => image.url = element_text(reader)?.unwrap_or_default(),
-                        b"title" => image.title = element_text(reader)?.unwrap_or_default(),
-                        b"link" => image.link = element_text(reader)?.unwrap_or_default(),
-                        b"width" => image.width = element_text(reader)?,
-                        b"height" => image.height = element_text(reader)?,
-                        b"description" => image.description = element_text(reader)?,
-                        n => reader.read_to_end(n, &mut Vec::new())?,
-                    }
-                }
+                Event::Start(element) => match element.name() {
+                    b"url" => image.url = element_text(reader)?.unwrap_or_default(),
+                    b"title" => image.title = element_text(reader)?.unwrap_or_default(),
+                    b"link" => image.link = element_text(reader)?.unwrap_or_default(),
+                    b"width" => image.width = element_text(reader)?,
+                    b"height" => image.height = element_text(reader)?,
+                    b"description" => image.description = element_text(reader)?,
+                    n => reader.read_to_end(n, &mut Vec::new())?,
+                },
                 Event::End(_) => break,
                 Event::Eof => return Err(Error::Eof),
                 _ => {}
@@ -271,9 +269,7 @@ impl ToXml for Image {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"image";
 
-        writer.write_event(
-            Event::Start(BytesStart::borrowed(name, name.len())),
-        )?;
+        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"url", &self.url)?;
         writer.write_text_element(b"title", &self.title)?;

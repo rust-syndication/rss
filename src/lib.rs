@@ -89,15 +89,15 @@ extern crate failure;
 extern crate quick_xml;
 
 #[cfg(feature = "serde")]
-#[macro_use]
-extern crate serde;
-#[cfg(feature = "serde")]
 #[cfg(feature = "validation")]
 extern crate chrono;
 #[cfg(feature = "validation")]
-extern crate url;
-#[cfg(feature = "validation")]
 extern crate mime;
+#[cfg(feature = "serde")]
+#[macro_use]
+extern crate serde;
+#[cfg(feature = "validation")]
+extern crate url;
 
 #[cfg(feature = "from_url")]
 extern crate reqwest;

@@ -128,7 +128,7 @@ pub fn remove_extension_value(
     map: &mut HashMap<String, Vec<Extension>>,
     key: &str,
 ) -> Option<String> {
-    map.remove(key).map(|mut v| v.remove(0)).and_then(
-        |ext| ext.value,
-    )
+    map.remove(key)
+        .map(|mut v| v.remove(0))
+        .and_then(|ext| ext.value)
 }

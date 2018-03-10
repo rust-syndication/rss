@@ -98,11 +98,11 @@ pub trait Validate {
 }
 
 macro_rules! validate {
-    ($e:expr, $msg:expr) => ({
+    ($e: expr, $msg: expr) => {{
         if !($e) {
             return Err(ValidationError::Validation(String::from($msg)));
         }
-    })
+    }};
 }
 
 impl Validate for Channel {

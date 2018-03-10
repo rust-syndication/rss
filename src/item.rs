@@ -8,7 +8,7 @@
 use std::io::{BufRead, Write};
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
@@ -543,46 +543,44 @@ impl FromXml for Item {
 
         loop {
             match reader.read_event(&mut buf)? {
-                Event::Start(element) => {
-                    match element.name() {
-                        b"category" => {
-                            let category = Category::from_xml(reader, element.attributes())?;
-                            item.categories.push(category);
-                        }
-                        b"guid" => {
-                            let guid = Guid::from_xml(reader, element.attributes())?;
-                            item.guid = Some(guid);
-                        }
-                        b"enclosure" => {
-                            let enclosure = Enclosure::from_xml(reader, element.attributes())?;
-                            item.enclosure = Some(enclosure);
-                        }
-                        b"source" => {
-                            let source = Source::from_xml(reader, element.attributes())?;
-                            item.source = Some(source);
-                        }
-                        b"title" => item.title = element_text(reader)?,
-                        b"link" => item.link = element_text(reader)?,
-                        b"description" => item.description = element_text(reader)?,
-                        b"author" => item.author = element_text(reader)?,
-                        b"comments" => item.comments = element_text(reader)?,
-                        b"pubDate" => item.pub_date = element_text(reader)?,
-                        b"content:encoded" => item.content = element_text(reader)?,
-                        n => {
-                            if let Some((ns, name)) = extension_name(n) {
-                                parse_extension(
-                                    reader,
-                                    element.attributes(),
-                                    ns,
-                                    name,
-                                    &mut item.extensions,
-                                )?;
-                            } else {
-                                reader.read_to_end(n, &mut Vec::new())?;
-                            }
+                Event::Start(element) => match element.name() {
+                    b"category" => {
+                        let category = Category::from_xml(reader, element.attributes())?;
+                        item.categories.push(category);
+                    }
+                    b"guid" => {
+                        let guid = Guid::from_xml(reader, element.attributes())?;
+                        item.guid = Some(guid);
+                    }
+                    b"enclosure" => {
+                        let enclosure = Enclosure::from_xml(reader, element.attributes())?;
+                        item.enclosure = Some(enclosure);
+                    }
+                    b"source" => {
+                        let source = Source::from_xml(reader, element.attributes())?;
+                        item.source = Some(source);
+                    }
+                    b"title" => item.title = element_text(reader)?,
+                    b"link" => item.link = element_text(reader)?,
+                    b"description" => item.description = element_text(reader)?,
+                    b"author" => item.author = element_text(reader)?,
+                    b"comments" => item.comments = element_text(reader)?,
+                    b"pubDate" => item.pub_date = element_text(reader)?,
+                    b"content:encoded" => item.content = element_text(reader)?,
+                    n => {
+                        if let Some((ns, name)) = extension_name(n) {
+                            parse_extension(
+                                reader,
+                                element.attributes(),
+                                ns,
+                                name,
+                                &mut item.extensions,
+                            )?;
+                        } else {
+                            reader.read_to_end(n, &mut Vec::new())?;
                         }
                     }
-                }
+                },
                 Event::End(_) => break,
                 Event::Eof => return Err(Error::Eof),
                 _ => {}
@@ -608,9 +606,7 @@ impl ToXml for Item {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"item";
 
-        writer.write_event(
-            Event::Start(BytesStart::borrowed(name, name.len())),
-        )?;
+        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         if let Some(title) = self.title.as_ref() {
             writer.write_text_element(b"title", title)?;

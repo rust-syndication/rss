@@ -8,7 +8,7 @@
 use std::io::{BufRead, Write};
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd, BytesText};
+use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;

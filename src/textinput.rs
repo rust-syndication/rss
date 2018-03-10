@@ -8,7 +8,7 @@
 use std::io::{BufRead, Write};
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::events::attributes::Attributes;
 use quick_xml::reader::Reader;
 use quick_xml::writer::Writer;
@@ -170,17 +170,15 @@ impl FromXml for TextInput {
 
         loop {
             match reader.read_event(&mut buf)? {
-                Event::Start(element) => {
-                    match element.name() {
-                        b"title" => text_input.title = element_text(reader)?.unwrap_or_default(),
-                        b"description" => {
-                            text_input.description = element_text(reader)?.unwrap_or_default()
-                        }
-                        b"name" => text_input.name = element_text(reader)?.unwrap_or_default(),
-                        b"link" => text_input.link = element_text(reader)?.unwrap_or_default(),
-                        n => reader.read_to_end(n, &mut Vec::new())?,
+                Event::Start(element) => match element.name() {
+                    b"title" => text_input.title = element_text(reader)?.unwrap_or_default(),
+                    b"description" => {
+                        text_input.description = element_text(reader)?.unwrap_or_default()
                     }
-                }
+                    b"name" => text_input.name = element_text(reader)?.unwrap_or_default(),
+                    b"link" => text_input.link = element_text(reader)?.unwrap_or_default(),
+                    n => reader.read_to_end(n, &mut Vec::new())?,
+                },
                 Event::End(_) => break,
                 Event::Eof => return Err(Error::Eof),
                 _ => {}
@@ -197,9 +195,7 @@ impl ToXml for TextInput {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         let name = b"textInput";
 
-        writer.write_event(
-            Event::Start(BytesStart::borrowed(name, name.len())),
-        )?;
+        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
 
         writer.write_text_element(b"title", &self.title)?;
         writer.write_text_element(b"description", &self.description)?;

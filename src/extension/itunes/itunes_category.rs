@@ -8,7 +8,7 @@
 use std::io::Write;
 
 use quick_xml::errors::Error as XmlError;
-use quick_xml::events::{Event, BytesStart, BytesEnd};
+use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::writer::Writer;
 
 use toxml::ToXml;
