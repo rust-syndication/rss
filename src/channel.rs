@@ -716,7 +716,7 @@ impl Channel {
         &mut self.items
     }
 
-    /// Consume the `Channel` and return a Vector of owned `Item`s.
+    /// Consume the `Channel` and return a vector of `Item`s.
     ///
     /// # Examples
     ///
@@ -725,9 +725,9 @@ impl Channel {
     ///
     /// let mut channel = Channel::default();
     /// channel.set_items(vec![Item::default()]);
-    /// assert_eq!(channel.items_owned().len(), 1);
+    /// assert_eq!(channel.into_items().len(), 1);
     /// ```
-    pub fn items_owned(self) -> Vec<Item> {
+    pub fn into_items(self) -> Vec<Item> {
         self.items
     }
 
