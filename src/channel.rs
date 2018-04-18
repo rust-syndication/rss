@@ -716,6 +716,21 @@ impl Channel {
         &mut self.items
     }
 
+    /// Consume the `Channel` and return a vector of `Item`s.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::{Channel, Item};
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_items(vec![Item::default()]);
+    /// assert_eq!(channel.into_items().len(), 1);
+    /// ```
+    pub fn into_items(self) -> Vec<Item> {
+        self.items
+    }
+
     /// Set the items in this channel.
     ///
     /// # Examples
