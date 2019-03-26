@@ -922,9 +922,9 @@ impl Channel {
     pub fn from_url(url: &str) -> Result<Channel, Error> {
         use std::io::Read;
 
-        let mut content = String::new();
-        ::reqwest::get(url)?.read_to_string(&mut content)?;
-        Ok(Channel::from_str(content.as_str())?)
+        let mut content = Vec::new();
+        ::reqwest::get(url)?.read_to_end(&mut content)?;
+        Ok(Channel::read_from(&content[..])?)
     }
 
     /// Attempt to read an RSS channel from a reader.
