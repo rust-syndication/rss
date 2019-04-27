@@ -24,6 +24,7 @@ use guid::Guid;
 use source::Source;
 use toxml::{ToXml, WriterExt};
 use util::element_text;
+use std::collections::HashMap;
 
 /// Represents an item in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -536,7 +537,7 @@ impl Item {
 }
 
 impl Item {
-    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+    pub fn from_xml<R: BufRead>(namespaces: &HashMap<String, String>, reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut item = Item::default();
         let mut buf = Vec::new();
 
@@ -588,12 +589,17 @@ impl Item {
         }
 
         if !item.extensions.is_empty() {
-            if let Some(map) = item.extensions.remove("itunes") {
-                item.itunes_ext = Some(ITunesItemExtension::from_map(map));
-            }
-
-            if let Some(map) = item.extensions.remove("dc") {
-                item.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
+            // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
+            for (prefix, namespace) in namespaces {
+                match namespace.as_ref() {
+                    "http://www.itunes.com/dtds/podcast-1.0.dtd" => {
+                        item.extensions.remove(prefix).map(|v| item.itunes_ext = Some(ITunesItemExtension::from_map(v)))
+                    },
+                    "http://purl.org/dc/elements/1.1/" => {
+                        item.extensions.remove(prefix).map(|v| item.dublin_core_ext = Some(DublinCoreExtension::from_map(v)))
+                    },
+                    _ => None
+                };
             }
         }
 

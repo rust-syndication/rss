@@ -13,7 +13,6 @@ use quick_xml::events::{BytesStart, Event};
 use quick_xml::Writer;
 
 use super::{parse_categories, parse_image, parse_owner};
-use error::Error;
 use extension::Extension;
 use extension::itunes::{ITunesCategory, ITunesOwner};
 use extension::util::remove_extension_value;
@@ -436,20 +435,20 @@ impl ITunesChannelExtension {
 
 impl ITunesChannelExtension {
     /// Create an `ITunesChannelExtension` from a `HashMap`.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Result<Self, Error> {
+    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
         let mut ext = ITunesChannelExtension::default();
         ext.author = remove_extension_value(&mut map, "author");
         ext.block = remove_extension_value(&mut map, "block");
-        ext.categories = parse_categories(&mut map)?;
+        ext.categories = parse_categories(&mut map);
         ext.image = parse_image(&mut map);
         ext.explicit = remove_extension_value(&mut map, "explicit");
         ext.complete = remove_extension_value(&mut map, "complete");
         ext.new_feed_url = remove_extension_value(&mut map, "new-feed-url");
-        ext.owner = parse_owner(&mut map)?;
+        ext.owner = parse_owner(&mut map);
         ext.subtitle = remove_extension_value(&mut map, "subtitle");
         ext.summary = remove_extension_value(&mut map, "summary");
         ext.keywords = remove_extension_value(&mut map, "keywords");
-        Ok(ext)
+        ext
     }
 }
 

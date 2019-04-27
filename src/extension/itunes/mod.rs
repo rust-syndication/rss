@@ -7,7 +7,6 @@
 
 use std::collections::HashMap;
 
-use error::Error;
 use extension::Extension;
 
 mod itunes_category;
@@ -32,12 +31,10 @@ fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
     element.attrs.remove("href")
 }
 
-fn parse_categories(
-    map: &mut HashMap<String, Vec<Extension>>,
-) -> Result<Vec<ITunesCategory>, Error> {
+fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Vec<ITunesCategory> {
     let mut elements = match map.remove("category") {
         Some(elements) => elements,
-        None => return Ok(Vec::new()),
+        None => return Vec::new(),
     };
 
     let mut categories = Vec::with_capacity(elements.len());
@@ -62,27 +59,26 @@ fn parse_categories(
         categories.push(category);
     }
 
-    Ok(categories)
+    categories
 }
 
-fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Result<Option<ITunesOwner>, Error> {
-    let mut element = match map.remove("owner").map(|mut v| v.remove(0)) {
-        Some(element) => element,
-        None => return Ok(None),
-    };
+fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Option<ITunesOwner> {
+    if let Some(mut element) = map.remove("owner").map(|mut v| v.remove(0)) {
+        let name = element
+            .children
+            .remove("name")
+            .and_then(|mut v| v.remove(0).value);
 
-    let name = element
-        .children
-        .remove("name")
-        .and_then(|mut v| v.remove(0).value);
+        let email = element
+            .children
+            .remove("email")
+            .and_then(|mut v| v.remove(0).value);
 
-    let email = element
-        .children
-        .remove("email")
-        .and_then(|mut v| v.remove(0).value);
-
-    let mut owner = ITunesOwner::default();
-    owner.set_name(name);
-    owner.set_email(email);
-    Ok(Some(owner))
+        let mut owner = ITunesOwner::default();
+        owner.set_name(name);
+        owner.set_email(email);
+        Some(owner)
+    } else {
+        None
+    }
 }

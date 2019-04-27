@@ -260,21 +260,21 @@ fn read_source() {
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .source()
             .as_ref()
-            .map(|v| v.url(),),
+            .map(|v| v.url()),
         Some("http://example.com/feed/")
     );
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .source()
             .as_ref()
-            .and_then(|v| v.title(),),
+            .and_then(|v| v.title()),
         Some("Feed")
     );
 }
@@ -297,11 +297,11 @@ fn read_guid() {
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .guid()
             .as_ref()
-            .map(|v| v.value(),),
+            .map(|v| v.value()),
         Some("abc")
     );
 
@@ -318,11 +318,11 @@ fn read_guid() {
     assert_eq!(
         channel
             .items()
-            .get(1,)
+            .get(1)
             .unwrap()
             .guid()
             .as_ref()
-            .map(|v| v.value(),),
+            .map(|v| v.value()),
         Some("def")
     );
 }
@@ -335,31 +335,31 @@ fn read_enclosure() {
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .enclosure()
             .as_ref()
-            .map(|v| v.url(),),
+            .map(|v| v.url()),
         Some("http://example.com/media.mp3")
     );
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .enclosure()
             .as_ref()
-            .map(|v| v.length(),),
+            .map(|v| v.length()),
         Some("4992349")
     );
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .enclosure()
             .as_ref()
-            .map(|v| v.mime_type(),),
+            .map(|v| v.mime_type()),
         Some("audio/mpeg")
     );
 }
@@ -480,7 +480,11 @@ fn read_extension() {
         channel.namespaces().get("ext").unwrap(),
         "http://example.com/"
     );
-    assert_eq!(channel.namespaces().len(), 1);
+    assert_eq!(
+        channel.namespaces().get("dc").unwrap(),
+        "http://purl.org/dc/elements/1.1/"
+    );
+    assert_eq!(channel.namespaces().len(), 2);
 
     assert_eq!(
         get_extension_values(
@@ -599,7 +603,7 @@ fn read_itunes() {
             .unwrap()
             .owner()
             .as_ref()
-            .and_then(|v| v.name(),),
+            .and_then(|v| v.name()),
         Some("Name")
     );
     assert_eq!(
@@ -608,7 +612,7 @@ fn read_itunes() {
             .unwrap()
             .owner()
             .as_ref()
-            .and_then(|v| v.email(),),
+            .and_then(|v| v.email()),
         Some("example@example.com")
     );
     assert_eq!(channel.itunes_ext().unwrap().subtitle(), Some("Subtitle"));
@@ -721,7 +725,16 @@ fn read_itunes() {
 
 #[test]
 fn read_dublincore() {
-    let input = include_str!("data/dublincore.xml");
+    run_dublincore_test(include_str!("data/dublincore.xml"));
+}
+
+#[test]
+fn read_dublincore_altprefix() {
+    run_dublincore_test(include_str!("data/dublincore_altprefix.xml"));
+}
+
+#[cfg(test)]
+fn run_dublincore_test(input: &str) {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     fn test_ext(dc: &DublinCoreExtension) {
@@ -814,6 +827,7 @@ fn read_dublincore() {
             .as_ref()
             .expect("dc extension missing"),
     );
+
     test_ext(
         channel
             .items()

@@ -955,15 +955,11 @@ impl Channel {
                     if element.name() == b"rss" || element.name() == b"rdf:RDF" {
                         for attr in element.attributes().with_checks(false) {
                             if let Ok(attr) = attr {
-                                if !attr.key.starts_with(b"xmlns:") || attr.key == b"xmlns:itunes"
-                                    || attr.key == b"xmlns:dc"
-                                {
-                                    continue;
+                                if attr.key.starts_with(b"xmlns:") {
+                                    let prefix = str::from_utf8(&attr.key[6..])?.to_string();
+                                    let namespace = attr.unescape_and_decode_value(&reader)?;
+                                    namespaces.insert(prefix, namespace);
                                 }
-
-                                let key = str::from_utf8(&attr.key[6..])?.to_string();
-                                let value = attr.unescape_and_decode_value(&reader)?;
-                                namespaces.insert(key, value);
                             }
                         }
 
@@ -981,11 +977,11 @@ impl Channel {
             match reader.read_event(&mut buf)? {
                 Event::Start(element) => match element.name() {
                     b"channel" => {
-                        let inner = Channel::from_xml(&mut reader, element.attributes())?;
+                        let inner = Channel::from_xml(&namespaces, &mut reader, element.attributes())?;
                         channel = Some(inner);
                     }
                     b"item" => {
-                        let item = Item::from_xml(&mut reader, element.attributes())?;
+                        let item = Item::from_xml(&namespaces, &mut reader, element.attributes())?;
                         if items.is_none() {
                             items = Some(Vec::new());
                         }
@@ -1117,7 +1113,7 @@ impl ToString for Channel {
 }
 
 impl Channel {
-    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+    pub fn from_xml<R: BufRead>(namespaces: &HashMap<String, String>, reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut channel = Channel::default();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();
@@ -1142,7 +1138,7 @@ impl Channel {
                         channel.text_input = Some(text_input);
                     }
                     b"item" => {
-                        let item = Item::from_xml(reader, element.attributes())?;
+                        let item = Item::from_xml(&namespaces, reader, element.attributes())?;
                         channel.items.push(item);
                     }
                     b"title" => {
@@ -1229,12 +1225,17 @@ impl Channel {
         }
 
         if !channel.extensions.is_empty() {
-            if let Some(map) = channel.extensions.remove("itunes") {
-                channel.itunes_ext = Some(ITunesChannelExtension::from_map(map)?);
-            }
-
-            if let Some(map) = channel.extensions.remove("dc") {
-                channel.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
+            // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
+            for (prefix, namespace) in namespaces {
+                match namespace.as_ref() {
+                    "http://www.itunes.com/dtds/podcast-1.0.dtd" => {
+                        channel.extensions.remove(prefix).map(|v| channel.itunes_ext = Some(ITunesChannelExtension::from_map(v)))
+                    },
+                    "http://purl.org/dc/elements/1.1/" => {
+                        channel.extensions.remove(prefix).map(|v| channel.dublin_core_ext = Some(DublinCoreExtension::from_map(v)))
+                    },
+                    _ => None
+                };
             }
         }
 
