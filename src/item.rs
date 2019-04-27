@@ -20,7 +20,6 @@ use extension::ExtensionMap;
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesItemExtension;
 use extension::util::{extension_name, parse_extension};
-use fromxml::FromXml;
 use guid::Guid;
 use source::Source;
 use toxml::{ToXml, WriterExt};
@@ -536,8 +535,8 @@ impl Item {
     }
 }
 
-impl FromXml for Item {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+impl Item {
+    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut item = Item::default();
         let mut buf = Vec::new();
 

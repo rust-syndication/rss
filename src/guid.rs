@@ -14,7 +14,6 @@ use quick_xml::Reader;
 use quick_xml::Writer;
 
 use error::Error;
-use fromxml::FromXml;
 use toxml::ToXml;
 use util::element_text;
 
@@ -105,8 +104,8 @@ impl Default for Guid {
     }
 }
 
-impl FromXml for Guid {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+impl Guid {
+    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
         let mut guid = Guid::default();
 
         for attr in atts.with_checks(false) {

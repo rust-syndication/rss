@@ -22,7 +22,6 @@ use extension::{self, ExtensionMap};
 use extension::dublincore::DublinCoreExtension;
 use extension::itunes::ITunesChannelExtension;
 use extension::util::{extension_name, parse_extension};
-use fromxml::FromXml;
 use image::Image;
 use item::Item;
 use textinput::TextInput;
@@ -1117,8 +1116,8 @@ impl ToString for Channel {
     }
 }
 
-impl FromXml for Channel {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+impl Channel {
+    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut channel = Channel::default();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();

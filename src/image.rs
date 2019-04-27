@@ -14,7 +14,6 @@ use quick_xml::Reader;
 use quick_xml::Writer;
 
 use error::Error;
-use fromxml::FromXml;
 use toxml::{ToXml, WriterExt};
 use util::element_text;
 
@@ -237,8 +236,8 @@ impl Image {
     }
 }
 
-impl FromXml for Image {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+impl Image {
+    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut image = Image::default();
         let mut buf = Vec::new();
 
