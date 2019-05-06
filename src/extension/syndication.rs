@@ -20,6 +20,7 @@ use toxml::WriterExt;
 pub const NAMESPACE: &str = "http://purl.org/rss/1.0/modules/syndication/";
 
 /// The unit of time between updates/refreshes
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq)]
 pub enum UpdatePeriod {
     /// refresh hourly
