@@ -10,17 +10,18 @@ use std::io::{BufRead, Write};
 use std::str::{self, FromStr};
 
 use quick_xml::Error as XmlError;
-use quick_xml::events::attributes::Attributes;
 use quick_xml::events::{BytesEnd, BytesStart, Event};
+use quick_xml::events::attributes::Attributes;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
 use category::Category;
 use cloud::Cloud;
 use error::Error;
-use extension::{self, ExtensionMap};
-use extension::dublincore::DublinCoreExtension;
-use extension::itunes::ITunesChannelExtension;
+use extension::ExtensionMap;
+use extension::dublincore;
+use extension::itunes;
+use extension::syndication;
 use extension::util::{extension_name, parse_extension};
 use image::Image;
 use item::Item;
@@ -76,9 +77,11 @@ pub struct Channel {
     /// The extensions for the channel.
     extensions: ExtensionMap,
     /// The iTunes extension for the channel.
-    itunes_ext: Option<ITunesChannelExtension>,
+    itunes_ext: Option<itunes::ITunesChannelExtension>,
     /// The Dublin Core extension for the channel.
-    dublin_core_ext: Option<DublinCoreExtension>,
+    dublin_core_ext: Option<dublincore::DublinCoreExtension>,
+    /// The Syndication extension for the channel.
+    syndication_ext: Option<syndication::SyndicationExtension>,
     /// The namespaces present in the RSS tag.
     namespaces: HashMap<String, String>,
 }
@@ -759,7 +762,7 @@ impl Channel {
     /// channel.set_itunes_ext(ITunesChannelExtension::default());
     /// assert!(channel.itunes_ext().is_some());
     /// ```
-    pub fn itunes_ext(&self) -> Option<&ITunesChannelExtension> {
+    pub fn itunes_ext(&self) -> Option<&itunes::ITunesChannelExtension> {
         self.itunes_ext.as_ref()
     }
 
@@ -776,7 +779,7 @@ impl Channel {
     /// ```
     pub fn set_itunes_ext<V>(&mut self, itunes_ext: V)
     where
-        V: Into<Option<ITunesChannelExtension>>,
+        V: Into<Option<itunes::ITunesChannelExtension>>,
     {
         self.itunes_ext = itunes_ext.into();
     }
@@ -793,7 +796,7 @@ impl Channel {
     /// channel.set_dublin_core_ext(DublinCoreExtension::default());
     /// assert!(channel.dublin_core_ext().is_some());
     /// ```
-    pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
+    pub fn dublin_core_ext(&self) -> Option<&dublincore::DublinCoreExtension> {
         self.dublin_core_ext.as_ref()
     }
 
@@ -810,9 +813,43 @@ impl Channel {
     /// ```
     pub fn set_dublin_core_ext<V>(&mut self, dublin_core_ext: V)
     where
-        V: Into<Option<DublinCoreExtension>>,
+        V: Into<Option<dublincore::DublinCoreExtension>>,
     {
         self.dublin_core_ext = dublin_core_ext.into();
+    }
+
+    /// Return the Syndication extension for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::syndication::SyndicationExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_syndication_ext(SyndicationExtension::default());
+    /// assert!(channel.syndication_ext().is_some());
+    /// ```
+    pub fn syndication_ext(&self) -> Option<&syndication::SyndicationExtension> {
+        self.syndication_ext.as_ref()
+    }
+
+    /// Set the Syndication extension for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::syndication::SyndicationExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_syndication_ext(SyndicationExtension::default());
+    /// ```
+    pub fn set_syndication_ext<V>(&mut self, syndication_ext: V)
+    where
+        V: Into<Option<syndication::SyndicationExtension>>,
+    {
+        self.syndication_ext = syndication_ext.into();
     }
 
     /// Return the extensions for this channel.
@@ -1029,32 +1066,6 @@ impl Channel {
         let mut element = BytesStart::borrowed(name, name.len());
         element.push_attribute(("version", "2.0"));
 
-        let mut itunes_ns = self.itunes_ext.is_some();
-        let mut dc_ns = self.dublin_core_ext.is_some();
-
-        if !itunes_ns || !dc_ns {
-            for item in &self.items {
-                if !itunes_ns {
-                    itunes_ns = item.itunes_ext().is_some();
-                }
-
-                if !dc_ns {
-                    dc_ns = item.dublin_core_ext().is_some();
-                }
-
-                if itunes_ns && dc_ns {
-                    break;
-                }
-            }
-        }
-
-        if itunes_ns {
-            element.push_attribute(("xmlns:itunes", extension::itunes::NAMESPACE));
-        }
-
-        if dc_ns {
-            element.push_attribute(("xmlns:dc", extension::dublincore::NAMESPACE));
-        }
         for (name, url) in &self.namespaces {
             element.push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
         }
@@ -1228,11 +1239,14 @@ impl Channel {
             // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
             for (prefix, namespace) in namespaces {
                 match namespace.as_ref() {
-                    "http://www.itunes.com/dtds/podcast-1.0.dtd" => {
-                        channel.extensions.remove(prefix).map(|v| channel.itunes_ext = Some(ITunesChannelExtension::from_map(v)))
+                    itunes::NAMESPACE => {
+                        channel.extensions.remove(prefix).map(|v| channel.itunes_ext = Some(itunes::ITunesChannelExtension::from_map(v)))
                     },
-                    "http://purl.org/dc/elements/1.1/" => {
-                        channel.extensions.remove(prefix).map(|v| channel.dublin_core_ext = Some(DublinCoreExtension::from_map(v)))
+                    dublincore::NAMESPACE => {
+                        channel.extensions.remove(prefix).map(|v| channel.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v)))
+                    },
+                    syndication::NAMESPACE => {
+                        channel.extensions.remove(prefix).map(|v| channel.syndication_ext = Some(syndication::SyndicationExtension::from_map(v)))
                     },
                     _ => None
                 };
@@ -1333,12 +1347,16 @@ impl ToXml for Channel {
             }
         }
 
-        if let Some(ext) = self.itunes_ext.as_ref() {
+        if let Some(ext) = &self.itunes_ext {
             ext.to_xml(writer)?;
         }
 
-        if let Some(ext) = self.dublin_core_ext.as_ref() {
+        if let Some(ext) = &self.dublin_core_ext {
             ext.to_xml(writer)?;
+        }
+
+        if let Some(ext) = &self.syndication_ext {
+            ext.to_xml(&self.namespaces, writer)?;
         }
 
         writer.write_objects(&self.items)?;

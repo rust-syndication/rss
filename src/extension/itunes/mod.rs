@@ -20,7 +20,7 @@ pub use self::itunes_item_extension::*;
 pub use self::itunes_owner::*;
 
 /// The iTunes XML namespace.
-pub static NAMESPACE: &'static str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+pub const NAMESPACE: &str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
 
 fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
     let mut element = match map.remove("image").map(|mut v| v.remove(0)) {

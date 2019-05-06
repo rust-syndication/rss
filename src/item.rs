@@ -17,8 +17,8 @@ use category::Category;
 use enclosure::Enclosure;
 use error::Error;
 use extension::ExtensionMap;
-use extension::dublincore::DublinCoreExtension;
-use extension::itunes::ITunesItemExtension;
+use extension::dublincore;
+use extension::itunes;
 use extension::util::{extension_name, parse_extension};
 use guid::Guid;
 use source::Source;
@@ -56,9 +56,9 @@ pub struct Item {
     /// The extensions for the item.
     extensions: ExtensionMap,
     /// The iTunes extension for the item.
-    itunes_ext: Option<ITunesItemExtension>,
+    itunes_ext: Option<itunes::ITunesItemExtension>,
     /// The Dublin Core extension for the item.
-    dublin_core_ext: Option<DublinCoreExtension>,
+    dublin_core_ext: Option<dublincore::DublinCoreExtension>,
 }
 
 impl Item {
@@ -432,7 +432,7 @@ impl Item {
     /// item.set_itunes_ext(ITunesItemExtension::default());
     /// assert!(item.itunes_ext().is_some());
     /// ```
-    pub fn itunes_ext(&self) -> Option<&ITunesItemExtension> {
+    pub fn itunes_ext(&self) -> Option<&itunes::ITunesItemExtension> {
         self.itunes_ext.as_ref()
     }
 
@@ -449,7 +449,7 @@ impl Item {
     /// ```
     pub fn set_itunes_ext<V>(&mut self, itunes_ext: V)
     where
-        V: Into<Option<ITunesItemExtension>>,
+        V: Into<Option<itunes::ITunesItemExtension>>,
     {
         self.itunes_ext = itunes_ext.into();
     }
@@ -466,7 +466,7 @@ impl Item {
     /// item.set_dublin_core_ext(DublinCoreExtension::default());
     /// assert!(item.dublin_core_ext().is_some());
     /// ```
-    pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
+    pub fn dublin_core_ext(&self) -> Option<&dublincore::DublinCoreExtension> {
         self.dublin_core_ext.as_ref()
     }
 
@@ -483,7 +483,7 @@ impl Item {
     /// ```
     pub fn set_dublin_core_ext<V>(&mut self, dublin_core_ext: V)
     where
-        V: Into<Option<DublinCoreExtension>>,
+        V: Into<Option<dublincore::DublinCoreExtension>>,
     {
         self.dublin_core_ext = dublin_core_ext.into();
     }
@@ -592,11 +592,11 @@ impl Item {
             // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
             for (prefix, namespace) in namespaces {
                 match namespace.as_ref() {
-                    "http://www.itunes.com/dtds/podcast-1.0.dtd" => {
-                        item.extensions.remove(prefix).map(|v| item.itunes_ext = Some(ITunesItemExtension::from_map(v)))
+                    itunes::NAMESPACE => {
+                        item.extensions.remove(prefix).map(|v| item.itunes_ext = Some(itunes::ITunesItemExtension::from_map(v)))
                     },
-                    "http://purl.org/dc/elements/1.1/" => {
-                        item.extensions.remove(prefix).map(|v| item.dublin_core_ext = Some(DublinCoreExtension::from_map(v)))
+                    dublincore::NAMESPACE => {
+                        item.extensions.remove(prefix).map(|v| item.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v)))
                     },
                     _ => None
                 };

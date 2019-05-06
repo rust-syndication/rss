@@ -36,3 +36,11 @@ fn read_dublincore(b: &mut Bencher) {
         let _ = Channel::read_from(input).expect("failed to parse feed");
     });
 }
+
+#[bench]
+fn read_syndication(b: &mut Bencher) {
+    let input: &[u8] = include_bytes!("../tests/data/syndication.xml");
+    b.iter(|| {
+        let _ = Channel::read_from(input).expect("failed to parse feed");
+    });
+}

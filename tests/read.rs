@@ -5,6 +5,7 @@ use std::collections::HashMap;
 use rss::Channel;
 use rss::extension::Extension;
 use rss::extension::dublincore::DublinCoreExtension;
+use rss::extension::syndication;
 
 fn get_extension_values<'a>(
     map: &'a HashMap<String, Vec<Extension>>,
@@ -837,6 +838,17 @@ fn run_dublincore_test(input: &str) {
             .as_ref()
             .expect("ds extension missing"),
     );
+}
+
+#[test]
+fn read_syndication() {
+    let input = include_str!("data/syndication.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    let syn = channel.syndication_ext().unwrap();
+    assert_eq!(syn.period(), &syndication::UpdatePeriod::HOURLY);
+    assert_eq!(syn.frequency(), 2);
+    assert_eq!(syn.base(), "2000-01-01T12:00+00:00");
 }
 
 #[test]

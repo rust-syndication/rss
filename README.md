@@ -112,7 +112,7 @@ channel.validate().unwrap();
 
 Elements which have non-default namespaces will be considered extensions. Extensions are stored in `Channel.extensions` and `Item.extensions`. 
 
-For conveninence, [Dublin Core](http://dublincore.org/documents/dces/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted to structs and stored in as properties on channels and items.
+For conveninence, [Dublin Core](http://dublincore.org/documents/dces/), [Syndication](http://web.resource.org/rss/1.0/modules/syndication/) and [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions are extracted to structs and stored in as properties on channels and items.
 
 ## Invalid Feeds
 
