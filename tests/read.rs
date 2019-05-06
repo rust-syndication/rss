@@ -742,82 +742,82 @@ fn run_dublincore_test(input: &str) {
         assert_eq!(
             dc.contributors()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Contributor 1", "Contributor 2"]
         );
         assert_eq!(
             dc.coverages()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Coverage"]
         );
         assert_eq!(
-            dc.creators().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.creators().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Creator"]
         );
         assert_eq!(
-            dc.dates().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.dates().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["2016-08-27"]
         );
         assert_eq!(
             dc.descriptions()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Description"]
         );
         assert_eq!(
-            dc.formats().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.formats().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["text/plain"]
         );
         assert_eq!(
             dc.identifiers()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Identifier"]
         );
         assert_eq!(
             dc.languages()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["en-US"]
         );
         assert_eq!(
             dc.publishers()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Publisher"]
         );
         assert_eq!(
             dc.relations()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Relation"]
         );
         assert_eq!(
-            dc.rights().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.rights().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Company"]
         );
         assert_eq!(
-            dc.sources().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.sources().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Source"]
         );
         assert_eq!(
-            dc.subjects().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.subjects().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Subject"]
         );
         assert_eq!(
-            dc.titles().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.titles().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Title"]
         );
         assert_eq!(
-            dc.types().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.types().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Type"]
         );
     }

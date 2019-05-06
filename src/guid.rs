@@ -105,6 +105,7 @@ impl Default for Guid {
 }
 
 impl Guid {
+    /// Builds a Guid from source XML
     pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
         let mut guid = Guid::default();
 

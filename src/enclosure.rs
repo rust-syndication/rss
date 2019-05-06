@@ -128,6 +128,7 @@ impl Enclosure {
 }
 
 impl Enclosure {
+    /// Builds an Enclosure from source XML
     pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
         let mut enclosure = Enclosure::default();
 
@@ -165,7 +166,7 @@ impl ToXml for Enclosure {
             (b"length", self.length.as_bytes()),
             (b"type", self.mime_type.as_bytes()),
         ];
-        element.extend_attributes(attrs.into_iter().cloned());
+        element.extend_attributes(attrs.iter().cloned());
 
         writer.write_event(Event::Empty(element))?;
         Ok(())

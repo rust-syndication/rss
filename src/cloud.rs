@@ -196,6 +196,7 @@ impl Cloud {
 }
 
 impl Cloud {
+    /// Builds a Cloud from source XML
     pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
         let mut cloud = Cloud::default();
 
@@ -240,7 +241,7 @@ impl ToXml for Cloud {
             (b"registerProcedure", self.register_procedure.as_bytes()),
             (b"protocol", self.protocol.as_bytes()),
         ];
-        element.extend_attributes(attrs.into_iter().cloned());
+        element.extend_attributes(attrs.iter().cloned());
 
         writer.write_event(Event::Empty(element))?;
         Ok(())

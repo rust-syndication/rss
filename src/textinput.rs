@@ -163,6 +163,7 @@ impl TextInput {
 }
 
 impl TextInput {
+    /// Builds a TextInput from source XML
     pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut text_input = TextInput::default();
         let mut buf = Vec::new();

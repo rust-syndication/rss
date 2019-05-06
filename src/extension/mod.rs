@@ -62,7 +62,7 @@ impl Extension {
 
     /// Return the text content of this extension.
     pub fn value(&self) -> Option<&str> {
-        self.value.as_ref().map(|s| s.as_str())
+        self.value.as_ref().map(String::as_str)
     }
 
     /// Set the text content of this extension.

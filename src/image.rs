@@ -148,7 +148,7 @@ impl Image {
     /// image.set_width("80".to_string());
     /// assert_eq!(image.width(), Some("80"));
     pub fn width(&self) -> Option<&str> {
-        self.width.as_ref().map(|s| s.as_str())
+        self.width.as_ref().map(String::as_str)
     }
 
     /// Set the width of this image.
@@ -181,7 +181,7 @@ impl Image {
     /// assert_eq!(image.height(), Some("31"));
     /// ```
     pub fn height(&self) -> Option<&str> {
-        self.height.as_ref().map(|s| s.as_str())
+        self.height.as_ref().map(String::as_str)
     }
 
     /// Set the height of this image.
@@ -215,7 +215,7 @@ impl Image {
     /// assert_eq!(image.description(), Some("Example Title"));
     /// ```
     pub fn description(&self) -> Option<&str> {
-        self.description.as_ref().map(|s| s.as_str())
+        self.description.as_ref().map(String::as_str)
     }
 
     /// Set the title for the link formed around this image.
@@ -237,6 +237,7 @@ impl Image {
 }
 
 impl Image {
+    /// Builds an Image from source XML
     pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut image = Image::default();
         let mut buf = Vec::new();

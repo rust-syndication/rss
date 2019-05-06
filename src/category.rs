@@ -73,7 +73,7 @@ impl Category {
     /// assert_eq!(category.domain(), Some("http://example.com"));
     /// ```
     pub fn domain(&self) -> Option<&str> {
-        self.domain.as_ref().map(|s| s.as_str())
+        self.domain.as_ref().map(String::as_str)
     }
 
     /// Set the domain of this category.
@@ -95,6 +95,7 @@ impl Category {
 }
 
 impl Category {
+    /// Builds a Category from source XML
     pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
         let mut category = Category::default();
 
