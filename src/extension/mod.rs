@@ -22,6 +22,9 @@ pub mod itunes;
 /// Types and methods for [Dublin Core](http://dublincore.org/documents/dces/) extensions.
 pub mod dublincore;
 
+/// Types and methods for [Syndication](http://web.resource.org/rss/1.0/modules/syndication/) extensions.
+pub mod syndication;
+
 pub(crate) mod util;
 
 /// A map of extension namespace prefixes to local names to elements.
@@ -59,7 +62,7 @@ impl Extension {
 
     /// Return the text content of this extension.
     pub fn value(&self) -> Option<&str> {
-        self.value.as_ref().map(|s| s.as_str())
+        self.value.as_ref().map(String::as_str)
     }
 
     /// Set the text content of this extension.

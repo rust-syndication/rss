@@ -17,14 +17,14 @@ use category::Category;
 use enclosure::Enclosure;
 use error::Error;
 use extension::ExtensionMap;
-use extension::dublincore::DublinCoreExtension;
-use extension::itunes::ITunesItemExtension;
+use extension::dublincore;
+use extension::itunes;
 use extension::util::{extension_name, parse_extension};
-use fromxml::FromXml;
 use guid::Guid;
 use source::Source;
 use toxml::{ToXml, WriterExt};
 use util::element_text;
+use std::collections::HashMap;
 
 /// Represents an item in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -56,9 +56,9 @@ pub struct Item {
     /// The extensions for the item.
     extensions: ExtensionMap,
     /// The iTunes extension for the item.
-    itunes_ext: Option<ITunesItemExtension>,
+    itunes_ext: Option<itunes::ITunesItemExtension>,
     /// The Dublin Core extension for the item.
-    dublin_core_ext: Option<DublinCoreExtension>,
+    dublin_core_ext: Option<dublincore::DublinCoreExtension>,
 }
 
 impl Item {
@@ -74,7 +74,7 @@ impl Item {
     /// assert_eq!(item.title(), Some("Item Title"));
     /// ```
     pub fn title(&self) -> Option<&str> {
-        self.title.as_ref().map(|s| s.as_str())
+        self.title.as_ref().map(String::as_str)
     }
 
     /// Set the title of this item.
@@ -106,7 +106,7 @@ impl Item {
     /// assert_eq!(item.link(), Some("http://example.com"));
     /// ```
     pub fn link(&self) -> Option<&str> {
-        self.link.as_ref().map(|s| s.as_str())
+        self.link.as_ref().map(String::as_str)
     }
 
     /// Set the URL of this item.
@@ -138,7 +138,7 @@ impl Item {
     /// assert_eq!(item.description(), Some("Item description"));
     /// ```
     pub fn description(&self) -> Option<&str> {
-        self.description.as_ref().map(|s| s.as_str())
+        self.description.as_ref().map(String::as_str)
     }
 
     /// Return the description of this item.
@@ -170,7 +170,7 @@ impl Item {
     /// assert_eq!(item.author(), Some("John Doe"));
     /// ```
     pub fn author(&self) -> Option<&str> {
-        self.author.as_ref().map(|s| s.as_str())
+        self.author.as_ref().map(String::as_str)
     }
 
     /// Set the email address for the author of this item.
@@ -239,7 +239,7 @@ impl Item {
     /// assert_eq!(item.comments(), Some("http://example.com"));
     /// ```
     pub fn comments(&self) -> Option<&str> {
-        self.comments.as_ref().map(|s| s.as_str())
+        self.comments.as_ref().map(String::as_str)
     }
 
     /// Set the URL for comments about this item.
@@ -335,7 +335,7 @@ impl Item {
     /// assert_eq!(item.pub_date(), Some("Mon, 01 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
-        self.pub_date.as_ref().map(|s| s.as_str())
+        self.pub_date.as_ref().map(String::as_str)
     }
 
     /// Set the publication date of this item as an RFC822 timestamp.
@@ -400,7 +400,7 @@ impl Item {
     /// assert_eq!(item.content(), Some("Item content"));
     /// ```
     pub fn content(&self) -> Option<&str> {
-        self.content.as_ref().map(|s| s.as_str())
+        self.content.as_ref().map(String::as_str)
     }
 
     /// Set the content of this item.
@@ -432,7 +432,7 @@ impl Item {
     /// item.set_itunes_ext(ITunesItemExtension::default());
     /// assert!(item.itunes_ext().is_some());
     /// ```
-    pub fn itunes_ext(&self) -> Option<&ITunesItemExtension> {
+    pub fn itunes_ext(&self) -> Option<&itunes::ITunesItemExtension> {
         self.itunes_ext.as_ref()
     }
 
@@ -449,7 +449,7 @@ impl Item {
     /// ```
     pub fn set_itunes_ext<V>(&mut self, itunes_ext: V)
     where
-        V: Into<Option<ITunesItemExtension>>,
+        V: Into<Option<itunes::ITunesItemExtension>>,
     {
         self.itunes_ext = itunes_ext.into();
     }
@@ -466,7 +466,7 @@ impl Item {
     /// item.set_dublin_core_ext(DublinCoreExtension::default());
     /// assert!(item.dublin_core_ext().is_some());
     /// ```
-    pub fn dublin_core_ext(&self) -> Option<&DublinCoreExtension> {
+    pub fn dublin_core_ext(&self) -> Option<&dublincore::DublinCoreExtension> {
         self.dublin_core_ext.as_ref()
     }
 
@@ -483,7 +483,7 @@ impl Item {
     /// ```
     pub fn set_dublin_core_ext<V>(&mut self, dublin_core_ext: V)
     where
-        V: Into<Option<DublinCoreExtension>>,
+        V: Into<Option<dublincore::DublinCoreExtension>>,
     {
         self.dublin_core_ext = dublin_core_ext.into();
     }
@@ -536,8 +536,9 @@ impl Item {
     }
 }
 
-impl FromXml for Item {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+impl Item {
+    /// Builds an Item from source XML
+    pub fn from_xml<R: BufRead>(namespaces: &HashMap<String, String>, reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut item = Item::default();
         let mut buf = Vec::new();
 
@@ -589,12 +590,17 @@ impl FromXml for Item {
         }
 
         if !item.extensions.is_empty() {
-            if let Some(map) = item.extensions.remove("itunes") {
-                item.itunes_ext = Some(ITunesItemExtension::from_map(map));
-            }
-
-            if let Some(map) = item.extensions.remove("dc") {
-                item.dublin_core_ext = Some(DublinCoreExtension::from_map(map));
+            // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
+            for (prefix, namespace) in namespaces {
+                match namespace.as_ref() {
+                    itunes::NAMESPACE => {
+                        item.extensions.remove(prefix).map(|v| item.itunes_ext = Some(itunes::ITunesItemExtension::from_map(v)))
+                    },
+                    dublincore::NAMESPACE => {
+                        item.extensions.remove(prefix).map(|v| item.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v)))
+                    },
+                    _ => None
+                };
             }
         }
 

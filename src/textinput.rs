@@ -14,7 +14,6 @@ use quick_xml::Reader;
 use quick_xml::Writer;
 
 use error::Error;
-use fromxml::FromXml;
 use toxml::{ToXml, WriterExt};
 use util::element_text;
 
@@ -163,8 +162,9 @@ impl TextInput {
     }
 }
 
-impl FromXml for TextInput {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+impl TextInput {
+    /// Builds a TextInput from source XML
+    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
         let mut text_input = TextInput::default();
         let mut buf = Vec::new();
 

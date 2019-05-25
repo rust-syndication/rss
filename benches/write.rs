@@ -40,3 +40,12 @@ fn write_dublincore(b: &mut Bencher) {
         let _ = channel.write_to(sink()).expect("failed to write");
     });
 }
+
+#[bench]
+fn write_syndication(b: &mut Bencher) {
+    let input: &[u8] = include_bytes!("../tests/data/syndication.xml");
+    let channel = Channel::read_from(input).expect("failed to parse feed");
+    b.iter(|| {
+        let _ = channel.write_to(sink()).expect("failed to write");
+    });
+}

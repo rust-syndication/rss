@@ -14,7 +14,6 @@ use quick_xml::Reader;
 use quick_xml::Writer;
 
 use error::Error;
-use fromxml::FromXml;
 use toxml::ToXml;
 
 /// Represents an enclosure in an RSS item.
@@ -128,8 +127,9 @@ impl Enclosure {
     }
 }
 
-impl FromXml for Enclosure {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+impl Enclosure {
+    /// Builds an Enclosure from source XML
+    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
         let mut enclosure = Enclosure::default();
 
         for attr in atts.with_checks(false) {
@@ -166,7 +166,7 @@ impl ToXml for Enclosure {
             (b"length", self.length.as_bytes()),
             (b"type", self.mime_type.as_bytes()),
         ];
-        element.extend_attributes(attrs.into_iter().cloned());
+        element.extend_attributes(attrs.iter().cloned());
 
         writer.write_event(Event::Empty(element))?;
         Ok(())

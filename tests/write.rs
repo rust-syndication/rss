@@ -110,6 +110,13 @@ fn write_dublincore() {
 }
 
 #[test]
+fn write_syndication() {
+    let input = include_str!("data/syndication.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    test_write!(channel);
+}
+
+#[test]
 fn verify_write_format() {
     let item = ItemBuilder::default()
         .itunes_ext(extension::itunes::ITunesItemExtension::default())

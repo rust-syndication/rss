@@ -13,7 +13,6 @@ use quick_xml::events::{BytesStart, Event};
 use quick_xml::Writer;
 
 use super::{parse_categories, parse_image, parse_owner};
-use error::Error;
 use extension::Extension;
 use extension::itunes::{ITunesCategory, ITunesOwner};
 use extension::util::remove_extension_value;
@@ -66,7 +65,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.author(), Some("John Doe"));
     /// ```
     pub fn author(&self) -> Option<&str> {
-        self.author.as_ref().map(|s| s.as_str())
+        self.author.as_ref().map(String::as_str)
     }
 
     /// Set the author of this podcast.
@@ -101,7 +100,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.block(), Some("Yes"));
     /// ```
     pub fn block(&self) -> Option<&str> {
-        self.block.as_ref().map(|s| s.as_str())
+        self.block.as_ref().map(String::as_str)
     }
 
     /// Set whether the podcast should be blocked from appearing in the iTunes Store.
@@ -173,7 +172,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.image(), Some("http://example.com/artwork.png"));
     /// ```
     pub fn image(&self) -> Option<&str> {
-        self.image.as_ref().map(|s| s.as_str())
+        self.image.as_ref().map(String::as_str)
     }
 
     /// Set the artwork URL for the podcast.
@@ -209,7 +208,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.explicit(), Some("Yes"));
     /// ```
     pub fn explicit(&self) -> Option<&str> {
-        self.explicit.as_ref().map(|s| s.as_str())
+        self.explicit.as_ref().map(String::as_str)
     }
 
     /// Set whether the podcast contains explicit content.
@@ -247,7 +246,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.complete(), Some("Yes"));
     /// ```
     pub fn complete(&self) -> Option<&str> {
-        self.complete.as_ref().map(|s| s.as_str())
+        self.complete.as_ref().map(String::as_str)
     }
 
     /// Set whether the podcast is complete and no new episodes will be posted.
@@ -281,7 +280,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.new_feed_url(), Some("http://example.com/feed"));
     /// ```
     pub fn new_feed_url(&self) -> Option<&str> {
-        self.new_feed_url.as_ref().map(|s| s.as_str())
+        self.new_feed_url.as_ref().map(String::as_str)
     }
 
     /// Set the new feed URL for this podcast.
@@ -345,7 +344,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.subtitle(), Some("A podcast"));
     /// ```
     pub fn subtitle(&self) -> Option<&str> {
-        self.subtitle.as_ref().map(|s| s.as_str())
+        self.subtitle.as_ref().map(String::as_str)
     }
 
     /// Set the description of this podcast.
@@ -377,7 +376,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.summary(), Some("A podcast"));
     /// ```
     pub fn summary(&self) -> Option<&str> {
-        self.summary.as_ref().map(|s| s.as_str())
+        self.summary.as_ref().map(String::as_str)
     }
 
     /// Set the summary for this podcast.
@@ -411,7 +410,7 @@ impl ITunesChannelExtension {
     /// assert_eq!(extension.keywords(), Some("technology"));
     /// ```
     pub fn keywords(&self) -> Option<&str> {
-        self.keywords.as_ref().map(|s| s.as_str())
+        self.keywords.as_ref().map(String::as_str)
     }
 
     /// Set the keywords for this podcast.
@@ -436,20 +435,20 @@ impl ITunesChannelExtension {
 
 impl ITunesChannelExtension {
     /// Create an `ITunesChannelExtension` from a `HashMap`.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Result<Self, Error> {
+    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
         let mut ext = ITunesChannelExtension::default();
         ext.author = remove_extension_value(&mut map, "author");
         ext.block = remove_extension_value(&mut map, "block");
-        ext.categories = parse_categories(&mut map)?;
+        ext.categories = parse_categories(&mut map);
         ext.image = parse_image(&mut map);
         ext.explicit = remove_extension_value(&mut map, "explicit");
         ext.complete = remove_extension_value(&mut map, "complete");
         ext.new_feed_url = remove_extension_value(&mut map, "new-feed-url");
-        ext.owner = parse_owner(&mut map)?;
+        ext.owner = parse_owner(&mut map);
         ext.subtitle = remove_extension_value(&mut map, "subtitle");
         ext.summary = remove_extension_value(&mut map, "summary");
         ext.keywords = remove_extension_value(&mut map, "keywords");
-        Ok(ext)
+        ext
     }
 }
 

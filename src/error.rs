@@ -48,7 +48,7 @@ impl StdError for Error {
     fn cause(&self) -> Option<&StdError> {
         match *self {
             Error::Utf8(ref err) => Some(err),
-            Error::Xml(ref err) => StdError::cause(err),
+            Error::Xml(ref err) => StdError::source(err),
             Error::InvalidStartTag | Error::Eof => None,
             #[cfg(feature = "from_url")]
             Error::UrlRequest(ref err) => Some(err),

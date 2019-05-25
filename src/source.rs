@@ -14,7 +14,6 @@ use quick_xml::Reader;
 use quick_xml::Writer;
 
 use error::Error;
-use fromxml::FromXml;
 use toxml::ToXml;
 use util::element_text;
 
@@ -74,7 +73,7 @@ impl Source {
     /// assert_eq!(source.title(), Some("Source Title"));
     /// ```
     pub fn title(&self) -> Option<&str> {
-        self.title.as_ref().map(|s| s.as_str())
+        self.title.as_ref().map(String::as_str)
     }
 
     /// Set the title of this source.
@@ -95,8 +94,9 @@ impl Source {
     }
 }
 
-impl FromXml for Source {
-    fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+impl Source {
+    /// Builds a Source from source XML
+    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
         let mut source = Source::default();
 
         for attr in atts.with_checks(false) {
@@ -121,7 +121,7 @@ impl ToXml for Source {
 
         writer.write_event(Event::Start(element))?;
 
-        if let Some(text) = self.title.as_ref().map(|s| s.as_bytes()) {
+        if let Some(text) = self.title.as_ref().map(String::as_bytes) {
             writer.write_event(Event::Text(BytesText::from_escaped(text)))?;
         }
 

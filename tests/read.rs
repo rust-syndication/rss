@@ -5,6 +5,7 @@ use std::collections::HashMap;
 use rss::Channel;
 use rss::extension::Extension;
 use rss::extension::dublincore::DublinCoreExtension;
+use rss::extension::syndication;
 
 fn get_extension_values<'a>(
     map: &'a HashMap<String, Vec<Extension>>,
@@ -260,21 +261,21 @@ fn read_source() {
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .source()
             .as_ref()
-            .map(|v| v.url(),),
+            .map(|v| v.url()),
         Some("http://example.com/feed/")
     );
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .source()
             .as_ref()
-            .and_then(|v| v.title(),),
+            .and_then(|v| v.title()),
         Some("Feed")
     );
 }
@@ -297,11 +298,11 @@ fn read_guid() {
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .guid()
             .as_ref()
-            .map(|v| v.value(),),
+            .map(|v| v.value()),
         Some("abc")
     );
 
@@ -318,11 +319,11 @@ fn read_guid() {
     assert_eq!(
         channel
             .items()
-            .get(1,)
+            .get(1)
             .unwrap()
             .guid()
             .as_ref()
-            .map(|v| v.value(),),
+            .map(|v| v.value()),
         Some("def")
     );
 }
@@ -335,31 +336,31 @@ fn read_enclosure() {
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .enclosure()
             .as_ref()
-            .map(|v| v.url(),),
+            .map(|v| v.url()),
         Some("http://example.com/media.mp3")
     );
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .enclosure()
             .as_ref()
-            .map(|v| v.length(),),
+            .map(|v| v.length()),
         Some("4992349")
     );
     assert_eq!(
         channel
             .items()
-            .get(0,)
+            .get(0)
             .unwrap()
             .enclosure()
             .as_ref()
-            .map(|v| v.mime_type(),),
+            .map(|v| v.mime_type()),
         Some("audio/mpeg")
     );
 }
@@ -480,7 +481,11 @@ fn read_extension() {
         channel.namespaces().get("ext").unwrap(),
         "http://example.com/"
     );
-    assert_eq!(channel.namespaces().len(), 1);
+    assert_eq!(
+        channel.namespaces().get("dc").unwrap(),
+        "http://purl.org/dc/elements/1.1/"
+    );
+    assert_eq!(channel.namespaces().len(), 2);
 
     assert_eq!(
         get_extension_values(
@@ -599,7 +604,7 @@ fn read_itunes() {
             .unwrap()
             .owner()
             .as_ref()
-            .and_then(|v| v.name(),),
+            .and_then(|v| v.name()),
         Some("Name")
     );
     assert_eq!(
@@ -608,7 +613,7 @@ fn read_itunes() {
             .unwrap()
             .owner()
             .as_ref()
-            .and_then(|v| v.email(),),
+            .and_then(|v| v.email()),
         Some("example@example.com")
     );
     assert_eq!(channel.itunes_ext().unwrap().subtitle(), Some("Subtitle"));
@@ -721,89 +726,98 @@ fn read_itunes() {
 
 #[test]
 fn read_dublincore() {
-    let input = include_str!("data/dublincore.xml");
+    run_dublincore_test(include_str!("data/dublincore.xml"));
+}
+
+#[test]
+fn read_dublincore_altprefix() {
+    run_dublincore_test(include_str!("data/dublincore_altprefix.xml"));
+}
+
+#[cfg(test)]
+fn run_dublincore_test(input: &str) {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     fn test_ext(dc: &DublinCoreExtension) {
         assert_eq!(
             dc.contributors()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Contributor 1", "Contributor 2"]
         );
         assert_eq!(
             dc.coverages()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Coverage"]
         );
         assert_eq!(
-            dc.creators().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.creators().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Creator"]
         );
         assert_eq!(
-            dc.dates().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.dates().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["2016-08-27"]
         );
         assert_eq!(
             dc.descriptions()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Description"]
         );
         assert_eq!(
-            dc.formats().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.formats().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["text/plain"]
         );
         assert_eq!(
             dc.identifiers()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Identifier"]
         );
         assert_eq!(
             dc.languages()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["en-US"]
         );
         assert_eq!(
             dc.publishers()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Publisher"]
         );
         assert_eq!(
             dc.relations()
                 .iter()
-                .map(|s| s.as_str())
+                .map(String::as_str)
                 .collect::<Vec<_>>(),
             vec!["Relation"]
         );
         assert_eq!(
-            dc.rights().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.rights().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Company"]
         );
         assert_eq!(
-            dc.sources().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.sources().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Source"]
         );
         assert_eq!(
-            dc.subjects().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.subjects().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Subject"]
         );
         assert_eq!(
-            dc.titles().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.titles().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Title"]
         );
         assert_eq!(
-            dc.types().iter().map(|s| s.as_str()).collect::<Vec<_>>(),
+            dc.types().iter().map(String::as_str).collect::<Vec<_>>(),
             vec!["Type"]
         );
     }
@@ -814,6 +828,7 @@ fn read_dublincore() {
             .as_ref()
             .expect("dc extension missing"),
     );
+
     test_ext(
         channel
             .items()
@@ -823,6 +838,17 @@ fn read_dublincore() {
             .as_ref()
             .expect("ds extension missing"),
     );
+}
+
+#[test]
+fn read_syndication() {
+    let input = include_str!("data/syndication.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    let syn = channel.syndication_ext().unwrap();
+    assert_eq!(syn.period(), &syndication::UpdatePeriod::HOURLY);
+    assert_eq!(syn.frequency(), 2);
+    assert_eq!(syn.base(), "2000-01-01T12:00+00:00");
 }
 
 #[test]

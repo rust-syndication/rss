@@ -17,7 +17,7 @@ use extension::util::remove_extension_values;
 use toxml::{ToXml, WriterExt};
 
 /// The Dublin Core XML namespace.
-pub static NAMESPACE: &'static str = "http://purl.org/dc/elements/1.1/";
+pub const NAMESPACE: &str = "http://purl.org/dc/elements/1.1/";
 
 /// A Dublin Core element extension.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

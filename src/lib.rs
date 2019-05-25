@@ -113,7 +113,6 @@ mod source;
 mod textinput;
 
 mod error;
-mod fromxml;
 mod toxml;
 mod util;
 
