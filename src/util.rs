@@ -10,7 +10,7 @@ use std::io::BufRead;
 use quick_xml::events::Event;
 use quick_xml::Reader;
 
-use error::Error;
+use crate::error::Error;
 
 pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>, Error> {
     let mut content: Option<String> = None;

@@ -123,14 +123,14 @@ pub mod extension;
 #[cfg(feature = "validation")]
 pub mod validation;
 
-pub use channel::{Channel, ChannelBuilder};
-pub use category::{Category, CategoryBuilder};
-pub use cloud::{Cloud, CloudBuilder};
-pub use enclosure::{Enclosure, EnclosureBuilder};
-pub use guid::{Guid, GuidBuilder};
-pub use image::{Image, ImageBuilder};
-pub use item::{Item, ItemBuilder};
-pub use source::{Source, SourceBuilder};
-pub use textinput::{TextInput, TextInputBuilder};
+pub use crate::channel::{Channel, ChannelBuilder};
+pub use crate::category::{Category, CategoryBuilder};
+pub use crate::cloud::{Cloud, CloudBuilder};
+pub use crate::enclosure::{Enclosure, EnclosureBuilder};
+pub use crate::guid::{Guid, GuidBuilder};
+pub use crate::image::{Image, ImageBuilder};
+pub use crate::item::{Item, ItemBuilder};
+pub use crate::source::{Source, SourceBuilder};
+pub use crate::textinput::{TextInput, TextInputBuilder};
 
-pub use error::Error;
+pub use crate::error::Error;

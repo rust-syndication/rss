@@ -13,9 +13,9 @@ use quick_xml::events::attributes::Attributes;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
-use error::Error;
-use toxml::ToXml;
-use util::element_text;
+use crate::error::Error;
+use crate::toxml::ToXml;
+use crate::util::element_text;
 
 /// Represents a category in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

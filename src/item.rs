@@ -13,17 +13,17 @@ use quick_xml::events::attributes::Attributes;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
-use category::Category;
-use enclosure::Enclosure;
-use error::Error;
-use extension::ExtensionMap;
-use extension::dublincore;
-use extension::itunes;
-use extension::util::{extension_name, parse_extension};
-use guid::Guid;
-use source::Source;
-use toxml::{ToXml, WriterExt};
-use util::element_text;
+use crate::category::Category;
+use crate::enclosure::Enclosure;
+use crate::error::Error;
+use crate::extension::ExtensionMap;
+use crate::extension::dublincore;
+use crate::extension::itunes;
+use crate::extension::util::{extension_name, parse_extension};
+use crate::guid::Guid;
+use crate::source::Source;
+use crate::toxml::{ToXml, WriterExt};
+use crate::util::element_text;
 use std::collections::HashMap;
 
 /// Represents an item in an RSS feed.

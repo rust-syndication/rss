@@ -7,7 +7,7 @@
 
 use std::collections::HashMap;
 
-use extension::Extension;
+use crate::extension::Extension;
 
 mod itunes_category;
 mod itunes_channel_extension;
