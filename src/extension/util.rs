@@ -13,8 +13,8 @@ use quick_xml::events::Event;
 use quick_xml::events::attributes::Attributes;
 use quick_xml::Reader;
 
-use error::Error;
-use extension::{Extension, ExtensionMap};
+use crate::error::Error;
+use crate::extension::{Extension, ExtensionMap};
 
 pub fn extension_name(element_name: &[u8]) -> Option<(&[u8], &[u8])> {
     let mut split = element_name.splitn(2, |b| *b == b':');

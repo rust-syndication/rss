@@ -13,8 +13,8 @@ use quick_xml::events::attributes::Attributes;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
-use error::Error;
-use toxml::ToXml;
+use crate::error::Error;
+use crate::toxml::ToXml;
 
 /// Represents an enclosure in an RSS item.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

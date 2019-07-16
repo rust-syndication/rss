@@ -15,19 +15,19 @@ use quick_xml::events::attributes::Attributes;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
-use category::Category;
-use cloud::Cloud;
-use error::Error;
-use extension::ExtensionMap;
-use extension::dublincore;
-use extension::itunes;
-use extension::syndication;
-use extension::util::{extension_name, parse_extension};
-use image::Image;
-use item::Item;
-use textinput::TextInput;
-use toxml::{ToXml, WriterExt};
-use util::element_text;
+use crate::category::Category;
+use crate::cloud::Cloud;
+use crate::error::Error;
+use crate::extension::ExtensionMap;
+use crate::extension::dublincore;
+use crate::extension::itunes;
+use crate::extension::syndication;
+use crate::extension::util::{extension_name, parse_extension};
+use crate::image::Image;
+use crate::item::Item;
+use crate::textinput::TextInput;
+use crate::toxml::{ToXml, WriterExt};
+use crate::util::element_text;
 
 /// Represents the channel of an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

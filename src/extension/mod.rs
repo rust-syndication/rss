@@ -13,7 +13,7 @@ use quick_xml::Error as XmlError;
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 use quick_xml::Writer;
 
-use toxml::ToXml;
+use crate::toxml::ToXml;
 
 /// Types and methods for
 /// [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions.

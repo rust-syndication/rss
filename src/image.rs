@@ -13,9 +13,9 @@ use quick_xml::events::attributes::Attributes;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
-use error::Error;
-use toxml::{ToXml, WriterExt};
-use util::element_text;
+use crate::error::Error;
+use crate::toxml::{ToXml, WriterExt};
+use crate::util::element_text;
 
 /// Represents an image in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

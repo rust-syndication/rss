@@ -17,7 +17,7 @@ use mime::Mime;
 use url::ParseError as UrlParseError;
 use url::Url;
 
-use {Category, Channel, Cloud, Enclosure, Image, Item, Source, TextInput};
+use crate::{Category, Channel, Cloud, Enclosure, Image, Item, Source, TextInput};
 
 #[derive(Debug)]
 /// Errors that occur during validation.

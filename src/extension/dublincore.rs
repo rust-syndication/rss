@@ -11,10 +11,10 @@ use std::io::Write;
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
-use extension::Extension;
-use extension::util::remove_extension_values;
+use crate::extension::Extension;
+use crate::extension::util::remove_extension_values;
 
-use toxml::{ToXml, WriterExt};
+use crate::toxml::{ToXml, WriterExt};
 
 /// The Dublin Core XML namespace.
 pub const NAMESPACE: &str = "http://purl.org/dc/elements/1.1/";

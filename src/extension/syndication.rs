@@ -13,8 +13,8 @@ use std::str::FromStr;
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
-use extension::Extension;
-use toxml::WriterExt;
+use crate::extension::Extension;
+use crate::toxml::WriterExt;
 
 /// The Syndication XML namespace.
 pub const NAMESPACE: &str = "http://purl.org/rss/1.0/modules/syndication/";

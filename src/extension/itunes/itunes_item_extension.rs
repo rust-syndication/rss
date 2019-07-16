@@ -13,9 +13,9 @@ use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::Writer;
 
 use super::parse_image;
-use extension::Extension;
-use extension::util::remove_extension_value;
-use toxml::{ToXml, WriterExt};
+use crate::extension::Extension;
+use crate::extension::util::remove_extension_value;
+use crate::toxml::{ToXml, WriterExt};
 
 /// An iTunes item element extension.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

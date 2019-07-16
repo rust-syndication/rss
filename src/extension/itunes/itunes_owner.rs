@@ -11,7 +11,7 @@ use quick_xml::Error as XmlError;
 use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::Writer;
 
-use toxml::{ToXml, WriterExt};
+use crate::toxml::{ToXml, WriterExt};
 
 /// The contact information for the owner of an iTunes podcast.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]

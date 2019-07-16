@@ -13,10 +13,10 @@ use quick_xml::events::{BytesStart, Event};
 use quick_xml::Writer;
 
 use super::{parse_categories, parse_image, parse_owner};
-use extension::Extension;
-use extension::itunes::{ITunesCategory, ITunesOwner};
-use extension::util::remove_extension_value;
-use toxml::{ToXml, WriterExt};
+use crate::extension::Extension;
+use crate::extension::itunes::{ITunesCategory, ITunesOwner};
+use crate::extension::util::remove_extension_value;
+use crate::toxml::{ToXml, WriterExt};
 
 /// An iTunes channel element extension.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
