@@ -12,8 +12,8 @@ use std::num::ParseIntError;
 
 use chrono::DateTime;
 use chrono::ParseError as DateParseError;
-use mime::Mime;
 use mime::FromStrError as MimeParseError;
+use mime::Mime;
 use url::ParseError as UrlParseError;
 use url::Url;
 
@@ -45,7 +45,7 @@ impl StdError for ValidationError {
         }
     }
 
-    fn cause(&self) -> Option<&StdError> {
+    fn cause(&self) -> Option<&dyn StdError> {
         match *self {
             ValidationError::DateParsing(ref err) => Some(err),
             ValidationError::IntParsing(ref err) => Some(err),

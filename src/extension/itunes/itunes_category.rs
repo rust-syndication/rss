@@ -7,10 +7,11 @@
 
 use std::io::Write;
 
-use quick_xml::Error as XmlError;
 use quick_xml::events::{BytesEnd, BytesStart, Event};
+use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
+use std::ops::Deref;
 use toxml::ToXml;
 
 /// A category for an iTunes podcast.
@@ -69,8 +70,8 @@ impl ITunesCategory {
     /// category.set_subcategory(Box::new(ITunesCategory::default()));
     /// assert!(category.subcategory().is_some());
     /// ```
-    pub fn subcategory(&self) -> Option<&Box<ITunesCategory>> {
-        self.subcategory.as_ref()
+    pub fn subcategory(&self) -> Option<&ITunesCategory> {
+        self.subcategory.as_ref().map(|x| x.deref())
     }
 
     /// Set the subcategory for this category.
