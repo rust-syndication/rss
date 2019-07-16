@@ -45,7 +45,7 @@ impl StdError for Error {
         }
     }
 
-    fn cause(&self) -> Option<&StdError> {
+    fn cause(&self) -> Option<&dyn StdError> {
         match *self {
             Error::Utf8(ref err) => Some(err),
             Error::Xml(ref err) => StdError::source(err),
