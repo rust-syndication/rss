@@ -9,8 +9,8 @@ use std::collections::HashMap;
 use std::io::BufRead;
 use std::str;
 
-use quick_xml::events::Event;
 use quick_xml::events::attributes::Attributes;
+use quick_xml::events::Event;
 use quick_xml::Reader;
 
 use crate::error::Error;
@@ -94,13 +94,13 @@ fn parse_extension_element<R: BufRead>(
                 items.push(ext);
             }
             Event::CData(element) => {
-                extension.value = Some(reader.decode(&element).into_owned());
+                extension.value = Some(reader.decode(&element)?.into());
             }
             Event::Text(element) => {
                 extension.value = Some(element.unescape_and_decode(reader)?);
             }
             Event::End(element) => {
-                extension.name = reader.decode(element.name()).into_owned();
+                extension.name = reader.decode(element.name())?.into();
                 break;
             }
             Event::Eof => return Err(Error::Eof),

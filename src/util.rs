@@ -23,7 +23,7 @@ pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>
                 reader.read_to_end(element.name(), &mut skip_buf)?;
             }
             Event::CData(element) => {
-                let text = reader.decode(&*element).into_owned();
+                let text = reader.decode(&*element)?.into();
                 content = Some(text);
             }
             Event::Text(element) => {
