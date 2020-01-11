@@ -85,7 +85,6 @@
 #[macro_use]
 extern crate derive_builder;
 
-extern crate failure;
 extern crate quick_xml;
 
 #[cfg(feature = "serde")]

@@ -9,7 +9,6 @@ use std::error::Error as StdError;
 use std::fmt;
 use std::str::Utf8Error;
 
-use failure::{self, Fail};
 use quick_xml::Error as XmlError;
 
 #[derive(Debug)]
@@ -18,7 +17,7 @@ pub enum Error {
     /// An error while converting bytes to UTF8.
     Utf8(Utf8Error),
     /// An XML parsing error.
-    Xml(failure::Compat<XmlError>),
+    Xml(XmlError),
     /// The input didn't begin with an opening `<rss>` tag.
     InvalidStartTag,
     /// The end of the input was reached without finding a complete channel element.
@@ -32,23 +31,10 @@ pub enum Error {
 }
 
 impl StdError for Error {
-    fn description(&self) -> &str {
-        match *self {
-            Error::Utf8(ref err) => err.description(),
-            Error::Xml(_) => "xml error",
-            Error::InvalidStartTag => "the input did not begin with an rss tag",
-            Error::Eof => "reached end of input without finding a complete channel",
-            #[cfg(feature = "from_url")]
-            Error::UrlRequest(ref err) => err.description(),
-            #[cfg(feature = "from_url")]
-            Error::Io(ref err) => err.description(),
-        }
-    }
-
-    fn cause(&self) -> Option<&dyn StdError> {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
         match *self {
             Error::Utf8(ref err) => Some(err),
-            Error::Xml(ref err) => StdError::source(err),
+            Error::Xml(ref err) => Some(err),
             Error::InvalidStartTag | Error::Eof => None,
             #[cfg(feature = "from_url")]
             Error::UrlRequest(ref err) => Some(err),
@@ -61,21 +47,21 @@ impl StdError for Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            Error::Utf8(ref err) => err.fmt(f),
-            Error::Xml(ref err) => err.fmt(f),
+            Error::Utf8(ref err) => fmt::Display::fmt(err, f),
+            Error::Xml(ref err) => fmt::Display::fmt(err, f),
             Error::InvalidStartTag => write!(f, "the input did not begin with an rss tag"),
             Error::Eof => write!(f, "reached end of input without finding a complete channel"),
             #[cfg(feature = "from_url")]
-            Error::UrlRequest(ref err) => err.fmt(f),
+            Error::UrlRequest(ref err) => fmt::Display::fmt(err, f),
             #[cfg(feature = "from_url")]
-            Error::Io(ref err) => err.fmt(f),
+            Error::Io(ref err) => fmt::Display::fmt(err, f),
         }
     }
 }
 
 impl From<XmlError> for Error {
     fn from(err: XmlError) -> Error {
-        Error::Xml(err.compat())
+        Error::Xml(err)
     }
 }
 
