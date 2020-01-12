@@ -19,8 +19,9 @@ use crate::util::element_text;
 
 /// Represents an image in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, Default, Clone, PartialEq, Builder)]
-#[builder(setter(into), default)]
+#[derive(Debug, Default, Clone, PartialEq)]
+#[cfg_attr(feature = "builders", derive(Builder))]
+#[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Image {
     /// The URL of the image.
     url: String,

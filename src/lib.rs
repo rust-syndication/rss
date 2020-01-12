@@ -56,6 +56,8 @@
 //!
 //! Builder methods are provided to assist in the creation of channels.
 //!
+//! **Note**: This requires the `builders` feature, which is enabled by default.
+//!
 //! ```
 //! use rss::ChannelBuilder;
 //!
@@ -82,6 +84,7 @@
 //! channel.validate().unwrap();
 //! ```
 
+#[cfg(feature = "builders")]
 #[macro_use]
 extern crate derive_builder;
 
@@ -122,14 +125,32 @@ pub mod extension;
 #[cfg(feature = "validation")]
 pub mod validation;
 
-pub use crate::channel::{Channel, ChannelBuilder};
-pub use crate::category::{Category, CategoryBuilder};
-pub use crate::cloud::{Cloud, CloudBuilder};
-pub use crate::enclosure::{Enclosure, EnclosureBuilder};
-pub use crate::guid::{Guid, GuidBuilder};
-pub use crate::image::{Image, ImageBuilder};
-pub use crate::item::{Item, ItemBuilder};
-pub use crate::source::{Source, SourceBuilder};
-pub use crate::textinput::{TextInput, TextInputBuilder};
+pub use crate::channel::Channel;
+#[cfg(feature = "builders")]
+pub use crate::channel::ChannelBuilder;
+pub use crate::category::Category;
+#[cfg(feature = "builders")]
+pub use crate::category::CategoryBuilder;
+pub use crate::cloud::Cloud;
+#[cfg(feature = "builders")]
+pub use crate::cloud::CloudBuilder;
+pub use crate::enclosure::Enclosure;
+#[cfg(feature = "builders")]
+pub use crate::enclosure::EnclosureBuilder;
+pub use crate::guid::Guid;
+#[cfg(feature = "builders")]
+pub use crate::guid::GuidBuilder;
+pub use crate::image::Image;
+#[cfg(feature = "builders")]
+pub use crate::image::ImageBuilder;
+pub use crate::item::Item;
+#[cfg(feature = "builders")]
+pub use crate::item::ItemBuilder;
+pub use crate::source::Source;
+#[cfg(feature = "builders")]
+pub use crate::source::SourceBuilder;
+pub use crate::textinput::TextInput;
+#[cfg(feature = "builders")]
+pub use crate::textinput::TextInputBuilder;
 
 pub use crate::error::Error;

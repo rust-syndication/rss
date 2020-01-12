@@ -83,6 +83,8 @@ let string = channel.to_string(); // convert the channel to a string
 
 Builder methods are provided to assist in the creation of channels.
 
+**Note**: This requires the `builders` feature, which is enabled by default.
+
 ```rust
 use rss::ChannelBuilder;
 

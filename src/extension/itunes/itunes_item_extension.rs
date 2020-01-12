@@ -19,8 +19,9 @@ use crate::toxml::{ToXml, WriterExt};
 
 /// An iTunes item element extension.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, Default, Clone, PartialEq, Builder)]
-#[builder(setter(into), default)]
+#[derive(Debug, Default, Clone, PartialEq)]
+#[cfg_attr(feature = "builders", derive(Builder))]
+#[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct ITunesItemExtension {
     /// The author of the podcast episode.
     author: Option<String>,
