@@ -64,8 +64,9 @@ impl fmt::Display for UpdatePeriod {
 
 /// An RSS syndication element extension.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, Clone, PartialEq, Builder)]
-#[builder(setter(into), default)]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "builders", derive(Builder))]
+#[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct SyndicationExtension {
     /// The refresh period for this channel
     period: UpdatePeriod,

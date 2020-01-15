@@ -15,8 +15,9 @@ use crate::toxml::{ToXml, WriterExt};
 
 /// The contact information for the owner of an iTunes podcast.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, Default, Clone, PartialEq, Builder)]
-#[builder(setter(into), default)]
+#[derive(Debug, Default, Clone, PartialEq)]
+#[cfg_attr(feature = "builders", derive(Builder))]
+#[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct ITunesOwner {
     /// The name of the owner.
     name: Option<String>,

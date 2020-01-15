@@ -19,8 +19,9 @@ use crate::util::element_text;
 
 /// Represents the GUID of an RSS item.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, Clone, PartialEq, Builder)]
-#[builder(setter(into), default)]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = "builders", derive(Builder))]
+#[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Guid {
     /// The value of the GUID.
     value: String,

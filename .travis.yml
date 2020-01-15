@@ -19,8 +19,9 @@ before_script:
 script:
   - |
       travis-cargo --only nighlty fmt -- --write-mode=diff &&
-      cargo build --release --features "from_url serde validation" &&
-      cargo test --release --features "from_url serde validation" &&
+      cargo build --release --no-default-features &&
+      cargo build --release --all-features &&
+      cargo test --release --all-features &&
       travis-cargo --only stable doc -- --features "from_url validation serde"
 
 after_success:
