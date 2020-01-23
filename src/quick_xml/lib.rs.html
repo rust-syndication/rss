@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.17.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../quick_xml/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="doccomment">//! High performance XML reader/writer.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Description</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - `Reader`: a low level xml pull-reader where buffer allocation/clearing is left to user</span>
+<span class="doccomment">//! - `Writer`: a xml writer. Can be nested with readers if you want to transform xmls</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Reader</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! use quick_xml::Reader;</span>
+<span class="doccomment">//! use quick_xml::events::Event;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let xml = r#&quot;&lt;tag1 att1 = &quot;test&quot;&gt;</span>
+<span class="doccomment">//!                 &lt;tag2&gt;&lt;!--Test comment--&gt;Test&lt;/tag2&gt;</span>
+<span class="doccomment">//!                 &lt;tag2&gt;</span>
+<span class="doccomment">//!                     Test 2</span>
+<span class="doccomment">//!                 &lt;/tag2&gt;</span>
+<span class="doccomment">//!             &lt;/tag1&gt;&quot;#;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut reader = Reader::from_str(xml);</span>
+<span class="doccomment">//! reader.trim_text(true);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut count = 0;</span>
+<span class="doccomment">//! let mut txt = Vec::new();</span>
+<span class="doccomment">//! let mut buf = Vec::new();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! // The `Reader` does not implement `Iterator` because it outputs borrowed data (`Cow`s)</span>
+<span class="doccomment">//! loop {</span>
+<span class="doccomment">//!     match reader.read_event(&amp;mut buf) {</span>
+<span class="doccomment">//!     // for triggering namespaced events, use this instead:</span>
+<span class="doccomment">//!     // match reader.read_namespaced_event(&amp;mut buf) {</span>
+<span class="doccomment">//!         Ok(Event::Start(ref e)) =&gt; {</span>
+<span class="doccomment">//!         // for namespaced:</span>
+<span class="doccomment">//!         // Ok((ref namespace_value, Event::Start(ref e)))</span>
+<span class="doccomment">//!             match e.name() {</span>
+<span class="doccomment">//!                 b&quot;tag1&quot; =&gt; println!(&quot;attributes values: {:?}&quot;,</span>
+<span class="doccomment">//!                                     e.attributes().map(|a| a.unwrap().value)</span>
+<span class="doccomment">//!                                     .collect::&lt;Vec&lt;_&gt;&gt;()),</span>
+<span class="doccomment">//!                 b&quot;tag2&quot; =&gt; count += 1,</span>
+<span class="doccomment">//!                 _ =&gt; (),</span>
+<span class="doccomment">//!             }</span>
+<span class="doccomment">//!         },</span>
+<span class="doccomment">//!         // unescape and decode the text event using the reader encoding</span>
+<span class="doccomment">//!         Ok(Event::Text(e)) =&gt; txt.push(e.unescape_and_decode(&amp;reader).unwrap()),</span>
+<span class="doccomment">//!         Ok(Event::Eof) =&gt; break, // exits the loop when reaching end of file</span>
+<span class="doccomment">//!         Err(e) =&gt; panic!(&quot;Error at position {}: {:?}&quot;, reader.buffer_position(), e),</span>
+<span class="doccomment">//!         _ =&gt; (), // There are several other `Event`s we do not consider here</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     // if we don&#39;t keep a borrow elsewhere, we can clear the buffer to keep memory usage low</span>
+<span class="doccomment">//!     buf.clear();</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Writer</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! use quick_xml::Writer;</span>
+<span class="doccomment">//! use quick_xml::events::{Event, BytesEnd, BytesStart};</span>
+<span class="doccomment">//! use quick_xml::Reader;</span>
+<span class="doccomment">//! use std::io::Cursor;</span>
+<span class="doccomment">//! use std::iter;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let xml = r#&quot;&lt;this_tag k1=&quot;v1&quot; k2=&quot;v2&quot;&gt;&lt;child&gt;text&lt;/child&gt;&lt;/this_tag&gt;&quot;#;</span>
+<span class="doccomment">//! let mut reader = Reader::from_str(xml);</span>
+<span class="doccomment">//! reader.trim_text(true);</span>
+<span class="doccomment">//! let mut writer = Writer::new(Cursor::new(Vec::new()));</span>
+<span class="doccomment">//! let mut buf = Vec::new();</span>
+<span class="doccomment">//! loop {</span>
+<span class="doccomment">//!     match reader.read_event(&amp;mut buf) {</span>
+<span class="doccomment">//!         Ok(Event::Start(ref e)) if e.name() == b&quot;this_tag&quot; =&gt; {</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!             // crates a new element ... alternatively we could reuse `e` by calling</span>
+<span class="doccomment">//!             // `e.into_owned()`</span>
+<span class="doccomment">//!             let mut elem = BytesStart::owned(b&quot;my_elem&quot;.to_vec(), &quot;my_elem&quot;.len());</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!             // collect existing attributes</span>
+<span class="doccomment">//!             elem.extend_attributes(e.attributes().map(|attr| attr.unwrap()));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!             // copy existing attributes, adds a new my-key=&quot;some value&quot; attribute</span>
+<span class="doccomment">//!             elem.push_attribute((&quot;my-key&quot;, &quot;some value&quot;));</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!             // writes the event to the writer</span>
+<span class="doccomment">//!             assert!(writer.write_event(Event::Start(elem)).is_ok());</span>
+<span class="doccomment">//!         },</span>
+<span class="doccomment">//!         Ok(Event::End(ref e)) if e.name() == b&quot;this_tag&quot; =&gt; {</span>
+<span class="doccomment">//!             assert!(writer.write_event(Event::End(BytesEnd::borrowed(b&quot;my_elem&quot;))).is_ok());</span>
+<span class="doccomment">//!         },</span>
+<span class="doccomment">//!         Ok(Event::Eof) =&gt; break,</span>
+<span class="doccomment">//!         Ok(e) =&gt; assert!(writer.write_event(e).is_ok()),</span>
+<span class="doccomment">//!         // or using the buffer</span>
+<span class="doccomment">//!         // Ok(e) =&gt; assert!(writer.write(&amp;buf).is_ok()),</span>
+<span class="doccomment">//!         Err(e) =&gt; panic!(&quot;Error at position {}: {:?}&quot;, reader.buffer_position(), e),</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//!     buf.clear();</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let result = writer.into_inner().into_inner();</span>
+<span class="doccomment">//! let expected = r#&quot;&lt;my_elem k1=&quot;v1&quot; k2=&quot;v2&quot; my-key=&quot;some value&quot;&gt;&lt;child&gt;text&lt;/child&gt;&lt;/my_elem&gt;&quot;#;</span>
+<span class="doccomment">//! assert_eq!(result, expected.as_bytes());</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Features</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! quick-xml supports 2 additional features, non activated by default:</span>
+<span class="doccomment">//! - `encoding`: support non utf8 xmls</span>
+<span class="doccomment">//! - `serialize`: support serde `Serialize`/`Deserialize`</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#![<span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;1024&quot;</span>]</span>
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding_rs&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">encoding_rs</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">memchr</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serialize&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serialize&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">de</span>;
+<span class="kw">mod</span> <span class="ident">errors</span>;
+<span class="kw">mod</span> <span class="ident">escape</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">events</span>;
+<span class="kw">mod</span> <span class="ident">reader</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serialize&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">se</span>;
+<span class="kw">mod</span> <span class="ident">utils</span>;
+<span class="kw">mod</span> <span class="ident">writer</span>;
+
+<span class="comment">// reexports</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serialize&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::<span class="ident">serialize</span>::<span class="ident">DeError</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">errors</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">reader</span>::<span class="ident">Reader</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">writer</span>::<span class="ident">Writer</span>;
+</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "quick_xml";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

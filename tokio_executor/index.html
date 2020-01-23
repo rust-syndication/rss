@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `tokio_executor` crate."><meta name="keywords" content="rust, rustlang, rust-lang, tokio_executor"><title>tokio_executor - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../tokio_executor/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate tokio_executor</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all tokio_executor's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'tokio_executor', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/tokio_executor/lib.rs.html#1-68' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>tokio_executor</a></span></h1><div class='docblock'><p>Task execution related traits and utilities.</p>
+<p>In the Tokio execution model, futures are lazy. When a future is created, no
+work is performed. In order for the work defined by the future to happen,
+the future must be submitted to an executor. A future that is submitted to
+an executor is called a &quot;task&quot;.</p>
+<p>The executor is responsible for ensuring that <a href="https://docs.rs/futures/0.1/futures/future/trait.Future.html#tymethod.poll"><code>Future::poll</code></a> is called
+whenever the task is notified. Notification happens when the internal
+state of a task transitions from <em>not ready</em> to <em>ready</em>. For example, a
+socket might have received data and a call to <code>read</code> will now be able to
+succeed.</p>
+<p>This crate provides traits and utilities that are necessary for building an
+executor, including:</p>
+<ul>
+<li>
+<p>The <a href="trait.Executor.html"><code>Executor</code></a> trait spawns future object onto an executor.</p>
+</li>
+<li>
+<p>The <a href="trait.TypedExecutor.html"><code>TypedExecutor</code></a> trait spawns futures of a specific type onto an
+executor. This is used to be generic over executors that spawn futures
+that are either <code>Send</code> or <code>!Send</code> or implement executors that apply to
+specific futures.</p>
+</li>
+<li>
+<p><a href="fn.enter.html"><code>enter</code></a> marks that the current thread is entering an execution
+context. This prevents a second executor from accidentally starting from
+within the context of one that is already running.</p>
+</li>
+<li>
+<p><a href="struct.DefaultExecutor.html"><code>DefaultExecutor</code></a> spawns tasks onto the default executor for the current
+context.</p>
+</li>
+<li>
+<p><a href="park/index.html"><code>Park</code></a> abstracts over blocking and unblocking the current thread.</p>
+</li>
+</ul>
+<h1 id="implementing-an-executor" class="section-header"><a href="#implementing-an-executor">Implementing an executor</a></h1>
+<p>Executors should always implement <code>TypedExecutor</code>. This usually is the bound
+that applications and libraries will use when generic over an executor. See
+the <a href="trait.TypedExecutor.html">trait documentation</a> for more details.</p>
+<p>If the executor is able to spawn all futures that are <code>Send</code>, then the
+executor should also implement the <code>Executor</code> trait. This trait is rarely
+used directly by applications and libraries. Instead, <code>tokio::spawn</code> is
+configured to dispatch to type that implements <code>Executor</code>.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="park/index.html" title='tokio_executor::park mod'>park</a></td><td class='docblock-short'><p>Abstraction over blocking and unblocking the current thread.</p>
+</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.DefaultExecutor.html" title='tokio_executor::DefaultExecutor struct'>DefaultExecutor</a></td><td class='docblock-short'><p>Executes futures on the default executor for the current execution context.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.DefaultGuard.html" title='tokio_executor::DefaultGuard struct'>DefaultGuard</a></td><td class='docblock-short'><p>Ensures that the executor is removed from the thread-local context
+when leaving the scope. This handles cases that involve panicking.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Enter.html" title='tokio_executor::Enter struct'>Enter</a></td><td class='docblock-short'><p>Represents an executor context.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.EnterError.html" title='tokio_executor::EnterError struct'>EnterError</a></td><td class='docblock-short'><p>An error returned by <code>enter</code> if an execution scope has already been
+entered.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SpawnError.html" title='tokio_executor::SpawnError struct'>SpawnError</a></td><td class='docblock-short'><p>Errors returned by <code>Executor::spawn</code>.</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Executor.html" title='tokio_executor::Executor trait'>Executor</a></td><td class='docblock-short'><p>A value that executes futures.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.TypedExecutor.html" title='tokio_executor::TypedExecutor trait'>TypedExecutor</a></td><td class='docblock-short'><p>A value that spawns futures of a specific type.</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.enter.html" title='tokio_executor::enter fn'>enter</a></td><td class='docblock-short'><p>Marks the current thread as being within the dynamic extent of an
+executor.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.set_default.html" title='tokio_executor::set_default fn'>set_default</a></td><td class='docblock-short'><p>Sets <code>executor</code> as the default executor, returning a guard that unsets it when
+dropped.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.spawn.html" title='tokio_executor::spawn fn'>spawn</a></td><td class='docblock-short'><p>Submits a future for execution on the default executor -- usually a
+threadpool.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.with_default.html" title='tokio_executor::with_default fn'>with_default</a></td><td class='docblock-short'><p>Set the default executor for the duration of the closure</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "tokio_executor";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

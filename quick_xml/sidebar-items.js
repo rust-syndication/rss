@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Error","The error type used by this crate."]],"mod":[["events","Defines zero-copy XML events used throughout this library."]],"struct":[["Reader","A low level encoding-agnostic XML event reader."],["Writer","XML writer."]],"type":[["Result","A specialized `Result` type where the error is hard-wired to [`Error`]."]]});

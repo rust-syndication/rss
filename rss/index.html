@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `rss` crate."><meta name="keywords" content="rust, rustlang, rust-lang, rss"><title>rss - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../rss/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate rss</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all rss's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'rss', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/rss/lib.rs.html#8-156' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>rss</a></span></h1><div class='docblock'><p>Library for serializing the RSS web content syndication format.</p>
+<h1 id="reading" class="section-header"><a href="#reading">Reading</a></h1><h2 id="from-a-reader" class="section-header"><a href="#from-a-reader">From a Reader</a></h2>
+<p>A channel can be read from any object that implements the <code>BufRead</code> trait.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">BufReader</span>;
+<span class="kw">use</span> <span class="ident">rss</span>::<span class="ident">Channel</span>;
+
+<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;example.xml&quot;</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">read_from</span>(<span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="ident">file</span>)).<span class="ident">unwrap</span>();</pre></div>
+<h2 id="from-a-url" class="section-header"><a href="#from-a-url">From a URL</a></h2>
+<p>A channel can also be read from a URL.</p>
+<p><strong>Note</strong>: This requires enabling the <code>from_url</code> feature.</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">use</span> <span class="ident">rss</span>::<span class="ident">Channel</span>;
+
+<span class="kw">let</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">from_url</span>(<span class="string">&quot;http://example.com/feed.xml&quot;</span>).<span class="ident">unwrap</span>();</pre></div>
+<h1 id="writing" class="section-header"><a href="#writing">Writing</a></h1>
+<p>A channel can be written to any object that implements the <code>Write</code> trait or converted to an
+XML string using the <code>ToString</code> trait.</p>
+<p><strong>Note</strong>: Writing a channel does not perform any escaping of XML entities.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">rss</span>::<span class="ident">Channel</span>;
+
+<span class="kw">let</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">default</span>();
+<span class="ident">channel</span>.<span class="ident">write_to</span>(::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">sink</span>()).<span class="ident">unwrap</span>(); <span class="comment">// write to the channel to a writer</span>
+<span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">channel</span>.<span class="ident">to_string</span>(); <span class="comment">// convert the channel to a string</span></pre></div>
+<h1 id="creation" class="section-header"><a href="#creation">Creation</a></h1>
+<p>Builder methods are provided to assist in the creation of channels.</p>
+<p><strong>Note</strong>: This requires the <code>builders</code> feature, which is enabled by default.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">rss</span>::<span class="ident">ChannelBuilder</span>;
+
+<span class="kw">let</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">ChannelBuilder</span>::<span class="ident">default</span>()
+    .<span class="ident">title</span>(<span class="string">&quot;Channel Title&quot;</span>)
+    .<span class="ident">link</span>(<span class="string">&quot;http://example.com&quot;</span>)
+    .<span class="ident">description</span>(<span class="string">&quot;An RSS feed.&quot;</span>)
+    .<span class="ident">build</span>()
+    .<span class="ident">unwrap</span>();</pre></div>
+<h2 id="validation" class="section-header"><a href="#validation">Validation</a></h2>
+<p>Validation methods are provided to validate the contents of a channel against the
+RSS specification.</p>
+<p><strong>Note</strong>: This requires enabling the <code>validation</code> feature.</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<span class="kw">use</span> <span class="ident">rss</span>::<span class="ident">Channel</span>;
+<span class="kw">use</span> <span class="ident">rss</span>::<span class="ident">validation</span>::<span class="ident">Validate</span>;
+
+<span class="kw">let</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">default</span>();
+<span class="ident">channel</span>.<span class="ident">validate</span>().<span class="ident">unwrap</span>();</pre></div>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="extension/index.html" title='rss::extension mod'>extension</a></td><td class='docblock-short'><p>Types and methods for namespaced extensions.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="validation/index.html" title='rss::validation mod'>validation</a></td><td class='docblock-short'><p>Methods for validating RSS feeds.</p>
+</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.Category.html" title='rss::Category struct'>Category</a></td><td class='docblock-short'><p>Represents a category in an RSS feed.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.CategoryBuilder.html" title='rss::CategoryBuilder struct'>CategoryBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Category.html"><code>Category</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Channel.html" title='rss::Channel struct'>Channel</a></td><td class='docblock-short'><p>Represents the channel of an RSS feed.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ChannelBuilder.html" title='rss::ChannelBuilder struct'>ChannelBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Channel.html"><code>Channel</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Cloud.html" title='rss::Cloud struct'>Cloud</a></td><td class='docblock-short'><p>Represents a cloud in an RSS feed.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.CloudBuilder.html" title='rss::CloudBuilder struct'>CloudBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Cloud.html"><code>Cloud</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Enclosure.html" title='rss::Enclosure struct'>Enclosure</a></td><td class='docblock-short'><p>Represents an enclosure in an RSS item.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.EnclosureBuilder.html" title='rss::EnclosureBuilder struct'>EnclosureBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Enclosure.html"><code>Enclosure</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Guid.html" title='rss::Guid struct'>Guid</a></td><td class='docblock-short'><p>Represents the GUID of an RSS item.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.GuidBuilder.html" title='rss::GuidBuilder struct'>GuidBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Guid.html"><code>Guid</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Image.html" title='rss::Image struct'>Image</a></td><td class='docblock-short'><p>Represents an image in an RSS feed.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ImageBuilder.html" title='rss::ImageBuilder struct'>ImageBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Image.html"><code>Image</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Item.html" title='rss::Item struct'>Item</a></td><td class='docblock-short'><p>Represents an item in an RSS feed.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ItemBuilder.html" title='rss::ItemBuilder struct'>ItemBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Item.html"><code>Item</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Source.html" title='rss::Source struct'>Source</a></td><td class='docblock-short'><p>Represents the source of an RSS item.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SourceBuilder.html" title='rss::SourceBuilder struct'>SourceBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Source.html"><code>Source</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.TextInput.html" title='rss::TextInput struct'>TextInput</a></td><td class='docblock-short'><p>Represents a text input for an RSS channel.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.TextInputBuilder.html" title='rss::TextInputBuilder struct'>TextInputBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.TextInput.html"><code>TextInput</code></a>.</p>
+</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.Error.html" title='rss::Error enum'>Error</a></td><td class='docblock-short'><p>Errors that occur during parsing.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "rss";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
