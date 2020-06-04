@@ -40,9 +40,9 @@ extern crate rss;
 
 ## Reading
 
-### From a Reader
-
 A channel can be read from any object that implements the `BufRead` trait.
+
+### From a file
 
 ```rust
 use std::fs::File;
@@ -53,16 +53,22 @@ let file = File::open("example.xml").unwrap();
 let channel = Channel::read_from(BufReader::new(file)).unwrap();
 ```
 
-### From a URL
+### From a buffer
 
-A channel can also be read from a URL.
-
-**Note**: This requires enabling the `from_url` feature.
+**Note**: This example requires [reqwest](https://crates.io/crates/reqwest) crate.
 
 ```rust
+use std::error::Error;
 use rss::Channel;
 
-let channel = Channel::from_url("http://example.com/feed.xml").unwrap();
+async fn example_feed() -> Result<Channel, Box<dyn Error>> {
+    let content = reqwest::get("http://example.com/feed.xml")
+        .await?
+        .bytes()
+        .await?;
+    let channel = Channel::read_from(&content[..])?;
+    Ok(channel)
+}
 ```
 
 ## Writing
