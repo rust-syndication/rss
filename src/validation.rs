@@ -35,17 +35,7 @@ pub enum ValidationError {
 }
 
 impl StdError for ValidationError {
-    fn description(&self) -> &str {
-        match *self {
-            ValidationError::DateParsing(ref err) => err.description(),
-            ValidationError::IntParsing(ref err) => err.description(),
-            ValidationError::UrlParsing(ref err) => err.description(),
-            ValidationError::MimeParsing(_) => "Unable to parse MIME type",
-            ValidationError::Validation(ref s) => s.as_str(),
-        }
-    }
-
-    fn cause(&self) -> Option<&dyn StdError> {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
         match *self {
             ValidationError::DateParsing(ref err) => Some(err),
             ValidationError::IntParsing(ref err) => Some(err),
