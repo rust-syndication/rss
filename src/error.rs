@@ -22,12 +22,6 @@ pub enum Error {
     InvalidStartTag,
     /// The end of the input was reached without finding a complete channel element.
     Eof,
-    /// An error during the web request.
-    #[cfg(feature = "from_url")]
-    UrlRequest(::reqwest::Error),
-    /// An IO error.
-    #[cfg(feature = "from_url")]
-    Io(::std::io::Error),
 }
 
 impl StdError for Error {
@@ -36,10 +30,6 @@ impl StdError for Error {
             Error::Utf8(ref err) => Some(err),
             Error::Xml(ref err) => Some(err),
             Error::InvalidStartTag | Error::Eof => None,
-            #[cfg(feature = "from_url")]
-            Error::UrlRequest(ref err) => Some(err),
-            #[cfg(feature = "from_url")]
-            Error::Io(ref err) => Some(err),
         }
     }
 }
@@ -51,10 +41,6 @@ impl fmt::Display for Error {
             Error::Xml(ref err) => fmt::Display::fmt(err, f),
             Error::InvalidStartTag => write!(f, "the input did not begin with an rss tag"),
             Error::Eof => write!(f, "reached end of input without finding a complete channel"),
-            #[cfg(feature = "from_url")]
-            Error::UrlRequest(ref err) => fmt::Display::fmt(err, f),
-            #[cfg(feature = "from_url")]
-            Error::Io(ref err) => fmt::Display::fmt(err, f),
         }
     }
 }
@@ -68,19 +54,5 @@ impl From<XmlError> for Error {
 impl From<Utf8Error> for Error {
     fn from(err: Utf8Error) -> Error {
         Error::Utf8(err)
-    }
-}
-
-#[cfg(feature = "from_url")]
-impl From<::reqwest::Error> for Error {
-    fn from(err: ::reqwest::Error) -> Error {
-        Error::UrlRequest(err)
-    }
-}
-
-#[cfg(feature = "from_url")]
-impl From<::std::io::Error> for Error {
-    fn from(err: ::std::io::Error) -> Error {
-        Error::Io(err)
     }
 }
