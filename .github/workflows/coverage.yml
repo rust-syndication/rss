@@ -1,0 +1,24 @@
+name: Coverage
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run coverage
+      run: |
+        docker run \
+          --security-opt seccomp=unconfined \
+          -v "$(pwd):/volume" \
+          xd009642/tarpaulin:latest \
+          cargo tarpaulin -f -t 5 --all-features --out Xml -v -- --test-threads=1 || true
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
