@@ -866,3 +866,19 @@ fn read_escaped() {
     let parsed_channel = output.parse::<Channel>().unwrap();
     assert_eq!(channel, parsed_channel);
 }
+
+#[test]
+fn read_cp1251() {
+    let input = include_bytes!("data/pikabu.xml");
+    let channel = Channel::read_from(&input[..]).expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "pikabu.ru");
+    assert_eq!(channel.link(), "http://pikabu.ru/");
+    assert_eq!(channel.description(), "pikabu.ru");
+
+    assert_eq!(channel.items().len(), 40);
+
+    let item = channel.items().get(0).unwrap();
+    assert_eq!(item.title(), Some("Будни Кошкиного Дома"));
+    assert_eq!(item.link(), Some("https://pikabu.ru/story/budni_koshkinogo_doma_7498334"));
+}
