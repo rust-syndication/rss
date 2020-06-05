@@ -23,8 +23,8 @@ fn read_rss090() {
     assert_eq!(channel.title(), "Mozilla Dot Org");
     assert_eq!(channel.link(), "http://www.mozilla.org");
     assert_eq!(
-        channel.description(),
-        "the Mozilla Organization\n      web site"
+        channel.description().lines().collect::<Vec<_>>(),
+        vec!["the Mozilla Organization", "      web site"]
     );
 
     let image = channel.image().unwrap();
@@ -155,9 +155,11 @@ fn read_rss1() {
     assert_eq!(channel.title(), "XML.com");
     assert_eq!(channel.link(), "http://xml.com/pub");
     assert_eq!(
-        channel.description(),
-        "XML.com features a rich mix of information and services \n      \
-         for the XML community."
+        channel.description().lines().collect::<Vec<_>>(),
+        vec![
+            "XML.com features a rich mix of information and services ",
+            "      for the XML community."
+        ]
     );
 
     let image = channel.image().unwrap();
@@ -180,12 +182,12 @@ fn read_rss1() {
         Some("http://xml.com/pub/2000/08/09/xslt/xslt.html")
     );
     assert_eq!(
-        item.description(),
-        Some(
-            "Processing document inclusions with general XML tools can be \n     \
-             problematic. This article proposes a way of preserving inclusion \n     \
-             information through SAX-based processing.",
-        )
+        item.description().map(|x| x.lines().collect::<Vec<_>>()),
+        Some(vec![
+            "Processing document inclusions with general XML tools can be ",
+            "     problematic. This article proposes a way of preserving inclusion ",
+            "     information through SAX-based processing."
+        ])
     );
 }
 

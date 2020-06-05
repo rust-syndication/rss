@@ -138,6 +138,7 @@ fn verify_write_format() {
 
     let output = include_str!("data/verify_write_format.xml")
         .replace("\n", "")
+        .replace("\r", "")
         .replace("\t", "");
 
     assert_eq!(channel.to_string(), output);
