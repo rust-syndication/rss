@@ -7,19 +7,19 @@
 
 use std::io::{BufRead, Write};
 
-use quick_xml::Error as XmlError;
-use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::events::attributes::Attributes;
+use quick_xml::events::{BytesEnd, BytesStart, Event};
+use quick_xml::Error as XmlError;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
 use crate::category::Category;
 use crate::enclosure::Enclosure;
 use crate::error::Error;
-use crate::extension::ExtensionMap;
 use crate::extension::dublincore;
 use crate::extension::itunes;
 use crate::extension::util::{extension_name, parse_extension};
+use crate::extension::ExtensionMap;
 use crate::guid::Guid;
 use crate::source::Source;
 use crate::toxml::{ToXml, WriterExt};
@@ -539,7 +539,11 @@ impl Item {
 
 impl Item {
     /// Builds an Item from source XML
-    pub fn from_xml<R: BufRead>(namespaces: &HashMap<String, String>, reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+    pub fn from_xml<R: BufRead>(
+        namespaces: &HashMap<String, String>,
+        reader: &mut Reader<R>,
+        _: Attributes,
+    ) -> Result<Self, Error> {
         let mut item = Item::default();
         let mut buf = Vec::new();
 
@@ -594,13 +598,14 @@ impl Item {
             // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
             for (prefix, namespace) in namespaces {
                 match namespace.as_ref() {
-                    itunes::NAMESPACE => {
-                        item.extensions.remove(prefix).map(|v| item.itunes_ext = Some(itunes::ITunesItemExtension::from_map(v)))
-                    },
-                    dublincore::NAMESPACE => {
-                        item.extensions.remove(prefix).map(|v| item.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v)))
-                    },
-                    _ => None
+                    itunes::NAMESPACE => item
+                        .extensions
+                        .remove(prefix)
+                        .map(|v| item.itunes_ext = Some(itunes::ITunesItemExtension::from_map(v))),
+                    dublincore::NAMESPACE => item.extensions.remove(prefix).map(|v| {
+                        item.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v))
+                    }),
+                    _ => None,
                 };
             }
         }

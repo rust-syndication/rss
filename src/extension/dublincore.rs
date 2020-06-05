@@ -11,8 +11,8 @@ use std::io::Write;
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
-use crate::extension::Extension;
 use crate::extension::util::remove_extension_values;
+use crate::extension::Extension;
 
 use crate::toxml::{ToXml, WriterExt};
 

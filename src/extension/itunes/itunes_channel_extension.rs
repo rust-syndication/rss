@@ -8,14 +8,14 @@
 use std::collections::HashMap;
 use std::io::Write;
 
-use quick_xml::Error as XmlError;
 use quick_xml::events::{BytesStart, Event};
+use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
 use super::{parse_categories, parse_image, parse_owner};
-use crate::extension::Extension;
 use crate::extension::itunes::{ITunesCategory, ITunesOwner};
 use crate::extension::util::remove_extension_value;
+use crate::extension::Extension;
 use crate::toxml::{ToXml, WriterExt};
 
 /// An iTunes channel element extension.

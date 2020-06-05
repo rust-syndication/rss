@@ -7,9 +7,9 @@
 
 use std::io::{BufRead, Write};
 
-use quick_xml::Error as XmlError;
-use quick_xml::events::{BytesStart, Event};
 use quick_xml::events::attributes::Attributes;
+use quick_xml::events::{BytesStart, Event};
+use quick_xml::Error as XmlError;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
@@ -198,7 +198,10 @@ impl Cloud {
 
 impl Cloud {
     /// Builds a Cloud from source XML
-    pub fn from_xml<R: BufRead>(reader: &mut Reader<R>, mut atts: Attributes) -> Result<Self, Error> {
+    pub fn from_xml<R: BufRead>(
+        reader: &mut Reader<R>,
+        mut atts: Attributes,
+    ) -> Result<Self, Error> {
         let mut cloud = Cloud::default();
 
         for attr in atts.with_checks(false) {

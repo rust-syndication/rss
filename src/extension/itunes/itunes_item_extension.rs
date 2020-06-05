@@ -8,13 +8,13 @@
 use std::collections::HashMap;
 use std::io::Write;
 
-use quick_xml::Error as XmlError;
 use quick_xml::events::{BytesEnd, BytesStart, Event};
+use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
 use super::parse_image;
-use crate::extension::Extension;
 use crate::extension::util::remove_extension_value;
+use crate::extension::Extension;
 use crate::toxml::{ToXml, WriterExt};
 
 /// An iTunes item element extension.

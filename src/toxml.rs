@@ -7,8 +7,8 @@
 
 use std::io::Write;
 
-use quick_xml::Error as XmlError;
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
+use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
 pub trait ToXml {

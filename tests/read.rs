@@ -2,10 +2,10 @@ extern crate rss;
 
 use std::collections::HashMap;
 
-use rss::Channel;
-use rss::extension::Extension;
 use rss::extension::dublincore::DublinCoreExtension;
 use rss::extension::syndication;
+use rss::extension::Extension;
+use rss::Channel;
 
 fn get_extension_values<'a>(
     map: &'a HashMap<String, Vec<Extension>>,
@@ -522,7 +522,8 @@ fn read_extension() {
             .get("ext")
             .unwrap()
             .get("parent")
-            .map(|v| v.iter()
+            .map(|v| v
+                .iter()
                 .find(|v| v.children().contains_key("child"))
                 .expect("failed to find child elements")
                 .children()
