@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-0.4.10/src/naive/date.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>date.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../chrono/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-0.4.11/src/naive/date.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>date.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../chrono/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2133,6 +2133,73 @@
 <span id="2133">2133</span>
 <span id="2134">2134</span>
 <span id="2135">2135</span>
+<span id="2136">2136</span>
+<span id="2137">2137</span>
+<span id="2138">2138</span>
+<span id="2139">2139</span>
+<span id="2140">2140</span>
+<span id="2141">2141</span>
+<span id="2142">2142</span>
+<span id="2143">2143</span>
+<span id="2144">2144</span>
+<span id="2145">2145</span>
+<span id="2146">2146</span>
+<span id="2147">2147</span>
+<span id="2148">2148</span>
+<span id="2149">2149</span>
+<span id="2150">2150</span>
+<span id="2151">2151</span>
+<span id="2152">2152</span>
+<span id="2153">2153</span>
+<span id="2154">2154</span>
+<span id="2155">2155</span>
+<span id="2156">2156</span>
+<span id="2157">2157</span>
+<span id="2158">2158</span>
+<span id="2159">2159</span>
+<span id="2160">2160</span>
+<span id="2161">2161</span>
+<span id="2162">2162</span>
+<span id="2163">2163</span>
+<span id="2164">2164</span>
+<span id="2165">2165</span>
+<span id="2166">2166</span>
+<span id="2167">2167</span>
+<span id="2168">2168</span>
+<span id="2169">2169</span>
+<span id="2170">2170</span>
+<span id="2171">2171</span>
+<span id="2172">2172</span>
+<span id="2173">2173</span>
+<span id="2174">2174</span>
+<span id="2175">2175</span>
+<span id="2176">2176</span>
+<span id="2177">2177</span>
+<span id="2178">2178</span>
+<span id="2179">2179</span>
+<span id="2180">2180</span>
+<span id="2181">2181</span>
+<span id="2182">2182</span>
+<span id="2183">2183</span>
+<span id="2184">2184</span>
+<span id="2185">2185</span>
+<span id="2186">2186</span>
+<span id="2187">2187</span>
+<span id="2188">2188</span>
+<span id="2189">2189</span>
+<span id="2190">2190</span>
+<span id="2191">2191</span>
+<span id="2192">2192</span>
+<span id="2193">2193</span>
+<span id="2194">2194</span>
+<span id="2195">2195</span>
+<span id="2196">2196</span>
+<span id="2197">2197</span>
+<span id="2198">2198</span>
+<span id="2199">2199</span>
+<span id="2200">2200</span>
+<span id="2201">2201</span>
+<span id="2202">2202</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This is a part of Chrono.</span>
 <span class="comment">// See README.md and LICENSE.txt for details.</span>
@@ -2230,7 +2297,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The ISO 8601 **ordinal date** is a pair of year number and day of the year (&quot;ordinal&quot;).</span>
 <span class="doccomment">/// The ordinal number ranges from 1 to 365 or 366 depending on the year.</span>
-<span class="doccomment">/// The year number is same to that of the [calendar date](#calendar-date).</span>
+<span class="doccomment">/// The year number is the same as that of the [calendar date](#calendar-date).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This is currently the internal format of Chrono&#39;s date types.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
@@ -2545,6 +2612,55 @@
         <span class="kw">let</span> <span class="ident">flags</span> <span class="op">=</span> <span class="ident">YearFlags</span>::<span class="ident">from_year_mod_400</span>(<span class="ident">year_mod_400</span> <span class="kw">as</span> <span class="ident">i32</span>);
         <span class="ident">NaiveDate</span>::<span class="ident">from_of</span>(<span class="ident">year_div_400</span> <span class="op">*</span> <span class="number">400</span> <span class="op">+</span> <span class="ident">year_mod_400</span> <span class="kw">as</span> <span class="ident">i32</span>,
                            <span class="ident">Of</span>::<span class="ident">new</span>(<span class="ident">ordinal</span>, <span class="ident">flags</span>))
+    }
+
+    <span class="doccomment">/// Makes a new `NaiveDate` by counting the number of occurrences of a particular day-of-week</span>
+    <span class="doccomment">/// since the beginning of the given month.  For instance, if you want the 2nd Friday of March</span>
+    <span class="doccomment">/// 2017, you would use `NaiveDate::from_weekday_of_month(2017, 3, Weekday::Fri, 2)`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The resulting `NaiveDate` is guaranteed to be in `month`.  If `n` is larger than the number</span>
+    <span class="doccomment">/// of `weekday` in `month` (eg. the 6th Friday of March 2017) then this function will panic.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// `n` is 1-indexed.  Passing `n=0` will cause a panic.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ~~~~</span>
+    <span class="doccomment">/// use chrono::{NaiveDate, Weekday};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let from_weekday_of_month = NaiveDate::from_weekday_of_month;</span>
+    <span class="doccomment">/// let from_ymd = NaiveDate::from_ymd;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(from_weekday_of_month(2018, 8, Weekday::Wed, 1), from_ymd(2018, 8, 1));</span>
+    <span class="doccomment">/// assert_eq!(from_weekday_of_month(2018, 8, Weekday::Fri, 1), from_ymd(2018, 8, 3));</span>
+    <span class="doccomment">/// assert_eq!(from_weekday_of_month(2018, 8, Weekday::Tue, 2), from_ymd(2018, 8, 14));</span>
+    <span class="doccomment">/// assert_eq!(from_weekday_of_month(2018, 8, Weekday::Fri, 4), from_ymd(2018, 8, 24));</span>
+    <span class="doccomment">/// assert_eq!(from_weekday_of_month(2018, 8, Weekday::Fri, 5), from_ymd(2018, 8, 31));</span>
+    <span class="doccomment">/// ~~~~</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_weekday_of_month</span>(<span class="ident">year</span>: <span class="ident">i32</span>, <span class="ident">month</span>: <span class="ident">u32</span>, <span class="ident">weekday</span>: <span class="ident">Weekday</span>, <span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NaiveDate</span> {
+        <span class="ident">NaiveDate</span>::<span class="ident">from_weekday_of_month_opt</span>(<span class="ident">year</span>, <span class="ident">month</span>, <span class="ident">weekday</span>, <span class="ident">n</span>).<span class="ident">expect</span>(<span class="string">&quot;out-of-range date&quot;</span>)
+    }
+
+    <span class="doccomment">/// Makes a new `NaiveDate` by counting the number of occurrences of a particular day-of-week</span>
+    <span class="doccomment">/// since the beginning of the given month.  For instance, if you want the 2nd Friday of March</span>
+    <span class="doccomment">/// 2017, you would use `NaiveDate::from_weekday_of_month(2017, 3, Weekday::Fri, 2)`.  `n` is 1-indexed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ~~~~</span>
+    <span class="doccomment">/// use chrono::{NaiveDate, Weekday};</span>
+    <span class="doccomment">/// assert_eq!(NaiveDate::from_weekday_of_month_opt(2017, 3, Weekday::Fri, 2),</span>
+    <span class="doccomment">///            NaiveDate::from_ymd_opt(2017, 3, 10))</span>
+    <span class="doccomment">/// ~~~~</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns `None` if `n` out-of-range; ie. if `n` is larger than the number of `weekday` in</span>
+    <span class="doccomment">/// `month` (eg. the 6th Friday of March 2017), or if `n == 0`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_weekday_of_month_opt</span>(<span class="ident">year</span>: <span class="ident">i32</span>, <span class="ident">month</span>: <span class="ident">u32</span>, <span class="ident">weekday</span>: <span class="ident">Weekday</span>, <span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="kw">return</span> <span class="prelude-val">None</span>; }
+        <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="ident">year</span>, <span class="ident">month</span>, <span class="number">1</span>).<span class="ident">weekday</span>();
+        <span class="kw">let</span> <span class="ident">first_to_dow</span> <span class="op">=</span> (<span class="number">7</span> <span class="op">+</span> <span class="ident">weekday</span>.<span class="ident">number_from_monday</span>() <span class="op">-</span> <span class="ident">first</span>.<span class="ident">number_from_monday</span>()) <span class="op">%</span> <span class="number">7</span>;
+        <span class="kw">let</span> <span class="ident">day</span> <span class="op">=</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">n</span>) <span class="op">-</span> <span class="number">1</span>) <span class="op">*</span> <span class="number">7</span> <span class="op">+</span> <span class="ident">first_to_dow</span> <span class="op">+</span> <span class="number">1</span>;
+        <span class="ident">NaiveDate</span>::<span class="ident">from_ymd_opt</span>(<span class="ident">year</span>, <span class="ident">month</span>, <span class="ident">day</span>)
     }
 
     <span class="doccomment">/// Parses a string with the specified format string and returns a new `NaiveDate`.</span>
@@ -3030,7 +3146,7 @@
     }
 
     <span class="doccomment">/// Formats the date with the specified formatting items.</span>
-    <span class="doccomment">/// Otherwise it is same to the ordinary `format` method.</span>
+    <span class="doccomment">/// Otherwise it is the same as the ordinary `format` method.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The `Iterator` of items should be `Clone`able,</span>
     <span class="doccomment">/// since the resulting `DelayedFormat` value may be formatted multiple times.</span>
@@ -3487,7 +3603,7 @@
 
 <span class="doccomment">/// A subtraction of `Duration` from `NaiveDate` discards the fractional days,</span>
 <span class="doccomment">/// rounding to the closest integral number of days towards `Duration::zero()`.</span>
-<span class="doccomment">/// It is same to the addition with a negated `Duration`.</span>
+<span class="doccomment">/// It is the same as the addition with a negated `Duration`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Panics on underflow or overflow.</span>
 <span class="doccomment">/// Use [`NaiveDate::checked_sub_signed`](#method.checked_sub_signed) to detect that.</span>
@@ -3563,7 +3679,7 @@
     }
 }
 
-<span class="doccomment">/// The `Debug` output of the naive date `d` is same to</span>
+<span class="doccomment">/// The `Debug` output of the naive date `d` is the same as</span>
 <span class="doccomment">/// [`d.format(&quot;%Y-%m-%d&quot;)`](../format/strftime/index.html).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The string printed can be readily parsed via the `parse` method on `str`.</span>
@@ -3598,7 +3714,7 @@
     }
 }
 
-<span class="doccomment">/// The `Display` output of the naive date `d` is same to</span>
+<span class="doccomment">/// The `Display` output of the naive date `d` is the same as</span>
 <span class="doccomment">/// [`d.format(&quot;%Y-%m-%d&quot;)`](../format/strftime/index.html).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The string printed can be readily parsed via the `parse` method on `str`.</span>
@@ -3971,6 +4087,24 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">from_ndays_from_ce</span>(<span class="ident">MIN_DATE</span>.<span class="ident">num_days_from_ce</span>() <span class="op">-</span> <span class="number">1</span>), <span class="prelude-val">None</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">from_ndays_from_ce</span>(<span class="ident">MAX_DATE</span>.<span class="ident">num_days_from_ce</span>()), <span class="prelude-val">Some</span>(<span class="ident">MAX_DATE</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">from_ndays_from_ce</span>(<span class="ident">MAX_DATE</span>.<span class="ident">num_days_from_ce</span>() <span class="op">+</span> <span class="number">1</span>), <span class="prelude-val">None</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_date_from_weekday_of_month_opt</span>() {
+        <span class="kw">let</span> <span class="ident">ymwd</span> <span class="op">=</span> <span class="op">|</span><span class="ident">y</span>,<span class="ident">m</span>,<span class="ident">w</span>,<span class="ident">n</span><span class="op">|</span> <span class="ident">NaiveDate</span>::<span class="ident">from_weekday_of_month_opt</span>(<span class="ident">y</span>,<span class="ident">m</span>,<span class="ident">w</span>,<span class="ident">n</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Tue</span>, <span class="number">0</span>), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Wed</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">1</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Thu</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">2</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Sun</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">5</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Mon</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">6</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Tue</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">7</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Wed</span>, <span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">8</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Sun</span>, <span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">12</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Thu</span>, <span class="number">3</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">16</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Thu</span>, <span class="number">4</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">23</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Thu</span>, <span class="number">5</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">30</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Fri</span>, <span class="number">5</span>), <span class="prelude-val">Some</span>(<span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="number">31</span>)));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">ymwd</span>(<span class="number">2018</span>, <span class="number">8</span>, <span class="ident">Weekday</span>::<span class="ident">Sat</span>, <span class="number">5</span>), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

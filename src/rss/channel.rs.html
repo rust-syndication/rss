@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/channel.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>channel.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rss/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/channel.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>channel.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rss/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1357,25 +1357,6 @@
 <span id="1357">1357</span>
 <span id="1358">1358</span>
 <span id="1359">1359</span>
-<span id="1360">1360</span>
-<span id="1361">1361</span>
-<span id="1362">1362</span>
-<span id="1363">1363</span>
-<span id="1364">1364</span>
-<span id="1365">1365</span>
-<span id="1366">1366</span>
-<span id="1367">1367</span>
-<span id="1368">1368</span>
-<span id="1369">1369</span>
-<span id="1370">1370</span>
-<span id="1371">1371</span>
-<span id="1372">1372</span>
-<span id="1373">1373</span>
-<span id="1374">1374</span>
-<span id="1375">1375</span>
-<span id="1376">1376</span>
-<span id="1377">1377</span>
-<span id="1378">1378</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -1388,20 +1369,20 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">BufRead</span>, <span class="ident">Write</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::{<span class="self">self</span>, <span class="ident">FromStr</span>};
 
-<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
-<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">Event</span>};
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::<span class="ident">attributes</span>::<span class="ident">Attributes</span>;
+<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">Event</span>};
+<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Reader</span>;
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Writer</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">category</span>::<span class="ident">Category</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">cloud</span>::<span class="ident">Cloud</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">ExtensionMap</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">dublincore</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">itunes</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">syndication</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">util</span>::{<span class="ident">extension_name</span>, <span class="ident">parse_extension</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">ExtensionMap</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">image</span>::<span class="ident">Image</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">item</span>::<span class="ident">Item</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">textinput</span>::<span class="ident">TextInput</span>;
@@ -2318,31 +2299,6 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Channel</span> {
-    <span class="doccomment">/// Attempt to read an RSS channel from a URL.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note: The `from_url` method can only be used by enabling the `from_url` feature in</span>
-    <span class="doccomment">/// your `Cargo.toml` as follows:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```toml</span>
-    <span class="doccomment">/// [dependencies]</span>
-    <span class="doccomment">/// rss = { version = &quot;*&quot;, features = [&quot;from_url&quot;] }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Channel;</span>
-    <span class="doccomment">/// let channel = Channel::from_url(&quot;https://feedpress.me/usererror.xml&quot;);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;from_url&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_url</span>(<span class="ident">url</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Channel</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Read</span>;
-
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-        ::<span class="ident">reqwest</span>::<span class="ident">get</span>(<span class="ident">url</span>)<span class="question-mark">?</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">content</span>)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">Channel</span>::<span class="ident">read_from</span>(<span class="kw-2">&amp;</span><span class="ident">content</span>[..])<span class="question-mark">?</span>)
-    }
-
     <span class="doccomment">/// Attempt to read an RSS channel from a reader.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
@@ -2394,7 +2350,8 @@
             <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
                 <span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">element</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
                     <span class="string">b&quot;channel&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">from_xml</span>(<span class="kw-2">&amp;</span><span class="ident">namespaces</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
+                        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span>
+                            <span class="ident">Channel</span>::<span class="ident">from_xml</span>(<span class="kw-2">&amp;</span><span class="ident">namespaces</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">channel</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>);
                     }
                     <span class="string">b&quot;item&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -2505,7 +2462,11 @@
 
 <span class="kw">impl</span> <span class="ident">Channel</span> {
     <span class="doccomment">/// Builds a Channel from source XML</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">namespaces</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="kw">_</span>: <span class="ident">Attributes</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
+        <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+        <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+        <span class="kw">_</span>: <span class="ident">Attributes</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">default</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">skip_buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
@@ -2620,16 +2581,17 @@
             <span class="comment">// Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)</span>
             <span class="kw">for</span> (<span class="ident">prefix</span>, <span class="ident">namespace</span>) <span class="kw">in</span> <span class="ident">namespaces</span> {
                 <span class="kw">match</span> <span class="ident">namespace</span>.<span class="ident">as_ref</span>() {
-                    <span class="ident">itunes</span>::<span class="ident">NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">channel</span>.<span class="ident">itunes_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">itunes</span>::<span class="ident">ITunesChannelExtension</span>::<span class="ident">from_map</span>(<span class="ident">v</span>)))
-                    },
-                    <span class="ident">dublincore</span>::<span class="ident">NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">channel</span>.<span class="ident">dublin_core_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dublincore</span>::<span class="ident">DublinCoreExtension</span>::<span class="ident">from_map</span>(<span class="ident">v</span>)))
-                    },
-                    <span class="ident">syndication</span>::<span class="ident">NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">channel</span>.<span class="ident">syndication_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">syndication</span>::<span class="ident">SyndicationExtension</span>::<span class="ident">from_map</span>(<span class="ident">v</span>)))
-                    },
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>
+                    <span class="ident">itunes</span>::<span class="ident">NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+                        <span class="ident">channel</span>.<span class="ident">itunes_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">itunes</span>::<span class="ident">ITunesChannelExtension</span>::<span class="ident">from_map</span>(<span class="ident">v</span>))
+                    }),
+                    <span class="ident">dublincore</span>::<span class="ident">NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+                        <span class="ident">channel</span>.<span class="ident">dublin_core_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dublincore</span>::<span class="ident">DublinCoreExtension</span>::<span class="ident">from_map</span>(<span class="ident">v</span>))
+                    }),
+                    <span class="ident">syndication</span>::<span class="ident">NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+                        <span class="ident">channel</span>.<span class="ident">syndication_ext</span> <span class="op">=</span>
+                            <span class="prelude-val">Some</span>(<span class="ident">syndication</span>::<span class="ident">SyndicationExtension</span>::<span class="ident">from_map</span>(<span class="ident">v</span>))
+                    }),
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
                 };
             }
         }
