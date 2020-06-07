@@ -75,7 +75,7 @@ impl Item {
     /// assert_eq!(item.title(), Some("Item Title"));
     /// ```
     pub fn title(&self) -> Option<&str> {
-        self.title.as_ref().map(String::as_str)
+        self.title.as_deref()
     }
 
     /// Set the title of this item.
@@ -107,7 +107,7 @@ impl Item {
     /// assert_eq!(item.link(), Some("http://example.com"));
     /// ```
     pub fn link(&self) -> Option<&str> {
-        self.link.as_ref().map(String::as_str)
+        self.link.as_deref()
     }
 
     /// Set the URL of this item.
@@ -139,7 +139,7 @@ impl Item {
     /// assert_eq!(item.description(), Some("Item description"));
     /// ```
     pub fn description(&self) -> Option<&str> {
-        self.description.as_ref().map(String::as_str)
+        self.description.as_deref()
     }
 
     /// Return the description of this item.
@@ -171,7 +171,7 @@ impl Item {
     /// assert_eq!(item.author(), Some("John Doe"));
     /// ```
     pub fn author(&self) -> Option<&str> {
-        self.author.as_ref().map(String::as_str)
+        self.author.as_deref()
     }
 
     /// Set the email address for the author of this item.
@@ -240,7 +240,7 @@ impl Item {
     /// assert_eq!(item.comments(), Some("http://example.com"));
     /// ```
     pub fn comments(&self) -> Option<&str> {
-        self.comments.as_ref().map(String::as_str)
+        self.comments.as_deref()
     }
 
     /// Set the URL for comments about this item.
@@ -336,7 +336,7 @@ impl Item {
     /// assert_eq!(item.pub_date(), Some("Mon, 01 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
-        self.pub_date.as_ref().map(String::as_str)
+        self.pub_date.as_deref()
     }
 
     /// Set the publication date of this item as an RFC822 timestamp.
@@ -401,7 +401,7 @@ impl Item {
     /// assert_eq!(item.content(), Some("Item content"));
     /// ```
     pub fn content(&self) -> Option<&str> {
-        self.content.as_ref().map(String::as_str)
+        self.content.as_deref()
     }
 
     /// Set the content of this item.

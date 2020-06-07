@@ -74,7 +74,7 @@ impl Category {
     /// assert_eq!(category.domain(), Some("http://example.com"));
     /// ```
     pub fn domain(&self) -> Option<&str> {
-        self.domain.as_ref().map(String::as_str)
+        self.domain.as_deref()
     }
 
     /// Set the domain of this category.

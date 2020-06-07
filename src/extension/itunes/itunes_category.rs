@@ -12,7 +12,6 @@ use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
 use crate::toxml::ToXml;
-use std::ops::Deref;
 
 /// A category for an iTunes podcast.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -72,7 +71,7 @@ impl ITunesCategory {
     /// assert!(category.subcategory().is_some());
     /// ```
     pub fn subcategory(&self) -> Option<&ITunesCategory> {
-        self.subcategory.as_ref().map(|x| x.deref())
+        self.subcategory.as_deref()
     }
 
     /// Set the subcategory for this category.

@@ -38,7 +38,7 @@ impl ITunesOwner {
     /// assert_eq!(owner.name(), Some("John Doe"));
     /// ```
     pub fn name(&self) -> Option<&str> {
-        self.name.as_ref().map(String::as_str)
+        self.name.as_deref()
     }
 
     /// Set the name of this person.
@@ -70,7 +70,7 @@ impl ITunesOwner {
     /// assert_eq!(owner.email(), Some("johndoe@example.com"));
     /// ```
     pub fn email(&self) -> Option<&str> {
-        self.email.as_ref().map(String::as_str)
+        self.email.as_deref()
     }
 
     /// Set the email of this person.

@@ -149,7 +149,7 @@ impl Image {
     /// image.set_width("80".to_string());
     /// assert_eq!(image.width(), Some("80"));
     pub fn width(&self) -> Option<&str> {
-        self.width.as_ref().map(String::as_str)
+        self.width.as_deref()
     }
 
     /// Set the width of this image.
@@ -182,7 +182,7 @@ impl Image {
     /// assert_eq!(image.height(), Some("31"));
     /// ```
     pub fn height(&self) -> Option<&str> {
-        self.height.as_ref().map(String::as_str)
+        self.height.as_deref()
     }
 
     /// Set the height of this image.
@@ -216,7 +216,7 @@ impl Image {
     /// assert_eq!(image.description(), Some("Example Title"));
     /// ```
     pub fn description(&self) -> Option<&str> {
-        self.description.as_ref().map(String::as_str)
+        self.description.as_deref()
     }
 
     /// Set the title for the link formed around this image.

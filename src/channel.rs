@@ -228,7 +228,7 @@ impl Channel {
     /// assert_eq!(channel.copyright(), Some("© 2017 John Doe"));
     /// ```
     pub fn copyright(&self) -> Option<&str> {
-        self.copyright.as_ref().map(String::as_str)
+        self.copyright.as_deref()
     }
 
     /// Set the copyright notice for this channel.
@@ -260,7 +260,7 @@ impl Channel {
     /// assert_eq!(channel.managing_editor(), Some("johndoe@example.com"));
     /// ```
     pub fn managing_editor(&self) -> Option<&str> {
-        self.managing_editor.as_ref().map(String::as_str)
+        self.managing_editor.as_deref()
     }
 
     /// Set the email address for the managing editor of this channel.
@@ -293,7 +293,7 @@ impl Channel {
     /// assert_eq!(channel.webmaster(), Some("johndoe@example.com"));
     /// ```
     pub fn webmaster(&self) -> Option<&str> {
-        self.webmaster.as_ref().map(String::as_str)
+        self.webmaster.as_deref()
     }
 
     /// Set the email address for webmaster of this channel.
@@ -325,7 +325,7 @@ impl Channel {
     /// assert_eq!(channel.pub_date(), Some("Mon, 1 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
-        self.pub_date.as_ref().map(String::as_str)
+        self.pub_date.as_deref()
     }
 
     /// Set the publication date for the content of this channel as an RFC822 timestamp.
@@ -357,7 +357,7 @@ impl Channel {
     /// assert_eq!(channel.last_build_date(), Some("Mon, 1 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn last_build_date(&self) -> Option<&str> {
-        self.last_build_date.as_ref().map(String::as_str)
+        self.last_build_date.as_deref()
     }
 
     /// Set the time that the content of this channel was last changed as an RFC822 timestamp.
@@ -426,7 +426,7 @@ impl Channel {
     /// assert_eq!(channel.generator(), Some("Program Name"));
     /// ```
     pub fn generator(&self) -> Option<&str> {
-        self.generator.as_ref().map(String::as_str)
+        self.generator.as_deref()
     }
 
     /// Set a string indicating the program used to generate the channel.
@@ -458,7 +458,7 @@ impl Channel {
     /// assert_eq!(channel.docs(), Some("https://cyber.harvard.edu/rss/rss.html"));
     /// ```
     pub fn docs(&self) -> Option<&str> {
-        self.docs.as_ref().map(String::as_str)
+        self.docs.as_deref()
     }
 
     /// Set a URL that points to the documentation of the RSS format used in this channel.
@@ -525,7 +525,7 @@ impl Channel {
     /// assert_eq!(channel.ttl(), Some("60"));
     /// ```
     pub fn ttl(&self) -> Option<&str> {
-        self.ttl.as_ref().map(String::as_str)
+        self.ttl.as_deref()
     }
 
     /// Set the time to live of this channel. This indicates the number of minutes the
@@ -580,7 +580,7 @@ impl Channel {
 
     /// Return the [PICS](https://www.w3.org/PICS/) rating for this channel.
     pub fn rating(&self) -> Option<&str> {
-        self.rating.as_ref().map(String::as_str)
+        self.rating.as_deref()
     }
 
     /// Set the [PICS](https://www.w3.org/PICS/) rating for this channel.
