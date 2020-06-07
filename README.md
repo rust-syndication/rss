@@ -1,8 +1,9 @@
 # rss
 
-[![Build Status](https://travis-ci.org/rust-syndication/rss.svg?branch=master)](https://travis-ci.org/rust-syndication/rss)
-[![Crates.io Status](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
-[![dependency status](https://deps.rs/repo/github/rust-syndication/rss/status.svg)](https://deps.rs/repo/github/rust-syndication/rss)
+[![Build status](https://github.com/rust-syndication/rss/workflows/Build/badge.svg)](https://github.com/rust-syndication/rss/actions?query=branch%3Amaster)
+[![Codecov](https://codecov.io/gh/rust-syndication/rss/branch/master/graph/badge.svg)](https://codecov.io/gh/rust-syndication/rss)
+[![crates.io](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
+[![Docs](https://docs.rs/rss/badge.svg)](https://docs.rs/rss)
 
 Library for serializing the RSS web content syndication format.
 
