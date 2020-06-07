@@ -74,7 +74,7 @@ impl Source {
     /// assert_eq!(source.title(), Some("Source Title"));
     /// ```
     pub fn title(&self) -> Option<&str> {
-        self.title.as_ref().map(String::as_str)
+        self.title.as_deref()
     }
 
     /// Set the title of this source.

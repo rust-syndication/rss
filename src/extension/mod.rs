@@ -63,7 +63,7 @@ impl Extension {
 
     /// Return the text content of this extension.
     pub fn value(&self) -> Option<&str> {
-        self.value.as_ref().map(String::as_str)
+        self.value.as_deref()
     }
 
     /// Set the text content of this extension.
@@ -98,7 +98,7 @@ impl ToXml for Extension {
             writer.write_event(Event::Text(BytesText::from_escaped(value.as_bytes())))?;
         }
 
-        for extension in self.children.values().flat_map(|extensions| extensions) {
+        for extension in self.children.values().flatten() {
             extension.to_xml(writer)?;
         }
 

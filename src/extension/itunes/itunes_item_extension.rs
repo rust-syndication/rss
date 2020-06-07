@@ -64,7 +64,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.author(), Some("John Doe"));
     /// ```
     pub fn author(&self) -> Option<&str> {
-        self.author.as_ref().map(String::as_str)
+        self.author.as_deref()
     }
 
     /// Set the author of this podcast episode.
@@ -99,7 +99,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.block(), Some("Yes"));
     /// ```
     pub fn block(&self) -> Option<&str> {
-        self.block.as_ref().map(String::as_str)
+        self.block.as_deref()
     }
 
     /// Set whether this podcast episode should be blocked from appearing in the iTunes Store.
@@ -134,7 +134,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.image(), Some("http://example.com/artwork.png"));
     /// ```
     pub fn image(&self) -> Option<&str> {
-        self.image.as_ref().map(String::as_str)
+        self.image.as_deref()
     }
 
     /// Set the artwork URL for this podcast episode.
@@ -168,7 +168,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.duration(), Some("1:00"));
     /// ```
     pub fn duration(&self) -> Option<&str> {
-        self.duration.as_ref().map(String::as_str)
+        self.duration.as_deref()
     }
 
     /// Set the duration of this podcast episode.
@@ -206,7 +206,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.explicit(), Some("Yes"));
     /// ```
     pub fn explicit(&self) -> Option<&str> {
-        self.explicit.as_ref().map(String::as_str)
+        self.explicit.as_deref()
     }
 
     /// Set whether this podcast episode contains explicit content.
@@ -244,7 +244,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.closed_captioned(), Some("Yes"));
     /// ```
     pub fn closed_captioned(&self) -> Option<&str> {
-        self.closed_captioned.as_ref().map(String::as_str)
+        self.closed_captioned.as_deref()
     }
 
     /// Set whether this podcast episode contains embedded closed captioning.
@@ -278,7 +278,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.order(), Some("1"));
     /// ```
     pub fn order(&self) -> Option<&str> {
-        self.order.as_ref().map(String::as_str)
+        self.order.as_deref()
     }
 
     /// Set the value used to override the default sorting order for episodes.
@@ -310,7 +310,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.subtitle(), Some("An episode"));
     /// ```
     pub fn subtitle(&self) -> Option<&str> {
-        self.subtitle.as_ref().map(String::as_str)
+        self.subtitle.as_deref()
     }
 
     /// Set the description of this podcast episode.
@@ -342,7 +342,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.summary(), Some("An episode"));
     /// ```
     pub fn summary(&self) -> Option<&str> {
-        self.summary.as_ref().map(String::as_str)
+        self.summary.as_deref()
     }
 
     /// Set the summary for this podcast episode.
@@ -376,7 +376,7 @@ impl ITunesItemExtension {
     /// assert_eq!(extension.keywords(), Some("technology"));
     /// ```
     pub fn keywords(&self) -> Option<&str> {
-        self.keywords.as_ref().map(String::as_str)
+        self.keywords.as_deref()
     }
 
     /// Set the keywords for this podcast episode.
