@@ -9,20 +9,20 @@ use std::collections::HashMap;
 use std::io::{BufRead, Write};
 use std::str::{self, FromStr};
 
-use quick_xml::Error as XmlError;
-use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::events::attributes::Attributes;
+use quick_xml::events::{BytesEnd, BytesStart, Event};
+use quick_xml::Error as XmlError;
 use quick_xml::Reader;
 use quick_xml::Writer;
 
 use crate::category::Category;
 use crate::cloud::Cloud;
 use crate::error::Error;
-use crate::extension::ExtensionMap;
 use crate::extension::dublincore;
 use crate::extension::itunes;
 use crate::extension::syndication;
 use crate::extension::util::{extension_name, parse_extension};
+use crate::extension::ExtensionMap;
 use crate::image::Image;
 use crate::item::Item;
 use crate::textinput::TextInput;
@@ -990,7 +990,8 @@ impl Channel {
             match reader.read_event(&mut buf)? {
                 Event::Start(element) => match element.name() {
                     b"channel" => {
-                        let inner = Channel::from_xml(&namespaces, &mut reader, element.attributes())?;
+                        let inner =
+                            Channel::from_xml(&namespaces, &mut reader, element.attributes())?;
                         channel = Some(inner);
                     }
                     b"item" => {
@@ -1101,7 +1102,11 @@ impl ToString for Channel {
 
 impl Channel {
     /// Builds a Channel from source XML
-    pub fn from_xml<R: BufRead>(namespaces: &HashMap<String, String>, reader: &mut Reader<R>, _: Attributes) -> Result<Self, Error> {
+    pub fn from_xml<R: BufRead>(
+        namespaces: &HashMap<String, String>,
+        reader: &mut Reader<R>,
+        _: Attributes,
+    ) -> Result<Self, Error> {
         let mut channel = Channel::default();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();
@@ -1216,16 +1221,17 @@ impl Channel {
             // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
             for (prefix, namespace) in namespaces {
                 match namespace.as_ref() {
-                    itunes::NAMESPACE => {
-                        channel.extensions.remove(prefix).map(|v| channel.itunes_ext = Some(itunes::ITunesChannelExtension::from_map(v)))
-                    },
-                    dublincore::NAMESPACE => {
-                        channel.extensions.remove(prefix).map(|v| channel.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v)))
-                    },
-                    syndication::NAMESPACE => {
-                        channel.extensions.remove(prefix).map(|v| channel.syndication_ext = Some(syndication::SyndicationExtension::from_map(v)))
-                    },
-                    _ => None
+                    itunes::NAMESPACE => channel.extensions.remove(prefix).map(|v| {
+                        channel.itunes_ext = Some(itunes::ITunesChannelExtension::from_map(v))
+                    }),
+                    dublincore::NAMESPACE => channel.extensions.remove(prefix).map(|v| {
+                        channel.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v))
+                    }),
+                    syndication::NAMESPACE => channel.extensions.remove(prefix).map(|v| {
+                        channel.syndication_ext =
+                            Some(syndication::SyndicationExtension::from_map(v))
+                    }),
+                    _ => None,
                 };
             }
         }

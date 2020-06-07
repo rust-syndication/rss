@@ -2,10 +2,10 @@ extern crate rss;
 
 use std::collections::HashMap;
 
-use rss::Channel;
-use rss::extension::Extension;
 use rss::extension::dublincore::DublinCoreExtension;
 use rss::extension::syndication;
+use rss::extension::Extension;
+use rss::Channel;
 
 fn get_extension_values<'a>(
     map: &'a HashMap<String, Vec<Extension>>,
@@ -23,8 +23,8 @@ fn read_rss090() {
     assert_eq!(channel.title(), "Mozilla Dot Org");
     assert_eq!(channel.link(), "http://www.mozilla.org");
     assert_eq!(
-        channel.description(),
-        "the Mozilla Organization\n      web site"
+        channel.description().lines().collect::<Vec<_>>(),
+        vec!["the Mozilla Organization", "      web site"]
     );
 
     let image = channel.image().unwrap();
@@ -155,9 +155,11 @@ fn read_rss1() {
     assert_eq!(channel.title(), "XML.com");
     assert_eq!(channel.link(), "http://xml.com/pub");
     assert_eq!(
-        channel.description(),
-        "XML.com features a rich mix of information and services \n      \
-         for the XML community."
+        channel.description().lines().collect::<Vec<_>>(),
+        vec![
+            "XML.com features a rich mix of information and services ",
+            "      for the XML community."
+        ]
     );
 
     let image = channel.image().unwrap();
@@ -180,12 +182,12 @@ fn read_rss1() {
         Some("http://xml.com/pub/2000/08/09/xslt/xslt.html")
     );
     assert_eq!(
-        item.description(),
-        Some(
-            "Processing document inclusions with general XML tools can be \n     \
-             problematic. This article proposes a way of preserving inclusion \n     \
-             information through SAX-based processing.",
-        )
+        item.description().map(|x| x.lines().collect::<Vec<_>>()),
+        Some(vec![
+            "Processing document inclusions with general XML tools can be ",
+            "     problematic. This article proposes a way of preserving inclusion ",
+            "     information through SAX-based processing."
+        ])
     );
 }
 
@@ -522,7 +524,8 @@ fn read_extension() {
             .get("ext")
             .unwrap()
             .get("parent")
-            .map(|v| v.iter()
+            .map(|v| v
+                .iter()
                 .find(|v| v.children().contains_key("child"))
                 .expect("failed to find child elements")
                 .children()

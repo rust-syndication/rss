@@ -45,7 +45,7 @@ impl FromStr for UpdatePeriod {
             "weekly" => Ok(UpdatePeriod::WEEKLY),
             "monthly" => Ok(UpdatePeriod::MONTHLY),
             "yearly" => Ok(UpdatePeriod::YEARLY),
-            _ => Err(())
+            _ => Err(()),
         }
     }
 }
@@ -108,11 +108,21 @@ impl SyndicationExtension {
     }
 
     /// Serialises this extension to the nominated writer
-    pub fn to_xml<W: Write>(&self, namespaces: &HashMap<String, String>, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    pub fn to_xml<W: Write>(
+        &self,
+        namespaces: &HashMap<String, String>,
+        writer: &mut Writer<W>,
+    ) -> Result<(), XmlError> {
         for (prefix, namespace) in namespaces {
             if NAMESPACE == namespace {
-                writer.write_text_element(format!("{}:updatePeriod", prefix), &self.period.to_string())?;
-                writer.write_text_element(format!("{}:updateFrequency", prefix), &format!("{}", self.frequency))?;
+                writer.write_text_element(
+                    format!("{}:updatePeriod", prefix),
+                    &self.period.to_string(),
+                )?;
+                writer.write_text_element(
+                    format!("{}:updateFrequency", prefix),
+                    &format!("{}", self.frequency),
+                )?;
                 writer.write_text_element(format!("{}:updateBase", prefix), &self.base)?;
             }
         }
@@ -122,13 +132,19 @@ impl SyndicationExtension {
 
 impl Default for SyndicationExtension {
     fn default() -> Self {
-        SyndicationExtension { period: UpdatePeriod::DAILY, frequency: 1, base: String::from("1970-01-01T00:00+00:00") }
+        SyndicationExtension {
+            period: UpdatePeriod::DAILY,
+            frequency: 1,
+            base: String::from("1970-01-01T00:00+00:00"),
+        }
     }
 }
 
 /// Retrieves the extensions for the nominated field and runs the callback if there is at least 1 extension value
 fn with_first_ext_value<'a, F>(map: &'a HashMap<String, Vec<Extension>>, field: &str, f: F)
-    where F: FnOnce(&'a str) {
+where
+    F: FnOnce(&'a str),
+{
     if let Some(extensions) = map.get(field) {
         if !extensions.is_empty() {
             if let Some(v) = extensions[0].value.as_ref() {
@@ -143,8 +159,12 @@ impl SyndicationExtension {
     pub fn from_map(map: HashMap<String, Vec<Extension>>) -> Self {
         let mut syn = SyndicationExtension::default();
 
-        with_first_ext_value(&map, "updatePeriod", |value| syn.period = value.parse().unwrap());
-        with_first_ext_value(&map, "updateFrequency", |value| syn.frequency = value.parse().unwrap());
+        with_first_ext_value(&map, "updatePeriod", |value| {
+            syn.period = value.parse().unwrap()
+        });
+        with_first_ext_value(&map, "updateFrequency", |value| {
+            syn.frequency = value.parse().unwrap()
+        });
         with_first_ext_value(&map, "updateBase", |value| syn.base = value.to_owned());
 
         syn

@@ -107,8 +107,8 @@ extern crate serde;
 #[cfg(feature = "validation")]
 extern crate url;
 
-mod channel;
 mod category;
+mod channel;
 mod cloud;
 mod enclosure;
 mod guid;
@@ -128,12 +128,12 @@ pub mod extension;
 #[cfg(feature = "validation")]
 pub mod validation;
 
-pub use crate::channel::Channel;
-#[cfg(feature = "builders")]
-pub use crate::channel::ChannelBuilder;
 pub use crate::category::Category;
 #[cfg(feature = "builders")]
 pub use crate::category::CategoryBuilder;
+pub use crate::channel::Channel;
+#[cfg(feature = "builders")]
+pub use crate::channel::ChannelBuilder;
 pub use crate::cloud::Cloud;
 #[cfg(feature = "builders")]
 pub use crate::cloud::CloudBuilder;
