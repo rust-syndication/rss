@@ -1588,7 +1588,7 @@
     <span class="doccomment">/// assert_eq!(channel.copyright(), Some(&quot;© 2017 John Doe&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copyright</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">copyright</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">copyright</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the copyright notice for this channel.</span>
@@ -1620,7 +1620,7 @@
     <span class="doccomment">/// assert_eq!(channel.managing_editor(), Some(&quot;johndoe@example.com&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">managing_editor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">managing_editor</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">managing_editor</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the email address for the managing editor of this channel.</span>
@@ -1653,7 +1653,7 @@
     <span class="doccomment">/// assert_eq!(channel.webmaster(), Some(&quot;johndoe@example.com&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">webmaster</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">webmaster</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">webmaster</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the email address for webmaster of this channel.</span>
@@ -1685,7 +1685,7 @@
     <span class="doccomment">/// assert_eq!(channel.pub_date(), Some(&quot;Mon, 1 Jan 2017 12:00:00 GMT&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pub_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">pub_date</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">pub_date</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the publication date for the content of this channel as an RFC822 timestamp.</span>
@@ -1717,7 +1717,7 @@
     <span class="doccomment">/// assert_eq!(channel.last_build_date(), Some(&quot;Mon, 1 Jan 2017 12:00:00 GMT&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_build_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">last_build_date</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">last_build_date</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the time that the content of this channel was last changed as an RFC822 timestamp.</span>
@@ -1786,7 +1786,7 @@
     <span class="doccomment">/// assert_eq!(channel.generator(), Some(&quot;Program Name&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">generator</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">generator</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set a string indicating the program used to generate the channel.</span>
@@ -1818,7 +1818,7 @@
     <span class="doccomment">/// assert_eq!(channel.docs(), Some(&quot;https://cyber.harvard.edu/rss/rss.html&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">docs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">docs</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">docs</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set a URL that points to the documentation of the RSS format used in this channel.</span>
@@ -1885,7 +1885,7 @@
     <span class="doccomment">/// assert_eq!(channel.ttl(), Some(&quot;60&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">ttl</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">ttl</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the time to live of this channel. This indicates the number of minutes the</span>
@@ -1940,7 +1940,7 @@
 
     <span class="doccomment">/// Return the [PICS](https://www.w3.org/PICS/) rating for this channel.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">rating</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_str</span>)
+        <span class="self">self</span>.<span class="ident">rating</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the [PICS](https://www.w3.org/PICS/) rating for this channel.</span>
