@@ -33,12 +33,6 @@ Add the dependency to your `Cargo.toml`.
 rss = "1.0"
 ```
 
-The package includes a single crate named `rss`.
-
-```rust
-extern crate rss;
-```
-
 ## Reading
 
 A channel can be read from any object that implements the `BufRead` trait.
