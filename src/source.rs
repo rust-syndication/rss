@@ -24,9 +24,9 @@ use crate::util::element_text;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Source {
     /// The URL of the source.
-    url: String,
+    pub url: String,
     /// The title of the source.
-    title: Option<String>,
+    pub title: Option<String>,
 }
 
 impl Source {

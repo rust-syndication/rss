@@ -24,31 +24,31 @@ use crate::toxml::{ToXml, WriterExt};
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct ITunesItemExtension {
     /// The author of the podcast episode.
-    author: Option<String>,
+    pub author: Option<String>,
     /// Specifies if the podcast episode should be prevented from appearing in the iTunes Store. A
     /// value of `Yes` indicates that the episode should not show up in the iTunes Store. All other
     /// values are ignored.
-    block: Option<String>,
+    pub block: Option<String>,
     /// The artwork for the podcast episode.
-    image: Option<String>,
+    pub image: Option<String>,
     /// The podcast episode duration in one of the following formats: HH:MM:SS, H:MM:SS, MM:SS,
     /// M:SS.
-    duration: Option<String>,
+    pub duration: Option<String>,
     /// Specifies whether the podcast episode contains explicit content. A value of `Yes`,
     /// `Explicit`, or `True` indicates that the episode contains explicit content. A value of
     /// `Clean`, `No`, `False` inidicates that episode does not contain explicit content.
-    explicit: Option<String>,
+    pub explicit: Option<String>,
     /// Specifies whether the podcast episode contains embedded closed captioning. A value of `Yes`
     /// indicates that it does. Any other value indicates that it does not.
-    closed_captioned: Option<String>,
+    pub closed_captioned: Option<String>,
     /// A value used to override the default sorting order for episodes.
-    order: Option<String>,
+    pub order: Option<String>,
     /// A description of the podcast episode.
-    subtitle: Option<String>,
+    pub subtitle: Option<String>,
     /// A summary of the podcast episode.
-    summary: Option<String>,
+    pub summary: Option<String>,
     /// Keywords for the podcast. The string contains a comma separated list of keywords.
-    keywords: Option<String>,
+    pub keywords: Option<String>,
 }
 
 impl ITunesItemExtension {

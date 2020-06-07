@@ -36,55 +36,55 @@ use crate::util::element_text;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Channel {
     /// The name of the channel.
-    title: String,
+    pub title: String,
     /// The URL for the website corresponding to the channel.
-    link: String,
+    pub link: String,
     /// A description of the channel.
-    description: String,
+    pub description: String,
     /// The language of the channel.
-    language: Option<String>,
+    pub language: Option<String>,
     /// The copyright notice for the channel.
-    copyright: Option<String>,
+    pub copyright: Option<String>,
     /// The email address for the managing editor.
-    managing_editor: Option<String>,
+    pub managing_editor: Option<String>,
     /// The email address for the webmaster.
-    webmaster: Option<String>,
+    pub webmaster: Option<String>,
     /// The publication date for the content of the channel as an RFC822 timestamp.
-    pub_date: Option<String>,
+    pub pub_date: Option<String>,
     /// The date that the contents of the channel last changed as an RFC822 timestamp.
-    last_build_date: Option<String>,
+    pub last_build_date: Option<String>,
     /// The categories the channel belongs to.
-    categories: Vec<Category>,
+    pub categories: Vec<Category>,
     /// A string indicating the program used to generate the channel.
-    generator: Option<String>,
+    pub generator: Option<String>,
     /// A URL that points to the documentation for the RSS format.
-    docs: Option<String>,
+    pub docs: Option<String>,
     /// The cloud to register with to be notified of updates to the channel.
-    cloud: Option<Cloud>,
+    pub cloud: Option<Cloud>,
     /// The PICS rating for the channel.
-    rating: Option<String>,
+    pub rating: Option<String>,
     /// The number of minutes the channel can be cached before refreshing.
-    ttl: Option<String>,
+    pub ttl: Option<String>,
     /// An image that can be displayed with the channel.
-    image: Option<Image>,
+    pub image: Option<Image>,
     /// A text input box that can be displayed with the channel.
-    text_input: Option<TextInput>,
+    pub text_input: Option<TextInput>,
     /// A hint to tell the aggregator which hours it can skip.
-    skip_hours: Vec<String>,
+    pub skip_hours: Vec<String>,
     /// A hint to tell the aggregator which days it can skip.
-    skip_days: Vec<String>,
+    pub skip_days: Vec<String>,
     /// The items in the channel.
-    items: Vec<Item>,
+    pub items: Vec<Item>,
     /// The extensions for the channel.
-    extensions: ExtensionMap,
+    pub extensions: ExtensionMap,
     /// The iTunes extension for the channel.
-    itunes_ext: Option<itunes::ITunesChannelExtension>,
+    pub itunes_ext: Option<itunes::ITunesChannelExtension>,
     /// The Dublin Core extension for the channel.
-    dublin_core_ext: Option<dublincore::DublinCoreExtension>,
+    pub dublin_core_ext: Option<dublincore::DublinCoreExtension>,
     /// The Syndication extension for the channel.
-    syndication_ext: Option<syndication::SyndicationExtension>,
+    pub syndication_ext: Option<syndication::SyndicationExtension>,
     /// The namespaces present in the RSS tag.
-    namespaces: HashMap<String, String>,
+    pub namespaces: HashMap<String, String>,
 }
 
 impl Channel {

@@ -69,11 +69,11 @@ impl fmt::Display for UpdatePeriod {
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct SyndicationExtension {
     /// The refresh period for this channel
-    period: UpdatePeriod,
+    pub period: UpdatePeriod,
     /// Number of periods between refreshes
-    frequency: u32,
+    pub frequency: u32,
     /// Timestamp from which the refresh periods are calculated
-    base: String,
+    pub base: String,
 }
 
 impl SyndicationExtension {

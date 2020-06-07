@@ -37,14 +37,14 @@ pub type ExtensionMap = HashMap<String, HashMap<String, Vec<Extension>>>;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Extension {
     /// The qualified name of the extension element.
-    name: String,
+    pub name: String,
     /// The content of the extension element.
-    value: Option<String>,
+    pub value: Option<String>,
     /// The attributes for the extension element.
-    attrs: HashMap<String, String>,
+    pub attrs: HashMap<String, String>,
     /// The children of the extension element. This is a map of local names to child
     /// elements.
-    children: HashMap<String, Vec<Extension>>,
+    pub children: HashMap<String, Vec<Extension>>,
 }
 
 impl Extension {
