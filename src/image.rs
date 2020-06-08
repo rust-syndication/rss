@@ -24,17 +24,17 @@ use crate::util::element_text;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Image {
     /// The URL of the image.
-    url: String,
+    pub url: String,
     /// A description of the image. This is used in the HTML `alt` attribute.
-    title: String,
+    pub title: String,
     /// The URL that the image links to.
-    link: String,
+    pub link: String,
     /// The width of the image.
-    width: Option<String>,
+    pub width: Option<String>,
     /// The height of the image.
-    height: Option<String>,
+    pub height: Option<String>,
     /// The text for the HTML `title` attribute of the link formed around the image.
-    description: Option<String>,
+    pub description: Option<String>,
 }
 
 impl Image {

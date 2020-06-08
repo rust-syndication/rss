@@ -25,32 +25,32 @@ use crate::toxml::{ToXml, WriterExt};
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct ITunesChannelExtension {
     /// The author of the podcast.
-    author: Option<String>,
+    pub author: Option<String>,
     /// Specifies if the podcast should be prevented from appearing in the iTunes Store. A value of
     /// `Yes` indicates that the podcast should not show up in the iTunes Store. All other values
     /// are ignored.
-    block: Option<String>,
+    pub block: Option<String>,
     /// The iTunes categories the podcast belongs to.
-    categories: Vec<ITunesCategory>,
+    pub categories: Vec<ITunesCategory>,
     /// The artwork for the podcast.
-    image: Option<String>,
+    pub image: Option<String>,
     /// Specifies whether the podcast contains explicit content. A value of `Yes`, `Explicit`, or
     /// `True` indicates that the podcast contains explicit content. A value of `Clean`, `No`,
     /// `False` inidicates that none of the episodes contain explicit content.
-    explicit: Option<String>,
+    pub explicit: Option<String>,
     /// Specifies whether the podcast is complete and no new episodes will be posted. A value of
     /// `Yes` indicates that the podcast is complete.
-    complete: Option<String>,
+    pub complete: Option<String>,
     /// The new URL where the podcast is located.
-    new_feed_url: Option<String>,
+    pub new_feed_url: Option<String>,
     /// The contact information for the owner of the podcast.
-    owner: Option<ITunesOwner>,
+    pub owner: Option<ITunesOwner>,
     /// A description of the podcast.
-    subtitle: Option<String>,
+    pub subtitle: Option<String>,
     /// A summary of the podcast.
-    summary: Option<String>,
+    pub summary: Option<String>,
     /// Keywords for the podcast. The string contains a comma separated list of keywords.
-    keywords: Option<String>,
+    pub keywords: Option<String>,
 }
 
 impl ITunesChannelExtension {

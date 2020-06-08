@@ -23,11 +23,11 @@ use crate::toxml::ToXml;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Enclosure {
     /// The URL of the enclosure.
-    url: String,
+    pub url: String,
     /// The length of the enclosure in bytes.
-    length: String,
+    pub length: String,
     /// The MIME type of the enclosure.
-    mime_type: String,
+    pub mime_type: String,
 }
 
 impl Enclosure {

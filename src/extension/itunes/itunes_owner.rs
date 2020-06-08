@@ -20,9 +20,9 @@ use crate::toxml::{ToXml, WriterExt};
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct ITunesOwner {
     /// The name of the owner.
-    name: Option<String>,
+    pub name: Option<String>,
     /// The email of the owner.
-    email: Option<String>,
+    pub email: Option<String>,
 }
 
 impl ITunesOwner {

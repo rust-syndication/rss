@@ -26,36 +26,36 @@ pub const NAMESPACE: &str = "http://purl.org/dc/elements/1.1/";
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct DublinCoreExtension {
     /// An entity responsible for making contributions to the resource.
-    contributors: Vec<String>,
+    pub contributors: Vec<String>,
     /// The spatial or temporal topic of the resource, the spatial applicability of the resource,
     /// or the jurisdiction under which the resource is relevant.
-    coverages: Vec<String>,
+    pub coverages: Vec<String>,
     /// An entity primarily responsible for making the resource.
-    creators: Vec<String>,
+    pub creators: Vec<String>,
     /// A point or period of time associated with an event in the lifecycle of the resource.
-    dates: Vec<String>,
+    pub dates: Vec<String>,
     /// An account of the resource.
-    descriptions: Vec<String>,
+    pub descriptions: Vec<String>,
     /// The file format, physical medium, or dimensions of the resource.
-    formats: Vec<String>,
+    pub formats: Vec<String>,
     /// An unambiguous reference to the resource within a given context.
-    identifiers: Vec<String>,
+    pub identifiers: Vec<String>,
     /// A language of the resource.
-    languages: Vec<String>,
+    pub languages: Vec<String>,
     /// An entity responsible for making the resource available.
-    publishers: Vec<String>,
+    pub publishers: Vec<String>,
     /// A related resource.
-    relations: Vec<String>,
+    pub relations: Vec<String>,
     /// Information about rights held in and over the resource.
-    rights: Vec<String>,
+    pub rights: Vec<String>,
     /// A related resource from which the described resource is derived.
-    sources: Vec<String>,
+    pub sources: Vec<String>,
     /// The topic of the resource.
-    subjects: Vec<String>,
+    pub subjects: Vec<String>,
     /// A name given to the resource.
-    titles: Vec<String>,
+    pub titles: Vec<String>,
     /// The nature or genre of the resource.
-    types: Vec<String>,
+    pub types: Vec<String>,
 }
 
 impl DublinCoreExtension {

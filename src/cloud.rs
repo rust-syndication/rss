@@ -23,15 +23,15 @@ use crate::toxml::ToXml;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Cloud {
     /// The domain to register with.
-    domain: String,
+    pub domain: String,
     /// The port to register with.
-    port: String,
+    pub port: String,
     /// The path to register with.
-    path: String,
+    pub path: String,
     /// The procedure to register with.
-    register_procedure: String,
+    pub register_procedure: String,
     /// The protocol to register with.
-    protocol: String,
+    pub protocol: String,
 }
 
 impl Cloud {

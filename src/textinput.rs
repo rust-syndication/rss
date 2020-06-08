@@ -24,13 +24,13 @@ use crate::util::element_text;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct TextInput {
     /// The label of the Submit button for the text input.
-    title: String,
+    pub title: String,
     /// A description of the text input.
-    description: String,
+    pub description: String,
     /// The name of the text object.
-    name: String,
+    pub name: String,
     /// The URL of the CGI script that processes the text input request.
-    link: String,
+    pub link: String,
 }
 
 impl TextInput {

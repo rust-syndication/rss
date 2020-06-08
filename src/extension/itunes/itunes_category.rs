@@ -20,11 +20,11 @@ use crate::toxml::ToXml;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct ITunesCategory {
     /// The name of the category.
-    text: String,
+    pub text: String,
     // This is contained within a Box to ensure it gets allocated on the heap to prevent an
     // infinite size.
     /// An optional subcategory for the category.
-    subcategory: Option<Box<ITunesCategory>>,
+    pub subcategory: Option<Box<ITunesCategory>>,
 }
 
 impl ITunesCategory {

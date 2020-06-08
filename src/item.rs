@@ -33,33 +33,33 @@ use std::collections::HashMap;
 #[cfg_attr(feature = "builders", builder(setter(into), default))]
 pub struct Item {
     /// The title of the item.
-    title: Option<String>,
+    pub title: Option<String>,
     /// The URL of the item.
-    link: Option<String>,
+    pub link: Option<String>,
     /// The item synopsis.
-    description: Option<String>,
+    pub description: Option<String>,
     /// The email address of author of the item.
-    author: Option<String>,
+    pub author: Option<String>,
     /// The categories the item belongs to.
-    categories: Vec<Category>,
+    pub categories: Vec<Category>,
     /// The URL for the comments page of the item.
-    comments: Option<String>,
+    pub comments: Option<String>,
     /// The description of a media object that is attached to the item.
-    enclosure: Option<Enclosure>,
+    pub enclosure: Option<Enclosure>,
     /// A unique identifier for the item.
-    guid: Option<Guid>,
+    pub guid: Option<Guid>,
     /// The date the item was published as an RFC822 timestamp.
-    pub_date: Option<String>,
+    pub pub_date: Option<String>,
     /// The RSS channel the item came from.
-    source: Option<Source>,
+    pub source: Option<Source>,
     /// The HTML contents of the item.
-    content: Option<String>,
+    pub content: Option<String>,
     /// The extensions for the item.
-    extensions: ExtensionMap,
+    pub extensions: ExtensionMap,
     /// The iTunes extension for the item.
-    itunes_ext: Option<itunes::ITunesItemExtension>,
+    pub itunes_ext: Option<itunes::ITunesItemExtension>,
     /// The Dublin Core extension for the item.
-    dublin_core_ext: Option<dublincore::DublinCoreExtension>,
+    pub dublin_core_ext: Option<dublincore::DublinCoreExtension>,
 }
 
 impl Item {
