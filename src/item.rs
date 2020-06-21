@@ -48,7 +48,7 @@ pub struct Item {
     pub enclosure: Option<Enclosure>,
     /// A unique identifier for the item.
     pub guid: Option<Guid>,
-    /// The date the item was published as an RFC822 timestamp.
+    /// The date the item was published as an RFC 2822 timestamp.
     pub pub_date: Option<String>,
     /// The RSS channel the item came from.
     pub source: Option<Source>,
@@ -324,7 +324,7 @@ impl Item {
         self.guid = guid.into();
     }
 
-    /// Return the publication date of this item as an RFC822 timestamp.
+    /// Return the publication date of this item as an RFC 2822 timestamp.
     ///
     /// # Examples
     ///
@@ -332,14 +332,14 @@ impl Item {
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_pub_date("Mon, 01 Jan 2017 12:00:00 GMT".to_string());
+    /// item.set_pub_date("Sun, 01 Jan 2017 12:00:00 GMT".to_string());
     /// assert_eq!(item.pub_date(), Some("Mon, 01 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
         self.pub_date.as_deref()
     }
 
-    /// Set the publication date of this item as an RFC822 timestamp.
+    /// Set the publication date of this item as an RFC 2822 timestamp.
     ///
     /// # Examples
     ///
@@ -348,7 +348,7 @@ impl Item {
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_pub_date("Mon, 01 Jan 2017 12:00:00 GMT".to_string());
+    /// item.set_pub_date("Sun, 01 Jan 2017 12:00:00 GMT".to_string());
     /// ```
     pub fn set_pub_date<V>(&mut self, pub_date: V)
     where
