@@ -333,7 +333,7 @@ impl Item {
     ///
     /// let mut item = Item::default();
     /// item.set_pub_date("Sun, 01 Jan 2017 12:00:00 GMT".to_string());
-    /// assert_eq!(item.pub_date(), Some("Mon, 01 Jan 2017 12:00:00 GMT"));
+    /// assert_eq!(item.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
         self.pub_date.as_deref()
