@@ -733,7 +733,7 @@
     <span class="kw">pub</span> <span class="ident">enclosure</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Enclosure</span><span class="op">&gt;</span>,
     <span class="doccomment">/// A unique identifier for the item.</span>
     <span class="kw">pub</span> <span class="ident">guid</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Guid</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The date the item was published as an RFC822 timestamp.</span>
+    <span class="doccomment">/// The date the item was published as an RFC 2822 timestamp.</span>
     <span class="kw">pub</span> <span class="ident">pub_date</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The RSS channel the item came from.</span>
     <span class="kw">pub</span> <span class="ident">source</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Source</span><span class="op">&gt;</span>,
@@ -1009,7 +1009,7 @@
         <span class="self">self</span>.<span class="ident">guid</span> <span class="op">=</span> <span class="ident">guid</span>.<span class="ident">into</span>();
     }
 
-    <span class="doccomment">/// Return the publication date of this item as an RFC822 timestamp.</span>
+    <span class="doccomment">/// Return the publication date of this item as an RFC 2822 timestamp.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -1017,14 +1017,14 @@
     <span class="doccomment">/// use rss::Item;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut item = Item::default();</span>
-    <span class="doccomment">/// item.set_pub_date(&quot;Mon, 01 Jan 2017 12:00:00 GMT&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(item.pub_date(), Some(&quot;Mon, 01 Jan 2017 12:00:00 GMT&quot;));</span>
+    <span class="doccomment">/// item.set_pub_date(&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;.to_string());</span>
+    <span class="doccomment">/// assert_eq!(item.pub_date(), Some(&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pub_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">pub_date</span>.<span class="ident">as_deref</span>()
     }
 
-    <span class="doccomment">/// Set the publication date of this item as an RFC822 timestamp.</span>
+    <span class="doccomment">/// Set the publication date of this item as an RFC 2822 timestamp.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -1033,7 +1033,7 @@
     <span class="doccomment">/// use rss::Item;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut item = Item::default();</span>
-    <span class="doccomment">/// item.set_pub_date(&quot;Mon, 01 Jan 2017 12:00:00 GMT&quot;.to_string());</span>
+    <span class="doccomment">/// item.set_pub_date(&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_pub_date</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pub_date</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
