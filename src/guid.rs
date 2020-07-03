@@ -137,7 +137,7 @@ impl ToXml for Guid {
 
         writer.write_event(Event::Start(element))?;
 
-        writer.write_event(Event::Text(BytesText::from_escaped(self.value.as_bytes())))?;
+        writer.write_event(Event::Text(BytesText::from_plain_str(&self.value)))?;
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
