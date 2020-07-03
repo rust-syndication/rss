@@ -326,7 +326,7 @@ fn read_guid() {
             .guid()
             .as_ref()
             .map(|v| v.value()),
-        Some("def")
+        Some("def?g=h&i=j")
     );
 }
 
