@@ -49,6 +49,8 @@ pub struct ITunesItemExtension {
     pub summary: Option<String>,
     /// Keywords for the podcast. The string contains a comma separated list of keywords.
     pub keywords: Option<String>,
+    /// Season number for this episode.
+    pub season: Option<String>,
 }
 
 impl ITunesItemExtension {
@@ -397,6 +399,42 @@ impl ITunesItemExtension {
     {
         self.keywords = keywords.into();
     }
+
+    /// Return the season of this podcast episode
+    ///
+    /// The duration will be a string although it is typically a number in practice
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut extension = ITunesItemExtension::default();
+    /// extension.set_season("3".to_string());
+    /// assert_eq!(extension.season(), Some("3"));
+    /// ```
+    pub fn season(&self) -> Option<&str> {
+        self.season.as_deref()
+    }
+
+    /// Set the the season number for this episode.
+    ///
+    /// An integer.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut extension = ITunesItemExtension::default();
+    /// extension.set_season("3".to_string());
+    /// ```
+    pub fn set_season<V>(&mut self, season: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.season = season.into()
+    }
 }
 
 impl ITunesItemExtension {
@@ -413,6 +451,7 @@ impl ITunesItemExtension {
         ext.subtitle = remove_extension_value(&mut map, "subtitle");
         ext.summary = remove_extension_value(&mut map, "summary");
         ext.keywords = remove_extension_value(&mut map, "keywords");
+        ext.season = remove_extension_value(&mut map, "season");
         ext
     }
 }
@@ -461,6 +500,10 @@ impl ToXml for ITunesItemExtension {
 
         if let Some(keywords) = self.keywords.as_ref() {
             writer.write_text_element(b"itunes:keywords", keywords)?;
+        }
+
+        if let Some(season) = self.season.as_ref() {
+            writer.write_text_element(b"itunes:season", season.to_string())?;
         }
 
         Ok(())
