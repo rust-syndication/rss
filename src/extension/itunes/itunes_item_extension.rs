@@ -53,6 +53,8 @@ pub struct ITunesItemExtension {
     pub episode: Option<String>,
     /// Season number for this episode.
     pub season: Option<String>,
+    /// Type of episode. Usually `full`, but potentially also `trailer` or `bonus`
+    pub episode_type: Option<String>,
 }
 
 impl ITunesItemExtension {
@@ -475,6 +477,44 @@ impl ITunesItemExtension {
     {
         self.season = season.into()
     }
+
+    /// Return the episode_type of this podcast episode
+    ///
+    /// The episode type will be a string usually "full" "trailer" or "bonus"
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut extension = ITunesItemExtension::default();
+    /// extension.set_episode_type("trailer".to_string());
+    /// assert_eq!(extension.episode_type(), Some("trailer"));
+    /// ```
+    pub fn episode_type(&self) -> Option<&str> {
+        self.episode_type.as_deref()
+    }
+
+    /// Set the the episode type for this episode.
+    ///
+    /// A string, usually "full" but maybe "trailer" or "bonus"
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut extension = ITunesItemExtension::default();
+    /// extension.set_episode_type("full".to_string());
+    /// assert_eq!(extension.episode_type(), Some("full"));
+    /// ```
+    pub fn set_episode_type<V>(&mut self, episode_type: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.episode_type = episode_type.into()
+    }
+
 }
 
 impl ITunesItemExtension {
@@ -493,6 +533,7 @@ impl ITunesItemExtension {
         ext.keywords = remove_extension_value(&mut map, "keywords");
         ext.episode = remove_extension_value(&mut map, "episode");
         ext.season = remove_extension_value(&mut map, "season");
+        ext.episode_type = remove_extension_value(&mut map, "episodeType");
         ext
     }
 }
@@ -549,6 +590,10 @@ impl ToXml for ITunesItemExtension {
 
         if let Some(season) = self.season.as_ref() {
             writer.write_text_element(b"itunes:season", season.to_string())?;
+        }
+
+        if let Some(episode_type) = self.episode_type.as_ref() {
+            writer.write_text_element(b"itunes:episodeType", episode_type.to_string())?;
         }
 
         Ok(())

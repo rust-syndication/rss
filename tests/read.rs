@@ -749,6 +749,16 @@ fn read_itunes() {
             .season(),
         Some("3")
     );
+    assert_eq!(
+        channel
+            .items()
+            .get(0)
+            .unwrap()
+            .itunes_ext()
+            .unwrap()
+            .episode_type(),
+        Some("trailer")
+    );
 }
 
 #[test]
