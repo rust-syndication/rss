@@ -49,6 +49,8 @@ pub struct ITunesItemExtension {
     pub summary: Option<String>,
     /// Keywords for the podcast. The string contains a comma separated list of keywords.
     pub keywords: Option<String>,
+    /// Episode number for this episode.
+    pub episode: Option<String>,
     /// Season number for this episode.
     pub season: Option<String>,
 }
@@ -400,6 +402,43 @@ impl ITunesItemExtension {
         self.keywords = keywords.into();
     }
 
+    /// Return the episode number of this podcast episode
+    ///
+    /// The episode number will be a string although it is typically a number in practice
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut extension = ITunesItemExtension::default();
+    /// extension.set_episode("3".to_string());
+    /// assert_eq!(extension.episode(), Some("3"));
+    /// ```
+    pub fn episode(&self) -> Option<&str> {
+        self.episode.as_deref()
+    }
+
+    /// Set the the episode number for this episode.
+    ///
+    /// An string.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesItemExtension;
+    ///
+    /// let mut extension = ITunesItemExtension::default();
+    /// extension.set_episode("2".to_string());
+    /// assert_eq!(extension.episode(), Some("2"));
+    /// ```
+    pub fn set_episode<V>(&mut self, episode: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.episode = episode.into()
+    }
+
     /// Return the season of this podcast episode
     ///
     /// The season will be a string although it is typically a number in practice
@@ -452,6 +491,7 @@ impl ITunesItemExtension {
         ext.subtitle = remove_extension_value(&mut map, "subtitle");
         ext.summary = remove_extension_value(&mut map, "summary");
         ext.keywords = remove_extension_value(&mut map, "keywords");
+        ext.episode = remove_extension_value(&mut map, "episode");
         ext.season = remove_extension_value(&mut map, "season");
         ext
     }
@@ -501,6 +541,10 @@ impl ToXml for ITunesItemExtension {
 
         if let Some(keywords) = self.keywords.as_ref() {
             writer.write_text_element(b"itunes:keywords", keywords)?;
+        }
+
+        if let Some(episode) = self.episode.as_ref() {
+            writer.write_text_element(b"itunes:episode", episode.to_string())?;
         }
 
         if let Some(season) = self.season.as_ref() {

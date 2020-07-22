@@ -735,6 +735,17 @@ fn read_itunes() {
             .unwrap()
             .itunes_ext()
             .unwrap()
+            .episode(),
+        Some("2")
+    );
+
+    assert_eq!(
+        channel
+            .items()
+            .get(0)
+            .unwrap()
+            .itunes_ext()
+            .unwrap()
             .season(),
         Some("3")
     );
