@@ -428,6 +428,7 @@ impl ITunesItemExtension {
     ///
     /// let mut extension = ITunesItemExtension::default();
     /// extension.set_season("3".to_string());
+    /// assert_eq!(extension.season(), Some("3"));
     /// ```
     pub fn set_season<V>(&mut self, season: V)
     where
