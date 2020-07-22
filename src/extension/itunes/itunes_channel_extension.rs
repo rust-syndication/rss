@@ -51,6 +51,8 @@ pub struct ITunesChannelExtension {
     pub summary: Option<String>,
     /// Keywords for the podcast. The string contains a comma separated list of keywords.
     pub keywords: Option<String>,
+    /// The type of the podcast.  Usually `serial` or `episodic`.
+    pub podcast_type: Option<String>,
 }
 
 impl ITunesChannelExtension {
@@ -432,6 +434,42 @@ impl ITunesChannelExtension {
     {
         self.keywords = keywords.into();
     }
+
+    /// Return the podcast_type of this podcast.
+    ///
+    /// A string usually "serial" or "episodic"
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesChannelExtension;
+    ///
+    /// let mut extension = ITunesChannelExtension::default();
+    /// extension.set_podcast_type("episodic".to_string());
+    /// assert_eq!(extension.podcast_type(), Some("episodic"));
+    /// ```
+    pub fn podcast_type(&self) -> Option<&str> {
+        self.podcast_type.as_deref()
+    }
+
+    /// Set the type of this podcast.
+    ///
+    /// A string, usually "serial" or "episodic"
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::extension::itunes::ITunesChannelExtension;
+    ///
+    /// let mut extension = ITunesChannelExtension::default();
+    /// extension.set_podcast_type("serial".to_string());
+    /// ```
+    pub fn set_podcast_type<V>(&mut self, t: V)
+    where
+        V: Into<Option<String>>,
+    {
+        self.podcast_type = t.into();
+    }
 }
 
 impl ITunesChannelExtension {
@@ -449,6 +487,7 @@ impl ITunesChannelExtension {
         ext.subtitle = remove_extension_value(&mut map, "subtitle");
         ext.summary = remove_extension_value(&mut map, "summary");
         ext.keywords = remove_extension_value(&mut map, "keywords");
+        ext.podcast_type = remove_extension_value(&mut map, "type");
         ext
     }
 }
@@ -498,6 +537,10 @@ impl ToXml for ITunesChannelExtension {
 
         if let Some(keywords) = self.keywords.as_ref() {
             writer.write_text_element(b"itunes:keywords", keywords)?;
+        }
+
+        if let Some(podcast_type) = self.podcast_type.as_ref() {
+            writer.write_text_element(b"itunes:type", podcast_type)?;
         }
 
         Ok(())
