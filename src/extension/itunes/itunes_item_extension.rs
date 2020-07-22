@@ -402,7 +402,7 @@ impl ITunesItemExtension {
 
     /// Return the season of this podcast episode
     ///
-    /// The duration will be a string although it is typically a number in practice
+    /// The season will be a string although it is typically a number in practice
     ///
     /// # Examples
     ///
