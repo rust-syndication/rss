@@ -626,7 +626,7 @@ fn read_itunes() {
         Some("key1,key2,key3")
     );
     assert_eq!(
-        channel.itunes_ext().unwrap().podcast_type(),
+        channel.itunes_ext().unwrap().r#type(),
         Some("episodic")
     );
 

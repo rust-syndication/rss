@@ -52,7 +52,7 @@ pub struct ITunesChannelExtension {
     /// Keywords for the podcast. The string contains a comma separated list of keywords.
     pub keywords: Option<String>,
     /// The type of the podcast.  Usually `serial` or `episodic`.
-    pub podcast_type: Option<String>,
+    pub r#type: Option<String>,
 }
 
 impl ITunesChannelExtension {
@@ -435,7 +435,7 @@ impl ITunesChannelExtension {
         self.keywords = keywords.into();
     }
 
-    /// Return the podcast_type of this podcast.
+    /// Return the type of this podcast.
     ///
     /// A string usually "serial" or "episodic"
     ///
@@ -445,11 +445,11 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::ITunesChannelExtension;
     ///
     /// let mut extension = ITunesChannelExtension::default();
-    /// extension.set_podcast_type("episodic".to_string());
-    /// assert_eq!(extension.podcast_type(), Some("episodic"));
+    /// extension.set_type("episodic".to_string());
+    /// assert_eq!(extension.r#type(), Some("episodic"));
     /// ```
-    pub fn podcast_type(&self) -> Option<&str> {
-        self.podcast_type.as_deref()
+    pub fn r#type(&self) -> Option<&str> {
+        self.r#type.as_deref()
     }
 
     /// Set the type of this podcast.
@@ -462,13 +462,13 @@ impl ITunesChannelExtension {
     /// use rss::extension::itunes::ITunesChannelExtension;
     ///
     /// let mut extension = ITunesChannelExtension::default();
-    /// extension.set_podcast_type("serial".to_string());
+    /// extension.set_type("serial".to_string());
     /// ```
-    pub fn set_podcast_type<V>(&mut self, t: V)
+    pub fn set_type<V>(&mut self, t: V)
     where
         V: Into<Option<String>>,
     {
-        self.podcast_type = t.into();
+        self.r#type = t.into();
     }
 }
 
@@ -487,7 +487,7 @@ impl ITunesChannelExtension {
         ext.subtitle = remove_extension_value(&mut map, "subtitle");
         ext.summary = remove_extension_value(&mut map, "summary");
         ext.keywords = remove_extension_value(&mut map, "keywords");
-        ext.podcast_type = remove_extension_value(&mut map, "type");
+        ext.r#type = remove_extension_value(&mut map, "type");
         ext
     }
 }
@@ -539,8 +539,8 @@ impl ToXml for ITunesChannelExtension {
             writer.write_text_element(b"itunes:keywords", keywords)?;
         }
 
-        if let Some(podcast_type) = self.podcast_type.as_ref() {
-            writer.write_text_element(b"itunes:type", podcast_type)?;
+        if let Some(r#type) = self.r#type.as_ref() {
+            writer.write_text_element(b"itunes:type", r#type)?;
         }
 
         Ok(())
