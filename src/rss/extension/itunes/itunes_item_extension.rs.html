@@ -466,6 +466,50 @@
 <span id="466">466</span>
 <span id="467">467</span>
 <span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -518,6 +562,8 @@
     <span class="kw">pub</span> <span class="ident">summary</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Keywords for the podcast. The string contains a comma separated list of keywords.</span>
     <span class="kw">pub</span> <span class="ident">keywords</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Season number for this episode.</span>
+    <span class="kw">pub</span> <span class="ident">season</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ITunesItemExtension</span> {
@@ -866,6 +912,43 @@
     {
         <span class="self">self</span>.<span class="ident">keywords</span> <span class="op">=</span> <span class="ident">keywords</span>.<span class="ident">into</span>();
     }
+
+    <span class="doccomment">/// Return the season of this podcast episode</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The season will be a string although it is typically a number in practice</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rss::extension::itunes::ITunesItemExtension;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
+    <span class="doccomment">/// extension.set_season(&quot;3&quot;.to_string());</span>
+    <span class="doccomment">/// assert_eq!(extension.season(), Some(&quot;3&quot;));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">season</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">season</span>.<span class="ident">as_deref</span>()
+    }
+
+    <span class="doccomment">/// Set the the season number for this episode.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// An integer.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rss::extension::itunes::ITunesItemExtension;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
+    <span class="doccomment">/// extension.set_season(&quot;3&quot;.to_string());</span>
+    <span class="doccomment">/// assert_eq!(extension.season(), Some(&quot;3&quot;));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_season</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">season</span>: <span class="ident">V</span>)
+    <span class="kw">where</span>
+        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    {
+        <span class="self">self</span>.<span class="ident">season</span> <span class="op">=</span> <span class="ident">season</span>.<span class="ident">into</span>()
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">ITunesItemExtension</span> {
@@ -882,6 +965,7 @@
         <span class="ident">ext</span>.<span class="ident">subtitle</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;subtitle&quot;</span>);
         <span class="ident">ext</span>.<span class="ident">summary</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;summary&quot;</span>);
         <span class="ident">ext</span>.<span class="ident">keywords</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;keywords&quot;</span>);
+        <span class="ident">ext</span>.<span class="ident">season</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;season&quot;</span>);
         <span class="ident">ext</span>
     }
 }
@@ -932,8 +1016,12 @@
             <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;itunes:keywords&quot;</span>, <span class="ident">keywords</span>)<span class="question-mark">?</span>;
         }
 
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">season</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">season</span>.<span class="ident">as_ref</span>() {
+            <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;itunes:season&quot;</span>, <span class="ident">season</span>.<span class="ident">to_string</span>())<span class="question-mark">?</span>;
+        }
+
         <span class="prelude-val">Ok</span>(())
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../";window.currentCrate = "rss";</script><script src="../../../../aliases.js"></script><script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script><script defer src="../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../";window.currentCrate = "rss";</script><script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script><script defer src="../../../../search-index.js"></script></body></html>
