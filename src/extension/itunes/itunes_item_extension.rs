@@ -475,7 +475,6 @@ impl ITunesItemExtension {
     {
         self.episode_type = episode_type.into()
     }
-
 }
 
 impl ITunesItemExtension {
