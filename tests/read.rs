@@ -725,6 +725,17 @@ fn read_itunes() {
             .keywords(),
         Some("key1,key2,key3")
     );
+
+    assert_eq!(
+        channel
+            .items()
+            .get(0)
+            .unwrap()
+            .itunes_ext()
+            .unwrap()
+            .season(),
+        Some("3")
+    );
 }
 
 #[test]
