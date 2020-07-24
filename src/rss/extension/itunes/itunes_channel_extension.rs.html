@@ -503,6 +503,49 @@
 <span id="503">503</span>
 <span id="504">504</span>
 <span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -557,6 +600,8 @@
     <span class="kw">pub</span> <span class="ident">summary</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Keywords for the podcast. The string contains a comma separated list of keywords.</span>
     <span class="kw">pub</span> <span class="ident">keywords</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The type of the podcast.  Usually `serial` or `episodic`.</span>
+    <span class="kw">pub</span> <span class="ident">r#type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ITunesChannelExtension</span> {
@@ -938,6 +983,42 @@
     {
         <span class="self">self</span>.<span class="ident">keywords</span> <span class="op">=</span> <span class="ident">keywords</span>.<span class="ident">into</span>();
     }
+
+    <span class="doccomment">/// Return the type of this podcast.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A string usually &quot;serial&quot; or &quot;episodic&quot;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rss::extension::itunes::ITunesChannelExtension;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut extension = ITunesChannelExtension::default();</span>
+    <span class="doccomment">/// extension.set_type(&quot;episodic&quot;.to_string());</span>
+    <span class="doccomment">/// assert_eq!(extension.r#type(), Some(&quot;episodic&quot;));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">r#type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">r#type</span>.<span class="ident">as_deref</span>()
+    }
+
+    <span class="doccomment">/// Set the type of this podcast.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A string, usually &quot;serial&quot; or &quot;episodic&quot;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rss::extension::itunes::ITunesChannelExtension;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut extension = ITunesChannelExtension::default();</span>
+    <span class="doccomment">/// extension.set_type(&quot;serial&quot;.to_string());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_type</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">t</span>: <span class="ident">V</span>)
+    <span class="kw">where</span>
+        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    {
+        <span class="self">self</span>.<span class="ident">r#type</span> <span class="op">=</span> <span class="ident">t</span>.<span class="ident">into</span>();
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">ITunesChannelExtension</span> {
@@ -955,6 +1036,7 @@
         <span class="ident">ext</span>.<span class="ident">subtitle</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;subtitle&quot;</span>);
         <span class="ident">ext</span>.<span class="ident">summary</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;summary&quot;</span>);
         <span class="ident">ext</span>.<span class="ident">keywords</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;keywords&quot;</span>);
+        <span class="ident">ext</span>.<span class="ident">r#type</span> <span class="op">=</span> <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;type&quot;</span>);
         <span class="ident">ext</span>
     }
 }
@@ -1004,6 +1086,10 @@
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">keywords</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">keywords</span>.<span class="ident">as_ref</span>() {
             <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;itunes:keywords&quot;</span>, <span class="ident">keywords</span>)<span class="question-mark">?</span>;
+        }
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">r#type</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">r#type</span>.<span class="ident">as_ref</span>() {
+            <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;itunes:type&quot;</span>, <span class="ident">r#type</span>)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
