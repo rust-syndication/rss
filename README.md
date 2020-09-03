@@ -5,7 +5,7 @@
 [![crates.io](http://meritbadge.herokuapp.com/rss)](https://crates.io/crates/rss)
 [![Docs](https://docs.rs/rss/badge.svg)](https://docs.rs/rss)
 
-Library for serializing the RSS web content syndication format.
+Library for deserializing and serializing the RSS web content syndication format.
 
 ### Supported Versions
 
