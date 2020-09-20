@@ -11,14 +11,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Run coverage
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        override: true
+    - uses: actions-rs/install@v0.1
+      with:
+        crate: cargo-tarpaulin
+        use-tool-cache: true
+    - name: Measure coverage
       run: |
-        docker run \
-          --security-opt seccomp=unconfined \
-          -v "$(pwd):/volume" \
-          xd009642/tarpaulin:latest \
-          cargo tarpaulin -f -t 5 --all-features --out Xml -v -- --test-threads=1 || true
-    - name: Upload coverage to Codecov
+        cargo tarpaulin \
+          --forward \
+          --timeout 5 \
+          --run-types Tests Doctests \
+          --all-features \
+          --out Xml \
+          --verbose \
+          -- \
+          --test-threads=1
+    - name: Upload coverage report to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: ${{secrets.CODECOV_TOKEN}}
