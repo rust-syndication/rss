@@ -345,6 +345,28 @@ impl Channel {
         self.pub_date = pub_date.into();
     }
 
+    /// Set the publication date for the content of this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use chrono::{TimeZone, Utc};
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_pub_date_strict(Utc.ymd(2017, 1, 1).and_hms(12, 0, 0));
+    /// assert_eq!(channel.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
+    /// ```
+    #[cfg(feature = "validation")]
+    pub fn set_pub_date_strict<V, Tz>(&mut self, pub_date: V)
+    where
+        V: Into<Option<chrono::DateTime<Tz>>>,
+        Tz: chrono::TimeZone,
+        <Tz as chrono::TimeZone>::Offset: std::fmt::Display,
+    {
+        self.pub_date = pub_date.into().map(|dt| dt.to_rfc2822());
+    }
+
     /// Return the time that the content of this channel was last changed as an RFC822 timestamp.
     ///
     /// # Examples
@@ -375,6 +397,28 @@ impl Channel {
         V: Into<Option<String>>,
     {
         self.last_build_date = last_build_date.into();
+    }
+
+    /// Set the publication date for the content of this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use chrono::{TimeZone, Utc};
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_last_build_date_strict(Utc.ymd(2017, 1, 1).and_hms(12, 0, 0));
+    /// assert_eq!(channel.last_build_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
+    /// ```
+    #[cfg(feature = "validation")]
+    pub fn set_last_build_date_strict<V, Tz>(&mut self, pub_date: V)
+    where
+        V: Into<Option<chrono::DateTime<Tz>>>,
+        Tz: chrono::TimeZone,
+        <Tz as chrono::TimeZone>::Offset: std::fmt::Display,
+    {
+        self.last_build_date = pub_date.into().map(|dt| dt.to_rfc2822());
     }
 
     /// Return the categories that this channel belongs to.

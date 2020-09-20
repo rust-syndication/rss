@@ -357,6 +357,31 @@ impl Item {
         self.pub_date = pub_date.into();
     }
 
+    /// Set the publication date of this item as an RFC 2822 timestamp.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Item;
+    /// use chrono::{FixedOffset, TimeZone, Utc};
+    ///
+    /// let mut item = Item::default();
+    /// item.set_pub_date_strict(Utc.ymd(2017, 1, 1).and_hms(12, 0, 0));
+    /// assert_eq!(item.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
+    ///
+    /// item.set_pub_date_strict(FixedOffset::east(2 * 3600).ymd(2017, 1, 1).and_hms(12, 0, 0));
+    /// assert_eq!(item.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 +0200"));
+    /// ```
+    #[cfg(feature = "validation")]
+    pub fn set_pub_date_strict<V, Tz>(&mut self, pub_date: V)
+    where
+        V: Into<Option<chrono::DateTime<Tz>>>,
+        Tz: chrono::TimeZone,
+        <Tz as chrono::TimeZone>::Offset: std::fmt::Display,
+    {
+        self.pub_date = pub_date.into().map(|dt| dt.to_rfc2822());
+    }
+
     /// Return the source URL for this item.
     ///
     /// # Examples
