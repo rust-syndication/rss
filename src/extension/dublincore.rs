@@ -377,4 +377,10 @@ impl ToXml for DublinCoreExtension {
         writer.write_text_elements(b"dc:type", &self.types)?;
         Ok(())
     }
+
+    fn used_namespaces(&self) -> HashMap<String, String> {
+        let mut namespaces = HashMap::new();
+        namespaces.insert("dc".to_owned(), NAMESPACE.to_owned());
+        namespaces
+    }
 }

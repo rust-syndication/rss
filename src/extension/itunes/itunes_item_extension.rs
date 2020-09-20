@@ -12,7 +12,7 @@ use quick_xml::events::{BytesEnd, BytesStart, Event};
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
-use super::parse_image;
+use super::{parse_image, NAMESPACE};
 use crate::extension::util::remove_extension_value;
 use crate::extension::Extension;
 use crate::toxml::{ToXml, WriterExt};
@@ -596,5 +596,11 @@ impl ToXml for ITunesItemExtension {
         }
 
         Ok(())
+    }
+
+    fn used_namespaces(&self) -> HashMap<String, String> {
+        let mut namespaces = HashMap::new();
+        namespaces.insert("itunes".to_owned(), NAMESPACE.to_owned());
+        namespaces
     }
 }

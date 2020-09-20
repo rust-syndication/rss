@@ -681,4 +681,21 @@ impl ToXml for Item {
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
     }
+
+    fn used_namespaces(&self) -> HashMap<String, String> {
+        let mut namespaces = HashMap::new();
+        if self.content.is_some() {
+            namespaces.insert(
+                "content".to_owned(),
+                "http://purl.org/rss/1.0/modules/content/".to_owned(),
+            );
+        }
+        if let Some(ext) = self.itunes_ext() {
+            namespaces.extend(ext.used_namespaces());
+        }
+        if let Some(ext) = self.dublin_core_ext() {
+            namespaces.extend(ext.used_namespaces());
+        }
+        namespaces
+    }
 }

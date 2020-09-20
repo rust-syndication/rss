@@ -5,6 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
+use std::collections::HashMap;
 use std::io::Write;
 
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
@@ -13,6 +14,10 @@ use quick_xml::Writer;
 
 pub trait ToXml {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError>;
+
+    fn used_namespaces(&self) -> HashMap<String, String> {
+        HashMap::new()
+    }
 }
 
 impl<'a, T: ToXml> ToXml for &'a T {
