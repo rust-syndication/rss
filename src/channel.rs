@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::io::{BufRead, Write};
 use std::str::{self, FromStr};
 
@@ -1043,8 +1043,12 @@ impl Channel {
         let mut element = BytesStart::borrowed(name, name.len());
         element.push_attribute(("version", "2.0"));
 
-        for (name, url) in &self.namespaces {
-            element.push_attribute((format!("xmlns:{}", &**name).as_bytes(), url.as_bytes()));
+        let used_namespaces = self.used_namespaces();
+        let mut namespaces: BTreeMap<&String, &String> = BTreeMap::new();
+        namespaces.extend(&used_namespaces);
+        namespaces.extend(&self.namespaces);
+        for (name, url) in namespaces {
+            element.push_attribute((format!("xmlns:{}", name).as_bytes(), url.as_bytes()));
         }
 
         writer.write_event(Event::Start(element))?;
@@ -1346,6 +1350,20 @@ impl ToXml for Channel {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
+    }
+
+    fn used_namespaces(&self) -> HashMap<String, String> {
+        let mut namespaces = HashMap::new();
+        for item in &self.items {
+            namespaces.extend(item.used_namespaces());
+        }
+        if let Some(ext) = self.itunes_ext() {
+            namespaces.extend(ext.used_namespaces());
+        }
+        if let Some(ext) = self.dublin_core_ext() {
+            namespaces.extend(ext.used_namespaces());
+        }
+        namespaces
     }
 }
 

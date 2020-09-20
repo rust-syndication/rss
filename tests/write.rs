@@ -143,3 +143,47 @@ fn verify_write_format() {
 
     assert_eq!(channel.to_string(), output);
 }
+
+#[test]
+fn test_content_namespace() {
+    let channel = ChannelBuilder::default()
+        .items(vec![ItemBuilder::default()
+            .content("Lorem ipsum dolor sit amet".to_owned())
+            .build()
+            .unwrap()])
+        .build()
+        .unwrap();
+    let xml = channel.to_string();
+
+    assert!(xml.contains("xmlns:content="));
+    assert!(!xml.contains("xmlns:dc="));
+    assert!(!xml.contains("xmlns:itunes="));
+}
+
+#[test]
+fn test_namespaces() {
+    let channel = ChannelBuilder::default()
+        .items(vec![ItemBuilder::default()
+            .content("Lorem ipsum dolor sit amet".to_owned())
+            .itunes_ext(
+                extension::itunes::ITunesItemExtensionBuilder::default()
+                    .author("Anonymous".to_owned())
+                    .build()
+                    .unwrap(),
+            )
+            .dublin_core_ext(
+                extension::dublincore::DublinCoreExtensionBuilder::default()
+                    .languages(vec!["English".to_owned(), "Deutsch".to_owned()])
+                    .build()
+                    .unwrap(),
+            )
+            .build()
+            .unwrap()])
+        .build()
+        .unwrap();
+    let xml = channel.to_string();
+
+    assert!(xml.contains("xmlns:content="));
+    assert!(xml.contains("xmlns:dc="));
+    assert!(xml.contains("xmlns:itunes="));
+}
