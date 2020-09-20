@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["adler32","Consume a Read object and returns the Adler32 hash."]],"struct":[["RollingAdler32","A rolling version of the Adler32 hash, which can 'forget' past bytes."]]});

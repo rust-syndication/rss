@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["rand_bytes","Fill buffer with cryptographically strong pseudo-random bytes."]]});
