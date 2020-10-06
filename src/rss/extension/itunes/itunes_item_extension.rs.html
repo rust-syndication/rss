@@ -598,6 +598,12 @@
 <span id="598">598</span>
 <span id="599">599</span>
 <span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -613,7 +619,7 @@
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Writer</span>;
 
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">parse_image</span>;
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">parse_image</span>, <span class="ident">NAMESPACE</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">util</span>::<span class="ident">remove_extension_value</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">Extension</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">toxml</span>::{<span class="ident">ToXml</span>, <span class="ident">WriterExt</span>};
@@ -1197,6 +1203,12 @@
         }
 
         <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
+        <span class="ident">namespaces</span>.<span class="ident">insert</span>(<span class="string">&quot;itunes&quot;</span>.<span class="ident">to_owned</span>(), <span class="ident">NAMESPACE</span>.<span class="ident">to_owned</span>());
+        <span class="ident">namespaces</span>
     }
 }
 </pre></div>

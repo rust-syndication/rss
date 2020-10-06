@@ -682,6 +682,23 @@
 <span id="682">682</span>
 <span id="683">683</span>
 <span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -1365,6 +1382,23 @@
 
         <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event</span>::<span class="ident">End</span>(<span class="ident">BytesEnd</span>::<span class="ident">borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">is_some</span>() {
+            <span class="ident">namespaces</span>.<span class="ident">insert</span>(
+                <span class="string">&quot;content&quot;</span>.<span class="ident">to_owned</span>(),
+                <span class="string">&quot;http://purl.org/rss/1.0/modules/content/&quot;</span>.<span class="ident">to_owned</span>(),
+            );
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ext</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">itunes_ext</span>() {
+            <span class="ident">namespaces</span>.<span class="ident">extend</span>(<span class="ident">ext</span>.<span class="ident">used_namespaces</span>());
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ext</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">dublin_core_ext</span>() {
+            <span class="ident">namespaces</span>.<span class="ident">extend</span>(<span class="ident">ext</span>.<span class="ident">used_namespaces</span>());
+        }
+        <span class="ident">namespaces</span>
     }
 }
 </pre></div>
