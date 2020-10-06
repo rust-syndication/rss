@@ -18,6 +18,8 @@ use quick_xml::Writer;
 use crate::category::Category;
 use crate::cloud::Cloud;
 use crate::error::Error;
+#[cfg(feature = "atom")]
+use crate::extension::atom;
 use crate::extension::dublincore;
 use crate::extension::itunes;
 use crate::extension::syndication;
@@ -77,6 +79,9 @@ pub struct Channel {
     pub items: Vec<Item>,
     /// The extensions for the channel.
     pub extensions: ExtensionMap,
+    /// The Atom extension for the channel.
+    #[cfg(feature = "atom")]
+    pub atom_ext: Option<atom::AtomExtension>,
     /// The iTunes extension for the channel.
     pub itunes_ext: Option<itunes::ITunesChannelExtension>,
     /// The Dublin Core extension for the channel.
@@ -779,6 +784,42 @@ impl Channel {
         self.items = items.into();
     }
 
+    /// Return the Atom extension for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::atom::AtomExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_atom_ext(AtomExtension::default());
+    /// assert!(channel.atom_ext().is_some());
+    /// ```
+    #[cfg(feature = "atom")]
+    pub fn atom_ext(&self) -> Option<&atom::AtomExtension> {
+        self.atom_ext.as_ref()
+    }
+
+    /// Set the Atom extension for this channel.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Channel;
+    /// use rss::extension::atom::AtomExtension;
+    ///
+    /// let mut channel = Channel::default();
+    /// channel.set_atom_ext(AtomExtension::default());
+    /// ```
+    #[cfg(feature = "atom")]
+    pub fn set_atom_ext<V>(&mut self, atom_ext: V)
+    where
+        V: Into<Option<atom::AtomExtension>>,
+    {
+        self.atom_ext = atom_ext.into();
+    }
+
     /// Return the iTunes extension for this channel.
     ///
     /// # Examples
@@ -1255,6 +1296,11 @@ impl Channel {
             // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
             for (prefix, namespace) in namespaces {
                 match namespace.as_ref() {
+                    #[cfg(feature = "atom")]
+                    atom::NAMESPACE => channel
+                        .extensions
+                        .remove(prefix)
+                        .map(|v| channel.atom_ext = Some(atom::AtomExtension::from_map(v))),
                     itunes::NAMESPACE => channel.extensions.remove(prefix).map(|v| {
                         channel.itunes_ext = Some(itunes::ITunesChannelExtension::from_map(v))
                     }),
@@ -1362,6 +1408,11 @@ impl ToXml for Channel {
                     extension.to_xml(writer)?;
                 }
             }
+        }
+
+        #[cfg(feature = "atom")]
+        if let Some(ext) = &self.atom_ext {
+            ext.to_xml(writer)?;
         }
 
         if let Some(ext) = &self.itunes_ext {
