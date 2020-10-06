@@ -321,8 +321,8 @@ impl Channel {
     /// use rss::Channel;
     ///
     /// let mut channel = Channel::default();
-    /// channel.set_pub_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
-    /// assert_eq!(channel.pub_date(), Some("Mon, 1 Jan 2017 12:00:00 GMT"));
+    /// channel.set_pub_date("Sun, 1 Jan 2017 12:00:00 GMT".to_string());
+    /// assert_eq!(channel.pub_date(), Some("Sun, 1 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn pub_date(&self) -> Option<&str> {
         self.pub_date.as_deref()
@@ -336,7 +336,7 @@ impl Channel {
     /// use rss::Channel;
     ///
     /// let mut channel = Channel::default();
-    /// channel.set_pub_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
+    /// channel.set_pub_date("Sun, 1 Jan 2017 12:00:00 GMT".to_string());
     /// ```
     pub fn set_pub_date<V>(&mut self, pub_date: V)
     where
@@ -353,8 +353,8 @@ impl Channel {
     /// use rss::Channel;
     ///
     /// let mut channel = Channel::default();
-    /// channel.set_last_build_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
-    /// assert_eq!(channel.last_build_date(), Some("Mon, 1 Jan 2017 12:00:00 GMT"));
+    /// channel.set_last_build_date("Sun, 1 Jan 2017 12:00:00 GMT".to_string());
+    /// assert_eq!(channel.last_build_date(), Some("Sun, 1 Jan 2017 12:00:00 GMT"));
     /// ```
     pub fn last_build_date(&self) -> Option<&str> {
         self.last_build_date.as_deref()
@@ -368,7 +368,7 @@ impl Channel {
     /// use rss::Channel;
     ///
     /// let mut channel = Channel::default();
-    /// channel.set_last_build_date("Mon, 1 Jan 2017 12:00:00 GMT".to_string());
+    /// channel.set_last_build_date("Sun, 1 Jan 2017 12:00:00 GMT".to_string());
     /// ```
     pub fn set_last_build_date<V>(&mut self, last_build_date: V)
     where
