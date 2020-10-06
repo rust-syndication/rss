@@ -538,6 +538,48 @@ fn read_extension() {
     );
 }
 
+#[cfg(feature = "atom")]
+#[test]
+fn read_atom() {
+    let input = include_str!("data/rss2_with_atom.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    assert_eq!(
+        channel.atom_ext().unwrap().links(),
+        &[rss::extension::atom::Link {
+            href: "http://liftoff.msfc.nasa.gov/rss".into(),
+            rel: "self".into(),
+            mime_type: Some("application/rss+xml".into()),
+            ..Default::default()
+        },]
+    );
+
+    assert_eq!(
+        channel.items[0].atom_ext().unwrap().links(),
+        &[
+            rss::extension::atom::Link {
+                href: "http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp".into(),
+                ..Default::default()
+            },
+            rss::extension::atom::Link {
+                href: "http://liftoff.msfc.nasa.gov/2003/05/30.html#item572".into(),
+                rel: "related".into(),
+                ..Default::default()
+            },
+        ]
+    );
+
+    assert!(channel.items[1].atom_ext().is_none());
+
+    assert_eq!(
+        channel.items[2].atom_ext().unwrap().links(),
+        &[rss::extension::atom::Link {
+            href: "http://liftoff.msfc.nasa.gov/news/2003/news-VASIMR.asp".into(),
+            ..Default::default()
+        }]
+    );
+}
+
 #[test]
 fn read_itunes() {
     let input = include_str!("data/itunes.xml");

@@ -15,6 +15,10 @@ use quick_xml::Writer;
 
 use crate::toxml::ToXml;
 
+/// Types and methods for [Atom](https://www.rssboard.org/rss-profile#namespace-elements-atom) extensions.
+#[cfg(feature = "atom")]
+pub mod atom;
+
 /// Types and methods for
 /// [iTunes](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) extensions.
 pub mod itunes;
