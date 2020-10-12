@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/utf_16.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf_16.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/utf_16.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf_16.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -492,7 +493,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Utf16Decoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">big_endian</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VariantDecoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">big_endian</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">VariantDecoder</span> {
         <span class="ident">VariantDecoder</span>::<span class="ident">Utf16</span>(<span class="ident">Utf16Decoder</span> {
             <span class="ident">lead_surrogate</span>: <span class="number">0</span>,
             <span class="ident">lead_byte</span>: <span class="prelude-val">None</span>,
@@ -501,19 +502,19 @@
         })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">additional_from_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">additional_from_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="number">1</span> <span class="op">+</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_some</span>() { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> }
-            <span class="op">+</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">2</span> }
+            <span class="op">+</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">==</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">2</span> }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">checked_add</span>(
             <span class="number">1</span>,
             <span class="ident">checked_div</span>(<span class="ident">byte_length</span>.<span class="ident">checked_add</span>(<span class="self">self</span>.<span class="ident">additional_from_state</span>()), <span class="number">2</span>),
         )
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">checked_add</span>(
             <span class="number">1</span>,
             <span class="ident">checked_mul</span>(
@@ -523,7 +524,7 @@
         )
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">checked_add</span>(
             <span class="number">1</span>,
             <span class="ident">checked_mul</span>(
@@ -537,10 +538,10 @@
         {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pending_bmp</span> {
                 <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_bmp</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
                         <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle</span>) <span class="op">=&gt;</span> {
                         <span class="ident">destination_handle</span>.<span class="ident">write_bmp</span>(<span class="self">self</span>.<span class="ident">lead_surrogate</span>);
                         <span class="self">self</span>.<span class="ident">pending_bmp</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span> <span class="number">0</span>;
@@ -551,7 +552,7 @@
         {
             <span class="comment">// This is the fast path. The rest runs only at the</span>
             <span class="comment">// start and end for partial sequences.</span>
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_none</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">read</span>, <span class="ident">written</span>)) <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">be</span> {
                     <span class="ident">dest</span>.<span class="ident">copy_utf16_from</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">source</span>)
                 } <span class="kw">else</span> {
@@ -563,25 +564,25 @@
         },
         {
             <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">pending_bmp</span>);
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_some</span>() {
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">||</span> <span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_some</span>() {
                 <span class="comment">// We need to check space without intent to write in order to</span>
                 <span class="comment">// make sure that there is space for the replacement character.</span>
                 <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_bmp</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
                         <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!=</span> <span class="number">0</span> {
                             <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span> <span class="number">0</span>;
                             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">lead_byte</span> {
-                                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
                                     <span class="kw">return</span> (
                                         <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                         <span class="ident">src_consumed</span>,
                                         <span class="ident">dest</span>.<span class="ident">written</span>(),
                                     );
                                 }
-                                <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
                                     <span class="self">self</span>.<span class="ident">lead_byte</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                                     <span class="kw">return</span> (
                                         <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">3</span>, <span class="number">0</span>),
@@ -600,21 +601,21 @@
         },
         {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">lead_byte</span> {
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
                     <span class="self">self</span>.<span class="ident">lead_byte</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">b</span>);
                     <span class="kw">continue</span>;
                 }
-                <span class="prelude-val">Some</span>(<span class="ident">lead</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">lead</span>) <span class="op">=&gt;</span> {
                     <span class="self">self</span>.<span class="ident">lead_byte</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                     <span class="kw">let</span> <span class="ident">code_unit</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">be</span> {
-                        <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">lead</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">b</span>)
+                        <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">lead</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">b</span>)
                     } <span class="kw">else</span> {
-                        <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">b</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">lead</span>)
+                        <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">b</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">lead</span>)
                     };
                     <span class="kw">let</span> <span class="ident">high_bits</span> <span class="op">=</span> <span class="ident">code_unit</span> <span class="op">&amp;</span> <span class="number">0xFC00u16</span>;
-                    <span class="kw">if</span> <span class="ident">high_bits</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xD800u16</span> {
+                    <span class="kw">if</span> <span class="ident">high_bits</span> <span class="op">==</span> <span class="number">0xD800u16</span> {
                         <span class="comment">// high surrogate</span>
-                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!=</span> <span class="number">0</span> {
                             <span class="comment">// The previous high surrogate was in</span>
                             <span class="comment">// error and this one becomes the new</span>
                             <span class="comment">// pending one.</span>
@@ -628,9 +629,9 @@
                         <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span> <span class="ident">code_unit</span>;
                         <span class="kw">continue</span>;
                     }
-                    <span class="kw">if</span> <span class="ident">high_bits</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xDC00u16</span> {
+                    <span class="kw">if</span> <span class="ident">high_bits</span> <span class="op">==</span> <span class="number">0xDC00u16</span> {
                         <span class="comment">// low surrogate</span>
-                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">==</span> <span class="number">0</span> {
                             <span class="kw">return</span> (
                                 <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                 <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
@@ -642,7 +643,7 @@
                         <span class="kw">continue</span>;
                     }
                     <span class="comment">// bmp</span>
-                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!=</span> <span class="number">0</span> {
                         <span class="comment">// The previous high surrogate was in</span>
                         <span class="comment">// error and this code unit becomes a</span>
                         <span class="comment">// pending BMP character.</span>

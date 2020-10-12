@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/image.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>image.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rss/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/image.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>image.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../rss/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -344,7 +345,7 @@
     <span class="doccomment">/// image.set_url(&quot;http://example.com/image.png&quot;);</span>
     <span class="doccomment">/// assert_eq!(image.url(), &quot;http://example.com/image.png&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">url</span>.<span class="ident">as_str</span>()
     }
 
@@ -378,7 +379,7 @@
     <span class="doccomment">/// image.set_title(&quot;Example image&quot;);</span>
     <span class="doccomment">/// assert_eq!(image.title(), &quot;Example image&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">title</span>.<span class="ident">as_str</span>()
     }
 
@@ -411,7 +412,7 @@
     <span class="doccomment">/// let mut image = Image::default();</span>
     <span class="doccomment">/// image.set_link(&quot;http://example.com&quot;);</span>
     <span class="doccomment">/// assert_eq!(image.link(), &quot;http://example.com&quot;);</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">link</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">link</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">link</span>.<span class="ident">as_str</span>()
     }
 
@@ -443,7 +444,7 @@
     <span class="doccomment">/// let mut image = Image::default();</span>
     <span class="doccomment">/// image.set_width(&quot;80&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(image.width(), Some(&quot;80&quot;));</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">width</span>.<span class="ident">as_deref</span>()
     }
 
@@ -458,7 +459,7 @@
     <span class="doccomment">/// image.set_width(&quot;80&quot;.to_string());</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_width</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">width</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
     {
         <span class="self">self</span>.<span class="ident">width</span> <span class="op">=</span> <span class="ident">width</span>.<span class="ident">into</span>();
     }
@@ -476,7 +477,7 @@
     <span class="doccomment">/// image.set_height(&quot;31&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(image.height(), Some(&quot;31&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">height</span>.<span class="ident">as_deref</span>()
     }
 
@@ -494,7 +495,7 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_height</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">height</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
     {
         <span class="self">self</span>.<span class="ident">height</span> <span class="op">=</span> <span class="ident">height</span>.<span class="ident">into</span>();
     }
@@ -510,7 +511,7 @@
     <span class="doccomment">/// image.set_description(&quot;Example Title&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(image.description(), Some(&quot;Example Title&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">description</span>.<span class="ident">as_deref</span>()
     }
 
@@ -526,7 +527,7 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_description</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">description</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>,
     {
         <span class="self">self</span>.<span class="ident">description</span> <span class="op">=</span> <span class="ident">description</span>.<span class="ident">into</span>();
     }
@@ -534,24 +535,24 @@
 
 <span class="kw">impl</span> <span class="ident">Image</span> {
     <span class="doccomment">/// Builds an Image from source XML</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="kw">_</span>: <span class="ident">Attributes</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="kw">_</span>: <span class="ident">Attributes</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">image</span> <span class="op">=</span> <span class="ident">Image</span>::<span class="ident">default</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
         <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
-                <span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">element</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
-                    <span class="string">b&quot;url&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">image</span>.<span class="ident">url</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
-                    <span class="string">b&quot;title&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">image</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
-                    <span class="string">b&quot;link&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">image</span>.<span class="ident">link</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
-                    <span class="string">b&quot;width&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">image</span>.<span class="ident">width</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;height&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">image</span>.<span class="ident">height</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;description&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">image</span>.<span class="ident">description</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="ident">n</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span>::<span class="ident">new</span>())<span class="question-mark">?</span>,
+                <span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">element</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
+                    <span class="string">b&quot;url&quot;</span> <span class="op">=&gt;</span> <span class="ident">image</span>.<span class="ident">url</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
+                    <span class="string">b&quot;title&quot;</span> <span class="op">=&gt;</span> <span class="ident">image</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
+                    <span class="string">b&quot;link&quot;</span> <span class="op">=&gt;</span> <span class="ident">image</span>.<span class="ident">link</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
+                    <span class="string">b&quot;width&quot;</span> <span class="op">=&gt;</span> <span class="ident">image</span>.<span class="ident">width</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;height&quot;</span> <span class="op">=&gt;</span> <span class="ident">image</span>.<span class="ident">height</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;description&quot;</span> <span class="op">=&gt;</span> <span class="ident">image</span>.<span class="ident">description</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="ident">n</span> <span class="op">=&gt;</span> <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span>::<span class="ident">new</span>())<span class="question-mark">?</span>,
                 },
-                <span class="ident">Event</span>::<span class="ident">End</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                <span class="ident">Event</span>::<span class="ident">Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Eof</span>),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="ident">Event</span>::<span class="ident">End</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="kw">break</span>,
+                <span class="ident">Event</span>::<span class="ident">Eof</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Eof</span>),
+                <span class="kw">_</span> <span class="op">=&gt;</span> {}
             }
 
             <span class="ident">buf</span>.<span class="ident">clear</span>();
@@ -562,7 +563,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="ident">Image</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="string">b&quot;image&quot;</span>;
 
         <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">BytesStart</span>::<span class="ident">borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>())))<span class="question-mark">?</span>;

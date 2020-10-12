@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/big5.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>big5.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/big5.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>big5.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -441,22 +442,22 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Big5Decoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VariantDecoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">VariantDecoder</span> {
         <span class="ident">VariantDecoder</span>::<span class="ident">Big5</span>(<span class="ident">Big5Decoder</span> { <span class="ident">lead</span>: <span class="prelude-val">None</span> })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">lead</span>.<span class="ident">is_none</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">plus_one_if_lead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">plus_one_if_lead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">byte_length</span>.<span class="ident">checked_add</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">lead</span> {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-            <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+            <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">1</span>,
         })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// If there is a lead but the next byte isn&#39;t a valid trail, an</span>
         <span class="comment">// error is generated for the lead (+1). Then another iteration checks</span>
         <span class="comment">// space, which needs +1 to account for the possibility of astral</span>
@@ -464,7 +465,7 @@
         <span class="ident">checked_add</span>(<span class="number">1</span>, <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// No need to account for REPLACEMENT CHARACTERS.</span>
         <span class="comment">// Cases:</span>
         <span class="comment">// ASCII: 1 to 1</span>
@@ -486,7 +487,7 @@
         <span class="ident">checked_add</span>(<span class="number">2</span>, <span class="ident">checked_mul</span>(<span class="number">2</span>, <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>)))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// If there is a lead but the next byte isn&#39;t a valid trail, an</span>
         <span class="comment">// error is generated for the lead (+(1*3)). Then another iteration</span>
         <span class="comment">// checks space, which needs +3 to account for the possibility of astral</span>
@@ -537,25 +538,25 @@
                           <span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>;
             <span class="kw">let</span> <span class="ident">rebased_pointer</span> <span class="op">=</span> <span class="ident">pointer</span>.<span class="ident">wrapping_sub</span>(<span class="number">942</span>);
             <span class="kw">let</span> <span class="ident">low_bits</span> <span class="op">=</span> <span class="ident">big5_low_bits</span>(<span class="ident">rebased_pointer</span>);
-            <span class="kw">if</span> <span class="ident">low_bits</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">low_bits</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="kw">match</span> <span class="ident">pointer</span> {
-                    <span class="number">1133</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="number">1133</span> <span class="op">=&gt;</span> {
                         <span class="ident">handle</span>.<span class="ident">write_big5_combination</span>(<span class="number">0x00CAu16</span>,
                                                       <span class="number">0x0304u16</span>)
                     }
-                    <span class="number">1135</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="number">1135</span> <span class="op">=&gt;</span> {
                         <span class="ident">handle</span>.<span class="ident">write_big5_combination</span>(<span class="number">0x00CAu16</span>,
                                                       <span class="number">0x030Cu16</span>)
                     }
-                    <span class="number">1164</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="number">1164</span> <span class="op">=&gt;</span> {
                         <span class="ident">handle</span>.<span class="ident">write_big5_combination</span>(<span class="number">0x00EAu16</span>,
                                                       <span class="number">0x0304u16</span>)
                     }
-                    <span class="number">1166</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="number">1166</span> <span class="op">=&gt;</span> {
                         <span class="ident">handle</span>.<span class="ident">write_big5_combination</span>(<span class="number">0x00EAu16</span>,
                                                       <span class="number">0x030Cu16</span>)
                     }
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="kw">_</span> <span class="op">=&gt;</span> {
                         <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&lt;</span> <span class="number">0x80</span> {
                             <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                     <span class="ident">unread_handle_trail</span>.<span class="ident">unread</span>(),
@@ -589,14 +590,14 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Big5Encoder</span>;
 
 <span class="kw">impl</span> <span class="ident">Big5Encoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Encoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>) <span class="op">-&gt;</span> <span class="ident">Encoder</span> {
         <span class="ident">Encoder</span>::<span class="ident">new</span>(<span class="ident">encoding</span>, <span class="ident">VariantEncoder</span>::<span class="ident">Big5</span>(<span class="ident">Big5Encoder</span>))
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf16_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">u16_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// Astral: 2 to 2</span>
         <span class="comment">// ASCII: 1 to 1</span>
         <span class="comment">// Other: 1 to 2</span>
@@ -606,7 +607,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf8_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">byte_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// Astral: 4 to 2</span>
         <span class="comment">// Upper BMP: 3 to 2</span>
         <span class="comment">// Lower BMP: 2 to 2</span>

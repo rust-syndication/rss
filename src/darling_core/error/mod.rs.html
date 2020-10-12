@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.10.2/src/error/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../darling_core/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.10.2/src/error/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../darling_core/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -557,13 +558,13 @@
 }
 
 <span class="doccomment">/// Transform a syn::Path to a readable String</span>
-<span class="kw">fn</span> <span class="ident">path_to_string</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-    <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">join</span>(<span class="string">&quot;::&quot;</span>)
+<span class="kw">fn</span> <span class="ident">path_to_string</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>().<span class="ident">join</span>(<span class="string">&quot;::&quot;</span>)
 }
 
 <span class="doccomment">/// Error creation functions</span>
 <span class="kw">impl</span> <span class="ident">Error</span> {
-    <span class="kw">pub</span>(<span class="kw">in</span> <span class="ident">error</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">kind</span>: <span class="ident">ErrorKind</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">in</span> <span class="ident">error</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">kind</span>: <span class="ident">ErrorKind</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span> {
             <span class="ident">kind</span>,
             <span class="ident">locations</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
@@ -572,42 +573,42 @@
     }
 
     <span class="doccomment">/// Creates a new error with a custom message.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">custom</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span>(<span class="ident">msg</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">custom</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span>(<span class="ident">msg</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Custom</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>()))
     }
 
     <span class="doccomment">/// Creates a new error for a field that appears twice in the input.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duplicate_field</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duplicate_field</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">DuplicateField</span>(<span class="ident">name</span>.<span class="ident">into</span>()))
     }
 
     <span class="doccomment">/// Creates a new error for a field that appears twice in the input. Helper to avoid repeating</span>
     <span class="doccomment">/// the syn::Path to String conversion.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duplicate_field_path</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duplicate_field_path</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">duplicate_field</span>(<span class="kw-2">&amp;</span><span class="ident">path_to_string</span>(<span class="ident">path</span>))
     }
 
     <span class="doccomment">/// Creates a new error for a non-optional field that does not appear in the input.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">missing_field</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">missing_field</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">MissingField</span>(<span class="ident">name</span>.<span class="ident">into</span>()))
     }
 
     <span class="doccomment">/// Creates a new error for a field name that appears in the input but does not correspond</span>
     <span class="doccomment">/// to a known field.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_field</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_field</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnknownField</span>(<span class="ident">name</span>.<span class="ident">into</span>()))
     }
 
     <span class="doccomment">/// Creates a new error for a field name that appears in the input but does not correspond</span>
     <span class="doccomment">/// to a known field. Helper to avoid repeating the syn::Path to String conversion.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_field_path</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_field_path</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">unknown_field</span>(<span class="kw-2">&amp;</span><span class="ident">path_to_string</span>(<span class="ident">path</span>))
     }
 
     <span class="doccomment">/// Creates a new error for a field name that appears in the input but does not correspond to</span>
     <span class="doccomment">/// a known attribute. The second argument is the list of known attributes; if a similar name</span>
     <span class="doccomment">/// is found that will be shown in the emitted error message.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_field_with_alts</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">alternates</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_field_with_alts</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">alternates</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
         <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span><span class="op">&gt;</span>,
@@ -616,16 +617,16 @@
     }
 
     <span class="doccomment">/// Creates a new error for a struct or variant that does not adhere to the supported shape.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unsupported_shape</span>(<span class="ident">shape</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unsupported_shape</span>(<span class="ident">shape</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnsupportedShape</span>(<span class="ident">shape</span>.<span class="ident">into</span>()))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unsupported_format</span>(<span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unsupported_format</span>(<span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnexpectedFormat</span>(<span class="ident">format</span>.<span class="ident">into</span>()))
     }
 
     <span class="doccomment">/// Creates a new error for a field which has an unexpected literal type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unexpected_type</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unexpected_type</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnexpectedType</span>(<span class="ident">ty</span>.<span class="ident">into</span>()))
     }
 
@@ -658,33 +659,33 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn main() {}</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unexpected_lit_type</span>(<span class="ident">lit</span>: <span class="kw-2">&amp;</span><span class="ident">Lit</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unexpected_lit_type</span>(<span class="ident">lit</span>: <span class="kw-2">&amp;</span><span class="ident">Lit</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">unexpected_type</span>(<span class="kw">match</span> <span class="kw-2">*</span><span class="ident">lit</span> {
-            <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;string&quot;</span>,
-            <span class="ident">Lit</span>::<span class="ident">ByteStr</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;byte string&quot;</span>,
-            <span class="ident">Lit</span>::<span class="ident">Byte</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;byte&quot;</span>,
-            <span class="ident">Lit</span>::<span class="ident">Char</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;char&quot;</span>,
-            <span class="ident">Lit</span>::<span class="ident">Int</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;int&quot;</span>,
-            <span class="ident">Lit</span>::<span class="ident">Float</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;float&quot;</span>,
-            <span class="ident">Lit</span>::<span class="ident">Bool</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bool&quot;</span>,
-            <span class="ident">Lit</span>::<span class="ident">Verbatim</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;verbatim&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;string&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">ByteStr</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;byte string&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">Byte</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;byte&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">Char</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;char&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">Int</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;int&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">Float</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;float&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">Bool</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;bool&quot;</span>,
+            <span class="ident">Lit</span>::<span class="ident">Verbatim</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="string">&quot;verbatim&quot;</span>,
         })
         .<span class="ident">with_span</span>(<span class="ident">lit</span>)
     }
 
     <span class="doccomment">/// Creates a new error for a value which doesn&#39;t match a set of expected literals.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unknown_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">UnknownValue</span>(<span class="ident">value</span>.<span class="ident">into</span>()))
     }
 
     <span class="doccomment">/// Creates a new error for a list which did not get enough items to proceed.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">too_few_items</span>(<span class="ident">min</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">too_few_items</span>(<span class="ident">min</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">TooFewItems</span>(<span class="ident">min</span>))
     }
 
     <span class="doccomment">/// Creates a new error when a list got more items than it supports. The `max` argument</span>
     <span class="doccomment">/// is the largest number of items the receiver could accept.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">too_many_items</span>(<span class="ident">max</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">too_many_items</span>(<span class="ident">max</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">TooManyItems</span>(<span class="ident">max</span>))
     }
 
@@ -692,10 +693,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">/// This function will panic if `errors.is_empty() == true`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple</span>(<span class="kw-2">mut</span> <span class="ident">errors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multiple</span>(<span class="kw-2">mut</span> <span class="ident">errors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">if</span> <span class="ident">errors</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">1</span> {
             <span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ErrorKind</span>::<span class="ident">Multiple</span>(<span class="ident">errors</span>))
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">errors</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">errors</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
             <span class="ident">errors</span>
                 .<span class="ident">pop</span>()
                 .<span class="ident">expect</span>(<span class="string">&quot;Error array of length 1 has a first item&quot;</span>)
@@ -709,7 +710,7 @@
     <span class="doccomment">/// Create a new error about a literal string that doesn&#39;t match a set of known</span>
     <span class="doccomment">/// or permissible values. This function can be made public if the API proves useful</span>
     <span class="doccomment">/// beyond impls for `syn` types.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unknown_lit_str_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">LitStr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unknown_lit_str_value</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">LitStr</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">unknown_value</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>.<span class="ident">value</span>()).<span class="ident">with_span</span>(<span class="ident">value</span>)
     }
 }
@@ -717,7 +718,7 @@
 <span class="doccomment">/// Error instance methods</span>
 <span class="kw">impl</span> <span class="ident">Error</span> {
     <span class="doccomment">/// Check if this error is associated with a span in the token stream.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">span</span>.<span class="ident">is_some</span>()
     }
 
@@ -732,7 +733,7 @@
     <span class="doccomment">/// * `FromMeta::from_meta`</span>
     <span class="doccomment">/// * `FromMeta::from_nested_meta`</span>
     <span class="doccomment">/// * `FromMeta::from_value`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_span</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Spanned</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">node</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_span</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Spanned</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">node</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">has_span</span>() {
             <span class="self">self</span>.<span class="ident">span</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">node</span>.<span class="ident">span</span>());
         }
@@ -741,11 +742,11 @@
     }
 
     <span class="doccomment">/// Recursively converts a tree of errors to a flattened list.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flatten</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flatten</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span>::<span class="ident">multiple</span>(<span class="self">self</span>.<span class="ident">into_vec</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">into_vec</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_vec</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ErrorKind</span>::<span class="ident">Multiple</span>(<span class="ident">errors</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">kind</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flat</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
             <span class="kw">for</span> <span class="ident">error</span> <span class="kw">in</span> <span class="ident">errors</span> {
@@ -760,7 +761,7 @@
 
     <span class="doccomment">/// Adds a location to the error, such as a field or variant.</span>
     <span class="doccomment">/// Locations must be added in reverse order of specificity.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">location</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">location</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">locations</span>.<span class="ident">insert</span>(<span class="number">0</span>, <span class="ident">location</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
@@ -768,7 +769,7 @@
     <span class="doccomment">/// Adds a location to the error, such as a field or variant.</span>
     <span class="doccomment">/// Locations must be added in reverse order of specificity. This is a helper function to avoid</span>
     <span class="doccomment">/// repeating path to string logic.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at_path</span>(<span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at_path</span>(<span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">at</span>(<span class="ident">path_to_string</span>(<span class="ident">path</span>))
     }
 
@@ -776,12 +777,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function never returns `0`, as it&#39;s impossible to construct</span>
     <span class="doccomment">/// a multi-error from an empty `Vec`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">kind</span>.<span class="ident">len</span>()
     }
 
     <span class="doccomment">/// Adds a location chain to the head of the error&#39;s existing locations.</span>
-    <span class="kw">fn</span> <span class="ident">prepend_at</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">locations</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">prepend_at</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">locations</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="ident">locations</span>.<span class="ident">is_empty</span>() {
             <span class="ident">locations</span>.<span class="ident">extend</span>(<span class="self">self</span>.<span class="ident">locations</span>);
             <span class="self">self</span>.<span class="ident">locations</span> <span class="op">=</span> <span class="ident">locations</span>;
@@ -792,7 +793,7 @@
 
     <span class="doccomment">/// Gets the location slice.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">location</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">location</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">locations</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span>.<span class="ident">as_str</span>()).<span class="ident">collect</span>()
     }
 
@@ -815,7 +816,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_errors</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_errors</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diagnostics&quot;</span>)]</span>
         {
             <span class="self">self</span>.<span class="ident">emit</span>();
@@ -832,15 +833,15 @@
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diagnostics&quot;</span>))]</span>
-    <span class="kw">fn</span> <span class="ident">single_to_syn_error</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">syn</span>::<span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">single_to_syn_error</span>(<span class="self">self</span>) <span class="op">-&gt;</span> ::<span class="ident">syn</span>::<span class="ident">Error</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">span</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">span</span>) <span class="op">=</span><span class="op">&gt;</span> ::<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">span</span>, <span class="self">self</span>.<span class="ident">kind</span>),
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> ::<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">Span</span>::<span class="ident">call_site</span>(), <span class="self">self</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">span</span>) <span class="op">=&gt;</span> ::<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">span</span>, <span class="self">self</span>.<span class="ident">kind</span>),
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> ::<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">Span</span>::<span class="ident">call_site</span>(), <span class="self">self</span>),
         }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diagnostics&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">single_to_diagnostic</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">proc_macro</span>::<span class="ident">Diagnostic</span> {
+    <span class="kw">fn</span> <span class="ident">single_to_diagnostic</span>(<span class="self">self</span>) <span class="op">-&gt;</span> ::<span class="ident">proc_macro</span>::<span class="ident">Diagnostic</span> {
         <span class="kw">use</span> <span class="ident">proc_macro</span>::{<span class="ident">Diagnostic</span>, <span class="ident">Level</span>};
 
         <span class="comment">// Delegate to dedicated error formatters when applicable.</span>
@@ -848,10 +849,10 @@
         <span class="comment">// If span information is available, don&#39;t include the error property path</span>
         <span class="comment">// since it&#39;s redundant and not consistent with native compiler diagnostics.</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">kind</span> {
-            <span class="ident">ErrorKind</span>::<span class="ident">UnknownField</span>(<span class="ident">euf</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">euf</span>.<span class="ident">to_diagnostic</span>(<span class="self">self</span>.<span class="ident">span</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">span</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">span</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">span</span>.<span class="ident">unwrap</span>().<span class="ident">error</span>(<span class="self">self</span>.<span class="ident">kind</span>.<span class="ident">to_string</span>()),
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Diagnostic</span>::<span class="ident">new</span>(<span class="ident">Level</span>::<span class="ident">Error</span>, <span class="self">self</span>.<span class="ident">to_string</span>()),
+            <span class="ident">ErrorKind</span>::<span class="ident">UnknownField</span>(<span class="ident">euf</span>) <span class="op">=&gt;</span> <span class="ident">euf</span>.<span class="ident">to_diagnostic</span>(<span class="self">self</span>.<span class="ident">span</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">span</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">span</span>) <span class="op">=&gt;</span> <span class="ident">span</span>.<span class="ident">unwrap</span>().<span class="ident">error</span>(<span class="self">self</span>.<span class="ident">kind</span>.<span class="ident">to_string</span>()),
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">Diagnostic</span>::<span class="ident">new</span>(<span class="ident">Level</span>::<span class="ident">Error</span>, <span class="self">self</span>.<span class="ident">to_string</span>()),
             },
         }
     }
@@ -896,17 +897,17 @@
 }
 
 <span class="kw">impl</span> <span class="ident">StdError</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">kind</span>.<span class="ident">description</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">StdError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">StdError</span><span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">kind</span>)<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">locations</span>.<span class="ident">is_empty</span>() {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot; at {}&quot;</span>, <span class="self">self</span>.<span class="ident">locations</span>.<span class="ident">join</span>(<span class="string">&quot;/&quot;</span>))<span class="question-mark">?</span>;
@@ -921,8 +922,8 @@
 <span class="comment">// considered for equality since that would break testing in most cases.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">kind</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">kind</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">locations</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">locations</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">kind</span> <span class="op">==</span> <span class="ident">other</span>.<span class="ident">kind</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">locations</span> <span class="op">==</span> <span class="ident">other</span>.<span class="ident">locations</span>
     }
 }
 
@@ -933,7 +934,7 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Error</span>;
     <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">IntoIter</span>;
 
-    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IntoIter</span> {
+    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">IntoIter</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ErrorKind</span>::<span class="ident">Multiple</span>(<span class="ident">errors</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">kind</span> {
             <span class="ident">IntoIter</span> {
                 <span class="ident">inner</span>: <span class="ident">IntoIterEnum</span>::<span class="ident">Multiple</span>(<span class="ident">errors</span>.<span class="ident">into_iter</span>()),
@@ -954,10 +955,10 @@
 <span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">IntoIterEnum</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">IntoIterEnum</span>::<span class="ident">Single</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">content</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">content</span>.<span class="ident">next</span>(),
-            <span class="ident">IntoIterEnum</span>::<span class="ident">Multiple</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">content</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">content</span>.<span class="ident">next</span>(),
+            <span class="ident">IntoIterEnum</span>::<span class="ident">Single</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">content</span>) <span class="op">=&gt;</span> <span class="ident">content</span>.<span class="ident">next</span>(),
+            <span class="ident">IntoIterEnum</span>::<span class="ident">Multiple</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">content</span>) <span class="op">=&gt;</span> <span class="ident">content</span>.<span class="ident">next</span>(),
         }
     }
 }
@@ -970,7 +971,7 @@
 <span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">IntoIter</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">next</span>()
     }
 }

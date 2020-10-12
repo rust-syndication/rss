@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/gb18030.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gb18030.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/gb18030.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gb18030.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -777,19 +778,19 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Gb18030Pending</span> {
-    <span class="kw">fn</span> <span class="ident">is_none</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_none</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-            <span class="ident">Gb18030Pending</span>::<span class="ident">One</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
-            <span class="ident">Gb18030Pending</span>::<span class="ident">Two</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">2</span>,
-            <span class="ident">Gb18030Pending</span>::<span class="ident">Three</span>(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">3</span>,
+            <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+            <span class="ident">Gb18030Pending</span>::<span class="ident">One</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">Gb18030Pending</span>::<span class="ident">Two</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">2</span>,
+            <span class="ident">Gb18030Pending</span>::<span class="ident">Three</span>(<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">3</span>,
         }
     }
 }
@@ -803,7 +804,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Gb18030Decoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VariantDecoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">VariantDecoder</span> {
         <span class="ident">VariantDecoder</span>::<span class="ident">Gb18030</span>(<span class="ident">Gb18030Decoder</span> {
             <span class="ident">first</span>: <span class="prelude-val">None</span>,
             <span class="ident">second</span>: <span class="prelude-val">None</span>,
@@ -813,44 +814,44 @@
         })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">first</span>.<span class="ident">is_none</span>()
-            <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">second</span>.<span class="ident">is_none</span>()
-            <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">third</span>.<span class="ident">is_none</span>()
-            <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>()
-            <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">pending_ascii</span>.<span class="ident">is_none</span>()
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">second</span>.<span class="ident">is_none</span>()
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">third</span>.<span class="ident">is_none</span>()
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>()
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">pending_ascii</span>.<span class="ident">is_none</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">extra_from_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">extra_from_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">byte_length</span>.<span class="ident">checked_add</span>(
             <span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">count</span>()
                 <span class="op">+</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">first</span> {
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">1</span>,
                 }
                 <span class="op">+</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">second</span> {
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">1</span>,
                 }
                 <span class="op">+</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">third</span> {
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">1</span>,
                 }
                 <span class="op">+</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">pending_ascii</span> {
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">1</span>,
                 },
         )
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// ASCII: 1 to 1 (worst case)</span>
         <span class="comment">// gbk: 2 to 1</span>
         <span class="comment">// ranges: 4 to 1 or 4 to 2</span>
         <span class="ident">checked_add</span>(<span class="number">1</span>, <span class="self">self</span>.<span class="ident">extra_from_state</span>(<span class="ident">byte_length</span>))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// ASCII: 1 to 1</span>
         <span class="comment">// gbk: 2 to 2 or 2 to 3</span>
         <span class="comment">// ranges: 4 to 2, 4 to 3 or 4 to 4</span>
@@ -858,7 +859,7 @@
         <span class="self">self</span>.<span class="ident">max_utf8_buffer_length</span>(<span class="ident">byte_length</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">checked_add</span>(<span class="number">1</span>, <span class="ident">checked_mul</span>(<span class="number">3</span>, <span class="self">self</span>.<span class="ident">extra_from_state</span>(<span class="ident">byte_length</span>)))
     }
 
@@ -868,7 +869,7 @@
             <span class="comment">// subtract offset 0x81.</span>
             <span class="kw">let</span> <span class="ident">non_ascii_minus_offset</span> <span class="op">=</span> <span class="ident">non_ascii</span>.<span class="ident">wrapping_sub</span>(<span class="number">0x81</span>);
             <span class="kw">if</span> <span class="ident">non_ascii_minus_offset</span> <span class="op">&gt;</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0x81</span>) {
-                <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x80</span> {
+                <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">==</span> <span class="number">0x80</span> {
                     <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0x20ACu16</span>);
                     <span class="kw">continue</span> <span class="lifetime">&#39;outermost</span>;
                 }
@@ -880,10 +881,10 @@
         },
         {
             <span class="comment">// Two-byte (or error)</span>
-            <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x20</span> {
+            <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">&gt;=</span> <span class="number">0x20</span> {
                 <span class="comment">// Not the gbk ideograph range above GB2312</span>
                 <span class="kw">let</span> <span class="ident">trail_minus_offset</span> <span class="op">=</span> <span class="ident">second</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xA1</span>);
-                <span class="kw">if</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0xA1</span>) {
+                <span class="kw">if</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;=</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0xA1</span>) {
                     <span class="comment">// GB2312</span>
                     <span class="kw">let</span> <span class="ident">hanzi_lead</span> <span class="op">=</span> <span class="ident">first_minus_offset</span>.<span class="ident">wrapping_sub</span>(<span class="number">0x2F</span>);
                     <span class="kw">if</span> <span class="ident">hanzi_lead</span> <span class="op">&lt;</span> (<span class="number">0x77</span> <span class="op">-</span> <span class="number">0x2F</span>) {
@@ -893,13 +894,13 @@
                         <span class="kw">let</span> <span class="ident">hanzi_pointer</span> <span class="op">=</span> <span class="ident">mul_94</span>(<span class="ident">hanzi_lead</span>) <span class="op">+</span> <span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>;
                         <span class="kw">let</span> <span class="ident">upper_bmp</span> <span class="op">=</span> <span class="ident">GB2312_HANZI</span>[<span class="ident">hanzi_pointer</span>];
                         <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="ident">upper_bmp</span>)
-                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x20</span> {
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">==</span> <span class="number">0x20</span> {
                         <span class="comment">// Symbols (starting with ideographic space)</span>
                         <span class="kw">let</span> <span class="ident">bmp</span> <span class="op">=</span> <span class="ident">GB2312_SYMBOLS</span>[<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>];
                         <span class="ident">handle</span>.<span class="ident">write_bmp_excl_ascii</span>(<span class="ident">bmp</span>)
-                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x25</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> ((<span class="ident">trail_minus_offset</span>.<span class="ident">wrapping_sub</span>(<span class="number">63</span>) <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">GB2312_SYMBOLS_AFTER_GREEK</span>.<span class="ident">len</span>()) {
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">==</span> <span class="number">0x25</span> <span class="op">&amp;&amp;</span> ((<span class="ident">trail_minus_offset</span>.<span class="ident">wrapping_sub</span>(<span class="number">63</span>) <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">GB2312_SYMBOLS_AFTER_GREEK</span>.<span class="ident">len</span>()) {
                         <span class="ident">handle</span>.<span class="ident">write_bmp_excl_ascii</span>(<span class="ident">GB2312_SYMBOLS_AFTER_GREEK</span>[<span class="ident">trail_minus_offset</span>.<span class="ident">wrapping_sub</span>(<span class="number">63</span>) <span class="kw">as</span> <span class="ident">usize</span>])
-                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x27</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> (<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">GB2312_PINYIN</span>.<span class="ident">len</span>() {
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">==</span> <span class="number">0x27</span> <span class="op">&amp;&amp;</span> (<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">GB2312_PINYIN</span>.<span class="ident">len</span>() {
                         <span class="ident">handle</span>.<span class="ident">write_bmp_excl_ascii</span>(<span class="ident">GB2312_PINYIN</span>[<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>])
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">first_minus_offset</span> <span class="op">&gt;</span> <span class="number">0x76</span> {
                         <span class="comment">// Bottom PUA</span>
@@ -1016,14 +1017,14 @@
                           (<span class="ident">second_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">*</span> (<span class="number">10</span> <span class="op">*</span> <span class="number">126</span>)) <span class="op">+</span>
                           (<span class="ident">third_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">*</span> <span class="number">10</span>) <span class="op">+</span>
                           <span class="ident">fourth_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="kw">if</span> <span class="ident">pointer</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">39419</span> {
+            <span class="kw">if</span> <span class="ident">pointer</span> <span class="op">&lt;=</span> <span class="number">39419</span> {
                 <span class="comment">// BMP</span>
-                <span class="kw">if</span> <span class="ident">pointer</span> <span class="op">=</span><span class="op">=</span> <span class="number">7457</span> {
+                <span class="kw">if</span> <span class="ident">pointer</span> <span class="op">==</span> <span class="number">7457</span> {
                     <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0xE7C7</span>)
                 } <span class="kw">else</span> {
                     <span class="ident">handle</span>.<span class="ident">write_bmp_excl_ascii</span>(<span class="ident">gb18030_range_decode</span>(<span class="ident">pointer</span> <span class="kw">as</span> <span class="ident">u16</span>))
                 }
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">pointer</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">189_000</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">pointer</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1_237_575</span> {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">pointer</span> <span class="op">&gt;=</span> <span class="number">189_000</span> <span class="op">&amp;&amp;</span> <span class="ident">pointer</span> <span class="op">&lt;=</span> <span class="number">1_237_575</span> {
                 <span class="comment">// Astral</span>
                 <span class="ident">handle</span>.<span class="ident">write_astral</span>((<span class="ident">pointer</span> <span class="op">-</span> (<span class="number">189_000usize</span> <span class="op">-</span> <span class="number">0x1_0000usize</span>)) <span class="kw">as</span> <span class="ident">u32</span>)
             } <span class="kw">else</span> {
@@ -1050,11 +1051,11 @@
 }
 
 <span class="comment">// XXX Experiment with inline directives</span>
-<span class="kw">fn</span> <span class="ident">gbk_encode_non_unified</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">gbk_encode_non_unified</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
     <span class="comment">// Try ideographic punctuation first as it&#39;s the most likely case.</span>
     <span class="comment">// Throwing in the check for full-width currencies and tilde is probably</span>
     <span class="comment">// more size-efficient here than elsewhere.</span>
-    <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x2014</span>, <span class="number">0x3017</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xFF04</span>, <span class="number">0xFFE1</span>) {
+    <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x2014</span>, <span class="number">0x3017</span>) <span class="op">||</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xFF04</span>, <span class="number">0xFFE1</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">GB2312_SYMBOLS</span>[..], <span class="ident">bmp</span>) {
             <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="number">0xA1</span>, <span class="ident">pos</span> <span class="op">+</span> <span class="number">0xA1</span>));
         }
@@ -1086,13 +1087,13 @@
     }
     <span class="comment">// Handle everything below U+02CA, which is in GBK_OTHER.</span>
     <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">&lt;</span> <span class="number">0x02CA</span> {
-        <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">bmp</span>, <span class="number">0x00E0</span>, <span class="number">0x0262</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">bmp</span> <span class="op">!</span><span class="op">=</span> <span class="number">0x00F7</span> {
+        <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">bmp</span>, <span class="number">0x00E0</span>, <span class="number">0x0262</span>) <span class="op">&amp;&amp;</span> <span class="ident">bmp</span> <span class="op">!=</span> <span class="number">0x00F7</span> {
             <span class="comment">// Pinyin except U+1E3F</span>
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">GB2312_PINYIN</span>[..], <span class="ident">bmp</span>) {
                 <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="number">0xA8</span>, <span class="ident">pos</span> <span class="op">+</span> <span class="number">0xA1</span>));
             }
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x00A4</span>, <span class="number">0x00F7</span>)
-            <span class="op">|</span><span class="op">|</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x02C7</span>, <span class="number">0x02C9</span>)
+            <span class="op">||</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x02C7</span>, <span class="number">0x02C9</span>)
         {
             <span class="comment">// Diacritics and Latin 1 symbols</span>
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">GB2312_SYMBOLS</span>[<span class="number">3</span>..(<span class="number">0xAC</span> <span class="op">-</span> <span class="number">0x60</span>)], <span class="ident">bmp</span>) {
@@ -1101,12 +1102,12 @@
         }
         <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
-    <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0xE794</span> {
+    <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">&gt;=</span> <span class="number">0xE794</span> {
         <span class="comment">// Various brackets, all in PUA or full-width regions</span>
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">GB2312_SYMBOLS_AFTER_GREEK</span>[..], <span class="ident">bmp</span>) {
             <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="number">0xA6</span>, <span class="ident">pos</span> <span class="op">+</span> (<span class="number">0x9F</span> <span class="op">-</span> <span class="number">0x60</span> <span class="op">+</span> <span class="number">0xA1</span>)));
         }
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x1E3F</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0x1E3F</span> {
         <span class="comment">// The one Pinyin placed elsewhere on the BMP</span>
         <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="number">0xA8</span>, <span class="number">0x7B</span> <span class="op">-</span> <span class="number">0x60</span> <span class="op">+</span> <span class="number">0xA1</span>));
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">bmp</span>, <span class="number">0xA000</span>, <span class="number">0xD800</span>) {
@@ -1135,7 +1136,7 @@
         <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">other_lead</span> <span class="op">+</span> (<span class="number">0x81</span> <span class="op">+</span> <span class="number">0x20</span>), <span class="ident">other_trail</span> <span class="op">+</span> <span class="ident">offset</span>));
     }
     <span class="comment">// CJK Radicals Supplement or PUA in GBK_BOTTOM</span>
-    <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x2E81</span>, <span class="number">0x2ECA</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xE816</span>, <span class="number">0xE864</span>) {
+    <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x2E81</span>, <span class="number">0x2ECA</span>) <span class="op">||</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xE816</span>, <span class="number">0xE864</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">GBK_BOTTOM</span>[<span class="number">21</span>..], <span class="ident">bmp</span>) {
             <span class="kw">let</span> <span class="ident">trail</span> <span class="op">=</span> <span class="ident">pos</span> <span class="op">+</span> <span class="number">16</span>;
             <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">trail</span> <span class="op">&lt;</span> <span class="number">0x3F</span> { <span class="number">0x40</span> } <span class="kw">else</span> { <span class="number">0x41</span> };
@@ -1144,7 +1145,7 @@
     }
     <span class="comment">// GB2312 bottom PUA</span>
     <span class="kw">let</span> <span class="ident">bmp_minus_gb2312_bottom_pua</span> <span class="op">=</span> <span class="ident">bmp</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xE234</span>);
-    <span class="kw">if</span> <span class="ident">bmp_minus_gb2312_bottom_pua</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xE4C5</span> <span class="op">-</span> <span class="number">0xE234</span>) {
+    <span class="kw">if</span> <span class="ident">bmp_minus_gb2312_bottom_pua</span> <span class="op">&lt;=</span> (<span class="number">0xE4C5</span> <span class="op">-</span> <span class="number">0xE234</span>) {
         <span class="kw">let</span> <span class="ident">pua_lead</span> <span class="op">=</span> <span class="ident">bmp_minus_gb2312_bottom_pua</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">/</span> <span class="number">94</span>;
         <span class="kw">let</span> <span class="ident">pua_trail</span> <span class="op">=</span> <span class="ident">bmp_minus_gb2312_bottom_pua</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">%</span> <span class="number">94</span>;
         <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="number">0x81</span> <span class="op">+</span> <span class="number">0x77</span> <span class="op">+</span> <span class="ident">pua_lead</span>, <span class="number">0xA1</span> <span class="op">+</span> <span class="ident">pua_trail</span>));
@@ -1159,7 +1160,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-gb-hanzi-encode&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">encode_hanzi</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>, <span class="kw">_</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
+<span class="kw">fn</span> <span class="ident">encode_hanzi</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>, <span class="kw">_</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">lead</span>, <span class="ident">trail</span>)) <span class="op">=</span> <span class="ident">gb2312_level1_hanzi_encode</span>(<span class="ident">bmp</span>) {
         (<span class="ident">lead</span>, <span class="ident">trail</span>)
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">hanzi_pointer</span>) <span class="op">=</span> <span class="ident">gb2312_level2_hanzi_encode</span>(<span class="ident">bmp</span>) {
@@ -1187,7 +1188,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-gb-hanzi-encode&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">encode_hanzi</span>(<span class="kw">_</span>: <span class="ident">u16</span>, <span class="ident">bmp_minus_unified_start</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
+<span class="kw">fn</span> <span class="ident">encode_hanzi</span>(<span class="kw">_</span>: <span class="ident">u16</span>, <span class="ident">bmp_minus_unified_start</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
     <span class="ident">gbk_hanzi_encode</span>(<span class="ident">bmp_minus_unified_start</span>)
 }
 
@@ -1196,7 +1197,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Gb18030Encoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>, <span class="ident">extended_range</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Encoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>, <span class="ident">extended_range</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Encoder</span> {
         <span class="ident">Encoder</span>::<span class="ident">new</span>(
             <span class="ident">encoding</span>,
             <span class="ident">VariantEncoder</span>::<span class="ident">Gb18030</span>(<span class="ident">Gb18030Encoder</span> {
@@ -1208,7 +1209,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf16_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">u16_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">extended</span> {
             <span class="ident">u16_length</span>.<span class="ident">checked_mul</span>(<span class="number">4</span>)
         } <span class="kw">else</span> {
@@ -1221,7 +1222,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf8_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">byte_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">extended</span> {
             <span class="comment">// 1 to 1</span>
             <span class="comment">// 2 to 2</span>
@@ -1249,7 +1250,7 @@
                 <span class="comment">// mapped.</span>
                 <span class="kw">let</span> (<span class="ident">lead</span>, <span class="ident">trail</span>) <span class="op">=</span> <span class="ident">encode_hanzi</span>(<span class="ident">bmp</span>, <span class="ident">bmp_minus_unified_start</span>);
                 <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="ident">lead</span>, <span class="ident">trail</span>)
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xE5E5</span> {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0xE5E5</span> {
                 <span class="comment">// It&#39;s not optimal to check for the unmappable</span>
                 <span class="comment">// and for euro at this stage, but getting</span>
                 <span class="comment">// the out of the way makes the rest of the</span>
@@ -1259,12 +1260,12 @@
                     <span class="ident">source</span>.<span class="ident">consumed</span>(),
                     <span class="ident">handle</span>.<span class="ident">written</span>(),
                 );
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x20AC</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">extended</span> {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0x20AC</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">extended</span> {
                 <span class="ident">handle</span>.<span class="ident">write_one</span>(<span class="number">0x80u8</span>)
             } <span class="kw">else</span> {
                 <span class="kw">match</span> <span class="ident">gbk_encode_non_unified</span>(<span class="ident">bmp</span>) {
-                    <span class="prelude-val">Some</span>((<span class="ident">lead</span>, <span class="ident">trail</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="ident">lead</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">trail</span> <span class="kw">as</span> <span class="ident">u8</span>),
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="prelude-val">Some</span>((<span class="ident">lead</span>, <span class="ident">trail</span>)) <span class="op">=&gt;</span> <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="ident">lead</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">trail</span> <span class="kw">as</span> <span class="ident">u8</span>),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
                         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">extended</span> {
                             <span class="kw">return</span> (
                                 <span class="ident">EncoderResult</span>::<span class="ident">unmappable_from_bmp</span>(<span class="ident">bmp</span>),

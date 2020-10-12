@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/euc_kr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>euc_kr.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/euc_kr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>euc_kr.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -461,32 +462,32 @@
 }
 
 <span class="kw">impl</span> <span class="ident">EucKrDecoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VariantDecoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">VariantDecoder</span> {
         <span class="ident">VariantDecoder</span>::<span class="ident">EucKr</span>(<span class="ident">EucKrDecoder</span> { <span class="ident">lead</span>: <span class="prelude-val">None</span> })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">lead</span>.<span class="ident">is_none</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">plus_one_if_lead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">plus_one_if_lead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">byte_length</span>.<span class="ident">checked_add</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">lead</span> {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-            <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+            <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">1</span>,
         })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// worst case: 2 to 3</span>
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>);
         <span class="ident">checked_add</span>(<span class="number">2</span>, <span class="ident">checked_add_opt</span>(<span class="ident">len</span>, <span class="ident">checked_div</span>(<span class="ident">checked_add</span>(<span class="number">1</span>, <span class="ident">len</span>), <span class="number">2</span>)))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">checked_mul</span>(<span class="number">3</span>, <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>))
     }
 
@@ -504,11 +505,11 @@
             <span class="ident">non_ascii_minus_offset</span>
         },
         {
-            <span class="kw">if</span> <span class="ident">lead_minus_offset</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x20</span> {
+            <span class="kw">if</span> <span class="ident">lead_minus_offset</span> <span class="op">&gt;=</span> <span class="number">0x20</span> {
                 <span class="comment">// Not the extension range above KS X 1001</span>
                 <span class="kw">let</span> <span class="ident">trail_minus_offset</span> <span class="op">=</span>
                     <span class="ident">byte</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xA1</span>);
-                <span class="kw">if</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0xA1</span>) {
+                <span class="kw">if</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;=</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0xA1</span>) {
                     <span class="comment">// KS X 1001</span>
                     <span class="kw">let</span> <span class="ident">ksx_pointer</span> <span class="op">=</span> <span class="ident">mul_94</span>(<span class="ident">lead_minus_offset</span> <span class="op">-</span> <span class="number">0x20</span>) <span class="op">+</span> <span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>;
                     <span class="kw">let</span> <span class="ident">hangul_pointer</span> <span class="op">=</span> <span class="ident">ksx_pointer</span>.<span class="ident">wrapping_sub</span>((<span class="number">0x2F</span> <span class="op">-</span> <span class="number">0x20</span>) <span class="op">*</span> <span class="number">94</span>);
@@ -523,18 +524,18 @@
                         <span class="kw">if</span> <span class="ident">hanja_pointer</span> <span class="op">&lt;</span> <span class="ident">KSX1001_HANJA</span>.<span class="ident">len</span>() {
                             <span class="kw">let</span> <span class="ident">upper_bmp</span> <span class="op">=</span> <span class="ident">KSX1001_HANJA</span>[<span class="ident">hanja_pointer</span>];
                             <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="ident">upper_bmp</span>)
-                        } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">lead_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x27</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> ((<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">KSX1001_UPPERCASE</span>.<span class="ident">len</span>()) {
+                        } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">lead_minus_offset</span> <span class="op">==</span> <span class="number">0x27</span>) <span class="op">&amp;&amp;</span> ((<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">KSX1001_UPPERCASE</span>.<span class="ident">len</span>()) {
                             <span class="kw">let</span> <span class="ident">mid_bmp</span> <span class="op">=</span> <span class="ident">KSX1001_UPPERCASE</span>[<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>];
-                            <span class="kw">if</span> <span class="ident">mid_bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                            <span class="kw">if</span> <span class="ident">mid_bmp</span> <span class="op">==</span> <span class="number">0</span> {
                                 <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                         <span class="ident">unread_handle_trail</span>.<span class="ident">consumed</span>(),
                                         <span class="ident">handle</span>.<span class="ident">written</span>());
                             }
                             <span class="ident">handle</span>.<span class="ident">write_mid_bmp</span>(<span class="ident">mid_bmp</span>)
-                        } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">lead_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x28</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> ((<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">KSX1001_LOWERCASE</span>.<span class="ident">len</span>()) {
+                        } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">lead_minus_offset</span> <span class="op">==</span> <span class="number">0x28</span>) <span class="op">&amp;&amp;</span> ((<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">KSX1001_LOWERCASE</span>.<span class="ident">len</span>()) {
                             <span class="kw">let</span> <span class="ident">mid_bmp</span> <span class="op">=</span> <span class="ident">KSX1001_LOWERCASE</span>[<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>];
                             <span class="ident">handle</span>.<span class="ident">write_mid_bmp</span>(<span class="ident">mid_bmp</span>)
-                        } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">lead_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x25</span>) <span class="kw-2">&amp;</span><span class="op">&amp;</span> ((<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">KSX1001_BOX</span>.<span class="ident">len</span>()) {
+                        } <span class="kw">else</span> <span class="kw">if</span> (<span class="ident">lead_minus_offset</span> <span class="op">==</span> <span class="number">0x25</span>) <span class="op">&amp;&amp;</span> ((<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;</span> <span class="ident">KSX1001_BOX</span>.<span class="ident">len</span>()) {
                             <span class="kw">let</span> <span class="ident">upper_bmp</span> <span class="op">=</span> <span class="ident">KSX1001_BOX</span>[<span class="ident">trail_minus_offset</span> <span class="kw">as</span> <span class="ident">usize</span>];
                             <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="ident">upper_bmp</span>)
                         } <span class="kw">else</span> {
@@ -626,7 +627,7 @@
         <span class="bool-val">true</span>);
 }
 
-<span class="kw">fn</span> <span class="ident">ksx1001_encode_misc</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">ksx1001_encode_misc</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x3000</span>, <span class="number">0x3015</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">KSX1001_SYMBOLS</span>[..(<span class="number">0xAB</span> <span class="op">-</span> <span class="number">0x60</span>)], <span class="ident">bmp</span>) {
             <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="number">0xA1</span>, <span class="ident">pos</span> <span class="op">+</span> <span class="number">0xA1</span>));
@@ -651,10 +652,10 @@
         }
     }
     <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x2015</span>, <span class="number">0x266D</span>)
-        <span class="op">|</span><span class="op">|</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x321C</span>, <span class="number">0x33D8</span>)
-        <span class="op">|</span><span class="op">|</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xFF3C</span>, <span class="number">0xFFE5</span>)
-        <span class="op">|</span><span class="op">|</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x00A1</span>, <span class="number">0x00F7</span>)
-        <span class="op">|</span><span class="op">|</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x02C7</span>, <span class="number">0x02DD</span>)
+        <span class="op">||</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x321C</span>, <span class="number">0x33D8</span>)
+        <span class="op">||</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xFF3C</span>, <span class="number">0xFFE5</span>)
+        <span class="op">||</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x00A1</span>, <span class="number">0x00F7</span>)
+        <span class="op">||</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0x02C7</span>, <span class="number">0x02DD</span>)
     {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">KSX1001_SYMBOLS</span>[<span class="number">3</span>..], <span class="ident">bmp</span>) {
             <span class="kw">if</span> <span class="ident">pos</span> <span class="op">&lt;</span> (<span class="number">94</span> <span class="op">-</span> <span class="number">3</span>) {
@@ -668,14 +669,14 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-hangul-encode&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">ksx1001_encode_hangul</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>, <span class="kw">_</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
+<span class="kw">fn</span> <span class="ident">ksx1001_encode_hangul</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>, <span class="kw">_</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
     <span class="kw">match</span> <span class="ident">KSX1001_HANGUL</span>.<span class="ident">binary_search</span>(<span class="kw-2">&amp;</span><span class="ident">bmp</span>) {
-        <span class="prelude-val">Ok</span>(<span class="ident">ksx_hangul_pointer</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">ksx_hangul_pointer</span>) <span class="op">=&gt;</span> {
             <span class="kw">let</span> <span class="ident">ksx_hangul_lead</span> <span class="op">=</span> (<span class="ident">ksx_hangul_pointer</span> <span class="op">/</span> <span class="number">94</span>) <span class="op">+</span> (<span class="number">0x81</span> <span class="op">+</span> <span class="number">0x2F</span>);
             <span class="kw">let</span> <span class="ident">ksx_hangul_trail</span> <span class="op">=</span> (<span class="ident">ksx_hangul_pointer</span> <span class="op">%</span> <span class="number">94</span>) <span class="op">+</span> <span class="number">0xA1</span>;
             (<span class="ident">ksx_hangul_lead</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">ksx_hangul_trail</span> <span class="kw">as</span> <span class="ident">u8</span>)
         }
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
             <span class="kw">let</span> (<span class="ident">lead</span>, <span class="ident">cp949_trail</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">&lt;</span> <span class="number">0xC8A5</span> {
                 <span class="comment">// Above KS X 1001</span>
                 <span class="kw">let</span> <span class="ident">top_pointer</span> <span class="op">=</span> <span class="ident">cp949_top_hangul_encode</span>(<span class="ident">bmp</span>) <span class="kw">as</span> <span class="ident">usize</span>;
@@ -689,9 +690,9 @@
                 <span class="kw">let</span> <span class="ident">left_trail</span> <span class="op">=</span> <span class="ident">left_pointer</span> <span class="op">%</span> (<span class="number">190</span> <span class="op">-</span> <span class="number">94</span> <span class="op">-</span> <span class="number">12</span>);
                 (<span class="ident">left_lead</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">left_trail</span> <span class="kw">as</span> <span class="ident">u8</span>)
             };
-            <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">cp949_trail</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">0x40</span> <span class="op">-</span> <span class="number">12</span>) {
+            <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">cp949_trail</span> <span class="op">&gt;=</span> (<span class="number">0x40</span> <span class="op">-</span> <span class="number">12</span>) {
                 <span class="number">0x41</span> <span class="op">+</span> <span class="number">12</span>
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">cp949_trail</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">0x20</span> <span class="op">-</span> <span class="number">6</span>) {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">cp949_trail</span> <span class="op">&gt;=</span> (<span class="number">0x20</span> <span class="op">-</span> <span class="number">6</span>) {
                 <span class="number">0x41</span> <span class="op">+</span> <span class="number">6</span>
             } <span class="kw">else</span> {
                 <span class="number">0x41</span>
@@ -703,13 +704,13 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-hangul-encode&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">ksx1001_encode_hangul</span>(<span class="kw">_</span>: <span class="ident">u16</span>, <span class="ident">bmp_minus_hangul_start</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
+<span class="kw">fn</span> <span class="ident">ksx1001_encode_hangul</span>(<span class="kw">_</span>: <span class="ident">u16</span>, <span class="ident">bmp_minus_hangul_start</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>) {
     <span class="ident">cp949_hangul_encode</span>(<span class="ident">bmp_minus_hangul_start</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-hanja-encode&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">ksx1001_encode_hanja</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">ksx1001_encode_hanja</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">hanja_pointer</span>) <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">KSX1001_HANJA</span>[..], <span class="ident">bmp</span>) {
         <span class="kw">let</span> <span class="ident">hanja_lead</span> <span class="op">=</span> (<span class="ident">hanja_pointer</span> <span class="op">/</span> <span class="number">94</span>) <span class="op">+</span> (<span class="number">0x81</span> <span class="op">+</span> <span class="number">0x49</span>);
         <span class="kw">let</span> <span class="ident">hanja_trail</span> <span class="op">=</span> (<span class="ident">hanja_pointer</span> <span class="op">%</span> <span class="number">94</span>) <span class="op">+</span> <span class="number">0xA1</span>;
@@ -721,7 +722,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-hanja-encode&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">ksx1001_encode_hanja</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">ksx1001_encode_hanja</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">&lt;</span> <span class="number">0xF900</span> {
         <span class="ident">ksx1001_unified_hangul_encode</span>(<span class="ident">bmp</span>)
     } <span class="kw">else</span> {
@@ -732,21 +733,21 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EucKrEncoder</span>;
 
 <span class="kw">impl</span> <span class="ident">EucKrEncoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Encoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>) <span class="op">-&gt;</span> <span class="ident">Encoder</span> {
         <span class="ident">Encoder</span>::<span class="ident">new</span>(<span class="ident">encoding</span>, <span class="ident">VariantEncoder</span>::<span class="ident">EucKr</span>(<span class="ident">EucKrEncoder</span>))
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf16_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">u16_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">u16_length</span>.<span class="ident">checked_mul</span>(<span class="number">2</span>)
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf8_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">byte_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">byte_length</span>.<span class="ident">checked_add</span>(<span class="number">1</span>)
     }
 
@@ -762,7 +763,7 @@
                 <span class="comment">// processed) and Hanja.</span>
                 <span class="comment">// Narrow the range further to Unified and</span>
                 <span class="comment">// Compatibility ranges of Hanja.</span>
-                <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">bmp</span>, <span class="number">0x4E00</span>, <span class="number">0x9F9D</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">in_range16</span>(<span class="ident">bmp</span>, <span class="number">0xF900</span>, <span class="number">0xFA0C</span>) {
+                <span class="kw">if</span> <span class="ident">in_range16</span>(<span class="ident">bmp</span>, <span class="number">0x4E00</span>, <span class="number">0x9F9D</span>) <span class="op">||</span> <span class="ident">in_range16</span>(<span class="ident">bmp</span>, <span class="number">0xF900</span>, <span class="number">0xFA0C</span>) {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">hanja_lead</span>, <span class="ident">hanja_trail</span>)) <span class="op">=</span> <span class="ident">ksx1001_encode_hanja</span>(<span class="ident">bmp</span>) {
                         (<span class="ident">hanja_lead</span>, <span class="ident">hanja_trail</span>)
                     } <span class="kw">else</span> {

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/euc_jp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>euc_jp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/euc_jp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>euc_jp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -490,20 +491,20 @@
 }
 
 <span class="kw">impl</span> <span class="ident">EucJpPending</span> {
-    <span class="kw">fn</span> <span class="ident">is_none</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_none</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
+            <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="number">0</span>,
             <span class="ident">EucJpPending</span>::<span class="ident">Jis0208Lead</span>(<span class="kw">_</span>)
             <span class="op">|</span> <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Shift</span>
-            <span class="op">|</span> <span class="ident">EucJpPending</span>::<span class="ident">HalfWidthKatakana</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
-            <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Lead</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="number">2</span>,
+            <span class="op">|</span> <span class="ident">EucJpPending</span>::<span class="ident">HalfWidthKatakana</span> <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Lead</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="number">2</span>,
         }
     }
 }
@@ -513,31 +514,31 @@
 }
 
 <span class="kw">impl</span> <span class="ident">EucJpDecoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VariantDecoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">VariantDecoder</span> {
         <span class="ident">VariantDecoder</span>::<span class="ident">EucJp</span>(<span class="ident">EucJpDecoder</span> {
             <span class="ident">pending</span>: <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span>,
         })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">plus_one_if_lead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">plus_one_if_lead</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">byte_length</span>.<span class="ident">checked_add</span>(<span class="kw">if</span> <span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>() { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> })
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf16_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length_without_replacement</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// worst case: 2 to 3</span>
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>);
         <span class="ident">checked_add</span>(<span class="number">2</span>, <span class="ident">checked_add_opt</span>(<span class="ident">len</span>, <span class="ident">checked_div</span>(<span class="ident">checked_add</span>(<span class="number">1</span>, <span class="ident">len</span>), <span class="number">2</span>)))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_utf8_buffer_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">byte_length</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">checked_mul</span>(<span class="number">3</span>, <span class="self">self</span>.<span class="ident">plus_one_if_lead</span>(<span class="ident">byte_length</span>))
     }
 
@@ -546,10 +547,10 @@
             <span class="kw">let</span> <span class="ident">trail_minus_offset</span> <span class="op">=</span> <span class="ident">byte</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xA1</span>);
             <span class="comment">// Fast-track Hiragana (60% according to Lunde)</span>
             <span class="comment">// and Katakana (10% acconding to Lunde).</span>
-            <span class="kw">if</span> <span class="ident">jis0208_lead_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x03</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span> <span class="number">0x53</span> {
+            <span class="kw">if</span> <span class="ident">jis0208_lead_minus_offset</span> <span class="op">==</span> <span class="number">0x03</span> <span class="op">&amp;&amp;</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span> <span class="number">0x53</span> {
                 <span class="comment">// Hiragana</span>
                 <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0x3041</span> <span class="op">+</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">trail_minus_offset</span>))
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">jis0208_lead_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x04</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span> <span class="number">0x56</span> {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">jis0208_lead_minus_offset</span> <span class="op">==</span> <span class="number">0x04</span> <span class="op">&amp;&amp;</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span> <span class="number">0x56</span> {
                 <span class="comment">// Katakana</span>
                 <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0x30A1</span> <span class="op">+</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">trail_minus_offset</span>))
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">trail_minus_offset</span> <span class="op">&gt;</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0xA1</span>) {
@@ -639,11 +640,11 @@
                 <span class="ident">handle</span>.<span class="ident">write_bmp_excl_ascii</span>(<span class="ident">bmp</span>)
             } <span class="kw">else</span> {
                 <span class="kw">let</span> <span class="ident">pointer_minus_upper_cyrillic</span> <span class="op">=</span> <span class="ident">pointer</span>.<span class="ident">wrapping_sub</span>(<span class="number">597</span>);
-                <span class="kw">if</span> <span class="ident">pointer_minus_upper_cyrillic</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">607</span> <span class="op">-</span> <span class="number">597</span>) {
+                <span class="kw">if</span> <span class="ident">pointer_minus_upper_cyrillic</span> <span class="op">&lt;=</span> (<span class="number">607</span> <span class="op">-</span> <span class="number">597</span>) {
                     <span class="ident">handle</span>.<span class="ident">write_mid_bmp</span>(<span class="number">0x0402</span> <span class="op">+</span> <span class="ident">pointer_minus_upper_cyrillic</span> <span class="kw">as</span> <span class="ident">u16</span>)
                 } <span class="kw">else</span> {
                     <span class="kw">let</span> <span class="ident">pointer_minus_lower_cyrillic</span> <span class="op">=</span> <span class="ident">pointer</span>.<span class="ident">wrapping_sub</span>(<span class="number">645</span>);
-                    <span class="kw">if</span> <span class="ident">pointer_minus_lower_cyrillic</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">655</span> <span class="op">-</span> <span class="number">645</span>) {
+                    <span class="kw">if</span> <span class="ident">pointer_minus_lower_cyrillic</span> <span class="op">&lt;=</span> (<span class="number">655</span> <span class="op">-</span> <span class="number">645</span>) {
                         <span class="ident">handle</span>.<span class="ident">write_mid_bmp</span>(<span class="number">0x0452</span> <span class="op">+</span> <span class="ident">pointer_minus_lower_cyrillic</span> <span class="kw">as</span> <span class="ident">u16</span>)
                     } <span class="kw">else</span> {
                         <span class="kw">return</span> (
@@ -690,14 +691,14 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-kanji-encode&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">encode_kanji</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">encode_kanji</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
     <span class="ident">jis0208_kanji_euc_jp_encode</span>(<span class="ident">bmp</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fast-kanji-encode&quot;</span>))]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">encode_kanji</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="number">0x4EDD</span> <span class="op">=</span><span class="op">=</span> <span class="ident">bmp</span> {
+<span class="kw">fn</span> <span class="ident">encode_kanji</span>(<span class="ident">bmp</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="number">0x4EDD</span> <span class="op">==</span> <span class="ident">bmp</span> {
         <span class="comment">// Ideograph on the symbol row!</span>
         <span class="prelude-val">Some</span>((<span class="number">0xA1</span>, <span class="number">0xB8</span>))
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">lead</span>, <span class="ident">trail</span>)) <span class="op">=</span> <span class="ident">jis0208_level1_kanji_euc_jp_encode</span>(<span class="ident">bmp</span>) {
@@ -718,21 +719,21 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EucJpEncoder</span>;
 
 <span class="kw">impl</span> <span class="ident">EucJpEncoder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Encoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>) <span class="op">-&gt;</span> <span class="ident">Encoder</span> {
         <span class="ident">Encoder</span>::<span class="ident">new</span>(<span class="ident">encoding</span>, <span class="ident">VariantEncoder</span>::<span class="ident">EucJp</span>(<span class="ident">EucJpEncoder</span>))
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf16_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">u16_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">u16_length</span>.<span class="ident">checked_mul</span>(<span class="number">2</span>)
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_buffer_length_from_utf8_without_replacement</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">byte_length</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="ident">byte_length</span>.<span class="ident">checked_add</span>(<span class="number">1</span>)
     }
 
@@ -761,21 +762,21 @@
                     <span class="kw">if</span> <span class="ident">bmp_minus_space</span> <span class="op">&lt;</span> <span class="number">3</span> {
                         <span class="comment">// fast-track common punctuation</span>
                         <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="number">0xA1</span>, <span class="number">0xA1</span> <span class="op">+</span> <span class="ident">bmp_minus_space</span> <span class="kw">as</span> <span class="ident">u8</span>)
-                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xA5</span> {
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0xA5</span> {
                         <span class="ident">handle</span>.<span class="ident">write_one</span>(<span class="number">0x5Cu8</span>)
-                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x203E</span> {
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0x203E</span> {
                         <span class="ident">handle</span>.<span class="ident">write_one</span>(<span class="number">0x7Eu8</span>)
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xFF61</span>, <span class="number">0xFF9F</span>) {
                         <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="number">0x8Eu8</span>, (<span class="ident">bmp</span> <span class="op">-</span> (<span class="number">0xFF61</span> <span class="op">-</span> <span class="number">0xA1</span>)) <span class="kw">as</span> <span class="ident">u8</span>)
-                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x2212</span> {
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0x2212</span> {
                         <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="number">0xA1u8</span>, <span class="number">0xDDu8</span>)
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">pointer</span>) <span class="op">=</span> <span class="ident">jis0208_range_encode</span>(<span class="ident">bmp</span>) {
                         <span class="kw">let</span> <span class="ident">lead</span> <span class="op">=</span> (<span class="ident">pointer</span> <span class="op">/</span> <span class="number">94</span>) <span class="op">+</span> <span class="number">0xA1</span>;
                         <span class="kw">let</span> <span class="ident">trail</span> <span class="op">=</span> (<span class="ident">pointer</span> <span class="op">%</span> <span class="number">94</span>) <span class="op">+</span> <span class="number">0xA1</span>;
                         <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="ident">lead</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">trail</span> <span class="kw">as</span> <span class="ident">u8</span>)
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">in_inclusive_range16</span>(<span class="ident">bmp</span>, <span class="number">0xFA0E</span>, <span class="number">0xFA2D</span>)
-                        <span class="op">|</span><span class="op">|</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xF929</span>
-                        <span class="op">|</span><span class="op">|</span> <span class="ident">bmp</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xF9DC</span>
+                        <span class="op">||</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0xF929</span>
+                        <span class="op">||</span> <span class="ident">bmp</span> <span class="op">==</span> <span class="number">0xF9DC</span>
                     {
                         <span class="comment">// Guaranteed to be found in IBM_KANJI</span>
                         <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="ident">IBM_KANJI</span>[..], <span class="ident">bmp</span>).<span class="ident">unwrap</span>();

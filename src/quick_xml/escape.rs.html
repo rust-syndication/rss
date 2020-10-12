@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.18.1/src/escape.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>escape.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../quick_xml/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.18.1/src/escape.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>escape.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../quick_xml/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -260,29 +261,29 @@
 }
 
 <span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">EscapeError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">EscapeError</span>::<span class="ident">EntityWithNull</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">EscapeError</span>::<span class="ident">EntityWithNull</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;Error while escaping character at range {:?}: Null character entity not allowed&quot;</span>,
                 <span class="ident">e</span>
             ),
-            <span class="ident">EscapeError</span>::<span class="ident">UnrecognizedSymbol</span>(<span class="ident">rge</span>, <span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">EscapeError</span>::<span class="ident">UnrecognizedSymbol</span>(<span class="ident">rge</span>, <span class="ident">res</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;Error while escaping character at range {:?}: Unrecognized escape symbol: {:?}&quot;</span>,
                 <span class="ident">rge</span>, <span class="ident">res</span>
             ),
-            <span class="ident">EscapeError</span>::<span class="ident">UnterminatedEntity</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="ident">EscapeError</span>::<span class="ident">UnterminatedEntity</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;Error while escaping character at range {:?}: Cannot find &#39;;&#39; after &#39;&amp;&#39;&quot;</span>,
                 <span class="ident">e</span>
             ),
-            <span class="ident">EscapeError</span>::<span class="ident">TooLongHexadecimal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Cannot convert hexadecimal to utf8&quot;</span>),
-            <span class="ident">EscapeError</span>::<span class="ident">InvalidHexadecimal</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">EscapeError</span>::<span class="ident">TooLongHexadecimal</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Cannot convert hexadecimal to utf8&quot;</span>),
+            <span class="ident">EscapeError</span>::<span class="ident">InvalidHexadecimal</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;&#39;{}&#39; is not a valid hexadecimal character&quot;</span>, <span class="ident">e</span>)
             }
-            <span class="ident">EscapeError</span>::<span class="ident">TooLongDecimal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Cannot convert decimal to utf8&quot;</span>),
-            <span class="ident">EscapeError</span>::<span class="ident">InvalidDecimal</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;&#39;{}&#39; is not a valid decimal character&quot;</span>, <span class="ident">e</span>),
+            <span class="ident">EscapeError</span>::<span class="ident">TooLongDecimal</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Cannot convert decimal to utf8&quot;</span>),
+            <span class="ident">EscapeError</span>::<span class="ident">InvalidDecimal</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;&#39;{}&#39; is not a valid decimal character&quot;</span>, <span class="ident">e</span>),
         }
     }
 }
@@ -301,11 +302,11 @@
 <span class="doccomment">/// helper function to escape a `&amp;[u8]` and replace all</span>
 <span class="doccomment">/// xml special characters (&lt;, &gt;, &amp;, &#39;, &quot;) with their corresponding</span>
 <span class="doccomment">/// xml escaped value.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_escape</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escape</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_escape</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="ident">b</span> {
-            <span class="string">b&#39;&lt;&#39;</span> <span class="op">|</span> <span class="string">b&#39;&gt;&#39;</span> <span class="op">|</span> <span class="string">b&#39;\&#39;&#39;</span> <span class="op">|</span> <span class="string">b&#39;&amp;&#39;</span> <span class="op">|</span> <span class="string">b&#39;&quot;&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="string">b&#39;&lt;&#39;</span> <span class="op">|</span> <span class="string">b&#39;&gt;&#39;</span> <span class="op">|</span> <span class="string">b&#39;\&#39;&#39;</span> <span class="op">|</span> <span class="string">b&#39;&amp;&#39;</span> <span class="op">|</span> <span class="string">b&#39;&quot;&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         }
     }
 
@@ -320,12 +321,12 @@
         <span class="kw">let</span> <span class="ident">new_pos</span> <span class="op">=</span> <span class="ident">pos</span> <span class="op">+</span> <span class="ident">i</span>;
         <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">raw</span>[<span class="ident">pos</span>..<span class="ident">new_pos</span>]);
         <span class="kw">match</span> <span class="ident">raw</span>[<span class="ident">new_pos</span>] {
-            <span class="string">b&#39;&lt;&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;lt;&quot;</span>),
-            <span class="string">b&#39;&gt;&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;gt;&quot;</span>),
-            <span class="string">b&#39;\&#39;&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;apos;&quot;</span>),
-            <span class="string">b&#39;&amp;&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;amp;&quot;</span>),
-            <span class="string">b&#39;&quot;&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;quot;&quot;</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;Only &#39;&lt;&#39;, &#39;&gt;&#39;,&#39;\&#39;, &#39;&amp;&#39; and &#39;\&quot;&#39; are escaped&quot;</span>),
+            <span class="string">b&#39;&lt;&#39;</span> <span class="op">=&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;lt;&quot;</span>),
+            <span class="string">b&#39;&gt;&#39;</span> <span class="op">=&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;gt;&quot;</span>),
+            <span class="string">b&#39;\&#39;&#39;</span> <span class="op">=&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;apos;&quot;</span>),
+            <span class="string">b&#39;&amp;&#39;</span> <span class="op">=&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;amp;&quot;</span>),
+            <span class="string">b&#39;&quot;&#39;</span> <span class="op">=&gt;</span> <span class="ident">escaped</span>.<span class="ident">extend_from_slice</span>(<span class="string">b&quot;&amp;quot;&quot;</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;Only &#39;&lt;&#39;, &#39;&gt;&#39;,&#39;\&#39;, &#39;&amp;&#39; and &#39;\&quot;&#39; are escaped&quot;</span>),
         }
         <span class="ident">pos</span> <span class="op">=</span> <span class="ident">new_pos</span> <span class="op">+</span> <span class="number">1</span>;
     }
@@ -342,13 +343,13 @@
 
 <span class="doccomment">/// helper function to unescape a `&amp;[u8]` and replace all</span>
 <span class="doccomment">/// xml escaped characters (&#39;&amp;...;&#39;) into their corresponding value</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">EscapeError</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">EscapeError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">unescaped</span> <span class="op">=</span> <span class="prelude-val">None</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_end</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">memchr</span>::<span class="ident">memchr2_iter</span>(<span class="string">b&#39;&amp;&#39;</span>, <span class="string">b&#39;;&#39;</span>, <span class="ident">raw</span>);
-    <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">start</span>) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">by_ref</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">raw</span>[<span class="kw-2">*</span><span class="ident">p</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;&amp;&#39;</span>) {
+    <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">start</span>) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">by_ref</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">raw</span>[<span class="kw-2">*</span><span class="ident">p</span>] <span class="op">==</span> <span class="string">b&#39;&amp;&#39;</span>) {
         <span class="kw">match</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">end</span>) <span class="kw">if</span> <span class="ident">raw</span>[<span class="ident">end</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;;&#39;</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">end</span>) <span class="kw">if</span> <span class="ident">raw</span>[<span class="ident">end</span>] <span class="op">==</span> <span class="string">b&#39;;&#39;</span> <span class="op">=&gt;</span> {
                 <span class="comment">// append valid data</span>
                 <span class="kw">if</span> <span class="ident">unescaped</span>.<span class="ident">is_none</span>() {
                     <span class="ident">unescaped</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">raw</span>.<span class="ident">len</span>()));
@@ -358,12 +359,12 @@
 
                 <span class="comment">// search for character correctness</span>
                 <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">raw</span>[<span class="ident">start</span> <span class="op">+</span> <span class="number">1</span>..<span class="ident">end</span>] {
-                    <span class="string">b&quot;lt&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;&lt;&#39;</span>),
-                    <span class="string">b&quot;gt&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;&gt;&#39;</span>),
-                    <span class="string">b&quot;amp&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;&amp;&#39;</span>),
-                    <span class="string">b&quot;apos&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;\&#39;&#39;</span>),
-                    <span class="string">b&quot;quot&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;\&quot;&#39;</span>),
-                    <span class="ident">bytes</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;lt&quot;</span> <span class="op">=&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;&lt;&#39;</span>),
+                    <span class="string">b&quot;gt&quot;</span> <span class="op">=&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;&gt;&#39;</span>),
+                    <span class="string">b&quot;amp&quot;</span> <span class="op">=&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;&amp;&#39;</span>),
+                    <span class="string">b&quot;apos&quot;</span> <span class="op">=&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;\&#39;&#39;</span>),
+                    <span class="string">b&quot;quot&quot;</span> <span class="op">=&gt;</span> <span class="ident">unescaped</span>.<span class="ident">push</span>(<span class="string">b&#39;\&quot;&#39;</span>),
+                    <span class="ident">bytes</span> <span class="op">=&gt;</span> {
                         <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">starts_with</span>(<span class="string">b&quot;#x&quot;</span>) {
                             <span class="ident">parse_hexadecimal</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>[<span class="number">2</span>..])
                         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">starts_with</span>(<span class="string">b&quot;#&quot;</span>) {
@@ -374,7 +375,7 @@
                                 <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>.<span class="ident">to_vec</span>()),
                             ))
                         }<span class="question-mark">?</span>;
-                        <span class="kw">if</span> <span class="ident">code</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                        <span class="kw">if</span> <span class="ident">code</span> <span class="op">==</span> <span class="number">0</span> {
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">EntityWithNull</span>(<span class="ident">start</span>..<span class="ident">end</span>));
                         }
                         <span class="ident">push_utf8</span>(<span class="ident">unescaped</span>, <span class="ident">code</span>);
@@ -382,7 +383,7 @@
                 }
                 <span class="ident">last_end</span> <span class="op">=</span> <span class="ident">end</span> <span class="op">+</span> <span class="number">1</span>;
             }
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">UnterminatedEntity</span>(<span class="ident">start</span>..<span class="ident">raw</span>.<span class="ident">len</span>())),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">UnterminatedEntity</span>(<span class="ident">start</span>..<span class="ident">raw</span>.<span class="ident">len</span>())),
         }
     }
 
@@ -400,49 +401,49 @@
     <span class="kw">if</span> <span class="ident">code</span> <span class="op">&lt;</span> <span class="ident">MAX_ONE_B</span> {
         <span class="ident">buf</span>.<span class="ident">push</span>(<span class="ident">code</span> <span class="kw">as</span> <span class="ident">u8</span>);
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">code</span> <span class="op">&lt;</span> <span class="ident">MAX_TWO_B</span> {
-        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">6</span> <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_TWO_B</span>);
+        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;&gt;</span> <span class="number">6</span> <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_TWO_B</span>);
         <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">code</span> <span class="op">&lt;</span> <span class="ident">MAX_THREE_B</span> {
-        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">12</span> <span class="op">&amp;</span> <span class="number">0x0F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_THREE_B</span>);
-        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">6</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
+        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;&gt;</span> <span class="number">12</span> <span class="op">&amp;</span> <span class="number">0x0F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_THREE_B</span>);
+        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;&gt;</span> <span class="number">6</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
         <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
     } <span class="kw">else</span> {
-        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">18</span> <span class="op">&amp;</span> <span class="number">0x07</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_FOUR_B</span>);
-        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">12</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
-        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">6</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
+        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;&gt;</span> <span class="number">18</span> <span class="op">&amp;</span> <span class="number">0x07</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_FOUR_B</span>);
+        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;&gt;</span> <span class="number">12</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
+        <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&gt;&gt;</span> <span class="number">6</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
         <span class="ident">buf</span>.<span class="ident">push</span>((<span class="ident">code</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="kw">as</span> <span class="ident">u8</span> <span class="op">|</span> <span class="ident">TAG_CONT</span>);
     }
 }
 
-<span class="kw">fn</span> <span class="ident">parse_hexadecimal</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">EscapeError</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">parse_hexadecimal</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">EscapeError</span><span class="op">&gt;</span> {
     <span class="comment">// maximum code is 0x10FFFF =&gt; 6 characters</span>
     <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">6</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">TooLongHexadecimal</span>);
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">code</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">b</span> <span class="kw">in</span> <span class="ident">bytes</span> {
-        <span class="ident">code</span> <span class="op">&lt;</span><span class="op">&lt;</span><span class="op">=</span> <span class="number">4</span>;
-        <span class="ident">code</span> <span class="op">+</span><span class="op">=</span> <span class="kw">match</span> <span class="ident">b</span> {
-            <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;0&#39;</span>,
-            <span class="string">b&#39;a&#39;</span>..<span class="op">=</span><span class="string">b&#39;f&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;a&#39;</span> <span class="op">+</span> <span class="number">10</span>,
-            <span class="string">b&#39;A&#39;</span>..<span class="op">=</span><span class="string">b&#39;F&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;A&#39;</span> <span class="op">+</span> <span class="number">10</span>,
-            <span class="ident">b</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">InvalidHexadecimal</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>)),
+        <span class="ident">code</span> <span class="op">&lt;&lt;</span><span class="op">=</span> <span class="number">4</span>;
+        <span class="ident">code</span> <span class="op">+=</span> <span class="kw">match</span> <span class="ident">b</span> {
+            <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span> <span class="op">=&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;0&#39;</span>,
+            <span class="string">b&#39;a&#39;</span>..<span class="op">=</span><span class="string">b&#39;f&#39;</span> <span class="op">=&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;a&#39;</span> <span class="op">+</span> <span class="number">10</span>,
+            <span class="string">b&#39;A&#39;</span>..<span class="op">=</span><span class="string">b&#39;F&#39;</span> <span class="op">=&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;A&#39;</span> <span class="op">+</span> <span class="number">10</span>,
+            <span class="ident">b</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">InvalidHexadecimal</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>)),
         } <span class="kw">as</span> <span class="ident">u32</span>;
     }
     <span class="prelude-val">Ok</span>(<span class="ident">code</span>)
 }
 
-<span class="kw">fn</span> <span class="ident">parse_decimal</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">EscapeError</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">parse_decimal</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">EscapeError</span><span class="op">&gt;</span> {
     <span class="comment">// maximum code is 0x10FFFF = 1114111 =&gt; 7 characters</span>
     <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">7</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">TooLongDecimal</span>);
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">code</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">b</span> <span class="kw">in</span> <span class="ident">bytes</span> {
-        <span class="ident">code</span> <span class="kw-2">*</span><span class="op">=</span> <span class="number">10</span>;
-        <span class="ident">code</span> <span class="op">+</span><span class="op">=</span> <span class="kw">match</span> <span class="ident">b</span> {
-            <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;0&#39;</span>,
-            <span class="ident">b</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">InvalidDecimal</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>)),
+        <span class="ident">code</span> <span class="op">*=</span> <span class="number">10</span>;
+        <span class="ident">code</span> <span class="op">+=</span> <span class="kw">match</span> <span class="ident">b</span> {
+            <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span> <span class="op">=&gt;</span> <span class="ident">b</span> <span class="op">-</span> <span class="string">b&#39;0&#39;</span>,
+            <span class="ident">b</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">EscapeError</span>::<span class="ident">InvalidDecimal</span>(<span class="ident">b</span> <span class="kw">as</span> <span class="ident">char</span>)),
         } <span class="kw">as</span> <span class="ident">u32</span>;
     }
     <span class="prelude-val">Ok</span>(<span class="ident">code</span>)

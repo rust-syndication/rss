@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.9.0/src/setter.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>setter.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../derive_builder_core/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.9.0/src/setter.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>setter.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../derive_builder_core/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -598,8 +599,8 @@
             <span class="kw">let</span> (<span class="ident">ty</span>, <span class="ident">stripped_option</span>) <span class="op">=</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">strip_option</span> {
                     <span class="kw">match</span> <span class="ident">extract_type_from_option</span>(<span class="ident">field_type</span>) {
-                        <span class="prelude-val">Some</span>(<span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">ty</span>, <span class="bool-val">true</span>),
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">field_type</span>, <span class="bool-val">false</span>),
+                        <span class="prelude-val">Some</span>(<span class="ident">ty</span>) <span class="op">=&gt;</span> (<span class="ident">ty</span>, <span class="bool-val">true</span>),
+                        <span class="prelude-val">None</span> <span class="op">=&gt;</span> (<span class="ident">field_type</span>, <span class="bool-val">false</span>),
                     }
                 } <span class="kw">else</span> {
                     (<span class="ident">field_type</span>, <span class="bool-val">false</span>)
@@ -611,17 +612,17 @@
             <span class="kw">let</span> <span class="ident">self_into_return_ty</span>: <span class="ident">TokenStream</span>;
 
             <span class="kw">match</span> <span class="ident">pattern</span> {
-                <span class="ident">BuilderPattern</span>::<span class="ident">Owned</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">BuilderPattern</span>::<span class="ident">Owned</span> <span class="op">=&gt;</span> {
                     <span class="ident">self_param</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="self">self</span>);
                     <span class="ident">return_ty</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="self">Self</span>);
                     <span class="ident">self_into_return_ty</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="self">self</span>);
                 }
-                <span class="ident">BuilderPattern</span>::<span class="ident">Mutable</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">BuilderPattern</span>::<span class="ident">Mutable</span> <span class="op">=&gt;</span> {
                     <span class="ident">self_param</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>);
                     <span class="ident">return_ty</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>);
                     <span class="ident">self_into_return_ty</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="self">self</span>);
                 }
-                <span class="ident">BuilderPattern</span>::<span class="ident">Immutable</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">BuilderPattern</span>::<span class="ident">Immutable</span> <span class="op">=&gt;</span> {
                     <span class="ident">self_param</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
                     <span class="ident">return_ty</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="self">Self</span>);
                     <span class="ident">self_into_return_ty</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">clone</span>::<span class="ident">clone</span>(<span class="self">self</span>));
@@ -633,7 +634,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">into_value</span>: <span class="ident">TokenStream</span>;
 
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">generic_into</span> {
-                <span class="ident">ty_params</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="ident">VALUE</span>: #<span class="ident">into</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+                <span class="ident">ty_params</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="ident">VALUE</span>: #<span class="ident">into</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;&gt;</span>);
                 <span class="ident">param_ty</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="ident">VALUE</span>);
                 <span class="ident">into_value</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="ident">value</span>.<span class="ident">into</span>());
             } <span class="kw">else</span> {
@@ -648,7 +649,7 @@
                 #(#<span class="ident">attrs</span>)<span class="op">*</span>
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
                 #<span class="ident">vis</span> <span class="kw">fn</span> #<span class="ident">ident</span> #<span class="ident">ty_params</span> (#<span class="ident">self_param</span>, <span class="ident">value</span>: #<span class="ident">param_ty</span>)
-                    <span class="op">-</span><span class="op">&gt;</span> #<span class="ident">return_ty</span>
+                    <span class="op">-&gt;</span> #<span class="ident">return_ty</span>
                 {
                     #<span class="ident">deprecation_notes</span>
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> #<span class="ident">self_into_return_ty</span>;
@@ -658,14 +659,14 @@
 
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">try_setter</span> {
                 <span class="kw">let</span> <span class="ident">try_into</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bindings</span>.<span class="ident">try_into_trait</span>();
-                <span class="kw">let</span> <span class="ident">try_ty_params</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="ident">VALUE</span>: #<span class="ident">try_into</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+                <span class="kw">let</span> <span class="ident">try_ty_params</span> <span class="op">=</span> <span class="macro">quote</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="ident">VALUE</span>: #<span class="ident">try_into</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;&gt;</span>);
                 <span class="kw">let</span> <span class="ident">try_ident</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">Ident</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;try_{}&quot;</span>, <span class="ident">ident</span>), <span class="ident">Span</span>::<span class="ident">call_site</span>());
                 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bindings</span>.<span class="ident">result_ty</span>();
 
                 <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote</span><span class="macro">!</span>(
                     #(#<span class="ident">attrs</span>)<span class="op">*</span>
                     #<span class="ident">vis</span> <span class="kw">fn</span> #<span class="ident">try_ident</span> #<span class="ident">try_ty_params</span> (#<span class="ident">self_param</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>)
-                        <span class="op">-</span><span class="op">&gt;</span> #<span class="ident">result</span><span class="op">&lt;</span>#<span class="ident">return_ty</span>, <span class="ident">VALUE</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+                        <span class="op">-&gt;</span> #<span class="ident">result</span><span class="op">&lt;</span>#<span class="ident">return_ty</span>, <span class="ident">VALUE</span>::<span class="ident">Error</span><span class="op">&gt;</span>
                     {
                         <span class="kw">let</span> <span class="ident">converted</span> : #<span class="ident">ty</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>;
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> #<span class="ident">self_into_return_ty</span>;
@@ -686,21 +687,21 @@
 <span class="comment">// We cannot know for sure that this is an Option.</span>
 <span class="comment">// The user could, for example, `type MaybeString = std::option::Option&lt;String&gt;`</span>
 <span class="comment">// We cannot handle those arbitrary names.</span>
-<span class="kw">fn</span> <span class="ident">extract_type_from_option</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">extract_type_from_option</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span><span class="op">&gt;</span> {
     <span class="kw">use</span> <span class="ident">syn</span>::<span class="ident">punctuated</span>::<span class="ident">Pair</span>;
     <span class="kw">use</span> <span class="ident">syn</span>::<span class="ident">token</span>::<span class="ident">Colon2</span>;
     <span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">GenericArgument</span>, <span class="ident">Path</span>, <span class="ident">PathArguments</span>, <span class="ident">PathSegment</span>};
 
-    <span class="kw">fn</span> <span class="ident">extract_type_path</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Path</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">extract_type_path</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Path</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">ty</span> {
-            <span class="ident">syn</span>::<span class="ident">Type</span>::<span class="ident">Path</span>(<span class="kw-2">ref</span> <span class="ident">typepath</span>) <span class="kw">if</span> <span class="ident">typepath</span>.<span class="ident">qself</span>.<span class="ident">is_none</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">typepath</span>.<span class="ident">path</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">syn</span>::<span class="ident">Type</span>::<span class="ident">Path</span>(<span class="kw-2">ref</span> <span class="ident">typepath</span>) <span class="kw">if</span> <span class="ident">typepath</span>.<span class="ident">qself</span>.<span class="ident">is_none</span>() <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">typepath</span>.<span class="ident">path</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
     <span class="comment">// TODO store (with lazy static) precomputed parsing of Option when support of rust 1.18 will be removed (incompatible with lazy_static)</span>
     <span class="comment">// TODO maybe optimization, reverse the order of segments</span>
-    <span class="kw">fn</span> <span class="ident">extract_option_segment</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Pair</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PathSegment</span>, <span class="kw-2">&amp;</span><span class="ident">Colon2</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">extract_option_segment</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Pair</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PathSegment</span>, <span class="kw-2">&amp;</span><span class="ident">Colon2</span><span class="op">&gt;&gt;</span> {
         <span class="kw">let</span> <span class="ident">idents_of_path</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">iter</span>().<span class="ident">fold</span>(<span class="ident">String</span>::<span class="ident">new</span>(), <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">acc</span>, <span class="ident">v</span><span class="op">|</span> {
             <span class="ident">acc</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>());
             <span class="ident">acc</span>.<span class="ident">push</span>(<span class="string">&#39;|&#39;</span>);
@@ -708,7 +709,7 @@
         });
         <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;Option|&quot;</span>, <span class="string">&quot;std|option|Option|&quot;</span>, <span class="string">&quot;core|option|Option|&quot;</span>]
             .<span class="ident">into_iter</span>()
-            .<span class="ident">find</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">idents_of_path</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="ident">s</span>)
+            .<span class="ident">find</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">idents_of_path</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">s</span>)
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">last</span>().<span class="ident">map</span>(<span class="ident">Pair</span>::<span class="ident">End</span>))
     }
 
@@ -718,13 +719,13 @@
             <span class="kw">let</span> <span class="ident">type_params</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">pair_path_segment</span>.<span class="ident">into_value</span>().<span class="ident">arguments</span>;
             <span class="comment">// It should have only on angle-bracketed param (&quot;&lt;String&gt;&quot;):</span>
             <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">type_params</span> {
-                <span class="ident">PathArguments</span>::<span class="ident">AngleBracketed</span>(<span class="kw-2">ref</span> <span class="ident">params</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">params</span>.<span class="ident">args</span>.<span class="ident">first</span>(),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+                <span class="ident">PathArguments</span>::<span class="ident">AngleBracketed</span>(<span class="kw-2">ref</span> <span class="ident">params</span>) <span class="op">=&gt;</span> <span class="ident">params</span>.<span class="ident">args</span>.<span class="ident">first</span>(),
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
             }
         })
         .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">generic_arg</span><span class="op">|</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">generic_arg</span> {
-            <span class="ident">GenericArgument</span>::<span class="ident">Type</span>(<span class="kw-2">ref</span> <span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">ty</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">GenericArgument</span>::<span class="ident">Type</span>(<span class="kw-2">ref</span> <span class="ident">ty</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">ty</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         })
 }
 
@@ -733,7 +734,7 @@
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">default_setter</span> {
-    () <span class="op">=</span><span class="op">&gt;</span> {
+    () <span class="op">=&gt;</span> {
         <span class="ident">Setter</span> {
             <span class="ident">setter_enabled</span>: <span class="bool-val">true</span>,
             <span class="ident">try_setter</span>: <span class="bool-val">false</span>,
@@ -765,7 +766,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">clone</span>::<span class="ident">Clone</span>::<span class="ident">clone</span>(<span class="self">self</span>);
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>);
                     <span class="ident">new</span>
@@ -784,7 +785,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>);
                     <span class="ident">new</span>
@@ -803,7 +804,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>);
                     <span class="ident">new</span>
@@ -824,7 +825,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+                <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>);
                     <span class="ident">new</span>
@@ -843,7 +844,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span> <span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span> <span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                 <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>.<span class="ident">into</span>());
                 <span class="ident">new</span>
@@ -862,7 +863,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>));
                     <span class="ident">new</span>
@@ -883,7 +884,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>.<span class="ident">into</span>()));
                     <span class="ident">new</span>
@@ -914,7 +915,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(
             <span class="attribute">#[<span class="ident">some_attr</span>]</span>
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span> <span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span> <span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                 #<span class="ident">deprecated</span>
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                 <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>.<span class="ident">into</span>());
@@ -922,8 +923,8 @@
             }
 
             <span class="attribute">#[<span class="ident">some_attr</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>)
-                <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">VALUE</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>)
+                <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">VALUE</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">converted</span> : <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                 <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">converted</span>);
@@ -943,7 +944,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> ::<span class="ident">core</span>::<span class="ident">clone</span>::<span class="ident">Clone</span>::<span class="ident">clone</span>(<span class="self">self</span>);
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">core</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>);
                     <span class="ident">new</span>
@@ -963,7 +964,7 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span> <span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span> <span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">core</span>::<span class="ident">convert</span>::<span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                 <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">core</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>.<span class="ident">into</span>());
                 <span class="ident">new</span>
@@ -990,14 +991,14 @@
             <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
             <span class="macro">quote</span><span class="macro">!</span>(
                 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">value</span>);
                     <span class="ident">new</span>
                 }
 
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>)
-                    <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">VALUE</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: ::<span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>)
+                    <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">VALUE</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="ident">converted</span> : <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>;
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
                     <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span>::<span class="prelude-val">Some</span>(<span class="ident">converted</span>);
