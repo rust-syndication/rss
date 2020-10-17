@@ -10,7 +10,7 @@ use std::io::{BufRead, Write};
 use std::str::{self, FromStr};
 
 use quick_xml::events::attributes::Attributes;
-use quick_xml::events::{BytesEnd, BytesStart, Event};
+use quick_xml::events::{BytesDecl, BytesEnd, BytesStart, Event};
 use quick_xml::Error as XmlError;
 use quick_xml::Reader;
 use quick_xml::Writer;
@@ -1067,6 +1067,8 @@ impl Channel {
     }
 
     fn write<W: Write>(&self, mut writer: Writer<W>) -> Result<W, Error> {
+        writer.write_event(Event::Decl(BytesDecl::new(b"1.0", Some(b"utf-8"), None)))?;
+
         let name = b"rss";
         let mut element = BytesStart::borrowed(name, name.len());
         element.push_attribute(("version", "2.0"));
