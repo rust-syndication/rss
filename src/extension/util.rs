@@ -38,24 +38,11 @@ where
     let name = str::from_utf8(name)?;
     let ext = parse_extension_element(reader, atts)?;
 
-    if !extensions.contains_key(ns) {
-        extensions.insert(ns.to_string(), HashMap::new());
-    }
+    let map = extensions
+        .entry(ns.to_string())
+        .or_insert_with(HashMap::new);
 
-    let map = match extensions.get_mut(ns) {
-        Some(map) => map,
-        None => unreachable!(),
-    };
-
-    if !map.contains_key(name) {
-        map.insert(name.to_string(), Vec::new());
-    }
-
-    let items = match map.get_mut(name) {
-        Some(items) => items,
-        None => unreachable!(),
-    };
-
+    let items = map.entry(name.to_string()).or_insert_with(Vec::new);
     items.push(ext);
 
     Ok(())
@@ -81,15 +68,10 @@ fn parse_extension_element<R: BufRead>(
             Event::Start(element) => {
                 let ext = parse_extension_element(reader, element.attributes())?;
                 let name = str::from_utf8(element.local_name())?;
-
-                if !extension.children.contains_key(name) {
-                    extension.children.insert(name.to_string(), Vec::new());
-                }
-
-                let items = match extension.children.get_mut(name) {
-                    Some(items) => items,
-                    None => unreachable!(),
-                };
+                let items = extension
+                    .children
+                    .entry(name.to_string())
+                    .or_insert_with(Vec::new);
 
                 items.push(ext);
             }
@@ -113,15 +95,10 @@ fn parse_extension_element<R: BufRead>(
     Ok(extension)
 }
 
-pub fn remove_extension_values(
-    map: &mut HashMap<String, Vec<Extension>>,
-    key: &str,
-) -> Option<Vec<String>> {
-    map.remove(key).map(|v| {
-        v.into_iter()
-            .filter_map(|ext| ext.value)
-            .collect::<Vec<_>>()
-    })
+pub fn get_extension_values(v: Vec<Extension>) -> Vec<String> {
+    v.into_iter()
+        .filter_map(|ext| ext.value)
+        .collect::<Vec<_>>()
 }
 
 pub fn remove_extension_value(
