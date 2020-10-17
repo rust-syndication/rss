@@ -11,7 +11,7 @@ use std::io::Write;
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
-use crate::extension::util::remove_extension_values;
+use crate::extension::util::get_extension_values;
 use crate::extension::Extension;
 
 use crate::toxml::{ToXml, WriterExt};
@@ -337,23 +337,28 @@ impl DublinCoreExtension {
 
 impl DublinCoreExtension {
     /// Creates a `DublinCoreExtension` using the specified `HashMap`.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
+    pub fn from_map(map: HashMap<String, Vec<Extension>>) -> Self {
         let mut ext = DublinCoreExtension::default();
-        ext.contributors = remove_extension_values(&mut map, "contributor").unwrap_or_default();
-        ext.coverages = remove_extension_values(&mut map, "coverage").unwrap_or_default();
-        ext.creators = remove_extension_values(&mut map, "creator").unwrap_or_default();
-        ext.dates = remove_extension_values(&mut map, "date").unwrap_or_default();
-        ext.descriptions = remove_extension_values(&mut map, "description").unwrap_or_default();
-        ext.formats = remove_extension_values(&mut map, "format").unwrap_or_default();
-        ext.identifiers = remove_extension_values(&mut map, "identifier").unwrap_or_default();
-        ext.languages = remove_extension_values(&mut map, "language").unwrap_or_default();
-        ext.publishers = remove_extension_values(&mut map, "publisher").unwrap_or_default();
-        ext.relations = remove_extension_values(&mut map, "relation").unwrap_or_default();
-        ext.rights = remove_extension_values(&mut map, "rights").unwrap_or_default();
-        ext.sources = remove_extension_values(&mut map, "source").unwrap_or_default();
-        ext.subjects = remove_extension_values(&mut map, "subject").unwrap_or_default();
-        ext.titles = remove_extension_values(&mut map, "title").unwrap_or_default();
-        ext.types = remove_extension_values(&mut map, "type").unwrap_or_default();
+        for (key, v) in map {
+            match key.as_str() {
+                "contributor" => ext.contributors = get_extension_values(v),
+                "coverage" => ext.coverages = get_extension_values(v),
+                "creator" => ext.creators = get_extension_values(v),
+                "date" => ext.dates = get_extension_values(v),
+                "description" => ext.descriptions = get_extension_values(v),
+                "format" => ext.formats = get_extension_values(v),
+                "identifier" => ext.identifiers = get_extension_values(v),
+                "language" => ext.languages = get_extension_values(v),
+                "publisher" => ext.publishers = get_extension_values(v),
+                "relation" => ext.relations = get_extension_values(v),
+                "rights" => ext.rights = get_extension_values(v),
+                "source" => ext.sources = get_extension_values(v),
+                "subject" => ext.subjects = get_extension_values(v),
+                "title" => ext.titles = get_extension_values(v),
+                "type" => ext.types = get_extension_values(v),
+                _ => {}
+            }
+        }
         ext
     }
 }
