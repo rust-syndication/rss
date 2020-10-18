@@ -385,6 +385,11 @@
 <span id="384">384</span>
 <span id="385">385</span>
 <span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -399,7 +404,7 @@
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Writer</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">util</span>::<span class="ident">remove_extension_values</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">util</span>::<span class="ident">get_extension_values</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">Extension</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">toxml</span>::{<span class="ident">ToXml</span>, <span class="ident">WriterExt</span>};
@@ -725,23 +730,28 @@
 
 <span class="kw">impl</span> <span class="ident">DublinCoreExtension</span> {
     <span class="doccomment">/// Creates a `DublinCoreExtension` using the specified `HashMap`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="ident">map</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ext</span> <span class="op">=</span> <span class="ident">DublinCoreExtension</span>::<span class="ident">default</span>();
-        <span class="ident">ext</span>.<span class="ident">contributors</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;contributor&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">coverages</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;coverage&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">creators</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;creator&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">dates</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;date&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">descriptions</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;description&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">formats</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;format&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">identifiers</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;identifier&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">languages</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;language&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">publishers</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;publisher&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">relations</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;relation&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">rights</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;rights&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">sources</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;source&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">subjects</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;subject&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">titles</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;title&quot;</span>).<span class="ident">unwrap_or_default</span>();
-        <span class="ident">ext</span>.<span class="ident">types</span> <span class="op">=</span> <span class="ident">remove_extension_values</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;type&quot;</span>).<span class="ident">unwrap_or_default</span>();
+        <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">map</span> {
+            <span class="kw">match</span> <span class="ident">key</span>.<span class="ident">as_str</span>() {
+                <span class="string">&quot;contributor&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">contributors</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;coverage&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">coverages</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;creator&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">creators</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;date&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">dates</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;description&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">descriptions</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;format&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">formats</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;identifier&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">identifiers</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;language&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">languages</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;publisher&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">publishers</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;relation&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">relations</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;rights&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">rights</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;source&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">sources</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;subject&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">subjects</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;title&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">titles</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;type&quot;</span> <span class="op">=&gt;</span> <span class="ident">ext</span>.<span class="ident">types</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="kw">_</span> <span class="op">=&gt;</span> {}
+            }
+        }
         <span class="ident">ext</span>
     }
 }
