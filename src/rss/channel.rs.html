@@ -1404,6 +1404,8 @@
 <span id="1403">1403</span>
 <span id="1404">1404</span>
 <span id="1405">1405</span>
+<span id="1406">1406</span>
+<span id="1407">1407</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -1417,7 +1419,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::{<span class="self">self</span>, <span class="ident">FromStr</span>};
 
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::<span class="ident">attributes</span>::<span class="ident">Attributes</span>;
-<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">Event</span>};
+<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::{<span class="ident">BytesDecl</span>, <span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">Event</span>};
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Reader</span>;
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Writer</span>;
@@ -2474,6 +2476,8 @@
     }
 
     <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event</span>::<span class="ident">Decl</span>(<span class="ident">BytesDecl</span>::<span class="ident">new</span>(<span class="string">b&quot;1.0&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">b&quot;utf-8&quot;</span>), <span class="prelude-val">None</span>)))<span class="question-mark">?</span>;
+
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="string">b&quot;rss&quot;</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">element</span> <span class="op">=</span> <span class="ident">BytesStart</span>::<span class="ident">borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>());
         <span class="ident">element</span>.<span class="ident">push_attribute</span>((<span class="string">&quot;version&quot;</span>, <span class="string">&quot;2.0&quot;</span>));

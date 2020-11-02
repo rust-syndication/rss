@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/iso_2022_jp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iso_2022_jp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.26/src/iso_2022_jp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iso_2022_jp.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1051,6 +1051,22 @@
 <span id="1050">1050</span>
 <span id="1051">1051</span>
 <span id="1052">1052</span>
+<span id="1053">1053</span>
+<span id="1054">1054</span>
+<span id="1055">1055</span>
+<span id="1056">1056</span>
+<span id="1057">1057</span>
+<span id="1058">1058</span>
+<span id="1059">1059</span>
+<span id="1060">1060</span>
+<span id="1061">1061</span>
+<span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright Mozilla Foundation. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution.</span>
@@ -1062,9 +1078,9 @@
 <span class="comment">// except according to those terms.</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">data</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">handles</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">variant</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">data</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">handles</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">variant</span>::<span class="kw-2">*</span>;
 <span class="comment">// Rust 1.14.0 requires the following despite the asterisk above.</span>
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">in_inclusive_range16</span>;
 
@@ -1917,6 +1933,11 @@
         <span class="ident">decode_iso_2022_jp</span>(<span class="string">b&quot;\x1B$@\x80\x54\x64&quot;</span>, <span class="string">&quot;\u{FFFD}\u{58FA}&quot;</span>);
         <span class="ident">decode_iso_2022_jp</span>(<span class="string">b&quot;\x1B$B\x28\x80&quot;</span>, <span class="string">&quot;\u{FFFD}&quot;</span>);
 
+        <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+            <span class="comment">// Miri is too slow</span>
+            <span class="kw">return</span>;
+        }
+
         <span class="comment">// Transitions</span>
         <span class="ident">decode_iso_2022_jp</span>(<span class="string">b&quot;\x1B(B\x5C\x1B(J\x5C&quot;</span>, <span class="string">&quot;\u{005C}\u{00A5}&quot;</span>);
         <span class="ident">decode_iso_2022_jp</span>(<span class="string">b&quot;\x1B(B\x5C\x1B(I\x21&quot;</span>, <span class="string">&quot;\u{005C}\u{FF61}&quot;</span>);
@@ -1992,35 +2013,45 @@
         <span class="comment">// Roman</span>
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{00A5}b&quot;</span>, <span class="string">b&quot;a\x1B(J\x5Cb\x1B(B&quot;</span>);
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{203E}b&quot;</span>, <span class="string">b&quot;a\x1B(J\x7Eb\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{00A5}b\x5C&quot;</span>, <span class="string">b&quot;a\x1B(J\x5Cb\x1B(B\x5C&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{203E}b\x7E&quot;</span>, <span class="string">b&quot;a\x1B(J\x7Eb\x1B(B\x7E&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\u{1F4A9}&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#128169;\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\x1B&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#65533;\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\x0E&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#65533;\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\x0F&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#65533;\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\u{58FA}&quot;</span>, <span class="string">b&quot;\x1B(J\x5C\x1B$B\x54\x64\x1B(B&quot;</span>);
+        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+            <span class="comment">// Miri is too slow</span>
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{00A5}b\x5C&quot;</span>, <span class="string">b&quot;a\x1B(J\x5Cb\x1B(B\x5C&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{203E}b\x7E&quot;</span>, <span class="string">b&quot;a\x1B(J\x7Eb\x1B(B\x7E&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\u{1F4A9}&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#128169;\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\x1B&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#65533;\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\x0E&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#65533;\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\x0F&quot;</span>, <span class="string">b&quot;\x1B(J\x5C&amp;#65533;\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{00A5}\u{58FA}&quot;</span>, <span class="string">b&quot;\x1B(J\x5C\x1B$B\x54\x64\x1B(B&quot;</span>);
+        }
 
         <span class="comment">// Half-width Katakana</span>
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF61}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x23\x1B(B&quot;</span>);
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF65}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x26\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF66}&quot;</span>, <span class="string">b&quot;\x1B$B\x25\x72\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF70}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x3C\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF9D}&quot;</span>, <span class="string">b&quot;\x1B$B\x25\x73\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF9E}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x2B\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF9F}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x2C\x1B(B&quot;</span>);
+        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+            <span class="comment">// Miri is too slow</span>
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF66}&quot;</span>, <span class="string">b&quot;\x1B$B\x25\x72\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF70}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x3C\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF9D}&quot;</span>, <span class="string">b&quot;\x1B$B\x25\x73\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF9E}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x2B\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF9F}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x2C\x1B(B&quot;</span>);
+        }
 
         <span class="comment">// 0208</span>
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&quot;</span>);
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\u{250F}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x28\x2E\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\u{1F4A9}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#128169;&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\x1B&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#65533;&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\x0E&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#65533;&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\x0F&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#65533;&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\u{00A5}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(J\x5C\x1B(B&quot;</span>);
-        <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}a&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(Ba&quot;</span>);
+        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+            <span class="comment">// Miri is too slow</span>
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\u{1F4A9}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#128169;&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\x1B&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#65533;&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\x0E&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#65533;&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\x0F&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#65533;&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\u{00A5}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(J\x5C\x1B(B&quot;</span>);
+            <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}a&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(Ba&quot;</span>);
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">miri</span>, <span class="ident">ignore</span>)]</span> <span class="comment">// Miri is too slow</span>
     <span class="kw">fn</span> <span class="ident">test_iso_2022_jp_decode_all</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_in.txt&quot;</span>);
         <span class="kw">let</span> <span class="ident">expectation</span> <span class="op">=</span> <span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_in_ref.txt&quot;</span>);
@@ -2030,6 +2061,7 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">miri</span>, <span class="ident">ignore</span>)]</span> <span class="comment">// Miri is too slow</span>
     <span class="kw">fn</span> <span class="ident">test_iso_2022_jp_encode_all</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_out.txt&quot;</span>);
         <span class="kw">let</span> <span class="ident">expectation</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_out_ref.txt&quot;</span>);

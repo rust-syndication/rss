@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.24/src/handles.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>handles.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.26/src/handles.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>handles.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1966,6 +1966,8 @@
 <span id="1965">1965</span>
 <span id="1966">1966</span>
 <span id="1967">1967</span>
+<span id="1968">1968</span>
+<span id="1969">1969</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright Mozilla Foundation. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution.</span>
@@ -1993,7 +1995,7 @@
         <span class="ident">all</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;little&quot;</span>, <span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;neon&quot;</span>)
     )
 ))]</span>
-<span class="kw">use</span> <span class="ident">simd_funcs</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">simd_funcs</span>::<span class="kw-2">*</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(
     <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd-accel&quot;</span>,
@@ -2007,9 +2009,9 @@
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">DecoderResult</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">EncoderResult</span>;
-<span class="kw">use</span> <span class="ident">ascii</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">utf_8</span>::<span class="ident">convert_utf8_to_utf16_up_to_invalid</span>;
-<span class="kw">use</span> <span class="ident">utf_8</span>::<span class="ident">utf8_valid_up_to</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ascii</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utf_8</span>::<span class="ident">convert_utf8_to_utf16_up_to_invalid</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utf_8</span>::<span class="ident">utf8_valid_up_to</span>;
 
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="ident">Available</span>(<span class="ident">T</span>),
@@ -2077,11 +2079,13 @@
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
+        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">MaybeUninit</span>;
+
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span>);
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u</span>: <span class="ident">u16</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>();
-            ::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span>), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u16</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="number">2</span>);
-            <span class="ident">u</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u</span>: <span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">MaybeUninit</span>::<span class="ident">uninit</span>();
+            ::<span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span>), <span class="ident">u</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="number">2</span>);
+            <span class="ident">u</span>.<span class="ident">assume_init</span>()
         }
     }
 
