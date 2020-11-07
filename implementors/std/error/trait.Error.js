@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["atom_syndication"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["chrono"] = [{"text":"impl Error for ParseError","synthetic":false,"types":[]},{"text":"impl Error for RoundingError","synthetic":false,"types":[]}];
 implementors["darling_core"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["mime"] = [{"text":"impl Error for FromStrError","synthetic":false,"types":[]}];

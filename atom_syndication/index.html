@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `atom_syndication` crate."><meta name="keywords" content="rust, rustlang, rust-lang, atom_syndication"><title>atom_syndication - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../atom_syndication/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate atom_syndication</p><div class='block version'><p>Version 0.9.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all atom_syndication's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'atom_syndication', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/atom_syndication/lib.rs.html#1-97' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>atom_syndication</a></span></h1><div class='docblock'><p>Library for serializing the Atom web content syndication format.</p>
+<h1 id="reading" class="section-header"><a href="#reading">Reading</a></h1>
+<p>A feed can be read from any object that implements the <code>BufRead</code> trait or using
+the <code>FromStr</code> trait.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">BufReader</span>;
+<span class="kw">use</span> <span class="ident">atom_syndication</span>::<span class="ident">Feed</span>;
+
+<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;example.xml&quot;</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">feed</span> <span class="op">=</span> <span class="ident">Feed</span>::<span class="ident">read_from</span>(<span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="ident">file</span>)).<span class="ident">unwrap</span>();
+
+<span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="string">&quot;&lt;feed&gt;&lt;/feed&gt;&quot;</span>;
+<span class="kw">let</span> <span class="ident">feed</span> <span class="op">=</span> <span class="ident">string</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Feed</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>();</pre></div>
+<h1 id="writing" class="section-header"><a href="#writing">Writing</a></h1>
+<p>A feed can be written to any object that implements the <code>Write</code> trait or converted to an XML
+string using the <code>ToString</code> trait.</p>
+<p><strong>Note</strong>: Writing a feed does not perform any escaping of XML entities.</p>
+<h2 id="example" class="section-header"><a href="#example">Example</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">BufReader</span>, <span class="ident">sink</span>};
+<span class="kw">use</span> <span class="ident">atom_syndication</span>::<span class="ident">Feed</span>;
+
+<span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="string">&quot;example.xml&quot;</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">feed</span> <span class="op">=</span> <span class="ident">Feed</span>::<span class="ident">read_from</span>(<span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="ident">file</span>)).<span class="ident">unwrap</span>();
+
+<span class="comment">// write to the feed to a writer</span>
+<span class="ident">feed</span>.<span class="ident">write_to</span>(<span class="ident">sink</span>()).<span class="ident">unwrap</span>();
+
+<span class="comment">// convert the feed to a string</span>
+<span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">feed</span>.<span class="ident">to_string</span>();</pre></div>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="extension/index.html" title='atom_syndication::extension mod'>extension</a></td><td class='docblock-short'><p>Types and functions for namespaced extensions.</p>
+</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.Category.html" title='atom_syndication::Category struct'>Category</a></td><td class='docblock-short'><p>Represents a category in an Atom feed</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.CategoryBuilder.html" title='atom_syndication::CategoryBuilder struct'>CategoryBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Category.html"><code>Category</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Content.html" title='atom_syndication::Content struct'>Content</a></td><td class='docblock-short'><p>Represents the content of an Atom entry</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.ContentBuilder.html" title='atom_syndication::ContentBuilder struct'>ContentBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Content.html"><code>Content</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Entry.html" title='atom_syndication::Entry struct'>Entry</a></td><td class='docblock-short'><p>Represents an entry in an Atom feed</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.EntryBuilder.html" title='atom_syndication::EntryBuilder struct'>EntryBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Entry.html"><code>Entry</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Feed.html" title='atom_syndication::Feed struct'>Feed</a></td><td class='docblock-short'><p>Represents an Atom feed</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.FeedBuilder.html" title='atom_syndication::FeedBuilder struct'>FeedBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Feed.html"><code>Feed</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Generator.html" title='atom_syndication::Generator struct'>Generator</a></td><td class='docblock-short'><p>Represents the generator of an Atom feed</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.GeneratorBuilder.html" title='atom_syndication::GeneratorBuilder struct'>GeneratorBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Generator.html"><code>Generator</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Link.html" title='atom_syndication::Link struct'>Link</a></td><td class='docblock-short'><p>Represents a link in an Atom feed</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.LinkBuilder.html" title='atom_syndication::LinkBuilder struct'>LinkBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Link.html"><code>Link</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Person.html" title='atom_syndication::Person struct'>Person</a></td><td class='docblock-short'><p>Represents a person in an Atom feed</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.PersonBuilder.html" title='atom_syndication::PersonBuilder struct'>PersonBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Person.html"><code>Person</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Source.html" title='atom_syndication::Source struct'>Source</a></td><td class='docblock-short'><p>Represents the source of an Atom entry</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.SourceBuilder.html" title='atom_syndication::SourceBuilder struct'>SourceBuilder</a></td><td class='docblock-short'><p>Builder for <a href="struct.Source.html"><code>Source</code></a>.</p>
+</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.Error.html" title='atom_syndication::Error enum'>Error</a></td><td class='docblock-short'><p>An error that occurred while performing an Atom operation.</p>
+</td></tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table><tr class='module-item'><td><a class="type" href="type.FixedDateTime.html" title='atom_syndication::FixedDateTime type'>FixedDateTime</a></td><td class='docblock-short'><p>Alias of <code>::chrono::DateTime&lt;::chrono::FixedOffset&gt;</code></p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "atom_syndication";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

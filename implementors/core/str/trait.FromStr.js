@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["atom_syndication"] = [{"text":"impl FromStr for Feed","synthetic":false,"types":[]}];
 implementors["chrono"] = [{"text":"impl FromStr for NaiveDate","synthetic":false,"types":[]},{"text":"impl FromStr for NaiveDateTime","synthetic":false,"types":[]},{"text":"impl FromStr for NaiveTime","synthetic":false,"types":[]},{"text":"impl FromStr for DateTime&lt;Utc&gt;","synthetic":false,"types":[]},{"text":"impl FromStr for DateTime&lt;Local&gt;","synthetic":false,"types":[]},{"text":"impl FromStr for DateTime&lt;FixedOffset&gt;","synthetic":false,"types":[]},{"text":"impl FromStr for Weekday","synthetic":false,"types":[]},{"text":"impl FromStr for Month","synthetic":false,"types":[]}];
 implementors["derive_builder_core"] = [{"text":"impl FromStr for Block","synthetic":false,"types":[]}];
 implementors["ident_case"] = [{"text":"impl FromStr for RenameRule","synthetic":false,"types":[]}];

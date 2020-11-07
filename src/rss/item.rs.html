@@ -717,6 +717,57 @@
 <span id="716">716</span>
 <span id="717">717</span>
 <span id="718">718</span>
+<span id="719">719</span>
+<span id="720">720</span>
+<span id="721">721</span>
+<span id="722">722</span>
+<span id="723">723</span>
+<span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -736,6 +787,8 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">category</span>::<span class="ident">Category</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">enclosure</span>::<span class="ident">Enclosure</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">atom</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">dublincore</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">itunes</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extension</span>::<span class="ident">util</span>::{<span class="ident">extension_name</span>, <span class="ident">parse_extension</span>};
@@ -776,6 +829,9 @@
     <span class="kw">pub</span> <span class="ident">content</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The extensions for the item.</span>
     <span class="kw">pub</span> <span class="ident">extensions</span>: <span class="ident">ExtensionMap</span>,
+    <span class="doccomment">/// The Atom extension for the channel.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">atom_ext</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">atom</span>::<span class="ident">AtomExtension</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The iTunes extension for the item.</span>
     <span class="kw">pub</span> <span class="ident">itunes_ext</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">itunes</span>::<span class="ident">ITunesItemExtension</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The Dublin Core extension for the item.</span>
@@ -1158,6 +1214,42 @@
         <span class="self">self</span>.<span class="ident">content</span> <span class="op">=</span> <span class="ident">content</span>.<span class="ident">into</span>();
     }
 
+    <span class="doccomment">/// Return the Atom extension for this item.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rss::Item;</span>
+    <span class="doccomment">/// use rss::extension::atom::AtomExtension;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut item = Item::default();</span>
+    <span class="doccomment">/// item.set_atom_ext(AtomExtension::default());</span>
+    <span class="doccomment">/// assert!(item.atom_ext().is_some());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atom_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">atom</span>::<span class="ident">AtomExtension</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">atom_ext</span>.<span class="ident">as_ref</span>()
+    }
+
+    <span class="doccomment">/// Set the Atom extension for this item.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rss::Item;</span>
+    <span class="doccomment">/// use rss::extension::atom::AtomExtension;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut item = Item::default();</span>
+    <span class="doccomment">/// item.set_atom_ext(AtomExtension::default());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_atom_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">atom_ext</span>: <span class="ident">V</span>)
+    <span class="kw">where</span>
+        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">atom</span>::<span class="ident">AtomExtension</span><span class="op">&gt;&gt;</span>,
+    {
+        <span class="self">self</span>.<span class="ident">atom_ext</span> <span class="op">=</span> <span class="ident">atom_ext</span>.<span class="ident">into</span>();
+    }
+
     <span class="doccomment">/// Return the iTunes extension for this item.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
@@ -1335,6 +1427,11 @@
             <span class="comment">// Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)</span>
             <span class="kw">for</span> (<span class="ident">prefix</span>, <span class="ident">namespace</span>) <span class="kw">in</span> <span class="ident">namespaces</span> {
                 <span class="kw">match</span> <span class="ident">namespace</span>.<span class="ident">as_ref</span>() {
+                    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
+                    <span class="ident">atom</span>::<span class="ident">NAMESPACE</span> <span class="op">=&gt;</span> <span class="ident">item</span>
+                        .<span class="ident">extensions</span>
+                        .<span class="ident">remove</span>(<span class="ident">prefix</span>)
+                        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">item</span>.<span class="ident">atom_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">atom</span>::<span class="ident">AtomExtension</span>::<span class="ident">from_map</span>(<span class="ident">v</span>))),
                     <span class="ident">itunes</span>::<span class="ident">NAMESPACE</span> <span class="op">=&gt;</span> <span class="ident">item</span>
                         .<span class="ident">extensions</span>
                         .<span class="ident">remove</span>(<span class="ident">prefix</span>)
@@ -1405,6 +1502,11 @@
                     <span class="ident">extension</span>.<span class="ident">to_xml</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
                 }
             }
+        }
+
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ext</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">atom_ext</span>.<span class="ident">as_ref</span>() {
+            <span class="ident">ext</span>.<span class="ident">to_xml</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ext</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">itunes_ext</span>.<span class="ident">as_ref</span>() {
