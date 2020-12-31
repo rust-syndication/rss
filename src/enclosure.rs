@@ -165,12 +165,9 @@ impl ToXml for Enclosure {
 
         let mut element = BytesStart::borrowed(name, name.len());
 
-        let attrs = &[
-            (b"url" as &[u8], self.url.as_bytes()),
-            (b"length", self.length.as_bytes()),
-            (b"type", self.mime_type.as_bytes()),
-        ];
-        element.extend_attributes(attrs.iter().cloned());
+        element.push_attribute(("url", self.url.as_str()));
+        element.push_attribute(("length", self.length.as_str()));
+        element.push_attribute(("type", self.mime_type.as_str()));
 
         writer.write_event(Event::Empty(element))?;
         Ok(())

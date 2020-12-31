@@ -1,6 +1,6 @@
 extern crate rss;
 
-use rss::{extension, Channel, ChannelBuilder, ItemBuilder};
+use rss::{extension, Channel, ChannelBuilder, CloudBuilder, EnclosureBuilder, ItemBuilder};
 use std::collections::HashMap;
 
 macro_rules! test_write {
@@ -186,4 +186,55 @@ fn test_namespaces() {
     assert!(xml.contains("xmlns:content="));
     assert!(xml.contains("xmlns:dc="));
     assert!(xml.contains("xmlns:itunes="));
+}
+
+#[test]
+fn test_escape() {
+    let mut attrs = HashMap::new();
+    attrs.insert("key1".to_owned(), "value 1&2".to_owned());
+    attrs.insert("key2".to_owned(), "value 2&3".to_owned());
+
+    let mut extension_tag = HashMap::new();
+    extension_tag.insert(
+        "n1".to_owned(),
+        vec![extension::ExtensionBuilder::default()
+            .name("ext")
+            .attrs(attrs)
+            .build()
+            .unwrap()],
+    );
+
+    let mut extensions = HashMap::new();
+    extensions.insert("e1".to_owned(), extension_tag);
+
+    let channel = ChannelBuilder::default()
+        .cloud(
+            CloudBuilder::default()
+                .domain("example.com")
+                .port("80")
+                .path("/rpc?r=1&p=2&c=3")
+                .register_procedure("notify")
+                .protocol("xml-rpc")
+                .build()
+                .unwrap(),
+        )
+        .extensions(extensions)
+        .items(vec![ItemBuilder::default()
+            .content("Lorem ipsum dolor sit amet".to_owned())
+            .enclosure(
+                EnclosureBuilder::default()
+                    .url("http://example.com?test=1&another=true")
+                    .build()
+                    .unwrap(),
+            )
+            .build()
+            .unwrap()])
+        .build()
+        .unwrap();
+    let xml = channel.to_string();
+
+    assert!(xml.contains("value 1&amp;2"));
+    assert!(xml.contains("value 2&amp;3"));
+    assert!(xml.contains("r=1&amp;p=2&amp;c=3"));
+    assert!(xml.contains("http://example.com?test=1&amp;another=true"));
 }

@@ -238,14 +238,11 @@ impl ToXml for Cloud {
         let name = b"cloud";
         let mut element = BytesStart::borrowed(name, name.len());
 
-        let attrs = &[
-            (b"domain" as &[u8], self.domain.as_bytes()),
-            (b"port", self.port.as_bytes()),
-            (b"path", self.path.as_bytes()),
-            (b"registerProcedure", self.register_procedure.as_bytes()),
-            (b"protocol", self.protocol.as_bytes()),
-        ];
-        element.extend_attributes(attrs.iter().cloned());
+        element.push_attribute(("domain", self.domain.as_str()));
+        element.push_attribute(("port", self.port.as_str()));
+        element.push_attribute(("path", self.path.as_str()));
+        element.push_attribute(("registerProcedure", self.register_procedure.as_str()));
+        element.push_attribute(("protocol", self.protocol.as_str()));
 
         writer.write_event(Event::Empty(element))?;
         Ok(())
