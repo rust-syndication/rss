@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder-0.9.0/src/options/darling_opts.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>darling_opts.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../derive_builder/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder-0.9.0/src/options/darling_opts.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>darling_opts.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../derive_builder/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -610,20 +612,20 @@
 <span class="doccomment">/// expose those flags and provides a method to compute any explicit visibility</span>
 <span class="doccomment">/// bounds.</span>
 <span class="kw">trait</span> <span class="ident">FlagVisibility</span> {
-    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span>;
-    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span>;
+    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span>;
+    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span>;
 
     <span class="doccomment">/// Get the explicitly-expressed visibility preference from the attribute.</span>
     <span class="doccomment">/// This returns `None` if the input didn&#39;t include either keyword.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">/// This method panics if the input specifies both `public` and `private`.</span>
-    <span class="kw">fn</span> <span class="ident">as_expressed_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Visibility</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">as_expressed_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Visibility</span><span class="op">&gt;</span> {
         <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">public</span>().<span class="ident">is_some</span>(), <span class="self">self</span>.<span class="ident">private</span>().<span class="ident">is_some</span>()) {
-            (<span class="bool-val">true</span>, <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;A field cannot be both public and private&quot;</span>),
-            (<span class="bool-val">true</span>, <span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">syn</span>::<span class="ident">parse_str</span>(<span class="string">&quot;pub&quot;</span>).<span class="ident">unwrap</span>()),
-            (<span class="bool-val">false</span>, <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Visibility</span>::<span class="ident">Inherited</span>),
-            (<span class="bool-val">false</span>, <span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            (<span class="bool-val">true</span>, <span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;A field cannot be both public and private&quot;</span>),
+            (<span class="bool-val">true</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">syn</span>::<span class="ident">parse_str</span>(<span class="string">&quot;pub&quot;</span>).<span class="ident">unwrap</span>()),
+            (<span class="bool-val">false</span>, <span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Visibility</span>::<span class="ident">Inherited</span>),
+            (<span class="bool-val">false</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
@@ -642,7 +644,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">BuildFn</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">BuildFn</span> {
             <span class="ident">skip</span>: <span class="bool-val">false</span>,
             <span class="ident">name</span>: <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="string">&quot;build&quot;</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()),
@@ -654,11 +656,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">FlagVisibility</span> <span class="kw">for</span> <span class="ident">BuildFn</span> {
-    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">public</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">private</span>
     }
 }
@@ -672,11 +674,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">FlagVisibility</span> <span class="kw">for</span> <span class="ident">FieldMeta</span> {
-    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">public</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">private</span>
     }
 }
@@ -693,7 +695,7 @@
 <span class="kw">impl</span> <span class="ident">StructLevelSetter</span> {
     <span class="doccomment">/// Check if setters are explicitly enabled or disabled at</span>
     <span class="doccomment">/// the struct level.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">skip</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="op">!</span><span class="ident">x</span>)
     }
 }
@@ -715,7 +717,7 @@
 <span class="kw">impl</span> <span class="ident">FieldLevelSetter</span> {
     <span class="doccomment">/// Get whether the setter should be emitted. The rules are the same as</span>
     <span class="doccomment">/// for `field_enabled`, except we only skip the setter if `setter(custom)` is present.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">custom</span>.<span class="ident">is_some</span>() {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">custom</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="op">!</span><span class="ident">x</span>);
         }
@@ -727,15 +729,15 @@
     <span class="doccomment">/// field should be emitted. The setter shorthand rules are that the</span>
     <span class="doccomment">/// presence of a `setter` with _any_ properties set forces the setter</span>
     <span class="doccomment">/// to be emitted.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">skip</span>.<span class="ident">is_some</span>() {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">skip</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="op">!</span><span class="ident">x</span>);
         }
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">is_some</span>()
-            <span class="op">||</span> <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">is_some</span>()
-            <span class="op">||</span> <span class="self">self</span>.<span class="ident">into</span>.<span class="ident">is_some</span>()
-            <span class="op">||</span> <span class="self">self</span>.<span class="ident">strip_option</span>.<span class="ident">is_some</span>()
+            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">is_some</span>()
+            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">into</span>.<span class="ident">is_some</span>()
+            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">strip_option</span>.<span class="ident">is_some</span>()
         {
             <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="bool-val">true</span>);
         }
@@ -757,23 +759,23 @@
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">FieldSetterMeta</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FieldLevelSetter</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">FieldSetterMeta</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">FieldSetterMeta</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">v</span> {
-            <span class="ident">FieldSetterMeta</span>::<span class="ident">Shorthand</span> <span class="op">=&gt;</span> <span class="ident">FieldLevelSetter</span> {
+            <span class="ident">FieldSetterMeta</span>::<span class="ident">Shorthand</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">FieldLevelSetter</span> {
                 <span class="ident">skip</span>: <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
                 ..<span class="ident">Default</span>::<span class="ident">default</span>()
             },
-            <span class="ident">FieldSetterMeta</span>::<span class="ident">Longhand</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="ident">val</span>,
+            <span class="ident">FieldSetterMeta</span>::<span class="ident">Longhand</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">val</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">FromMeta</span> <span class="kw">for</span> <span class="ident">FieldSetterMeta</span> {
-    <span class="kw">fn</span> <span class="ident">from_word</span>() <span class="op">-&gt;</span> <span class="ident">darling</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_word</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">darling</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">FieldSetterMeta</span>::<span class="ident">Shorthand</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">from_meta</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Meta</span>) <span class="op">-&gt;</span> <span class="ident">darling</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_meta</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Meta</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">darling</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Meta</span>::<span class="ident">Path</span>(<span class="kw">_</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">value</span> {
             <span class="ident">FieldSetterMeta</span>::<span class="ident">from_word</span>()
         } <span class="kw">else</span> {
@@ -821,11 +823,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">FlagVisibility</span> <span class="kw">for</span> <span class="ident">Field</span> {
-    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">public</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">private</span>
     }
 }
@@ -892,18 +894,18 @@
 }
 
 <span class="kw">impl</span> <span class="ident">FlagVisibility</span> <span class="kw">for</span> <span class="ident">Options</span> {
-    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">public</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">public</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
+    <span class="kw">fn</span> <span class="ident">private</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Flag</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">private</span>
     }
 }
 
 <span class="doccomment">/// Accessors for parsed properties.</span>
 <span class="kw">impl</span> <span class="ident">Options</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder_ident</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Ident</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder_ident</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ident</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">custom</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span> {
             <span class="kw">return</span> <span class="ident">custom</span>.<span class="ident">clone</span>();
         }
@@ -915,19 +917,19 @@
     <span class="doccomment">/// The visibility of the builder struct.</span>
     <span class="doccomment">/// If a visibility was declared in attributes, that will be used;</span>
     <span class="doccomment">/// otherwise the struct&#39;s own visibility will be used.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Visibility</span> {
-        <span class="self">self</span>.<span class="ident">as_expressed_vis</span>().<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="self">self</span>.<span class="ident">vis</span>.<span class="ident">clone</span>())
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Visibility</span> {
+        <span class="self">self</span>.<span class="ident">as_expressed_vis</span>().<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">vis</span>.<span class="ident">clone</span>())
     }
 
     <span class="doccomment">/// Get the visibility of the emitted `build` method.</span>
     <span class="doccomment">/// This defaults to the visibility of the parent builder, but can be overridden.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build_method_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Visibility</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build_method_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Visibility</span> {
         <span class="self">self</span>.<span class="ident">build_fn</span>
             .<span class="ident">as_expressed_vis</span>()
-            .<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="self">self</span>.<span class="ident">builder_vis</span>())
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">builder_vis</span>())
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">raw_fields</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Field</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">raw_fields</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Field</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">data</span>
             .<span class="ident">as_ref</span>()
             .<span class="ident">take_struct</span>()
@@ -937,21 +939,21 @@
 
     <span class="doccomment">/// A builder requires `Clone` to be derived if its build method or any of its setters</span>
     <span class="doccomment">/// use the mutable or immutable pattern.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">requires_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">pattern</span>.<span class="ident">requires_clone</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">fields</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">f</span>.<span class="ident">pattern</span>().<span class="ident">requires_clone</span>())
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">requires_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">pattern</span>.<span class="ident">requires_clone</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">fields</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">f</span>.<span class="ident">pattern</span>().<span class="ident">requires_clone</span>())
     }
 
     <span class="doccomment">/// Get an iterator over the input struct&#39;s fields which pulls fallback</span>
     <span class="doccomment">/// values from struct-level settings.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fields</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">FieldIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fields</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">FieldIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">FieldIter</span>(<span class="self">self</span>, <span class="self">self</span>.<span class="ident">raw_fields</span>().<span class="ident">into_iter</span>())
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">raw_fields</span>().<span class="ident">len</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">bindings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Bindings</span> {
+    <span class="kw">fn</span> <span class="ident">bindings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bindings</span> {
         <span class="ident">Bindings</span> {
             <span class="ident">no_std</span>: <span class="self">self</span>.<span class="ident">no_std</span>.<span class="ident">is_some</span>(),
         }
@@ -960,7 +962,7 @@
 
 <span class="doccomment">/// Converters to codegen structs</span>
 <span class="kw">impl</span> <span class="ident">Options</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">Builder</span> {
             <span class="ident">enabled</span>: <span class="bool-val">true</span>,
             <span class="ident">ident</span>: <span class="self">self</span>.<span class="ident">builder_ident</span>(),
@@ -977,7 +979,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_build_method</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BuildMethod</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_build_method</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BuildMethod</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">ty_generics</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">generics</span>.<span class="ident">split_for_impl</span>();
         <span class="ident">BuildMethod</span> {
             <span class="ident">enabled</span>: <span class="op">!</span><span class="self">self</span>.<span class="ident">build_fn</span>.<span class="ident">skip</span>,
@@ -1009,7 +1011,7 @@
 <span class="doccomment">/// parent struct&#39;s configuration.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FieldWithDefaults</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Check if this field should emit a setter.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">setter</span>
             .<span class="ident">setter_enabled</span>()
@@ -1017,7 +1019,7 @@
             .<span class="ident">unwrap_or</span>(<span class="bool-val">true</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">setter</span>
             .<span class="ident">field_enabled</span>()
@@ -1027,13 +1029,13 @@
 
     <span class="doccomment">/// Check if this field should emit a fallible setter.</span>
     <span class="doccomment">/// This depends on the `TryFrom` trait, which hasn&#39;t yet stabilized.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_setter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">field</span>.<span class="ident">try_setter</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">try_setter</span>.<span class="ident">is_some</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_setter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">field</span>.<span class="ident">try_setter</span>.<span class="ident">is_some</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">try_setter</span>.<span class="ident">is_some</span>()
     }
 
     <span class="doccomment">/// Get the prefix that should be applied to the field name to produce</span>
     <span class="doccomment">/// the setter ident, if any.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_prefix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Ident</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_prefix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Ident</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">setter</span>
             .<span class="ident">prefix</span>
@@ -1042,7 +1044,7 @@
     }
 
     <span class="doccomment">/// Get the ident of the emitted setter method</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_ident</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">syn</span>::<span class="ident">Ident</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_ident</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="ident">Ident</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">custom</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">field</span>.<span class="ident">setter</span>.<span class="ident">name</span> {
             <span class="kw">return</span> <span class="ident">custom</span>.<span class="ident">clone</span>();
         }
@@ -1058,7 +1060,7 @@
 
     <span class="doccomment">/// Checks if the emitted setter should be generic over types that impl</span>
     <span class="doccomment">/// `Into&lt;FieldType&gt;`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_into</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_into</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">setter</span>
             .<span class="ident">into</span>
@@ -1068,7 +1070,7 @@
 
     <span class="doccomment">/// Checks if the emitted setter should strip the wrapper Option over types that impl</span>
     <span class="doccomment">/// `Option&lt;FieldType&gt;`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_strip_option</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_strip_option</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">setter</span>
             .<span class="ident">strip_option</span>
@@ -1077,43 +1079,43 @@
     }
 
     <span class="doccomment">/// Get the visibility of the emitted setter, if there will be one.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Visibility</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">setter_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Visibility</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">as_expressed_vis</span>()
-            .<span class="ident">or_else</span>(<span class="op">||</span> <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">as_expressed_vis</span>())
+            .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">as_expressed_vis</span>())
             .<span class="ident">unwrap_or</span>(<span class="ident">syn</span>::<span class="ident">parse_str</span>(<span class="string">&quot;pub&quot;</span>).<span class="ident">unwrap</span>())
     }
 
     <span class="doccomment">/// Get the ident of the input field. This is also used as the ident of the</span>
     <span class="doccomment">/// emitted field.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_ident</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Ident</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_ident</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Ident</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">ident</span>
             .<span class="ident">as_ref</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Tuple structs are not supported&quot;</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Visibility</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">field_vis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Visibility</span> {
         <span class="self">self</span>.<span class="ident">field</span>
             .<span class="ident">field</span>
             .<span class="ident">as_expressed_vis</span>()
-            .<span class="ident">or_else</span>(<span class="op">||</span> <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">field</span>.<span class="ident">as_expressed_vis</span>())
+            .<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">field</span>.<span class="ident">as_expressed_vis</span>())
             .<span class="ident">unwrap_or</span>(<span class="ident">Visibility</span>::<span class="ident">Inherited</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pattern</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BuilderPattern</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pattern</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BuilderPattern</span> {
         <span class="self">self</span>.<span class="ident">field</span>.<span class="ident">pattern</span>.<span class="ident">unwrap_or</span>(<span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">pattern</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_parent_default</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">use_parent_default</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">field</span>.<span class="ident">default</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">default</span>.<span class="ident">is_some</span>()
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deprecation_notes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">DeprecationNotes</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deprecation_notes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">DeprecationNotes</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">deprecation_notes</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">bindings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Bindings</span> {
+    <span class="kw">fn</span> <span class="ident">bindings</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bindings</span> {
         <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">bindings</span>()
     }
 }
@@ -1121,7 +1123,7 @@
 <span class="doccomment">/// Converters to codegen structs</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FieldWithDefaults</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Returns a `Setter` according to the options.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_setter</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Setter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_setter</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Setter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">Setter</span> {
             <span class="ident">setter_enabled</span>: <span class="self">self</span>.<span class="ident">setter_enabled</span>(),
             <span class="ident">try_setter</span>: <span class="self">self</span>.<span class="ident">try_setter</span>(),
@@ -1143,7 +1145,7 @@
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// if `default_expression` can not be parsed as `Block`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_initializer</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Initializer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_initializer</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Initializer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">Initializer</span> {
             <span class="ident">field_enabled</span>: <span class="self">self</span>.<span class="ident">field_enabled</span>(),
             <span class="ident">field_ident</span>: <span class="self">self</span>.<span class="ident">field_ident</span>(),
@@ -1158,7 +1160,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_builder_field</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BuilderField</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_builder_field</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BuilderField</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">BuilderField</span> {
             <span class="ident">field_ident</span>: <span class="self">self</span>.<span class="ident">field_ident</span>(),
             <span class="ident">field_type</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">field</span>.<span class="ident">ty</span>,
@@ -1175,7 +1177,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">FieldIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">FieldWithDefaults</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="number">1</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> <span class="ident">FieldWithDefaults</span> {
             <span class="ident">parent</span>: <span class="self">self</span>.<span class="number">0</span>,
             <span class="ident">field</span>,

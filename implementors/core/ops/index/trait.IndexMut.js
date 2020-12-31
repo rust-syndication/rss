@@ -1,4 +1,4 @@
 (function() {var implementors = {};
 implementors["syn"] = [{"text":"impl&lt;T, P&gt; IndexMut&lt;usize&gt; for Punctuated&lt;T, P&gt;","synthetic":false,"types":[]}];
-implementors["tinyvec"] = [{"text":"impl&lt;A:&nbsp;Array, I:&nbsp;SliceIndex&lt;[A::Item]&gt;&gt; IndexMut&lt;I&gt; for ArrayVec&lt;A&gt;","synthetic":false,"types":[]},{"text":"impl&lt;A:&nbsp;Array, I:&nbsp;SliceIndex&lt;[A::Item]&gt;&gt; IndexMut&lt;I&gt; for TinyVec&lt;A&gt;","synthetic":false,"types":[]}];
+implementors["tinyvec"] = [{"text":"impl&lt;A:&nbsp;Array, I:&nbsp;SliceIndex&lt;[A::Item]&gt;&gt; IndexMut&lt;I&gt; for ArrayVec&lt;A&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'s, T, I&gt; IndexMut&lt;I&gt; for SliceVec&lt;'s, T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: SliceIndex&lt;[T]&gt;,&nbsp;</span>","synthetic":false,"types":[]},{"text":"impl&lt;A:&nbsp;Array, I:&nbsp;SliceIndex&lt;[A::Item]&gt;&gt; IndexMut&lt;I&gt; for TinyVec&lt;A&gt;","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
