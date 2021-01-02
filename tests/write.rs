@@ -1,6 +1,9 @@
 extern crate rss;
 
-use rss::{extension, Channel, ChannelBuilder, CloudBuilder, EnclosureBuilder, ItemBuilder};
+use rss::{
+    extension, CategoryBuilder, Channel, ChannelBuilder, CloudBuilder, EnclosureBuilder,
+    ItemBuilder, SourceBuilder,
+};
 use std::collections::HashMap;
 
 macro_rules! test_write {
@@ -190,24 +193,11 @@ fn test_namespaces() {
 
 #[test]
 fn test_escape() {
-    let mut attrs = HashMap::new();
-    attrs.insert("key1".to_owned(), "value 1&2".to_owned());
-    attrs.insert("key2".to_owned(), "value 2&3".to_owned());
-
-    let mut extension_tag = HashMap::new();
-    extension_tag.insert(
-        "n1".to_owned(),
-        vec![extension::ExtensionBuilder::default()
-            .name("ext")
-            .attrs(attrs)
+    let mut channel = ChannelBuilder::default()
+        .categories(vec![CategoryBuilder::default()
+            .name("this & that")
             .build()
-            .unwrap()],
-    );
-
-    let mut extensions = HashMap::new();
-    extensions.insert("e1".to_owned(), extension_tag);
-
-    let channel = ChannelBuilder::default()
+            .unwrap()])
         .cloud(
             CloudBuilder::default()
                 .domain("example.com")
@@ -218,7 +208,6 @@ fn test_escape() {
                 .build()
                 .unwrap(),
         )
-        .extensions(extensions)
         .items(vec![ItemBuilder::default()
             .content("Lorem ipsum dolor sit amet".to_owned())
             .enclosure(
@@ -227,14 +216,77 @@ fn test_escape() {
                     .build()
                     .unwrap(),
             )
+            .source(
+                SourceBuilder::default()
+                    .url("http://example.com?test=2&another=false")
+                    .title("<title>".to_owned())
+                    .build()
+                    .unwrap(),
+            )
             .build()
             .unwrap()])
         .build()
         .unwrap();
+
+    let mut attrs = HashMap::new();
+    attrs.insert("ext:key1".to_owned(), "value 1&2".to_owned());
+    attrs.insert("ext:key2".to_owned(), "value 2&3".to_owned());
+
+    let mut extension_tag = HashMap::new();
+    extension_tag.insert(
+        "tag".to_owned(),
+        vec![extension::ExtensionBuilder::default()
+            .name("ext:tag")
+            .attrs(attrs)
+            .build()
+            .unwrap()],
+    );
+
+    channel.extensions.insert("ext".to_owned(), extension_tag);
+    channel
+        .namespaces
+        .insert("ext".to_owned(), "http://example.com/ext".to_owned());
+
     let xml = channel.to_string();
 
+    assert!(xml.contains("this &amp; that"));
     assert!(xml.contains("value 1&amp;2"));
     assert!(xml.contains("value 2&amp;3"));
     assert!(xml.contains("r=1&amp;p=2&amp;c=3"));
     assert!(xml.contains("http://example.com?test=1&amp;another=true"));
+    assert!(xml.contains("http://example.com?test=2&amp;another=false"));
+    assert!(xml.contains("&lt;title&gt;"));
+
+    let channel = rss::Channel::read_from(xml.as_bytes()).unwrap();
+
+    assert_eq!(channel.categories[0].name, "this & that");
+    assert_eq!(channel.cloud.unwrap().path, "/rpc?r=1&p=2&c=3");
+    assert_eq!(channel.extensions["ext"]["tag"][0].name, "ext:tag");
+    assert_eq!(channel.extensions["ext"]["tag"][0].value, None);
+    assert_eq!(
+        channel.extensions["ext"]["tag"][0].attrs["ext:key1"],
+        "value 1&2"
+    );
+    assert_eq!(
+        channel.extensions["ext"]["tag"][0].attrs["ext:key2"],
+        "value 2&3"
+    );
+    assert_eq!(
+        channel.items[0].enclosure.as_ref().unwrap().url,
+        "http://example.com?test=1&another=true"
+    );
+    assert_eq!(
+        channel.items[0].source.as_ref().unwrap().url,
+        "http://example.com?test=2&another=false"
+    );
+    assert_eq!(
+        channel.items[0]
+            .source
+            .as_ref()
+            .unwrap()
+            .title
+            .as_ref()
+            .unwrap(),
+        "<title>"
+    );
 }

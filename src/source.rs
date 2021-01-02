@@ -125,8 +125,8 @@ impl ToXml for Source {
 
         writer.write_event(Event::Start(element))?;
 
-        if let Some(text) = self.title.as_ref().map(String::as_bytes) {
-            writer.write_event(Event::Text(BytesText::from_escaped(text)))?;
+        if let Some(ref text) = self.title {
+            writer.write_event(Event::Text(BytesText::from_plain_str(text)))?;
         }
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
