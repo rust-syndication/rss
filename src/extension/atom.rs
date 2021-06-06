@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::io::Write;
 
 pub use atom_syndication::Link;
@@ -53,8 +53,8 @@ impl AtomExtension {
 }
 
 impl AtomExtension {
-    /// Creates an `AtomExtension` using the specified `HashMap`.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
+    /// Creates an `AtomExtension` using the specified `BTreeMap`.
+    pub fn from_map(mut map: BTreeMap<String, Vec<Extension>>) -> Self {
         let mut ext = Self::default();
 
         ext.links = map

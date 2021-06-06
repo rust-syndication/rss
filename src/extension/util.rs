@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::io::BufRead;
 use std::str;
 
@@ -40,7 +40,7 @@ where
 
     let map = extensions
         .entry(ns.to_string())
-        .or_insert_with(HashMap::new);
+        .or_insert_with(BTreeMap::new);
 
     let items = map.entry(name.to_string()).or_insert_with(Vec::new);
     items.push(ext);
@@ -102,7 +102,7 @@ pub fn get_extension_values(v: Vec<Extension>) -> Vec<String> {
 }
 
 pub fn remove_extension_value(
-    map: &mut HashMap<String, Vec<Extension>>,
+    map: &mut BTreeMap<String, Vec<Extension>>,
     key: &str,
 ) -> Option<String> {
     map.remove(key)

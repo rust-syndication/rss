@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::io::Write;
 use std::str;
 
@@ -32,7 +32,7 @@ pub mod syndication;
 pub(crate) mod util;
 
 /// A map of extension namespace prefixes to local names to elements.
-pub type ExtensionMap = HashMap<String, HashMap<String, Vec<Extension>>>;
+pub type ExtensionMap = BTreeMap<String, BTreeMap<String, Vec<Extension>>>;
 
 /// A namespaced extension such as iTunes or Dublin Core.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -53,11 +53,11 @@ pub struct Extension {
     pub value: Option<String>,
     /// The attributes for the extension element.
     #[cfg_attr(feature = "builders", builder(setter(each = "attr")))]
-    pub attrs: HashMap<String, String>,
+    pub attrs: BTreeMap<String, String>,
     /// The children of the extension element. This is a map of local names to child
     /// elements.
     #[cfg_attr(feature = "builders", builder(setter(each = "child")))]
-    pub children: HashMap<String, Vec<Extension>>,
+    pub children: BTreeMap<String, Vec<Extension>>,
 }
 
 impl Extension {
@@ -88,14 +88,14 @@ impl Extension {
     }
 
     /// Return the attributes for the extension element.
-    pub fn attrs(&self) -> &HashMap<String, String> {
+    pub fn attrs(&self) -> &BTreeMap<String, String> {
         &self.attrs
     }
 
     /// Return the children of the extension element.
     ///
     /// This is a map of local names to child elements.
-    pub fn children(&self) -> &HashMap<String, Vec<Extension>> {
+    pub fn children(&self) -> &BTreeMap<String, Vec<Extension>> {
         &self.children
     }
 }
