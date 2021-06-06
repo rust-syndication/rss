@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::{BTreeMap, HashMap};
+use std::collections::BTreeMap;
 use std::io::{BufRead, Write};
 use std::str::{self, FromStr};
 
@@ -102,7 +102,7 @@ pub struct Channel {
     pub syndication_ext: Option<syndication::SyndicationExtension>,
     /// The namespaces present in the RSS tag.
     #[cfg_attr(feature = "builders", builder(setter(each = "namespace")))]
-    pub namespaces: HashMap<String, String>,
+    pub namespaces: BTreeMap<String, String>,
 }
 
 impl Channel {
@@ -940,13 +940,13 @@ impl Channel {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::HashMap;
+    /// use std::collections::BTreeMap;
     /// use rss::Channel;
     /// use rss::extension::{ExtensionMap, Extension};
     ///
     /// let extension = Extension::default();
     ///
-    /// let mut item_map = HashMap::<String, Vec<Extension>>::new();
+    /// let mut item_map = BTreeMap::<String, Vec<Extension>>::new();
     /// item_map.insert("ext:name".to_string(), vec![extension]);
     ///
     /// let mut extension_map = ExtensionMap::default();
@@ -987,17 +987,17 @@ impl Channel {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::HashMap;
+    /// use std::collections::BTreeMap;
     /// use rss::Channel;
     ///
-    /// let mut namespaces = HashMap::new();
+    /// let mut namespaces = BTreeMap::new();
     /// namespaces.insert("ext".to_string(), "http://example.com".to_string());
     ///
     /// let mut channel = Channel::default();
     /// channel.set_namespaces(namespaces);
     /// assert_eq!(channel.namespaces().get("ext").map(String::as_str), Some("http://example.com"));
     /// ```
-    pub fn namespaces(&self) -> &HashMap<String, String> {
+    pub fn namespaces(&self) -> &BTreeMap<String, String> {
         &self.namespaces
     }
 
@@ -1006,15 +1006,15 @@ impl Channel {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::HashMap;
+    /// use std::collections::BTreeMap;
     /// use rss::Channel;
     ///
     /// let mut channel = Channel::default();
-    /// channel.set_namespaces(HashMap::new());
+    /// channel.set_namespaces(BTreeMap::new());
     /// ```
     pub fn set_namespaces<V>(&mut self, namespaces: V)
     where
-        V: Into<HashMap<String, String>>,
+        V: Into<BTreeMap<String, String>>,
     {
         self.namespaces = namespaces.into()
     }
@@ -1032,7 +1032,7 @@ impl Channel {
     pub fn read_from<R: BufRead>(reader: R) -> Result<Channel, Error> {
         let mut reader = Reader::from_reader(reader);
         reader.trim_text(true).expand_empty_elements(true);
-        let mut namespaces = HashMap::new();
+        let mut namespaces = BTreeMap::new();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();
 
@@ -1191,7 +1191,7 @@ impl ToString for Channel {
 impl Channel {
     /// Builds a Channel from source XML
     pub fn from_xml<R: BufRead>(
-        namespaces: &HashMap<String, String>,
+        namespaces: &BTreeMap<String, String>,
         reader: &mut Reader<R>,
         _: Attributes,
     ) -> Result<Self, Error> {
@@ -1446,8 +1446,8 @@ impl ToXml for Channel {
         Ok(())
     }
 
-    fn used_namespaces(&self) -> HashMap<String, String> {
-        let mut namespaces = HashMap::new();
+    fn used_namespaces(&self) -> BTreeMap<String, String> {
+        let mut namespaces = BTreeMap::new();
         for item in &self.items {
             namespaces.extend(item.used_namespaces());
         }

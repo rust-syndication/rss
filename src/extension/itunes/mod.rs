@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 use crate::extension::Extension;
 
@@ -22,7 +22,7 @@ pub use self::itunes_owner::*;
 /// The iTunes XML namespace.
 pub const NAMESPACE: &str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
 
-fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
+fn parse_image(map: &mut BTreeMap<String, Vec<Extension>>) -> Option<String> {
     let mut element = match map.remove("image").map(|mut v| v.remove(0)) {
         Some(element) => element,
         None => return None,
@@ -31,7 +31,7 @@ fn parse_image(map: &mut HashMap<String, Vec<Extension>>) -> Option<String> {
     element.attrs.remove("href")
 }
 
-fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Vec<ITunesCategory> {
+fn parse_categories(map: &mut BTreeMap<String, Vec<Extension>>) -> Vec<ITunesCategory> {
     let mut elements = match map.remove("category") {
         Some(elements) => elements,
         None => return Vec::new(),
@@ -62,7 +62,7 @@ fn parse_categories(map: &mut HashMap<String, Vec<Extension>>) -> Vec<ITunesCate
     categories
 }
 
-fn parse_owner(map: &mut HashMap<String, Vec<Extension>>) -> Option<ITunesOwner> {
+fn parse_owner(map: &mut BTreeMap<String, Vec<Extension>>) -> Option<ITunesOwner> {
     if let Some(mut element) = map.remove("owner").map(|mut v| v.remove(0)) {
         let name = element
             .children

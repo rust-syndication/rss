@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::fmt;
 use std::io::Write;
 use std::str::FromStr;
@@ -117,7 +117,7 @@ impl SyndicationExtension {
     /// Serialises this extension to the nominated writer
     pub fn to_xml<W: Write>(
         &self,
-        namespaces: &HashMap<String, String>,
+        namespaces: &BTreeMap<String, String>,
         writer: &mut Writer<W>,
     ) -> Result<(), XmlError> {
         for (prefix, namespace) in namespaces {
@@ -148,7 +148,7 @@ impl Default for SyndicationExtension {
 }
 
 /// Retrieves the extensions for the nominated field and runs the callback if there is at least 1 extension value
-fn with_first_ext_value<'a, F>(map: &'a HashMap<String, Vec<Extension>>, field: &str, f: F)
+fn with_first_ext_value<'a, F>(map: &'a BTreeMap<String, Vec<Extension>>, field: &str, f: F)
 where
     F: FnOnce(&'a str),
 {
@@ -162,8 +162,8 @@ where
 }
 
 impl SyndicationExtension {
-    /// Creates a `SyndicationExtension` using the specified `HashMap`.
-    pub fn from_map(map: HashMap<String, Vec<Extension>>) -> Self {
+    /// Creates a `SyndicationExtension` using the specified `BTreeMap`.
+    pub fn from_map(map: BTreeMap<String, Vec<Extension>>) -> Self {
         let mut syn = SyndicationExtension::default();
 
         with_first_ext_value(&map, "updatePeriod", |value| {

@@ -1,6 +1,6 @@
 extern crate rss;
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 use rss::extension::dublincore::DublinCoreExtension;
 use rss::extension::syndication;
@@ -8,7 +8,7 @@ use rss::extension::Extension;
 use rss::Channel;
 
 fn get_extension_values<'a>(
-    map: &'a HashMap<String, Vec<Extension>>,
+    map: &'a BTreeMap<String, Vec<Extension>>,
     key: &str,
 ) -> Option<Vec<&'a str>> {
     map.get(key)

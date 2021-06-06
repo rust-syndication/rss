@@ -4,7 +4,7 @@ use rss::{
     extension, CategoryBuilder, Channel, ChannelBuilder, CloudBuilder, EnclosureBuilder,
     GuidBuilder, ImageBuilder, ItemBuilder, SourceBuilder, TextInputBuilder,
 };
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 macro_rules! test_write {
     ($channel: ident) => {{
@@ -126,7 +126,7 @@ fn verify_write_format() {
         .dublin_core_ext(extension::dublincore::DublinCoreExtension::default())
         .build();
 
-    let mut namespaces: HashMap<String, String> = HashMap::new();
+    let mut namespaces: BTreeMap<String, String> = BTreeMap::new();
     namespaces.insert("ext".to_string(), "http://example.com/".to_string());
 
     let channel = ChannelBuilder::default()
@@ -235,11 +235,11 @@ fn test_escape() {
         )
         .build();
 
-    let mut attrs = HashMap::new();
+    let mut attrs = BTreeMap::new();
     attrs.insert("ext:key1".to_owned(), "value 1&2".to_owned());
     attrs.insert("ext:key2".to_owned(), "value 2&3".to_owned());
 
-    let mut extension_tag = HashMap::new();
+    let mut extension_tag = BTreeMap::new();
     extension_tag.insert(
         "tag".to_owned(),
         vec![extension::ExtensionBuilder::default()

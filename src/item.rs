@@ -5,6 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
+use std::collections::BTreeMap;
 use std::io::{BufRead, Write};
 
 use quick_xml::events::attributes::Attributes;
@@ -26,7 +27,6 @@ use crate::guid::Guid;
 use crate::source::Source;
 use crate::toxml::{ToXml, WriterExt};
 use crate::util::element_text;
-use std::collections::HashMap;
 
 /// Represents an item in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -561,13 +561,13 @@ impl Item {
     /// # Examples
     ///
     /// ```
-    /// use std::collections::HashMap;
+    /// use std::collections::BTreeMap;
     /// use rss::Item;
     /// use rss::extension::{ExtensionMap, Extension};
     ///
     /// let extension = Extension::default();
     ///
-    /// let mut item_map = HashMap::<String, Vec<Extension>>::new();
+    /// let mut item_map = BTreeMap::<String, Vec<Extension>>::new();
     /// item_map.insert("ext:name".to_string(), vec![extension]);
     ///
     /// let mut extension_map = ExtensionMap::default();
@@ -607,7 +607,7 @@ impl Item {
 impl Item {
     /// Builds an Item from source XML
     pub fn from_xml<R: BufRead>(
-        namespaces: &HashMap<String, String>,
+        namespaces: &BTreeMap<String, String>,
         reader: &mut Reader<R>,
         _: Attributes,
     ) -> Result<Self, Error> {
@@ -759,8 +759,8 @@ impl ToXml for Item {
         Ok(())
     }
 
-    fn used_namespaces(&self) -> HashMap<String, String> {
-        let mut namespaces = HashMap::new();
+    fn used_namespaces(&self) -> BTreeMap<String, String> {
+        let mut namespaces = BTreeMap::new();
         if self.content.is_some() {
             namespaces.insert(
                 "content".to_owned(),

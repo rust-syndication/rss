@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::io::Write;
 
 use quick_xml::Error as XmlError;
@@ -358,8 +358,8 @@ impl DublinCoreExtension {
 }
 
 impl DublinCoreExtension {
-    /// Creates a `DublinCoreExtension` using the specified `HashMap`.
-    pub fn from_map(map: HashMap<String, Vec<Extension>>) -> Self {
+    /// Creates a `DublinCoreExtension` using the specified `BTreeMap`.
+    pub fn from_map(map: BTreeMap<String, Vec<Extension>>) -> Self {
         let mut ext = DublinCoreExtension::default();
         for (key, v) in map {
             match key.as_str() {
@@ -405,8 +405,8 @@ impl ToXml for DublinCoreExtension {
         Ok(())
     }
 
-    fn used_namespaces(&self) -> HashMap<String, String> {
-        let mut namespaces = HashMap::new();
+    fn used_namespaces(&self) -> BTreeMap<String, String> {
+        let mut namespaces = BTreeMap::new();
         namespaces.insert("dc".to_owned(), NAMESPACE.to_owned());
         namespaces
     }

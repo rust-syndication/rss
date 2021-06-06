@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::io::Write;
 
 use quick_xml::events::{BytesEnd, BytesStart, Event};
@@ -524,8 +524,8 @@ impl ITunesItemExtension {
 }
 
 impl ITunesItemExtension {
-    /// Create an `ITunesChannelExtension` from a `HashMap`.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
+    /// Create an `ITunesChannelExtension` from a `BTreeMap`.
+    pub fn from_map(mut map: BTreeMap<String, Vec<Extension>>) -> Self {
         let mut ext = ITunesItemExtension::default();
         ext.author = remove_extension_value(&mut map, "author");
         ext.block = remove_extension_value(&mut map, "block");
@@ -605,8 +605,8 @@ impl ToXml for ITunesItemExtension {
         Ok(())
     }
 
-    fn used_namespaces(&self) -> HashMap<String, String> {
-        let mut namespaces = HashMap::new();
+    fn used_namespaces(&self) -> BTreeMap<String, String> {
+        let mut namespaces = BTreeMap::new();
         namespaces.insert("itunes".to_owned(), NAMESPACE.to_owned());
         namespaces
     }

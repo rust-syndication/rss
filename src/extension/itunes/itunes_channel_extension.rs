@@ -5,7 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::io::Write;
 
 use quick_xml::events::{BytesStart, Event};
@@ -481,8 +481,8 @@ impl ITunesChannelExtension {
 }
 
 impl ITunesChannelExtension {
-    /// Create an `ITunesChannelExtension` from a `HashMap`.
-    pub fn from_map(mut map: HashMap<String, Vec<Extension>>) -> Self {
+    /// Create an `ITunesChannelExtension` from a `BTreeMap`.
+    pub fn from_map(mut map: BTreeMap<String, Vec<Extension>>) -> Self {
         let mut ext = ITunesChannelExtension::default();
         ext.author = remove_extension_value(&mut map, "author");
         ext.block = remove_extension_value(&mut map, "block");
