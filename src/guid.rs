@@ -21,7 +21,14 @@ use crate::util::element_text;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct Guid {
     /// The value of the GUID.
     pub value: String,
@@ -141,5 +148,13 @@ impl ToXml for Guid {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl GuidBuilder {
+    /// Builds a new `Guid`.
+    pub fn build(&self) -> Guid {
+        self.build_impl().unwrap()
     }
 }

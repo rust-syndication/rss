@@ -21,7 +21,14 @@ use crate::util::element_text;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct Image {
     /// The URL of the image.
     pub url: String,
@@ -290,5 +297,13 @@ impl ToXml for Image {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl ImageBuilder {
+    /// Builds a new `Image`.
+    pub fn build(&self) -> Image {
+        self.build_impl().unwrap()
     }
 }

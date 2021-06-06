@@ -23,38 +23,60 @@ pub const NAMESPACE: &str = "http://purl.org/dc/elements/1.1/";
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct DublinCoreExtension {
     /// An entity responsible for making contributions to the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "contributor")))]
     pub contributors: Vec<String>,
     /// The spatial or temporal topic of the resource, the spatial applicability of the resource,
     /// or the jurisdiction under which the resource is relevant.
+    #[cfg_attr(feature = "builders", builder(setter(each = "coverage")))]
     pub coverages: Vec<String>,
     /// An entity primarily responsible for making the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "creator")))]
     pub creators: Vec<String>,
     /// A point or period of time associated with an event in the lifecycle of the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "date")))]
     pub dates: Vec<String>,
     /// An account of the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "description")))]
     pub descriptions: Vec<String>,
     /// The file format, physical medium, or dimensions of the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "format")))]
     pub formats: Vec<String>,
     /// An unambiguous reference to the resource within a given context.
+    #[cfg_attr(feature = "builders", builder(setter(each = "identifier")))]
     pub identifiers: Vec<String>,
     /// A language of the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "language")))]
     pub languages: Vec<String>,
     /// An entity responsible for making the resource available.
+    #[cfg_attr(feature = "builders", builder(setter(each = "publisher")))]
     pub publishers: Vec<String>,
     /// A related resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "relation")))]
     pub relations: Vec<String>,
     /// Information about rights held in and over the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "right")))]
     pub rights: Vec<String>,
     /// A related resource from which the described resource is derived.
+    #[cfg_attr(feature = "builders", builder(setter(each = "source")))]
     pub sources: Vec<String>,
     /// The topic of the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "subject")))]
     pub subjects: Vec<String>,
     /// A name given to the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "title")))]
     pub titles: Vec<String>,
     /// The nature or genre of the resource.
+    #[cfg_attr(feature = "builders", builder(setter(each = "r#type")))]
     pub types: Vec<String>,
 }
 
@@ -387,5 +409,13 @@ impl ToXml for DublinCoreExtension {
         let mut namespaces = HashMap::new();
         namespaces.insert("dc".to_owned(), NAMESPACE.to_owned());
         namespaces
+    }
+}
+
+#[cfg(feature = "builders")]
+impl DublinCoreExtensionBuilder {
+    /// Builds a new `DublinCoreExtension`.
+    pub fn build(&self) -> DublinCoreExtension {
+        self.build_impl().unwrap()
     }
 }

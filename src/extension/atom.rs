@@ -23,9 +23,17 @@ pub const NAMESPACE: &str = "http://www.w3.org/2005/Atom";
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Default, Debug, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct AtomExtension {
     /// Links
+    #[cfg_attr(feature = "builders", builder(setter(each = "link")))]
     pub links: Vec<Link>,
 }
 
@@ -100,5 +108,57 @@ impl ToXml for AtomExtension {
             writer.write_event(Event::Empty(element))?;
         }
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl AtomExtensionBuilder {
+    /// Builds a new `AtomExtension`.
+    pub fn build(&self) -> AtomExtension {
+        self.build_impl().unwrap()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[cfg(feature = "builders")]
+    #[cfg(feature = "atom")]
+    fn test_builder() {
+        use atom_syndication::LinkBuilder;
+        assert_eq!(
+            AtomExtensionBuilder::default()
+                .link(
+                    LinkBuilder::default()
+                        .rel("self")
+                        .href("http://example.com/feed")
+                        .build()
+                        .unwrap(),
+                )
+                .link(
+                    LinkBuilder::default()
+                        .rel("alternate")
+                        .href("http://example.com")
+                        .build()
+                        .unwrap(),
+                )
+                .build(),
+            AtomExtension {
+                links: vec![
+                    Link {
+                        rel: "self".to_string(),
+                        href: "http://example.com/feed".to_string(),
+                        ..Default::default()
+                    },
+                    Link {
+                        rel: "alternate".to_string(),
+                        href: "http://example.com".to_string(),
+                        ..Default::default()
+                    }
+                ]
+            }
+        );
     }
 }

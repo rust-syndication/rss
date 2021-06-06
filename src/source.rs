@@ -21,7 +21,14 @@ use crate::util::element_text;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct Source {
     /// The URL of the source.
     pub url: String,
@@ -131,5 +138,13 @@ impl ToXml for Source {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl SourceBuilder {
+    /// Builds a new `Source`.
+    pub fn build(&self) -> Source {
+        self.build_impl().unwrap()
     }
 }

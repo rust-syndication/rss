@@ -20,7 +20,14 @@ use crate::toxml::ToXml;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct Enclosure {
     /// The URL of the enclosure.
     pub url: String,
@@ -171,5 +178,13 @@ impl ToXml for Enclosure {
 
         writer.write_event(Event::Empty(element))?;
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl EnclosureBuilder {
+    /// Builds a new `Enclosure`.
+    pub fn build(&self) -> Enclosure {
+        self.build_impl().unwrap()
     }
 }

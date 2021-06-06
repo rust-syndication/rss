@@ -71,8 +71,7 @@
 //!     .title("Channel Title")
 //!     .link("http://example.com")
 //!     .description("An RSS feed.")
-//!     .build()
-//!     .unwrap();
+//!     .build();
 //! ```
 //!
 //! ## Validation
