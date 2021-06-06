@@ -134,15 +134,13 @@ mod tests {
                     LinkBuilder::default()
                         .rel("self")
                         .href("http://example.com/feed")
-                        .build()
-                        .unwrap(),
+                        .build(),
                 )
                 .link(
                     LinkBuilder::default()
                         .rel("alternate")
                         .href("http://example.com")
-                        .build()
-                        .unwrap(),
+                        .build(),
                 )
                 .build(),
             AtomExtension {
