@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"struct":[["UninitializedFieldError","Runtime error when a `build()` method is called and one or more required fields do not have a value."]]});
