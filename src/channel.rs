@@ -35,7 +35,14 @@ use crate::util::element_text;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct Channel {
     /// The name of the channel.
     pub title: String,
@@ -56,6 +63,7 @@ pub struct Channel {
     /// The date that the contents of the channel last changed as an RFC822 timestamp.
     pub last_build_date: Option<String>,
     /// The categories the channel belongs to.
+    #[cfg_attr(feature = "builders", builder(setter(each = "category")))]
     pub categories: Vec<Category>,
     /// A string indicating the program used to generate the channel.
     pub generator: Option<String>,
@@ -72,12 +80,16 @@ pub struct Channel {
     /// A text input box that can be displayed with the channel.
     pub text_input: Option<TextInput>,
     /// A hint to tell the aggregator which hours it can skip.
+    #[cfg_attr(feature = "builders", builder(setter(each = "skip_hour")))]
     pub skip_hours: Vec<String>,
     /// A hint to tell the aggregator which days it can skip.
+    #[cfg_attr(feature = "builders", builder(setter(each = "skip_day")))]
     pub skip_days: Vec<String>,
     /// The items in the channel.
+    #[cfg_attr(feature = "builders", builder(setter(each = "item")))]
     pub items: Vec<Item>,
     /// The extensions for the channel.
+    #[cfg_attr(feature = "builders", builder(setter(each = "extension")))]
     pub extensions: ExtensionMap,
     /// The Atom extension for the channel.
     #[cfg(feature = "atom")]
@@ -89,6 +101,7 @@ pub struct Channel {
     /// The Syndication extension for the channel.
     pub syndication_ext: Option<syndication::SyndicationExtension>,
     /// The namespaces present in the RSS tag.
+    #[cfg_attr(feature = "builders", builder(setter(each = "namespace")))]
     pub namespaces: HashMap<String, String>,
 }
 
@@ -1454,5 +1467,13 @@ impl FromStr for Channel {
     #[inline]
     fn from_str(s: &str) -> Result<Channel, Error> {
         Channel::read_from(s.as_bytes())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl ChannelBuilder {
+    /// Builds a new `Channel`.
+    pub fn build(&self) -> Channel {
+        self.build_impl().unwrap()
     }
 }

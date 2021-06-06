@@ -22,7 +22,14 @@ use crate::toxml::{ToXml, WriterExt};
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct ITunesChannelExtension {
     /// The author of the podcast.
     pub author: Option<String>,
@@ -31,6 +38,7 @@ pub struct ITunesChannelExtension {
     /// are ignored.
     pub block: Option<String>,
     /// The iTunes categories the podcast belongs to.
+    #[cfg_attr(feature = "builders", builder(setter(each = "category")))]
     pub categories: Vec<ITunesCategory>,
     /// The artwork for the podcast.
     pub image: Option<String>,
@@ -544,5 +552,46 @@ impl ToXml for ITunesChannelExtension {
         }
 
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl ITunesChannelExtensionBuilder {
+    /// Builds a new `ITunesChannelExtension`.
+    pub fn build(&self) -> ITunesChannelExtension {
+        self.build_impl().unwrap()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[cfg(feature = "builders")]
+    fn test_builder() {
+        use crate::extension::itunes::ITunesCategoryBuilder;
+
+        assert_eq!(
+            ITunesChannelExtensionBuilder::default()
+                .author("John Doe".to_string())
+                .category(ITunesCategoryBuilder::default().text("technology").build())
+                .category(ITunesCategoryBuilder::default().text("podcast").build())
+                .build(),
+            ITunesChannelExtension {
+                author: Some("John Doe".to_string()),
+                categories: vec![
+                    ITunesCategory {
+                        text: "technology".to_string(),
+                        subcategory: None,
+                    },
+                    ITunesCategory {
+                        text: "podcast".to_string(),
+                        subcategory: None,
+                    },
+                ],
+                ..Default::default()
+            },
+        );
     }
 }

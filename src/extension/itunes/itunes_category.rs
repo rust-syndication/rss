@@ -17,7 +17,14 @@ use crate::toxml::ToXml;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct ITunesCategory {
     /// The name of the category.
     pub text: String,
@@ -105,5 +112,45 @@ impl ToXml for ITunesCategory {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl ITunesCategoryBuilder {
+    /// Builds a new `ITunesCategory`.
+    pub fn build(&self) -> ITunesCategory {
+        self.build_impl().unwrap()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[cfg(feature = "builders")]
+    fn test_builder() {
+        assert_eq!(
+            ITunesCategoryBuilder::default().text("music").build(),
+            ITunesCategory {
+                text: "music".to_string(),
+                subcategory: None,
+            }
+        );
+        assert_eq!(
+            ITunesCategoryBuilder::default()
+                .text("music")
+                .subcategory(Some(Box::new(
+                    ITunesCategoryBuilder::default().text("pop").build()
+                )))
+                .build(),
+            ITunesCategory {
+                text: "music".to_string(),
+                subcategory: Some(Box::new(ITunesCategory {
+                    text: "pop".to_string(),
+                    subcategory: None,
+                })),
+            }
+        );
     }
 }

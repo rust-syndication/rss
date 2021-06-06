@@ -32,7 +32,14 @@ use std::collections::HashMap;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct Item {
     /// The title of the item.
     pub title: Option<String>,
@@ -43,6 +50,7 @@ pub struct Item {
     /// The email address of author of the item.
     pub author: Option<String>,
     /// The categories the item belongs to.
+    #[cfg_attr(feature = "builders", builder(setter(each = "category")))]
     pub categories: Vec<Category>,
     /// The URL for the comments page of the item.
     pub comments: Option<String>,
@@ -57,6 +65,7 @@ pub struct Item {
     /// The HTML contents of the item.
     pub content: Option<String>,
     /// The extensions for the item.
+    #[cfg_attr(feature = "builders", builder(setter(each = "extension")))]
     pub extensions: ExtensionMap,
     /// The Atom extension for the channel.
     #[cfg(feature = "atom")]
@@ -765,5 +774,13 @@ impl ToXml for Item {
             namespaces.extend(ext.used_namespaces());
         }
         namespaces
+    }
+}
+
+#[cfg(feature = "builders")]
+impl ItemBuilder {
+    /// Builds a new `Item`.
+    pub fn build(&self) -> Item {
+        self.build_impl().unwrap()
     }
 }

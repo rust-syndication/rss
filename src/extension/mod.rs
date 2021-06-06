@@ -38,16 +38,25 @@ pub type ExtensionMap = HashMap<String, HashMap<String, Vec<Extension>>>;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct Extension {
     /// The qualified name of the extension element.
     pub name: String,
     /// The content of the extension element.
     pub value: Option<String>,
     /// The attributes for the extension element.
+    #[cfg_attr(feature = "builders", builder(setter(each = "attr")))]
     pub attrs: HashMap<String, String>,
     /// The children of the extension element. This is a map of local names to child
     /// elements.
+    #[cfg_attr(feature = "builders", builder(setter(each = "child")))]
     pub children: HashMap<String, Vec<Extension>>,
 }
 
@@ -108,5 +117,13 @@ impl ToXml for Extension {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl ExtensionBuilder {
+    /// Builds a new `Extension`.
+    pub fn build(&self) -> Extension {
+        self.build_impl().unwrap()
     }
 }

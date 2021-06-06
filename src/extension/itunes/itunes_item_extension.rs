@@ -21,7 +21,14 @@ use crate::toxml::{ToXml, WriterExt};
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct ITunesItemExtension {
     /// The author of the podcast episode.
     pub author: Option<String>,
@@ -602,5 +609,32 @@ impl ToXml for ITunesItemExtension {
         let mut namespaces = HashMap::new();
         namespaces.insert("itunes".to_owned(), NAMESPACE.to_owned());
         namespaces
+    }
+}
+
+#[cfg(feature = "builders")]
+impl ITunesItemExtensionBuilder {
+    /// Builds a new `ITunesItemExtension`.
+    pub fn build(&self) -> ITunesItemExtension {
+        self.build_impl().unwrap()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[cfg(feature = "builders")]
+    fn test_builder() {
+        assert_eq!(
+            ITunesItemExtensionBuilder::default()
+                .author("John Doe".to_string())
+                .build(),
+            ITunesItemExtension {
+                author: Some("John Doe".to_string()),
+                ..Default::default()
+            }
+        );
     }
 }

@@ -21,7 +21,14 @@ use crate::util::element_text;
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
 #[cfg_attr(feature = "builders", derive(Builder))]
-#[cfg_attr(feature = "builders", builder(setter(into), default))]
+#[cfg_attr(
+    feature = "builders",
+    builder(
+        setter(into),
+        default,
+        build_fn(name = "build_impl", private, error = "never::Never")
+    )
+)]
 pub struct TextInput {
     /// The label of the Submit button for the text input.
     pub title: String,
@@ -205,5 +212,13 @@ impl ToXml for TextInput {
 
         writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
         Ok(())
+    }
+}
+
+#[cfg(feature = "builders")]
+impl TextInputBuilder {
+    /// Builds a new `TextInput`.
+    pub fn build(&self) -> TextInput {
+        self.build_impl().unwrap()
     }
 }
