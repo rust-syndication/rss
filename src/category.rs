@@ -110,12 +110,10 @@ impl Category {
     ) -> Result<Self, Error> {
         let mut category = Category::default();
 
-        for attr in atts.with_checks(false) {
-            if let Ok(attr) = attr {
-                if attr.key == b"domain" {
-                    category.domain = Some(attr.unescape_and_decode_value(reader)?);
-                    break;
-                }
+        for attr in atts.with_checks(false).flatten() {
+            if attr.key == b"domain" {
+                category.domain = Some(attr.unescape_and_decode_value(reader)?);
+                break;
             }
         }
 

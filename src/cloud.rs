@@ -211,26 +211,24 @@ impl Cloud {
     ) -> Result<Self, Error> {
         let mut cloud = Cloud::default();
 
-        for attr in atts.with_checks(false) {
-            if let Ok(att) = attr {
-                match att.key {
-                    b"domain" => {
-                        cloud.domain = att.unescape_and_decode_value(reader)?;
-                    }
-                    b"port" => {
-                        cloud.port = att.unescape_and_decode_value(reader)?;
-                    }
-                    b"path" => {
-                        cloud.path = att.unescape_and_decode_value(reader)?;
-                    }
-                    b"registerProcedure" => {
-                        cloud.register_procedure = att.unescape_and_decode_value(reader)?;
-                    }
-                    b"protocol" => {
-                        cloud.protocol = att.unescape_and_decode_value(reader)?;
-                    }
-                    _ => {}
+        for att in atts.with_checks(false).flatten() {
+            match att.key {
+                b"domain" => {
+                    cloud.domain = att.unescape_and_decode_value(reader)?;
                 }
+                b"port" => {
+                    cloud.port = att.unescape_and_decode_value(reader)?;
+                }
+                b"path" => {
+                    cloud.path = att.unescape_and_decode_value(reader)?;
+                }
+                b"registerProcedure" => {
+                    cloud.register_procedure = att.unescape_and_decode_value(reader)?;
+                }
+                b"protocol" => {
+                    cloud.protocol = att.unescape_and_decode_value(reader)?;
+                }
+                _ => {}
             }
         }
 

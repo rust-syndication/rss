@@ -24,15 +24,15 @@ pub const NAMESPACE: &str = "http://purl.org/rss/1.0/modules/syndication/";
 #[derive(Debug, Clone, PartialEq)]
 pub enum UpdatePeriod {
     /// refresh hourly
-    HOURLY,
+    Hourly,
     /// refresh daily
-    DAILY,
+    Daily,
     /// refresh weekly
-    WEEKLY,
+    Weekly,
     /// refresh monthly
-    MONTHLY,
+    Monthly,
     /// refresh yearly
-    YEARLY,
+    Yearly,
 }
 
 impl FromStr for UpdatePeriod {
@@ -40,11 +40,11 @@ impl FromStr for UpdatePeriod {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "hourly" => Ok(UpdatePeriod::HOURLY),
-            "daily" => Ok(UpdatePeriod::DAILY),
-            "weekly" => Ok(UpdatePeriod::WEEKLY),
-            "monthly" => Ok(UpdatePeriod::MONTHLY),
-            "yearly" => Ok(UpdatePeriod::YEARLY),
+            "hourly" => Ok(UpdatePeriod::Hourly),
+            "daily" => Ok(UpdatePeriod::Daily),
+            "weekly" => Ok(UpdatePeriod::Weekly),
+            "monthly" => Ok(UpdatePeriod::Monthly),
+            "yearly" => Ok(UpdatePeriod::Yearly),
             _ => Err(()),
         }
     }
@@ -53,11 +53,11 @@ impl FromStr for UpdatePeriod {
 impl fmt::Display for UpdatePeriod {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            UpdatePeriod::HOURLY => write!(f, "hourly"),
-            UpdatePeriod::DAILY => write!(f, "daily"),
-            UpdatePeriod::WEEKLY => write!(f, "weekly"),
-            UpdatePeriod::MONTHLY => write!(f, "monthly"),
-            UpdatePeriod::YEARLY => write!(f, "yearly"),
+            UpdatePeriod::Hourly => write!(f, "hourly"),
+            UpdatePeriod::Daily => write!(f, "daily"),
+            UpdatePeriod::Weekly => write!(f, "weekly"),
+            UpdatePeriod::Monthly => write!(f, "monthly"),
+            UpdatePeriod::Yearly => write!(f, "yearly"),
         }
     }
 }
@@ -140,7 +140,7 @@ impl SyndicationExtension {
 impl Default for SyndicationExtension {
     fn default() -> Self {
         SyndicationExtension {
-            period: UpdatePeriod::DAILY,
+            period: UpdatePeriod::Daily,
             frequency: 1,
             base: String::from("1970-01-01T00:00+00:00"),
         }
@@ -195,12 +195,12 @@ mod tests {
     fn test_builder() {
         assert_eq!(
             SyndicationExtensionBuilder::default()
-                .period(UpdatePeriod::WEEKLY)
+                .period(UpdatePeriod::Weekly)
                 .frequency(2_u32)
                 .base("2021-01-01T00:00+00:00")
                 .build(),
             SyndicationExtension {
-                period: UpdatePeriod::WEEKLY,
+                period: UpdatePeriod::Weekly,
                 frequency: 2,
                 base: "2021-01-01T00:00+00:00".to_string(),
             }

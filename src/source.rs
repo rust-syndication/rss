@@ -110,12 +110,10 @@ impl Source {
     ) -> Result<Self, Error> {
         let mut source = Source::default();
 
-        for attr in atts.with_checks(false) {
-            if let Ok(attr) = attr {
-                if attr.key == b"url" {
-                    source.url = attr.unescape_and_decode_value(reader)?;
-                    break;
-                }
+        for attr in atts.with_checks(false).flatten() {
+            if attr.key == b"url" {
+                source.url = attr.unescape_and_decode_value(reader)?;
+                break;
             }
         }
 

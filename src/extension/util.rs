@@ -55,12 +55,10 @@ fn parse_extension_element<R: BufRead>(
     let mut extension = Extension::default();
     let mut buf = Vec::new();
 
-    for attr in atts.with_checks(false) {
-        if let Ok(attr) = attr {
-            let key = str::from_utf8(attr.key)?;
-            let value = attr.unescape_and_decode_value(reader)?;
-            extension.attrs.insert(key.to_string(), value);
-        }
+    for attr in atts.with_checks(false).flatten() {
+        let key = str::from_utf8(attr.key)?;
+        let value = attr.unescape_and_decode_value(reader)?;
+        extension.attrs.insert(key.to_string(), value);
     }
 
     loop {
