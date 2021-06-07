@@ -925,7 +925,7 @@ fn read_syndication() {
     let channel = input.parse::<Channel>().expect("failed to parse xml");
 
     let syn = channel.syndication_ext().unwrap();
-    assert_eq!(syn.period(), &syndication::UpdatePeriod::HOURLY);
+    assert_eq!(syn.period(), &syndication::UpdatePeriod::Hourly);
     assert_eq!(syn.frequency(), 2);
     assert_eq!(syn.base(), "2000-01-01T12:00+00:00");
 }

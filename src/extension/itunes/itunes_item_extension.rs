@@ -526,21 +526,21 @@ impl ITunesItemExtension {
 impl ITunesItemExtension {
     /// Create an `ITunesChannelExtension` from a `BTreeMap`.
     pub fn from_map(mut map: BTreeMap<String, Vec<Extension>>) -> Self {
-        let mut ext = ITunesItemExtension::default();
-        ext.author = remove_extension_value(&mut map, "author");
-        ext.block = remove_extension_value(&mut map, "block");
-        ext.image = parse_image(&mut map);
-        ext.duration = remove_extension_value(&mut map, "duration");
-        ext.explicit = remove_extension_value(&mut map, "explicit");
-        ext.closed_captioned = remove_extension_value(&mut map, "isClosedCaptioned");
-        ext.order = remove_extension_value(&mut map, "order");
-        ext.subtitle = remove_extension_value(&mut map, "subtitle");
-        ext.summary = remove_extension_value(&mut map, "summary");
-        ext.keywords = remove_extension_value(&mut map, "keywords");
-        ext.episode = remove_extension_value(&mut map, "episode");
-        ext.season = remove_extension_value(&mut map, "season");
-        ext.episode_type = remove_extension_value(&mut map, "episodeType");
-        ext
+        Self {
+            author: remove_extension_value(&mut map, "author"),
+            block: remove_extension_value(&mut map, "block"),
+            image: parse_image(&mut map),
+            duration: remove_extension_value(&mut map, "duration"),
+            explicit: remove_extension_value(&mut map, "explicit"),
+            closed_captioned: remove_extension_value(&mut map, "isClosedCaptioned"),
+            order: remove_extension_value(&mut map, "order"),
+            subtitle: remove_extension_value(&mut map, "subtitle"),
+            summary: remove_extension_value(&mut map, "summary"),
+            keywords: remove_extension_value(&mut map, "keywords"),
+            episode: remove_extension_value(&mut map, "episode"),
+            season: remove_extension_value(&mut map, "season"),
+            episode_type: remove_extension_value(&mut map, "episodeType"),
+        }
     }
 }
 

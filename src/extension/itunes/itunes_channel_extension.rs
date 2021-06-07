@@ -483,20 +483,20 @@ impl ITunesChannelExtension {
 impl ITunesChannelExtension {
     /// Create an `ITunesChannelExtension` from a `BTreeMap`.
     pub fn from_map(mut map: BTreeMap<String, Vec<Extension>>) -> Self {
-        let mut ext = ITunesChannelExtension::default();
-        ext.author = remove_extension_value(&mut map, "author");
-        ext.block = remove_extension_value(&mut map, "block");
-        ext.categories = parse_categories(&mut map);
-        ext.image = parse_image(&mut map);
-        ext.explicit = remove_extension_value(&mut map, "explicit");
-        ext.complete = remove_extension_value(&mut map, "complete");
-        ext.new_feed_url = remove_extension_value(&mut map, "new-feed-url");
-        ext.owner = parse_owner(&mut map);
-        ext.subtitle = remove_extension_value(&mut map, "subtitle");
-        ext.summary = remove_extension_value(&mut map, "summary");
-        ext.keywords = remove_extension_value(&mut map, "keywords");
-        ext.r#type = remove_extension_value(&mut map, "type");
-        ext
+        Self {
+            author: remove_extension_value(&mut map, "author"),
+            block: remove_extension_value(&mut map, "block"),
+            categories: parse_categories(&mut map),
+            image: parse_image(&mut map),
+            explicit: remove_extension_value(&mut map, "explicit"),
+            complete: remove_extension_value(&mut map, "complete"),
+            new_feed_url: remove_extension_value(&mut map, "new-feed-url"),
+            owner: parse_owner(&mut map),
+            subtitle: remove_extension_value(&mut map, "subtitle"),
+            summary: remove_extension_value(&mut map, "summary"),
+            keywords: remove_extension_value(&mut map, "keywords"),
+            r#type: remove_extension_value(&mut map, "type"),
+        }
     }
 }
 

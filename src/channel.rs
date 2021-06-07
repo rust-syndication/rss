@@ -1048,13 +1048,11 @@ impl Channel {
             match reader.read_event(&mut buf)? {
                 Event::Start(element) => {
                     if element.name() == b"rss" || element.name() == b"rdf:RDF" {
-                        for attr in element.attributes().with_checks(false) {
-                            if let Ok(attr) = attr {
-                                if attr.key.starts_with(b"xmlns:") {
-                                    let prefix = str::from_utf8(&attr.key[6..])?.to_string();
-                                    let namespace = attr.unescape_and_decode_value(&reader)?;
-                                    namespaces.insert(prefix, namespace);
-                                }
+                        for attr in element.attributes().with_checks(false).flatten() {
+                            if attr.key.starts_with(b"xmlns:") {
+                                let prefix = str::from_utf8(&attr.key[6..])?.to_string();
+                                let namespace = attr.unescape_and_decode_value(&reader)?;
+                                namespaces.insert(prefix, namespace);
                             }
                         }
 

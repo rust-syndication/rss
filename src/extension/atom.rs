@@ -55,29 +55,26 @@ impl AtomExtension {
 impl AtomExtension {
     /// Creates an `AtomExtension` using the specified `BTreeMap`.
     pub fn from_map(mut map: BTreeMap<String, Vec<Extension>>) -> Self {
-        let mut ext = Self::default();
-
-        ext.links = map
+        let links = map
             .remove("link")
             .unwrap_or_default()
             .into_iter()
             .filter_map(|mut link_ext| {
-                let href = link_ext.attrs.remove("href")?;
-
-                let mut link = Link::default();
-                link.href = href;
-                if let Some(rel) = link_ext.attrs.remove("rel") {
-                    link.rel = rel;
-                }
-                link.hreflang = link_ext.attrs.remove("hreflang");
-                link.mime_type = link_ext.attrs.remove("type");
-                link.title = link_ext.attrs.remove("title");
-                link.length = link_ext.attrs.remove("length");
-                Some(link)
+                Some(Link {
+                    href: link_ext.attrs.remove("href")?,
+                    rel: link_ext
+                        .attrs
+                        .remove("rel")
+                        .unwrap_or_else(|| Link::default().rel),
+                    hreflang: link_ext.attrs.remove("hreflang"),
+                    mime_type: link_ext.attrs.remove("type"),
+                    title: link_ext.attrs.remove("title"),
+                    length: link_ext.attrs.remove("length"),
+                })
             })
             .collect();
 
-        ext
+        Self { links }
     }
 }
 

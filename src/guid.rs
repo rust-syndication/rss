@@ -120,12 +120,10 @@ impl Guid {
     ) -> Result<Self, Error> {
         let mut guid = Guid::default();
 
-        for attr in atts.with_checks(false) {
-            if let Ok(attr) = attr {
-                if attr.key == b"isPermaLink" {
-                    guid.permalink = &*attr.value != b"false";
-                    break;
-                }
+        for attr in atts.with_checks(false).flatten() {
+            if attr.key == b"isPermaLink" {
+                guid.permalink = &*attr.value != b"false";
+                break;
             }
         }
 

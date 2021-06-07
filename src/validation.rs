@@ -130,7 +130,7 @@ impl Validate for Channel {
         for hour in self.skip_hours() {
             let hour = hour.parse::<i64>()?;
             validate!(
-                hour >= 0 && hour <= 23,
+                (0..=23).contains(&hour),
                 "Channel skip hour is not between 0 and 23"
             );
         }
@@ -214,7 +214,7 @@ impl Validate for Image {
         if let Some(width) = self.width() {
             let width = width.parse::<i64>()?;
             validate!(
-                width >= 0 && width <= 144,
+                (0..=144).contains(&width),
                 "Image width is not between 0 and 144"
             );
         }
@@ -222,7 +222,7 @@ impl Validate for Image {
         if let Some(height) = self.height() {
             let height = height.parse::<i64>()?;
             validate!(
-                height >= 0 && height <= 144,
+                (0..=144).contains(&height),
                 "Image height is not between 0 and 144"
             );
         }

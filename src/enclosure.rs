@@ -143,20 +143,18 @@ impl Enclosure {
     ) -> Result<Self, Error> {
         let mut enclosure = Enclosure::default();
 
-        for attr in atts.with_checks(false) {
-            if let Ok(attr) = attr {
-                match attr.key {
-                    b"url" => {
-                        enclosure.url = attr.unescape_and_decode_value(reader)?;
-                    }
-                    b"length" => {
-                        enclosure.length = attr.unescape_and_decode_value(reader)?;
-                    }
-                    b"type" => {
-                        enclosure.mime_type = attr.unescape_and_decode_value(reader)?;
-                    }
-                    _ => {}
+        for attr in atts.with_checks(false).flatten() {
+            match attr.key {
+                b"url" => {
+                    enclosure.url = attr.unescape_and_decode_value(reader)?;
                 }
+                b"length" => {
+                    enclosure.length = attr.unescape_and_decode_value(reader)?;
+                }
+                b"type" => {
+                    enclosure.mime_type = attr.unescape_and_decode_value(reader)?;
+                }
+                _ => {}
             }
         }
 
