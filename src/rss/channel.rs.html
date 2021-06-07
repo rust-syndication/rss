@@ -1488,7 +1488,7 @@
 <span class="comment">// This program is free software; you can redistribute it and/or modify</span>
 <span class="comment">// it under the terms of the MIT License and/or Apache 2.0 License.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::{<span class="ident">BTreeMap</span>, <span class="ident">HashMap</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">BTreeMap</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">BufRead</span>, <span class="ident">Write</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::{<span class="self">self</span>, <span class="ident">FromStr</span>};
 
@@ -1585,7 +1585,7 @@
     <span class="kw">pub</span> <span class="ident">syndication_ext</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syndication</span>::<span class="ident">SyndicationExtension</span><span class="op">&gt;</span>,
     <span class="doccomment">/// The namespaces present in the RSS tag.</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>, <span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">each</span> <span class="op">=</span> <span class="string">&quot;namespace&quot;</span>)))]</span>
-    <span class="kw">pub</span> <span class="ident">namespaces</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">namespaces</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Channel</span> {
@@ -2423,13 +2423,13 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use std::collections::HashMap;</span>
+    <span class="doccomment">/// use std::collections::BTreeMap;</span>
     <span class="doccomment">/// use rss::Channel;</span>
     <span class="doccomment">/// use rss::extension::{ExtensionMap, Extension};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let extension = Extension::default();</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut item_map = HashMap::&lt;String, Vec&lt;Extension&gt;&gt;::new();</span>
+    <span class="doccomment">/// let mut item_map = BTreeMap::&lt;String, Vec&lt;Extension&gt;&gt;::new();</span>
     <span class="doccomment">/// item_map.insert(&quot;ext:name&quot;.to_string(), vec![extension]);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut extension_map = ExtensionMap::default();</span>
@@ -2470,17 +2470,17 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use std::collections::HashMap;</span>
+    <span class="doccomment">/// use std::collections::BTreeMap;</span>
     <span class="doccomment">/// use rss::Channel;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut namespaces = HashMap::new();</span>
+    <span class="doccomment">/// let mut namespaces = BTreeMap::new();</span>
     <span class="doccomment">/// namespaces.insert(&quot;ext&quot;.to_string(), &quot;http://example.com&quot;.to_string());</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_namespaces(namespaces);</span>
     <span class="doccomment">/// assert_eq!(channel.namespaces().get(&quot;ext&quot;).map(String::as_str), Some(&quot;http://example.com&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">namespaces</span>
     }
 
@@ -2489,15 +2489,15 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use std::collections::HashMap;</span>
+    <span class="doccomment">/// use std::collections::BTreeMap;</span>
     <span class="doccomment">/// use rss::Channel;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut channel = Channel::default();</span>
-    <span class="doccomment">/// channel.set_namespaces(HashMap::new());</span>
+    <span class="doccomment">/// channel.set_namespaces(BTreeMap::new());</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_namespaces</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">namespaces</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
         <span class="self">self</span>.<span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">namespaces</span>.<span class="ident">into</span>()
     }
@@ -2515,7 +2515,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_from</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Channel</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">Reader</span>::<span class="ident">from_reader</span>(<span class="ident">reader</span>);
         <span class="ident">reader</span>.<span class="ident">trim_text</span>(<span class="bool-val">true</span>).<span class="ident">expand_empty_elements</span>(<span class="bool-val">true</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">BTreeMap</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">skip_buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
@@ -2674,7 +2674,7 @@
 <span class="kw">impl</span> <span class="ident">Channel</span> {
     <span class="doccomment">/// Builds a Channel from source XML</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
-        <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+        <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
         <span class="kw">_</span>: <span class="ident">Attributes</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -2929,8 +2929,8 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
+    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">BTreeMap</span>::<span class="ident">new</span>();
         <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">items</span> {
             <span class="ident">namespaces</span>.<span class="ident">extend</span>(<span class="ident">item</span>.<span class="ident">used_namespaces</span>());
         }
