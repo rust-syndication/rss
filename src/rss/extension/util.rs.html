@@ -110,8 +110,6 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
@@ -170,12 +168,10 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">extension</span> <span class="op">=</span> <span class="ident">Extension</span>::<span class="ident">default</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-    <span class="kw">for</span> <span class="ident">attr</span> <span class="kw">in</span> <span class="ident">atts</span>.<span class="ident">with_checks</span>(<span class="bool-val">false</span>) {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="ident">attr</span> {
-            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">attr</span>.<span class="ident">key</span>)<span class="question-mark">?</span>;
-            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">attr</span>.<span class="ident">unescape_and_decode_value</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
-            <span class="ident">extension</span>.<span class="ident">attrs</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>);
-        }
+    <span class="kw">for</span> <span class="ident">attr</span> <span class="kw">in</span> <span class="ident">atts</span>.<span class="ident">with_checks</span>(<span class="bool-val">false</span>).<span class="ident">flatten</span>() {
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">attr</span>.<span class="ident">key</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">attr</span>.<span class="ident">unescape_and_decode_value</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
+        <span class="ident">extension</span>.<span class="ident">attrs</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>);
     }
 
     <span class="kw">loop</span> {
