@@ -73,10 +73,7 @@ fn parse_extension_element<R: BufRead>(
 
                 items.push(ext);
             }
-            Event::CData(element) => {
-                extension.value = Some(reader.decode(&element).into());
-            }
-            Event::Text(element) => {
+            Event::Text(element) | Event::CData(element) => {
                 extension.value = Some(element.unescape_and_decode(reader)?);
             }
             Event::End(element) => {
