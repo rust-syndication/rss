@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.28/src/macros.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>macros.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1633,7 +1633,7 @@
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">decoder_function</span> {
+<span class="macro">macro_rules!</span> <span class="ident">decoder_function</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">preamble</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">loop_preable</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>:<span class="ident">block</span>,
@@ -1654,8 +1654,8 @@
                  <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code_unit</span>],
                  <span class="ident">last</span>: <span class="ident">bool</span>)
                  <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource</span>::<span class="ident">new</span>(<span class="ident">src</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct</span>::<span class="ident">new</span>(<span class="ident">dst</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource::new</span>(<span class="ident">src</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct::new</span>(<span class="ident">dst</span>);
         <span class="kw">loop</span> { <span class="comment">// TODO: remove this loop</span>
             {
                 <span class="comment">// Start non-boilerplate</span>
@@ -1667,22 +1667,22 @@
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">loop_preable</span>
                 }
                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Full</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">if</span> <span class="ident">last</span> {
                             <span class="comment">// Start non-boilerplate</span>
                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>
                             <span class="comment">// End non-boilerplate</span>
                         }
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span>.<span class="ident">written</span>());
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span>.<span class="ident">written</span>());
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>() {
-                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                            <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                         <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                         <span class="ident">dst_written</span>);
                             }
-                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Space::Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read</span>();
                                 <span class="comment">// Start non-boilerplate</span>
                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">body</span>
@@ -1696,7 +1696,7 @@
     });
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">decoder_functions</span> {
+<span class="macro">macro_rules!</span> <span class="ident">decoder_functions</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">preamble</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">loop_preable</span>:<span class="ident">block</span>,
@@ -1711,7 +1711,7 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>:<span class="ident">ident</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">decoder_function</span><span class="macro">!</span>(
+        <span class="macro">decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">preamble</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">loop_preable</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>,
@@ -1728,7 +1728,7 @@
             <span class="ident">u8</span>,
             <span class="ident">Utf8Destination</span>
         );
-        <span class="macro">decoder_function</span><span class="macro">!</span>(
+        <span class="macro">decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">preamble</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">loop_preable</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>,
@@ -1748,7 +1748,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ascii_compatible_two_byte_decoder_function</span> {
+<span class="macro">macro_rules!</span> <span class="ident">ascii_compatible_two_byte_decoder_function</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">trail</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>:<span class="ident">ident</span>,
@@ -1770,8 +1770,8 @@
                  <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code_unit</span>],
                  <span class="ident">last</span>: <span class="ident">bool</span>)
                  <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource</span>::<span class="ident">new</span>(<span class="ident">src</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest_prolog</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct</span>::<span class="ident">new</span>(<span class="ident">dst</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource::new</span>(<span class="ident">src</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest_prolog</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct::new</span>(<span class="ident">dst</span>);
         <span class="kw">let</span> <span class="ident">dest</span> <span class="op">=</span> <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">lead</span> {
             <span class="prelude-val">Some</span>(<span class="ident">lead</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead_minus_offset</span> <span class="op">=</span> <span class="ident">lead</span>;
@@ -1780,22 +1780,22 @@
                 <span class="comment">// handling part of the main loop, we need to repeat trail handling</span>
                 <span class="comment">// here.</span>
                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_prolog</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Full</span>(<span class="ident">src_consumed_prolog</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">if</span> <span class="ident">last</span> {
-                            <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                            <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                     <span class="ident">src_consumed_prolog</span>,
                                     <span class="ident">dest_prolog</span>.<span class="ident">written</span>());
                         }
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_consumed_prolog</span>, <span class="ident">dest_prolog</span>.<span class="ident">written</span>());
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">src_consumed_prolog</span>, <span class="ident">dest_prolog</span>.<span class="ident">written</span>());
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_prolog</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Available</span>(<span class="ident">source_handle_prolog</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">match</span> <span class="ident">dest_prolog</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>() {
-                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written_prolog</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                            <span class="ident">Space::Full</span>(<span class="ident">dst_written_prolog</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                         <span class="ident">source_handle_prolog</span>.<span class="ident">consumed</span>(),
                                         <span class="ident">dst_written_prolog</span>);
                             }
-                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Space::Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">byte</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_trail</span>) <span class="op">=</span> <span class="ident">source_handle_prolog</span>.<span class="ident">read</span>();
                                 <span class="comment">// Start non-boilerplate</span>
                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">trail</span>
@@ -1811,8 +1811,8 @@
         };
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">outermost</span>: <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="ident">dest</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">copy_ascii</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>) {
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">CopyAsciiResult::Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
+                <span class="ident">CopyAsciiResult::GoOn</span>((<span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="lifetime">&#39;middle</span>: <span class="kw">loop</span> {
                         <span class="kw">let</span> <span class="ident">dest_again</span> <span class="op">=</span> {
                             <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead_minus_offset</span> <span class="op">=</span> {
@@ -1821,18 +1821,18 @@
                                 <span class="comment">// End non-boilerplate</span>
                             };
                             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                                <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">Space::Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="kw">if</span> <span class="ident">last</span> {
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                                 <span class="ident">src_consumed_trail</span>,
                                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                     }
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">lead</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead_minus_offset</span>);
-                                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                    <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                             <span class="ident">src_consumed_trail</span>,
                                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                 }
-                                <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">Space::Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">byte</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_trail</span>) <span class="op">=</span> <span class="ident">source_handle_trail</span>.<span class="ident">read</span>();
                                     <span class="comment">// Start non-boilerplate</span>
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">trail</span>
@@ -1841,19 +1841,19 @@
                             }
                         };
                         <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                            <span class="ident">Space::Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                         <span class="ident">src_consumed</span>,
                                         <span class="ident">dest_again</span>.<span class="ident">written</span>());
                             }
-                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="kw">match</span> <span class="ident">dest_again</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>() {
-                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                                    <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                                 <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                                 <span class="ident">dst_written</span>);
                                     }
-                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="kw-2">mut</span> <span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Available</span>(<span class="kw-2">mut</span> <span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">b</span>, <span class="ident">unread_handle</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read</span>();
                                         <span class="kw">let</span> <span class="ident">source_again</span> <span class="op">=</span> <span class="ident">unread_handle</span>.<span class="ident">commit</span>();
                                         <span class="lifetime">&#39;innermost</span>: <span class="kw">loop</span> {
@@ -1870,19 +1870,19 @@
                                             <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span> <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">&lt;</span> <span class="number">60</span> {
                                                 <span class="comment">// We&#39;ve got punctuation</span>
                                                 <span class="kw">match</span> <span class="ident">source_again</span>.<span class="ident">check_available</span>() {
-                                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                                    <span class="ident">Space::Full</span>(<span class="ident">src_consumed_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                                                 <span class="ident">src_consumed_again</span>,
                                                                 <span class="ident">dest_again_again</span>.<span class="ident">written</span>());
                                                     }
-                                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                    <span class="ident">Space::Available</span>(<span class="ident">source_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                         <span class="kw">match</span> <span class="ident">dest_again_again</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>() {
-                                                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                                                            <span class="ident">Space::Full</span>(<span class="ident">dst_written_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                                <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                                                         <span class="ident">source_handle_again</span>.<span class="ident">consumed</span>(),
                                                                         <span class="ident">dst_written_again</span>);
                                                             }
-                                                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                            <span class="ident">Space::Available</span>(<span class="ident">destination_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                                 {
                                                                     <span class="kw">let</span> (<span class="ident">b_again</span>, <span class="ident">_unread_handle_again</span>) <span class="op">=</span>
                                                                         <span class="ident">source_handle_again</span>.<span class="ident">read</span>();
@@ -1909,7 +1909,7 @@
     });
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ascii_compatible_two_byte_decoder_functions</span> {
+<span class="macro">macro_rules!</span> <span class="ident">ascii_compatible_two_byte_decoder_functions</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">trail</span>:<span class="ident">block</span>,
@@ -1925,7 +1925,7 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span>:<span class="ident">expr</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">ascii_compatible_two_byte_decoder_function</span><span class="macro">!</span>(
+        <span class="macro">ascii_compatible_two_byte_decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">trail</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>,
@@ -1943,7 +1943,7 @@
             <span class="ident">Utf8Destination</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span>
         );
-        <span class="macro">ascii_compatible_two_byte_decoder_function</span><span class="macro">!</span>(
+        <span class="macro">ascii_compatible_two_byte_decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">trail</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>,
@@ -1964,7 +1964,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">gb18030_decoder_function</span> {
+<span class="macro">macro_rules!</span> <span class="ident">gb18030_decoder_function</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_body</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_body</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_body</span>:<span class="ident">block</span>,
@@ -1993,15 +1993,15 @@
                  <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code_unit</span>],
                  <span class="ident">last</span>: <span class="ident">bool</span>)
                  <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource</span>::<span class="ident">new</span>(<span class="ident">src</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct</span>::<span class="ident">new</span>(<span class="ident">dst</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource::new</span>(<span class="ident">src</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct::new</span>(<span class="ident">dst</span>);
         {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">ascii</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending_ascii</span> {
                 <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_bmp</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
+                    <span class="ident">Space::Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">pending_ascii_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Available</span>(<span class="ident">pending_ascii_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending_ascii</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                         <span class="ident">pending_ascii_handle</span>.<span class="ident">write_ascii</span>(<span class="ident">ascii</span>);
                     }
@@ -2010,30 +2010,30 @@
         }
         <span class="kw">while</span> <span class="op">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>() {
             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Space::Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">last</span> {
                         <span class="comment">// Start non-boilerplate</span>
                         <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span>.<span class="ident">count</span>();
-                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span>;
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="ident">count</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="number">0</span>),
+                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::None</span>;
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="ident">count</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="number">0</span>),
                                 <span class="ident">src_consumed</span>,
                                 <span class="ident">dest</span>.<span class="ident">written</span>());
                         <span class="comment">// End non-boilerplate</span>
                     }
-                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
+                    <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
                 }
-                <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_astral</span>() {
-                        <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                     <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                     <span class="ident">dst_written</span>);
                         }
-                        <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="ident">Space::Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="kw">let</span> (<span class="ident">byte</span>, <span class="ident">unread_handle</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read</span>();
                             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> {
-                                <span class="ident">Gb18030Pending</span>::<span class="ident">One</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span>;
+                                <span class="ident">Gb18030Pending::One</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::None</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second</span> <span class="op">=</span> <span class="ident">byte</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_second</span> <span class="op">=</span> <span class="ident">unread_handle</span>;
                                     <span class="comment">// If second is between 0x40 and 0x7E,</span>
@@ -2053,13 +2053,13 @@
                                         <span class="comment">// End non-boilerplate</span>
                                     } <span class="kw">else</span> {
                                         <span class="comment">// Four-byte!</span>
-                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="ident">Two</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
+                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::Two</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
                                                                            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>);
                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">commit</span>()
                                     }
                                 }
-                                <span class="ident">Gb18030Pending</span>::<span class="ident">Two</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span>;
+                                <span class="ident">Gb18030Pending::Two</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::None</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third</span> <span class="op">=</span> <span class="ident">byte</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_third</span> <span class="op">=</span> <span class="ident">unread_handle</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_minus_offset</span> <span class="op">=</span> {
@@ -2067,22 +2067,22 @@
                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_body</span>
                                         <span class="comment">// End non-boilerplate</span>
                                     };
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="ident">Three</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::Three</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
                                                                          <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>,
                                                                          <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_minus_offset</span>);
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">commit</span>()
                                 }
-                                <span class="ident">Gb18030Pending</span>::<span class="ident">Three</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
+                                <span class="ident">Gb18030Pending::Three</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
                                                       <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>,
                                                       <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span>;
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::None</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fourth</span> <span class="op">=</span> <span class="ident">byte</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_fourth</span> <span class="op">=</span> <span class="ident">unread_handle</span>;
                                     <span class="comment">// Start non-boilerplate</span>
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fourth_body</span>
                                     <span class="comment">// End non-boilerplate</span>
                                 }
-                                <span class="ident">Gb18030Pending</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;Checked in loop condition&quot;</span>),
+                                <span class="ident">Gb18030Pending::None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(<span class="string">&quot;Checked in loop condition&quot;</span>),
                             };
                         }
                     }
@@ -2091,8 +2091,8 @@
         }
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">outermost</span>: <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">copy_ascii_from_check_space_astral</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>) {
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">CopyAsciiResult::Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
+                <span class="ident">CopyAsciiResult::GoOn</span>((<span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="lifetime">&#39;middle</span>: <span class="kw">loop</span> {
                         <span class="kw">let</span> <span class="ident">dest_again</span> <span class="op">=</span> {
                             <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span> <span class="op">=</span> {
@@ -2101,18 +2101,18 @@
                                 <span class="comment">// End non-boilerplate</span>
                             };
                             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                                <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">Space::Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="kw">if</span> <span class="ident">last</span> {
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                                 <span class="ident">src_consumed_trail</span>,
                                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                     }
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="ident">One</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>);
-                                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::One</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>);
+                                    <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                             <span class="ident">src_consumed_trail</span>,
                                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                 }
-                                <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">Space::Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">second</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_second</span>) <span class="op">=</span> <span class="ident">source_handle_trail</span>.<span class="ident">read</span>();
                                     <span class="comment">// Start non-boilerplate</span>
                                     <span class="comment">// If second is between 0x40 and 0x7E,</span>
@@ -2133,20 +2133,20 @@
                                     } <span class="kw">else</span> {
                                         <span class="comment">// Four-byte!</span>
                                         <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_second</span>.<span class="ident">commit</span>().<span class="ident">check_available</span>() {
-                                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_third</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                            <span class="ident">Space::Full</span>(<span class="ident">src_consumed_third</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                 <span class="kw">if</span> <span class="ident">last</span> {
-                                                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
+                                                    <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                                             <span class="ident">src_consumed_third</span>,
                                                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                                 }
                                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span>
-                                                    <span class="ident">Gb18030Pending</span>::<span class="ident">Two</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
+                                                    <span class="ident">Gb18030Pending::Two</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>,
                                                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>);
-                                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                                <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                                         <span class="ident">src_consumed_third</span>,
                                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                             }
-                                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_third</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                            <span class="ident">Space::Available</span>(<span class="ident">source_handle_third</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                 <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">third</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_third</span>) <span class="op">=</span>
                                                     <span class="ident">source_handle_third</span>.<span class="ident">read</span>();
                                                 <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_minus_offset</span> <span class="op">=</span> {
@@ -2156,18 +2156,18 @@
                                                 };
                                                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_third</span>.<span class="ident">commit</span>()
                                                                          .<span class="ident">check_available</span>() {
-                                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_fourth</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                    <span class="ident">Space::Full</span>(<span class="ident">src_consumed_fourth</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                         <span class="kw">if</span> <span class="ident">last</span> {
-                                                            <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">3</span>, <span class="number">0</span>),
+                                                            <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">3</span>, <span class="number">0</span>),
                                                                     <span class="ident">src_consumed_fourth</span>,
                                                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                                         }
-                                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending</span>::<span class="ident">Three</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_minus_offset</span>);
-                                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">Gb18030Pending::Three</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_minus_offset</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_minus_offset</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_minus_offset</span>);
+                                                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                                                 <span class="ident">src_consumed_fourth</span>,
                                                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                                     }
-                                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_fourth</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                    <span class="ident">Space::Available</span>(<span class="ident">source_handle_fourth</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                         <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">fourth</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_fourth</span>) <span class="op">=</span>
                                                             <span class="ident">source_handle_fourth</span>.<span class="ident">read</span>();
                                                         <span class="comment">// Start non-boilerplate</span>
@@ -2183,19 +2183,19 @@
                             }
                         };
                         <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                            <span class="ident">Space::Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                         <span class="ident">src_consumed</span>,
                                         <span class="ident">dest_again</span>.<span class="ident">written</span>());
                             }
-                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="kw">match</span> <span class="ident">dest_again</span>.<span class="ident">check_space_astral</span>() {
-                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                                    <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                                 <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                                 <span class="ident">dst_written</span>);
                                     }
-                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">let</span> (<span class="ident">b</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read</span>();
                                         <span class="kw">loop</span> {
                                             <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span> <span class="number">127</span> {
@@ -2221,7 +2221,7 @@
     });
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">gb18030_decoder_functions</span> {
+<span class="macro">macro_rules!</span> <span class="ident">gb18030_decoder_functions</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_body</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_body</span>:<span class="ident">block</span>,
@@ -2243,7 +2243,7 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">outermost</span>:<span class="ident">tt</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">gb18030_decoder_function</span><span class="macro">!</span>(
+        <span class="macro">gb18030_decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_body</span>,
@@ -2267,7 +2267,7 @@
             <span class="ident">u8</span>,
             <span class="ident">Utf8Destination</span>
         );
-        <span class="macro">gb18030_decoder_function</span><span class="macro">!</span>(
+        <span class="macro">gb18030_decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">third_body</span>,
@@ -2294,7 +2294,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">euc_jp_decoder_function</span> {
+<span class="macro">macro_rules!</span> <span class="ident">euc_jp_decoder_function</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0802_trail_body</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_lead_body</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_trail_body</span>:<span class="ident">block</span>,
@@ -2318,40 +2318,40 @@
                  <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code_unit</span>],
                  <span class="ident">last</span>: <span class="ident">bool</span>)
                  <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource</span>::<span class="ident">new</span>(<span class="ident">src</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct</span>::<span class="ident">new</span>(<span class="ident">dst</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="ident">ByteSource::new</span>(<span class="ident">src</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest_struct::new</span>(<span class="ident">dst</span>);
         <span class="kw">while</span> <span class="op">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>() {
             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Space::Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">last</span> {
                         <span class="comment">// Start non-boilerplate</span>
                         <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span>.<span class="ident">count</span>();
-                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span>;
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="ident">count</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="number">0</span>),
+                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::None</span>;
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="ident">count</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="number">0</span>),
                                 <span class="ident">src_consumed</span>,
                                 <span class="ident">dest</span>.<span class="ident">written</span>());
                         <span class="comment">// End non-boilerplate</span>
                     }
-                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
+                    <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
                 }
-                <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_bmp</span>() {
-                        <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                     <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                     <span class="ident">dst_written</span>);
                         }
-                        <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="ident">Space::Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">byte</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_trail</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read</span>();
                             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> {
-                                <span class="ident">EucJpPending</span>::<span class="ident">Jis0208Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0208_lead_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span>;
+                                <span class="ident">EucJpPending::Jis0208Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0208_lead_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::None</span>;
                                     <span class="comment">// Start non-boilerplate</span>
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0802_trail_body</span>
                                     <span class="comment">// End non-boilerplate</span>
                                 }
-                                <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Shift</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span>;
+                                <span class="ident">EucJpPending::Jis0212Shift</span> <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::None</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">byte</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_jis0212</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_trail</span>;
                                     <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span> <span class="op">=</span> {
@@ -2360,22 +2360,22 @@
                                         <span class="comment">// End non-boilerplate</span>
                                     };
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span>
-                                        <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span>);
+                                        <span class="ident">EucJpPending::Jis0212Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span>);
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">commit</span>()
                                 }
-                                <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span>;
+                                <span class="ident">EucJpPending::Jis0212Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::None</span>;
                                     <span class="comment">// Start non-boilerplate</span>
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_trail_body</span>
                                     <span class="comment">// End non-boilerplate</span>
                                 }
-                                <span class="ident">EucJpPending</span>::<span class="ident">HalfWidthKatakana</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span>;
+                                <span class="ident">EucJpPending::HalfWidthKatakana</span> <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::None</span>;
                                     <span class="comment">// Start non-boilerplate</span>
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">half_width_katakana_body</span>
                                     <span class="comment">// End non-boilerplate</span>
                                 }
-                                <span class="ident">EucJpPending</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(<span class="string">&quot;Checked in loop condition&quot;</span>),
+                                <span class="ident">EucJpPending::None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(<span class="string">&quot;Checked in loop condition&quot;</span>),
                             };
                         }
                     }
@@ -2384,8 +2384,8 @@
         }
         <span class="lifetime">&#39;outermost</span>: <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">copy_ascii_from_check_space_bmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>) {
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">CopyAsciiResult::Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
+                <span class="ident">CopyAsciiResult::GoOn</span>((<span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="lifetime">&#39;middle</span>: <span class="kw">loop</span> {
                         <span class="kw">let</span> <span class="ident">dest_again</span> <span class="op">=</span> {
                             <span class="comment">// If lead is between 0xA1 and 0xFE, inclusive,</span>
@@ -2396,19 +2396,19 @@
                             <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0208_lead_minus_offset</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0xA1</span>) {
                                 <span class="comment">// JIS 0208</span>
                                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">if</span> <span class="ident">last</span> {
-                                            <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                                            <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                                     <span class="ident">src_consumed_trail</span>,
                                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                         }
                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span>
-                                            <span class="ident">EucJpPending</span>::<span class="ident">Jis0208Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0208_lead_minus_offset</span>);
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                            <span class="ident">EucJpPending::Jis0208Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0208_lead_minus_offset</span>);
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                                 <span class="ident">src_consumed_trail</span>,
                                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                     }
-                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">byte</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_trail</span>) <span class="op">=</span>
                                             <span class="ident">source_handle_trail</span>.<span class="ident">read</span>();
                                         <span class="comment">// Start non-boilerplate</span>
@@ -2418,18 +2418,18 @@
                                 }
                             } <span class="kw">else</span> <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x8F</span> {
                                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_jis0212</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Full</span>(<span class="ident">src_consumed_jis0212</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">if</span> <span class="ident">last</span> {
-                                            <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                                            <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                                     <span class="ident">src_consumed_jis0212</span>,
                                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                         }
-                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Shift</span>;
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::Jis0212Shift</span>;
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                                 <span class="ident">src_consumed_jis0212</span>,
                                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                     }
-                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_jis0212</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Available</span>(<span class="ident">source_handle_jis0212</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">lead</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_jis0212</span>) <span class="op">=</span>
                                             <span class="ident">source_handle_jis0212</span>.<span class="ident">read</span>();
                                         <span class="kw">let</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span> <span class="op">=</span> {
@@ -2438,18 +2438,18 @@
                                             <span class="comment">// End non-boilerplate</span>
                                         };
                                         <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_jis0212</span>.<span class="ident">commit</span>().<span class="ident">check_available</span>() {
-                                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                            <span class="ident">Space::Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                 <span class="kw">if</span> <span class="ident">last</span> {
-                                                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
+                                                    <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                                             <span class="ident">src_consumed_trail</span>,
                                                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                                 }
-                                                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="ident">Jis0212Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span>);
-                                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::Jis0212Lead</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0212_lead_minus_offset</span>);
+                                                <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                                         <span class="ident">src_consumed_trail</span>,
                                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                             }
-                                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                            <span class="ident">Space::Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                 <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">byte</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_trail</span>) <span class="op">=</span>
                                                     <span class="ident">source_handle_trail</span>.<span class="ident">read</span>();
                                                 <span class="comment">// Start non-boilerplate</span>
@@ -2461,18 +2461,18 @@
                                 }
                             } <span class="kw">else</span> <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">non_ascii</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x8E</span> {
                                 <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Full</span>(<span class="ident">src_consumed_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">if</span> <span class="ident">last</span> {
-                                            <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                                            <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                                     <span class="ident">src_consumed_trail</span>,
                                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                         }
-                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending</span>::<span class="ident">HalfWidthKatakana</span>;
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                                        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>.<span class="ident">pending</span> <span class="op">=</span> <span class="ident">EucJpPending::HalfWidthKatakana</span>;
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                                 <span class="ident">src_consumed_trail</span>,
                                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                                     }
-                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Available</span>(<span class="ident">source_handle_trail</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">byte</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle_trail</span>) <span class="op">=</span>
                                             <span class="ident">source_handle_trail</span>.<span class="ident">read</span>();
                                         <span class="comment">// Start non-boilerplate</span>
@@ -2481,25 +2481,25 @@
                                     }
                                 }
                             } <span class="kw">else</span> {
-                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                                <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">consumed</span>(),
                                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>());
                             }
                         };
                         <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>,
+                            <span class="ident">Space::Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>,
                                         <span class="ident">src_consumed</span>,
                                         <span class="ident">dest_again</span>.<span class="ident">written</span>());
                             }
-                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="kw">match</span> <span class="ident">dest_again</span>.<span class="ident">check_space_bmp</span>() {
-                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                                    <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                        <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>,
                                                 <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                                 <span class="ident">dst_written</span>);
                                     }
-                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">let</span> (<span class="ident">b</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read</span>();
                                         <span class="kw">loop</span> {
                                             <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span> <span class="number">127</span> {
@@ -2525,7 +2525,7 @@
     });
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">euc_jp_decoder_functions</span> {
+<span class="macro">macro_rules!</span> <span class="ident">euc_jp_decoder_functions</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0802_trail_body</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_lead_body</span>:<span class="ident">block</span>,
@@ -2542,7 +2542,7 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>:<span class="ident">ident</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">euc_jp_decoder_function</span><span class="macro">!</span>(
+        <span class="macro">euc_jp_decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0802_trail_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_lead_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_trail_body</span>,
@@ -2561,7 +2561,7 @@
             <span class="ident">u8</span>,
             <span class="ident">Utf8Destination</span>
         );
-        <span class="macro">euc_jp_decoder_function</span><span class="macro">!</span>(
+        <span class="macro">euc_jp_decoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0802_trail_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_lead_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">jis0812_trail_body</span>,
@@ -2583,7 +2583,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">encoder_function</span> {
+<span class="macro">macro_rules!</span> <span class="ident">encoder_function</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">body</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>:<span class="ident">ident</span>,
@@ -2602,26 +2602,26 @@
                  <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
                  <span class="ident">last</span>: <span class="ident">bool</span>)
                  <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">EncoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source_struct</span>::<span class="ident">new</span>(<span class="ident">src</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span> <span class="op">=</span> <span class="ident">ByteDestination</span>::<span class="ident">new</span>(<span class="ident">dst</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source_struct::new</span>(<span class="ident">src</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span> <span class="op">=</span> <span class="ident">ByteDestination::new</span>(<span class="ident">dst</span>);
         <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Space::Full</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">last</span> {
                         <span class="comment">// Start non-boilerplate</span>
                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>
                         <span class="comment">// End non-boilerplate</span>
                     }
-                    <span class="kw">return</span> (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span>.<span class="ident">written</span>());
+                    <span class="kw">return</span> (<span class="ident">EncoderResult::InputEmpty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_consumed</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span>.<span class="ident">written</span>());
                 }
-                <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dest</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>() {
-                        <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="kw">return</span> (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="kw">return</span> (<span class="ident">EncoderResult::OutputFull</span>,
                                     <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                     <span class="ident">dst_written</span>);
                         }
-                        <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="ident">Space::Available</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="kw">let</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read</span>();
                             <span class="comment">// Start non-boilerplate</span>
                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">body</span>
@@ -2634,7 +2634,7 @@
     });
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">encoder_functions</span> {
+<span class="macro">macro_rules!</span> <span class="ident">encoder_functions</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">body</span>:<span class="ident">block</span>,
@@ -2647,7 +2647,7 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">unread_handle</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>:<span class="ident">ident</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">encoder_function</span><span class="macro">!</span>(
+        <span class="macro">encoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>,
@@ -2662,7 +2662,7 @@
             <span class="ident">str</span>,
             <span class="ident">Utf8Source</span>
         );
-        <span class="macro">encoder_function</span><span class="macro">!</span>(
+        <span class="macro">encoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">eof</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slf</span>,
@@ -2680,7 +2680,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ascii_compatible_encoder_function</span> {
+<span class="macro">macro_rules!</span> <span class="ident">ascii_compatible_encoder_function</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">astral_body</span>:<span class="ident">block</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp</span>:<span class="ident">ident</span>,
@@ -2699,49 +2699,49 @@
                  <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
                  <span class="ident">_last</span>: <span class="ident">bool</span>)
                  <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">EncoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source_struct</span>::<span class="ident">new</span>(<span class="ident">src</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest</span> <span class="op">=</span> <span class="ident">ByteDestination</span>::<span class="ident">new</span>(<span class="ident">dst</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source_struct::new</span>(<span class="ident">src</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dest</span> <span class="op">=</span> <span class="ident">ByteDestination::new</span>(<span class="ident">dst</span>);
         <span class="lifetime">&#39;outermost</span>: <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">copy_ascii</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dest</span>) {
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
-                <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="kw-2">mut</span> <span class="ident">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">CopyAsciiResult::Stop</span>(<span class="ident">ret</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">ret</span>,
+                <span class="ident">CopyAsciiResult::GoOn</span>((<span class="kw-2">mut</span> <span class="ident">non_ascii</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="lifetime">&#39;middle</span>: <span class="kw">loop</span> {
                         <span class="kw">let</span> <span class="ident">dest_again</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">non_ascii</span> {
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="comment">// Start non-boilerplate</span>
                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>
                                 <span class="comment">// End non-boilerplate</span>
                             }
-                            <span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">astral</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">NonAscii::Astral</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">astral</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="comment">// Start non-boilerplate</span>
                                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">astral_body</span>
                                 <span class="comment">// End non-boilerplate</span>
                             }
                         };
                         <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">check_available</span>() {
-                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">return</span> (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>,
+                            <span class="ident">Space::Full</span>(<span class="ident">src_consumed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="kw">return</span> (<span class="ident">EncoderResult::InputEmpty</span>,
                                         <span class="ident">src_consumed</span>,
                                         <span class="ident">dest_again</span>.<span class="ident">written</span>());
                             }
-                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Space::Available</span>(<span class="ident">source_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="kw">match</span> <span class="ident">dest_again</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>() {
-                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                        <span class="kw">return</span> (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>,
+                                    <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                        <span class="kw">return</span> (<span class="ident">EncoderResult::OutputFull</span>,
                                                 <span class="ident">source_handle</span>.<span class="ident">consumed</span>(),
                                                 <span class="ident">dst_written</span>);
                                     }
-                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="kw-2">mut</span> <span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                    <span class="ident">Space::Available</span>(<span class="kw-2">mut</span> <span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                         <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">c</span>, <span class="ident">unread_handle</span>) <span class="op">=</span> <span class="ident">source_handle</span>.<span class="ident">read_enum</span>();
                                         <span class="kw">let</span> <span class="ident">source_again</span> <span class="op">=</span> <span class="ident">unread_handle</span>.<span class="ident">commit</span>();
                                         <span class="lifetime">&#39;innermost</span>: <span class="kw">loop</span> {
                                             <span class="kw">let</span> <span class="ident">ascii</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">c</span> {
-                                                <span class="ident">Unicode</span>::<span class="ident">NonAscii</span>(<span class="ident">non_ascii_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                <span class="ident">Unicode::NonAscii</span>(<span class="ident">non_ascii_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                     <span class="ident">non_ascii</span> <span class="op">=</span> <span class="ident">non_ascii_again</span>;
                                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span> <span class="op">=</span> <span class="ident">destination_handle</span>;
                                                     <span class="kw">continue</span> <span class="lifetime">&#39;middle</span>;
                                                 }
-                                                <span class="ident">Unicode</span>::<span class="ident">Ascii</span>(<span class="ident">a</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">a</span>,
+                                                <span class="ident">Unicode::Ascii</span>(<span class="ident">a</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">a</span>,
                                             };
                                             <span class="comment">// Testing on Haswell says that we should write the</span>
                                             <span class="comment">// byte unconditionally instead of trying to unread it</span>
@@ -2751,19 +2751,19 @@
                                             <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span> <span class="op">&amp;&amp;</span> <span class="ident">ascii</span> <span class="op">&lt;</span> <span class="number">60</span> {
                                                 <span class="comment">// We&#39;ve got punctuation</span>
                                                 <span class="kw">match</span> <span class="ident">source_again</span>.<span class="ident">check_available</span>() {
-                                                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">src_consumed_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                                        <span class="kw">return</span> (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>,
+                                                    <span class="ident">Space::Full</span>(<span class="ident">src_consumed_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                        <span class="kw">return</span> (<span class="ident">EncoderResult::InputEmpty</span>,
                                                                 <span class="ident">src_consumed_again</span>,
                                                                 <span class="ident">dest_again_again</span>.<span class="ident">written</span>());
                                                     }
-                                                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">source_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                    <span class="ident">Space::Available</span>(<span class="ident">source_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                         <span class="kw">match</span> <span class="ident">dest_again_again</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>() {
-                                                            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                                                <span class="kw">return</span> (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>,
+                                                            <span class="ident">Space::Full</span>(<span class="ident">dst_written_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                                <span class="kw">return</span> (<span class="ident">EncoderResult::OutputFull</span>,
                                                                         <span class="ident">source_handle_again</span>.<span class="ident">consumed</span>(),
                                                                         <span class="ident">dst_written_again</span>);
                                                             }
-                                                            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                                                            <span class="ident">Space::Available</span>(<span class="ident">destination_handle_again</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                                                 {
                                                                     <span class="kw">let</span> (<span class="ident">c_again</span>, <span class="ident">_unread_handle_again</span>) <span class="op">=</span>
                                                                         <span class="ident">source_handle_again</span>.<span class="ident">read_enum</span>();
@@ -2790,7 +2790,7 @@
     });
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ascii_compatible_encoder_functions</span> {
+<span class="macro">macro_rules!</span> <span class="ident">ascii_compatible_encoder_functions</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">astral_body</span>:<span class="ident">block</span>,
@@ -2803,7 +2803,7 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span>:<span class="ident">expr</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">ascii_compatible_encoder_function</span><span class="macro">!</span>(
+        <span class="macro">ascii_compatible_encoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">astral_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp</span>,
@@ -2818,7 +2818,7 @@
             <span class="ident">Utf8Source</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span>
         );
-        <span class="macro">ascii_compatible_encoder_function</span><span class="macro">!</span>(
+        <span class="macro">ascii_compatible_encoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">astral_body</span>,
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp</span>,
@@ -2836,7 +2836,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ascii_compatible_bmp_encoder_function</span> {
+<span class="macro">macro_rules!</span> <span class="ident">ascii_compatible_bmp_encoder_function</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp</span>:<span class="ident">ident</span>,
@@ -2850,11 +2850,11 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source_struct</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span>:<span class="ident">expr</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">ascii_compatible_encoder_function</span><span class="macro">!</span>(
+        <span class="macro">ascii_compatible_encoder_function!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>,
             {
                 <span class="kw">return</span> (
-                    <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">astral</span>),
+                    <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">astral</span>),
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">consumed</span>(),
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>(),
                 );
@@ -2874,7 +2874,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">ascii_compatible_bmp_encoder_functions</span> {
+<span class="macro">macro_rules!</span> <span class="ident">ascii_compatible_bmp_encoder_functions</span> {
     (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>:<span class="ident">block</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp</span>:<span class="ident">ident</span>,
@@ -2885,11 +2885,11 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">destination_check</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ascii_punctuation</span>:<span class="ident">expr</span>
     ) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">ascii_compatible_encoder_functions</span><span class="macro">!</span>(
+        <span class="macro">ascii_compatible_encoder_functions!</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bmp_body</span>,
             {
                 <span class="kw">return</span> (
-                    <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">astral</span>),
+                    <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">astral</span>),
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">source</span>.<span class="ident">consumed</span>(),
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">handle</span>.<span class="ident">written</span>(),
                 );
@@ -2906,7 +2906,7 @@
     };
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">public_decode_function</span>{
+<span class="macro">macro_rules!</span> <span class="ident">public_decode_function</span>{
     ($(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">meta</span>:<span class="ident">meta</span>]</span>)<span class="kw-2">*</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf</span>:<span class="ident">ident</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_raw</span>:<span class="ident">ident</span>,
@@ -2925,89 +2925,89 @@
         <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">life_cycle</span> {
                 <span class="comment">// The common case. (Post-sniffing.)</span>
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderLifeCycle::Converting</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">return</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_checking_end</span>(<span class="ident">src</span>, <span class="ident">dst</span>, <span class="ident">last</span>);
                 }
                 <span class="comment">// The rest is all BOM sniffing!</span>
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">AtStart</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
+                <span class="ident">DecoderLifeCycle::AtStart</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">debug_assert_eq!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
                     <span class="kw">if</span> <span class="ident">src</span>.<span class="ident">is_empty</span>() {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
                     <span class="kw">match</span> <span class="ident">src</span>[<span class="number">0</span>] {
                         <span class="number">0xEFu8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf8First</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::SeenUtf8First</span>;
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                             <span class="kw">continue</span>;
                         }
                         <span class="number">0xFEu8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf16BeFirst</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::SeenUtf16BeFirst</span>;
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                             <span class="kw">continue</span>;
                         }
                         <span class="number">0xFFu8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf16LeFirst</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::SeenUtf16LeFirst</span>;
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                             <span class="kw">continue</span>;
                         }
                         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
                             <span class="kw">continue</span>;
                         }
                     }
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">AtUtf8Start</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
+                <span class="ident">DecoderLifeCycle::AtUtf8Start</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">debug_assert_eq!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
                     <span class="kw">if</span> <span class="ident">src</span>.<span class="ident">is_empty</span>() {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
                     <span class="kw">match</span> <span class="ident">src</span>[<span class="number">0</span>] {
                         <span class="number">0xEFu8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf8First</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::SeenUtf8First</span>;
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                             <span class="kw">continue</span>;
                         }
                         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
                             <span class="kw">continue</span>;
                         }
                     }
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">AtUtf16BeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
+                <span class="ident">DecoderLifeCycle::AtUtf16BeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">debug_assert_eq!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
                     <span class="kw">if</span> <span class="ident">src</span>.<span class="ident">is_empty</span>() {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
                     <span class="kw">match</span> <span class="ident">src</span>[<span class="number">0</span>] {
                         <span class="number">0xFEu8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf16BeFirst</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::SeenUtf16BeFirst</span>;
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                             <span class="kw">continue</span>;
                         }
                         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
                             <span class="kw">continue</span>;
                         }
                     }
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">AtUtf16LeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
+                <span class="ident">DecoderLifeCycle::AtUtf16LeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">debug_assert_eq!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
                     <span class="kw">if</span> <span class="ident">src</span>.<span class="ident">is_empty</span>() {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
                     <span class="kw">match</span> <span class="ident">src</span>[<span class="number">0</span>] {
                         <span class="number">0xFFu8</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf16LeFirst</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::SeenUtf16LeFirst</span>;
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                             <span class="kw">continue</span>;
                         }
                         <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+                            <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
                             <span class="kw">continue</span>;
                         }
                     }
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf8First</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderLifeCycle::SeenUtf8First</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">offset</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">src</span>.<span class="ident">len</span>() {
                         <span class="kw">if</span> <span class="ident">last</span> {
                             <span class="kw">return</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_after_one_potential_bom_byte</span>(<span class="ident">src</span>,
@@ -3016,10 +3016,10 @@
                                                                                     <span class="ident">offset</span>,
                                                                                     <span class="number">0xEFu8</span>);
                         }
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
                     }
                     <span class="kw">if</span> <span class="ident">src</span>[<span class="ident">offset</span>] <span class="op">=</span><span class="op">=</span> <span class="number">0xBBu8</span> {
-                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf8Second</span>;
+                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::SeenUtf8Second</span>;
                         <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="kw">continue</span>;
                     }
@@ -3029,7 +3029,7 @@
                                                                             <span class="ident">offset</span>,
                                                                             <span class="number">0xEFu8</span>);
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf8Second</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderLifeCycle::SeenUtf8Second</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">offset</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">src</span>.<span class="ident">len</span>() {
                         <span class="kw">if</span> <span class="ident">last</span> {
                             <span class="kw">return</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_after_two_potential_bom_bytes</span>(<span class="ident">src</span>,
@@ -3037,10 +3037,10 @@
                                                                                      <span class="ident">last</span>,
                                                                                      <span class="ident">offset</span>);
                         }
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
                     }
                     <span class="kw">if</span> <span class="ident">src</span>[<span class="ident">offset</span>] <span class="op">=</span><span class="op">=</span> <span class="number">0xBFu8</span> {
-                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
                         <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">encoding</span> <span class="op">!</span><span class="op">=</span> <span class="ident">UTF_8</span> {
                             <span class="self">self</span>.<span class="ident">encoding</span> <span class="op">=</span> <span class="ident">UTF_8</span>;
@@ -3056,7 +3056,7 @@
                                                                              <span class="ident">last</span>,
                                                                              <span class="ident">offset</span>);
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf16BeFirst</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderLifeCycle::SeenUtf16BeFirst</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">offset</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">src</span>.<span class="ident">len</span>() {
                         <span class="kw">if</span> <span class="ident">last</span> {
                             <span class="kw">return</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_after_one_potential_bom_byte</span>(<span class="ident">src</span>,
@@ -3065,10 +3065,10 @@
                                                                                     <span class="ident">offset</span>,
                                                                                     <span class="number">0xFEu8</span>);
                         }
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
                     }
                     <span class="kw">if</span> <span class="ident">src</span>[<span class="ident">offset</span>] <span class="op">=</span><span class="op">=</span> <span class="number">0xFFu8</span> {
-                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
                         <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">encoding</span> <span class="op">!</span><span class="op">=</span> <span class="ident">UTF_16BE</span> {
                             <span class="self">self</span>.<span class="ident">encoding</span> <span class="op">=</span> <span class="ident">UTF_16BE</span>;
@@ -3085,7 +3085,7 @@
                                                                             <span class="ident">offset</span>,
                                                                             <span class="number">0xFEu8</span>);
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">SeenUtf16LeFirst</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderLifeCycle::SeenUtf16LeFirst</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">offset</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">src</span>.<span class="ident">len</span>() {
                         <span class="kw">if</span> <span class="ident">last</span> {
                             <span class="kw">return</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_after_one_potential_bom_byte</span>(<span class="ident">src</span>,
@@ -3094,10 +3094,10 @@
                                                                                     <span class="ident">offset</span>,
                                                                                     <span class="number">0xFFu8</span>);
                         }
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">offset</span>, <span class="number">0</span>);
                     }
                     <span class="kw">if</span> <span class="ident">src</span>[<span class="ident">offset</span>] <span class="op">=</span><span class="op">=</span> <span class="number">0xFEu8</span> {
-                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
                         <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">encoding</span> <span class="op">!</span><span class="op">=</span> <span class="ident">UTF_16LE</span> {
                             <span class="self">self</span>.<span class="ident">encoding</span> <span class="op">=</span> <span class="ident">UTF_16LE</span>;
@@ -3114,15 +3114,15 @@
                                                                             <span class="ident">offset</span>,
                                                                             <span class="number">0xFFu8</span>);
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">ConvertingWithPendingBB</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
+                <span class="ident">DecoderLifeCycle::ConvertingWithPendingBB</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">debug_assert_eq!</span>(<span class="ident">offset</span>, <span class="number">0usize</span>);
                     <span class="kw">return</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_after_one_potential_bom_byte</span>(<span class="ident">src</span>,
                                                                             <span class="ident">dst</span>,
                                                                             <span class="ident">last</span>,
                                                                             <span class="number">0usize</span>,
                                                                             <span class="number">0xBBu8</span>);
                 }
-                <span class="ident">DecoderLifeCycle</span>::<span class="ident">Finished</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Must not use a decoder that has finished.&quot;</span>),
+                <span class="ident">DecoderLifeCycle::Finished</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;Must not use a decoder that has finished.&quot;</span>),
             }
         }
     }
@@ -3134,7 +3134,7 @@
                                                    <span class="ident">offset</span>: <span class="ident">usize</span>,
                                                    <span class="ident">first_byte</span>: <span class="ident">u8</span>)
                                                    <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
         <span class="kw">if</span> <span class="ident">offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0usize</span> {
             <span class="comment">// First byte was seen previously.</span>
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> [<span class="ident">first_byte</span>];
@@ -3143,23 +3143,23 @@
                 <span class="self">self</span>.<span class="ident">variant</span>
                     .<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_raw</span>(<span class="kw-2">&amp;</span><span class="ident">first</span>[..], <span class="ident">dst</span>, <span class="bool-val">false</span>);
             <span class="kw">match</span> <span class="ident">first_result</span> {
-                <span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderResult::InputEmpty</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>) <span class="op">=</span>
                         <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_checking_end</span>(<span class="ident">src</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>[<span class="ident">first_written</span>..], <span class="ident">last</span>);
                     <span class="ident">first_result</span> <span class="op">=</span> <span class="ident">result</span>;
                     <span class="ident">out_read</span> <span class="op">=</span> <span class="ident">read</span>; <span class="comment">// Overwrite, don&#39;t add!</span>
                     <span class="ident">first_written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">written</span>;
                 }
-                <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderResult::Malformed</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="comment">// Wasn&#39;t read from `src`!, leave out_read to 0</span>
                 }
-                <span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Output buffer must have been too small.&quot;</span>);
+                <span class="ident">DecoderResult::OutputFull</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">panic!</span>(<span class="string">&quot;Output buffer must have been too small.&quot;</span>);
                 }
             }
             <span class="kw">return</span> (<span class="ident">first_result</span>, <span class="ident">out_read</span>, <span class="ident">first_written</span>);
         }
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">offset</span>, <span class="number">1usize</span>);
+        <span class="macro">debug_assert_eq!</span>(<span class="ident">offset</span>, <span class="number">1usize</span>);
         <span class="comment">// The first byte is in `src`, so no need to push it separately.</span>
         <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_checking_end</span>(<span class="ident">src</span>, <span class="ident">dst</span>, <span class="ident">last</span>)
     }
@@ -3170,7 +3170,7 @@
                                                     <span class="ident">last</span>: <span class="ident">bool</span>,
                                                     <span class="ident">offset</span>: <span class="ident">usize</span>)
                                                     <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>;
+        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Converting</span>;
         <span class="kw">if</span> <span class="ident">offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0usize</span> {
             <span class="comment">// The first two bytes are not in the current buffer..</span>
             <span class="kw">let</span> <span class="ident">ef_bb</span> <span class="op">=</span> [<span class="number">0xEFu8</span>, <span class="number">0xBBu8</span>];
@@ -3178,23 +3178,23 @@
                 <span class="self">self</span>.<span class="ident">variant</span>
                     .<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_raw</span>(<span class="kw-2">&amp;</span><span class="ident">ef_bb</span>[..], <span class="ident">dst</span>, <span class="bool-val">false</span>);
             <span class="kw">match</span> <span class="ident">first_result</span> {
-                <span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderResult::InputEmpty</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>) <span class="op">=</span>
                         <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_checking_end</span>(<span class="ident">src</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>[<span class="ident">first_written</span>..], <span class="ident">last</span>);
                     <span class="ident">first_result</span> <span class="op">=</span> <span class="ident">result</span>;
                     <span class="ident">first_read</span> <span class="op">=</span> <span class="ident">read</span>; <span class="comment">// Overwrite, don&#39;t add!</span>
                     <span class="ident">first_written</span> <span class="op">+</span><span class="op">=</span> <span class="ident">written</span>;
                 }
-                <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">DecoderResult::Malformed</span>(<span class="kw">_</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">first_read</span> <span class="op">=</span><span class="op">=</span> <span class="number">1usize</span> {
                         <span class="comment">// The first byte was malformed. We need to handle</span>
                         <span class="comment">// the second one, which isn&#39;t in `src`, later.</span>
-                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">ConvertingWithPendingBB</span>;
+                        <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::ConvertingWithPendingBB</span>;
                     }
                     <span class="ident">first_read</span> <span class="op">=</span> <span class="number">0usize</span>; <span class="comment">// Wasn&#39;t read from `src`!</span>
                 }
-                <span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Output buffer must have been too small.&quot;</span>);
+                <span class="ident">DecoderResult::OutputFull</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">panic!</span>(<span class="string">&quot;Output buffer must have been too small.&quot;</span>);
                 }
             }
             <span class="kw">return</span> (<span class="ident">first_result</span>, <span class="ident">first_read</span>, <span class="ident">first_written</span>);
@@ -3209,7 +3209,7 @@
                                                                     <span class="number">0xEFu8</span>);
 
         }
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">offset</span>, <span class="number">2usize</span>);
+        <span class="macro">debug_assert_eq!</span>(<span class="ident">offset</span>, <span class="number">2usize</span>);
         <span class="comment">// The first two bytes are in `src`, so no need to push them separately.</span>
         <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_checking_end</span>(<span class="ident">src</span>, <span class="ident">dst</span>, <span class="ident">last</span>)
     }
@@ -3223,7 +3223,7 @@
                                                <span class="ident">last</span>: <span class="ident">bool</span>,
                                                <span class="ident">offset</span>: <span class="ident">usize</span>)
                                                <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">life_cycle</span>, <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>);
+        <span class="macro">debug_assert_eq!</span>(<span class="self">self</span>.<span class="ident">life_cycle</span>, <span class="ident">DecoderLifeCycle::Converting</span>);
         <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>) <span class="op">=</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_checking_end</span>(<span class="kw-2">&amp;</span><span class="ident">src</span>[<span class="ident">offset</span>..], <span class="ident">dst</span>, <span class="ident">last</span>);
         (<span class="ident">result</span>, <span class="ident">read</span> <span class="op">+</span> <span class="ident">offset</span>, <span class="ident">written</span>)
     }
@@ -3235,17 +3235,17 @@
                                    <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">code_unit</span>],
                                    <span class="ident">last</span>: <span class="ident">bool</span>)
                                    <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">DecoderResult</span>, <span class="ident">usize</span>, <span class="ident">usize</span>) {
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">life_cycle</span>, <span class="ident">DecoderLifeCycle</span>::<span class="ident">Converting</span>);
+        <span class="macro">debug_assert_eq!</span>(<span class="self">self</span>.<span class="ident">life_cycle</span>, <span class="ident">DecoderLifeCycle::Converting</span>);
         <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">variant</span>
                                           .<span class="macro-nonterminal">$</span><span class="macro-nonterminal">decode_to_utf_raw</span>(<span class="ident">src</span>, <span class="ident">dst</span>, <span class="ident">last</span>);
         <span class="kw">if</span> <span class="ident">last</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span> <span class="op">=</span> <span class="ident">result</span> {
-                <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle</span>::<span class="ident">Finished</span>;
+            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">DecoderResult::InputEmpty</span> <span class="op">=</span> <span class="ident">result</span> {
+                <span class="self">self</span>.<span class="ident">life_cycle</span> <span class="op">=</span> <span class="ident">DecoderLifeCycle::Finished</span>;
             }
         }
         (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>)
     });
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

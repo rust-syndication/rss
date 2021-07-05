@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atom_syndication-0.10.0/src/extension/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../atom_syndication/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../atom_syndication/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -211,15 +211,15 @@
 <span id="208">208</span>
 <span id="209">209</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">BTreeMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
+<span class="kw">use</span> <span class="ident">std::collections::BTreeMap</span>;
+<span class="kw">use</span> <span class="ident">std::io::Write</span>;
+<span class="kw">use</span> <span class="ident">std::str</span>;
 
-<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">BytesText</span>, <span class="ident">Event</span>};
-<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
-<span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">Writer</span>;
+<span class="kw">use</span> <span class="ident">quick_xml::events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">BytesText</span>, <span class="ident">Event</span>};
+<span class="kw">use</span> <span class="ident">quick_xml::Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
+<span class="kw">use</span> <span class="ident">quick_xml::Writer</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">toxml</span>::<span class="ident">ToXml</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::toxml::ToXml</span>;
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">util</span>;
 
@@ -396,19 +396,19 @@
 <span class="kw">impl</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="ident">Extension</span> {
     <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">as_bytes</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">element</span> <span class="op">=</span> <span class="ident">BytesStart</span>::<span class="ident">borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">element</span> <span class="op">=</span> <span class="ident">BytesStart::borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>());
         <span class="ident">element</span>.<span class="ident">extend_attributes</span>(<span class="self">self</span>.<span class="ident">attrs</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">a</span><span class="op">|</span> (<span class="ident">a</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>(), <span class="ident">a</span>.<span class="number">1</span>.<span class="ident">as_bytes</span>())));
-        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">element</span>))<span class="question-mark">?</span>;
+        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Start</span>(<span class="ident">element</span>))<span class="question-mark">?</span>;
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_ref</span>() {
-            <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event</span>::<span class="ident">Text</span>(<span class="ident">BytesText</span>::<span class="ident">from_escaped</span>(<span class="ident">value</span>.<span class="ident">as_bytes</span>())))<span class="question-mark">?</span>;
+            <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Text</span>(<span class="ident">BytesText::from_escaped</span>(<span class="ident">value</span>.<span class="ident">as_bytes</span>())))<span class="question-mark">?</span>;
         }
 
         <span class="kw">for</span> <span class="ident">extension</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">values</span>().<span class="ident">flatten</span>() {
             <span class="ident">extension</span>.<span class="ident">to_xml</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event</span>::<span class="ident">End</span>(<span class="ident">BytesEnd</span>::<span class="ident">borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
+        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
@@ -421,5 +421,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="atom_syndication" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="atom_syndication" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

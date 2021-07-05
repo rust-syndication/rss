@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mime-0.3.16/src/parse.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>parse.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../mime/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../mime/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -366,11 +366,11 @@
 <span id="363">363</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused</span>, <span class="ident">deprecated</span>)]</span>
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">Enumerate</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">Bytes</span>;
+<span class="kw">use</span> <span class="ident">std::ascii::AsciiExt</span>;
+<span class="kw">use</span> <span class="ident">std::error::Error</span>;
+<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="kw">use</span> <span class="ident">std::iter::Enumerate</span>;
+<span class="kw">use</span> <span class="ident">std::str::Bytes</span>;
 
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Mime</span>, <span class="ident">Source</span>, <span class="ident">ParamSource</span>, <span class="ident">Indexed</span>, <span class="ident">CHARSET</span>, <span class="ident">UTF_8</span>};
 
@@ -387,7 +387,7 @@
 
 <span class="kw">impl</span> <span class="ident">ParseError</span> {
     <span class="kw">fn</span> <span class="ident">s</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ParseError</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="self">self</span><span class="ident">::ParseError</span>::<span class="kw-2">*</span>;
 
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">MissingSlash</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;a slash (/) was missing between the type and subtype&quot;</span>,
@@ -398,10 +398,10 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParseError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParseError</span>::<span class="ident">InvalidToken</span> { <span class="ident">pos</span>, <span class="ident">byte</span> } <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}, {:X} at position {}&quot;</span>, <span class="self">self</span>.<span class="ident">s</span>(), <span class="ident">byte</span>, <span class="ident">pos</span>)
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ParseError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParseError::InvalidToken</span> { <span class="ident">pos</span>, <span class="ident">byte</span> } <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}, {:X} at position {}&quot;</span>, <span class="self">self</span>.<span class="ident">s</span>(), <span class="ident">byte</span>, <span class="ident">pos</span>)
         } <span class="kw">else</span> {
             <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">s</span>())
         }
@@ -418,7 +418,7 @@
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Mime</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;*/*&quot;</span> {
-        <span class="kw">return</span> <span class="prelude-val">Ok</span>(::<span class="ident">STAR_STAR</span>);
+        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">::STAR_STAR</span>);
     }
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">bytes</span>().<span class="ident">enumerate</span>();
@@ -433,8 +433,8 @@
                 <span class="ident">start</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>;
                 <span class="kw">break</span>;
             },
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">MissingSlash</span>), <span class="comment">// EOF and no toplevel is no Mime</span>
-            <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">InvalidToken</span> {
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::MissingSlash</span>), <span class="comment">// EOF and no toplevel is no Mime</span>
+            <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::InvalidToken</span> {
                 <span class="ident">pos</span>: <span class="ident">pos</span>,
                 <span class="ident">byte</span>: <span class="ident">byte</span>,
             })
@@ -456,13 +456,13 @@
             <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">c</span>)) <span class="kw">if</span> <span class="ident">is_token</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> (),
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Mime</span> {
-                    <span class="ident">source</span>: <span class="ident">Source</span>::<span class="ident">Dynamic</span>(<span class="ident">s</span>.<span class="ident">to_ascii_lowercase</span>()),
+                    <span class="ident">source</span>: <span class="ident">Source::Dynamic</span>(<span class="ident">s</span>.<span class="ident">to_ascii_lowercase</span>()),
                     <span class="ident">slash</span>: <span class="ident">slash</span>,
                     <span class="ident">plus</span>: <span class="ident">plus</span>,
-                    <span class="ident">params</span>: <span class="ident">ParamSource</span>::<span class="prelude-val">None</span>,
+                    <span class="ident">params</span>: <span class="ident">ParamSource::None</span>,
                 });
             },
-            <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">InvalidToken</span> {
+            <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::InvalidToken</span> {
                 <span class="ident">pos</span>: <span class="ident">pos</span>,
                 <span class="ident">byte</span>: <span class="ident">byte</span>,
             })
@@ -473,16 +473,16 @@
     <span class="kw">let</span> <span class="ident">params</span> <span class="op">=</span> <span class="ident">params_from_str</span>(<span class="ident">s</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">iter</span>, <span class="ident">start</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">params</span> {
-        <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>)  <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>.<span class="ident">to_ascii_lowercase</span>(),
-        <span class="ident">ParamSource</span>::<span class="ident">Custom</span>(<span class="ident">semicolon</span>, <span class="kw-2">ref</span> <span class="ident">indices</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lower_ascii_with_params</span>(<span class="ident">s</span>, <span class="ident">semicolon</span>, <span class="ident">indices</span>),
-        <span class="ident">ParamSource</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">ParamSource::Utf8</span>(<span class="kw">_</span>)  <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>.<span class="ident">to_ascii_lowercase</span>(),
+        <span class="ident">ParamSource::Custom</span>(<span class="ident">semicolon</span>, <span class="kw-2">ref</span> <span class="ident">indices</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">lower_ascii_with_params</span>(<span class="ident">s</span>, <span class="ident">semicolon</span>, <span class="ident">indices</span>),
+        <span class="ident">ParamSource::None</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="comment">// Chop off the empty list</span>
             <span class="ident">s</span>[..<span class="ident">start</span>].<span class="ident">to_ascii_lowercase</span>()
         }
     };
 
     <span class="prelude-val">Ok</span>(<span class="ident">Mime</span> {
-        <span class="ident">source</span>: <span class="ident">Source</span>::<span class="ident">Dynamic</span>(<span class="ident">src</span>),
+        <span class="ident">source</span>: <span class="ident">Source::Dynamic</span>(<span class="ident">src</span>),
         <span class="ident">slash</span>: <span class="ident">slash</span>,
         <span class="ident">plus</span>: <span class="ident">plus</span>,
         <span class="ident">params</span>: <span class="ident">params</span>,
@@ -493,7 +493,7 @@
 <span class="kw">fn</span> <span class="ident">params_from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">iter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Enumerate</span><span class="op">&lt;</span><span class="ident">Bytes</span><span class="op">&gt;</span>, <span class="kw-2">mut</span> <span class="ident">start</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ParamSource</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">semicolon</span> <span class="op">=</span> <span class="ident">start</span>;
     <span class="ident">start</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource</span>::<span class="prelude-val">None</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource::None</span>;
     <span class="lifetime">&#39;params</span>: <span class="kw">while</span> <span class="ident">start</span> <span class="op">&lt;</span> <span class="ident">s</span>.<span class="ident">len</span>() {
         <span class="kw">let</span> <span class="ident">name</span>;
         <span class="comment">// name</span>
@@ -509,8 +509,8 @@
                     <span class="ident">start</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>;
                     <span class="kw">break</span> <span class="lifetime">&#39;name</span>;
                 },
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">MissingEqual</span>),
-                <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">InvalidToken</span> {
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::MissingEqual</span>),
+                <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::InvalidToken</span> {
                     <span class="ident">pos</span>: <span class="ident">pos</span>,
                     <span class="ident">byte</span>: <span class="ident">byte</span>,
                 }),
@@ -529,8 +529,8 @@
                         <span class="kw">break</span> <span class="lifetime">&#39;value</span>;
                     },
                     <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">c</span>)) <span class="kw">if</span> <span class="ident">is_restricted_quoted_char</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> (),
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">MissingQuote</span>),
-                    <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">InvalidToken</span> {
+                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::MissingQuote</span>),
+                    <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::InvalidToken</span> {
                         <span class="ident">pos</span>: <span class="ident">pos</span>,
                         <span class="ident">byte</span>: <span class="ident">byte</span>,
                     }),
@@ -553,7 +553,7 @@
                         <span class="kw">break</span> <span class="lifetime">&#39;value</span>;
                     },
 
-                    <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">InvalidToken</span> {
+                    <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::InvalidToken</span> {
                         <span class="ident">pos</span>: <span class="ident">pos</span>,
                         <span class="ident">byte</span>: <span class="ident">byte</span>,
                     }),
@@ -577,7 +577,7 @@
                         <span class="ident">start</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">len</span>();
                         <span class="kw">break</span> <span class="lifetime">&#39;ws</span>;
                     },
-                    <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError</span>::<span class="ident">InvalidToken</span> {
+                    <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">byte</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::InvalidToken</span> {
                         <span class="ident">pos</span>: <span class="ident">pos</span>,
                         <span class="ident">byte</span>: <span class="ident">byte</span>,
                     }),
@@ -586,26 +586,26 @@
         }
 
         <span class="kw">match</span> <span class="ident">params</span> {
-            <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">ParamSource::Utf8</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="number">2</span>;
                 <span class="kw">let</span> <span class="ident">charset</span> <span class="op">=</span> <span class="ident">Indexed</span>(<span class="ident">i</span>, <span class="string">&quot;charset&quot;</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="ident">i</span>);
                 <span class="kw">let</span> <span class="ident">utf8</span> <span class="op">=</span> <span class="ident">Indexed</span>(<span class="ident">charset</span>.<span class="number">1</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">charset</span>.<span class="number">1</span> <span class="op">+</span> <span class="string">&quot;utf-8&quot;</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>);
-                <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource</span>::<span class="ident">Custom</span>(<span class="ident">semicolon</span>, <span class="macro">vec</span><span class="macro">!</span>[
+                <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource::Custom</span>(<span class="ident">semicolon</span>, <span class="macro">vec!</span>[
                     (<span class="ident">charset</span>, <span class="ident">utf8</span>),
                     (<span class="ident">name</span>, <span class="ident">value</span>),
                 ]);
             },
-            <span class="ident">ParamSource</span>::<span class="ident">Custom</span>(<span class="kw">_</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">vec</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">ParamSource::Custom</span>(<span class="kw">_</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">vec</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">vec</span>.<span class="ident">push</span>((<span class="ident">name</span>, <span class="ident">value</span>));
             },
-            <span class="ident">ParamSource</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">ParamSource::None</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">if</span> <span class="ident">semicolon</span> <span class="op">+</span> <span class="number">2</span> <span class="op">=</span><span class="op">=</span> <span class="ident">name</span>.<span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">CHARSET</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">s</span>[<span class="ident">name</span>.<span class="number">0</span>..<span class="ident">name</span>.<span class="number">1</span>] {
                     <span class="kw">if</span> <span class="ident">UTF_8</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">s</span>[<span class="ident">value</span>.<span class="number">0</span>..<span class="ident">value</span>.<span class="number">1</span>] {
-                        <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="ident">semicolon</span>);
+                        <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource::Utf8</span>(<span class="ident">semicolon</span>);
                         <span class="kw">continue</span> <span class="lifetime">&#39;params</span>;
                     }
                 }
-                <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource</span>::<span class="ident">Custom</span>(<span class="ident">semicolon</span>, <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">name</span>, <span class="ident">value</span>)]);
+                <span class="ident">params</span> <span class="op">=</span> <span class="ident">ParamSource::Custom</span>(<span class="ident">semicolon</span>, <span class="macro">vec!</span>[(<span class="ident">name</span>, <span class="ident">value</span>)]);
             },
         }
     }
@@ -666,13 +666,13 @@
 <span class="comment">//</span>
 <span class="comment">// So, clearly, ¯\_(Ä_/¯</span>
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">byte_map</span> {
+<span class="macro">macro_rules!</span> <span class="ident">byte_map</span> {
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>:<span class="ident">expr</span>,)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> ([
         $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>,)<span class="op">*</span>
     ])
 }
 
-<span class="kw">static</span> <span class="ident">TOKEN_MAP</span>: [<span class="ident">bool</span>; <span class="number">256</span>] <span class="op">=</span> <span class="macro">byte_map</span><span class="macro">!</span>[
+<span class="kw">static</span> <span class="ident">TOKEN_MAP</span>: [<span class="ident">bool</span>; <span class="number">256</span>] <span class="op">=</span> <span class="macro">byte_map!</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>,
@@ -725,9 +725,9 @@
             <span class="string">b&#39;~&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>
         };
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">valid</span>, <span class="ident">should</span>, <span class="string">&quot;{:?} ({}) should be {}&quot;</span>, <span class="ident">i</span> <span class="kw">as</span> <span class="ident">char</span>, <span class="ident">i</span>, <span class="ident">should</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">valid</span>, <span class="ident">should</span>, <span class="string">&quot;{:?} ({}) should be {}&quot;</span>, <span class="ident">i</span> <span class="kw">as</span> <span class="ident">char</span>, <span class="ident">i</span>, <span class="ident">should</span>);
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="mime" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="mime" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

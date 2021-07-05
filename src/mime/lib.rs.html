@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mime-0.3.16/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../mime/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../mime/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -970,12 +970,12 @@
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_debug_implementations</span>)]</span>
 
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>;
+<span class="kw">use</span> <span class="ident">std::cmp::Ordering</span>;
+<span class="kw">use</span> <span class="ident">std::error::Error</span>;
+<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="kw">use</span> <span class="ident">std::hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
+<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
+<span class="kw">use</span> <span class="ident">std::slice</span>;
 
 <span class="kw">mod</span> <span class="ident">parse</span>;
 
@@ -1011,7 +1011,7 @@
 <span class="doccomment">/// An error when parsing a `Mime` from a string.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FromStrError</span> {
-    <span class="ident">inner</span>: <span class="ident">parse</span>::<span class="ident">ParseError</span>,
+    <span class="ident">inner</span>: <span class="ident">parse::ParseError</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">FromStrError</span> {
@@ -1020,9 +1020,9 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">FromStrError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}: {}&quot;</span>, <span class="self">self</span>.<span class="ident">s</span>(), <span class="self">self</span>.<span class="ident">inner</span>)
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">FromStrError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}: {}&quot;</span>, <span class="self">self</span>.<span class="ident">s</span>(), <span class="self">self</span>.<span class="ident">inner</span>)
     }
 }
 
@@ -1043,8 +1043,8 @@
 <span class="kw">impl</span> <span class="ident">Source</span> {
     <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Source</span>::<span class="ident">Atom</span>(<span class="kw">_</span>, <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>,
-            <span class="ident">Source</span>::<span class="ident">Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>,
+            <span class="ident">Source::Atom</span>(<span class="kw">_</span>, <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>,
+            <span class="ident">Source::Dynamic</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">s</span>,
         }
     }
 }
@@ -1140,14 +1140,14 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">params</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Params</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">params</span> {
-            <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ParamsInner</span>::<span class="ident">Utf8</span>,
-            <span class="ident">ParamSource</span>::<span class="ident">Custom</span>(<span class="kw">_</span>, <span class="kw-2">ref</span> <span class="ident">params</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">ParamsInner</span>::<span class="ident">Custom</span> {
+            <span class="ident">ParamSource::Utf8</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ParamsInner::Utf8</span>,
+            <span class="ident">ParamSource::Custom</span>(<span class="kw">_</span>, <span class="kw-2">ref</span> <span class="ident">params</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">ParamsInner::Custom</span> {
                     <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">source</span>,
                     <span class="ident">params</span>: <span class="ident">params</span>.<span class="ident">iter</span>(),
                 }
             }
-            <span class="ident">ParamSource</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ParamsInner</span>::<span class="prelude-val">None</span>,
+            <span class="ident">ParamSource::None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ParamsInner::None</span>,
         };
 
         <span class="ident">Params</span>(<span class="ident">inner</span>)
@@ -1165,7 +1165,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
     <span class="kw">fn</span> <span class="ident">has_params</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">params</span> {
-            <span class="ident">ParamSource</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">ParamSource::None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         }
     }
@@ -1173,15 +1173,15 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">semicolon</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">params</span> {
-            <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="ident">i</span>) <span class="op">|</span>
-            <span class="ident">ParamSource</span>::<span class="ident">Custom</span>(<span class="ident">i</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>),
-            <span class="ident">ParamSource</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">ParamSource::Utf8</span>(<span class="ident">i</span>) <span class="op">|</span>
+            <span class="ident">ParamSource::Custom</span>(<span class="ident">i</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>),
+            <span class="ident">ParamSource::None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
     <span class="kw">fn</span> <span class="ident">atom</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u8</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">source</span> {
-            <span class="ident">Source</span>::<span class="ident">Atom</span>(<span class="ident">a</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">a</span>,
+            <span class="ident">Source::Atom</span>(<span class="ident">a</span>, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">a</span>,
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
         }
     }
@@ -1193,13 +1193,13 @@
     <span class="comment">// str::eq_ignore_ascii_case didn&#39;t stabilize until Rust 1.23.</span>
     <span class="comment">// So while our MSRV is 1.15, gotta import this trait.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>, <span class="ident">unused</span>)]</span>
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
+    <span class="kw">use</span> <span class="ident">std::ascii::AsciiExt</span>;
 
     <span class="ident">a</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="ident">b</span>)
 }
 
 <span class="kw">fn</span> <span class="ident">mime_eq_str</span>(<span class="ident">mime</span>: <span class="kw-2">&amp;</span><span class="ident">Mime</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="ident">semicolon</span>) <span class="op">=</span> <span class="ident">mime</span>.<span class="ident">params</span> {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParamSource::Utf8</span>(<span class="ident">semicolon</span>) <span class="op">=</span> <span class="ident">mime</span>.<span class="ident">params</span> {
         <span class="kw">if</span> <span class="ident">mime</span>.<span class="ident">source</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">s</span>.<span class="ident">len</span>() {
             <span class="ident">eq_ascii</span>(<span class="ident">mime</span>.<span class="ident">source</span>.<span class="ident">as_ref</span>(), <span class="ident">s</span>)
         } <span class="kw">else</span> {
@@ -1359,8 +1359,8 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Mime</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">FromStrError</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Mime</span>, <span class="self">Self</span>::<span class="prelude-val">Err</span><span class="op">&gt;</span> {
-        <span class="ident">parse</span>::<span class="ident">parse</span>(<span class="ident">s</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">FromStrError</span> { <span class="ident">inner</span>: <span class="ident">e</span> })
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Mime</span>, <span class="self">Self</span><span class="ident">::Err</span><span class="op">&gt;</span> {
+        <span class="ident">parse::parse</span>(<span class="ident">s</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">FromStrError</span> { <span class="ident">inner</span>: <span class="ident">e</span> })
     }
 }
 
@@ -1371,17 +1371,17 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Mime</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Mime</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="self">self</span>.<span class="ident">source</span>.<span class="ident">as_ref</span>(), <span class="ident">f</span>)
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="ident">fmt::Debug::fmt</span>(<span class="self">self</span>.<span class="ident">source</span>.<span class="ident">as_ref</span>(), <span class="ident">f</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Mime</span> {
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Mime</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="self">self</span>.<span class="ident">source</span>.<span class="ident">as_ref</span>(), <span class="ident">f</span>)
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="ident">fmt::Display::fmt</span>(<span class="self">self</span>.<span class="ident">source</span>.<span class="ident">as_ref</span>(), <span class="ident">f</span>)
     }
 }
 
@@ -1434,17 +1434,17 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="self">self</span>.<span class="ident">source</span>, <span class="ident">f</span>)
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="ident">fmt::Debug::fmt</span>(<span class="self">self</span>.<span class="ident">source</span>, <span class="ident">f</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="self">self</span>.<span class="ident">source</span>, <span class="ident">f</span>)
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+        <span class="ident">fmt::Display::fmt</span>(<span class="self">self</span>.<span class="ident">source</span>, <span class="ident">f</span>)
     }
 }
 
@@ -1454,7 +1454,7 @@
     <span class="ident">Utf8</span>,
     <span class="ident">Custom</span> {
         <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Source</span>,
-        <span class="ident">params</span>: <span class="ident">slice</span>::<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, (<span class="ident">Indexed</span>, <span class="ident">Indexed</span>)<span class="op">&gt;</span>,
+        <span class="ident">params</span>: <span class="ident">slice::Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, (<span class="ident">Indexed</span>, <span class="ident">Indexed</span>)<span class="op">&gt;</span>,
     },
     <span class="prelude-val">None</span>,
 }
@@ -1462,8 +1462,8 @@
 <span class="doccomment">/// An iterator over the parameters of a MIME.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Params</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ParamsInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Params</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Params</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="ident">fmt</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Params&quot;</span>).<span class="ident">finish</span>()
     }
 }
@@ -1474,12 +1474,12 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">ParamsInner</span>::<span class="ident">Utf8</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">ParamsInner::Utf8</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> (<span class="ident">CHARSET</span>, <span class="ident">UTF_8</span>);
-                <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span> <span class="ident">ParamsInner</span>::<span class="prelude-val">None</span>;
+                <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span> <span class="ident">ParamsInner::None</span>;
                 <span class="prelude-val">Some</span>(<span class="ident">value</span>)
             }
-            <span class="ident">ParamsInner</span>::<span class="ident">Custom</span> { <span class="ident">source</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">params</span> } <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">ParamsInner::Custom</span> { <span class="ident">source</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">params</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">params</span>.<span class="ident">next</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">name</span>, <span class="ident">value</span>)<span class="op">|</span> {
                     <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">Name</span> {
                         <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">as_ref</span>()[<span class="ident">name</span>.<span class="number">0</span>..<span class="ident">name</span>.<span class="number">1</span>],
@@ -1492,21 +1492,21 @@
                     (<span class="ident">name</span>, <span class="ident">value</span>)
                 })
             }
-            <span class="ident">ParamsInner</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>
+            <span class="ident">ParamsInner::None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="ident">ParamsInner</span>::<span class="ident">Utf8</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="number">1</span>)),
-            <span class="ident">ParamsInner</span>::<span class="ident">Custom</span> { <span class="kw-2">ref</span> <span class="ident">params</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">params</span>.<span class="ident">size_hint</span>(),
-            <span class="ident">ParamsInner</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>)),
+            <span class="ident">ParamsInner::Utf8</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="number">1</span>)),
+            <span class="ident">ParamsInner::Custom</span> { <span class="kw-2">ref</span> <span class="ident">params</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">params</span>.<span class="ident">size_hint</span>(),
+            <span class="ident">ParamsInner::None</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>)),
         }
     }
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">names</span> {
+<span class="macro">macro_rules!</span> <span class="ident">names</span> {
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>:<span class="ident">expr</span>;)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> (
         $(
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>]</span>
@@ -1519,15 +1519,15 @@
         <span class="attribute">#[<span class="ident">test</span>]</span>
         <span class="kw">fn</span> <span class="ident">test_names_macro_consts</span>() {
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused</span>, <span class="ident">deprecated</span>)]</span>
-            <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
+            <span class="kw">use</span> <span class="ident">std::ascii::AsciiExt</span>;
             $(
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>.<span class="ident">source</span>.<span class="ident">to_ascii_lowercase</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>.<span class="ident">source</span>);
+            <span class="macro">assert_eq!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>.<span class="ident">source</span>.<span class="ident">to_ascii_lowercase</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>.<span class="ident">source</span>);
             )<span class="op">*</span>
         }
     )
 }
 
-<span class="macro">names</span><span class="macro">!</span> {
+<span class="macro">names!</span> {
     <span class="ident">STAR</span>, <span class="string">&quot;*&quot;</span>;
 
     <span class="ident">TEXT</span>, <span class="string">&quot;text&quot;</span>;
@@ -1583,7 +1583,7 @@
     <span class="ident">UTF_8</span>, <span class="string">&quot;utf-8&quot;</span>;
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">mimes</span> {
+<span class="macro">macro_rules!</span> <span class="ident">mimes</span> {
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">piece</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>;)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> (
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span>
         <span class="kw">enum</span> <span class="ident">__Atoms</span> {
@@ -1594,7 +1594,7 @@
         }
 
         $(
-            <span class="macro">mime_constant</span><span class="macro">!</span> {
+            <span class="macro">mime_constant!</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">piece</span>),<span class="op">*</span>
             }
         )<span class="op">*</span>
@@ -1603,27 +1603,27 @@
         <span class="kw">fn</span> <span class="ident">test_mimes_macro_consts</span>() {
             <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> [
             $(
-            <span class="macro">mime_constant_test</span><span class="macro">!</span> {
+            <span class="macro">mime_constant_test!</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">piece</span>),<span class="op">*</span>
             }
             ),<span class="op">*</span>
             ].<span class="ident">iter</span>().<span class="ident">enumerate</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">pos</span>, <span class="kw-2">&amp;</span><span class="ident">atom</span>)<span class="op">|</span> {
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">atom</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="string">&quot;atom {} in position {}&quot;</span>, <span class="ident">atom</span>, <span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>);
+                <span class="macro">assert_eq!</span>(<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">atom</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="string">&quot;atom {} in position {}&quot;</span>, <span class="ident">atom</span>, <span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>);
             }).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>()<span class="op">&gt;</span><span class="op">&gt;</span>();
         }
     )
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">mime_constant</span> {
+<span class="macro">macro_rules!</span> <span class="ident">mime_constant</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="macro">mime_constant</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="prelude-val">None</span>);
+        <span class="macro">mime_constant!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="prelude-val">None</span>);
     );
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="macro">mime_constant</span><span class="macro">!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource</span>::<span class="prelude-val">None</span>);
+        <span class="macro">mime_constant!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource::None</span>);
     );
 
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="macro">mime_constant</span><span class="macro">!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>));
+        <span class="macro">mime_constant!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource::Utf8</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>));
     );
 
 
@@ -1632,7 +1632,7 @@
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>]</span>
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;`&quot;</span>]</span>
         <span class="kw">pub</span> <span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>: <span class="ident">Mime</span> <span class="op">=</span> <span class="ident">Mime</span> {
-            <span class="ident">source</span>: <span class="ident">Source</span>::<span class="ident">Atom</span>(<span class="ident">__Atoms</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>),
+            <span class="ident">source</span>: <span class="ident">Source::Atom</span>(<span class="ident">__Atoms</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>),
             <span class="ident">slash</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>,
             <span class="ident">plus</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>,
             <span class="ident">params</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>,
@@ -1642,42 +1642,42 @@
 
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">mime_constant_test</span> {
+<span class="macro">macro_rules!</span> <span class="ident">mime_constant_test</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="macro">mime_constant_test</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="prelude-val">None</span>);
+        <span class="macro">mime_constant_test!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="prelude-val">None</span>);
     );
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="macro">mime_constant_test</span><span class="macro">!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource</span>::<span class="prelude-val">None</span>);
+        <span class="macro">mime_constant_test!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource::None</span>);
     );
 
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        <span class="macro">mime_constant_test</span><span class="macro">!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>));
+        <span class="macro">mime_constant_test!</span>(<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>, <span class="ident">ParamSource::Utf8</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>));
     );
 
     (<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> ({
         <span class="kw">let</span> <span class="ident">__mime</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>;
         <span class="kw">let</span> <span class="ident">__slash</span> <span class="op">=</span> <span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>()[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">__slash</span>, <span class="string">b&#39;/&#39;</span>, <span class="string">&quot;{:?} has {:?} at slash position {:?}&quot;</span>, <span class="ident">__mime</span>, <span class="ident">__slash</span> <span class="kw">as</span> <span class="ident">char</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">__slash</span>, <span class="string">b&#39;/&#39;</span>, <span class="string">&quot;{:?} has {:?} at slash position {:?}&quot;</span>, <span class="ident">__mime</span>, <span class="ident">__slash</span> <span class="kw">as</span> <span class="ident">char</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">plus</span>) <span class="op">=</span> <span class="ident">__mime</span>.<span class="ident">plus</span> {
             <span class="kw">let</span> <span class="ident">__c</span> <span class="op">=</span> <span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>()[<span class="ident">plus</span>];
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">__c</span>, <span class="string">b&#39;+&#39;</span>, <span class="string">&quot;{:?} has {:?} at plus position {:?}&quot;</span>, <span class="ident">__mime</span>, <span class="ident">__c</span> <span class="kw">as</span> <span class="ident">char</span>, <span class="ident">plus</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">__c</span>, <span class="string">b&#39;+&#39;</span>, <span class="string">&quot;{:?} has {:?} at plus position {:?}&quot;</span>, <span class="ident">__mime</span>, <span class="ident">__c</span> <span class="kw">as</span> <span class="ident">char</span>, <span class="ident">plus</span>);
         } <span class="kw">else</span> {
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>().<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;+&#39;</span>), <span class="string">&quot;{:?} forgot plus&quot;</span>, <span class="ident">__mime</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>().<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;+&#39;</span>), <span class="string">&quot;{:?} forgot plus&quot;</span>, <span class="ident">__mime</span>);
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParamSource</span>::<span class="ident">Utf8</span>(<span class="ident">semicolon</span>) <span class="op">=</span> <span class="ident">__mime</span>.<span class="ident">params</span> {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>()[<span class="ident">semicolon</span>], <span class="string">b&#39;;&#39;</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">__mime</span>.<span class="ident">as_ref</span>()[<span class="ident">semicolon</span>..], <span class="string">&quot;; charset=utf-8&quot;</span>);
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParamSource</span>::<span class="prelude-val">None</span> <span class="op">=</span> <span class="ident">__mime</span>.<span class="ident">params</span> {
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>().<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;;&#39;</span>));
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParamSource::Utf8</span>(<span class="ident">semicolon</span>) <span class="op">=</span> <span class="ident">__mime</span>.<span class="ident">params</span> {
+            <span class="macro">assert_eq!</span>(<span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>()[<span class="ident">semicolon</span>], <span class="string">b&#39;;&#39;</span>);
+            <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">__mime</span>.<span class="ident">as_ref</span>()[<span class="ident">semicolon</span>..], <span class="string">&quot;; charset=utf-8&quot;</span>);
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ParamSource::None</span> <span class="op">=</span> <span class="ident">__mime</span>.<span class="ident">params</span> {
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">__mime</span>.<span class="ident">as_ref</span>().<span class="ident">as_bytes</span>().<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;;&#39;</span>));
         } <span class="kw">else</span> {
-            <span class="macro">unreachable</span><span class="macro">!</span>();
+            <span class="macro">unreachable!</span>();
         }
         <span class="ident">__mime</span>.<span class="ident">atom</span>()
     })
 }
 
 
-<span class="macro">mimes</span><span class="macro">!</span> {
+<span class="macro">mimes!</span> {
     <span class="ident">STAR_STAR</span>, <span class="string">&quot;*/*&quot;</span>, <span class="number">1</span>;
 
     <span class="ident">TEXT_STAR</span>, <span class="string">&quot;text/*&quot;</span>, <span class="number">4</span>;
@@ -1724,86 +1724,86 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
+    <span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_type_</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">type_</span>(), <span class="ident">TEXT</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">type_</span>(), <span class="ident">TEXT</span>);
     }
 
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_subtype</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">subtype</span>(), <span class="ident">PLAIN</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">subtype</span>(), <span class="ident">PLAIN</span>);
-        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/html+xml&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">subtype</span>(), <span class="ident">HTML</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">subtype</span>(), <span class="ident">PLAIN</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">subtype</span>(), <span class="ident">PLAIN</span>);
+        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/html+xml&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">subtype</span>(), <span class="ident">HTML</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_matching</span>() {
         <span class="kw">match</span> (<span class="ident">TEXT_PLAIN</span>.<span class="ident">type_</span>(), <span class="ident">TEXT_PLAIN</span>.<span class="ident">subtype</span>()) {
             (<span class="ident">TEXT</span>, <span class="ident">PLAIN</span>) <span class="op">=</span><span class="op">&gt;</span> (),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
         }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_suffix</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">suffix</span>(), <span class="prelude-val">None</span>);
-        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/html+xml&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">suffix</span>(), <span class="prelude-val">Some</span>(<span class="ident">XML</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">suffix</span>(), <span class="prelude-val">None</span>);
+        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/html+xml&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">suffix</span>(), <span class="prelude-val">Some</span>(<span class="ident">XML</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_mime_fmt</span>() {
         <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">TEXT_PLAIN</span>;
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">to_string</span>(), <span class="string">&quot;text/plain&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">to_string</span>(), <span class="string">&quot;text/plain&quot;</span>);
         <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">TEXT_PLAIN_UTF_8</span>;
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">to_string</span>(), <span class="string">&quot;text/plain; charset=utf-8&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">to_string</span>(), <span class="string">&quot;text/plain; charset=utf-8&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_mime_from_str</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;TEXT/PLAIN&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=utf-8&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Mime::from_str</span>(<span class="string">&quot;TEXT/PLAIN&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain;charset=utf-8&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
 
         <span class="comment">// spaces</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain; charset=utf-8&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain; charset=utf-8&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
 
         <span class="comment">// quotes + semi colon</span>
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot; ; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot; ; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
 
-        <span class="kw">let</span> <span class="ident">upper</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;TEXT/PLAIN&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">upper</span>, <span class="ident">TEXT_PLAIN</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">upper</span>.<span class="ident">type_</span>(), <span class="ident">TEXT</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">upper</span>.<span class="ident">subtype</span>(), <span class="ident">PLAIN</span>);
+        <span class="kw">let</span> <span class="ident">upper</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="string">&quot;TEXT/PLAIN&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">upper</span>, <span class="ident">TEXT_PLAIN</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">upper</span>.<span class="ident">type_</span>(), <span class="ident">TEXT</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">upper</span>.<span class="ident">subtype</span>(), <span class="ident">PLAIN</span>);
 
 
-        <span class="kw">let</span> <span class="ident">extended</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;TEXT/PLAIN; CHARSET=UTF-8; FOO=BAR&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">extended</span>, <span class="string">&quot;text/plain; charset=utf-8; foo=BAR&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">extended</span>.<span class="ident">get_param</span>(<span class="string">&quot;charset&quot;</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;utf-8&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">extended</span>.<span class="ident">get_param</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;BAR&quot;</span>);
+        <span class="kw">let</span> <span class="ident">extended</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="string">&quot;TEXT/PLAIN; CHARSET=UTF-8; FOO=BAR&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">extended</span>, <span class="string">&quot;text/plain; charset=utf-8; foo=BAR&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">extended</span>.<span class="ident">get_param</span>(<span class="string">&quot;charset&quot;</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;utf-8&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">extended</span>.<span class="ident">get_param</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;BAR&quot;</span>);
 
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;multipart/form-data; boundary=--------foobar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;multipart/form-data; boundary=--------foobar&quot;</span>).<span class="ident">unwrap</span>();
 
         <span class="comment">// stars</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;*/*&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="ident">STAR_STAR</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;image/*&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;image/*&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;text/*; charset=utf-8&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;text/*; charset=utf-8&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;*/*&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="ident">STAR_STAR</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;image/*&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;image/*&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;text/*; charset=utf-8&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>(), <span class="string">&quot;text/*; charset=utf-8&quot;</span>);
 
         <span class="comment">// parse errors</span>
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;f o o / bar&quot;</span>).<span class="ident">unwrap_err</span>();
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text\n/plain&quot;</span>).<span class="ident">unwrap_err</span>();
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text\r/plain&quot;</span>).<span class="ident">unwrap_err</span>();
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/\r\nplain&quot;</span>).<span class="ident">unwrap_err</span>();
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;\r\ncharset=utf-8&quot;</span>).<span class="ident">unwrap_err</span>();
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain; charset=\r\nutf-8&quot;</span>).<span class="ident">unwrap_err</span>();
-        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain; charset=\&quot;\r\nutf-8\&quot;&quot;</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;f o o / bar&quot;</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text\n/plain&quot;</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text\r/plain&quot;</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/\r\nplain&quot;</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain;\r\ncharset=utf-8&quot;</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain; charset=\r\nutf-8&quot;</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain; charset=\&quot;\r\nutf-8\&quot;&quot;</span>).<span class="ident">unwrap_err</span>();
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1815,67 +1815,67 @@
         ];
 
         <span class="kw">for</span> <span class="ident">case</span> <span class="kw">in</span> <span class="ident">CASES</span> {
-            <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="ident">case</span>).<span class="ident">expect</span>(<span class="ident">case</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>, <span class="ident">TEXT_EVENT_STREAM</span>, <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">type_</span>(), <span class="ident">TEXT</span>, <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">subtype</span>(), <span class="ident">EVENT_STREAM</span>, <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">mime</span>.<span class="ident">has_params</span>(), <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
+            <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="ident">case</span>).<span class="ident">expect</span>(<span class="ident">case</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">mime</span>, <span class="ident">TEXT_EVENT_STREAM</span>, <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">type_</span>(), <span class="ident">TEXT</span>, <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">subtype</span>(), <span class="ident">EVENT_STREAM</span>, <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">mime</span>.<span class="ident">has_params</span>(), <span class="string">&quot;case = {:?}&quot;</span>, <span class="ident">case</span>);
         }
 
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_case_sensitive_values</span>() {
-        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;multipart/form-data; charset=BASE64; boundary=ABCDEFG&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">CHARSET</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;bAsE64&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">BOUNDARY</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;ABCDEFG&quot;</span>);
-        <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">BOUNDARY</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;abcdefg&quot;</span>);
+        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="string">&quot;multipart/form-data; charset=BASE64; boundary=ABCDEFG&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">CHARSET</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;bAsE64&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">BOUNDARY</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;ABCDEFG&quot;</span>);
+        <span class="macro">assert_ne!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">BOUNDARY</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;abcdefg&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_get_param</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">get_param</span>(<span class="string">&quot;charset&quot;</span>), <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">get_param</span>(<span class="string">&quot;baz&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">get_param</span>(<span class="string">&quot;charset&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">get_param</span>(<span class="string">&quot;baz&quot;</span>), <span class="prelude-val">None</span>);
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">get_param</span>(<span class="string">&quot;charset&quot;</span>), <span class="prelude-val">Some</span>(<span class="ident">UTF_8</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">get_param</span>(<span class="string">&quot;baz&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">get_param</span>(<span class="string">&quot;charset&quot;</span>), <span class="prelude-val">Some</span>(<span class="ident">UTF_8</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">get_param</span>(<span class="string">&quot;baz&quot;</span>), <span class="prelude-val">None</span>);
 
-        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain; charset=utf-8; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">CHARSET</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;utf-8&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;bar&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="string">&quot;baz&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain; charset=utf-8; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">CHARSET</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;utf-8&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>(), <span class="string">&quot;bar&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="string">&quot;baz&quot;</span>), <span class="prelude-val">None</span>);
 
 
-        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">CHARSET</span>), <span class="prelude-val">Some</span>(<span class="ident">UTF_8</span>));
+        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="ident">Mime::from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq!</span>(<span class="ident">mime</span>.<span class="ident">get_param</span>(<span class="ident">CHARSET</span>), <span class="prelude-val">Some</span>(<span class="ident">UTF_8</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_name_eq</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT</span>, <span class="ident">TEXT</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT</span>, <span class="string">&quot;text&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;text&quot;</span>, <span class="ident">TEXT</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT</span>, <span class="string">&quot;TEXT&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT</span>, <span class="ident">TEXT</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT</span>, <span class="string">&quot;text&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;text&quot;</span>, <span class="ident">TEXT</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT</span>, <span class="string">&quot;TEXT&quot;</span>);
 
         <span class="kw">let</span> <span class="ident">param</span> <span class="op">=</span> <span class="ident">Name</span> {
             <span class="ident">source</span>: <span class="string">&quot;ABC&quot;</span>,
             <span class="ident">insensitive</span>: <span class="bool-val">false</span>,
         };
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">param</span>, <span class="ident">param</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">param</span>, <span class="string">&quot;ABC&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;ABC&quot;</span>, <span class="ident">param</span>);
-        <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="ident">param</span>, <span class="string">&quot;abc&quot;</span>);
-        <span class="macro">assert_ne</span><span class="macro">!</span>(<span class="string">&quot;abc&quot;</span>, <span class="ident">param</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">param</span>, <span class="ident">param</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">param</span>, <span class="string">&quot;ABC&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="string">&quot;ABC&quot;</span>, <span class="ident">param</span>);
+        <span class="macro">assert_ne!</span>(<span class="ident">param</span>, <span class="string">&quot;abc&quot;</span>);
+        <span class="macro">assert_ne!</span>(<span class="string">&quot;abc&quot;</span>, <span class="ident">param</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_essence_str</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">essence_str</span>(), <span class="string">&quot;text/plain&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">essence_str</span>(), <span class="string">&quot;text/plain&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">IMAGE_SVG</span>.<span class="ident">essence_str</span>(), <span class="string">&quot;image/svg+xml&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN</span>.<span class="ident">essence_str</span>(), <span class="string">&quot;text/plain&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>.<span class="ident">essence_str</span>(), <span class="string">&quot;text/plain&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">IMAGE_SVG</span>.<span class="ident">essence_str</span>(), <span class="string">&quot;image/svg+xml&quot;</span>);
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="mime" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="mime" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

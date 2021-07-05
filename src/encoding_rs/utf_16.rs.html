@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.28/src/utf_16.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>utf_16.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -484,8 +484,8 @@
 <span class="comment">// except according to those terms.</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">handles</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">variant</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::handles</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::variant</span>::<span class="kw-2">*</span>;
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Utf16Decoder</span> {
     <span class="ident">lead_surrogate</span>: <span class="ident">u16</span>, <span class="comment">// If non-zero and pending_bmp == false, a pending lead surrogate</span>
@@ -496,7 +496,7 @@
 
 <span class="kw">impl</span> <span class="ident">Utf16Decoder</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">big_endian</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VariantDecoder</span> {
-        <span class="ident">VariantDecoder</span>::<span class="ident">Utf16</span>(<span class="ident">Utf16Decoder</span> {
+        <span class="ident">VariantDecoder::Utf16</span>(<span class="ident">Utf16Decoder</span> {
             <span class="ident">lead_surrogate</span>: <span class="number">0</span>,
             <span class="ident">lead_byte</span>: <span class="prelude-val">None</span>,
             <span class="ident">be</span>: <span class="ident">big_endian</span>,
@@ -536,14 +536,14 @@
         )
     }
 
-    <span class="macro">decoder_functions</span><span class="macro">!</span>(
+    <span class="macro">decoder_functions!</span>(
         {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pending_bmp</span> {
                 <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_bmp</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
+                    <span class="ident">Space::Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">destination_handle</span>.<span class="ident">write_bmp</span>(<span class="self">self</span>.<span class="ident">lead_surrogate</span>);
                         <span class="self">self</span>.<span class="ident">pending_bmp</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span> <span class="number">0</span>;
@@ -560,26 +560,26 @@
                 } <span class="kw">else</span> {
                     <span class="ident">dest</span>.<span class="ident">copy_utf16_from</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">source</span>)
                 } {
-                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>), <span class="ident">read</span>, <span class="ident">written</span>);
+                    <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">0</span>), <span class="ident">read</span>, <span class="ident">written</span>);
                 }
             }
         },
         {
-            <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">pending_bmp</span>);
+            <span class="macro">debug_assert!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">pending_bmp</span>);
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_some</span>() {
                 <span class="comment">// We need to check space without intent to write in order to</span>
                 <span class="comment">// make sure that there is space for the replacement character.</span>
                 <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_bmp</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
+                    <span class="ident">Space::Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Available</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                             <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span> <span class="number">0</span>;
                             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">lead_byte</span> {
                                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="kw">return</span> (
-                                        <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
+                                        <span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                         <span class="ident">src_consumed</span>,
                                         <span class="ident">dest</span>.<span class="ident">written</span>(),
                                     );
@@ -587,16 +587,16 @@
                                 <span class="prelude-val">Some</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="self">self</span>.<span class="ident">lead_byte</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                                     <span class="kw">return</span> (
-                                        <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">3</span>, <span class="number">0</span>),
+                                        <span class="ident">DecoderResult::Malformed</span>(<span class="number">3</span>, <span class="number">0</span>),
                                         <span class="ident">src_consumed</span>,
                                         <span class="ident">dest</span>.<span class="ident">written</span>(),
                                     );
                                 }
                             }
                         }
-                        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_some</span>());
+                        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">lead_byte</span>.<span class="ident">is_some</span>());
                         <span class="self">self</span>.<span class="ident">lead_byte</span> <span class="op">=</span> <span class="prelude-val">None</span>;
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>), <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>), <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
                     }
                 }
             }
@@ -610,9 +610,9 @@
                 <span class="prelude-val">Some</span>(<span class="ident">lead</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">lead_byte</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                     <span class="kw">let</span> <span class="ident">code_unit</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">be</span> {
-                        <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">lead</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">b</span>)
+                        <span class="ident">u16::from</span>(<span class="ident">lead</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16::from</span>(<span class="ident">b</span>)
                     } <span class="kw">else</span> {
-                        <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">b</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">lead</span>)
+                        <span class="ident">u16::from</span>(<span class="ident">b</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">u16::from</span>(<span class="ident">lead</span>)
                     };
                     <span class="kw">let</span> <span class="ident">high_bits</span> <span class="op">=</span> <span class="ident">code_unit</span> <span class="op">&amp;</span> <span class="number">0xFC00u16</span>;
                     <span class="kw">if</span> <span class="ident">high_bits</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xD800u16</span> {
@@ -623,7 +623,7 @@
                             <span class="comment">// pending one.</span>
                             <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span> <span class="ident">code_unit</span> <span class="kw">as</span> <span class="ident">u16</span>;
                             <span class="kw">return</span> (
-                                <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">2</span>),
+                                <span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">2</span>),
                                 <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                                 <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                             );
@@ -635,7 +635,7 @@
                         <span class="comment">// low surrogate</span>
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                             <span class="kw">return</span> (
-                                <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
+                                <span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                 <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                                 <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                             );
@@ -652,7 +652,7 @@
                         <span class="self">self</span>.<span class="ident">lead_surrogate</span> <span class="op">=</span> <span class="ident">code_unit</span>;
                         <span class="self">self</span>.<span class="ident">pending_bmp</span> <span class="op">=</span> <span class="bool-val">true</span>;
                         <span class="kw">return</span> (
-                            <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">2</span>),
+                            <span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">2</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
@@ -678,7 +678,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">testing</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span><span class="ident">::testing</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="kw">fn</span> <span class="ident">decode_utf_16le</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">expect</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
@@ -740,8 +740,8 @@
         <span class="ident">encode_utf_16le</span>(<span class="string">&quot;&quot;</span>, <span class="string">b&quot;&quot;</span>);
 
         <span class="comment">// Encodes as UTF-8</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">UTF_16LE</span>.<span class="ident">new_encoder</span>().<span class="ident">encoding</span>(), <span class="ident">UTF_8</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">UTF_16BE</span>.<span class="ident">new_encoder</span>().<span class="ident">encoding</span>(), <span class="ident">UTF_8</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">UTF_16LE</span>.<span class="ident">new_encoder</span>().<span class="ident">encoding</span>(), <span class="ident">UTF_8</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">UTF_16BE</span>.<span class="ident">new_encoder</span>().<span class="ident">encoding</span>(), <span class="ident">UTF_8</span>);
         <span class="ident">encode_utf_16le</span>(<span class="string">&quot;\u{1F4A9}\u{2603}&quot;</span>, <span class="string">&quot;\u{1F4A9}\u{2603}&quot;</span>.<span class="ident">as_bytes</span>());
         <span class="ident">encode_utf_16be</span>(<span class="string">&quot;\u{1F4A9}\u{2603}&quot;</span>, <span class="string">&quot;\u{1F4A9}\u{2603}&quot;</span>.<span class="ident">as_bytes</span>());
     }
@@ -752,13 +752,13 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output</span> <span class="op">=</span> [<span class="number">0u16</span>; <span class="number">20</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">UTF_16BE</span>.<span class="ident">new_decoder</span>();
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="ident">input</span>.<span class="ident">chunks</span>(<span class="number">1</span>) {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">1</span>);
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="ident">b</span>.<span class="ident">len</span>()).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="kw">_</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="ident">b</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
         }
     }
 
@@ -768,13 +768,13 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output</span> <span class="op">=</span> [<span class="number">0u16</span>; <span class="number">20</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">UTF_16LE</span>.<span class="ident">new_decoder</span>();
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="ident">input</span>.<span class="ident">chunks</span>(<span class="number">1</span>) {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">1</span>);
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="ident">b</span>.<span class="ident">len</span>()).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="kw">_</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="ident">b</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
         }
     }
 
@@ -784,13 +784,13 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output</span> <span class="op">=</span> [<span class="number">0u16</span>; <span class="number">20</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">UTF_16BE</span>.<span class="ident">new_decoder</span>();
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="ident">input</span>.<span class="ident">chunks</span>(<span class="number">3</span>) {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">3</span>);
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="ident">b</span>.<span class="ident">len</span>()).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="kw">_</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="ident">b</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="ident">b</span>.<span class="ident">len</span>());
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="ident">b</span>.<span class="ident">len</span>());
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
         }
     }
 
@@ -800,13 +800,13 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output</span> <span class="op">=</span> [<span class="number">0u16</span>; <span class="number">20</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">UTF_16LE</span>.<span class="ident">new_decoder</span>();
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="ident">input</span>.<span class="ident">chunks</span>(<span class="number">3</span>) {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">b</span>.<span class="ident">len</span>(), <span class="number">3</span>);
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="ident">b</span>.<span class="ident">len</span>()).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="kw">_</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="ident">b</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="ident">b</span>.<span class="ident">len</span>());
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="ident">b</span>.<span class="ident">len</span>());
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
         }
     }
 
@@ -818,20 +818,20 @@
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;\xFF&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">0</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">0</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
         }
         {
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;\xFD&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">true</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">1</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFDFF</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">1</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFDFF</span>);
         }
     }
 
@@ -843,20 +843,20 @@
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;\xFE&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">0</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">0</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
         }
         {
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;\xFD&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">true</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">1</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFEFD</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">1</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFEFD</span>);
         }
     }
 
@@ -868,11 +868,11 @@
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;\xFF&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">true</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">1</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFFFD</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">1</span>);
+            <span class="macro">assert!</span>(<span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFFFD</span>);
         }
     }
 
@@ -884,11 +884,11 @@
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;\xFE&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">true</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">1</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFFFD</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">1</span>);
+            <span class="macro">assert!</span>(<span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFFFD</span>);
         }
     }
 
@@ -899,23 +899,23 @@
         {
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf8</span>(<span class="kw-2">&amp;</span>[<span class="number">0x03</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">0</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0x0</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">0</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0x0</span>);
         }
         {
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf8</span>(<span class="kw-2">&amp;</span>[<span class="number">0x26</span>, <span class="number">0x03</span>, <span class="number">0x26</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">OutputFull</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">3</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xE2</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0x98</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">2</span>], <span class="number">0x83</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">3</span>], <span class="number">0x00</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::OutputFull</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">3</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xE2</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0x98</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">2</span>], <span class="number">0x83</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">3</span>], <span class="number">0x00</span>);
         }
     }
 
@@ -926,26 +926,26 @@
         {
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf8</span>(<span class="kw-2">&amp;</span>[<span class="number">0x26</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">0</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0x0</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">0</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0x0</span>);
         }
         {
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf8</span>(<span class="kw-2">&amp;</span>[<span class="number">0x03</span>, <span class="number">0x26</span>, <span class="number">0x03</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..], <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">OutputFull</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">3</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xE2</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0x98</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">2</span>], <span class="number">0x83</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">3</span>], <span class="number">0x00</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::OutputFull</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">3</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xE2</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0x98</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">2</span>], <span class="number">0x83</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">3</span>], <span class="number">0x00</span>);
         }
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

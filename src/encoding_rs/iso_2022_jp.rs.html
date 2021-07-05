@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.28/src/iso_2022_jp.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iso_2022_jp.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1080,11 +1080,11 @@
 <span class="comment">// except according to those terms.</span>
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">data</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">handles</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">variant</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::data</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::handles</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::variant</span>::<span class="kw-2">*</span>;
 <span class="comment">// Rust 1.14.0 requires the following despite the asterisk above.</span>
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">in_inclusive_range16</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::in_inclusive_range16</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">enum</span> <span class="ident">Iso2022JpDecoderState</span> {
@@ -1107,9 +1107,9 @@
 
 <span class="kw">impl</span> <span class="ident">Iso2022JpDecoder</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VariantDecoder</span> {
-        <span class="ident">VariantDecoder</span>::<span class="ident">Iso2022Jp</span>(<span class="ident">Iso2022JpDecoder</span> {
-            <span class="ident">decoder_state</span>: <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Ascii</span>,
-            <span class="ident">output_state</span>: <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Ascii</span>,
+        <span class="ident">VariantDecoder::Iso2022Jp</span>(<span class="ident">Iso2022JpDecoder</span> {
+            <span class="ident">decoder_state</span>: <span class="ident">Iso2022JpDecoderState::Ascii</span>,
+            <span class="ident">output_state</span>: <span class="ident">Iso2022JpDecoderState::Ascii</span>,
             <span class="ident">lead</span>: <span class="number">0u8</span>,
             <span class="ident">output_flag</span>: <span class="bool-val">false</span>,
             <span class="ident">pending_prepended</span>: <span class="bool-val">false</span>,
@@ -1117,8 +1117,8 @@
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">in_neutral_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Ascii</span>
-            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">output_state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Ascii</span>
+        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Iso2022JpDecoderState::Ascii</span>
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">output_state</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Iso2022JpDecoderState::Ascii</span>
             <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0u8</span>
             <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">output_flag</span>
             <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">pending_prepended</span>
@@ -1131,7 +1131,7 @@
             } <span class="kw">else</span> {
                 <span class="number">1</span>
             } <span class="op">+</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">decoder_state</span> {
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Escape</span> <span class="op">|</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+                <span class="ident">Iso2022JpDecoderState::Escape</span> <span class="op">|</span> <span class="ident">Iso2022JpDecoderState::EscapeStart</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
             },
         )
@@ -1167,33 +1167,33 @@
         )
     }
 
-    <span class="macro">decoder_functions</span><span class="macro">!</span>(
+    <span class="macro">decoder_functions!</span>(
         {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pending_prepended</span> {
                 <span class="comment">// lead was set in EscapeStart and &quot;prepended&quot;</span>
                 <span class="comment">// in Escape.</span>
-                <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x24u8</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x28u8</span>);
+                <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x24u8</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x28u8</span>);
                 <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_bmp</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
+                    <span class="ident">Space::Full</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">return</span> (<span class="ident">DecoderResult::OutputFull</span>, <span class="number">0</span>, <span class="number">0</span>);
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Space::Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="self">self</span>.<span class="ident">pending_prepended</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         <span class="self">self</span>.<span class="ident">output_flag</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">decoder_state</span> {
-                            <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Ascii</span> <span class="op">|</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Roman</span> <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Iso2022JpDecoderState::Ascii</span> <span class="op">|</span> <span class="ident">Iso2022JpDecoderState::Roman</span> <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="ident">destination_handle</span>.<span class="ident">write_ascii</span>(<span class="self">self</span>.<span class="ident">lead</span>);
                                 <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span> <span class="number">0x0u8</span>;
                             }
-                            <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Katakana</span> <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">Iso2022JpDecoderState::Katakana</span> <span class="op">=</span><span class="op">&gt;</span> {
                                 <span class="ident">destination_handle</span>
-                                    .<span class="ident">write_upper_bmp</span>(<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">lead</span>) <span class="op">-</span> <span class="number">0x21u16</span> <span class="op">+</span> <span class="number">0xFF61u16</span>);
+                                    .<span class="ident">write_upper_bmp</span>(<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">lead</span>) <span class="op">-</span> <span class="number">0x21u16</span> <span class="op">+</span> <span class="number">0xFF61u16</span>);
                                 <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span> <span class="number">0x0u8</span>;
                             }
-                            <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">LeadByte</span> <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">TrailByte</span>;
+                            <span class="ident">Iso2022JpDecoderState::LeadByte</span> <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::TrailByte</span>;
                             }
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
                         }
                     }
                 }
@@ -1202,29 +1202,29 @@
         {},
         {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">decoder_state</span> {
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">TrailByte</span> <span class="op">|</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::TrailByte</span> <span class="op">|</span> <span class="ident">Iso2022JpDecoderState::EscapeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">output_state</span>;
-                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>), <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
+                    <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>), <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
                 }
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Escape</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::Escape</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pending_prepended</span> <span class="op">=</span> <span class="bool-val">true</span>;
                     <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">output_state</span>;
-                    <span class="kw">return</span> (<span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">1</span>), <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
+                    <span class="kw">return</span> (<span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">1</span>), <span class="ident">src_consumed</span>, <span class="ident">dest</span>.<span class="ident">written</span>());
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
             }
         },
         {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">decoder_state</span> {
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Ascii</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::Ascii</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x1Bu8</span> {
-                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span>;
+                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::EscapeStart</span>;
                         <span class="kw">continue</span>;
                     }
                     <span class="self">self</span>.<span class="ident">output_flag</span> <span class="op">=</span> <span class="bool-val">false</span>;
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span> <span class="number">0x7Fu8</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x0Eu8</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x0Fu8</span> {
                         <span class="kw">return</span> (
-                            <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                            <span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
@@ -1232,9 +1232,9 @@
                     <span class="ident">destination_handle</span>.<span class="ident">write_ascii</span>(<span class="ident">b</span>);
                     <span class="kw">continue</span>;
                 }
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Roman</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::Roman</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x1Bu8</span> {
-                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span>;
+                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::EscapeStart</span>;
                         <span class="kw">continue</span>;
                     }
                     <span class="self">self</span>.<span class="ident">output_flag</span> <span class="op">=</span> <span class="bool-val">false</span>;
@@ -1248,7 +1248,7 @@
                     }
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span> <span class="number">0x7Fu8</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x0Eu8</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x0Fu8</span> {
                         <span class="kw">return</span> (
-                            <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                            <span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
@@ -1256,51 +1256,51 @@
                     <span class="ident">destination_handle</span>.<span class="ident">write_ascii</span>(<span class="ident">b</span>);
                     <span class="kw">continue</span>;
                 }
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Katakana</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::Katakana</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x1Bu8</span> {
-                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span>;
+                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::EscapeStart</span>;
                         <span class="kw">continue</span>;
                     }
                     <span class="self">self</span>.<span class="ident">output_flag</span> <span class="op">=</span> <span class="bool-val">false</span>;
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x21u8</span> <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x5Fu8</span> {
-                        <span class="ident">destination_handle</span>.<span class="ident">write_upper_bmp</span>(<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">b</span>) <span class="op">-</span> <span class="number">0x21u16</span> <span class="op">+</span> <span class="number">0xFF61u16</span>);
+                        <span class="ident">destination_handle</span>.<span class="ident">write_upper_bmp</span>(<span class="ident">u16::from</span>(<span class="ident">b</span>) <span class="op">-</span> <span class="number">0x21u16</span> <span class="op">+</span> <span class="number">0xFF61u16</span>);
                         <span class="kw">continue</span>;
                     }
                     <span class="kw">return</span> (
-                        <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                        <span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                         <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                         <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                     );
                 }
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">LeadByte</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::LeadByte</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x1Bu8</span> {
-                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span>;
+                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::EscapeStart</span>;
                         <span class="kw">continue</span>;
                     }
                     <span class="self">self</span>.<span class="ident">output_flag</span> <span class="op">=</span> <span class="bool-val">false</span>;
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x21u8</span> <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7Eu8</span> {
                         <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span> <span class="ident">b</span>;
-                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">TrailByte</span>;
+                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::TrailByte</span>;
                         <span class="kw">continue</span>;
                     }
                     <span class="kw">return</span> (
-                        <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                        <span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                         <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                         <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                     );
                 }
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">TrailByte</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::TrailByte</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x1Bu8</span> {
-                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span>;
+                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::EscapeStart</span>;
                         <span class="comment">// The byte in error is the previous</span>
                         <span class="comment">// lead byte.</span>
                         <span class="kw">return</span> (
-                            <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">1</span>),
+                            <span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">1</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
                     }
-                    <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">LeadByte</span>;
+                    <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::LeadByte</span>;
                     <span class="kw">let</span> <span class="ident">jis0208_lead_minus_offset</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">-</span> <span class="number">0x21</span>;
                     <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="ident">b</span>;
                     <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">destination_handle</span>;
@@ -1311,15 +1311,15 @@
                     <span class="comment">// and Katakana (10% acconding to Lunde).</span>
                     <span class="kw">if</span> <span class="ident">jis0208_lead_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x03</span> <span class="op">&amp;&amp;</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span> <span class="number">0x53</span> {
                         <span class="comment">// Hiragana</span>
-                        <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0x3041</span> <span class="op">+</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">trail_minus_offset</span>));
+                        <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0x3041</span> <span class="op">+</span> <span class="ident">u16::from</span>(<span class="ident">trail_minus_offset</span>));
                         <span class="kw">continue</span>;
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">jis0208_lead_minus_offset</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x04</span> <span class="op">&amp;&amp;</span> <span class="ident">trail_minus_offset</span> <span class="op">&lt;</span> <span class="number">0x56</span> {
                         <span class="comment">// Katakana</span>
-                        <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0x30A1</span> <span class="op">+</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">trail_minus_offset</span>));
+                        <span class="ident">handle</span>.<span class="ident">write_upper_bmp</span>(<span class="number">0x30A1</span> <span class="op">+</span> <span class="ident">u16::from</span>(<span class="ident">trail_minus_offset</span>));
                         <span class="kw">continue</span>;
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">trail_minus_offset</span> <span class="op">&gt;</span> (<span class="number">0xFE</span> <span class="op">-</span> <span class="number">0xA1</span>) {
                         <span class="kw">return</span> (
-                            <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
+                            <span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">handle</span>.<span class="ident">written</span>(),
                         );
@@ -1350,7 +1350,7 @@
                                     <span class="kw">continue</span>;
                                 } <span class="kw">else</span> {
                                     <span class="kw">return</span> (
-                                        <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
+                                        <span class="ident">DecoderResult::Malformed</span>(<span class="number">2</span>, <span class="number">0</span>),
                                         <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                                         <span class="ident">handle</span>.<span class="ident">written</span>(),
                                     );
@@ -1359,30 +1359,30 @@
                         }
                     }
                 }
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">EscapeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::EscapeStart</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x24u8</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x28u8</span> {
                         <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span> <span class="ident">b</span>;
-                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Escape</span>;
+                        <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="ident">Iso2022JpDecoderState::Escape</span>;
                         <span class="kw">continue</span>;
                     }
                     <span class="self">self</span>.<span class="ident">output_flag</span> <span class="op">=</span> <span class="bool-val">false</span>;
                     <span class="self">self</span>.<span class="ident">decoder_state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">output_state</span>;
                     <span class="kw">return</span> (
-                        <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
+                        <span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">0</span>),
                         <span class="ident">unread_handle</span>.<span class="ident">unread</span>(),
                         <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                     );
                 }
-                <span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Escape</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpDecoderState::Escape</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">state</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Iso2022JpDecoderState</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                     <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x28u8</span> <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x42u8</span> {
-                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Ascii</span>);
+                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState::Ascii</span>);
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x28u8</span> <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x4Au8</span> {
-                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Roman</span>);
+                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState::Roman</span>);
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x28u8</span> <span class="op">&amp;&amp;</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x49u8</span> {
-                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState</span>::<span class="ident">Katakana</span>);
+                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState::Katakana</span>);
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">lead</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x24u8</span> <span class="op">&amp;&amp;</span> (<span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x40u8</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x42u8</span>) {
-                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState</span>::<span class="ident">LeadByte</span>);
+                        <span class="ident">state</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Iso2022JpDecoderState::LeadByte</span>);
                     }
                     <span class="kw">match</span> <span class="ident">state</span> {
                         <span class="prelude-val">Some</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -1398,7 +1398,7 @@
                                 <span class="comment">// the first one of these was</span>
                                 <span class="comment">// useless.</span>
                                 <span class="kw">return</span> (
-                                    <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">3</span>, <span class="number">3</span>),
+                                    <span class="ident">DecoderResult::Malformed</span>(<span class="number">3</span>, <span class="number">3</span>),
                                     <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                                     <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                                 );
@@ -1416,7 +1416,7 @@
                             <span class="comment">// current or the previous byte but</span>
                             <span class="comment">// the one before those (lone 0x1B).</span>
                             <span class="kw">return</span> (
-                                <span class="ident">DecoderResult</span>::<span class="ident">Malformed</span>(<span class="number">1</span>, <span class="number">1</span>),
+                                <span class="ident">DecoderResult::Malformed</span>(<span class="number">1</span>, <span class="number">1</span>),
                                 <span class="ident">unread_handle</span>.<span class="ident">unread</span>(),
                                 <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                             );
@@ -1546,17 +1546,17 @@
 
 <span class="kw">impl</span> <span class="ident">Iso2022JpEncoder</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">encoding</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Encoder</span> {
-        <span class="ident">Encoder</span>::<span class="ident">new</span>(
+        <span class="ident">Encoder::new</span>(
             <span class="ident">encoding</span>,
-            <span class="ident">VariantEncoder</span>::<span class="ident">Iso2022Jp</span>(<span class="ident">Iso2022JpEncoder</span> {
-                <span class="ident">state</span>: <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span>,
+            <span class="ident">VariantEncoder::Iso2022Jp</span>(<span class="ident">Iso2022JpEncoder</span> {
+                <span class="ident">state</span>: <span class="ident">Iso2022JpEncoderState::Ascii</span>,
             }),
         )
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_pending_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-            <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">Iso2022JpEncoderState::Ascii</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
         }
     }
@@ -1594,16 +1594,16 @@
         <span class="ident">checked_add</span>(<span class="number">3</span>, <span class="ident">byte_length</span>.<span class="ident">checked_mul</span>(<span class="number">3</span>))
     }
 
-    <span class="macro">encoder_functions</span><span class="macro">!</span>(
+    <span class="macro">encoder_functions!</span>(
         {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-                <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="ident">Iso2022JpEncoderState::Ascii</span> <span class="op">=</span><span class="op">&gt;</span> {}
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">dest</span>.<span class="ident">check_space_three</span>() {
-                    <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">return</span> (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">src_consumed</span>, <span class="ident">dst_written</span>);
+                    <span class="ident">Space::Full</span>(<span class="ident">dst_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">return</span> (<span class="ident">EncoderResult::OutputFull</span>, <span class="ident">src_consumed</span>, <span class="ident">dst_written</span>);
                     }
-                    <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span>;
+                    <span class="ident">Space::Available</span>(<span class="ident">destination_handle</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Ascii</span>;
                         <span class="ident">destination_handle</span>.<span class="ident">write_three</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x42u8</span>);
                     }
                 },
@@ -1611,10 +1611,10 @@
         },
         {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-                <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpEncoderState::Ascii</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{0E}&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{0F}&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{1B}&#39;</span> {
                         <span class="kw">return</span> (
-                            <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="string">&#39;\u{FFFD}&#39;</span>),
+                            <span class="ident">EncoderResult::Unmappable</span>(<span class="string">&#39;\u{FFFD}&#39;</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
@@ -1624,14 +1624,14 @@
                         <span class="kw">continue</span>;
                     }
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{A5}&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{203E}&#39;</span> {
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Roman</span>;
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Roman</span>;
                         <span class="ident">destination_handle</span>.<span class="ident">write_three</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x4Au8</span>);
                         <span class="ident">unread_handle</span>.<span class="ident">unread</span>();
                         <span class="kw">continue</span>;
                     }
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">&gt;</span> <span class="string">&#39;\u{FFFF}&#39;</span> {
                         <span class="kw">return</span> (
-                            <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">c</span>),
+                            <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">c</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
@@ -1640,27 +1640,27 @@
                     <span class="comment">// again in the Jis0208 state, but this</span>
                     <span class="comment">// encoder is not worth optimizing.</span>
                     <span class="kw">if</span> <span class="ident">is_mapped_for_two_byte_encode</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u16</span>) {
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Jis0208</span>;
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Jis0208</span>;
                         <span class="ident">destination_handle</span>.<span class="ident">write_three</span>(<span class="number">0x1Bu8</span>, <span class="number">0x24u8</span>, <span class="number">0x42u8</span>);
                         <span class="ident">unread_handle</span>.<span class="ident">unread</span>();
                         <span class="kw">continue</span>;
                     }
                     <span class="kw">return</span> (
-                        <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">c</span>),
+                        <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">c</span>),
                         <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                         <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                     );
                 }
-                <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Roman</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpEncoderState::Roman</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{0E}&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{0F}&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{1B}&#39;</span> {
                         <span class="kw">return</span> (
-                            <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="string">&#39;\u{FFFD}&#39;</span>),
+                            <span class="ident">EncoderResult::Unmappable</span>(<span class="string">&#39;\u{FFFD}&#39;</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
                     }
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{5C}&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{7E}&#39;</span> {
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span>;
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Ascii</span>;
                         <span class="ident">destination_handle</span>.<span class="ident">write_three</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x42u8</span>);
                         <span class="ident">unread_handle</span>.<span class="ident">unread</span>();
                         <span class="kw">continue</span>;
@@ -1679,7 +1679,7 @@
                     }
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">&gt;</span> <span class="string">&#39;\u{FFFF}&#39;</span> {
                         <span class="kw">return</span> (
-                            <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">c</span>),
+                            <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">c</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                         );
@@ -1688,26 +1688,26 @@
                     <span class="comment">// again in the Jis0208 state, but this</span>
                     <span class="comment">// encoder is not worth optimizing.</span>
                     <span class="kw">if</span> <span class="ident">is_mapped_for_two_byte_encode</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u16</span>) {
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Jis0208</span>;
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Jis0208</span>;
                         <span class="ident">destination_handle</span>.<span class="ident">write_three</span>(<span class="number">0x1Bu8</span>, <span class="number">0x24u8</span>, <span class="number">0x42u8</span>);
                         <span class="ident">unread_handle</span>.<span class="ident">unread</span>();
                         <span class="kw">continue</span>;
                     }
                     <span class="kw">return</span> (
-                        <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">c</span>),
+                        <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">c</span>),
                         <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                         <span class="ident">destination_handle</span>.<span class="ident">written</span>(),
                     );
                 }
-                <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Jis0208</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Iso2022JpEncoderState::Jis0208</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">&lt;</span><span class="op">=</span> <span class="string">&#39;\u{7F}&#39;</span> {
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span>;
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Ascii</span>;
                         <span class="ident">destination_handle</span>.<span class="ident">write_three</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x42u8</span>);
                         <span class="ident">unread_handle</span>.<span class="ident">unread</span>();
                         <span class="kw">continue</span>;
                     }
                     <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{A5}&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;\u{203E}&#39;</span> {
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Roman</span>;
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Roman</span>;
                         <span class="ident">destination_handle</span>.<span class="ident">write_three</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x4Au8</span>);
                         <span class="ident">unread_handle</span>.<span class="ident">unread</span>();
                         <span class="kw">continue</span>;
@@ -1716,9 +1716,9 @@
                         <span class="comment">// Transition to ASCII here in order</span>
                         <span class="comment">// not to make it the responsibility</span>
                         <span class="comment">// of the caller.</span>
-                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span>;
+                        <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Ascii</span>;
                         <span class="kw">return</span> (
-                            <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">c</span>),
+                            <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">c</span>),
                             <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                             <span class="ident">destination_handle</span>.<span class="ident">write_three_return_written</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x42u8</span>),
                         );
@@ -1737,9 +1737,9 @@
                             <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="ident">lead</span>, <span class="ident">trail</span>);
                             <span class="kw">continue</span>;
                         } <span class="kw">else</span> {
-                            <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span>;
+                            <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Ascii</span>;
                             <span class="kw">return</span> (
-                                <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">c</span>),
+                                <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">c</span>),
                                 <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                                 <span class="ident">handle</span>.<span class="ident">write_three_return_written</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x42u8</span>),
                             );
@@ -1800,9 +1800,9 @@
                                 <span class="ident">handle</span>.<span class="ident">write_two</span>(<span class="ident">lead</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="ident">trail</span> <span class="kw">as</span> <span class="ident">u8</span>);
                                 <span class="kw">continue</span>;
                             } <span class="kw">else</span> {
-                                <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState</span>::<span class="ident">Ascii</span>;
+                                <span class="self">self</span>.<span class="ident">state</span> <span class="op">=</span> <span class="ident">Iso2022JpEncoderState::Ascii</span>;
                                 <span class="kw">return</span> (
-                                    <span class="ident">EncoderResult</span>::<span class="ident">Unmappable</span>(<span class="ident">c</span>),
+                                    <span class="ident">EncoderResult::Unmappable</span>(<span class="ident">c</span>),
                                     <span class="ident">unread_handle</span>.<span class="ident">consumed</span>(),
                                     <span class="ident">handle</span>.<span class="ident">write_three_return_written</span>(<span class="number">0x1Bu8</span>, <span class="number">0x28u8</span>, <span class="number">0x42u8</span>),
                                 );
@@ -1828,7 +1828,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">testing</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span><span class="ident">::testing</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="kw">fn</span> <span class="ident">decode_iso_2022_jp</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">expect</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
@@ -1935,7 +1935,7 @@
         <span class="ident">decode_iso_2022_jp</span>(<span class="string">b&quot;\x1B$@\x80\x54\x64&quot;</span>, <span class="string">&quot;\u{FFFD}\u{58FA}&quot;</span>);
         <span class="ident">decode_iso_2022_jp</span>(<span class="string">b&quot;\x1B$B\x28\x80&quot;</span>, <span class="string">&quot;\u{FFFD}&quot;</span>);
 
-        <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+        <span class="kw">if</span> <span class="macro">cfg!</span>(<span class="ident">miri</span>) {
             <span class="comment">// Miri is too slow</span>
             <span class="kw">return</span>;
         }
@@ -2015,7 +2015,7 @@
         <span class="comment">// Roman</span>
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{00A5}b&quot;</span>, <span class="string">b&quot;a\x1B(J\x5Cb\x1B(B&quot;</span>);
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{203E}b&quot;</span>, <span class="string">b&quot;a\x1B(J\x7Eb\x1B(B&quot;</span>);
-        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg!</span>(<span class="ident">miri</span>) {
             <span class="comment">// Miri is too slow</span>
             <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{00A5}b\x5C&quot;</span>, <span class="string">b&quot;a\x1B(J\x5Cb\x1B(B\x5C&quot;</span>);
             <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;a\u{203E}b\x7E&quot;</span>, <span class="string">b&quot;a\x1B(J\x7Eb\x1B(B\x7E&quot;</span>);
@@ -2029,7 +2029,7 @@
         <span class="comment">// Half-width Katakana</span>
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF61}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x23\x1B(B&quot;</span>);
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF65}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x26\x1B(B&quot;</span>);
-        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg!</span>(<span class="ident">miri</span>) {
             <span class="comment">// Miri is too slow</span>
             <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF66}&quot;</span>, <span class="string">b&quot;\x1B$B\x25\x72\x1B(B&quot;</span>);
             <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{FF70}&quot;</span>, <span class="string">b&quot;\x1B$B\x21\x3C\x1B(B&quot;</span>);
@@ -2041,7 +2041,7 @@
         <span class="comment">// 0208</span>
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&quot;</span>);
         <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\u{250F}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x28\x2E\x1B(B&quot;</span>);
-        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">miri</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="macro">cfg!</span>(<span class="ident">miri</span>) {
             <span class="comment">// Miri is too slow</span>
             <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\u{1F4A9}&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#128169;&quot;</span>);
             <span class="ident">encode_iso_2022_jp</span>(<span class="string">&quot;\u{58FA}\x1B&quot;</span>, <span class="string">b&quot;\x1B$B\x54\x64\x1B(B&amp;#65533;&quot;</span>);
@@ -2055,22 +2055,22 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">miri</span>, <span class="ident">ignore</span>)]</span> <span class="comment">// Miri is too slow</span>
     <span class="kw">fn</span> <span class="ident">test_iso_2022_jp_decode_all</span>() {
-        <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_in.txt&quot;</span>);
-        <span class="kw">let</span> <span class="ident">expectation</span> <span class="op">=</span> <span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_in_ref.txt&quot;</span>);
+        <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">include_bytes!</span>(<span class="string">&quot;test_data/iso_2022_jp_in.txt&quot;</span>);
+        <span class="kw">let</span> <span class="ident">expectation</span> <span class="op">=</span> <span class="macro">include_str!</span>(<span class="string">&quot;test_data/iso_2022_jp_in_ref.txt&quot;</span>);
         <span class="kw">let</span> (<span class="ident">cow</span>, <span class="ident">had_errors</span>) <span class="op">=</span> <span class="ident">ISO_2022_JP</span>.<span class="ident">decode_without_bom_handling</span>(<span class="ident">input</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">had_errors</span>, <span class="string">&quot;Should have had errors.&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">cow</span>[..], <span class="ident">expectation</span>);
+        <span class="macro">assert!</span>(<span class="ident">had_errors</span>, <span class="string">&quot;Should have had errors.&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">cow</span>[..], <span class="ident">expectation</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">miri</span>, <span class="ident">ignore</span>)]</span> <span class="comment">// Miri is too slow</span>
     <span class="kw">fn</span> <span class="ident">test_iso_2022_jp_encode_all</span>() {
-        <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">include_str</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_out.txt&quot;</span>);
-        <span class="kw">let</span> <span class="ident">expectation</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;test_data/iso_2022_jp_out_ref.txt&quot;</span>);
+        <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">include_str!</span>(<span class="string">&quot;test_data/iso_2022_jp_out.txt&quot;</span>);
+        <span class="kw">let</span> <span class="ident">expectation</span> <span class="op">=</span> <span class="macro">include_bytes!</span>(<span class="string">&quot;test_data/iso_2022_jp_out_ref.txt&quot;</span>);
         <span class="kw">let</span> (<span class="ident">cow</span>, <span class="ident">encoding</span>, <span class="ident">had_errors</span>) <span class="op">=</span> <span class="ident">ISO_2022_JP</span>.<span class="ident">encode</span>(<span class="ident">input</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>, <span class="string">&quot;Should not have had errors.&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encoding</span>, <span class="ident">ISO_2022_JP</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">cow</span>[..], <span class="kw-2">&amp;</span><span class="ident">expectation</span>[..]);
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>, <span class="string">&quot;Should not have had errors.&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">encoding</span>, <span class="ident">ISO_2022_JP</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">cow</span>[..], <span class="kw-2">&amp;</span><span class="ident">expectation</span>[..]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -2080,9 +2080,9 @@
         {
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf8_without_replacement</span>(<span class="string">b&quot;\x1B\x28\x49&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>, <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">3</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">0</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">DecoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">0</span>);
         }
         {
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>
@@ -2090,12 +2090,12 @@
                 .<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf8_without_replacement</span>(<span class="string">b&quot;\x21&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">true</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">3</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xEF</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0xBD</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">2</span>], <span class="number">0xA1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">DecoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xEF</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0xBD</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">2</span>], <span class="number">0xA1</span>);
         }
     }
 
@@ -2106,21 +2106,21 @@
         {
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;\x1B&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>, <span class="bool-val">false</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">0</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">0</span>);
+            <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">had_errors</span>);
         }
         {
             <span class="kw">let</span> <span class="ident">needed</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">max_utf16_buffer_length</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
             <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
                 <span class="ident">decoder</span>.<span class="ident">decode_to_utf16</span>(<span class="string">b&quot;A&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..<span class="ident">needed</span>], <span class="bool-val">true</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="number">2</span>);
-            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">had_errors</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFFFD</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0x0041</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="number">2</span>);
+            <span class="macro">assert!</span>(<span class="ident">had_errors</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">0</span>], <span class="number">0xFFFD</span>);
+            <span class="macro">assert_eq!</span>(<span class="ident">output</span>[<span class="number">1</span>], <span class="number">0x0041</span>);
         }
     }
 
@@ -2131,13 +2131,13 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">ISO_2022_JP</span>.<span class="ident">new_encoder</span>();
         <span class="kw">let</span> (<span class="ident">result</span>, <span class="ident">read</span>, <span class="ident">written</span>, <span class="ident">had_errors</span>) <span class="op">=</span>
             <span class="ident">encoder</span>.<span class="ident">encode_from_utf16</span>(<span class="kw-2">&amp;</span>[<span class="number">0xDC00u16</span>, <span class="number">0xDEDEu16</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">output</span>[..], <span class="bool-val">true</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">CoderResult</span>::<span class="ident">InputEmpty</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">read</span>, <span class="number">2</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">written</span>, <span class="ident">expectation</span>.<span class="ident">len</span>());
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">had_errors</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">output</span>[..<span class="ident">written</span>], <span class="ident">expectation</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">CoderResult::InputEmpty</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">read</span>, <span class="number">2</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">written</span>, <span class="ident">expectation</span>.<span class="ident">len</span>());
+        <span class="macro">assert!</span>(<span class="ident">had_errors</span>);
+        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span><span class="ident">output</span>[..<span class="ident">written</span>], <span class="ident">expectation</span>);
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

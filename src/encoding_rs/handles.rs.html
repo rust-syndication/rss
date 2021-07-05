@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.28/src/handles.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>handles.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1997,7 +1997,7 @@
         <span class="ident">all</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;little&quot;</span>, <span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;neon&quot;</span>)
     )
 ))]</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">simd_funcs</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::simd_funcs</span>::<span class="kw-2">*</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(
     <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd-accel&quot;</span>,
@@ -2007,13 +2007,13 @@
         <span class="ident">all</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;little&quot;</span>, <span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;neon&quot;</span>)
     )
 ))]</span>
-<span class="kw">use</span> <span class="ident">packed_simd</span>::<span class="ident">u16x8</span>;
+<span class="kw">use</span> <span class="ident">packed_simd::u16x8</span>;
 
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">DecoderResult</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">EncoderResult</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ascii</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utf_8</span>::<span class="ident">convert_utf8_to_utf16_up_to_invalid</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utf_8</span>::<span class="ident">utf8_valid_up_to</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::DecoderResult</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::EncoderResult</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::ascii</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::utf_8::convert_utf8_to_utf16_up_to_invalid</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::utf_8::utf8_valid_up_to</span>;
 
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="ident">Available</span>(<span class="ident">T</span>),
@@ -2075,18 +2075,18 @@
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim_last</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">&gt;</span> <span class="number">0</span>);
+        <span class="macro">assert!</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u16</span> {
-        <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">MaybeUninit</span>;
+        <span class="kw">use</span> <span class="ident">core::mem::MaybeUninit</span>;
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span>);
+        <span class="macro">assert!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span>);
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u</span>: <span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">MaybeUninit</span>::<span class="ident">uninit</span>();
-            ::<span class="ident">core</span>::<span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span>), <span class="ident">u</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="number">2</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u</span>: <span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">MaybeUninit::uninit</span>();
+            <span class="ident">::core::ptr::copy_nonoverlapping</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span>), <span class="ident">u</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="number">2</span>);
             <span class="ident">u</span>.<span class="ident">assume_init</span>()
         }
     }
@@ -2094,7 +2094,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd-accel&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">simd_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u16x8</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">+</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">/</span> <span class="number">2</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>);
+        <span class="macro">assert!</span>(<span class="ident">i</span> <span class="op">+</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">/</span> <span class="number">2</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>);
         <span class="kw">let</span> <span class="ident">byte_index</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">*</span> <span class="number">2</span>;
         <span class="kw">unsafe</span> { <span class="ident">to_u16_lanes</span>(<span class="ident">load16_unaligned</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">byte_index</span>))) }
     }
@@ -2108,20 +2108,20 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tail</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UnalignedU16Slice</span> {
         <span class="comment">// XXX the return value should be restricted not to</span>
         <span class="comment">// outlive self.</span>
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">from</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>);
-        <span class="kw">unsafe</span> { <span class="ident">UnalignedU16Slice</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">from</span> <span class="op">*</span> <span class="number">2</span>), <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="ident">from</span>) }
+        <span class="macro">assert!</span>(<span class="ident">from</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>);
+        <span class="kw">unsafe</span> { <span class="ident">UnalignedU16Slice::new</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">from</span> <span class="op">*</span> <span class="number">2</span>), <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="ident">from</span>) }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd-accel&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_bmp_to</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">Endian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u16</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">len</span>());
+        <span class="macro">assert!</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">len</span>());
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">if</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">/</span> <span class="number">2</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span> {
             <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">/</span> <span class="number">2</span>;
             <span class="kw">loop</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">simd</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">simd_at</span>(<span class="ident">offset</span>);
-                <span class="kw">if</span> <span class="ident">E</span>::<span class="ident">OPPOSITE_ENDIAN</span> {
+                <span class="kw">if</span> <span class="ident">E::OPPOSITE_ENDIAN</span> {
                     <span class="ident">simd</span> <span class="op">=</span> <span class="ident">simd_byte_swap</span>(<span class="ident">simd</span>);
                 }
                 <span class="kw">unsafe</span> {
@@ -2139,7 +2139,7 @@
         <span class="kw">while</span> <span class="ident">offset</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span> {
             <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="ident">swap_if_opposite_endian</span>::<span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">at</span>(<span class="ident">offset</span>));
             <span class="ident">other</span>[<span class="ident">offset</span>] <span class="op">=</span> <span class="ident">unit</span>;
-            <span class="kw">if</span> <span class="kw">super</span>::<span class="ident">in_range16</span>(<span class="ident">unit</span>, <span class="number">0xD800</span>, <span class="number">0xE000</span>) {
+            <span class="kw">if</span> <span class="kw">super</span><span class="ident">::in_range16</span>(<span class="ident">unit</span>, <span class="number">0xD800</span>, <span class="number">0xE000</span>) {
                 <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">unit</span>, <span class="ident">offset</span>));
             }
             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
@@ -2150,11 +2150,11 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd-accel&quot;</span>))]</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">copy_bmp_to</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">Endian</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u16</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">len</span>());
+        <span class="macro">assert!</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">len</span>());
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">target</span>) <span class="kw">in</span> <span class="ident">other</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>().<span class="ident">take</span>(<span class="self">self</span>.<span class="ident">len</span>) {
             <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="ident">swap_if_opposite_endian</span>::<span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">at</span>(<span class="ident">i</span>));
             <span class="kw-2">*</span><span class="ident">target</span> <span class="op">=</span> <span class="ident">unit</span>;
-            <span class="kw">if</span> <span class="kw">super</span>::<span class="ident">in_range16</span>(<span class="ident">unit</span>, <span class="number">0xD800</span>, <span class="number">0xE000</span>) {
+            <span class="kw">if</span> <span class="kw">super</span><span class="ident">::in_range16</span>(<span class="ident">unit</span>, <span class="number">0xD800</span>, <span class="number">0xE000</span>) {
                 <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">unit</span>, <span class="ident">i</span>));
             }
         }
@@ -2168,15 +2168,15 @@
     <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
     <span class="ident">offset</span>: <span class="ident">usize</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CopyAsciiResult</span><span class="op">&lt;</span><span class="ident">usize</span>, (<span class="ident">u16</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> ::<span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">src</span>.<span class="ident">len</span>(), <span class="ident">dst</span>.<span class="ident">len</span>());
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">::core::cmp::min</span>(<span class="ident">src</span>.<span class="ident">len</span>(), <span class="ident">dst</span>.<span class="ident">len</span>());
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0usize</span>;
     <span class="kw">loop</span> {
         <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="ident">len</span> {
-            <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>(<span class="ident">i</span> <span class="op">+</span> <span class="ident">offset</span>);
+            <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>(<span class="ident">i</span> <span class="op">+</span> <span class="ident">offset</span>);
         }
         <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="ident">swap_if_opposite_endian</span>::<span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="ident">src</span>.<span class="ident">at</span>(<span class="ident">i</span>));
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&gt;</span> <span class="number">0x7F</span> {
-            <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">unit</span>, <span class="ident">i</span> <span class="op">+</span> <span class="ident">offset</span>));
+            <span class="kw">return</span> <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">unit</span>, <span class="ident">i</span> <span class="op">+</span> <span class="ident">offset</span>));
         }
         <span class="ident">dst</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">unit</span> <span class="kw">as</span> <span class="ident">u8</span>;
         <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
@@ -2185,7 +2185,7 @@
 
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">fn</span> <span class="ident">swap_if_opposite_endian</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">Endian</span><span class="op">&gt;</span>(<span class="ident">unit</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u16</span> {
-    <span class="kw">if</span> <span class="ident">E</span>::<span class="ident">OPPOSITE_ENDIAN</span> {
+    <span class="kw">if</span> <span class="ident">E::OPPOSITE_ENDIAN</span> {
         <span class="ident">unit</span>.<span class="ident">swap_bytes</span>()
     } <span class="kw">else</span> {
         <span class="ident">unit</span>
@@ -2207,14 +2207,14 @@
     <span class="ident">src</span>: <span class="ident">UnalignedU16Slice</span>,
     <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CopyAsciiResult</span><span class="op">&lt;</span><span class="ident">usize</span>, (<span class="ident">u16</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> ::<span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">src</span>.<span class="ident">len</span>(), <span class="ident">dst</span>.<span class="ident">len</span>());
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">::core::cmp::min</span>(<span class="ident">src</span>.<span class="ident">len</span>(), <span class="ident">dst</span>.<span class="ident">len</span>());
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">if</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len</span> {
         <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
         <span class="kw">loop</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">src</span>.<span class="ident">simd_at</span>(<span class="ident">offset</span>);
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">second</span> <span class="op">=</span> <span class="ident">src</span>.<span class="ident">simd_at</span>(<span class="ident">offset</span> <span class="op">+</span> (<span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">/</span> <span class="number">2</span>));
-            <span class="kw">if</span> <span class="ident">E</span>::<span class="ident">OPPOSITE_ENDIAN</span> {
+            <span class="kw">if</span> <span class="ident">E::OPPOSITE_ENDIAN</span> {
                 <span class="ident">first</span> <span class="op">=</span> <span class="ident">simd_byte_swap</span>(<span class="ident">first</span>);
                 <span class="ident">second</span> <span class="op">=</span> <span class="ident">simd_byte_swap</span>(<span class="ident">second</span>);
             }
@@ -2251,12 +2251,12 @@
             <span class="ident">src</span>.<span class="ident">tail</span>(<span class="ident">src_pos</span>),
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dst</span>[<span class="ident">dst_pos</span>..],
         ) {
-            <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">unit</span>, <span class="ident">read_written</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">unit</span>, <span class="ident">read_written</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">src_pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">read_written</span>;
                 <span class="ident">dst_pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">read_written</span>;
                 <span class="ident">unit</span>
             }
-            <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>(<span class="ident">read_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">CopyAsciiResult::Stop</span>(<span class="ident">read_written</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">return</span> (<span class="ident">src_pos</span> <span class="op">+</span> <span class="ident">read_written</span>, <span class="ident">dst_pos</span> <span class="op">+</span> <span class="ident">read_written</span>, <span class="bool-val">false</span>);
             }
         };
@@ -2290,7 +2290,7 @@
                     <span class="kw">if</span> <span class="ident">second_minus_low_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xDC00</span>) {
                         <span class="comment">// The next code unit is a low surrogate. Advance position.</span>
                         <span class="ident">src_pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">second</span>)
+                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> (<span class="ident">u32::from</span>(<span class="ident">non_ascii</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32::from</span>(<span class="ident">second</span>)
                             <span class="op">-</span> (((<span class="number">0xD800u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">-</span> <span class="number">0x10000u32</span>) <span class="op">+</span> <span class="number">0xDC00u32</span>);
 
                         <span class="ident">dst</span>[<span class="ident">dst_pos</span>] <span class="op">=</span> ((<span class="ident">point</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">18</span>) <span class="op">|</span> <span class="number">0xF0u32</span>) <span class="kw">as</span> <span class="ident">u8</span>;
@@ -2346,9 +2346,9 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_available</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">ByteReadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">ByteReadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">ByteReadHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">consumed</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">consumed</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -2386,7 +2386,7 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u8</span>, <span class="ident">ByteUnreadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">read</span>();
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">ByteUnreadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">source</span>);
+        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">ByteUnreadHandle::new</span>(<span class="self">self</span>.<span class="ident">source</span>);
         (<span class="ident">byte</span>, <span class="ident">handle</span>)
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -2553,17 +2553,17 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_bmp</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">Utf16BmpHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">Utf16BmpHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">Utf16BmpHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_astral</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">Utf16AstralHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">Utf16AstralHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">Utf16AstralHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -2580,8 +2580,8 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_ascii</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ascii</span>: <span class="ident">u8</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ascii</span> <span class="op">&lt;</span> <span class="number">0x80</span>);
-        <span class="self">self</span>.<span class="ident">write_code_unit</span>(<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">ascii</span>));
+        <span class="macro">debug_assert!</span>(<span class="ident">ascii</span> <span class="op">&lt;</span> <span class="number">0x80</span>);
+        <span class="self">self</span>.<span class="ident">write_code_unit</span>(<span class="ident">u16::from</span>(<span class="ident">ascii</span>));
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_bmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bmp</span>: <span class="ident">u16</span>) {
@@ -2589,23 +2589,23 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_bmp_excl_ascii</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bmp</span>: <span class="ident">u16</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(<span class="ident">bmp</span>);
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_mid_bmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bmp</span>: <span class="ident">u16</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>); <span class="comment">// XXX</span>
+        <span class="macro">debug_assert!</span>(<span class="ident">bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>); <span class="comment">// XXX</span>
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(<span class="ident">bmp</span>);
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_upper_bmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bmp</span>: <span class="ident">u16</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(<span class="ident">bmp</span>);
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_astral</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">astral</span>: <span class="ident">u32</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">astral</span> <span class="op">&gt;</span> <span class="number">0xFFFF</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">astral</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x10_FFFF</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">astral</span> <span class="op">&gt;</span> <span class="number">0xFFFF</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">astral</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x10_FFFF</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>((<span class="number">0xD7C0</span> <span class="op">+</span> (<span class="ident">astral</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">10</span>)) <span class="kw">as</span> <span class="ident">u16</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>((<span class="number">0xDC00</span> <span class="op">+</span> (<span class="ident">astral</span> <span class="op">&amp;</span> <span class="number">0x3FF</span>)) <span class="kw">as</span> <span class="ident">u16</span>);
     }
@@ -2628,9 +2628,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">slice</span>[<span class="ident">source</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">ascii_to_basic_latin</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -2638,7 +2638,7 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
@@ -2648,7 +2648,7 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf16BmpHandle</span>::<span class="ident">new</span>(<span class="self">self</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf16BmpHandle::new</span>(<span class="self">self</span>)))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_ascii_from_check_space_astral</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
@@ -2660,9 +2660,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">slice</span>[<span class="ident">source</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">ascii_to_basic_latin</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -2670,7 +2670,7 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
@@ -2679,8 +2679,8 @@
                         <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>; <span class="comment">// +1 for non_ascii</span>
                         <span class="ident">non_ascii</span>
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((
-                            <span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((
+                            <span class="ident">DecoderResult::OutputFull</span>,
                             <span class="ident">source</span>.<span class="ident">pos</span>,
                             <span class="self">self</span>.<span class="ident">pos</span>,
                         ));
@@ -2688,7 +2688,7 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf16AstralHandle</span>::<span class="ident">new</span>(<span class="self">self</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf16AstralHandle::new</span>(<span class="self">self</span>)))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_utf8_up_to_invalid_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteSource</span>) {
@@ -2707,16 +2707,16 @@
         <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">src_unaligned</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">UnalignedU16Slice</span>::<span class="ident">new</span>(
+            <span class="ident">UnalignedU16Slice::new</span>(
                 <span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(),
-                ::<span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">src_remaining</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>()),
+                <span class="ident">::core::cmp::min</span>(<span class="ident">src_remaining</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>()),
             )
         };
         <span class="kw">if</span> <span class="ident">src_unaligned</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="kw">let</span> <span class="ident">last_unit</span> <span class="op">=</span> <span class="ident">swap_if_opposite_endian</span>::<span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="ident">src_unaligned</span>.<span class="ident">at</span>(<span class="ident">src_unaligned</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>));
-        <span class="kw">if</span> <span class="kw">super</span>::<span class="ident">in_range16</span>(<span class="ident">last_unit</span>, <span class="number">0xD800</span>, <span class="number">0xDC00</span>) {
+        <span class="kw">if</span> <span class="kw">super</span><span class="ident">::in_range16</span>(<span class="ident">last_unit</span>, <span class="number">0xD800</span>, <span class="number">0xDC00</span>) {
             <span class="comment">// Last code unit is a high surrogate. It might</span>
             <span class="comment">// legitimately form a pair later, so let&#39;s not</span>
             <span class="comment">// include it.</span>
@@ -2738,7 +2738,7 @@
                     <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
                 }
                 <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="ident">swap_if_opposite_endian</span>::<span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="ident">src_unaligned</span>.<span class="ident">at</span>(<span class="ident">second_pos</span>));
-                <span class="kw">if</span> <span class="op">!</span><span class="kw">super</span>::<span class="ident">in_range16</span>(<span class="ident">second</span>, <span class="number">0xDC00</span>, <span class="number">0xE000</span>) {
+                <span class="kw">if</span> <span class="op">!</span><span class="kw">super</span><span class="ident">::in_range16</span>(<span class="ident">second</span>, <span class="number">0xDC00</span>, <span class="number">0xE000</span>) {
                     <span class="comment">// Unpaired surrogate</span>
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">second_pos</span> <span class="op">*</span> <span class="number">2</span>;
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">offset</span>;
@@ -2886,17 +2886,17 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_bmp</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">Utf8BmpHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">Utf8BmpHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">Utf8BmpHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_astral</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">Utf8AstralHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">Utf8AstralHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">Utf8AstralHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -2913,7 +2913,7 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_ascii</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ascii</span>: <span class="ident">u8</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">ascii</span> <span class="op">&lt;</span> <span class="number">0x80</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">ascii</span> <span class="op">&lt;</span> <span class="number">0x80</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(<span class="ident">ascii</span>);
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -2928,14 +2928,14 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_mid_bmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mid_bmp</span>: <span class="ident">u16</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">mid_bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">mid_bmp</span> <span class="op">&lt;</span> <span class="number">0x800</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">mid_bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">mid_bmp</span> <span class="op">&lt;</span> <span class="number">0x800</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(((<span class="ident">mid_bmp</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">6</span>) <span class="op">|</span> <span class="number">0xC0</span>) <span class="kw">as</span> <span class="ident">u8</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(((<span class="ident">mid_bmp</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">|</span> <span class="number">0x80</span>) <span class="kw">as</span> <span class="ident">u8</span>);
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_upper_bmp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">upper_bmp</span>: <span class="ident">u16</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">upper_bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x800</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">upper_bmp</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x800</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(((<span class="ident">upper_bmp</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">12</span>) <span class="op">|</span> <span class="number">0xE0</span>) <span class="kw">as</span> <span class="ident">u8</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>((((<span class="ident">upper_bmp</span> <span class="op">&amp;</span> <span class="number">0xFC0</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">6</span>) <span class="op">|</span> <span class="number">0x80</span>) <span class="kw">as</span> <span class="ident">u8</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(((<span class="ident">upper_bmp</span> <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">|</span> <span class="number">0x80</span>) <span class="kw">as</span> <span class="ident">u8</span>);
@@ -2950,8 +2950,8 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">write_astral</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">astral</span>: <span class="ident">u32</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">astral</span> <span class="op">&gt;</span> <span class="number">0xFFFF</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">astral</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x10_FFFF</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">astral</span> <span class="op">&gt;</span> <span class="number">0xFFFF</span>);
+        <span class="macro">debug_assert!</span>(<span class="ident">astral</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x10_FFFF</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>(((<span class="ident">astral</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">18</span>) <span class="op">|</span> <span class="number">0xF0</span>) <span class="kw">as</span> <span class="ident">u8</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>((((<span class="ident">astral</span> <span class="op">&amp;</span> <span class="number">0x3F000</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">12</span>) <span class="op">|</span> <span class="number">0x80</span>) <span class="kw">as</span> <span class="ident">u8</span>);
         <span class="self">self</span>.<span class="ident">write_code_unit</span>((((<span class="ident">astral</span> <span class="op">&amp;</span> <span class="number">0xFC0</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">6</span>) <span class="op">|</span> <span class="number">0x80</span>) <span class="kw">as</span> <span class="ident">u8</span>);
@@ -2960,7 +2960,7 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_surrogate_pair</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">high</span>: <span class="ident">u16</span>, <span class="ident">low</span>: <span class="ident">u16</span>) {
         <span class="self">self</span>.<span class="ident">write_astral</span>(
-            (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">high</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">low</span>)
+            (<span class="ident">u32::from</span>(<span class="ident">high</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32::from</span>(<span class="ident">low</span>)
                 <span class="op">-</span> (((<span class="number">0xD800u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">-</span> <span class="number">0x10000u32</span>) <span class="op">+</span> <span class="number">0xDC00u32</span>),
         );
     }
@@ -2979,9 +2979,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">slice</span>[<span class="ident">source</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">ascii_to_ascii</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -2989,7 +2989,7 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
@@ -2998,8 +2998,8 @@
                         <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>; <span class="comment">// +1 for non_ascii</span>
                         <span class="ident">non_ascii</span>
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((
-                            <span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((
+                            <span class="ident">DecoderResult::OutputFull</span>,
                             <span class="ident">source</span>.<span class="ident">pos</span>,
                             <span class="self">self</span>.<span class="ident">pos</span>,
                         ));
@@ -3007,7 +3007,7 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf8BmpHandle</span>::<span class="ident">new</span>(<span class="self">self</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf8BmpHandle::new</span>(<span class="self">self</span>)))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_ascii_from_check_space_astral</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
@@ -3019,9 +3019,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">slice</span>[<span class="ident">source</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">DecoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">DecoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">ascii_to_ascii</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -3029,7 +3029,7 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="ident">source</span>.<span class="ident">pos</span>, <span class="self">self</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
@@ -3038,8 +3038,8 @@
                         <span class="ident">source</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>; <span class="comment">// +1 for non_ascii</span>
                         <span class="ident">non_ascii</span>
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((
-                            <span class="ident">DecoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((
+                            <span class="ident">DecoderResult::OutputFull</span>,
                             <span class="ident">source</span>.<span class="ident">pos</span>,
                             <span class="self">self</span>.<span class="ident">pos</span>,
                         ));
@@ -3047,13 +3047,13 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf8AstralHandle</span>::<span class="ident">new</span>(<span class="self">self</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">Utf8AstralHandle::new</span>(<span class="self">self</span>)))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_utf8_up_to_invalid_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ByteSource</span>) {
         <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">source</span>.<span class="ident">slice</span>[<span class="ident">source</span>.<span class="ident">pos</span>..];
         <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
-        <span class="kw">let</span> <span class="ident">min_len</span> <span class="op">=</span> ::<span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">src_remaining</span>.<span class="ident">len</span>(), <span class="ident">dst_remaining</span>.<span class="ident">len</span>());
+        <span class="kw">let</span> <span class="ident">min_len</span> <span class="op">=</span> <span class="ident">::core::cmp::min</span>(<span class="ident">src_remaining</span>.<span class="ident">len</span>(), <span class="ident">dst_remaining</span>.<span class="ident">len</span>());
         <span class="comment">// Validate first, then memcpy to let memcpy do its thing even for</span>
         <span class="comment">// non-ASCII. (And potentially do something better than SSE2 for ASCII.)</span>
         <span class="kw">let</span> <span class="ident">valid_len</span> <span class="op">=</span> <span class="ident">utf8_valid_up_to</span>(<span class="kw-2">&amp;</span><span class="ident">src_remaining</span>[..<span class="ident">min_len</span>]);
@@ -3070,15 +3070,15 @@
         <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">src_unaligned</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">UnalignedU16Slice</span>::<span class="ident">new</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">src_remaining</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span>) };
+            <span class="kw">unsafe</span> { <span class="ident">UnalignedU16Slice::new</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">src_remaining</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span>) };
         <span class="kw">if</span> <span class="ident">src_unaligned</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_unit</span> <span class="op">=</span> <span class="ident">src_unaligned</span>.<span class="ident">at</span>(<span class="ident">src_unaligned</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>);
-        <span class="kw">if</span> <span class="ident">E</span>::<span class="ident">OPPOSITE_ENDIAN</span> {
+        <span class="kw">if</span> <span class="ident">E::OPPOSITE_ENDIAN</span> {
             <span class="ident">last_unit</span> <span class="op">=</span> <span class="ident">last_unit</span>.<span class="ident">swap_bytes</span>();
         }
-        <span class="kw">if</span> <span class="kw">super</span>::<span class="ident">in_range16</span>(<span class="ident">last_unit</span>, <span class="number">0xD800</span>, <span class="number">0xDC00</span>) {
+        <span class="kw">if</span> <span class="kw">super</span><span class="ident">::in_range16</span>(<span class="ident">last_unit</span>, <span class="number">0xD800</span>, <span class="number">0xDC00</span>) {
             <span class="comment">// Last code unit is a high surrogate. It might</span>
             <span class="comment">// legitimately form a pair later, so let&#39;s not</span>
             <span class="comment">// include it.</span>
@@ -3116,9 +3116,9 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_available</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">Utf16ReadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">Utf16ReadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">Utf16ReadHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">consumed</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">consumed</span>())
         }
     }
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">collapsible_if</span>))]</span>
@@ -3129,7 +3129,7 @@
         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">=</span> <span class="ident">unit</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xD800</span>);
         <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&gt;</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
-            <span class="kw">return</span> <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>)) };
+            <span class="kw">return</span> <span class="kw">unsafe</span> { <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">u32::from</span>(<span class="ident">unit</span>)) };
         }
         <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDBFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
             <span class="comment">// high surrogate</span>
@@ -3140,8 +3140,8 @@
                     <span class="comment">// The next code unit is a low surrogate. Advance position.</span>
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                     <span class="kw">return</span> <span class="kw">unsafe</span> {
-                        ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(
-                            (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">second</span>)
+                        <span class="ident">::core::char::from_u32_unchecked</span>(
+                            (<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32::from</span>(<span class="ident">second</span>)
                                 <span class="op">-</span> (((<span class="number">0xD800u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">-</span> <span class="number">0x10000u32</span>) <span class="op">+</span> <span class="number">0xDC00u32</span>),
                         )
                     };
@@ -3162,11 +3162,11 @@
         <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>];
         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&lt;</span> <span class="number">0x80</span> {
-            <span class="kw">return</span> <span class="ident">Unicode</span>::<span class="ident">Ascii</span>(<span class="ident">unit</span> <span class="kw">as</span> <span class="ident">u8</span>);
+            <span class="kw">return</span> <span class="ident">Unicode::Ascii</span>(<span class="ident">unit</span> <span class="kw">as</span> <span class="ident">u8</span>);
         }
         <span class="kw">let</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">=</span> <span class="ident">unit</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xD800</span>);
         <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&gt;</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
-            <span class="kw">return</span> <span class="ident">Unicode</span>::<span class="ident">NonAscii</span>(<span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">unit</span>));
+            <span class="kw">return</span> <span class="ident">Unicode::NonAscii</span>(<span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">unit</span>));
         }
         <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDBFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
             <span class="comment">// high surrogate</span>
@@ -3176,9 +3176,9 @@
                 <span class="kw">if</span> <span class="ident">second_minus_low_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xDC00</span>) {
                     <span class="comment">// The next code unit is a low surrogate. Advance position.</span>
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                    <span class="kw">return</span> <span class="ident">Unicode</span>::<span class="ident">NonAscii</span>(<span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="kw">unsafe</span> {
-                        ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(
-                            (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">second</span>)
+                    <span class="kw">return</span> <span class="ident">Unicode::NonAscii</span>(<span class="ident">NonAscii::Astral</span>(<span class="kw">unsafe</span> {
+                        <span class="ident">::core::char::from_u32_unchecked</span>(
+                            (<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32::from</span>(<span class="ident">second</span>)
                                 <span class="op">-</span> (((<span class="number">0xD800u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">-</span> <span class="number">0x10000u32</span>) <span class="op">+</span> <span class="number">0xDC00u32</span>),
                         )
                     }));
@@ -3190,7 +3190,7 @@
             <span class="comment">// Unpaired surrogate at the end of buffer, fall through</span>
         }
         <span class="comment">// Unpaired low surrogate</span>
-        <span class="ident">Unicode</span>::<span class="ident">NonAscii</span>(<span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="number">0xFFFDu16</span>))
+        <span class="ident">Unicode::NonAscii</span>(<span class="ident">NonAscii::BmpExclAscii</span>(<span class="number">0xFFFDu16</span>))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">unread</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
@@ -3211,9 +3211,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dest</span>.<span class="ident">slice</span>[<span class="ident">dest</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">basic_latin_to_ascii</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -3221,7 +3221,7 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
@@ -3231,7 +3231,7 @@
                         <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="ident">non_ascii</span>;
                         <span class="kw">let</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">=</span> <span class="ident">unit</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xD800</span>);
                         <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&gt;</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">unit</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">unit</span>)
                         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDBFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
                             <span class="comment">// high surrogate</span>
                             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
@@ -3240,28 +3240,28 @@
                                 <span class="kw">if</span> <span class="ident">second_minus_low_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xDC00</span>) {
                                     <span class="comment">// The next code unit is a low surrogate. Advance position.</span>
                                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                                    <span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="kw">unsafe</span> {
-                                        ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(
-                                            (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">second</span>)
+                                    <span class="ident">NonAscii::Astral</span>(<span class="kw">unsafe</span> {
+                                        <span class="ident">::core::char::from_u32_unchecked</span>(
+                                            (<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32::from</span>(<span class="ident">second</span>)
                                                 <span class="op">-</span> (((<span class="number">0xD800u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">-</span> <span class="number">0x10000u32</span>) <span class="op">+</span> <span class="number">0xDC00u32</span>),
                                         )
                                     })
                                 } <span class="kw">else</span> {
                                     <span class="comment">// The next code unit is not a low surrogate. Don&#39;t advance</span>
                                     <span class="comment">// position and treat the high surrogate as unpaired.</span>
-                                    <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
+                                    <span class="ident">NonAscii::BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
                                 }
                             } <span class="kw">else</span> {
                                 <span class="comment">// Unpaired surrogate at the end of the buffer.</span>
-                                <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
+                                <span class="ident">NonAscii::BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
                             }
                         } <span class="kw">else</span> {
                             <span class="comment">// Unpaired low surrogate</span>
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
                         }
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((
-                            <span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((
+                            <span class="ident">EncoderResult::OutputFull</span>,
                             <span class="self">self</span>.<span class="ident">pos</span>,
                             <span class="ident">dest</span>.<span class="ident">pos</span>,
                         ));
@@ -3269,7 +3269,7 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteTwoHandle</span>::<span class="ident">new</span>(<span class="ident">dest</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteTwoHandle::new</span>(<span class="ident">dest</span>)))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_ascii_to_check_space_four</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
@@ -3281,9 +3281,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dest</span>.<span class="ident">slice</span>[<span class="ident">dest</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">basic_latin_to_ascii</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -3291,7 +3291,7 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
@@ -3301,37 +3301,37 @@
                         <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="ident">non_ascii</span>;
                         <span class="kw">let</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">=</span> <span class="ident">unit</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xD800</span>);
                         <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&gt;</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">unit</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">unit</span>)
                         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">unit_minus_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDBFF</span> <span class="op">-</span> <span class="number">0xD800</span>) {
                             <span class="comment">// high surrogate</span>
                             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
                                 <span class="comment">// Unpaired surrogate at the end of the buffer.</span>
-                                <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
+                                <span class="ident">NonAscii::BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
                             } <span class="kw">else</span> {
                                 <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>];
                                 <span class="kw">let</span> <span class="ident">second_minus_low_surrogate_start</span> <span class="op">=</span> <span class="ident">second</span>.<span class="ident">wrapping_sub</span>(<span class="number">0xDC00</span>);
                                 <span class="kw">if</span> <span class="ident">second_minus_low_surrogate_start</span> <span class="op">&lt;</span><span class="op">=</span> (<span class="number">0xDFFF</span> <span class="op">-</span> <span class="number">0xDC00</span>) {
                                     <span class="comment">// The next code unit is a low surrogate. Advance position.</span>
                                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                                    <span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="kw">unsafe</span> {
-                                        ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(
-                                            (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">second</span>)
+                                    <span class="ident">NonAscii::Astral</span>(<span class="kw">unsafe</span> {
+                                        <span class="ident">::core::char::from_u32_unchecked</span>(
+                                            (<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">+</span> <span class="ident">u32::from</span>(<span class="ident">second</span>)
                                                 <span class="op">-</span> (((<span class="number">0xD800u32</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">10</span>) <span class="op">-</span> <span class="number">0x1_0000u32</span>) <span class="op">+</span> <span class="number">0xDC00u32</span>),
                                         )
                                     })
                                 } <span class="kw">else</span> {
                                     <span class="comment">// The next code unit is not a low surrogate. Don&#39;t advance</span>
                                     <span class="comment">// position and treat the high surrogate as unpaired.</span>
-                                    <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
+                                    <span class="ident">NonAscii::BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
                                 }
                             }
                         } <span class="kw">else</span> {
                             <span class="comment">// Unpaired low surrogate</span>
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="number">0xFFFDu16</span>)
                         }
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((
-                            <span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((
+                            <span class="ident">EncoderResult::OutputFull</span>,
                             <span class="self">self</span>.<span class="ident">pos</span>,
                             <span class="ident">dest</span>.<span class="ident">pos</span>,
                         ));
@@ -3339,7 +3339,7 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteFourHandle</span>::<span class="ident">new</span>(<span class="ident">dest</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteFourHandle::new</span>(<span class="ident">dest</span>)))
     }
 }
 
@@ -3361,13 +3361,13 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">char</span>, <span class="ident">Utf16UnreadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">character</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">read</span>();
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf16UnreadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">source</span>);
+        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf16UnreadHandle::new</span>(<span class="self">self</span>.<span class="ident">source</span>);
         (<span class="ident">character</span>, <span class="ident">handle</span>)
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_enum</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">Unicode</span>, <span class="ident">Utf16UnreadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">character</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">read_enum</span>();
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf16UnreadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">source</span>);
+        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf16UnreadHandle::new</span>(<span class="self">self</span>.<span class="ident">source</span>);
         (<span class="ident">character</span>, <span class="ident">handle</span>)
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -3425,9 +3425,9 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_available</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">Utf8ReadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">Utf8ReadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">Utf8ReadHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">consumed</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">consumed</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -3436,27 +3436,27 @@
         <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>];
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&lt;</span> <span class="number">0x80</span> {
             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">return</span> <span class="ident">char</span>::<span class="ident">from</span>(<span class="ident">unit</span>);
+            <span class="kw">return</span> <span class="ident">char::from</span>(<span class="ident">unit</span>);
         }
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&lt;</span> <span class="number">0xE0</span> {
             <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span>
-                ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>) <span class="op">|</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                ((<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>) <span class="op">|</span> (<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">2</span>;
-            <span class="kw">return</span> <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">point</span>) };
+            <span class="kw">return</span> <span class="kw">unsafe</span> { <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">point</span>) };
         }
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&lt;</span> <span class="number">0xF0</span> {
-            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                <span class="op">|</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                <span class="op">|</span> (<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">3</span>;
-            <span class="kw">return</span> <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">point</span>) };
+            <span class="kw">return</span> <span class="kw">unsafe</span> { <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">point</span>) };
         }
-        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
-            <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-            <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-            <span class="op">|</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
+            <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+            <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+            <span class="op">|</span> (<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">4</span>;
-        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">point</span>) }
+        <span class="kw">unsafe</span> { <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">point</span>) }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">read_enum</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Unicode</span> {
@@ -3464,28 +3464,28 @@
         <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>];
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&lt;</span> <span class="number">0x80</span> {
             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">return</span> <span class="ident">Unicode</span>::<span class="ident">Ascii</span>(<span class="ident">unit</span>);
+            <span class="kw">return</span> <span class="ident">Unicode::Ascii</span>(<span class="ident">unit</span>);
         }
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&lt;</span> <span class="number">0xE0</span> {
             <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span>
-                ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>) <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                ((<span class="ident">u16::from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>) <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">2</span>;
-            <span class="kw">return</span> <span class="ident">Unicode</span>::<span class="ident">NonAscii</span>(<span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>));
+            <span class="kw">return</span> <span class="ident">Unicode::NonAscii</span>(<span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>));
         }
         <span class="kw">if</span> <span class="ident">unit</span> <span class="op">&lt;</span> <span class="number">0xF0</span> {
-            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                <span class="op">|</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16::from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                <span class="op">|</span> ((<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">3</span>;
-            <span class="kw">return</span> <span class="ident">Unicode</span>::<span class="ident">NonAscii</span>(<span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>));
+            <span class="kw">return</span> <span class="ident">Unicode::NonAscii</span>(<span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>));
         }
-        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
-            <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-            <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-            <span class="op">|</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32::from</span>(<span class="ident">unit</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
+            <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+            <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+            <span class="op">|</span> (<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">4</span>;
-        <span class="ident">Unicode</span>::<span class="ident">NonAscii</span>(<span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="kw">unsafe</span> {
-            ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">point</span>)
+        <span class="ident">Unicode::NonAscii</span>(<span class="ident">NonAscii::Astral</span>(<span class="kw">unsafe</span> {
+            <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">point</span>)
         }))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -3506,9 +3506,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dest</span>.<span class="ident">slice</span>[<span class="ident">dest</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">ascii_to_ascii</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -3516,7 +3516,7 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
@@ -3524,28 +3524,28 @@
                     <span class="comment">// We don&#39;t need to check space in destination, because</span>
                     <span class="comment">// `ascii_to_ascii()` already did.</span>
                     <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">&lt;</span> <span class="number">0xE0</span> {
-                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                            <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                            <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">2</span>;
-                        <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>)
+                        <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>)
                     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">&lt;</span> <span class="number">0xF0</span> {
-                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                            <span class="op">|</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                            <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                            <span class="op">|</span> ((<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                            <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">3</span>;
-                        <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>)
+                        <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>)
                     } <span class="kw">else</span> {
-                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
-                            <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                            <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                            <span class="op">|</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                        <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
+                            <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                            <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                            <span class="op">|</span> (<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">4</span>;
-                        <span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">point</span>) })
+                        <span class="ident">NonAscii::Astral</span>(<span class="kw">unsafe</span> { <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">point</span>) })
                     }
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteOneHandle</span>::<span class="ident">new</span>(<span class="ident">dest</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteOneHandle::new</span>(<span class="ident">dest</span>)))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_ascii_to_check_space_two</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
@@ -3557,9 +3557,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dest</span>.<span class="ident">slice</span>[<span class="ident">dest</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">ascii_to_ascii</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -3567,34 +3567,34 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
                     <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
                     <span class="kw">if</span> <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span> <span class="op">&lt;</span> <span class="ident">dst_len</span> {
                         <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">&lt;</span> <span class="number">0xE0</span> {
-                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                                <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                                <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">2</span>;
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>)
                         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">&lt;</span> <span class="number">0xF0</span> {
-                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                                <span class="op">|</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                                <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                                <span class="op">|</span> ((<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                                <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">3</span>;
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>)
                         } <span class="kw">else</span> {
-                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
-                                <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                                <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                                <span class="op">|</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
+                                <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                                <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                                <span class="op">|</span> (<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">4</span>;
-                            <span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">point</span>) })
+                            <span class="ident">NonAscii::Astral</span>(<span class="kw">unsafe</span> { <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">point</span>) })
                         }
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((
-                            <span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((
+                            <span class="ident">EncoderResult::OutputFull</span>,
                             <span class="self">self</span>.<span class="ident">pos</span>,
                             <span class="ident">dest</span>.<span class="ident">pos</span>,
                         ));
@@ -3602,7 +3602,7 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteTwoHandle</span>::<span class="ident">new</span>(<span class="ident">dest</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteTwoHandle::new</span>(<span class="ident">dest</span>)))
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_ascii_to_check_space_four</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
@@ -3614,9 +3614,9 @@
             <span class="kw">let</span> <span class="ident">src_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> <span class="ident">dst_remaining</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dest</span>.<span class="ident">slice</span>[<span class="ident">dest</span>.<span class="ident">pos</span>..];
             <span class="kw">let</span> (<span class="ident">pending</span>, <span class="ident">length</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">dst_remaining</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">src_remaining</span>.<span class="ident">len</span>() {
-                (<span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::OutputFull</span>, <span class="ident">dst_remaining</span>.<span class="ident">len</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">EncoderResult</span>::<span class="ident">InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
+                (<span class="ident">EncoderResult::InputEmpty</span>, <span class="ident">src_remaining</span>.<span class="ident">len</span>())
             };
             <span class="kw">match</span> <span class="kw">unsafe</span> {
                 <span class="ident">ascii_to_ascii</span>(<span class="ident">src_remaining</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst_remaining</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">length</span>)
@@ -3624,34 +3624,34 @@
                 <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
                     <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">length</span>;
-                    <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
+                    <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((<span class="ident">pending</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">dest</span>.<span class="ident">pos</span>));
                 }
                 <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">consumed</span>)) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
                     <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="ident">consumed</span>;
                     <span class="kw">if</span> <span class="ident">dest</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span> <span class="op">&lt;</span> <span class="ident">dst_len</span> {
                         <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">&lt;</span> <span class="number">0xE0</span> {
-                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                                <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x1F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                                <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">2</span>;
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>)
                         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">non_ascii</span> <span class="op">&lt;</span> <span class="number">0xF0</span> {
-                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                                <span class="op">|</span> ((<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                                <span class="op">|</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u16::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0xF</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                                <span class="op">|</span> ((<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                                <span class="op">|</span> (<span class="ident">u16::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">3</span>;
-                            <span class="ident">NonAscii</span>::<span class="ident">BmpExclAscii</span>(<span class="ident">point</span>)
+                            <span class="ident">NonAscii::BmpExclAscii</span>(<span class="ident">point</span>)
                         } <span class="kw">else</span> {
-                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
-                                <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
-                                <span class="op">|</span> ((<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
-                                <span class="op">|</span> (<span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
+                            <span class="kw">let</span> <span class="ident">point</span> <span class="op">=</span> ((<span class="ident">u32::from</span>(<span class="ident">non_ascii</span>) <span class="op">&amp;</span> <span class="number">0x7</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">18</span>)
+                                <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">12</span>)
+                                <span class="op">|</span> ((<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>)
+                                <span class="op">|</span> (<span class="ident">u32::from</span>(<span class="self">self</span>.<span class="ident">slice</span>[<span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span>]) <span class="op">&amp;</span> <span class="number">0x3F</span>);
                             <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span><span class="op">=</span> <span class="number">4</span>;
-                            <span class="ident">NonAscii</span>::<span class="ident">Astral</span>(<span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">point</span>) })
+                            <span class="ident">NonAscii::Astral</span>(<span class="kw">unsafe</span> { <span class="ident">::core::char::from_u32_unchecked</span>(<span class="ident">point</span>) })
                         }
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="ident">CopyAsciiResult</span>::<span class="ident">Stop</span>((
-                            <span class="ident">EncoderResult</span>::<span class="ident">OutputFull</span>,
+                        <span class="kw">return</span> <span class="ident">CopyAsciiResult::Stop</span>((
+                            <span class="ident">EncoderResult::OutputFull</span>,
                             <span class="self">self</span>.<span class="ident">pos</span>,
                             <span class="ident">dest</span>.<span class="ident">pos</span>,
                         ));
@@ -3659,7 +3659,7 @@
                 }
             }
         };
-        <span class="ident">CopyAsciiResult</span>::<span class="ident">GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteFourHandle</span>::<span class="ident">new</span>(<span class="ident">dest</span>)))
+        <span class="ident">CopyAsciiResult::GoOn</span>((<span class="ident">non_ascii_ret</span>, <span class="ident">ByteFourHandle::new</span>(<span class="ident">dest</span>)))
     }
 }
 
@@ -3681,13 +3681,13 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">char</span>, <span class="ident">Utf8UnreadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">character</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">read</span>();
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf8UnreadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">source</span>);
+        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf8UnreadHandle::new</span>(<span class="self">self</span>.<span class="ident">source</span>);
         (<span class="ident">character</span>, <span class="ident">handle</span>)
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_enum</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">Unicode</span>, <span class="ident">Utf8UnreadHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">character</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">read_enum</span>();
-        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf8UnreadHandle</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">source</span>);
+        <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">Utf8UnreadHandle::new</span>(<span class="self">self</span>.<span class="ident">source</span>);
         (<span class="ident">character</span>, <span class="ident">handle</span>)
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -3880,33 +3880,33 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_one</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">ByteOneHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">ByteOneHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">ByteOneHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_two</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">ByteTwoHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">1</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">ByteTwoHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">ByteTwoHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_three</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">ByteThreeHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">2</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">ByteThreeHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">ByteThreeHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_space_four</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Space</span><span class="op">&lt;</span><span class="ident">ByteFourHandle</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+</span> <span class="number">3</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">slice</span>.<span class="ident">len</span>() {
-            <span class="ident">Space</span>::<span class="ident">Available</span>(<span class="ident">ByteFourHandle</span>::<span class="ident">new</span>(<span class="self">self</span>))
+            <span class="ident">Space::Available</span>(<span class="ident">ByteFourHandle::new</span>(<span class="self">self</span>))
         } <span class="kw">else</span> {
-            <span class="ident">Space</span>::<span class="ident">Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
+            <span class="ident">Space::Full</span>(<span class="self">self</span>.<span class="ident">written</span>())
         }
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -3941,5 +3941,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
