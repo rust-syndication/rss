@@ -17,7 +17,7 @@ all-features = false
 [features]
 default = ["builders"]
 builders = ["derive_builder", "never", "atom_syndication/builders"]
-validation = ["chrono", "url", "mime"]
+validation = ["chrono", "chrono/std", "url", "mime"]
 with-serde = ["serde", "atom_syndication/with-serde"]
 atom = ["atom_syndication"]
 
@@ -25,11 +25,11 @@ atom = ["atom_syndication"]
 quick-xml = { version = "0.22", features = ["encoding"] }
 derive_builder = { version = "0.10.2", optional = true }
 never = { version = "0.1", optional = true }
-chrono = {version = "0.4", optional = true }
+chrono = { version = "0.4", optional = true, default-features = false, features = ["alloc"] }
 url = { version = "2.1", optional = true }
 mime = { version = "0.3", optional = true }
 serde = { version = "1.0", optional = true, features = ["derive"] }
-atom_syndication = { version = "0.10", optional = true }
+atom_syndication = { version = "0.11", optional = true }
 
 [dev-dependencies]
 bencher = "0.1"
