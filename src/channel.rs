@@ -1217,7 +1217,7 @@ impl Channel {
                         channel.text_input = Some(text_input);
                     }
                     b"item" => {
-                        let item = Item::from_xml(&namespaces, reader, element.attributes())?;
+                        let item = Item::from_xml(namespaces, reader, element.attributes())?;
                         channel.items.push(item);
                     }
                     b"title" => {
