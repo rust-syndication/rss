@@ -2,6 +2,7 @@
 
 ## 2.0.0 - Unreleased
 
+- Disable clock feature of chrono to mitigate RUSTSEC-2020-0159 [`#130`](https://github.com/rust-syndication/rss/pull/130)
 - Update quick_xml to 0.22 [`0daf20b`](https://github.com/rust-syndication/rss/commit/0daf20b6f19411450f79090d687d796414193327)
 - Fix issues found by clippy [`f3283a1`](https://github.com/rust-syndication/rss/commit/f3283a13808f41f0c10cd64720e493f18a286967)
 - Replace HashMap with BTreeMap to have a stable order of tags/attributes [`8b088b1`](https://github.com/rust-syndication/rss/commit/8b088b147c0801a950b5197d6faa475ca766f257)
