@@ -30,7 +30,7 @@ Add the dependency to your `Cargo.toml`.
 
 ```toml
 [dependencies]
-rss = "1.0"
+rss = "2.0"
 ```
 
 ## Reading
