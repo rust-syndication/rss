@@ -1,6 +1,8 @@
 # Changelog
 
-## 2.0.0 - Unreleased
+## 2.x.x - Unreleased
+
+## 2.0.0 - 2021-10-21
 
 - Disable clock feature of chrono to mitigate RUSTSEC-2020-0159 [`#130`](https://github.com/rust-syndication/rss/pull/130)
 - Update quick_xml to 0.22 [`0daf20b`](https://github.com/rust-syndication/rss/commit/0daf20b6f19411450f79090d687d796414193327)
