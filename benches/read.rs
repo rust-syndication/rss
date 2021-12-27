@@ -36,11 +36,19 @@ fn read_syndication(b: &mut Bencher) {
     });
 }
 
+fn read_extensions(b: &mut Bencher) {
+    let input: &[u8] = include_bytes!("../tests/data/extension.xml");
+    b.iter(|| {
+        let _ = Channel::read_from(input).expect("failed to parse feed");
+    });
+}
+
 benchmark_group!(
     benches,
     read_rss2sample,
     read_itunes,
     read_dublincore,
     read_syndication,
+    read_extensions,
 );
 benchmark_main!(benches);
