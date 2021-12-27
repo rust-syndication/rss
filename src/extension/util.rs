@@ -38,12 +38,15 @@ where
     let name = str::from_utf8(name)?;
     let ext = parse_extension_element(reader, atts)?;
 
-    let map = extensions
-        .entry(ns.to_string())
-        .or_insert_with(BTreeMap::new);
-
-    let items = map.entry(name.to_string()).or_insert_with(Vec::new);
-    items.push(ext);
+    if let Some(map) = extensions.get_mut(ns) {
+        if let Some(items) = map.get_mut(name) {
+            items.push(ext);
+        } else {
+            map.insert(name.to_string(), vec![ext]);
+        }
+    } else {
+        extensions.insert(ns.to_string(), BTreeMap::new());
+    }
 
     Ok(())
 }
@@ -66,12 +69,11 @@ fn parse_extension_element<R: BufRead>(
             Event::Start(element) => {
                 let ext = parse_extension_element(reader, element.attributes())?;
                 let name = str::from_utf8(element.local_name())?;
-                let items = extension
-                    .children
-                    .entry(name.to_string())
-                    .or_insert_with(Vec::new);
-
-                items.push(ext);
+                if let Some(items) = extension.children.get_mut(name) {
+                    items.push(ext);
+                } else {
+                    extension.children.insert(name.to_string(), vec![ext]);
+                }
             }
             Event::Text(element) | Event::CData(element) => {
                 extension.value = Some(element.unescape_and_decode(reader)?);
