@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;quick-xml-0.22.0&#x2F;src&#x2F;reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../quick_xml/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/reader.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../quick_xml/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../quick_xml/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../quick_xml/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1347,7 +1352,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a `Reader` that reads from a reader implementing `BufRead`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_reader</span>(<span class="ident">reader</span>: <span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_reader</span>(<span class="ident">reader</span>: <span class="ident">B</span>) -&gt; <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
         <span class="ident">Reader</span> {
             <span class="ident">reader</span>,
             <span class="ident">opened_buffer</span>: <span class="ident">Vec::new</span>(),
@@ -1379,7 +1384,7 @@
     <span class="doccomment">/// [`Empty`]: events/enum.Event.html#variant.Empty</span>
     <span class="doccomment">/// [`Start`]: events/enum.Event.html#variant.Start</span>
     <span class="doccomment">/// [`End`]: events/enum.Event.html#variant.End</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_empty_elements</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_empty_elements</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">expand_empty_elements</span> <span class="op">=</span> <span class="ident">val</span>;
         <span class="self">self</span>
     }
@@ -1392,7 +1397,7 @@
     <span class="doccomment">/// (`false` by default)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Text`]: events/enum.Event.html#variant.Text</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim_text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim_text</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">trim_text_start</span> <span class="op">=</span> <span class="ident">val</span>;
         <span class="self">self</span>.<span class="ident">trim_text_end</span> <span class="op">=</span> <span class="ident">val</span>;
         <span class="self">self</span>
@@ -1405,7 +1410,7 @@
     <span class="doccomment">/// (`false` by default)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Text`]: events/enum.Event.html#variant.Text</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim_text_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim_text_end</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">trim_text_end</span> <span class="op">=</span> <span class="ident">val</span>;
         <span class="self">self</span>
     }
@@ -1421,7 +1426,7 @@
     <span class="doccomment">/// (`true` by default)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`End`]: events/enum.Event.html#variant.End</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim_markup_names_in_closing_tags</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trim_markup_names_in_closing_tags</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">trim_markup_names_in_closing_tags</span> <span class="op">=</span> <span class="ident">val</span>;
         <span class="self">self</span>
     }
@@ -1439,7 +1444,7 @@
     <span class="doccomment">/// (`true` by default)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`End`]: events/enum.Event.html#variant.End</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_end_names</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_end_names</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">check_end_names</span> <span class="op">=</span> <span class="ident">val</span>;
         <span class="self">self</span>
     }
@@ -1454,7 +1459,7 @@
     <span class="doccomment">/// (`false` by default)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Comment`]: events/enum.Event.html#variant.Comment</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_comments</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_comments</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">val</span>: <span class="ident">bool</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">check_comments</span> <span class="op">=</span> <span class="ident">val</span>;
         <span class="self">self</span>
     }
@@ -1462,7 +1467,7 @@
     <span class="doccomment">/// Gets the current byte position in the input data.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Useful when debugging errors.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buffer_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buffer_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="comment">// when internal state is Opened, we have actually read until &#39;&lt;&#39;,</span>
         <span class="comment">// which we don&#39;t want to show</span>
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">TagState::Opened</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">tag_state</span> {
@@ -1474,18 +1479,18 @@
 
     <span class="doccomment">/// private function to read until &#39;&lt;&#39; is found</span>
     <span class="doccomment">/// return a `Text` event</span>
-    <span class="kw">fn</span> <span class="ident">read_until_open</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_until_open</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">tag_state</span> <span class="op">=</span> <span class="ident">TagState::Opened</span>;
         <span class="kw">let</span> <span class="ident">buf_start</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>();
-        <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&lt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
-            <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&lt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
+            <span class="prelude-val">Ok</span>(<span class="number">0</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
                 <span class="kw">let</span> (<span class="ident">start</span>, <span class="ident">len</span>) <span class="op">=</span> (
                     <span class="ident">buf_start</span>
                         <span class="op">+</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">trim_text_start</span> {
                             <span class="kw">match</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="ident">buf_start</span>).<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="op">!</span><span class="ident">is_whitespace</span>(<span class="ident">b</span>)) {
-                                <span class="prelude-val">Some</span>(<span class="ident">start</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">start</span>,
-                                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="self">self</span>.<span class="ident">read_event</span>(<span class="ident">buf</span>),
+                                <span class="prelude-val">Some</span>(<span class="ident">start</span>) =&gt; <span class="ident">start</span>,
+                                <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="self">self</span>.<span class="ident">read_event</span>(<span class="ident">buf</span>),
                             }
                         } <span class="kw">else</span> {
                             <span class="number">0</span>
@@ -1500,52 +1505,52 @@
                 );
                 <span class="prelude-val">Ok</span>(<span class="ident">Event::Text</span>(<span class="ident">BytesText::from_escaped</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">start</span>..<span class="ident">len</span>])))
             }
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">e</span>),
         }
     }
 
     <span class="doccomment">/// private function to read until &#39;&gt;&#39; is found</span>
-    <span class="kw">fn</span> <span class="ident">read_until_close</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_until_close</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">tag_state</span> <span class="op">=</span> <span class="ident">TagState::Closed</span>;
 
         <span class="comment">// need to read 1 character to decide whether pay special attention to attribute values</span>
         <span class="kw">let</span> <span class="ident">buf_start</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>();
         <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">reader</span>.<span class="ident">fill_buf</span>() {
-                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span>.<span class="ident">is_empty</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
-                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span>.<span class="ident">is_empty</span>() =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
+                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) =&gt; {
                     <span class="comment">// We intentionally don&#39;t `consume()` the byte, otherwise we would have to</span>
                     <span class="comment">// handle things like &#39;&lt;&gt;&#39; here already.</span>
                     <span class="kw">break</span> <span class="ident">n</span>[<span class="number">0</span>];
                 }
-                <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">io::ErrorKind::Interrupted</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Io</span>(<span class="ident">e</span>)),
+                <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io::ErrorKind::Interrupted</span> =&gt; <span class="kw">continue</span>,
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Io</span>(<span class="ident">e</span>)),
             }
         };
 
         <span class="kw">if</span> <span class="ident">start</span> <span class="op">!</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">start</span> <span class="op">!</span><span class="op">=</span> <span class="string">b&#39;!&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">start</span> <span class="op">!</span><span class="op">=</span> <span class="string">b&#39;?&#39;</span> {
-            <span class="kw">match</span> <span class="ident">read_elem_until</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
-                <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">match</span> <span class="ident">read_elem_until</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
+                <span class="prelude-val">Ok</span>(<span class="number">0</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
                     <span class="comment">// we already *know* that we are in this case</span>
                     <span class="self">self</span>.<span class="ident">read_start</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span>..])
                 }
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">e</span>),
             }
         } <span class="kw">else</span> {
-            <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
-                <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">start</span> {
-                    <span class="string">b&#39;/&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">read_end</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span>..]),
-                    <span class="string">b&#39;!&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">read_bang</span>(<span class="ident">buf_start</span>, <span class="ident">buf</span>),
-                    <span class="string">b&#39;?&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">read_question_mark</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span>..]),
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(
+            <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
+                <span class="prelude-val">Ok</span>(<span class="number">0</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="kw">match</span> <span class="ident">start</span> {
+                    <span class="string">b&#39;/&#39;</span> =&gt; <span class="self">self</span>.<span class="ident">read_end</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span>..]),
+                    <span class="string">b&#39;!&#39;</span> =&gt; <span class="self">self</span>.<span class="ident">read_bang</span>(<span class="ident">buf_start</span>, <span class="ident">buf</span>),
+                    <span class="string">b&#39;?&#39;</span> =&gt; <span class="self">self</span>.<span class="ident">read_question_mark</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span>..]),
+                    <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(
                         <span class="string">&quot;We checked that `start` must be one of [/!?], was {:?} \
                              instead.&quot;</span>,
                         <span class="ident">start</span>
                     ),
                 },
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">e</span>),
             }
         }
     }
@@ -1553,7 +1558,7 @@
     <span class="doccomment">/// reads `BytesElement` starting with a `/`,</span>
     <span class="doccomment">/// if `self.check_end_names`, checks that element matches last opened element</span>
     <span class="doccomment">/// return `End` event</span>
-    <span class="kw">fn</span> <span class="ident">read_end</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_end</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="comment">// XML standard permits whitespaces after the markup name in closing tags.</span>
         <span class="comment">// Let&#39;s strip them from the buffer before comparing tag names.</span>
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">trim_markup_names_in_closing_tags</span> {
@@ -1567,7 +1572,7 @@
             <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..]
         };
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">check_end_names</span> {
-            <span class="kw">let</span> <span class="ident">mismatch_err</span> <span class="op">=</span> <span class="op">|</span><span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">found</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">buf_position</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span><span class="op">|</span> {
+            <span class="kw">let</span> <span class="ident">mismatch_err</span> <span class="op">=</span> <span class="op">|</span><span class="ident">expected</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">found</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">buf_position</span>: <span class="kw-2">&amp;mut</span> <span class="ident">usize</span><span class="op">|</span> {
                 <span class="kw-2">*</span><span class="ident">buf_position</span> <span class="op">-</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>();
                 <span class="prelude-val">Err</span>(<span class="ident">Error::EndEventMismatch</span> {
                     <span class="ident">expected</span>: <span class="ident">from_utf8</span>(<span class="ident">expected</span>).<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>).<span class="ident">to_owned</span>(),
@@ -1575,16 +1580,16 @@
                 })
             };
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">opened_starts</span>.<span class="ident">pop</span>() {
-                <span class="prelude-val">Some</span>(<span class="ident">start</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">start</span>) =&gt; {
                     <span class="kw">if</span> <span class="ident">name</span> <span class="op">!</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">opened_buffer</span>[<span class="ident">start</span>..] {
                         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">opened_buffer</span>[<span class="ident">start</span>..];
-                        <span class="ident">mismatch_err</span>(<span class="ident">expected</span>, <span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>)
+                        <span class="ident">mismatch_err</span>(<span class="ident">expected</span>, <span class="ident">name</span>, <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>)
                     } <span class="kw">else</span> {
                         <span class="self">self</span>.<span class="ident">opened_buffer</span>.<span class="ident">truncate</span>(<span class="ident">start</span>);
                         <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))
                     }
                 }
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">mismatch_err</span>(<span class="string">b&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>),
+                <span class="prelude-val">None</span> =&gt; <span class="ident">mismatch_err</span>(<span class="string">b&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..], <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>),
             }
         } <span class="kw">else</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))
@@ -1600,24 +1605,24 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">buf_start</span>: <span class="ident">usize</span>,
         <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">buf</span>[<span class="ident">buf_start</span>..].<span class="ident">starts_with</span>(<span class="string">b&quot;!--&quot;</span>) {
             <span class="kw">while</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">buf_start</span> <span class="op">+</span> <span class="number">5</span> <span class="op">|</span><span class="op">|</span> <span class="op">!</span><span class="ident">buf</span>.<span class="ident">ends_with</span>(<span class="string">b&quot;--&quot;</span>) {
                 <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">b&#39;&gt;&#39;</span>);
-                <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
-                    <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
+                    <span class="prelude-val">Ok</span>(<span class="number">0</span>) =&gt; {
                         <span class="self">self</span>.<span class="ident">buf_position</span> <span class="op">-</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">buf_start</span>;
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedEof</span>(<span class="string">&quot;Comment&quot;</span>.<span class="ident">to_string</span>()));
                     }
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> (),
-                    <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
                 }
             }
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>();
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">check_comments</span> {
                 <span class="comment">// search if &#39;--&#39; not in comments</span>
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">p</span>) <span class="op">=</span> <span class="ident">memchr::memchr_iter</span>(<span class="string">b&#39;-&#39;</span>, <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span> <span class="op">+</span> <span class="number">3</span>..<span class="ident">len</span> <span class="op">-</span> <span class="number">2</span>])
-                    .<span class="ident">position</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">buf</span>[<span class="ident">buf_start</span> <span class="op">+</span> <span class="number">3</span> <span class="op">+</span> <span class="ident">p</span> <span class="op">+</span> <span class="number">1</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;-&#39;</span>)
+                    .<span class="ident">position</span>(<span class="op">|</span><span class="ident">p</span><span class="op">|</span> <span class="ident">buf</span>[<span class="ident">buf_start</span> <span class="op">+</span> <span class="number">3</span> <span class="op">+</span> <span class="ident">p</span> <span class="op">+</span> <span class="number">1</span>] <span class="op">==</span> <span class="string">b&#39;-&#39;</span>)
                 {
                     <span class="self">self</span>.<span class="ident">buf_position</span> <span class="op">-</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">buf_start</span> <span class="op">+</span> <span class="ident">p</span>;
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedToken</span>(<span class="string">&quot;--&quot;</span>.<span class="ident">to_string</span>()));
@@ -1628,44 +1633,44 @@
             )))
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">buf_start</span> <span class="op">+</span> <span class="number">8</span> {
             <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span> <span class="op">+</span> <span class="number">1</span>..<span class="ident">buf_start</span> <span class="op">+</span> <span class="number">8</span>] {
-                <span class="string">b&quot;[CDATA[&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="string">b&quot;[CDATA[&quot;</span> =&gt; {
                     <span class="kw">while</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="number">10</span> <span class="op">|</span><span class="op">|</span> <span class="op">!</span><span class="ident">buf</span>.<span class="ident">ends_with</span>(<span class="string">b&quot;]]&quot;</span>) {
                         <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">b&#39;&gt;&#39;</span>);
-                        <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
-                            <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
+                            <span class="prelude-val">Ok</span>(<span class="number">0</span>) =&gt; {
                                 <span class="self">self</span>.<span class="ident">buf_position</span> <span class="op">-</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">buf_start</span>;
                                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedEof</span>(<span class="string">&quot;CData&quot;</span>.<span class="ident">to_string</span>()));
                             }
-                            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> (),
-                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+                            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
                         }
                     }
                     <span class="prelude-val">Ok</span>(<span class="ident">Event::CData</span>(<span class="ident">BytesText::from_plain</span>(
                         <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span> <span class="op">+</span> <span class="number">8</span>..<span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">2</span>],
                     )))
                 }
-                <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">b&quot;DOCTYPE&quot;</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="ident">buf_start</span>).<span class="ident">filter</span>(<span class="op">|</span><span class="op">&amp;&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;&lt;&#39;</span>).<span class="ident">count</span>();
+                <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">b&quot;DOCTYPE&quot;</span>) =&gt; {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="ident">buf_start</span>).<span class="ident">filter</span>(<span class="op">|</span><span class="op">&amp;&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="string">b&#39;&lt;&#39;</span>).<span class="ident">count</span>();
                     <span class="kw">while</span> <span class="ident">count</span> <span class="op">&gt;</span> <span class="number">0</span> {
                         <span class="ident">buf</span>.<span class="ident">push</span>(<span class="string">b&#39;&gt;&#39;</span>);
-                        <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
-                            <span class="prelude-val">Ok</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="kw">match</span> <span class="ident">read_until</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">reader</span>, <span class="string">b&#39;&gt;&#39;</span>, <span class="ident">buf</span>, <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">buf_position</span>) {
+                            <span class="prelude-val">Ok</span>(<span class="number">0</span>) =&gt; {
                                 <span class="self">self</span>.<span class="ident">buf_position</span> <span class="op">-</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">buf_start</span>;
                                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedEof</span>(<span class="string">&quot;DOCTYPE&quot;</span>.<span class="ident">to_string</span>()));
                             }
-                            <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="prelude-val">Ok</span>(<span class="ident">n</span>) =&gt; {
                                 <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">n</span>;
-                                <span class="ident">count</span> <span class="op">+</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="ident">start</span>).<span class="ident">filter</span>(<span class="op">|</span><span class="op">&amp;&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;&lt;&#39;</span>).<span class="ident">count</span>();
+                                <span class="ident">count</span> <span class="op">+</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="ident">start</span>).<span class="ident">filter</span>(<span class="op">|</span><span class="op">&amp;&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="string">b&#39;&lt;&#39;</span>).<span class="ident">count</span>();
                                 <span class="ident">count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
                             }
-                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+                            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
                         }
                     }
                     <span class="prelude-val">Ok</span>(<span class="ident">Event::DocType</span>(<span class="ident">BytesText::from_escaped</span>(
                         <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="ident">buf_start</span> <span class="op">+</span> <span class="number">8</span>..<span class="ident">buf</span>.<span class="ident">len</span>()],
                     )))
                 }
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedBang</span>),
+                <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedBang</span>),
             }
         } <span class="kw">else</span> {
             <span class="self">self</span>.<span class="ident">buf_position</span> <span class="op">-</span><span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">buf_start</span>;
@@ -1676,10 +1681,10 @@
     <span class="doccomment">/// reads `BytesElement` starting with a `?`,</span>
     <span class="doccomment">/// return `Decl` or `PI` event</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">read_question_mark</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_question_mark</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>();
-        <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">buf</span>[<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;?&#39;</span> {
-            <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">5</span> <span class="op">&amp;&amp;</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..<span class="number">4</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;xml&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">is_whitespace</span>(<span class="ident">buf</span>[<span class="number">4</span>]) {
+        <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">buf</span>[<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">==</span> <span class="string">b&#39;?&#39;</span> {
+            <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">5</span> <span class="op">&amp;&amp;</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..<span class="number">4</span>] <span class="op">==</span> <span class="string">b&quot;xml&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">is_whitespace</span>(<span class="ident">buf</span>[<span class="number">4</span>]) {
                 <span class="kw">let</span> <span class="ident">event</span> <span class="op">=</span> <span class="ident">BytesDecl::from_start</span>(<span class="ident">BytesStart::borrowed</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>], <span class="number">3</span>));
                 <span class="comment">// Try getting encoding from the declaration event</span>
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">enc</span>) <span class="op">=</span> <span class="ident">event</span>.<span class="ident">encoder</span>() {
@@ -1699,10 +1704,10 @@
     <span class="doccomment">/// reads `BytesElement` starting with a `?`,</span>
     <span class="doccomment">/// return `Decl` or `PI` event</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>))]</span>
-    <span class="kw">fn</span> <span class="ident">read_question_mark</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_question_mark</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>();
-        <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">buf</span>[<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;?&#39;</span> {
-            <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">5</span> <span class="op">&amp;&amp;</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..<span class="number">4</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;xml&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">is_whitespace</span>(<span class="ident">buf</span>[<span class="number">4</span>]) {
+        <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">buf</span>[<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">==</span> <span class="string">b&#39;?&#39;</span> {
+            <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">5</span> <span class="op">&amp;&amp;</span> <span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..<span class="number">4</span>] <span class="op">==</span> <span class="string">b&quot;xml&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">is_whitespace</span>(<span class="ident">buf</span>[<span class="number">4</span>]) {
                 <span class="kw">let</span> <span class="ident">event</span> <span class="op">=</span> <span class="ident">BytesDecl::from_start</span>(<span class="ident">BytesStart::borrowed</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[<span class="number">1</span>..<span class="ident">len</span> <span class="op">-</span> <span class="number">1</span>], <span class="number">3</span>));
                 <span class="prelude-val">Ok</span>(<span class="ident">Event::Decl</span>(<span class="ident">event</span>))
             } <span class="kw">else</span> {
@@ -1715,7 +1720,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">close_expanded_empty</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">close_expanded_empty</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">tag_state</span> <span class="op">=</span> <span class="ident">TagState::Closed</span>;
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">opened_buffer</span>
@@ -1725,7 +1730,7 @@
 
     <span class="doccomment">/// reads `BytesElement` starting with any character except `/`, `!` or ``?`</span>
     <span class="doccomment">/// return `Start` or `Empty` event</span>
-    <span class="kw">fn</span> <span class="ident">read_start</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_start</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="comment">// TODO: do this directly when reading bufreader ...</span>
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">len</span>();
         <span class="kw">let</span> <span class="ident">name_end</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">b</span><span class="op">|</span> <span class="ident">is_whitespace</span>(<span class="ident">b</span>)).<span class="ident">unwrap_or</span>(<span class="ident">len</span>);
@@ -1791,16 +1796,16 @@
     <span class="doccomment">/// println!(&quot;Found {} start events&quot;, count);</span>
     <span class="doccomment">/// println!(&quot;Text events: {:?}&quot;, txt);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">event</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">tag_state</span> {
-            <span class="ident">TagState::Opened</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">read_until_close</span>(<span class="ident">buf</span>),
-            <span class="ident">TagState::Closed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">read_until_open</span>(<span class="ident">buf</span>),
-            <span class="ident">TagState::Empty</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">close_expanded_empty</span>(),
-            <span class="ident">TagState::Exit</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
+            <span class="ident">TagState::Opened</span> =&gt; <span class="self">self</span>.<span class="ident">read_until_close</span>(<span class="ident">buf</span>),
+            <span class="ident">TagState::Closed</span> =&gt; <span class="self">self</span>.<span class="ident">read_until_open</span>(<span class="ident">buf</span>),
+            <span class="ident">TagState::Empty</span> =&gt; <span class="self">self</span>.<span class="ident">close_expanded_empty</span>(),
+            <span class="ident">TagState::Exit</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>),
         };
         <span class="kw">match</span> <span class="ident">event</span> {
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">tag_state</span> <span class="op">=</span> <span class="ident">TagState::Exit</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) =&gt; <span class="self">self</span>.<span class="ident">tag_state</span> <span class="op">=</span> <span class="ident">TagState::Exit</span>,
+            <span class="kw">_</span> =&gt; {}
         }
         <span class="ident">event</span>
     }
@@ -1817,7 +1822,7 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
         <span class="ident">qname</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>],
         <span class="ident">namespace_buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) {
+    ) -&gt; (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) {
         <span class="self">self</span>.<span class="ident">ns_buffer</span>
             .<span class="ident">resolve_namespace</span>(<span class="ident">qname</span>, <span class="ident">namespace_buffer</span>, <span class="bool-val">true</span>)
     }
@@ -1834,7 +1839,7 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
         <span class="ident">qname</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>],
         <span class="ident">namespace_buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) {
+    ) -&gt; (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) {
         <span class="self">self</span>.<span class="ident">ns_buffer</span>
             .<span class="ident">resolve_namespace</span>(<span class="ident">qname</span>, <span class="ident">namespace_buffer</span>, <span class="bool-val">false</span>)
     }
@@ -1885,11 +1890,11 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
         <span class="ident">namespace_buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">ns_buffer</span>.<span class="ident">pop_empty_namespaces</span>(<span class="ident">namespace_buffer</span>);
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">read_event</span>(<span class="ident">buf</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="ident">Event::Eof</span>)),
-            <span class="prelude-val">Ok</span>(<span class="ident">Event::Start</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) =&gt; <span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="ident">Event::Eof</span>)),
+            <span class="prelude-val">Ok</span>(<span class="ident">Event::Start</span>(<span class="ident">e</span>)) =&gt; {
                 <span class="self">self</span>.<span class="ident">ns_buffer</span>.<span class="ident">push_new_namespaces</span>(<span class="kw-2">&amp;</span><span class="ident">e</span>, <span class="ident">namespace_buffer</span>);
                 <span class="prelude-val">Ok</span>((
                     <span class="self">self</span>.<span class="ident">ns_buffer</span>
@@ -1897,7 +1902,7 @@
                     <span class="ident">Event::Start</span>(<span class="ident">e</span>),
                 ))
             }
-            <span class="prelude-val">Ok</span>(<span class="ident">Event::Empty</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">Event::Empty</span>(<span class="ident">e</span>)) =&gt; {
                 <span class="comment">// For empty elements we need to &#39;artificially&#39; keep the namespace scope on the</span>
                 <span class="comment">// stack until the next `next()` call occurs.</span>
                 <span class="comment">// Otherwise the caller has no chance to use `resolve` in the context of the</span>
@@ -1913,7 +1918,7 @@
                     <span class="ident">Event::Empty</span>(<span class="ident">e</span>),
                 ))
             }
-            <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="ident">e</span>)) =&gt; {
                 <span class="comment">// notify next `read_namespaced_event()` invocation that it needs to pop this</span>
                 <span class="comment">// namespace scope</span>
                 <span class="self">self</span>.<span class="ident">ns_buffer</span>.<span class="ident">pending_pop</span> <span class="op">=</span> <span class="bool-val">true</span>;
@@ -1923,8 +1928,8 @@
                     <span class="ident">Event::End</span>(<span class="ident">e</span>),
                 ))
             }
-            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="ident">e</span>)),
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="ident">e</span>)),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">e</span>),
         }
     }
 
@@ -1936,7 +1941,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`decode`]: #method.decode</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span> {
         <span class="self">self</span>.<span class="ident">encoding</span>
     }
 
@@ -1948,7 +1953,7 @@
     <span class="doccomment">/// If no encoding is specified, defaults to UTF-8.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">encoding</span>.<span class="ident">decode</span>(<span class="ident">bytes</span>).<span class="number">0</span>
     }
 
@@ -1962,7 +1967,7 @@
     <span class="doccomment">/// If you instead want to use XML declared encoding, use the `encoding` feature</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_without_bom</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_without_bom</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">starts_with</span>(<span class="string">b&quot;\xEF\xBB\xBF&quot;</span>) {
             <span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>[<span class="number">3</span>..]).<span class="ident">map_err</span>(<span class="ident">Error::Utf8</span>)
         } <span class="kw">else</span> {
@@ -1978,7 +1983,7 @@
     <span class="doccomment">/// If no encoding is specified, defaults to UTF-8.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_without_bom</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_without_bom</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_encoding_set</span> {
             <span class="kw">return</span> <span class="self">self</span>.<span class="ident">encoding</span>.<span class="ident">decode_with_bom_removal</span>(<span class="ident">bytes</span>).<span class="number">0</span>;
         }
@@ -2007,13 +2012,13 @@
     <span class="doccomment">/// If you instead want to use XML declared encoding, use the `encoding` feature</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="ident">from_utf8</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="ident">Error::Utf8</span>)
     }
 
     <span class="doccomment">/// Get utf8 decoder</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decoder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decoder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decoder</span> {
         <span class="ident">Decoder</span> {
             <span class="ident">encoding</span>: <span class="self">self</span>.<span class="ident">encoding</span>,
         }
@@ -2021,30 +2026,30 @@
 
     <span class="doccomment">/// Get utf8 decoder</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decoder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decoder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decoder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decoder</span> {
         <span class="ident">Decoder</span>
     }
 
     <span class="doccomment">/// Reads until end element is found</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Manages nested cases where parent and child elements have the same name</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_to_end</span><span class="op">&lt;</span><span class="ident">K</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">end</span>: <span class="ident">K</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_to_end</span><span class="op">&lt;</span><span class="ident">K</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">end</span>: <span class="ident">K</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">depth</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">let</span> <span class="ident">end</span> <span class="op">=</span> <span class="ident">end</span>.<span class="ident">as_ref</span>();
         <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">read_event</span>(<span class="ident">buf</span>) {
-                <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">end</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">if</span> <span class="ident">depth</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="ident">end</span> =&gt; {
+                    <span class="kw">if</span> <span class="ident">depth</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
                     }
                     <span class="ident">depth</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
                 }
-                <span class="prelude-val">Ok</span>(<span class="ident">Event::Start</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">end</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">depth</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>,
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
-                <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Event::Start</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="ident">end</span> =&gt; <span class="ident">depth</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>,
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+                <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) =&gt; {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedEof</span>(<span class="macro">format!</span>(<span class="string">&quot;&lt;/{:?}&gt;&quot;</span>, <span class="ident">from_utf8</span>(<span class="ident">end</span>))));
                 }
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
+                <span class="kw">_</span> =&gt; (),
             }
             <span class="ident">buf</span>.<span class="ident">clear</span>();
         }
@@ -2084,13 +2089,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Text`]: events/enum.Event.html#variant.Text</span>
     <span class="doccomment">/// [`End`]: events/enum.Event.html#variant.End</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_text</span><span class="op">&lt;</span><span class="ident">K</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">end</span>: <span class="ident">K</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_text</span><span class="op">&lt;</span><span class="ident">K</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">end</span>: <span class="ident">K</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">read_event</span>(<span class="ident">buf</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">Event::Text</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">unescape_and_decode</span>(<span class="self">self</span>),
-            <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">end</span>.<span class="ident">as_ref</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()),
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
-            <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedEof</span>(<span class="string">&quot;Text&quot;</span>.<span class="ident">to_string</span>())),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::TextNotFound</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">Event::Text</span>(<span class="ident">e</span>)) =&gt; <span class="ident">e</span>.<span class="ident">unescape_and_decode</span>(<span class="self">self</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="ident">end</span>.<span class="ident">as_ref</span>() =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>()),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">Event::Eof</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::UnexpectedEof</span>(<span class="string">&quot;Text&quot;</span>.<span class="ident">to_string</span>())),
+            <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::TextNotFound</span>),
         };
         <span class="self">self</span>.<span class="ident">read_to_end</span>(<span class="ident">end</span>, <span class="ident">buf</span>)<span class="question-mark">?</span>;
         <span class="ident">s</span>
@@ -2148,14 +2153,14 @@
     <span class="doccomment">///     buf.clear();</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_underlying_reader</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">B</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_underlying_reader</span>(<span class="self">self</span>) -&gt; <span class="ident">B</span> {
         <span class="self">self</span>.<span class="ident">reader</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">BufReader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates an XML reader from a file path.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">BufReader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">path</span>: <span class="ident">P</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">BufReader</span><span class="op">&lt;</span><span class="ident">File</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::open</span>(<span class="ident">path</span>).<span class="ident">map_err</span>(<span class="ident">Error::Io</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">BufReader::new</span>(<span class="ident">file</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">Reader::from_reader</span>(<span class="ident">reader</span>))
@@ -2164,7 +2169,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
     <span class="doccomment">/// Creates an XML reader from a string slice.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="ident">Reader</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
         <span class="ident">Reader::from_reader</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>())
     }
 }
@@ -2173,32 +2178,32 @@
 <span class="doccomment">/// return the position of byte</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">fn</span> <span class="ident">read_until</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
-    <span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
+    <span class="ident">r</span>: <span class="kw-2">&amp;mut</span> <span class="ident">R</span>,
     <span class="ident">byte</span>: <span class="ident">u8</span>,
-    <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
-    <span class="ident">position</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="ident">buf</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="ident">position</span>: <span class="kw-2">&amp;mut</span> <span class="ident">usize</span>,
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">read</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">done</span> <span class="op">=</span> <span class="bool-val">false</span>;
     <span class="kw">while</span> <span class="op">!</span><span class="ident">done</span> {
         <span class="kw">let</span> <span class="ident">used</span> <span class="op">=</span> {
             <span class="kw">let</span> <span class="ident">available</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">r</span>.<span class="ident">fill_buf</span>() {
-                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span>.<span class="ident">is_empty</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span>,
-                <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">io::ErrorKind::Interrupted</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span>.<span class="ident">is_empty</span>() =&gt; <span class="kw">break</span>,
+                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) =&gt; <span class="ident">n</span>,
+                <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io::ErrorKind::Interrupted</span> =&gt; <span class="kw">continue</span>,
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
                     <span class="kw-2">*</span><span class="ident">position</span> <span class="op">+</span><span class="op">=</span> <span class="ident">read</span>;
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Io</span>(<span class="ident">e</span>));
                 }
             };
 
             <span class="kw">match</span> <span class="ident">memchr::memchr</span>(<span class="ident">byte</span>, <span class="ident">available</span>) {
-                <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">i</span>) =&gt; {
                     <span class="ident">buf</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">available</span>[..<span class="ident">i</span>]);
                     <span class="ident">done</span> <span class="op">=</span> <span class="bool-val">true</span>;
                     <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>
                 }
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">None</span> =&gt; {
                     <span class="ident">buf</span>.<span class="ident">extend_from_slice</span>(<span class="ident">available</span>);
                     <span class="ident">available</span>.<span class="ident">len</span>()
                 }
@@ -2223,11 +2228,11 @@
 <span class="doccomment">/// level)</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">fn</span> <span class="ident">read_elem_until</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
-    <span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
+    <span class="ident">r</span>: <span class="kw-2">&amp;mut</span> <span class="ident">R</span>,
     <span class="ident">end_byte</span>: <span class="ident">u8</span>,
-    <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
-    <span class="ident">position</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="ident">buf</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="ident">position</span>: <span class="kw-2">&amp;mut</span> <span class="ident">usize</span>,
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
     <span class="kw">enum</span> <span class="ident">State</span> {
         <span class="doccomment">/// The initial state (inside element, but outside of attribute value)</span>
@@ -2243,10 +2248,10 @@
     <span class="kw">while</span> <span class="op">!</span><span class="ident">done</span> {
         <span class="kw">let</span> <span class="ident">used</span> <span class="op">=</span> {
             <span class="kw">let</span> <span class="ident">available</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">r</span>.<span class="ident">fill_buf</span>() {
-                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span>.<span class="ident">is_empty</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">read</span>),
-                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span>,
-                <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">io::ErrorKind::Interrupted</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="kw">if</span> <span class="ident">n</span>.<span class="ident">is_empty</span>() =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">read</span>),
+                <span class="prelude-val">Ok</span>(<span class="ident">n</span>) =&gt; <span class="ident">n</span>,
+                <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io::ErrorKind::Interrupted</span> =&gt; <span class="kw">continue</span>,
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
                     <span class="kw-2">*</span><span class="ident">position</span> <span class="op">+</span><span class="op">=</span> <span class="ident">read</span>;
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Io</span>(<span class="ident">e</span>));
                 }
@@ -2256,26 +2261,26 @@
             <span class="kw">let</span> <span class="ident">used</span>: <span class="ident">usize</span>;
             <span class="kw">loop</span> {
                 <span class="kw">match</span> <span class="ident">memiter</span>.<span class="ident">next</span>() {
-                    <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="prelude-val">Some</span>(<span class="ident">i</span>) =&gt; {
                         <span class="ident">state</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">state</span>, <span class="ident">available</span>[<span class="ident">i</span>]) {
-                            (<span class="ident">State::Elem</span>, <span class="ident">b</span>) <span class="kw">if</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="ident">end_byte</span> <span class="op">=</span><span class="op">&gt;</span> {
+                            (<span class="ident">State::Elem</span>, <span class="ident">b</span>) <span class="kw">if</span> <span class="ident">b</span> <span class="op">==</span> <span class="ident">end_byte</span> =&gt; {
                                 <span class="comment">// only allowed to match `end_byte` while we are in state `Elem`</span>
                                 <span class="ident">buf</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">available</span>[..<span class="ident">i</span>]);
                                 <span class="ident">done</span> <span class="op">=</span> <span class="bool-val">true</span>;
                                 <span class="ident">used</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>;
                                 <span class="kw">break</span>;
                             }
-                            (<span class="ident">State::Elem</span>, <span class="string">b&#39;\&#39;&#39;</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">State::SingleQ</span>,
-                            (<span class="ident">State::Elem</span>, <span class="string">b&#39;\&quot;&#39;</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">State::DoubleQ</span>,
+                            (<span class="ident">State::Elem</span>, <span class="string">b&#39;\&#39;&#39;</span>) =&gt; <span class="ident">State::SingleQ</span>,
+                            (<span class="ident">State::Elem</span>, <span class="string">b&#39;\&quot;&#39;</span>) =&gt; <span class="ident">State::DoubleQ</span>,
 
                             <span class="comment">// the only end_byte that gets us out if the same character</span>
-                            (<span class="ident">State::SingleQ</span>, <span class="string">b&#39;\&#39;&#39;</span>) <span class="op">|</span> (<span class="ident">State::DoubleQ</span>, <span class="string">b&#39;\&quot;&#39;</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">State::Elem</span>,
+                            (<span class="ident">State::SingleQ</span>, <span class="string">b&#39;\&#39;&#39;</span>) <span class="op">|</span> (<span class="ident">State::DoubleQ</span>, <span class="string">b&#39;\&quot;&#39;</span>) =&gt; <span class="ident">State::Elem</span>,
 
                             <span class="comment">// all other bytes: no state change</span>
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">state</span>,
+                            <span class="kw">_</span> =&gt; <span class="ident">state</span>,
                         };
                     }
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="prelude-val">None</span> =&gt; {
                         <span class="ident">buf</span>.<span class="ident">extend_from_slice</span>(<span class="ident">available</span>);
                         <span class="ident">used</span> <span class="op">=</span> <span class="ident">available</span>.<span class="ident">len</span>();
                         <span class="kw">break</span>;
@@ -2293,10 +2298,10 @@
 
 <span class="doccomment">/// A function to check whether the byte is a whitespace (blank, new line, carriage return or tab)</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_whitespace</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_whitespace</span>(<span class="ident">b</span>: <span class="ident">u8</span>) -&gt; <span class="ident">bool</span> {
     <span class="kw">match</span> <span class="ident">b</span> {
-        <span class="string">b&#39; &#39;</span> <span class="op">|</span> <span class="string">b&#39;\r&#39;</span> <span class="op">|</span> <span class="string">b&#39;\n&#39;</span> <span class="op">|</span> <span class="string">b&#39;\t&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
+        <span class="string">b&#39; &#39;</span> <span class="op">|</span> <span class="string">b&#39;\r&#39;</span> <span class="op">|</span> <span class="string">b&#39;\n&#39;</span> <span class="op">|</span> <span class="string">b&#39;\t&#39;</span> =&gt; <span class="bool-val">true</span>,
+        <span class="kw">_</span> =&gt; <span class="bool-val">false</span>,
     }
 }
 
@@ -2328,8 +2333,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` if `value_len == 0`</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">opt_value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">ns_buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">value_len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">fn</span> <span class="ident">opt_value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">ns_buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">value_len</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">start</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">prefix_len</span>;
@@ -2339,11 +2344,11 @@
 
     <span class="doccomment">/// Check if the namespace matches the potentially qualified name</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_match</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ns_buffer</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">qname</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">prefix_len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">fn</span> <span class="ident">is_match</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ns_buffer</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">qname</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">bool</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">prefix_len</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="op">!</span><span class="ident">qname</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;:&#39;</span>)
         } <span class="kw">else</span> {
-            <span class="ident">qname</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">prefix_len</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;:&#39;</span>)
+            <span class="ident">qname</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">prefix_len</span>).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">n</span> <span class="op">==</span> <span class="string">b&#39;:&#39;</span>)
                 <span class="op">&amp;&amp;</span> <span class="ident">qname</span>.<span class="ident">starts_with</span>(<span class="kw-2">&amp;</span><span class="ident">ns_buffer</span>[<span class="self">self</span>.<span class="ident">start</span>..<span class="self">self</span>.<span class="ident">start</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">prefix_len</span>])
         }
     }
@@ -2371,14 +2376,14 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
         <span class="ident">element_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>],
         <span class="ident">buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">slices</span>
             .<span class="ident">iter</span>()
             .<span class="ident">rfind</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="ident">n</span>.<span class="ident">is_match</span>(<span class="ident">buffer</span>, <span class="ident">element_name</span>))
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="ident">n</span>.<span class="ident">opt_value</span>(<span class="ident">buffer</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">pop_empty_namespaces</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buffer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">pop_empty_namespaces</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">buffer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">pending_pop</span> {
             <span class="kw">return</span>;
         }
@@ -2388,12 +2393,12 @@
         <span class="comment">// from the back (most deeply nested scope), look for the first scope that is still valid</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">slices</span>.<span class="ident">iter</span>().<span class="ident">rposition</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="ident">n</span>.<span class="ident">level</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">current_level</span>) {
             <span class="comment">// none of the namespaces are valid, remove all of them</span>
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">None</span> =&gt; {
                 <span class="ident">buffer</span>.<span class="ident">clear</span>();
                 <span class="self">self</span>.<span class="ident">slices</span>.<span class="ident">clear</span>();
             }
             <span class="comment">// drop all namespaces past the last valid namespace</span>
-            <span class="prelude-val">Some</span>(<span class="ident">last_valid_pos</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">last_valid_pos</span>) =&gt; {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">slices</span>.<span class="ident">get</span>(<span class="ident">last_valid_pos</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="ident">n</span>.<span class="ident">start</span>) {
                     <span class="ident">buffer</span>.<span class="ident">truncate</span>(<span class="ident">len</span>);
                     <span class="self">self</span>.<span class="ident">slices</span>.<span class="ident">truncate</span>(<span class="ident">last_valid_pos</span> <span class="op">+</span> <span class="number">1</span>);
@@ -2402,7 +2407,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">push_new_namespaces</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">e</span>: <span class="kw-2">&amp;</span><span class="ident">BytesStart</span>, <span class="ident">buffer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">push_new_namespaces</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">e</span>: <span class="kw-2">&amp;</span><span class="ident">BytesStart</span>, <span class="ident">buffer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">nesting_level</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="ident">level</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">nesting_level</span>;
         <span class="comment">// adds new namespaces for attributes starting with &#39;xmlns:&#39; and for the &#39;xmlns&#39;</span>
@@ -2411,7 +2416,7 @@
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">Attribute</span> { <span class="ident">key</span>: <span class="ident">k</span>, <span class="ident">value</span>: <span class="ident">v</span> }) <span class="op">=</span> <span class="ident">a</span> {
                 <span class="kw">if</span> <span class="ident">k</span>.<span class="ident">starts_with</span>(<span class="string">b&quot;xmlns&quot;</span>) {
                     <span class="kw">match</span> <span class="ident">k</span>.<span class="ident">get</span>(<span class="number">5</span>) {
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">None</span> =&gt; {
                             <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">len</span>();
                             <span class="ident">buffer</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">v</span>);
                             <span class="self">self</span>.<span class="ident">slices</span>.<span class="ident">push</span>(<span class="ident">Namespace</span> {
@@ -2421,7 +2426,7 @@
                                 <span class="ident">level</span>,
                             });
                         }
-                        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;:&#39;</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="string">b&#39;:&#39;</span>) =&gt; {
                             <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">len</span>();
                             <span class="ident">buffer</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>[<span class="number">6</span>..]);
                             <span class="ident">buffer</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">v</span>);
@@ -2432,7 +2437,7 @@
                                 <span class="ident">level</span>,
                             });
                         }
-                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
+                        <span class="kw">_</span> =&gt; <span class="kw">break</span>,
                     }
                 }
             } <span class="kw">else</span> {
@@ -2454,7 +2459,7 @@
         <span class="ident">qname</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>],
         <span class="ident">buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>],
         <span class="ident">use_default</span>: <span class="ident">bool</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) {
+    ) -&gt; (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> [<span class="ident">u8</span>]) {
         <span class="self">self</span>.<span class="ident">slices</span>
             .<span class="ident">iter</span>()
             .<span class="ident">rfind</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="ident">n</span>.<span class="ident">is_match</span>(<span class="ident">buffer</span>, <span class="ident">qname</span>))
@@ -2485,16 +2490,15 @@
 
 <span class="kw">impl</span> <span class="ident">Decoder</span> {
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="ident">from_utf8</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="ident">Error::Utf8</span>)
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> [<span class="ident">u8</span>]) -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span>, <span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">encoding</span>.<span class="ident">decode</span>(<span class="ident">bytes</span>).<span class="number">0</span>
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="quick_xml" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="quick_xml" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

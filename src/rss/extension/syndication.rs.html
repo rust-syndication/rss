@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;extension&#x2F;syndication.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>syndication.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../rss/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/syndication.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>syndication.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../rss/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -207,6 +212,10 @@
 <span id="207">207</span>
 <span id="208">208</span>
 <span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
 </pre><pre class="rust"><code><span class="comment">// This file is part of rss.</span>
 <span class="comment">//</span>
 <span class="comment">// Copyright © 2015-2021 The rust-syndication Developers</span>
@@ -247,26 +256,26 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">UpdatePeriod</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> ();
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">s</span> {
-            <span class="string">&quot;hourly&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Hourly</span>),
-            <span class="string">&quot;daily&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Daily</span>),
-            <span class="string">&quot;weekly&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Weekly</span>),
-            <span class="string">&quot;monthly&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Monthly</span>),
-            <span class="string">&quot;yearly&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Yearly</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(()),
+            <span class="string">&quot;hourly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Hourly</span>),
+            <span class="string">&quot;daily&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Daily</span>),
+            <span class="string">&quot;weekly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Weekly</span>),
+            <span class="string">&quot;monthly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Monthly</span>),
+            <span class="string">&quot;yearly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Yearly</span>),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(()),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">UpdatePeriod</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">UpdatePeriod::Hourly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;hourly&quot;</span>),
-            <span class="ident">UpdatePeriod::Daily</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;daily&quot;</span>),
-            <span class="ident">UpdatePeriod::Weekly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;weekly&quot;</span>),
-            <span class="ident">UpdatePeriod::Monthly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;monthly&quot;</span>),
-            <span class="ident">UpdatePeriod::Yearly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;yearly&quot;</span>),
+            <span class="ident">UpdatePeriod::Hourly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;hourly&quot;</span>),
+            <span class="ident">UpdatePeriod::Daily</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;daily&quot;</span>),
+            <span class="ident">UpdatePeriod::Weekly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;weekly&quot;</span>),
+            <span class="ident">UpdatePeriod::Monthly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;monthly&quot;</span>),
+            <span class="ident">UpdatePeriod::Yearly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;yearly&quot;</span>),
         }
     }
 }
@@ -294,32 +303,32 @@
 
 <span class="kw">impl</span> <span class="ident">SyndicationExtension</span> {
     <span class="doccomment">/// Retrieve the base timestamp from which the refresh periods are calculated</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">base</span>
     }
 
     <span class="doccomment">/// Set the base from which the refresh periods are calculated</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_base</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_base</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
         <span class="self">self</span>.<span class="ident">base</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">to_owned</span>();
     }
 
     <span class="doccomment">/// Retrieve the number of periods between refreshes</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frequency</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frequency</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">frequency</span>
     }
 
     <span class="doccomment">/// Set the number of periods between refreshes</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_frequency</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">frequency</span>: <span class="ident">u32</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_frequency</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">frequency</span>: <span class="ident">u32</span>) {
         <span class="self">self</span>.<span class="ident">frequency</span> <span class="op">=</span> <span class="ident">frequency</span>;
     }
 
     <span class="doccomment">/// Retrieve the refresh period for this channel</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">period</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">UpdatePeriod</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">period</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">UpdatePeriod</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">period</span>
     }
 
     <span class="doccomment">/// Set the refresh period for this channel</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_period</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">period</span>: <span class="ident">UpdatePeriod</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_period</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">period</span>: <span class="ident">UpdatePeriod</span>) {
         <span class="self">self</span>.<span class="ident">period</span> <span class="op">=</span> <span class="ident">period</span>;
     }
 
@@ -327,10 +336,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
-        <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
+        <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>,
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
         <span class="kw">for</span> (<span class="ident">prefix</span>, <span class="ident">namespace</span>) <span class="kw">in</span> <span class="ident">namespaces</span> {
-            <span class="kw">if</span> <span class="ident">NAMESPACE</span> <span class="op">=</span><span class="op">=</span> <span class="ident">namespace</span> {
+            <span class="kw">if</span> <span class="ident">NAMESPACE</span> <span class="op">==</span> <span class="ident">namespace</span> {
                 <span class="ident">writer</span>.<span class="ident">write_text_element</span>(
                     <span class="macro">format!</span>(<span class="string">&quot;{}:updatePeriod&quot;</span>, <span class="ident">prefix</span>),
                     <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">period</span>.<span class="ident">to_string</span>(),
@@ -347,7 +356,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">SyndicationExtension</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">SyndicationExtension</span> {
             <span class="ident">period</span>: <span class="ident">UpdatePeriod::Daily</span>,
             <span class="ident">frequency</span>: <span class="number">1</span>,
@@ -372,14 +381,18 @@
 
 <span class="kw">impl</span> <span class="ident">SyndicationExtension</span> {
     <span class="doccomment">/// Creates a `SyndicationExtension` using the specified `BTreeMap`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="ident">map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="ident">map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">syn</span> <span class="op">=</span> <span class="ident">SyndicationExtension::default</span>();
 
         <span class="ident">with_first_ext_value</span>(<span class="kw-2">&amp;</span><span class="ident">map</span>, <span class="string">&quot;updatePeriod&quot;</span>, <span class="op">|</span><span class="ident">value</span><span class="op">|</span> {
-            <span class="ident">syn</span>.<span class="ident">period</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">update_period</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>() {
+                <span class="ident">syn</span>.<span class="ident">period</span> <span class="op">=</span> <span class="ident">update_period</span>
+            }
         });
         <span class="ident">with_first_ext_value</span>(<span class="kw-2">&amp;</span><span class="ident">map</span>, <span class="string">&quot;updateFrequency&quot;</span>, <span class="op">|</span><span class="ident">value</span><span class="op">|</span> {
-            <span class="ident">syn</span>.<span class="ident">frequency</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">frequency</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>() {
+                <span class="ident">syn</span>.<span class="ident">frequency</span> <span class="op">=</span> <span class="ident">frequency</span>
+            }
         });
         <span class="ident">with_first_ext_value</span>(<span class="kw-2">&amp;</span><span class="ident">map</span>, <span class="string">&quot;updateBase&quot;</span>, <span class="op">|</span><span class="ident">value</span><span class="op">|</span> <span class="ident">syn</span>.<span class="ident">base</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_owned</span>());
 
@@ -390,7 +403,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">SyndicationExtensionBuilder</span> {
     <span class="doccomment">/// Builds a new `SyndicationExtension`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SyndicationExtension</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">SyndicationExtension</span> {
         <span class="self">self</span>.<span class="ident">build_impl</span>().<span class="ident">unwrap</span>()
     }
 }
@@ -417,6 +430,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rss" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
-    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

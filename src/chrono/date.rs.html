@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;chrono-0.4.19&#x2F;src&#x2F;date.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>date.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../chrono/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-0.4.19/src/date.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>date.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../chrono/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../chrono/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../chrono/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -540,7 +545,7 @@
     <span class="comment">//</span>
     <span class="comment">// note: this constructor is purposely not named to `new` to discourage the direct usage.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_utc</span>(<span class="ident">date</span>: <span class="ident">NaiveDate</span>, <span class="ident">offset</span>: <span class="ident">Tz::Offset</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_utc</span>(<span class="ident">date</span>: <span class="ident">NaiveDate</span>, <span class="ident">offset</span>: <span class="ident">Tz::Offset</span>) -&gt; <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="ident">Date</span> { <span class="ident">date</span>: <span class="ident">date</span>, <span class="ident">offset</span>: <span class="ident">offset</span> }
     }
 
@@ -549,7 +554,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics on invalid datetime.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="ident">NaiveTime</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="ident">NaiveTime</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">localdt</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">and_time</span>(<span class="ident">time</span>);
         <span class="self">self</span>.<span class="ident">timezone</span>().<span class="ident">from_local_datetime</span>(<span class="kw-2">&amp;</span><span class="ident">localdt</span>).<span class="ident">single</span>()
     }
@@ -559,7 +564,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics on invalid hour, minute and/or second.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>) -&gt; <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">and_hms_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>).<span class="ident">expect</span>(<span class="string">&quot;invalid time&quot;</span>)
     }
 
@@ -568,7 +573,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` on invalid hour, minute and/or second.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_opt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_opt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">NaiveTime::from_hms_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">time</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">and_time</span>(<span class="ident">time</span>))
     }
 
@@ -578,7 +583,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics on invalid hour, minute, second and/or millisecond.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_milli</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>, <span class="ident">milli</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_milli</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>, <span class="ident">milli</span>: <span class="ident">u32</span>) -&gt; <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">and_hms_milli_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>, <span class="ident">milli</span>).<span class="ident">expect</span>(<span class="string">&quot;invalid time&quot;</span>)
     }
 
@@ -594,7 +599,7 @@
         <span class="ident">min</span>: <span class="ident">u32</span>,
         <span class="ident">sec</span>: <span class="ident">u32</span>,
         <span class="ident">milli</span>: <span class="ident">u32</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">NaiveTime::from_hms_milli_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>, <span class="ident">milli</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">time</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">and_time</span>(<span class="ident">time</span>))
     }
 
@@ -604,7 +609,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics on invalid hour, minute, second and/or microsecond.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_micro</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>, <span class="ident">micro</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_micro</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>, <span class="ident">micro</span>: <span class="ident">u32</span>) -&gt; <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">and_hms_micro_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>, <span class="ident">micro</span>).<span class="ident">expect</span>(<span class="string">&quot;invalid time&quot;</span>)
     }
 
@@ -620,7 +625,7 @@
         <span class="ident">min</span>: <span class="ident">u32</span>,
         <span class="ident">sec</span>: <span class="ident">u32</span>,
         <span class="ident">micro</span>: <span class="ident">u32</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">NaiveTime::from_hms_micro_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>, <span class="ident">micro</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">time</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">and_time</span>(<span class="ident">time</span>))
     }
 
@@ -630,7 +635,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics on invalid hour, minute, second and/or nanosecond.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_nano</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>, <span class="ident">nano</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">and_hms_nano</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hour</span>: <span class="ident">u32</span>, <span class="ident">min</span>: <span class="ident">u32</span>, <span class="ident">sec</span>: <span class="ident">u32</span>, <span class="ident">nano</span>: <span class="ident">u32</span>) -&gt; <span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">and_hms_nano_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>, <span class="ident">nano</span>).<span class="ident">expect</span>(<span class="string">&quot;invalid time&quot;</span>)
     }
 
@@ -646,7 +651,7 @@
         <span class="ident">min</span>: <span class="ident">u32</span>,
         <span class="ident">sec</span>: <span class="ident">u32</span>,
         <span class="ident">nano</span>: <span class="ident">u32</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DateTime</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">NaiveTime::from_hms_nano_opt</span>(<span class="ident">hour</span>, <span class="ident">min</span>, <span class="ident">sec</span>, <span class="ident">nano</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">time</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">and_time</span>(<span class="ident">time</span>))
     }
 
@@ -654,7 +659,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics when `self` is the last representable date.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">succ</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">succ</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">succ_opt</span>().<span class="ident">expect</span>(<span class="string">&quot;out of bound&quot;</span>)
     }
 
@@ -662,7 +667,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` when `self` is the last representable date.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">succ_opt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">succ_opt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">date</span>.<span class="ident">succ_opt</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">Date::from_utc</span>(<span class="ident">date</span>, <span class="self">self</span>.<span class="ident">offset</span>.<span class="ident">clone</span>()))
     }
 
@@ -670,7 +675,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics when `self` is the first representable date.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pred</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pred</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">pred_opt</span>().<span class="ident">expect</span>(<span class="string">&quot;out of bound&quot;</span>)
     }
 
@@ -678,26 +683,26 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` when `self` is the first representable date.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pred_opt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pred_opt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">date</span>.<span class="ident">pred_opt</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">Date::from_utc</span>(<span class="ident">date</span>, <span class="self">self</span>.<span class="ident">offset</span>.<span class="ident">clone</span>()))
     }
 
     <span class="doccomment">/// Retrieves an associated offset from UTC.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Tz::Offset</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Tz::Offset</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">offset</span>
     }
 
     <span class="doccomment">/// Retrieves an associated time zone.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timezone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tz</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timezone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Tz</span> {
         <span class="ident">TimeZone::from_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">offset</span>)
     }
 
     <span class="doccomment">/// Changes the associated time zone.</span>
     <span class="doccomment">/// This does not change the actual `Date` (but will change the string representation).</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_timezone</span><span class="op">&lt;</span><span class="ident">Tz2</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tz</span>: <span class="kw-2">&amp;</span><span class="ident">Tz2</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz2</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_timezone</span><span class="op">&lt;</span><span class="ident">Tz2</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tz</span>: <span class="kw-2">&amp;</span><span class="ident">Tz2</span>) -&gt; <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz2</span><span class="op">&gt;</span> {
         <span class="ident">tz</span>.<span class="ident">from_utc_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">date</span>)
     }
 
@@ -705,7 +710,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` when it will result in overflow.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">checked_add_signed</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">checked_add_signed</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">date</span> <span class="op">=</span> <span class="macro">try_opt!</span>(<span class="self">self</span>.<span class="ident">date</span>.<span class="ident">checked_add_signed</span>(<span class="ident">rhs</span>));
         <span class="prelude-val">Some</span>(<span class="ident">Date</span> { <span class="ident">date</span>: <span class="ident">date</span>, <span class="ident">offset</span>: <span class="self">self</span>.<span class="ident">offset</span> })
     }
@@ -714,7 +719,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` when it will result in overflow.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">checked_sub_signed</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">checked_sub_signed</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">date</span> <span class="op">=</span> <span class="macro">try_opt!</span>(<span class="self">self</span>.<span class="ident">date</span>.<span class="ident">checked_sub_signed</span>(<span class="ident">rhs</span>));
         <span class="prelude-val">Some</span>(<span class="ident">Date</span> { <span class="ident">date</span>: <span class="ident">date</span>, <span class="ident">offset</span>: <span class="self">self</span>.<span class="ident">offset</span> })
     }
@@ -725,13 +730,13 @@
     <span class="doccomment">/// This does not overflow or underflow at all,</span>
     <span class="doccomment">/// as all possible output fits in the range of `Duration`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signed_duration_since</span><span class="op">&lt;</span><span class="ident">Tz2</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz2</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OldDuration</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signed_duration_since</span><span class="op">&lt;</span><span class="ident">Tz2</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz2</span><span class="op">&gt;</span>) -&gt; <span class="ident">OldDuration</span> {
         <span class="self">self</span>.<span class="ident">date</span>.<span class="ident">signed_duration_since</span>(<span class="ident">rhs</span>.<span class="ident">date</span>)
     }
 
     <span class="doccomment">/// Returns a view to the naive UTC date.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">naive_utc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NaiveDate</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">naive_utc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">NaiveDate</span> {
         <span class="self">self</span>.<span class="ident">date</span>
     }
 
@@ -741,15 +746,15 @@
     <span class="doccomment">/// because the offset is restricted to never exceed one day,</span>
     <span class="doccomment">/// but provided for the consistency.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">naive_local</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NaiveDate</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">naive_local</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">NaiveDate</span> {
         <span class="self">self</span>.<span class="ident">date</span>
     }
 }
 
 <span class="doccomment">/// Maps the local date to other date with given conversion function.</span>
-<span class="kw">fn</span> <span class="ident">map_local</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">d</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span>
+<span class="kw">fn</span> <span class="ident">map_local</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">d</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">NaiveDate</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>,
+    <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">NaiveDate</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NaiveDate</span><span class="op">&gt;</span>,
 {
     <span class="ident">f</span>(<span class="ident">d</span>.<span class="ident">naive_local</span>()).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">timezone</span>().<span class="ident">from_local_date</span>(<span class="kw-2">&amp;</span><span class="ident">date</span>).<span class="ident">single</span>())
 }
@@ -761,7 +766,7 @@
     <span class="doccomment">/// Formats the date with the specified formatting items.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">test</span>))]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_with_items</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">I</span>, <span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">items</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_with_items</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">I</span>, <span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">items</span>: <span class="ident">I</span>) -&gt; <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">B</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
         <span class="ident">B</span>: <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
@@ -774,7 +779,7 @@
     <span class="doccomment">/// on the supported escape sequences.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">test</span>))]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">StrftimeItems</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">StrftimeItems</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">format_with_items</span>(<span class="ident">StrftimeItems::new</span>(<span class="ident">fmt</span>))
     }
 
@@ -785,7 +790,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">items</span>: <span class="ident">I</span>,
         <span class="ident">locale</span>: <span class="ident">Locale</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">B</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
         <span class="ident">B</span>: <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
@@ -808,81 +813,81 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
         <span class="ident">locale</span>: <span class="ident">Locale</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">StrftimeItems</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">DelayedFormat</span><span class="op">&lt;</span><span class="ident">StrftimeItems</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">format_localized_with_items</span>(<span class="ident">StrftimeItems::new_with_locale</span>(<span class="ident">fmt</span>, <span class="ident">locale</span>), <span class="ident">locale</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">Datelike</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">year</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
+    <span class="kw">fn</span> <span class="ident">year</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i32</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">year</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">month</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">month</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">month</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">month0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">month0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">month0</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">day</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">day</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">day</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">day0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">day0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">day0</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ordinal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">ordinal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">ordinal</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ordinal0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">ordinal0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">ordinal0</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">weekday</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Weekday</span> {
+    <span class="kw">fn</span> <span class="ident">weekday</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Weekday</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">weekday</span>()
     }
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">iso_week</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IsoWeek</span> {
+    <span class="kw">fn</span> <span class="ident">iso_week</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">IsoWeek</span> {
         <span class="self">self</span>.<span class="ident">naive_local</span>().<span class="ident">iso_week</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">with_year</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">year</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_year</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">year</span>: <span class="ident">i32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">map_local</span>(<span class="self">self</span>, <span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span>.<span class="ident">with_year</span>(<span class="ident">year</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">with_month</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">month</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_month</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">month</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">map_local</span>(<span class="self">self</span>, <span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span>.<span class="ident">with_month</span>(<span class="ident">month</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">with_month0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">month0</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_month0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">month0</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">map_local</span>(<span class="self">self</span>, <span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span>.<span class="ident">with_month0</span>(<span class="ident">month0</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">with_day</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">day</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_day</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">day</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">map_local</span>(<span class="self">self</span>, <span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span>.<span class="ident">with_day</span>(<span class="ident">day</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">with_day0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">day0</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_day0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">day0</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">map_local</span>(<span class="self">self</span>, <span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span>.<span class="ident">with_day0</span>(<span class="ident">day0</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">with_ordinal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ordinal</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_ordinal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ordinal</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">map_local</span>(<span class="self">self</span>, <span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span>.<span class="ident">with_ordinal</span>(<span class="ident">ordinal</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">with_ordinal0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ordinal0</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_ordinal0</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ordinal0</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">map_local</span>(<span class="self">self</span>, <span class="op">|</span><span class="ident">date</span><span class="op">|</span> <span class="ident">date</span>.<span class="ident">with_ordinal0</span>(<span class="ident">ordinal0</span>))
     }
 }
@@ -892,27 +897,27 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="op">&lt;</span><span class="ident">Tz</span> <span class="kw">as</span> <span class="ident">TimeZone</span><span class="op">&gt;</span><span class="ident">::Offset</span>: <span class="ident">Send</span> {}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span>, <span class="ident">Tz2</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz2</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz2</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">date</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">date</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz2</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">date</span> <span class="op">==</span> <span class="ident">other</span>.<span class="ident">date</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">date</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">date</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="self">self</span>.<span class="ident">date</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">date</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">hash::Hash</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">hash::Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
+    <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">hash::Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;mut</span> <span class="ident">H</span>) {
         <span class="self">self</span>.<span class="ident">date</span>.<span class="ident">hash</span>(<span class="ident">state</span>)
     }
 }
@@ -921,7 +926,7 @@
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) -&gt; <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">checked_add_signed</span>(<span class="ident">rhs</span>).<span class="ident">expect</span>(<span class="string">&quot;`Date + Duration` overflowed&quot;</span>)
     }
 }
@@ -930,7 +935,7 @@
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">OldDuration</span>) -&gt; <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">checked_sub_signed</span>(<span class="ident">rhs</span>).<span class="ident">expect</span>(<span class="string">&quot;`Date - Duration` overflowed&quot;</span>)
     }
 }
@@ -939,13 +944,13 @@
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">OldDuration</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OldDuration</span> {
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span>) -&gt; <span class="ident">OldDuration</span> {
         <span class="self">self</span>.<span class="ident">signed_duration_since</span>(<span class="ident">rhs</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Tz</span>: <span class="ident">TimeZone</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Date</span><span class="op">&lt;</span><span class="ident">Tz</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{:?}{:?}&quot;</span>, <span class="self">self</span>.<span class="ident">naive_local</span>(), <span class="self">self</span>.<span class="ident">offset</span>)
     }
 }
@@ -954,11 +959,10 @@
 <span class="kw">where</span>
     <span class="ident">Tz::Offset</span>: <span class="ident">fmt::Display</span>,
 {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{}&quot;</span>, <span class="self">self</span>.<span class="ident">naive_local</span>(), <span class="self">self</span>.<span class="ident">offset</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="chrono" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="chrono" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;extension&#x2F;itunes&#x2F;itunes_item_extension.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>itunes_item_extension.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../rss/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/itunes/itunes_item_extension.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>itunes_item_extension.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><script defer src="../../../../main.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../../rss/index.html"><img class="rust-logo" src="../../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -716,7 +721,7 @@
     <span class="doccomment">/// extension.set_author(&quot;John Doe&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.author(), Some(&quot;John Doe&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">author</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">author</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">author</span>.<span class="ident">as_deref</span>()
     }
 
@@ -730,7 +735,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_author(&quot;John Doe&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_author</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">author</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_author</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">author</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -751,7 +756,7 @@
     <span class="doccomment">/// extension.set_block(&quot;Yes&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.block(), Some(&quot;Yes&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">block</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">block</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">block</span>.<span class="ident">as_deref</span>()
     }
 
@@ -768,7 +773,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_block(&quot;Yes&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_block</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">block</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_block</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">block</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -786,7 +791,7 @@
     <span class="doccomment">/// extension.set_image(&quot;http://example.com/artwork.png&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.image(), Some(&quot;http://example.com/artwork.png&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">image</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">image</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">image</span>.<span class="ident">as_deref</span>()
     }
 
@@ -800,7 +805,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_image(&quot;http://example.com/artwork.png&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_image</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">image</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_image</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">image</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -820,7 +825,7 @@
     <span class="doccomment">/// extension.set_duration(&quot;1:00&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.duration(), Some(&quot;1:00&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">duration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">duration</span>.<span class="ident">as_deref</span>()
     }
 
@@ -836,7 +841,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_duration(&quot;1:00&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_duration</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">duration</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_duration</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">duration</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -858,7 +863,7 @@
     <span class="doccomment">/// extension.set_explicit(&quot;Yes&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.explicit(), Some(&quot;Yes&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">explicit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">explicit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">explicit</span>.<span class="ident">as_deref</span>()
     }
 
@@ -876,7 +881,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_explicit(&quot;Yes&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_explicit</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">explicit</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_explicit</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">explicit</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -896,7 +901,7 @@
     <span class="doccomment">/// extension.set_closed_captioned(&quot;Yes&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.closed_captioned(), Some(&quot;Yes&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">closed_captioned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">closed_captioned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">closed_captioned</span>.<span class="ident">as_deref</span>()
     }
 
@@ -912,7 +917,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_closed_captioned(&quot;Yes&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_closed_captioned</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">closed_captioned</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_closed_captioned</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">closed_captioned</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -930,7 +935,7 @@
     <span class="doccomment">/// extension.set_order(&quot;1&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.order(), Some(&quot;1&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">order</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">order</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">order</span>.<span class="ident">as_deref</span>()
     }
 
@@ -944,7 +949,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_order(&quot;1&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_order</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">order</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_order</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">order</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -962,7 +967,7 @@
     <span class="doccomment">/// extension.set_subtitle(&quot;An episode&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.subtitle(), Some(&quot;An episode&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subtitle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subtitle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">subtitle</span>.<span class="ident">as_deref</span>()
     }
 
@@ -976,7 +981,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_subtitle(&quot;An episode&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_subtitle</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">subtitle</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_subtitle</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">subtitle</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -994,7 +999,7 @@
     <span class="doccomment">/// extension.set_summary(&quot;An episode&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.summary(), Some(&quot;An episode&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">summary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">summary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">summary</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1008,7 +1013,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_summary(&quot;An episode&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_summary</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">summary</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_summary</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">summary</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1028,7 +1033,7 @@
     <span class="doccomment">/// extension.set_keywords(&quot;technology&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.keywords(), Some(&quot;technology&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keywords</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keywords</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">keywords</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1044,7 +1049,7 @@
     <span class="doccomment">/// let mut extension = ITunesItemExtension::default();</span>
     <span class="doccomment">/// extension.set_keywords(&quot;technology&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_keywords</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">keywords</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_keywords</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">keywords</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1064,7 +1069,7 @@
     <span class="doccomment">/// extension.set_episode(&quot;3&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.episode(), Some(&quot;3&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">episode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">episode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">episode</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1081,7 +1086,7 @@
     <span class="doccomment">/// extension.set_episode(&quot;2&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.episode(), Some(&quot;2&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_episode</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">episode</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_episode</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">episode</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1101,7 +1106,7 @@
     <span class="doccomment">/// extension.set_season(&quot;3&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.season(), Some(&quot;3&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">season</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">season</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">season</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1118,7 +1123,7 @@
     <span class="doccomment">/// extension.set_season(&quot;3&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.season(), Some(&quot;3&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_season</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">season</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_season</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">season</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1138,7 +1143,7 @@
     <span class="doccomment">/// extension.set_episode_type(&quot;trailer&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.episode_type(), Some(&quot;trailer&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">episode_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">episode_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">episode_type</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1155,7 +1160,7 @@
     <span class="doccomment">/// extension.set_episode_type(&quot;full&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(extension.episode_type(), Some(&quot;full&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_episode_type</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">episode_type</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_episode_type</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">episode_type</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1165,27 +1170,27 @@
 
 <span class="kw">impl</span> <span class="ident">ITunesItemExtension</span> {
     <span class="doccomment">/// Create an `ITunesChannelExtension` from a `BTreeMap`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">author</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;author&quot;</span>),
-            <span class="ident">block</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;block&quot;</span>),
-            <span class="ident">image</span>: <span class="ident">parse_image</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>),
-            <span class="ident">duration</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;duration&quot;</span>),
-            <span class="ident">explicit</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;explicit&quot;</span>),
-            <span class="ident">closed_captioned</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;isClosedCaptioned&quot;</span>),
-            <span class="ident">order</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;order&quot;</span>),
-            <span class="ident">subtitle</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;subtitle&quot;</span>),
-            <span class="ident">summary</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;summary&quot;</span>),
-            <span class="ident">keywords</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;keywords&quot;</span>),
-            <span class="ident">episode</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;episode&quot;</span>),
-            <span class="ident">season</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;season&quot;</span>),
-            <span class="ident">episode_type</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">map</span>, <span class="string">&quot;episodeType&quot;</span>),
+            <span class="ident">author</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;author&quot;</span>),
+            <span class="ident">block</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;block&quot;</span>),
+            <span class="ident">image</span>: <span class="ident">parse_image</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>),
+            <span class="ident">duration</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;duration&quot;</span>),
+            <span class="ident">explicit</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;explicit&quot;</span>),
+            <span class="ident">closed_captioned</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;isClosedCaptioned&quot;</span>),
+            <span class="ident">order</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;order&quot;</span>),
+            <span class="ident">subtitle</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;subtitle&quot;</span>),
+            <span class="ident">summary</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;summary&quot;</span>),
+            <span class="ident">keywords</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;keywords&quot;</span>),
+            <span class="ident">episode</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;episode&quot;</span>),
+            <span class="ident">season</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;season&quot;</span>),
+            <span class="ident">episode_type</span>: <span class="ident">remove_extension_value</span>(<span class="kw-2">&amp;mut</span> <span class="ident">map</span>, <span class="string">&quot;episodeType&quot;</span>),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="ident">ITunesItemExtension</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">author</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">author</span>.<span class="ident">as_ref</span>() {
             <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;itunes:author&quot;</span>, <span class="ident">author</span>)<span class="question-mark">?</span>;
         }
@@ -1245,7 +1250,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
         <span class="ident">namespaces</span>.<span class="ident">insert</span>(<span class="string">&quot;itunes&quot;</span>.<span class="ident">to_owned</span>(), <span class="ident">NAMESPACE</span>.<span class="ident">to_owned</span>());
         <span class="ident">namespaces</span>
@@ -1255,7 +1260,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">ITunesItemExtensionBuilder</span> {
     <span class="doccomment">/// Builds a new `ITunesItemExtension`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ITunesItemExtension</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ITunesItemExtension</span> {
         <span class="self">self</span>.<span class="ident">build_impl</span>().<span class="ident">unwrap</span>()
     }
 }
@@ -1279,6 +1284,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="rss" data-search-index-js="../../../../search-index.js" data-search-js="../../../../search.js"></div>
-    <script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

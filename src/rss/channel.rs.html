@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;channel.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>channel.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../rss/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/channel.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>channel.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../rss/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1594,7 +1599,7 @@
     <span class="doccomment">/// channel.set_title(&quot;Channel Title&quot;);</span>
     <span class="doccomment">/// assert_eq!(channel.title(), &quot;Channel Title&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">title</span>.<span class="ident">as_str</span>()
     }
 
@@ -1608,7 +1613,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_title(&quot;Channel Title&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     {
@@ -1626,7 +1631,7 @@
     <span class="doccomment">/// channel.set_link(&quot;http://example.com&quot;);</span>
     <span class="doccomment">/// assert_eq!(channel.link(), &quot;http://example.com&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">link</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">link</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">link</span>.<span class="ident">as_str</span>()
     }
 
@@ -1640,7 +1645,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_link(&quot;http://example.com&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_link</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">link</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_link</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">link</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     {
@@ -1658,7 +1663,7 @@
     <span class="doccomment">/// channel.set_description(&quot;Channel description&quot;);</span>
     <span class="doccomment">/// assert_eq!(channel.description(), &quot;Channel description&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">description</span>.<span class="ident">as_str</span>()
     }
 
@@ -1672,7 +1677,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_description(&quot;Channel description&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_description</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">description</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_description</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">description</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     {
@@ -1690,7 +1695,7 @@
     <span class="doccomment">/// channel.set_language(&quot;en-US&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.language(), Some(&quot;en-US&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">language</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">language</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">language</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String::as_ref</span>)
     }
 
@@ -1704,7 +1709,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_language(&quot;en-US&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_language</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">language</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_language</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">language</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1722,7 +1727,7 @@
     <span class="doccomment">/// channel.set_copyright(&quot;© 2017 John Doe&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.copyright(), Some(&quot;© 2017 John Doe&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copyright</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copyright</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">copyright</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1736,7 +1741,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_copyright(&quot;© 2017 John Doe&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_copyright</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">copyright</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_copyright</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">copyright</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1754,7 +1759,7 @@
     <span class="doccomment">/// channel.set_managing_editor(&quot;johndoe@example.com&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.managing_editor(), Some(&quot;johndoe@example.com&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">managing_editor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">managing_editor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">managing_editor</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1769,7 +1774,7 @@
     <span class="doccomment">/// channel.set_managing_editor(&quot;johndoe@example.com&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.managing_editor(), Some(&quot;johndoe@example.com&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_managing_editor</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">managing_editor</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_managing_editor</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">managing_editor</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1787,7 +1792,7 @@
     <span class="doccomment">/// channel.set_webmaster(&quot;johndoe@example.com&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.webmaster(), Some(&quot;johndoe@example.com&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">webmaster</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">webmaster</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">webmaster</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1801,7 +1806,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_webmaster(&quot;johndoe@example.com&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_webmaster</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">webmaster</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_webmaster</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">webmaster</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1819,7 +1824,7 @@
     <span class="doccomment">/// channel.set_pub_date(&quot;Sun, 1 Jan 2017 12:00:00 GMT&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.pub_date(), Some(&quot;Sun, 1 Jan 2017 12:00:00 GMT&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pub_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pub_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">pub_date</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1847,7 +1852,7 @@
     <span class="doccomment">/// assert_eq!(channel.pub_date(), Some(&quot;Sun, 01 Jan 2017 12:00:00 +0000&quot;));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_pub_date</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pub_date</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_pub_date</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">pub_date</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1865,7 +1870,7 @@
     <span class="doccomment">/// channel.set_last_build_date(&quot;Sun, 1 Jan 2017 12:00:00 GMT&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.last_build_date(), Some(&quot;Sun, 1 Jan 2017 12:00:00 GMT&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_build_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_build_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">last_build_date</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1893,7 +1898,7 @@
     <span class="doccomment">/// assert_eq!(channel.last_build_date(), Some(&quot;Sun, 01 Jan 2017 12:00:00 +0000&quot;));</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_last_build_date</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">last_build_date</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_last_build_date</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">last_build_date</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1911,13 +1916,13 @@
     <span class="doccomment">/// channel.set_categories(vec![Category::default()]);</span>
     <span class="doccomment">/// assert_eq!(channel.categories().len(), 1);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">categories</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Category</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">categories</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">Category</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">categories</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the categories that this channel belongs to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">categories_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Category</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">categories</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">categories_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">Category</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">categories</span>
     }
 
     <span class="doccomment">/// Set the categories that this channel belongs to.</span>
@@ -1930,7 +1935,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_categories(vec![Category::default()]);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_categories</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">categories</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_categories</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">categories</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Category</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1948,7 +1953,7 @@
     <span class="doccomment">/// channel.set_generator(&quot;Program Name&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.generator(), Some(&quot;Program Name&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">generator</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1962,7 +1967,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_generator(&quot;Program Name&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_generator</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">generator</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_generator</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">generator</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -1980,7 +1985,7 @@
     <span class="doccomment">/// channel.set_docs(&quot;https://cyber.harvard.edu/rss/rss.html&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.docs(), Some(&quot;https://cyber.harvard.edu/rss/rss.html&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">docs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">docs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">docs</span>.<span class="ident">as_deref</span>()
     }
 
@@ -1994,7 +1999,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_docs(&quot;https://cyber.harvard.edu/rss/rss.html&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_docs</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">docs</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_docs</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">docs</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2013,7 +2018,7 @@
     <span class="doccomment">/// channel.set_cloud(Cloud::default());</span>
     <span class="doccomment">/// assert!(channel.cloud().is_some());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cloud</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Cloud</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cloud</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Cloud</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">cloud</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2028,7 +2033,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_cloud(Cloud::default());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cloud</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cloud</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cloud</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">cloud</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cloud</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2047,7 +2052,7 @@
     <span class="doccomment">/// channel.set_ttl(&quot;60&quot;.to_string());</span>
     <span class="doccomment">/// assert_eq!(channel.ttl(), Some(&quot;60&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">ttl</span>.<span class="ident">as_deref</span>()
     }
 
@@ -2062,7 +2067,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_ttl(&quot;60&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ttl</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ttl</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ttl</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">ttl</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2080,7 +2085,7 @@
     <span class="doccomment">/// channel.set_image(Image::default());</span>
     <span class="doccomment">/// assert!(channel.image().is_some());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">image</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Image</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">image</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Image</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">image</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2094,7 +2099,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_image(Image::default());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_image</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">image</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_image</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">image</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Image</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2102,12 +2107,12 @@
     }
 
     <span class="doccomment">/// Return the [PICS](https://www.w3.org/PICS/) rating for this channel.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">rating</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// Set the [PICS](https://www.w3.org/PICS/) rating for this channel.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_rating</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rating</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_rating</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rating</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2125,7 +2130,7 @@
     <span class="doccomment">/// channel.set_text_input(TextInput::default());</span>
     <span class="doccomment">/// assert!(channel.text_input().is_some());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_input</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">TextInput</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_input</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">TextInput</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">text_input</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2139,7 +2144,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_text_input(TextInput::default());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_text_input</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">text_input</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_text_input</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">text_input</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TextInput</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2159,13 +2164,13 @@
     <span class="doccomment">/// channel.set_skip_hours(vec![&quot;1&quot;.to_string()]);</span>
     <span class="doccomment">/// assert_eq!(channel.skip_hours().len(), 1);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_hours</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_hours</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">skip_hours</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the hours that aggregators can skip for refreshing content.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_hours_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">skip_hours</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_hours_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">skip_hours</span>
     }
 
     <span class="doccomment">/// Set the hours that aggregators can skip for refreshing content.</span>
@@ -2178,7 +2183,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_skip_hours(vec![&quot;1&quot;.to_string()]);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_skip_hours</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">skip_hours</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_skip_hours</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">skip_hours</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2196,13 +2201,13 @@
     <span class="doccomment">/// channel.set_skip_days(vec![&quot;Monday&quot;.to_string()]);</span>
     <span class="doccomment">/// assert_eq!(channel.skip_days().len(), 1);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_days</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_days</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">skip_days</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the days that aggregators can skip for refreshing content.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_days_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">skip_days</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_days_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">skip_days</span>
     }
 
     <span class="doccomment">/// Set the days that aggregators can skip for refreshing content.</span>
@@ -2215,7 +2220,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_skip_days(vec![&quot;Monday&quot;.to_string()]);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_skip_days</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">skip_days</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_skip_days</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">skip_days</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2233,13 +2238,13 @@
     <span class="doccomment">/// channel.set_items(vec![Item::default()]);</span>
     <span class="doccomment">/// assert_eq!(channel.items().len(), 1);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">items</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Item</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">items</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">Item</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">items</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the items in this channel.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">items_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Item</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">items</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">items_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">Item</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">items</span>
     }
 
     <span class="doccomment">/// Consume the `Channel` and return a vector of `Item`s.</span>
@@ -2253,7 +2258,7 @@
     <span class="doccomment">/// channel.set_items(vec![Item::default()]);</span>
     <span class="doccomment">/// assert_eq!(channel.into_items().len(), 1);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_items</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_items</span>(<span class="self">self</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">items</span>
     }
 
@@ -2267,7 +2272,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_items(vec![Item::default()]);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_items</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">items</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_items</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">items</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2287,7 +2292,7 @@
     <span class="doccomment">/// assert!(channel.atom_ext().is_some());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atom_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">atom::AtomExtension</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atom_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">atom::AtomExtension</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">atom_ext</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2303,7 +2308,7 @@
     <span class="doccomment">/// channel.set_atom_ext(AtomExtension::default());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_atom_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">atom_ext</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_atom_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">atom_ext</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">atom::AtomExtension</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2322,7 +2327,7 @@
     <span class="doccomment">/// channel.set_itunes_ext(ITunesChannelExtension::default());</span>
     <span class="doccomment">/// assert!(channel.itunes_ext().is_some());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">itunes_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">itunes::ITunesChannelExtension</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">itunes_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">itunes::ITunesChannelExtension</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">itunes_ext</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2337,7 +2342,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_itunes_ext(ITunesChannelExtension::default());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_itunes_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">itunes_ext</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_itunes_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">itunes_ext</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">itunes::ITunesChannelExtension</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2356,7 +2361,7 @@
     <span class="doccomment">/// channel.set_dublin_core_ext(DublinCoreExtension::default());</span>
     <span class="doccomment">/// assert!(channel.dublin_core_ext().is_some());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dublin_core_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">dublincore::DublinCoreExtension</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dublin_core_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">dublincore::DublinCoreExtension</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">dublin_core_ext</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2371,7 +2376,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_dublin_core_ext(DublinCoreExtension::default());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_dublin_core_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dublin_core_ext</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_dublin_core_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">dublin_core_ext</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">dublincore::DublinCoreExtension</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2390,7 +2395,7 @@
     <span class="doccomment">/// channel.set_syndication_ext(SyndicationExtension::default());</span>
     <span class="doccomment">/// assert!(channel.syndication_ext().is_some());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">syndication_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">syndication::SyndicationExtension</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">syndication_ext</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">syndication::SyndicationExtension</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">syndication_ext</span>.<span class="ident">as_ref</span>()
     }
 
@@ -2405,7 +2410,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_syndication_ext(SyndicationExtension::default());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_syndication_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">syndication_ext</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_syndication_ext</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">syndication_ext</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syndication::SyndicationExtension</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2437,7 +2442,7 @@
     <span class="doccomment">///                   .map(|v| v.len()),</span>
     <span class="doccomment">///            Some(1));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extensions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ExtensionMap</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extensions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">ExtensionMap</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">extensions</span>
     }
 
@@ -2452,7 +2457,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_extensions(ExtensionMap::default());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_extensions</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">extensions</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_extensions</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">extensions</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ExtensionMap</span><span class="op">&gt;</span>,
     {
@@ -2474,7 +2479,7 @@
     <span class="doccomment">/// channel.set_namespaces(namespaces);</span>
     <span class="doccomment">/// assert_eq!(channel.namespaces().get(&quot;ext&quot;).map(String::as_str), Some(&quot;http://example.com&quot;));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">namespaces</span>
     }
 
@@ -2489,7 +2494,7 @@
     <span class="doccomment">/// let mut channel = Channel::default();</span>
     <span class="doccomment">/// channel.set_namespaces(BTreeMap::new());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_namespaces</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">namespaces</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_namespaces</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">namespaces</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -2506,7 +2511,7 @@
     <span class="doccomment">/// let reader: BufRead = ...;</span>
     <span class="doccomment">/// let channel = Channel::read_from(reader).unwrap();</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_from</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Channel</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_from</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Channel</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">Reader::from_reader</span>(<span class="ident">reader</span>);
         <span class="ident">reader</span>.<span class="ident">trim_text</span>(<span class="bool-val">true</span>).<span class="ident">expand_empty_elements</span>(<span class="bool-val">true</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
@@ -2522,9 +2527,9 @@
 
         <span class="comment">// find opening element</span>
         <span class="kw">loop</span> {
-            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
-                <span class="ident">Event::Start</span>(<span class="ident">element</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;rss&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;rdf:RDF&quot;</span> {
+            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
+                <span class="ident">Event::Start</span>(<span class="ident">element</span>) =&gt; {
+                    <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="string">b&quot;rss&quot;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="string">b&quot;rdf:RDF&quot;</span> {
                         <span class="kw">for</span> <span class="ident">attr</span> <span class="kw">in</span> <span class="ident">element</span>.<span class="ident">attributes</span>().<span class="ident">with_checks</span>(<span class="bool-val">false</span>).<span class="ident">flatten</span>() {
                             <span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">key</span>.<span class="ident">starts_with</span>(<span class="string">b&quot;xmlns:&quot;</span>) {
                                 <span class="kw">let</span> <span class="ident">prefix</span> <span class="op">=</span> <span class="ident">str::from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">attr</span>.<span class="ident">key</span>[<span class="number">6</span>..])<span class="question-mark">?</span>.<span class="ident">to_string</span>();
@@ -2538,45 +2543,45 @@
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::InvalidStartTag</span>);
                     }
                 }
-                <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
+                <span class="ident">Event::Eof</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
+                <span class="kw">_</span> =&gt; <span class="kw">continue</span>,
             }
         }
 
         <span class="kw">loop</span> {
-            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
-                <span class="ident">Event::Start</span>(<span class="ident">element</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
-                    <span class="string">b&quot;channel&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
+                <span class="ident">Event::Start</span>(<span class="ident">element</span>) =&gt; <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
+                    <span class="string">b&quot;channel&quot;</span> =&gt; {
                         <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span>
-                            <span class="ident">Channel::from_xml</span>(<span class="kw-2">&amp;</span><span class="ident">namespaces</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
+                            <span class="ident">Channel::from_xml</span>(<span class="kw-2">&amp;</span><span class="ident">namespaces</span>, <span class="kw-2">&amp;mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">channel</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>);
                     }
-                    <span class="string">b&quot;item&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="ident">Item::from_xml</span>(<span class="kw-2">&amp;</span><span class="ident">namespaces</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
+                    <span class="string">b&quot;item&quot;</span> =&gt; {
+                        <span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="ident">Item::from_xml</span>(<span class="kw-2">&amp;</span><span class="ident">namespaces</span>, <span class="kw-2">&amp;mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="kw">if</span> <span class="ident">items</span>.<span class="ident">is_none</span>() {
                             <span class="ident">items</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Vec::new</span>());
                         }
                         <span class="ident">items</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">push</span>(<span class="ident">item</span>);
                     }
-                    <span class="string">b&quot;image&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">Image::from_xml</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
+                    <span class="string">b&quot;image&quot;</span> =&gt; {
+                        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">Image::from_xml</span>(<span class="kw-2">&amp;mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">image</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>);
                     }
-                    <span class="string">b&quot;textinput&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">TextInput::from_xml</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
+                    <span class="string">b&quot;textinput&quot;</span> =&gt; {
+                        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">TextInput::from_xml</span>(<span class="kw-2">&amp;mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">text_input</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>);
                     }
-                    <span class="ident">name</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">name</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span>,
+                    <span class="ident">name</span> =&gt; <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">name</span>, <span class="kw-2">&amp;mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span>,
                 },
-                <span class="ident">Event::End</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="ident">Event::End</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Event::Eof</span> =&gt; <span class="kw">break</span>,
+                <span class="kw">_</span> =&gt; {}
             }
             <span class="ident">buf</span>.<span class="ident">clear</span>();
         }
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">channel</span>) <span class="op">=</span> <span class="ident">channel</span> {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">items</span>) <span class="op">=</span> <span class="ident">items</span> {
-                <span class="ident">channel</span>.<span class="ident">items</span>.<span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">items</span>);
+                <span class="ident">channel</span>.<span class="ident">items</span>.<span class="ident">append</span>(<span class="kw-2">&amp;mut</span> <span class="ident">items</span>);
             }
 
             <span class="kw">if</span> <span class="ident">image</span>.<span class="ident">is_some</span>() {
@@ -2595,7 +2600,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Decl</span>(<span class="ident">BytesDecl::new</span>(<span class="string">b&quot;1.0&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">b&quot;utf-8&quot;</span>), <span class="prelude-val">None</span>)))<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="string">b&quot;rss&quot;</span>;
@@ -2612,7 +2617,7 @@
 
         <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Start</span>(<span class="ident">element</span>))<span class="question-mark">?</span>;
 
-        <span class="self">self</span>.<span class="ident">to_xml</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="ident">to_xml</span>(<span class="kw-2">&amp;mut</span> <span class="ident">writer</span>)<span class="question-mark">?</span>;
 
         <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
 
@@ -2628,7 +2633,7 @@
     <span class="doccomment">/// let writer: Write = ...;</span>
     <span class="doccomment">/// channel.write_to(writer).unwrap();</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_to</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_to</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">write</span>(<span class="ident">::quick_xml::Writer::new</span>(<span class="ident">writer</span>))
     }
 
@@ -2646,7 +2651,7 @@
         <span class="ident">writer</span>: <span class="ident">W</span>,
         <span class="ident">indent_char</span>: <span class="ident">u8</span>,
         <span class="ident">indent_size</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">write</span>(<span class="ident">::quick_xml::Writer::new_with_indent</span>(
             <span class="ident">writer</span>,
             <span class="ident">indent_char</span>,
@@ -2656,7 +2661,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToString</span> <span class="kw">for</span> <span class="ident">Channel</span> {
-    <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
         <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">write_to</span>(<span class="ident">Vec::new</span>()).<span class="ident">unwrap_or_default</span>();
         <span class="comment">// this unwrap should be safe since the bytes written from the Channel are all valid utf8</span>
         <span class="ident">String::from_utf8</span>(<span class="ident">buf</span>).<span class="ident">unwrap</span>()
@@ -2667,114 +2672,114 @@
     <span class="doccomment">/// Builds a Channel from source XML</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
         <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
-        <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+        <span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
         <span class="kw">_</span>: <span class="ident">Attributes</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel::default</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">skip_buf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
 
         <span class="kw">loop</span> {
-            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
-                <span class="ident">Event::Start</span>(<span class="ident">element</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
-                    <span class="string">b&quot;category&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
+                <span class="ident">Event::Start</span>(<span class="ident">element</span>) =&gt; <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
+                    <span class="string">b&quot;category&quot;</span> =&gt; {
                         <span class="kw">let</span> <span class="ident">category</span> <span class="op">=</span> <span class="ident">Category::from_xml</span>(<span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">channel</span>.<span class="ident">categories</span>.<span class="ident">push</span>(<span class="ident">category</span>);
                     }
-                    <span class="string">b&quot;cloud&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;cloud&quot;</span> =&gt; {
                         <span class="kw">let</span> <span class="ident">cloud</span> <span class="op">=</span> <span class="ident">Cloud::from_xml</span>(<span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">channel</span>.<span class="ident">cloud</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cloud</span>);
                     }
-                    <span class="string">b&quot;image&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;image&quot;</span> =&gt; {
                         <span class="kw">let</span> <span class="ident">image</span> <span class="op">=</span> <span class="ident">Image::from_xml</span>(<span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">channel</span>.<span class="ident">image</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">image</span>);
                     }
-                    <span class="string">b&quot;textInput&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;textInput&quot;</span> =&gt; {
                         <span class="kw">let</span> <span class="ident">text_input</span> <span class="op">=</span> <span class="ident">TextInput::from_xml</span>(<span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">channel</span>.<span class="ident">text_input</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">text_input</span>);
                     }
-                    <span class="string">b&quot;item&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;item&quot;</span> =&gt; {
                         <span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="ident">Item::from_xml</span>(<span class="ident">namespaces</span>, <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
                         <span class="ident">channel</span>.<span class="ident">items</span>.<span class="ident">push</span>(<span class="ident">item</span>);
                     }
-                    <span class="string">b&quot;title&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;title&quot;</span> =&gt; {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content</span>) <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span> {
                             <span class="ident">channel</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">content</span>;
                         }
                     }
-                    <span class="string">b&quot;link&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;link&quot;</span> =&gt; {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content</span>) <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span> {
                             <span class="ident">channel</span>.<span class="ident">link</span> <span class="op">=</span> <span class="ident">content</span>;
                         }
                     }
-                    <span class="string">b&quot;description&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;description&quot;</span> =&gt; {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content</span>) <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span> {
                             <span class="ident">channel</span>.<span class="ident">description</span> <span class="op">=</span> <span class="ident">content</span>;
                         }
                     }
-                    <span class="string">b&quot;language&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">language</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;copyright&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">copyright</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;managingEditor&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;language&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">language</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;copyright&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">copyright</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;managingEditor&quot;</span> =&gt; {
                         <span class="ident">channel</span>.<span class="ident">managing_editor</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
                     }
-                    <span class="string">b&quot;webMaster&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">webmaster</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;pubDate&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">pub_date</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;lastBuildDate&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="string">b&quot;webMaster&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">webmaster</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;pubDate&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">pub_date</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;lastBuildDate&quot;</span> =&gt; {
                         <span class="ident">channel</span>.<span class="ident">last_build_date</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
                     }
-                    <span class="string">b&quot;generator&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">generator</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;rating&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">rating</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;docs&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">docs</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;ttl&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">ttl</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;skipHours&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">loop</span> {
+                    <span class="string">b&quot;generator&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">generator</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;rating&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">rating</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;docs&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">docs</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;ttl&quot;</span> =&gt; <span class="ident">channel</span>.<span class="ident">ttl</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+                    <span class="string">b&quot;skipHours&quot;</span> =&gt; <span class="kw">loop</span> {
                         <span class="ident">skip_buf</span>.<span class="ident">clear</span>();
-                        <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span> {
-                            <span class="ident">Event::Start</span>(<span class="ident">element</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;hour&quot;</span> {
+                        <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span> {
+                            <span class="ident">Event::Start</span>(<span class="ident">element</span>) =&gt; {
+                                <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="string">b&quot;hour&quot;</span> {
                                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content</span>) <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span> {
                                         <span class="ident">channel</span>.<span class="ident">skip_hours</span>.<span class="ident">push</span>(<span class="ident">content</span>);
                                     }
                                 } <span class="kw">else</span> {
-                                    <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">element</span>.<span class="ident">name</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec::new</span>())<span class="question-mark">?</span>;
+                                    <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">element</span>.<span class="ident">name</span>(), <span class="kw-2">&amp;mut</span> <span class="ident">Vec::new</span>())<span class="question-mark">?</span>;
                                 }
                             }
-                            <span class="ident">Event::End</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                            <span class="ident">Event::End</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Event::Eof</span> =&gt; <span class="kw">break</span>,
+                            <span class="kw">_</span> =&gt; {}
                         }
                     },
-                    <span class="string">b&quot;skipDays&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">loop</span> {
+                    <span class="string">b&quot;skipDays&quot;</span> =&gt; <span class="kw">loop</span> {
                         <span class="ident">skip_buf</span>.<span class="ident">clear</span>();
-                        <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span> {
-                            <span class="ident">Event::Start</span>(<span class="ident">element</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                                <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;day&quot;</span> {
+                        <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span> {
+                            <span class="ident">Event::Start</span>(<span class="ident">element</span>) =&gt; {
+                                <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="string">b&quot;day&quot;</span> {
                                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content</span>) <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span> {
                                         <span class="ident">channel</span>.<span class="ident">skip_days</span>.<span class="ident">push</span>(<span class="ident">content</span>);
                                     }
                                 } <span class="kw">else</span> {
-                                    <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">element</span>.<span class="ident">name</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec::new</span>())<span class="question-mark">?</span>;
+                                    <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">element</span>.<span class="ident">name</span>(), <span class="kw-2">&amp;mut</span> <span class="ident">Vec::new</span>())<span class="question-mark">?</span>;
                                 }
                             }
-                            <span class="ident">Event::End</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                            <span class="ident">Event::End</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Event::Eof</span> =&gt; <span class="kw">break</span>,
+                            <span class="kw">_</span> =&gt; {}
                         }
                     },
-                    <span class="ident">n</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">n</span> =&gt; {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">ns</span>, <span class="ident">name</span>)) <span class="op">=</span> <span class="ident">extension_name</span>(<span class="ident">element</span>.<span class="ident">name</span>()) {
                             <span class="ident">parse_extension</span>(
                                 <span class="ident">reader</span>,
                                 <span class="ident">element</span>.<span class="ident">attributes</span>(),
                                 <span class="ident">ns</span>,
                                 <span class="ident">name</span>,
-                                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">channel</span>.<span class="ident">extensions</span>,
+                                <span class="kw-2">&amp;mut</span> <span class="ident">channel</span>.<span class="ident">extensions</span>,
                             )<span class="question-mark">?</span>;
                         } <span class="kw">else</span> {
-                            <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span>;
+                            <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">n</span>, <span class="kw-2">&amp;mut</span> <span class="ident">skip_buf</span>)<span class="question-mark">?</span>;
                         }
                     }
                 },
-                <span class="ident">Event::End</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="ident">Event::End</span>(<span class="kw">_</span>) =&gt; <span class="kw">break</span>,
+                <span class="ident">Event::Eof</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
+                <span class="kw">_</span> =&gt; {}
             }
 
             <span class="ident">buf</span>.<span class="ident">clear</span>();
@@ -2785,21 +2790,21 @@
             <span class="kw">for</span> (<span class="ident">prefix</span>, <span class="ident">namespace</span>) <span class="kw">in</span> <span class="ident">namespaces</span> {
                 <span class="kw">match</span> <span class="ident">namespace</span>.<span class="ident">as_ref</span>() {
                     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;atom&quot;</span>)]</span>
-                    <span class="ident">atom::NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>
+                    <span class="ident">atom::NAMESPACE</span> =&gt; <span class="ident">channel</span>
                         .<span class="ident">extensions</span>
                         .<span class="ident">remove</span>(<span class="ident">prefix</span>)
                         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">channel</span>.<span class="ident">atom_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">atom::AtomExtension::from_map</span>(<span class="ident">v</span>))),
-                    <span class="ident">itunes::NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+                    <span class="ident">itunes::NAMESPACE</span> =&gt; <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
                         <span class="ident">channel</span>.<span class="ident">itunes_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">itunes::ITunesChannelExtension::from_map</span>(<span class="ident">v</span>))
                     }),
-                    <span class="ident">dublincore::NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+                    <span class="ident">dublincore::NAMESPACE</span> =&gt; <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
                         <span class="ident">channel</span>.<span class="ident">dublin_core_ext</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">dublincore::DublinCoreExtension::from_map</span>(<span class="ident">v</span>))
                     }),
-                    <span class="ident">syndication::NAMESPACE</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+                    <span class="ident">syndication::NAMESPACE</span> =&gt; <span class="ident">channel</span>.<span class="ident">extensions</span>.<span class="ident">remove</span>(<span class="ident">prefix</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
                         <span class="ident">channel</span>.<span class="ident">syndication_ext</span> <span class="op">=</span>
                             <span class="prelude-val">Some</span>(<span class="ident">syndication::SyndicationExtension::from_map</span>(<span class="ident">v</span>))
                     }),
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+                    <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
                 };
             }
         }
@@ -2809,7 +2814,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="ident">Channel</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="string">b&quot;channel&quot;</span>;
 
         <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Start</span>(<span class="ident">BytesStart::borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>())))<span class="question-mark">?</span>;
@@ -2921,7 +2926,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
         <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">items</span> {
             <span class="ident">namespaces</span>.<span class="ident">extend</span>(<span class="ident">item</span>.<span class="ident">used_namespaces</span>());
@@ -2940,7 +2945,7 @@
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Channel</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Channel</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="ident">Channel::read_from</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>())
     }
 }
@@ -2948,11 +2953,10 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">ChannelBuilder</span> {
     <span class="doccomment">/// Builds a new `Channel`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Channel</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Channel</span> {
         <span class="self">self</span>.<span class="ident">build_impl</span>().<span class="ident">unwrap</span>()
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rss" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

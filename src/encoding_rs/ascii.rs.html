@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;encoding_rs-0.8.29&#x2F;src&#x2F;ascii.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ascii.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../encoding_rs/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/encoding_rs-0.8.31/src/ascii.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ascii.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../encoding_rs/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../encoding_rs/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../encoding_rs/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1589,13 +1594,13 @@
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="comment">// Unsafe to match the intrinsic, which is needlessly unsafe.</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unlikely</span>(<span class="ident">b</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unlikely</span>(<span class="ident">b</span>: <span class="ident">bool</span>) -&gt; <span class="ident">bool</span> {
             <span class="ident">b</span>
         }
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="comment">// Unsafe to match the intrinsic, which is needlessly unsafe.</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">likely</span>(<span class="ident">b</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">likely</span>(<span class="ident">b</span>: <span class="ident">bool</span>) -&gt; <span class="ident">bool</span> {
             <span class="ident">b</span>
         }
     }
@@ -1611,13 +1616,13 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">ascii_naive</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(
-            <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
-            <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
+            <span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
+            <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
             <span class="ident">len</span>: <span class="ident">usize</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="comment">// Yes, manually omitting the bound check here matters</span>
             <span class="comment">// a lot for perf.</span>
             <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
@@ -1637,14 +1642,14 @@
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>,
-     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">never_loop</span>, <span class="ident">cast_ptr_alignment</span>))]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(
-            <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
-            <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
+            <span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
+            <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
             <span class="ident">len</span>: <span class="ident">usize</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="comment">// This loop is only broken out of as a `goto` forward</span>
             <span class="kw">loop</span> {
@@ -1696,8 +1701,8 @@
                     <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">ALU_STRIDE_SIZE</span>;
                     <span class="kw">loop</span> {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">num_ascii</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>(
-                            <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>,
-                            <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>,
+                            <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">usize</span>,
+                            <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">usize</span>,
                         ) {
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">num_ascii</span>;
                             <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>)), <span class="ident">offset</span>));
@@ -1728,17 +1733,17 @@
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>,
      <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>,
-     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">cfg_attr</span>(
             <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>,
             <span class="ident">allow</span>(<span class="ident">never_loop</span>, <span class="ident">cast_ptr_alignment</span>, <span class="ident">cast_lossless</span>)
         )]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(
-            <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
-            <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
+            <span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
+            <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
             <span class="ident">len</span>: <span class="ident">usize</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="comment">// This loop is only broken out of as a `goto` forward</span>
             <span class="kw">loop</span> {
@@ -1799,8 +1804,8 @@
                     <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">ALU_STRIDE_SIZE</span>;
                     <span class="kw">loop</span> {
                         <span class="kw">if</span> <span class="op">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>(
-                            <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>,
-                            <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>,
+                            <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">usize</span>,
+                            <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">usize</span>,
                         ) {
                             <span class="kw">break</span>;
                         }
@@ -1827,13 +1832,13 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">latin1_alu</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">cfg_attr</span>(
             <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>,
             <span class="ident">allow</span>(<span class="ident">never_loop</span>, <span class="ident">cast_ptr_alignment</span>, <span class="ident">cast_lossless</span>)
         )]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="comment">// This loop is only broken out of as a `goto` forward</span>
             <span class="kw">loop</span> {
@@ -1872,8 +1877,8 @@
                     <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">ALU_STRIDE_SIZE</span>;
                     <span class="kw">loop</span> {
                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_fn</span>(
-                            <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>,
-                            <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>,
+                            <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">usize</span>,
+                            <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*mut</span> <span class="ident">usize</span>,
                         );
                         <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">ALU_STRIDE_SIZE</span>;
                         <span class="kw">if</span> <span class="ident">offset</span> <span class="op">&gt;</span> <span class="ident">len_minus_stride</span> {
@@ -1902,13 +1907,13 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_src_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_dst_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>
-    ) <span class="op">=</span><span class="op">&gt;</span> {
+    ) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(
-            <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
-            <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
+            <span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
+            <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
             <span class="ident">len</span>: <span class="ident">usize</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="kw">if</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len</span> {
                 <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
@@ -1918,8 +1923,8 @@
                 <span class="comment">// on Haswell, it would make sense to just use unaligned and not bother</span>
                 <span class="comment">// checking. Need to benchmark older architectures before deciding.</span>
                 <span class="kw">let</span> <span class="ident">dst_masked</span> <span class="op">=</span> (<span class="ident">dst</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span>;
-                <span class="kw">if</span> ((<span class="ident">src</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> ((<span class="ident">src</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span>) <span class="op">==</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="kw">loop</span> {
                             <span class="kw">if</span> <span class="op">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_both_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>), <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>)) {
                                 <span class="kw">break</span>;
@@ -1941,7 +1946,7 @@
                         }
                     }
                 } <span class="kw">else</span> {
-                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="kw">loop</span> {
                             <span class="kw">if</span> <span class="op">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_dst_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>), <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>)) {
                                 <span class="kw">break</span>;
@@ -1988,13 +1993,13 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">double_stride_both_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">double_stride_src_aligned</span>:<span class="ident">ident</span>
-    ) <span class="op">=</span><span class="op">&gt;</span> {
+    ) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(
-            <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
-            <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
+            <span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
+            <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
             <span class="ident">len</span>: <span class="ident">usize</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">unit_size</span> <span class="op">=</span> <span class="ident">::core::mem::size_of</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span><span class="op">&gt;</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="comment">// This loop is only broken out of as a goto forward without</span>
@@ -2028,7 +2033,7 @@
                         }
                         <span class="kw">let</span> <span class="ident">len_minus_stride_times_two</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> (<span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">*</span> <span class="number">2</span>);
                         <span class="kw">let</span> <span class="ident">dst_masked</span> <span class="op">=</span> (<span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span>;
-                        <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                        <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">==</span> <span class="number">0</span> {
                             <span class="kw">loop</span> {
                                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">advance</span>) <span class="op">=</span>
                                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">double_stride_both_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>), <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>))
@@ -2110,15 +2115,15 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_src_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_dst_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>
-    ) <span class="op">=</span><span class="op">&gt;</span> {
+    ) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="kw">if</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len</span> {
                 <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
                 <span class="kw">let</span> <span class="ident">dst_masked</span> <span class="op">=</span> (<span class="ident">dst</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span>;
-                <span class="kw">if</span> ((<span class="ident">src</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
-                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> ((<span class="ident">src</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span>) <span class="op">==</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="kw">loop</span> {
                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_both_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>), <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>));
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
@@ -2136,7 +2141,7 @@
                         }
                     }
                 } <span class="kw">else</span> {
-                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">dst_masked</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="kw">loop</span> {
                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_dst_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>), <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>));
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
@@ -2174,9 +2179,9 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_src_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_dst_aligned</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>
-    ) <span class="op">=</span><span class="op">&gt;</span> {
+    ) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">unit_size</span> <span class="op">=</span> <span class="ident">::core::mem::size_of</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span><span class="op">&gt;</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="kw">if</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len</span> {
@@ -2192,7 +2197,7 @@
                 <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
                 <span class="kw">if</span> <span class="ident">offset</span> <span class="op">+</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">*</span> <span class="number">2</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len</span> {
                     <span class="kw">let</span> <span class="ident">len_minus_stride_times_two</span> <span class="op">=</span> <span class="ident">len_minus_stride</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
-                    <span class="kw">if</span> (<span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> (<span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> <span class="ident">SIMD_ALIGNMENT_MASK</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="kw">loop</span> {
                             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_both_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>), <span class="ident">dst</span>.<span class="ident">add</span>(<span class="ident">offset</span>));
                             <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
@@ -2243,13 +2248,13 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">ascii_simd_unalign</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
         <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(
-            <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
-            <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
+            <span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>,
+            <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>,
             <span class="ident">len</span>: <span class="ident">usize</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="kw">if</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len</span> {
                 <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
@@ -2278,9 +2283,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">latin1_simd_unalign</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">stride_neither_aligned</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
             <span class="kw">if</span> <span class="ident">SIMD_STRIDE_SIZE</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">len</span> {
                 <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">SIMD_STRIDE_SIZE</span>;
@@ -2303,9 +2308,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">ascii_to_ascii_simd_stride</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">u8</span>) -&gt; <span class="ident">bool</span> {
             <span class="kw">let</span> <span class="ident">simd</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>(<span class="ident">src</span>);
             <span class="kw">if</span> <span class="op">!</span><span class="ident">simd_is_ascii</span>(<span class="ident">simd</span>) {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
@@ -2318,9 +2323,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">ascii_to_ascii_simd_double_stride</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">u8</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">load16_aligned</span>(<span class="ident">src</span>);
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="ident">load16_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">SIMD_STRIDE_SIZE</span>));
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>(<span class="ident">dst</span>, <span class="ident">first</span>);
@@ -2341,9 +2346,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">ascii_to_basic_latin_simd_stride</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">u16</span>) -&gt; <span class="ident">bool</span> {
             <span class="kw">let</span> <span class="ident">simd</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>(<span class="ident">src</span>);
             <span class="kw">if</span> <span class="op">!</span><span class="ident">simd_is_ascii</span>(<span class="ident">simd</span>) {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
@@ -2358,9 +2363,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">ascii_to_basic_latin_simd_double_stride</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">u16</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">load16_aligned</span>(<span class="ident">src</span>);
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="ident">load16_aligned</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">SIMD_STRIDE_SIZE</span>));
             <span class="kw">let</span> (<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">=</span> <span class="ident">simd_unpack</span>(<span class="ident">first</span>);
@@ -2387,9 +2392,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">unpack_simd_stride</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u16</span>) {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">u16</span>) {
             <span class="kw">let</span> <span class="ident">simd</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>(<span class="ident">src</span>);
             <span class="kw">let</span> (<span class="ident">first</span>, <span class="ident">second</span>) <span class="op">=</span> <span class="ident">simd_unpack</span>(<span class="ident">simd</span>);
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>(<span class="ident">dst</span>, <span class="ident">first</span>);
@@ -2400,9 +2405,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">basic_latin_to_ascii_simd_stride</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u16</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">u16</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">u8</span>) -&gt; <span class="ident">bool</span> {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>(<span class="ident">src</span>);
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">8</span>));
             <span class="kw">if</span> <span class="ident">simd_is_basic_latin</span>(<span class="ident">first</span> <span class="op">|</span> <span class="ident">second</span>) {
@@ -2417,9 +2422,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_macros</span>)]</span>
 <span class="macro">macro_rules!</span> <span class="ident">pack_simd_stride</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>:<span class="ident">ident</span>) =&gt; {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u16</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) {
+        <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">u16</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">u8</span>) {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>(<span class="ident">src</span>);
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">load</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">8</span>));
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">store</span>(<span class="ident">dst</span>, <span class="ident">simd_pack</span>(<span class="ident">first</span>, <span class="ident">second</span>));
@@ -2557,7 +2562,7 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALU_ALIGNMENT_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">7</span>;
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> ((<span class="number">0x0000_0000_FF00_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">24</span>) <span class="op">|</span>
                         ((<span class="number">0x0000_0000_00FF_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span>) <span class="op">|</span>
                         ((<span class="number">0x0000_0000_0000_FF00usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span>
@@ -2581,7 +2586,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> ((<span class="number">0x00FF_0000_0000_0000usize</span> <span class="op">&amp;</span> <span class="ident">second</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span>
                        ((<span class="number">0x0000_00FF_0000_0000usize</span> <span class="op">&amp;</span> <span class="ident">second</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span>) <span class="op">|</span>
                        ((<span class="number">0x0000_0000_00FF_0000usize</span> <span class="op">&amp;</span> <span class="ident">second</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">24</span>) <span class="op">|</span>
@@ -2613,7 +2618,7 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALU_ALIGNMENT_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">3</span>;
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> ((<span class="number">0x0000_FF00usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span>
                         (<span class="number">0x0000_00FFusize</span> <span class="op">&amp;</span> <span class="ident">word</span>);
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> ((<span class="number">0xFF00_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>) <span class="op">|</span>
@@ -2629,7 +2634,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> ((<span class="number">0x00FF_0000usize</span> <span class="op">&amp;</span> <span class="ident">second</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span>
                        ((<span class="number">0x0000_00FFusize</span> <span class="op">&amp;</span> <span class="ident">second</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span>) <span class="op">|</span>
                        ((<span class="number">0x00FF_0000usize</span> <span class="op">&amp;</span> <span class="ident">first</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>) <span class="op">|</span>
@@ -2653,7 +2658,7 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALU_ALIGNMENT_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">7</span>;
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> ((<span class="number">0xFF00_0000_0000_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>) <span class="op">|</span>
                          ((<span class="number">0x00FF_0000_0000_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">16</span>) <span class="op">|</span>
                          ((<span class="number">0x0000_FF00_0000_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">24</span>) <span class="op">|</span>
@@ -2677,7 +2682,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> ((<span class="number">0x00FF0000_00000000usize</span> <span class="op">&amp;</span> <span class="ident">first</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span>
                        ((<span class="number">0x000000FF_00000000usize</span> <span class="op">&amp;</span> <span class="ident">first</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span>) <span class="op">|</span>
                        ((<span class="number">0x00000000_00FF0000usize</span> <span class="op">&amp;</span> <span class="ident">first</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">24</span>) <span class="op">|</span>
@@ -2709,7 +2714,7 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALU_ALIGNMENT_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">3</span>;
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_alu</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> ((<span class="number">0xFF00_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>) <span class="op">|</span>
                          ((<span class="number">0x00FF_0000usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">16</span>);
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> ((<span class="number">0x0000_FF00usize</span> <span class="op">&amp;</span> <span class="ident">word</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span>
@@ -2725,7 +2730,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_alu</span>(<span class="ident">first</span>: <span class="ident">usize</span>, <span class="ident">second</span>: <span class="ident">usize</span>, <span class="ident">third</span>: <span class="ident">usize</span>, <span class="ident">fourth</span>: <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> ((<span class="number">0x00FF_0000usize</span> <span class="op">&amp;</span> <span class="ident">first</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">8</span>) <span class="op">|</span>
                        ((<span class="number">0x0000_00FFusize</span> <span class="op">&amp;</span> <span class="ident">first</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span>) <span class="op">|</span>
                        ((<span class="number">0x00FF_0000usize</span> <span class="op">&amp;</span> <span class="ident">second</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>) <span class="op">|</span>
@@ -2748,13 +2753,13 @@
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;little&quot;</span>)]</span> {
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="ident">word</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="ident">word</span>: <span class="ident">usize</span>) -&gt; <span class="ident">u32</span> {
             <span class="ident">word</span>.<span class="ident">trailing_zeros</span>()
         }
     } <span class="kw">else</span> {
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="ident">word</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="ident">word</span>: <span class="ident">usize</span>) -&gt; <span class="ident">u32</span> {
             <span class="ident">word</span>.<span class="ident">leading_zeros</span>()
         }
     }
@@ -2763,7 +2768,7 @@
 <span class="macro">cfg_if!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd-accel&quot;</span>, <span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;little&quot;</span>, <span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;disabled&quot;</span>))]</span> {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate_ascii</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate_ascii</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">as_ptr</span>();
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
@@ -2791,7 +2796,7 @@
         }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;simd-accel&quot;</span>, <span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;sse2&quot;</span>))]</span> {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate_ascii</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate_ascii</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">as_ptr</span>();
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
@@ -2891,10 +2896,10 @@
         }
     } <span class="kw">else</span> {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">fn</span> <span class="ident">find_non_ascii</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">find_non_ascii</span>(<span class="ident">word</span>: <span class="ident">usize</span>, <span class="ident">second_word</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">word_masked</span> <span class="op">=</span> <span class="ident">word</span> <span class="op">&amp;</span> <span class="ident">ASCII_MASK</span>;
             <span class="kw">let</span> <span class="ident">second_masked</span> <span class="op">=</span> <span class="ident">second_word</span> <span class="op">&amp;</span> <span class="ident">ASCII_MASK</span>;
-            <span class="kw">if</span> (<span class="ident">word_masked</span> <span class="op">|</span> <span class="ident">second_masked</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> (<span class="ident">word_masked</span> <span class="op">|</span> <span class="ident">second_masked</span>) <span class="op">==</span> <span class="number">0</span> {
                 <span class="kw">return</span> <span class="prelude-val">None</span>;
             }
             <span class="kw">if</span> <span class="ident">word_masked</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
@@ -2916,7 +2921,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">validate_ascii_stride</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">validate_ascii_stride</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">src</span>;
             <span class="kw">let</span> <span class="ident">second_word</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">1</span>));
             <span class="ident">find_non_ascii</span>(<span class="ident">word</span>, <span class="ident">second_word</span>)
@@ -2924,7 +2929,7 @@
 
         <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">cast_ptr_alignment</span>))]</span>
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate_ascii</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">validate_ascii</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">as_ptr</span>();
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">len</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">0usize</span>;
@@ -2940,7 +2945,7 @@
                 }
                 <span class="kw">let</span> <span class="ident">len_minus_stride</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">ALU_STRIDE_SIZE</span>;
                 <span class="kw">loop</span> {
-                    <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span> };
+                    <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>) <span class="kw">as</span> <span class="kw-2">*const</span> <span class="ident">usize</span> };
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">num_ascii</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">validate_ascii_stride</span>(<span class="ident">ptr</span>) } {
                         <span class="ident">offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">num_ascii</span>;
                         <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="kw">unsafe</span> { <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="ident">offset</span>)) }, <span class="ident">offset</span>));
@@ -2979,14 +2984,14 @@
         <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALU_ALIGNMENT_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">3</span>;
     } <span class="kw">else</span> {
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_latin1_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unpack_latin1_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">src</span>;
             <span class="kw">let</span> <span class="ident">second_word</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">1</span>));
             <span class="ident">unpack_alu</span>(<span class="ident">word</span>, <span class="ident">second_word</span>, <span class="ident">dst</span>);
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_latin1_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pack_latin1_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">src</span>;
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">1</span>));
             <span class="kw">let</span> <span class="ident">third</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">2</span>));
@@ -2995,7 +3000,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ascii_to_basic_latin_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ascii_to_basic_latin_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) -&gt; <span class="ident">bool</span> {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">src</span>;
             <span class="kw">let</span> <span class="ident">second_word</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">1</span>));
             <span class="comment">// Check if the words contains non-ASCII</span>
@@ -3007,7 +3012,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">basic_latin_to_ascii_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">basic_latin_to_ascii_stride_alu</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) -&gt; <span class="ident">bool</span> {
             <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">src</span>;
             <span class="kw">let</span> <span class="ident">second</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">1</span>));
             <span class="kw">let</span> <span class="ident">third</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">2</span>));
@@ -3020,7 +3025,7 @@
         }
 
         <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ascii_to_ascii_stride</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ascii_to_ascii_stride</span>(<span class="ident">src</span>: <span class="kw-2">*const</span> <span class="ident">usize</span>, <span class="ident">dst</span>: <span class="kw-2">*mut</span> <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">src</span>;
             <span class="kw">let</span> <span class="ident">second_word</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">src</span>.<span class="ident">add</span>(<span class="number">1</span>));
             <span class="kw-2">*</span><span class="ident">dst</span> <span class="op">=</span> <span class="ident">word</span>;
@@ -3036,17 +3041,17 @@
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ascii_valid_up_to</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ascii_valid_up_to</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">usize</span> {
     <span class="kw">match</span> <span class="ident">validate_ascii</span>(<span class="ident">bytes</span>) {
-        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">bytes</span>.<span class="ident">len</span>(),
-        <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">num_valid</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">num_valid</span>,
+        <span class="prelude-val">None</span> =&gt; <span class="ident">bytes</span>.<span class="ident">len</span>(),
+        <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="ident">num_valid</span>)) =&gt; <span class="ident">num_valid</span>,
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iso_2022_jp_ascii_valid_up_to</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iso_2022_jp_ascii_valid_up_to</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">usize</span> {
     <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">b_ref</span>) <span class="kw">in</span> <span class="ident">bytes</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">b_ref</span>;
-        <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x1B</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x0E</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x0F</span> {
+        <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x80</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0x1B</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0x0E</span> <span class="op">|</span><span class="op">|</span> <span class="ident">b</span> <span class="op">==</span> <span class="number">0x0F</span> {
             <span class="kw">return</span> <span class="ident">i</span>;
         }
     }
@@ -3062,7 +3067,7 @@
     <span class="kw">use</span> <span class="ident">alloc::vec::Vec</span>;
 
     <span class="macro">macro_rules!</span> <span class="ident">test_ascii</span> {
-        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">test_name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fn_tested</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">test_name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fn_tested</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dst_unit</span>:<span class="ident">ty</span>) =&gt; {
             <span class="attribute">#[<span class="ident">test</span>]</span>
             <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">test_name</span>() {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">src</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="number">32</span>);
@@ -3072,12 +3077,12 @@
                     <span class="ident">dst</span>.<span class="ident">clear</span>();
                     <span class="ident">dst</span>.<span class="ident">resize</span>(<span class="number">32</span>, <span class="number">0</span>);
                     <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">32</span> {
-                        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="ident">j</span> { <span class="number">0xAA</span> } <span class="kw">else</span> { <span class="ident">j</span> <span class="op">+</span> <span class="number">0x40</span> };
+                        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="ident">j</span> { <span class="number">0xAA</span> } <span class="kw">else</span> { <span class="ident">j</span> <span class="op">+</span> <span class="number">0x40</span> };
                         <span class="ident">src</span>.<span class="ident">push</span>(<span class="ident">c</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src_unit</span>);
                     }
                     <span class="kw">match</span> <span class="kw">unsafe</span> { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fn_tested</span>(<span class="ident">src</span>.<span class="ident">as_ptr</span>(), <span class="ident">dst</span>.<span class="ident">as_mut_ptr</span>(), <span class="number">32</span>) } {
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(<span class="string">&quot;Should always find non-ASCII&quot;</span>),
-                        <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">num_ascii</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">None</span> =&gt; <span class="macro">unreachable!</span>(<span class="string">&quot;Should always find non-ASCII&quot;</span>),
+                        <span class="prelude-val">Some</span>((<span class="ident">non_ascii</span>, <span class="ident">num_ascii</span>)) =&gt; {
                             <span class="macro">assert_eq!</span>(<span class="ident">non_ascii</span>, <span class="number">0xAA</span>);
                             <span class="macro">assert_eq!</span>(<span class="ident">num_ascii</span>, <span class="ident">i</span>);
                             <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">i</span> {
@@ -3095,6 +3100,5 @@
     <span class="macro">test_ascii!</span>(<span class="ident">test_basic_latin_to_ascii</span>, <span class="ident">basic_latin_to_ascii</span>, <span class="ident">u16</span>, <span class="ident">u8</span>);
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="encoding_rs" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

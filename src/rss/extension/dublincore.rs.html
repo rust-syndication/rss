@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;extension&#x2F;dublincore.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dublincore.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../rss/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/dublincore.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dublincore.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../rss/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -503,17 +508,17 @@
 
 <span class="kw">impl</span> <span class="ident">DublinCoreExtension</span> {
     <span class="doccomment">/// Return the contributors to the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contributors</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contributors</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">contributors</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the contributors to the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contributors_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">contributors</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contributors_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">contributors</span>
     }
 
     <span class="doccomment">/// Set the contributors to the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_contributors</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">contributors</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_contributors</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">contributors</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -522,19 +527,19 @@
 
     <span class="doccomment">/// Return the spatial or temporal topics of the resource, the spatial applicabilities of the</span>
     <span class="doccomment">/// resource, or the jurisdictions under which the resource is relevant.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">coverages</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">coverages</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">coverages</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the spatial or temporal topics of the resource, the spatial</span>
     <span class="doccomment">/// applicabilities of the resource, or the jurisdictions under which the resource is relevant.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">coverages_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">coverages</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">coverages_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">coverages</span>
     }
 
     <span class="doccomment">/// Set the spatial or temporal topics of the resource, the spatial applicabilities of the</span>
     <span class="doccomment">/// resource, or the jurisdictions under which the resource is relevant.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_coverages</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">coverages</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_coverages</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">coverages</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -542,17 +547,17 @@
     }
 
     <span class="doccomment">/// Return the creators of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">creators</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">creators</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">creators</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the creators of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">creators_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">creators</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">creators_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">creators</span>
     }
 
     <span class="doccomment">/// Set the creators of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_creators</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">creators</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_creators</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">creators</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -560,17 +565,17 @@
     }
 
     <span class="doccomment">/// Return the times associated with the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dates</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dates</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dates</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the times associated with the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dates_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">dates</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dates_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">dates</span>
     }
 
     <span class="doccomment">/// Set the times associated with the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_dates</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dates</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_dates</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">dates</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -578,17 +583,17 @@
     }
 
     <span class="doccomment">/// Return the descriptions of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">descriptions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">descriptions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">descriptions</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the descriptions of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">descriptions_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">descriptions</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">descriptions_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">descriptions</span>
     }
 
     <span class="doccomment">/// Set the descriptions of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_descriptions</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">descriptions</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_descriptions</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">descriptions</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -596,18 +601,18 @@
     }
 
     <span class="doccomment">/// Return the file formats, physical mediums, or dimensions of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">formats</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">formats</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">formats</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the file formats, physical mediums, or</span>
     <span class="doccomment">/// dimensions of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">formats_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">formats</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">formats_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">formats</span>
     }
 
     <span class="doccomment">/// Set the file formats, physical mediums, or dimensions of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_formats</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">formats</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_formats</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">formats</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -615,17 +620,17 @@
     }
 
     <span class="doccomment">/// Return the identifiers of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifiers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifiers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">identifiers</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the identifiers of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifiers_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">identifiers</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identifiers_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">identifiers</span>
     }
 
     <span class="doccomment">/// Set the identifiers of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifiers</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">identifiers</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_identifiers</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">identifiers</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -633,17 +638,17 @@
     }
 
     <span class="doccomment">/// Return the languages of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">languages</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">languages</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">languages</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the languages of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">languages_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">languages</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">languages_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">languages</span>
     }
 
     <span class="doccomment">/// Set the languages of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_languages</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">languages</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_languages</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">languages</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -651,17 +656,17 @@
     }
 
     <span class="doccomment">/// Return the publishers of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">publishers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">publishers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">publishers</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the publishers of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">publishers_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">publishers</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">publishers_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">publishers</span>
     }
 
     <span class="doccomment">/// Set the publishers of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_publishers</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">publishers</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_publishers</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">publishers</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -669,17 +674,17 @@
     }
 
     <span class="doccomment">/// Return the related resources.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">relations</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the related resources.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">relations</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relations_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">relations</span>
     }
 
     <span class="doccomment">/// Set the related resources.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_relations</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">relations</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_relations</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">relations</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -687,18 +692,18 @@
     }
 
     <span class="doccomment">/// Return the information about rights held in and over the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rights</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rights</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rights</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the information about rights held in and over</span>
     <span class="doccomment">/// the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rights_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">rights</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rights_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">rights</span>
     }
 
     <span class="doccomment">/// Set the information about rights held in and over the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_rights</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rights</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_rights</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">rights</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -706,17 +711,17 @@
     }
 
     <span class="doccomment">/// Return the sources of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sources</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sources</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">sources</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the sources of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sources_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">sources</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sources_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">sources</span>
     }
 
     <span class="doccomment">/// Set the sources of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_sources</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">sources</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_sources</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">sources</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -724,17 +729,17 @@
     }
 
     <span class="doccomment">/// Return the topics of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subjects</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subjects</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">subjects</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the subjects of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subjects_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">subjects</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subjects_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">subjects</span>
     }
 
     <span class="doccomment">/// Set the topics of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_subjects</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">subjects</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_subjects</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">subjects</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -742,17 +747,17 @@
     }
 
     <span class="doccomment">/// Return the titles of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">titles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">titles</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">titles</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the titles of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">titles_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">titles</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">titles_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">titles</span>
     }
 
     <span class="doccomment">/// Set the titles of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_titles</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">titles</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_titles</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">titles</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -760,17 +765,17 @@
     }
 
     <span class="doccomment">/// Return the natures or genres of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">String</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">types</span>
     }
 
     <span class="doccomment">/// Return a mutable slice of the natures or genres of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">String</span>] {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">types</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types_mut</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> [<span class="ident">String</span>] {
+        <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">types</span>
     }
 
     <span class="doccomment">/// set the natures or genres of the resource.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_types</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">types</span>: <span class="ident">V</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_types</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">types</span>: <span class="ident">V</span>)
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -780,26 +785,26 @@
 
 <span class="kw">impl</span> <span class="ident">DublinCoreExtension</span> {
     <span class="doccomment">/// Creates a `DublinCoreExtension` using the specified `BTreeMap`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="ident">map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="ident">map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ext</span> <span class="op">=</span> <span class="ident">DublinCoreExtension::default</span>();
         <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">map</span> {
             <span class="kw">match</span> <span class="ident">key</span>.<span class="ident">as_str</span>() {
-                <span class="string">&quot;contributor&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">contributors</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;coverage&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">coverages</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;creator&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">creators</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;date&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">dates</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;description&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">descriptions</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;format&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">formats</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;identifier&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">identifiers</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;language&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">languages</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;publisher&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">publishers</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;relation&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">relations</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;rights&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">rights</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;source&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">sources</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;subject&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">subjects</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;title&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">titles</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="string">&quot;type&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ext</span>.<span class="ident">types</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="string">&quot;contributor&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">contributors</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;coverage&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">coverages</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;creator&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">creators</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;date&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">dates</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;description&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">descriptions</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;format&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">formats</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;identifier&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">identifiers</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;language&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">languages</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;publisher&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">publishers</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;relation&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">relations</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;rights&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">rights</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;source&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">sources</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;subject&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">subjects</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;title&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">titles</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="string">&quot;type&quot;</span> =&gt; <span class="ident">ext</span>.<span class="ident">types</span> <span class="op">=</span> <span class="ident">get_extension_values</span>(<span class="ident">v</span>),
+                <span class="kw">_</span> =&gt; {}
             }
         }
         <span class="ident">ext</span>
@@ -807,7 +812,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="ident">DublinCoreExtension</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
         <span class="ident">writer</span>.<span class="ident">write_text_elements</span>(<span class="string">b&quot;dc:contributor&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">contributors</span>)<span class="question-mark">?</span>;
         <span class="ident">writer</span>.<span class="ident">write_text_elements</span>(<span class="string">b&quot;dc:coverage&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">coverages</span>)<span class="question-mark">?</span>;
         <span class="ident">writer</span>.<span class="ident">write_text_elements</span>(<span class="string">b&quot;dc:creator&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">creators</span>)<span class="question-mark">?</span>;
@@ -826,7 +831,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">namespaces</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
         <span class="ident">namespaces</span>.<span class="ident">insert</span>(<span class="string">&quot;dc&quot;</span>.<span class="ident">to_owned</span>(), <span class="ident">NAMESPACE</span>.<span class="ident">to_owned</span>());
         <span class="ident">namespaces</span>
@@ -836,11 +841,10 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">DublinCoreExtensionBuilder</span> {
     <span class="doccomment">/// Builds a new `DublinCoreExtension`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DublinCoreExtension</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">DublinCoreExtension</span> {
         <span class="self">self</span>.<span class="ident">build_impl</span>().<span class="ident">unwrap</span>()
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rss" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
-    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

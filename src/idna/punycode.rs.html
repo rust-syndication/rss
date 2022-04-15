@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;idna-0.2.3&#x2F;src&#x2F;punycode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>punycode.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../idna/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/idna-0.2.3/src/punycode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>punycode.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../idna/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../idna/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../idna/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -342,7 +347,7 @@
 <span class="kw">static</span> <span class="ident">DELIMITER</span>: <span class="ident">char</span> <span class="op">=</span> <span class="string">&#39;-&#39;</span>;
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">adapt</span>(<span class="kw-2">mut</span> <span class="ident">delta</span>: <span class="ident">u32</span>, <span class="ident">num_points</span>: <span class="ident">u32</span>, <span class="ident">first_time</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">fn</span> <span class="ident">adapt</span>(<span class="kw-2">mut</span> <span class="ident">delta</span>: <span class="ident">u32</span>, <span class="ident">num_points</span>: <span class="ident">u32</span>, <span class="ident">first_time</span>: <span class="ident">bool</span>) -&gt; <span class="ident">u32</span> {
     <span class="ident">delta</span> <span class="op">/</span><span class="op">=</span> <span class="kw">if</span> <span class="ident">first_time</span> { <span class="ident">DAMP</span> } <span class="kw">else</span> { <span class="number">2</span> };
     <span class="ident">delta</span> <span class="op">+</span><span class="op">=</span> <span class="ident">delta</span> <span class="op">/</span> <span class="ident">num_points</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">k</span> <span class="op">=</span> <span class="number">0</span>;
@@ -357,7 +362,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This is a convenience wrapper around `decode`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_to_string</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_to_string</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="ident">decode</span>(<span class="ident">input</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">chars</span><span class="op">|</span> <span class="ident">chars</span>.<span class="ident">into_iter</span>().<span class="ident">collect</span>())
 }
 
@@ -366,7 +371,7 @@
 <span class="doccomment">/// Return None on malformed input or overflow.</span>
 <span class="doccomment">/// Overflow can only happen on inputs that take more than</span>
 <span class="doccomment">/// 63 encoded bytes, the DNS limit on domain name labels.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="prelude-val">Some</span>(<span class="ident">Decoder::default</span>().<span class="ident">decode</span>(<span class="ident">input</span>).<span class="ident">ok</span>()<span class="question-mark">?</span>.<span class="ident">collect</span>())
 }
 
@@ -377,13 +382,13 @@
 
 <span class="kw">impl</span> <span class="ident">Decoder</span> {
     <span class="doccomment">/// Split the input iterator and return a Vec with insertions of encoded characters</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, ()<span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, ()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">insertions</span>.<span class="ident">clear</span>();
         <span class="comment">// Handle &quot;basic&quot; (ASCII) code points.</span>
         <span class="comment">// They are encoded as-is before the last delimiter, if any.</span>
         <span class="kw">let</span> (<span class="ident">base</span>, <span class="ident">input</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">input</span>.<span class="ident">rfind</span>(<span class="ident">DELIMITER</span>) {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="string">&quot;&quot;</span>, <span class="ident">input</span>),
-            <span class="prelude-val">Some</span>(<span class="ident">position</span>) <span class="op">=</span><span class="op">&gt;</span> (
+            <span class="prelude-val">None</span> =&gt; (<span class="string">&quot;&quot;</span>, <span class="ident">input</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">position</span>) =&gt; (
                 <span class="kw-2">&amp;</span><span class="ident">input</span>[..<span class="ident">position</span>],
                 <span class="kw">if</span> <span class="ident">position</span> <span class="op">&gt;</span> <span class="number">0</span> {
                     <span class="kw-2">&amp;</span><span class="ident">input</span>[<span class="ident">position</span> <span class="op">+</span> <span class="number">1</span>..]
@@ -408,18 +413,18 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">weight</span> <span class="op">=</span> <span class="number">1</span>;
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">BASE</span>;
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">byte</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                <span class="prelude-val">Some</span>(<span class="ident">byte</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">byte</span>,
+                <span class="prelude-val">None</span> =&gt; <span class="kw">break</span>,
+                <span class="prelude-val">Some</span>(<span class="ident">byte</span>) =&gt; <span class="ident">byte</span>,
             };
 
             <span class="comment">// Decode a generalized variable-length integer into delta,</span>
             <span class="comment">// which gets added to i.</span>
             <span class="kw">loop</span> {
                 <span class="kw">let</span> <span class="ident">digit</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">byte</span> {
-                    <span class="ident">byte</span> @ <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">byte</span> <span class="op">-</span> <span class="string">b&#39;0&#39;</span> <span class="op">+</span> <span class="number">26</span>,
-                    <span class="ident">byte</span> @ <span class="string">b&#39;A&#39;</span>..<span class="op">=</span><span class="string">b&#39;Z&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">byte</span> <span class="op">-</span> <span class="string">b&#39;A&#39;</span>,
-                    <span class="ident">byte</span> @ <span class="string">b&#39;a&#39;</span>..<span class="op">=</span><span class="string">b&#39;z&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">byte</span> <span class="op">-</span> <span class="string">b&#39;a&#39;</span>,
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
+                    <span class="ident">byte</span> @ <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span> =&gt; <span class="ident">byte</span> <span class="op">-</span> <span class="string">b&#39;0&#39;</span> <span class="op">+</span> <span class="number">26</span>,
+                    <span class="ident">byte</span> @ <span class="string">b&#39;A&#39;</span>..<span class="op">=</span><span class="string">b&#39;Z&#39;</span> =&gt; <span class="ident">byte</span> <span class="op">-</span> <span class="string">b&#39;A&#39;</span>,
+                    <span class="ident">byte</span> @ <span class="string">b&#39;a&#39;</span>..<span class="op">=</span><span class="string">b&#39;z&#39;</span> =&gt; <span class="ident">byte</span> <span class="op">-</span> <span class="string">b&#39;a&#39;</span>,
+                    <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
                 } <span class="kw">as</span> <span class="ident">u32</span>;
                 <span class="kw">if</span> <span class="ident">digit</span> <span class="op">&gt;</span> (<span class="ident">u32::MAX</span> <span class="op">-</span> <span class="ident">i</span>) <span class="op">/</span> <span class="ident">weight</span> {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(()); <span class="comment">// Overflow</span>
@@ -441,12 +446,12 @@
                 <span class="ident">weight</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">BASE</span> <span class="op">-</span> <span class="ident">t</span>;
                 <span class="ident">k</span> <span class="op">+</span><span class="op">=</span> <span class="ident">BASE</span>;
                 <span class="ident">byte</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">iter</span>.<span class="ident">next</span>() {
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(()), <span class="comment">// End of input before the end of this delta</span>
-                    <span class="prelude-val">Some</span>(<span class="ident">byte</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">byte</span>,
+                    <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(()), <span class="comment">// End of input before the end of this delta</span>
+                    <span class="prelude-val">Some</span>(<span class="ident">byte</span>) =&gt; <span class="ident">byte</span>,
                 };
             }
 
-            <span class="ident">bias</span> <span class="op">=</span> <span class="ident">adapt</span>(<span class="ident">i</span> <span class="op">-</span> <span class="ident">previous_i</span>, <span class="ident">length</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">previous_i</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>);
+            <span class="ident">bias</span> <span class="op">=</span> <span class="ident">adapt</span>(<span class="ident">i</span> <span class="op">-</span> <span class="ident">previous_i</span>, <span class="ident">length</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">previous_i</span> <span class="op">==</span> <span class="number">0</span>);
             <span class="kw">if</span> <span class="ident">i</span> <span class="op">/</span> (<span class="ident">length</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">&gt;</span> <span class="ident">u32::MAX</span> <span class="op">-</span> <span class="ident">code_point</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(()); <span class="comment">// Overflow</span>
             }
@@ -456,12 +461,12 @@
             <span class="ident">code_point</span> <span class="op">+</span><span class="op">=</span> <span class="ident">i</span> <span class="op">/</span> (<span class="ident">length</span> <span class="op">+</span> <span class="number">1</span>);
             <span class="ident">i</span> <span class="op">%</span><span class="op">=</span> <span class="ident">length</span> <span class="op">+</span> <span class="number">1</span>;
             <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">char::from_u32</span>(<span class="ident">code_point</span>) {
-                <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">c</span>,
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
+                <span class="prelude-val">Some</span>(<span class="ident">c</span>) =&gt; <span class="ident">c</span>,
+                <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
             };
 
             <span class="comment">// Move earlier insertions farther out in the string</span>
-            <span class="kw">for</span> (<span class="ident">idx</span>, <span class="kw">_</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">insertions</span> {
+            <span class="kw">for</span> (<span class="ident">idx</span>, <span class="kw">_</span>) <span class="kw">in</span> <span class="kw-2">&amp;mut</span> <span class="self">self</span>.<span class="ident">insertions</span> {
                 <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">idx</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span> {
                     <span class="kw-2">*</span><span class="ident">idx</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                 }
@@ -493,15 +498,15 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Decode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span> {
         <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">insertions</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">inserted</span>) {
-                <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">c</span>)) <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">pos</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">position</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Some</span>((<span class="ident">pos</span>, <span class="ident">c</span>)) <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">pos</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">position</span> =&gt; {
                     <span class="self">self</span>.<span class="ident">inserted</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                     <span class="self">self</span>.<span class="ident">position</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                     <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="ident">c</span>);
                 }
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="kw">_</span> =&gt; {}
             }
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">base</span>.<span class="ident">next</span>() {
                 <span class="self">self</span>.<span class="ident">position</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
@@ -512,14 +517,14 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">position</span>;
         (<span class="ident">len</span>, <span class="prelude-val">Some</span>(<span class="ident">len</span>))
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span> <span class="kw">for</span> <span class="ident">Decode</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">position</span>
     }
 }
@@ -528,23 +533,23 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This is a convenience wrapper around `encode`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_str</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_str</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">input</span>.<span class="ident">len</span>());
-    <span class="ident">encode_into</span>(<span class="ident">input</span>.<span class="ident">chars</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>).<span class="ident">ok</span>().<span class="ident">map</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">buf</span>)
+    <span class="ident">encode_into</span>(<span class="ident">input</span>.<span class="ident">chars</span>(), <span class="kw-2">&amp;mut</span> <span class="ident">buf</span>).<span class="ident">ok</span>().<span class="ident">map</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">buf</span>)
 }
 
 <span class="doccomment">/// Convert Unicode to Punycode.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Return None on overflow, which can only happen on inputs that would take more than</span>
 <span class="doccomment">/// 63 encoded bytes, the DNS limit on domain name labels.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">char</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">char</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String::with_capacity</span>(<span class="ident">input</span>.<span class="ident">len</span>());
-    <span class="ident">encode_into</span>(<span class="ident">input</span>.<span class="ident">iter</span>().<span class="ident">copied</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)
+    <span class="ident">encode_into</span>(<span class="ident">input</span>.<span class="ident">iter</span>().<span class="ident">copied</span>(), <span class="kw-2">&amp;mut</span> <span class="ident">buf</span>)
         .<span class="ident">ok</span>()
         .<span class="ident">map</span>(<span class="op">|</span>()<span class="op">|</span> <span class="ident">buf</span>)
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">encode_into</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">input</span>: <span class="ident">I</span>, <span class="ident">output</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">encode_into</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">input</span>: <span class="ident">I</span>, <span class="ident">output</span>: <span class="kw-2">&amp;mut</span> <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">char</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
 {
@@ -584,11 +589,11 @@
             <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span>;
             <span class="kw">if</span> <span class="ident">c</span> <span class="op">&lt;</span> <span class="ident">code_point</span> {
                 <span class="ident">delta</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="kw">if</span> <span class="ident">delta</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">delta</span> <span class="op">==</span> <span class="number">0</span> {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(()); <span class="comment">// Overflow</span>
                 }
             }
-            <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="ident">code_point</span> {
+            <span class="kw">if</span> <span class="ident">c</span> <span class="op">==</span> <span class="ident">code_point</span> {
                 <span class="comment">// Represent delta as a generalized variable-length integer:</span>
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">delta</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">BASE</span>;
@@ -609,7 +614,7 @@
                     <span class="ident">k</span> <span class="op">+</span><span class="op">=</span> <span class="ident">BASE</span>;
                 }
                 <span class="ident">output</span>.<span class="ident">push</span>(<span class="ident">value_to_digit</span>(<span class="ident">q</span>));
-                <span class="ident">bias</span> <span class="op">=</span> <span class="ident">adapt</span>(<span class="ident">delta</span>, <span class="ident">processed</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">processed</span> <span class="op">=</span><span class="op">=</span> <span class="ident">basic_length</span>);
+                <span class="ident">bias</span> <span class="op">=</span> <span class="ident">adapt</span>(<span class="ident">delta</span>, <span class="ident">processed</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">processed</span> <span class="op">==</span> <span class="ident">basic_length</span>);
                 <span class="ident">delta</span> <span class="op">=</span> <span class="number">0</span>;
                 <span class="ident">processed</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
@@ -621,14 +626,13 @@
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">value_to_digit</span>(<span class="ident">value</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">char</span> {
+<span class="kw">fn</span> <span class="ident">value_to_digit</span>(<span class="ident">value</span>: <span class="ident">u32</span>) -&gt; <span class="ident">char</span> {
     <span class="kw">match</span> <span class="ident">value</span> {
-        <span class="number">0</span>..<span class="op">=</span><span class="number">25</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">value</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">+</span> <span class="string">b&#39;a&#39;</span>) <span class="kw">as</span> <span class="ident">char</span>,       <span class="comment">// a..z</span>
-        <span class="number">26</span>..<span class="op">=</span><span class="number">35</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">value</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">-</span> <span class="number">26</span> <span class="op">+</span> <span class="string">b&#39;0&#39;</span>) <span class="kw">as</span> <span class="ident">char</span>, <span class="comment">// 0..9</span>
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(),
+        <span class="number">0</span>..<span class="op">=</span><span class="number">25</span> =&gt; (<span class="ident">value</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">+</span> <span class="string">b&#39;a&#39;</span>) <span class="kw">as</span> <span class="ident">char</span>,       <span class="comment">// a..z</span>
+        <span class="number">26</span>..<span class="op">=</span><span class="number">35</span> =&gt; (<span class="ident">value</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">-</span> <span class="number">26</span> <span class="op">+</span> <span class="string">b&#39;0&#39;</span>) <span class="kw">as</span> <span class="ident">char</span>, <span class="comment">// 0..9</span>
+        <span class="kw">_</span> =&gt; <span class="macro">panic!</span>(),
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="idna" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="idna" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

@@ -1,4 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;quick-xml-0.22.0&#x2F;src&#x2F;events&#x2F;mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../quick_xml/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/events/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../quick_xml/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../quick_xml/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../quick_xml/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -983,7 +988,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// `&amp;content[..name_len]` is not checked to be a valid name</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrowed</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">name_len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrowed</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>], <span class="ident">name_len</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">BytesStart</span> {
             <span class="ident">buf</span>: <span class="ident">Cow::Borrowed</span>(<span class="ident">content</span>),
             <span class="ident">name_len</span>,
@@ -996,7 +1001,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// `&amp;content` is not checked to be a valid name</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrowed_name</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrowed_name</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) -&gt; <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>())
     }
 
@@ -1004,7 +1009,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Owns its contents.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">owned</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">content</span>: <span class="ident">C</span>, <span class="ident">name_len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">owned</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">content</span>: <span class="ident">C</span>, <span class="ident">name_len</span>: <span class="ident">usize</span>) -&gt; <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident">BytesStart</span> {
             <span class="ident">buf</span>: <span class="ident">Cow::Owned</span>(<span class="ident">content</span>.<span class="ident">into</span>()),
             <span class="ident">name_len</span>,
@@ -1015,7 +1020,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Owns its contents.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">owned_name</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">owned_name</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="ident">C</span>) -&gt; <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">into</span>();
         <span class="ident">BytesStart</span> {
             <span class="ident">name_len</span>: <span class="ident">content</span>.<span class="ident">len</span>(),
@@ -1024,12 +1029,12 @@
     }
 
     <span class="doccomment">/// Converts the event into an owned event.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) -&gt; <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::owned</span>(<span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">into_owned</span>(), <span class="self">self</span>.<span class="ident">name_len</span>)
     }
 
     <span class="doccomment">/// Converts the event into an owned event without taking ownership of Event</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_owned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_owned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::owned</span>(<span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">to_owned</span>(), <span class="self">self</span>.<span class="ident">name_len</span>)
     }
 
@@ -1057,12 +1062,12 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`to_end`]: #method.to_end</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_borrowed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesStart</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_borrowed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">BytesStart</span> {
         <span class="ident">BytesStart::borrowed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">buf</span>, <span class="self">self</span>.<span class="ident">name_len</span>)
     }
 
     <span class="doccomment">/// Creates new paired close tag</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesEnd</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">BytesEnd</span> {
         <span class="ident">BytesEnd::borrowed</span>(<span class="self">self</span>.<span class="ident">name</span>())
     }
 
@@ -1071,7 +1076,7 @@
     <span class="doccomment">/// The yielded items must be convertible to [`Attribute`] using `Into`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Attribute`]: attributes/struct.Attributes.html</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_attributes</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attributes</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_attributes</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attributes</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">IntoIterator</span>,
         <span class="ident">I::Item</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span>,
@@ -1082,7 +1087,7 @@
 
     <span class="doccomment">/// Gets the undecoded raw tag name as a `&amp;[u8]`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">buf</span>[..<span class="self">self</span>.<span class="ident">name_len</span>]
     }
 
@@ -1090,7 +1095,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// All content up to and including the first `:` character is removed from the tag name.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">local_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">local_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span>();
         <span class="ident">memchr::memchr</span>(<span class="string">b&#39;:&#39;</span>, <span class="ident">name</span>).<span class="ident">map_or</span>(<span class="ident">name</span>, <span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="ident">name</span>[<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>..])
     }
@@ -1102,7 +1107,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`unescaped_with_custom_entities()`](#method.unescaped_with_custom_entities)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescaped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescaped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">make_unescaped</span>(<span class="prelude-val">None</span>)
     }
 
@@ -1121,7 +1126,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescaped_with_custom_entities</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;s</span> <span class="self">self</span>,
         <span class="ident">custom_entities</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">make_unescaped</span>(<span class="prelude-val">Some</span>(<span class="ident">custom_entities</span>))
     }
 
@@ -1129,24 +1134,24 @@
     <span class="kw">fn</span> <span class="ident">make_unescaped</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;s</span> <span class="self">self</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">do_unescape</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">buf</span>, <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)
     }
 
     <span class="doccomment">/// Returns an iterator over the attributes of this tag.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attributes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Attributes</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attributes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Attributes</span> {
         <span class="ident">Attributes::new</span>(<span class="self">self</span>, <span class="self">self</span>.<span class="ident">name_len</span>)
     }
 
     <span class="doccomment">/// Returns an iterator over the HTML-like attributes of this tag (no mandatory quotes or `=`).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">html_attributes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Attributes</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">html_attributes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Attributes</span> {
         <span class="ident">Attributes::html</span>(<span class="self">self</span>, <span class="self">self</span>.<span class="ident">name_len</span>)
     }
 
     <span class="doccomment">/// Gets the undecoded raw string with the attributes of this tag as a `&amp;[u8]`,</span>
     <span class="doccomment">/// including the whitespace after the tag name if there is any.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attributes_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attributes_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">buf</span>[<span class="self">self</span>.<span class="ident">name_len</span>..]
     }
 
@@ -1155,7 +1160,7 @@
     <span class="doccomment">/// The yielded items must be convertible to [`Attribute`] using `Into`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Attribute`]: attributes/struct.Attributes.html</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extend_attributes</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attributes</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extend_attributes</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">attributes</span>: <span class="ident">I</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">IntoIterator</span>,
         <span class="ident">I::Item</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span>,
@@ -1177,7 +1182,7 @@
     <span class="doccomment">/// [`unescaped()`]: #method.unescaped</span>
     <span class="doccomment">/// [`Reader::decode()`]: ../reader/struct.Reader.html#method.decode</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape_and_decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape_and_decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_with_custom_entities</span>(<span class="ident">reader</span>, <span class="prelude-val">None</span>)
     }
 
@@ -1200,7 +1205,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_with_custom_entities</span>(<span class="ident">reader</span>, <span class="prelude-val">Some</span>(<span class="ident">custom_entities</span>))
     }
 
@@ -1210,7 +1215,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>);
         <span class="kw">let</span> <span class="ident">unescaped</span> <span class="op">=</span>
             <span class="ident">do_unescape</span>(<span class="ident">decoded</span>.<span class="ident">as_bytes</span>(), <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)<span class="question-mark">?</span>;
@@ -1223,7 +1228,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">unescaped</span> <span class="op">=</span>
             <span class="ident">do_unescape</span>(<span class="ident">decoded</span>.<span class="ident">as_bytes</span>(), <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)<span class="question-mark">?</span>;
@@ -1231,7 +1236,7 @@
     }
 
     <span class="doccomment">/// Adds an attribute to this element.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">A</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">A</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">A</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">A</span>) {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">attr</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">to_mut</span>();
         <span class="ident">bytes</span>.<span class="ident">push</span>(<span class="string">b&#39; &#39;</span>);
@@ -1246,7 +1251,7 @@
     <span class="doccomment">/// # Warning</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// `name` is not checked to be a valid name</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_name</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_name</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">to_mut</span>();
         <span class="ident">bytes</span>.<span class="ident">splice</span>(..<span class="self">self</span>.<span class="ident">name_len</span>, <span class="ident">name</span>.<span class="ident">iter</span>().<span class="ident">cloned</span>());
         <span class="self">self</span>.<span class="ident">name_len</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">len</span>();
@@ -1254,14 +1259,14 @@
     }
 
     <span class="doccomment">/// Remove all attributes from the ByteStart</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_attributes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_attributes</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">to_mut</span>().<span class="ident">truncate</span>(<span class="self">self</span>.<span class="ident">name_len</span>);
         <span class="self">self</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span>) -&gt; <span class="ident">std::fmt::Result</span> {
         <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::utils::write_byte_string</span>;
 
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;BytesStart {{ buf: &quot;</span>)<span class="question-mark">?</span>;
@@ -1280,52 +1285,52 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a `BytesDecl` from a `BytesStart`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_start</span>(<span class="ident">start</span>: <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_start</span>(<span class="ident">start</span>: <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) -&gt; <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">BytesDecl</span> { <span class="ident">element</span>: <span class="ident">start</span> }
     }
 
     <span class="doccomment">/// Gets xml version, including quotes (&#39; or &quot;)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="comment">// The version *must* be the first thing in the declaration.</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">element</span>.<span class="ident">attributes</span>().<span class="ident">next</span>() {
-            <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)) =&gt; <span class="prelude-val">Err</span>(<span class="ident">e</span>),
             <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">Attribute</span> {
                 <span class="ident">key</span>: <span class="string">b&quot;version&quot;</span>,
                 <span class="ident">value</span>: <span class="ident">v</span>,
-            })) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">v</span>),
-            <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">a</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            })) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">v</span>),
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">a</span>)) =&gt; {
                 <span class="kw">let</span> <span class="ident">found</span> <span class="op">=</span> <span class="ident">from_utf8</span>(<span class="ident">a</span>.<span class="ident">key</span>).<span class="ident">map_err</span>(<span class="ident">Error::Utf8</span>)<span class="question-mark">?</span>.<span class="ident">to_string</span>();
                 <span class="prelude-val">Err</span>(<span class="ident">Error::XmlDeclWithoutVersion</span>(<span class="prelude-val">Some</span>(<span class="ident">found</span>)))
             }
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error::XmlDeclWithoutVersion</span>(<span class="prelude-val">None</span>)),
+            <span class="prelude-val">None</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::XmlDeclWithoutVersion</span>(<span class="prelude-val">None</span>)),
         }
     }
 
     <span class="doccomment">/// Gets xml encoding, including quotes (&#39; or &quot;)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">a</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">element</span>.<span class="ident">attributes</span>() {
             <span class="kw">match</span> <span class="ident">a</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)),
                 <span class="prelude-val">Ok</span>(<span class="ident">Attribute</span> {
                     <span class="ident">key</span>: <span class="string">b&quot;encoding&quot;</span>,
                     <span class="ident">value</span>: <span class="ident">v</span>,
-                }) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">v</span>)),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
+                }) =&gt; <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">v</span>)),
+                <span class="kw">_</span> =&gt; (),
             }
         }
         <span class="prelude-val">None</span>
     }
 
     <span class="doccomment">/// Gets xml standalone, including quotes (&#39; or &quot;)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">standalone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">standalone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">a</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">element</span>.<span class="ident">attributes</span>() {
             <span class="kw">match</span> <span class="ident">a</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)),
                 <span class="prelude-val">Ok</span>(<span class="ident">Attribute</span> {
                     <span class="ident">key</span>: <span class="string">b&quot;standalone&quot;</span>,
                     <span class="ident">value</span>: <span class="ident">v</span>,
-                }) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">v</span>)),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
+                }) =&gt; <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">v</span>)),
+                <span class="kw">_</span> =&gt; (),
             }
         }
         <span class="prelude-val">None</span>
@@ -1342,7 +1347,7 @@
         <span class="ident">version</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">encoding</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
         <span class="ident">standalone</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="comment">// Compute length of the buffer based on supplied attributes</span>
         <span class="comment">// &#39; encoding=&quot;&quot;&#39;   =&gt; 12</span>
         <span class="kw">let</span> <span class="ident">encoding_attr_len</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">xs</span>) <span class="op">=</span> <span class="ident">encoding</span> {
@@ -1380,14 +1385,14 @@
 
     <span class="doccomment">/// Gets the decoder struct</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding_rs&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Encoding</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">encoding</span>()
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">ok</span>())
             .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">Encoding::for_label</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>))
     }
 
     <span class="doccomment">/// Converts the event into an owned event.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) -&gt; <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident">BytesDecl</span> {
             <span class="ident">element</span>: <span class="self">self</span>.<span class="ident">element</span>.<span class="ident">into_owned</span>(),
         }
@@ -1403,7 +1408,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new `BytesEnd` borrowing a slice</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrowed</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrowed</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) -&gt; <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">BytesEnd</span> {
             <span class="ident">name</span>: <span class="ident">Cow::Borrowed</span>(<span class="ident">name</span>),
         }
@@ -1411,14 +1416,14 @@
 
     <span class="doccomment">/// Creates a new `BytesEnd` owning its name</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">owned</span>(<span class="ident">name</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">owned</span>(<span class="ident">name</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident">BytesEnd</span> {
             <span class="ident">name</span>: <span class="ident">Cow::Owned</span>(<span class="ident">name</span>),
         }
     }
 
     <span class="doccomment">/// Converts the event into an owned event.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) -&gt; <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident">BytesEnd</span> {
             <span class="ident">name</span>: <span class="ident">Cow::Owned</span>(<span class="self">self</span>.<span class="ident">name</span>.<span class="ident">into_owned</span>()),
         }
@@ -1426,7 +1431,7 @@
 
     <span class="doccomment">/// Gets `BytesEnd` event name</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">name</span>
     }
 
@@ -1434,8 +1439,8 @@
     <span class="doccomment">/// returns the name() with any leading namespace removed (all content up to</span>
     <span class="doccomment">/// and including the first &#39;:&#39; character)</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">local_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span>().<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;:&#39;</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">local_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">name</span>().<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="string">b&#39;:&#39;</span>) {
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name</span>()[<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>..]
         } <span class="kw">else</span> {
             <span class="self">self</span>.<span class="ident">name</span>()
@@ -1444,7 +1449,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span>) -&gt; <span class="ident">std::fmt::Result</span> {
         <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::utils::write_byte_string</span>;
 
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;BytesEnd {{ name: &quot;</span>)<span class="question-mark">?</span>;
@@ -1463,7 +1468,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new `BytesText` from an escaped byte sequence.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_escaped</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">content</span>: <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_escaped</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">content</span>: <span class="ident">C</span>) -&gt; <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">BytesText</span> {
             <span class="ident">content</span>: <span class="ident">content</span>.<span class="ident">into</span>(),
         }
@@ -1472,7 +1477,7 @@
     <span class="doccomment">/// Creates a new `BytesText` from a byte sequence. The byte sequence is</span>
     <span class="doccomment">/// expected not to be escaped.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_plain</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_plain</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) -&gt; <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident">BytesText</span> {
             <span class="ident">content</span>: <span class="ident">escape</span>(<span class="ident">content</span>),
         }
@@ -1480,24 +1485,24 @@
 
     <span class="doccomment">/// Creates a new `BytesText` from an escaped string.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_escaped_str</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">content</span>: <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_escaped_str</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">content</span>: <span class="ident">C</span>) -&gt; <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::from_escaped</span>(<span class="kw">match</span> <span class="ident">content</span>.<span class="ident">into</span>() {
-            <span class="ident">Cow::Owned</span>(<span class="ident">o</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cow::Owned</span>(<span class="ident">o</span>.<span class="ident">into_bytes</span>()),
-            <span class="ident">Cow::Borrowed</span>(<span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cow::Borrowed</span>(<span class="ident">b</span>.<span class="ident">as_bytes</span>()),
+            <span class="ident">Cow::Owned</span>(<span class="ident">o</span>) =&gt; <span class="ident">Cow::Owned</span>(<span class="ident">o</span>.<span class="ident">into_bytes</span>()),
+            <span class="ident">Cow::Borrowed</span>(<span class="ident">b</span>) =&gt; <span class="ident">Cow::Borrowed</span>(<span class="ident">b</span>.<span class="ident">as_bytes</span>()),
         })
     }
 
     <span class="doccomment">/// Creates a new `BytesText` from a string. The string is expected not to</span>
     <span class="doccomment">/// be escaped.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_plain_str</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_plain_str</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::from_plain</span>(<span class="ident">content</span>.<span class="ident">as_bytes</span>())
     }
 
     <span class="doccomment">/// Ensures that all data is owned to extend the object&#39;s lifetime if</span>
     <span class="doccomment">/// necessary.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) -&gt; <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident">BytesText</span> {
             <span class="ident">content</span>: <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">into_owned</span>().<span class="ident">into</span>(),
         }
@@ -1506,7 +1511,7 @@
     <span class="doccomment">/// Extracts the inner `Cow` from the `BytesText` event container.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serialize&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) -&gt; <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">content</span>
     }
 
@@ -1516,7 +1521,7 @@
     <span class="doccomment">/// returns Malformed error with index within element if &#39;&amp;&#39; is not followed by &#39;;&#39;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See also [`unescaped_with_custom_entities()`](#method.unescaped_with_custom_entities)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescaped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescaped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">make_unescaped</span>(<span class="prelude-val">None</span>)
     }
 
@@ -1534,14 +1539,14 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescaped_with_custom_entities</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;s</span> <span class="self">self</span>,
         <span class="ident">custom_entities</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">make_unescaped</span>(<span class="prelude-val">Some</span>(<span class="ident">custom_entities</span>))
     }
 
     <span class="kw">fn</span> <span class="ident">make_unescaped</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;s</span> <span class="self">self</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;s</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">do_unescape</span>(<span class="self">self</span>, <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)
     }
 
@@ -1555,8 +1560,8 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape_and_decode_without_bom</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_without_bom</span>(<span class="ident">reader</span>, <span class="prelude-val">None</span>)
     }
 
@@ -1571,7 +1576,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape_and_decode_without_bom</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_without_bom</span>(<span class="ident">reader</span>, <span class="prelude-val">None</span>)
     }
 
@@ -1589,9 +1594,9 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape_and_decode_without_bom_with_custom_entities</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
+        <span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_without_bom</span>(<span class="ident">reader</span>, <span class="prelude-val">Some</span>(<span class="ident">custom_entities</span>))
     }
 
@@ -1611,16 +1616,16 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_without_bom</span>(<span class="ident">reader</span>, <span class="prelude-val">Some</span>(<span class="ident">custom_entities</span>))
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;encoding&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">do_unescape_and_decode_without_bom</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
+        <span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode_without_bom</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>);
         <span class="kw">let</span> <span class="ident">unescaped</span> <span class="op">=</span>
             <span class="ident">do_unescape</span>(<span class="ident">decoded</span>.<span class="ident">as_bytes</span>(), <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)<span class="question-mark">?</span>;
@@ -1632,7 +1637,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode_without_bom</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">unescaped</span> <span class="op">=</span>
             <span class="ident">do_unescape</span>(<span class="ident">decoded</span>.<span class="ident">as_bytes</span>(), <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)<span class="question-mark">?</span>;
@@ -1645,7 +1650,7 @@
     <span class="doccomment">/// it might be wiser to manually use</span>
     <span class="doccomment">/// 1. BytesText::unescaped()</span>
     <span class="doccomment">/// 2. Reader::decode(...)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape_and_decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unescape_and_decode</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_with_custom_entities</span>(<span class="ident">reader</span>, <span class="prelude-val">None</span>)
     }
 
@@ -1663,7 +1668,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">do_unescape_and_decode_with_custom_entities</span>(<span class="ident">reader</span>, <span class="prelude-val">Some</span>(<span class="ident">custom_entities</span>))
     }
 
@@ -1672,7 +1677,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>);
         <span class="kw">let</span> <span class="ident">unescaped</span> <span class="op">=</span>
             <span class="ident">do_unescape</span>(<span class="ident">decoded</span>.<span class="ident">as_bytes</span>(), <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)<span class="question-mark">?</span>;
@@ -1684,7 +1689,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
         <span class="ident">custom_entities</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">unescaped</span> <span class="op">=</span>
             <span class="ident">do_unescape</span>(<span class="ident">decoded</span>.<span class="ident">as_bytes</span>(), <span class="ident">custom_entities</span>).<span class="ident">map_err</span>(<span class="ident">Error::EscapeError</span>)<span class="question-mark">?</span>;
@@ -1692,13 +1697,13 @@
     }
 
     <span class="doccomment">/// Gets escaped content.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escaped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">escaped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">content</span>.<span class="ident">as_ref</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span>) -&gt; <span class="ident">std::fmt::Result</span> {
         <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::utils::write_byte_string</span>;
 
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;BytesText {{ content: &quot;</span>)<span class="question-mark">?</span>;
@@ -1737,69 +1742,69 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Converts the event to an owned version, untied to the lifetime of</span>
     <span class="doccomment">/// buffer used when reading but incurring a new, seperate allocation.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) -&gt; <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Event::Start</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Start</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::End</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::End</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::Empty</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Empty</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::Text</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Text</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::Comment</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Comment</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::CData</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::CData</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::Decl</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Decl</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::PI</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::PI</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::DocType</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::DocType</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
-            <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Eof</span>,
+            <span class="ident">Event::Start</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::Start</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::End</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::End</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::Empty</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::Empty</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::Text</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::Text</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::Comment</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::Comment</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::CData</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::CData</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::Decl</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::Decl</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::PI</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::PI</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::DocType</span>(<span class="ident">e</span>) =&gt; <span class="ident">Event::DocType</span>(<span class="ident">e</span>.<span class="ident">into_owned</span>()),
+            <span class="ident">Event::Eof</span> =&gt; <span class="ident">Event::Eof</span>,
         }
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">BytesStart</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> [<span class="ident">u8</span>];
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">buf</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">BytesDecl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> [<span class="ident">u8</span>];
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">element</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">BytesEnd</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> [<span class="ident">u8</span>];
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">name</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">BytesText</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> [<span class="ident">u8</span>];
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">content</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> [<span class="ident">u8</span>];
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Event::Start</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">|</span> <span class="ident">Event::Empty</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::Text</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::Decl</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::PI</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::CData</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::Comment</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::DocType</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
-            <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[],
+            <span class="ident">Event::Start</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">|</span> <span class="ident">Event::Empty</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::Text</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::Decl</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::PI</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::CData</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::Comment</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::DocType</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">e</span>,
+            <span class="ident">Event::Eof</span> =&gt; <span class="kw-2">&amp;</span>[],
         }
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="self">self</span>
     }
 }
@@ -1821,19 +1826,19 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parsed_local_names</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
         <span class="kw">loop</span> {
-            <span class="kw">match</span> <span class="ident">rdr</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>).<span class="ident">expect</span>(<span class="string">&quot;unable to read xml event&quot;</span>) {
-                <span class="ident">Event::Start</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parsed_local_names</span>.<span class="ident">push</span>(
+            <span class="kw">match</span> <span class="ident">rdr</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buf</span>).<span class="ident">expect</span>(<span class="string">&quot;unable to read xml event&quot;</span>) {
+                <span class="ident">Event::Start</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="ident">parsed_local_names</span>.<span class="ident">push</span>(
                     <span class="ident">from_utf8</span>(<span class="ident">e</span>.<span class="ident">local_name</span>())
                         .<span class="ident">expect</span>(<span class="string">&quot;unable to build str from local_name&quot;</span>)
                         .<span class="ident">to_string</span>(),
                 ),
-                <span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parsed_local_names</span>.<span class="ident">push</span>(
+                <span class="ident">Event::End</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) =&gt; <span class="ident">parsed_local_names</span>.<span class="ident">push</span>(
                     <span class="ident">from_utf8</span>(<span class="ident">e</span>.<span class="ident">local_name</span>())
                         .<span class="ident">expect</span>(<span class="string">&quot;unable to build str from local_name&quot;</span>)
                         .<span class="ident">to_string</span>(),
                 ),
-                <span class="ident">Event::Eof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">break</span>,
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="ident">Event::Eof</span> =&gt; <span class="kw">break</span>,
+                <span class="kw">_</span> =&gt; {}
             }
         }
         <span class="macro">assert_eq!</span>(<span class="ident">parsed_local_names</span>[<span class="number">0</span>], <span class="string">&quot;bus&quot;</span>.<span class="ident">to_string</span>());
@@ -1879,6 +1884,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="quick_xml" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
-    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="quick_xml" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>
