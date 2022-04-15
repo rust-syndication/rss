@@ -167,10 +167,14 @@ impl SyndicationExtension {
         let mut syn = SyndicationExtension::default();
 
         with_first_ext_value(&map, "updatePeriod", |value| {
-            syn.period = value.parse().unwrap()
+            if let Ok(update_period) = value.parse() {
+                syn.period = update_period
+            }
         });
         with_first_ext_value(&map, "updateFrequency", |value| {
-            syn.frequency = value.parse().unwrap()
+            if let Ok(frequency) = value.parse() {
+                syn.frequency = frequency
+            }
         });
         with_first_ext_value(&map, "updateBase", |value| syn.base = value.to_owned());
 
