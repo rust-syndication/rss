@@ -591,15 +591,15 @@ impl ToXml for ITunesItemExtension {
         }
 
         if let Some(episode) = self.episode.as_ref() {
-            writer.write_text_element(b"itunes:episode", episode.to_string())?;
+            writer.write_text_element(b"itunes:episode", episode)?;
         }
 
         if let Some(season) = self.season.as_ref() {
-            writer.write_text_element(b"itunes:season", season.to_string())?;
+            writer.write_text_element(b"itunes:season", season)?;
         }
 
         if let Some(episode_type) = self.episode_type.as_ref() {
-            writer.write_text_element(b"itunes:episodeType", episode_type.to_string())?;
+            writer.write_text_element(b"itunes:episodeType", episode_type)?;
         }
 
         Ok(())
