@@ -2,6 +2,10 @@
 
 ## 2.x.x - Unreleased
 
+## 2.0.1 - 2022-04-17
+
+- check if update_period and frequency are valid [`#135`](https://github.com/rust-syndication/rss/pull/135)
+
 ## 2.0.0 - 2021-10-21
 
 - Disable clock feature of chrono to mitigate RUSTSEC-2020-0159 [`#130`](https://github.com/rust-syndication/rss/pull/130)
