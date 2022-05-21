@@ -114,7 +114,7 @@ impl SyndicationExtension {
         self.period = period;
     }
 
-    /// Serialises this extension to the nominated writer
+    /// Serializes this extension to the nominated writer
     pub fn to_xml<W: Write>(
         &self,
         namespaces: &BTreeMap<String, String>,
