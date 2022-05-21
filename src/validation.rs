@@ -160,7 +160,7 @@ impl Validate for Channel {
 
         if let Some(ttl) = self.ttl() {
             let ttl = ttl.parse::<i64>()?;
-            validate!(ttl > 0, "Channel TTL is not greather than 0");
+            validate!(ttl > 0, "Channel TTL is not greater than 0");
         }
 
         Ok(())
@@ -179,7 +179,7 @@ impl Validate for Category {
 impl Validate for Cloud {
     fn validate(&self) -> Result<(), ValidationError> {
         let port = self.port().parse::<i64>()?;
-        validate!(port > 0, "Cloud port must be greather than 0");
+        validate!(port > 0, "Cloud port must be greater than 0");
         Url::parse(self.domain())?;
         validate!(
             vec!["xml-rpc", "soap", "http-post"].contains(&self.protocol()),
@@ -194,7 +194,7 @@ impl Validate for Enclosure {
         Url::parse(self.url())?;
         self.mime_type().parse::<Mime>()?;
         let length = self.length().parse::<i64>()?;
-        validate!(length > 0, "Enclosure length is not greather than 0");
+        validate!(length > 0, "Enclosure length is not greater than 0");
         Ok(())
     }
 }
