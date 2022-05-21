@@ -43,7 +43,7 @@ pub struct ITunesItemExtension {
     pub duration: Option<String>,
     /// Specifies whether the podcast episode contains explicit content. A value of `Yes`,
     /// `Explicit`, or `True` indicates that the episode contains explicit content. A value of
-    /// `Clean`, `No`, `False` inidicates that episode does not contain explicit content.
+    /// `Clean`, `No`, `False` indicates that episode does not contain explicit content.
     pub explicit: Option<String>,
     /// Specifies whether the podcast episode contains embedded closed captioning. A value of `Yes`
     /// indicates that it does. Any other value indicates that it does not.
@@ -206,7 +206,7 @@ impl ITunesItemExtension {
     /// Return whether this podcast episode contains explicit content.
     ///
     /// A value of `Yes`, `Explicit`, or `True` indicates that the episode contains explicit
-    /// content. A value of `Clean`, `No`, `False` inidicates that episode does not contain
+    /// content. A value of `Clean`, `No`, `False` indicates that episode does not contain
     /// explicit content.
     ///
     /// # Examples
@@ -225,7 +225,7 @@ impl ITunesItemExtension {
     /// Set whether this podcast episode contains explicit content.
     ///
     /// A value of `Yes`, `Explicit`, or `True` indicates that the episode contains explicit
-    /// content. A value of `Clean`, `No`, `False` inidicates that episode does not contain
+    /// content. A value of `Clean`, `No`, `False` indicates that episode does not contain
     /// explicit content.
     ///
     /// # Examples
