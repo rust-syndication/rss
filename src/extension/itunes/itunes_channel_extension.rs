@@ -44,7 +44,7 @@ pub struct ITunesChannelExtension {
     pub image: Option<String>,
     /// Specifies whether the podcast contains explicit content. A value of `Yes`, `Explicit`, or
     /// `True` indicates that the podcast contains explicit content. A value of `Clean`, `No`,
-    /// `False` inidicates that none of the episodes contain explicit content.
+    /// `False` indicates that none of the episodes contain explicit content.
     pub explicit: Option<String>,
     /// Specifies whether the podcast is complete and no new episodes will be posted. A value of
     /// `Yes` indicates that the podcast is complete.
@@ -206,7 +206,7 @@ impl ITunesChannelExtension {
     /// Return whether the podcast contains explicit content.
     ///
     /// A value of `Yes`, `Explicit`, or `True` indicates that the podcast contains explicit
-    /// content. A value of `Clean`, `No`, `False` inidicates that none of the episodes contain
+    /// content. A value of `Clean`, `No`, `False` indicates that none of the episodes contain
     /// explicit content.
     ///
     /// # Examples
@@ -225,7 +225,7 @@ impl ITunesChannelExtension {
     /// Set whether the podcast contains explicit content.
     ///
     /// A value of `Yes`, `Explicit`, or `True` indicates that the podcast contains explicit
-    /// content. A value of `Clean`, `No`, `False` inidicates that none of the episodes contain
+    /// content. A value of `Clean`, `No`, `False` indicates that none of the episodes contain
     /// explicit content.
     ///
     /// # Examples
