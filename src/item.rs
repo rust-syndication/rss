@@ -634,7 +634,15 @@ impl Item {
                         item.source = Some(source);
                     }
                     b"title" => item.title = element_text(reader)?,
-                    b"link" => item.link = element_text(reader)?,
+                    b"link" => {
+                        // keep the first valid link
+                        if item.link.is_some() {
+                            // let the parse continue
+                            let _ = element_text(reader);
+                            continue;
+                        }
+                        item.link = element_text(reader)?
+                    }
                     b"description" => item.description = element_text(reader)?,
                     b"author" => item.author = element_text(reader)?,
                     b"comments" => item.comments = element_text(reader)?,
