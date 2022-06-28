@@ -158,7 +158,7 @@ fn read_rss1() {
         channel.description().lines().collect::<Vec<_>>(),
         vec![
             "XML.com features a rich mix of information and services ",
-            "      for the XML community."
+            "      for the XML community.",
         ]
     );
 
@@ -186,7 +186,7 @@ fn read_rss1() {
         Some(vec![
             "Processing document inclusions with general XML tools can be ",
             "     problematic. This article proposes a way of preserving inclusion ",
-            "     information through SAX-based processing."
+            "     information through SAX-based processing.",
         ])
     );
 }
@@ -944,4 +944,16 @@ fn read_escaped() {
     let output = channel.to_string();
     let parsed_channel = output.parse::<Channel>().unwrap();
     assert_eq!(channel, parsed_channel);
+}
+
+#[test]
+fn read_multi_links() {
+    let input = include_str!("data/multi_links.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    assert_eq!(channel.items.len(), 50);
+    assert_eq!(
+        channel.items[0].link,
+        Some("https://www.coindesk.com/markets/2022/06/28/first-mover-asia-chip-maker-nvidia-isnt-an-ether-proxy-bitcoin-holds-near-21k/?utm_medium=referral&utm_source=rss&utm_campaign=headlines".to_string()),
+    );
 }
