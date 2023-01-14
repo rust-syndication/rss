@@ -631,7 +631,11 @@ impl Item {
                         item.source = Some(source);
                     }
                     "title" => item.title = element_text(reader)?,
-                    "link" => item.link = element_text(reader)?,
+                    "link" => {
+                        if let Some(link) = element_text(reader)?.filter(|text| !text.is_empty()) {
+                            item.link = Some(link);
+                        }
+                    }
                     "description" => item.description = element_text(reader)?,
                     "author" => item.author = element_text(reader)?,
                     "comments" => item.comments = element_text(reader)?,
