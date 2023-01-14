@@ -26,7 +26,7 @@ use crate::extension::ExtensionMap;
 use crate::guid::Guid;
 use crate::source::Source;
 use crate::toxml::{ToXml, WriterExt};
-use crate::util::element_text;
+use crate::util::{decode, element_text, skip};
 
 /// Represents an item in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -615,31 +615,28 @@ impl Item {
         let mut buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf)? {
-                Event::Start(element) => match element.name() {
-                    b"category" => {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), reader)?.as_ref() {
+                    "category" => {
                         let category = Category::from_xml(reader, element.attributes())?;
                         item.categories.push(category);
                     }
-                    b"guid" => {
+                    "guid" => {
                         let guid = Guid::from_xml(reader, element.attributes())?;
                         item.guid = Some(guid);
                     }
-                    b"enclosure" => {
-                        let enclosure = Enclosure::from_xml(reader, element.attributes())?;
-                        item.enclosure = Some(enclosure);
-                    }
-                    b"source" => {
+                    "enclosure" => item.enclosure = Some(Enclosure::from_xml(reader, &element)?),
+                    "source" => {
                         let source = Source::from_xml(reader, element.attributes())?;
                         item.source = Some(source);
                     }
-                    b"title" => item.title = element_text(reader)?,
-                    b"link" => item.link = element_text(reader)?,
-                    b"description" => item.description = element_text(reader)?,
-                    b"author" => item.author = element_text(reader)?,
-                    b"comments" => item.comments = element_text(reader)?,
-                    b"pubDate" => item.pub_date = element_text(reader)?,
-                    b"content:encoded" => item.content = element_text(reader)?,
+                    "title" => item.title = element_text(reader)?,
+                    "link" => item.link = element_text(reader)?,
+                    "description" => item.description = element_text(reader)?,
+                    "author" => item.author = element_text(reader)?,
+                    "comments" => item.comments = element_text(reader)?,
+                    "pubDate" => item.pub_date = element_text(reader)?,
+                    "content:encoded" => item.content = element_text(reader)?,
                     n => {
                         if let Some((ns, name)) = extension_name(n) {
                             parse_extension(
@@ -650,7 +647,7 @@ impl Item {
                                 &mut item.extensions,
                             )?;
                         } else {
-                            reader.read_to_end(n, &mut Vec::new())?;
+                            skip(element.name(), reader)?;
                         }
                     }
                 },
@@ -688,30 +685,30 @@ impl Item {
 
 impl ToXml for Item {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"item";
+        let name = "item";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(Event::Start(BytesStart::new(name)))?;
 
         if let Some(title) = self.title.as_ref() {
-            writer.write_text_element(b"title", title)?;
+            writer.write_text_element("title", title)?;
         }
 
         if let Some(link) = self.link.as_ref() {
-            writer.write_text_element(b"link", link)?;
+            writer.write_text_element("link", link)?;
         }
 
         if let Some(description) = self.description.as_ref() {
-            writer.write_cdata_element(b"description", description)?;
+            writer.write_cdata_element("description", description)?;
         }
 
         if let Some(author) = self.author.as_ref() {
-            writer.write_text_element(b"author", author)?;
+            writer.write_text_element("author", author)?;
         }
 
         writer.write_objects(&self.categories)?;
 
         if let Some(comments) = self.comments.as_ref() {
-            writer.write_text_element(b"comments", comments)?;
+            writer.write_text_element("comments", comments)?;
         }
 
         if let Some(enclosure) = self.enclosure.as_ref() {
@@ -723,7 +720,7 @@ impl ToXml for Item {
         }
 
         if let Some(pub_date) = self.pub_date.as_ref() {
-            writer.write_text_element(b"pubDate", pub_date)?;
+            writer.write_text_element("pubDate", pub_date)?;
         }
 
         if let Some(source) = self.source.as_ref() {
@@ -731,7 +728,7 @@ impl ToXml for Item {
         }
 
         if let Some(content) = self.content.as_ref() {
-            writer.write_cdata_element(b"content:encoded", content)?;
+            writer.write_cdata_element("content:encoded", content)?;
         }
 
         for map in self.extensions.values() {
@@ -755,7 +752,7 @@ impl ToXml for Item {
             ext.to_xml(writer)?;
         }
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 

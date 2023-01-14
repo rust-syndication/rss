@@ -100,19 +100,19 @@ impl ITunesOwner {
 
 impl ToXml for ITunesOwner {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"itunes:owner";
+        let name = "itunes:owner";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(Event::Start(BytesStart::new(name)))?;
 
         if let Some(name) = self.name.as_ref() {
-            writer.write_text_element(b"itunes:name", name)?;
+            writer.write_text_element("itunes:name", name)?;
         }
 
         if let Some(email) = self.email.as_ref() {
-            writer.write_text_element(b"itunes:email", email)?;
+            writer.write_text_element("itunes:email", email)?;
         }
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 }

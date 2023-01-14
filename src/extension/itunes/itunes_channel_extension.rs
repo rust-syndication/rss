@@ -503,32 +503,32 @@ impl ITunesChannelExtension {
 impl ToXml for ITunesChannelExtension {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         if let Some(author) = self.author.as_ref() {
-            writer.write_text_element(b"itunes:author", author)?;
+            writer.write_text_element("itunes:author", author)?;
         }
 
         if let Some(block) = self.block.as_ref() {
-            writer.write_text_element(b"itunes:block", block)?;
+            writer.write_text_element("itunes:block", block)?;
         }
 
         writer.write_objects(&self.categories)?;
 
         if let Some(image) = self.image.as_ref() {
-            let name = b"itunes:image";
-            let mut element = BytesStart::borrowed(name, name.len());
+            let name = "itunes:image";
+            let mut element = BytesStart::new(name);
             element.push_attribute(("href", &**image));
             writer.write_event(Event::Empty(element))?;
         }
 
         if let Some(explicit) = self.explicit.as_ref() {
-            writer.write_text_element(b"itunes:explicit", explicit)?;
+            writer.write_text_element("itunes:explicit", explicit)?;
         }
 
         if let Some(complete) = self.complete.as_ref() {
-            writer.write_text_element(b"itunes:complete", complete)?;
+            writer.write_text_element("itunes:complete", complete)?;
         }
 
         if let Some(new_feed_url) = self.new_feed_url.as_ref() {
-            writer.write_text_element(b"itunes:new-feed-url", new_feed_url)?;
+            writer.write_text_element("itunes:new-feed-url", new_feed_url)?;
         }
 
         if let Some(owner) = self.owner.as_ref() {
@@ -536,19 +536,19 @@ impl ToXml for ITunesChannelExtension {
         }
 
         if let Some(subtitle) = self.subtitle.as_ref() {
-            writer.write_text_element(b"itunes:subtitle", subtitle)?;
+            writer.write_text_element("itunes:subtitle", subtitle)?;
         }
 
         if let Some(summary) = self.summary.as_ref() {
-            writer.write_text_element(b"itunes:summary", summary)?;
+            writer.write_text_element("itunes:summary", summary)?;
         }
 
         if let Some(keywords) = self.keywords.as_ref() {
-            writer.write_text_element(b"itunes:keywords", keywords)?;
+            writer.write_text_element("itunes:keywords", keywords)?;
         }
 
         if let Some(r#type) = self.r#type.as_ref() {
-            writer.write_text_element(b"itunes:type", r#type)?;
+            writer.write_text_element("itunes:type", r#type)?;
         }
 
         Ok(())

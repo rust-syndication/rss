@@ -387,21 +387,21 @@ impl DublinCoreExtension {
 
 impl ToXml for DublinCoreExtension {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        writer.write_text_elements(b"dc:contributor", &self.contributors)?;
-        writer.write_text_elements(b"dc:coverage", &self.coverages)?;
-        writer.write_text_elements(b"dc:creator", &self.creators)?;
-        writer.write_text_elements(b"dc:date", &self.dates)?;
-        writer.write_text_elements(b"dc:description", &self.descriptions)?;
-        writer.write_text_elements(b"dc:format", &self.formats)?;
-        writer.write_text_elements(b"dc:identifier", &self.identifiers)?;
-        writer.write_text_elements(b"dc:language", &self.languages)?;
-        writer.write_text_elements(b"dc:publisher", &self.publishers)?;
-        writer.write_text_elements(b"dc:relation", &self.relations)?;
-        writer.write_text_elements(b"dc:rights", &self.rights)?;
-        writer.write_text_elements(b"dc:source", &self.sources)?;
-        writer.write_text_elements(b"dc:subject", &self.subjects)?;
-        writer.write_text_elements(b"dc:title", &self.titles)?;
-        writer.write_text_elements(b"dc:type", &self.types)?;
+        writer.write_text_elements("dc:contributor", &self.contributors)?;
+        writer.write_text_elements("dc:coverage", &self.coverages)?;
+        writer.write_text_elements("dc:creator", &self.creators)?;
+        writer.write_text_elements("dc:date", &self.dates)?;
+        writer.write_text_elements("dc:description", &self.descriptions)?;
+        writer.write_text_elements("dc:format", &self.formats)?;
+        writer.write_text_elements("dc:identifier", &self.identifiers)?;
+        writer.write_text_elements("dc:language", &self.languages)?;
+        writer.write_text_elements("dc:publisher", &self.publishers)?;
+        writer.write_text_elements("dc:relation", &self.relations)?;
+        writer.write_text_elements("dc:rights", &self.rights)?;
+        writer.write_text_elements("dc:source", &self.sources)?;
+        writer.write_text_elements("dc:subject", &self.subjects)?;
+        writer.write_text_elements("dc:title", &self.titles)?;
+        writer.write_text_elements("dc:type", &self.types)?;
         Ok(())
     }
 
