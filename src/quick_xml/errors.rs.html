@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.22.0/src/errors.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>errors.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../quick_xml/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../quick_xml/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../quick_xml/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/quick-xml-0.27.1/src/errors.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>errors.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../quick_xml/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -227,230 +222,413 @@
 <span id="222">222</span>
 <span id="223">223</span>
 <span id="224">224</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Error management module</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Error management module
 
-<span class="doccomment">/// The error type used by this crate.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
-    <span class="doccomment">/// IO error</span>
-    <span class="ident">Io</span>(<span class="ident">::std::io::Error</span>),
-    <span class="doccomment">/// Utf8 error</span>
-    <span class="ident">Utf8</span>(<span class="ident">::std::str::Utf8Error</span>),
-    <span class="doccomment">/// Unexpected End of File</span>
-    <span class="ident">UnexpectedEof</span>(<span class="ident">String</span>),
-    <span class="doccomment">/// End event mismatch</span>
-    <span class="ident">EndEventMismatch</span> {
-        <span class="doccomment">/// Expected end event</span>
-        <span class="ident">expected</span>: <span class="ident">String</span>,
-        <span class="doccomment">/// Found end event</span>
-        <span class="ident">found</span>: <span class="ident">String</span>,
+</span><span class="kw">use </span><span class="kw">crate</span>::escape::EscapeError;
+<span class="kw">use </span><span class="kw">crate</span>::events::attributes::AttrError;
+<span class="kw">use </span><span class="kw">crate</span>::utils::write_byte_string;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::io::Error <span class="kw">as </span>IoError;
+<span class="kw">use </span>std::str::Utf8Error;
+<span class="kw">use </span>std::string::FromUtf8Error;
+<span class="kw">use </span>std::sync::Arc;
+
+<span class="doccomment">/// The error type used by this crate.
+</span><span class="attribute">#[derive(Clone, Debug)]
+</span><span class="kw">pub enum </span>Error {
+    <span class="doccomment">/// IO error.
+    ///
+    /// `Arc&lt;IoError&gt;` instead of `IoError` since `IoError` is not `Clone`.
+    </span>Io(Arc&lt;IoError&gt;),
+    <span class="doccomment">/// Input decoding error. If `encoding` feature is disabled, contains `None`,
+    /// otherwise contains the UTF-8 decoding error
+    </span>NonDecodable(<span class="prelude-ty">Option</span>&lt;Utf8Error&gt;),
+    <span class="doccomment">/// Unexpected End of File
+    </span>UnexpectedEof(String),
+    <span class="doccomment">/// End event mismatch
+    </span>EndEventMismatch {
+        <span class="doccomment">/// Expected end event
+        </span>expected: String,
+        <span class="doccomment">/// Found end event
+        </span>found: String,
     },
-    <span class="doccomment">/// Unexpected token</span>
-    <span class="ident">UnexpectedToken</span>(<span class="ident">String</span>),
-    <span class="doccomment">/// Unexpected &lt;!&gt;</span>
-    <span class="ident">UnexpectedBang</span>,
-    <span class="doccomment">/// Text not found, expected `Event::Text`</span>
-    <span class="ident">TextNotFound</span>,
-    <span class="doccomment">/// `Event::XmlDecl` must start with *version* attribute</span>
-    <span class="ident">XmlDeclWithoutVersion</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>),
-    <span class="doccomment">/// Attribute Name contains quote</span>
-    <span class="ident">NameWithQuote</span>(<span class="ident">usize</span>),
-    <span class="doccomment">/// Attribute key not followed by with `=`</span>
-    <span class="ident">NoEqAfterName</span>(<span class="ident">usize</span>),
-    <span class="doccomment">/// Attribute value not quoted</span>
-    <span class="ident">UnquotedValue</span>(<span class="ident">usize</span>),
-    <span class="doccomment">/// Duplicate attribute</span>
-    <span class="ident">DuplicatedAttribute</span>(<span class="ident">usize</span>, <span class="ident">usize</span>),
-    <span class="doccomment">/// Escape error</span>
-    <span class="ident">EscapeError</span>(<span class="ident">::escape::EscapeError</span>),
+    <span class="doccomment">/// Unexpected token
+    </span>UnexpectedToken(String),
+    <span class="doccomment">/// Unexpected &lt;!&gt;
+    </span>UnexpectedBang(u8),
+    <span class="doccomment">/// Text not found, expected `Event::Text`
+    </span>TextNotFound,
+    <span class="doccomment">/// `Event::XmlDecl` must start with *version* attribute
+    </span>XmlDeclWithoutVersion(<span class="prelude-ty">Option</span>&lt;String&gt;),
+    <span class="doccomment">/// Attribute parsing error
+    </span>InvalidAttr(AttrError),
+    <span class="doccomment">/// Escape error
+    </span>EscapeError(EscapeError),
+    <span class="doccomment">/// Specified namespace prefix is unknown, cannot resolve namespace for it
+    </span>UnknownPrefix(Vec&lt;u8&gt;),
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">::std::io::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="doccomment">/// Creates a new `Error::Io` from the given error</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="ident">::std::io::Error</span>) -&gt; <span class="ident">Error</span> {
-        <span class="ident">Error::Io</span>(<span class="ident">error</span>)
+<span class="kw">impl </span>From&lt;IoError&gt; <span class="kw">for </span>Error {
+    <span class="doccomment">/// Creates a new `Error::Io` from the given error
+    </span><span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(error: IoError) -&gt; Error {
+        Error::Io(Arc::new(error))
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">::std::str::Utf8Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="doccomment">/// Creates a new `Error::Utf8` from the given error</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error</span>: <span class="ident">::std::str::Utf8Error</span>) -&gt; <span class="ident">Error</span> {
-        <span class="ident">Error::Utf8</span>(<span class="ident">error</span>)
+<span class="kw">impl </span>From&lt;Utf8Error&gt; <span class="kw">for </span>Error {
+    <span class="doccomment">/// Creates a new `Error::NonDecodable` from the given error
+    </span><span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(error: Utf8Error) -&gt; Error {
+        Error::NonDecodable(<span class="prelude-val">Some</span>(error))
     }
 }
 
-<span class="doccomment">/// A specialized `Result` type where the error is hard-wired to [`Error`].</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`Error`]: enum.Error.html</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">::std::result::Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">impl </span>From&lt;FromUtf8Error&gt; <span class="kw">for </span>Error {
+    <span class="doccomment">/// Creates a new `Error::Utf8` from the given error
+    </span><span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(error: FromUtf8Error) -&gt; Error {
+        error.utf8_error().into()
+    }
+}
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">std::fmt::Formatter</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Error::Io</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;I/O error: {}&quot;</span>, <span class="ident">e</span>),
-            <span class="ident">Error::Utf8</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;UTF8 error: {}&quot;</span>, <span class="ident">e</span>),
-            <span class="ident">Error::UnexpectedEof</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unexpected EOF during reading {}.&quot;</span>, <span class="ident">e</span>),
-            <span class="ident">Error::EndEventMismatch</span> { <span class="ident">expected</span>, <span class="ident">found</span> } =&gt; {
-                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Expecting &lt;/{}&gt; found &lt;/{}&gt;&quot;</span>, <span class="ident">expected</span>, <span class="ident">found</span>)
+<span class="kw">impl </span>From&lt;EscapeError&gt; <span class="kw">for </span>Error {
+    <span class="doccomment">/// Creates a new `Error::EscapeError` from the given error
+    </span><span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(error: EscapeError) -&gt; Error {
+        Error::EscapeError(error)
+    }
+}
+
+<span class="kw">impl </span>From&lt;AttrError&gt; <span class="kw">for </span>Error {
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>from(error: AttrError) -&gt; <span class="self">Self </span>{
+        Error::InvalidAttr(error)
+    }
+}
+
+<span class="doccomment">/// A specialized `Result` type where the error is hard-wired to [`Error`].
+</span><span class="kw">pub type </span><span class="prelude-ty">Result</span>&lt;T&gt; = std::result::Result&lt;T, Error&gt;;
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Error {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="self">self </span>{
+            Error::Io(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;I/O error: {}&quot;</span>, e),
+            Error::NonDecodable(<span class="prelude-val">None</span>) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Malformed input, decoding impossible&quot;</span>),
+            Error::NonDecodable(<span class="prelude-val">Some</span>(e)) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Malformed UTF-8 input: {}&quot;</span>, e),
+            Error::UnexpectedEof(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unexpected EOF during reading {}&quot;</span>, e),
+            Error::EndEventMismatch { expected, found } =&gt; {
+                <span class="macro">write!</span>(f, <span class="string">&quot;Expecting &lt;/{}&gt; found &lt;/{}&gt;&quot;</span>, expected, found)
             }
-            <span class="ident">Error::UnexpectedToken</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unexpected token &#39;{}&#39;&quot;</span>, <span class="ident">e</span>),
-            <span class="ident">Error::UnexpectedBang</span> =&gt; <span class="macro">write!</span>(
-                <span class="ident">f</span>,
-                <span class="string">&quot;Only Comment, CDATA and DOCTYPE nodes can start with a &#39;!&#39;&quot;</span>
+            Error::UnexpectedToken(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unexpected token &#39;{}&#39;&quot;</span>, e),
+            Error::UnexpectedBang(b) =&gt; <span class="macro">write!</span>(
+                f,
+                <span class="string">&quot;Only Comment (`--`), CDATA (`[CDATA[`) and DOCTYPE (`DOCTYPE`) nodes can start with a &#39;!&#39;, but symbol `{}` found&quot;</span>,
+                <span class="kw-2">*</span>b <span class="kw">as </span>char
             ),
-            <span class="ident">Error::TextNotFound</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Cannot read text, expecting Event::Text&quot;</span>),
-            <span class="ident">Error::XmlDeclWithoutVersion</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(
-                <span class="ident">f</span>,
+            Error::TextNotFound =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Cannot read text, expecting Event::Text&quot;</span>),
+            Error::XmlDeclWithoutVersion(e) =&gt; <span class="macro">write!</span>(
+                f,
                 <span class="string">&quot;XmlDecl must start with &#39;version&#39; attribute, found {:?}&quot;</span>,
-                <span class="ident">e</span>
+                e
             ),
-            <span class="ident">Error::NameWithQuote</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(
-                <span class="ident">f</span>,
-                <span class="string">&quot;error while parsing attribute at position {}: \
-                 Attribute key cannot contain quote.&quot;</span>,
-                <span class="ident">e</span>
-            ),
-            <span class="ident">Error::NoEqAfterName</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(
-                <span class="ident">f</span>,
-                <span class="string">&quot;error while parsing attribute at position {}: \
-                 Attribute key must be directly followed by = or space&quot;</span>,
-                <span class="ident">e</span>
-            ),
-            <span class="ident">Error::UnquotedValue</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(
-                <span class="ident">f</span>,
-                <span class="string">&quot;error while parsing attribute at position {}: \
-                 Attribute value must start with a quote.&quot;</span>,
-                <span class="ident">e</span>
-            ),
-            <span class="ident">Error::DuplicatedAttribute</span>(<span class="ident">pos1</span>, <span class="ident">pos2</span>) =&gt; <span class="macro">write!</span>(
-                <span class="ident">f</span>,
-                <span class="string">&quot;error while parsing attribute at position {0}: \
-                 Duplicate attribute at position {1} and {0}&quot;</span>,
-                <span class="ident">pos1</span>, <span class="ident">pos2</span>
-            ),
-            <span class="ident">Error::EscapeError</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
+            Error::InvalidAttr(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;error while parsing attribute: {}&quot;</span>, e),
+            Error::EscapeError(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, e),
+            Error::UnknownPrefix(prefix) =&gt; {
+                f.write_str(<span class="string">&quot;Unknown namespace prefix &#39;&quot;</span>)<span class="question-mark">?</span>;
+                write_byte_string(f, prefix)<span class="question-mark">?</span>;
+                f.write_str(<span class="string">&quot;&#39;&quot;</span>)
+            }
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="ident">dyn</span> <span class="ident">std::error::Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Error::Io</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-            <span class="ident">Error::Utf8</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-            <span class="ident">Error::EscapeError</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+<span class="kw">impl </span>std::error::Error <span class="kw">for </span>Error {
+    <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)&gt; {
+        <span class="kw">match </span><span class="self">self </span>{
+            Error::Io(e) =&gt; <span class="prelude-val">Some</span>(e),
+            Error::NonDecodable(<span class="prelude-val">Some</span>(e)) =&gt; <span class="prelude-val">Some</span>(e),
+            Error::InvalidAttr(e) =&gt; <span class="prelude-val">Some</span>(e),
+            Error::EscapeError(e) =&gt; <span class="prelude-val">Some</span>(e),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serialize&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">serialize</span> {
-    <span class="doccomment">//! A module to handle serde (de)serialization errors</span>
+<span class="attribute">#[cfg(feature = <span class="string">&quot;serialize&quot;</span>)]
+</span><span class="kw">pub mod </span>serialize {
+    <span class="doccomment">//! A module to handle serde (de)serialization errors
 
-    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::Error</span>;
-    <span class="kw">use</span> <span class="ident">std::fmt</span>;
+    </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">crate</span>::utils::write_byte_string;
+    <span class="kw">use </span>std::borrow::Cow;
+    <span class="attribute">#[cfg(feature = <span class="string">&quot;overlapped-lists&quot;</span>)]
+    </span><span class="kw">use </span>std::num::NonZeroUsize;
+    <span class="kw">use </span>std::num::{ParseFloatError, ParseIntError};
 
-    <span class="doccomment">/// (De)serialization error</span>
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DeError</span> {
-        <span class="doccomment">/// Serde custom error</span>
-        <span class="ident">Custom</span>(<span class="ident">String</span>),
-        <span class="doccomment">/// Cannot parse to integer</span>
-        <span class="ident">Int</span>(<span class="ident">std::num::ParseIntError</span>),
-        <span class="doccomment">/// Cannot parse to float</span>
-        <span class="ident">Float</span>(<span class="ident">std::num::ParseFloatError</span>),
-        <span class="doccomment">/// Xml parsing error</span>
-        <span class="ident">Xml</span>(<span class="ident">Error</span>),
-        <span class="doccomment">/// Unexpected end of attributes</span>
-        <span class="ident">EndOfAttributes</span>,
-        <span class="doccomment">/// Unexpected end of file</span>
-        <span class="ident">Eof</span>,
-        <span class="doccomment">/// Invalid value for a boolean</span>
-        <span class="ident">InvalidBoolean</span>(<span class="ident">String</span>),
-        <span class="doccomment">/// Invalid unit value</span>
-        <span class="ident">InvalidUnit</span>(<span class="ident">String</span>),
-        <span class="doccomment">/// Invalid event for Enum</span>
-        <span class="ident">InvalidEnum</span>(<span class="ident"><span class="kw">crate</span>::events::Event</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>),
-        <span class="doccomment">/// Expecting Text event</span>
-        <span class="ident">Text</span>,
-        <span class="doccomment">/// Expecting Start event</span>
-        <span class="ident">Start</span>,
-        <span class="doccomment">/// Expecting End event</span>
-        <span class="ident">End</span>,
-        <span class="doccomment">/// Unsupported operation</span>
-        <span class="ident">Unsupported</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>),
+    <span class="doccomment">/// (De)serialization error
+    </span><span class="attribute">#[derive(Clone, Debug)]
+    </span><span class="kw">pub enum </span>DeError {
+        <span class="doccomment">/// Serde custom error
+        </span>Custom(String),
+        <span class="doccomment">/// Xml parsing error
+        </span>InvalidXml(Error),
+        <span class="doccomment">/// Cannot parse to integer
+        </span>InvalidInt(ParseIntError),
+        <span class="doccomment">/// Cannot parse to float
+        </span>InvalidFloat(ParseFloatError),
+        <span class="doccomment">/// Cannot parse specified value to boolean
+        </span>InvalidBoolean(String),
+        <span class="doccomment">/// This error indicates an error in the [`Deserialize`](serde::Deserialize)
+        /// implementation when read a map or a struct: `MapAccess::next_value[_seed]`
+        /// was called before `MapAccess::next_key[_seed]`.
+        ///
+        /// You should check your types, that implements corresponding trait.
+        </span>KeyNotRead,
+        <span class="doccomment">/// Deserializer encounter a start tag with a specified name when it is
+        /// not expecting. This happens when you try to deserialize a primitive
+        /// value (numbers, strings, booleans) from an XML element.
+        </span>UnexpectedStart(Vec&lt;u8&gt;),
+        <span class="doccomment">/// Deserializer encounter an end tag with a specified name when it is
+        /// not expecting. Usually that should not be possible, because XML reader
+        /// is not able to produce such stream of events that lead to this error.
+        ///
+        /// If you get this error this likely indicates and error in the `quick_xml`.
+        /// Please open an issue at &lt;https://github.com/tafia/quick-xml&gt;, provide
+        /// your Rust code and XML input.
+        </span>UnexpectedEnd(Vec&lt;u8&gt;),
+        <span class="doccomment">/// The [`Reader`] produced [`Event::Eof`] when it is not expecting,
+        /// for example, after producing [`Event::Start`] but before corresponding
+        /// [`Event::End`].
+        ///
+        /// [`Reader`]: crate::reader::Reader
+        /// [`Event::Eof`]: crate::events::Event::Eof
+        /// [`Event::Start`]: crate::events::Event::Start
+        /// [`Event::End`]: crate::events::Event::End
+        </span>UnexpectedEof,
+        <span class="doccomment">/// This error indicates that [`deserialize_struct`] was called, but there
+        /// is no any XML element in the input. That means that you try to deserialize
+        /// a struct not from an XML element.
+        ///
+        /// [`deserialize_struct`]: serde::de::Deserializer::deserialize_struct
+        </span>ExpectedStart,
+        <span class="doccomment">/// An attempt to deserialize to a type, that is not supported by the XML
+        /// store at current position, for example, attempt to deserialize `struct`
+        /// from attribute or attempt to deserialize binary data.
+        ///
+        /// Serialized type cannot be represented in an XML due to violation of the
+        /// XML rules in the final XML document. For example, attempt to serialize
+        /// a `HashMap&lt;{integer}, ...&gt;` would cause this error because [XML name]
+        /// cannot start from a digit or a hyphen (minus sign). The same result
+        /// would occur if map key is a complex type that cannot be serialized as
+        /// a primitive type (i.e. string, char, bool, unit struct or unit variant).
+        ///
+        /// [XML name]: https://www.w3.org/TR/REC-xml/#sec-common-syn
+        </span>Unsupported(Cow&lt;<span class="lifetime">&#39;static</span>, str&gt;),
+        <span class="doccomment">/// Too many events were skipped while deserializing a sequence, event limit
+        /// exceeded. The limit was provided as an argument
+        </span><span class="attribute">#[cfg(feature = <span class="string">&quot;overlapped-lists&quot;</span>)]
+        </span>TooManyEvents(NonZeroUsize),
     }
 
-    <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">DeError</span> {
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
-            <span class="kw">match</span> <span class="self">self</span> {
-                <span class="ident">DeError::Custom</span>(<span class="ident">s</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">s</span>),
-                <span class="ident">DeError::Xml</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
-                <span class="ident">DeError::Int</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
-                <span class="ident">DeError::Float</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
-                <span class="ident">DeError::EndOfAttributes</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unexpected end of attributes&quot;</span>),
-                <span class="ident">DeError::Eof</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unexpected `Event::Eof`&quot;</span>),
-                <span class="ident">DeError::InvalidBoolean</span>(<span class="ident">v</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid boolean value &#39;{}&#39;&quot;</span>, <span class="ident">v</span>),
-                <span class="ident">DeError::InvalidUnit</span>(<span class="ident">v</span>) =&gt; {
-                    <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid unit value &#39;{}&#39;, expected empty string&quot;</span>, <span class="ident">v</span>)
+    <span class="kw">impl </span>fmt::Display <span class="kw">for </span>DeError {
+        <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+            <span class="kw">match </span><span class="self">self </span>{
+                DeError::Custom(s) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, s),
+                DeError::InvalidXml(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, e),
+                DeError::InvalidInt(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, e),
+                DeError::InvalidFloat(e) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, e),
+                DeError::InvalidBoolean(v) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Invalid boolean value &#39;{}&#39;&quot;</span>, v),
+                DeError::KeyNotRead =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Invalid `Deserialize` implementation: `MapAccess::next_value[_seed]` was called before `MapAccess::next_key[_seed]`&quot;</span>),
+                DeError::UnexpectedStart(e) =&gt; {
+                    f.write_str(<span class="string">&quot;Unexpected `Event::Start(&quot;</span>)<span class="question-mark">?</span>;
+                    write_byte_string(f, e)<span class="question-mark">?</span>;
+                    f.write_str(<span class="string">&quot;)`&quot;</span>)
                 }
-                <span class="ident">DeError::InvalidEnum</span>(<span class="ident">e</span>) =&gt; <span class="macro">write!</span>(
-                    <span class="ident">f</span>,
-                    <span class="string">&quot;Invalid event for Enum, expecting Text or Start, got: {:?}&quot;</span>,
-                    <span class="ident">e</span>
-                ),
-                <span class="ident">DeError::Text</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Expecting Text event&quot;</span>),
-                <span class="ident">DeError::Start</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Expecting Start event&quot;</span>),
-                <span class="ident">DeError::End</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Expecting End event&quot;</span>),
-                <span class="ident">DeError::Unsupported</span>(<span class="ident">s</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Unsupported operation {}&quot;</span>, <span class="ident">s</span>),
+                DeError::UnexpectedEnd(e) =&gt; {
+                    f.write_str(<span class="string">&quot;Unexpected `Event::End(&quot;</span>)<span class="question-mark">?</span>;
+                    write_byte_string(f, e)<span class="question-mark">?</span>;
+                    f.write_str(<span class="string">&quot;)`&quot;</span>)
+                }
+                DeError::UnexpectedEof =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unexpected `Event::Eof`&quot;</span>),
+                DeError::ExpectedStart =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Expecting `Event::Start`&quot;</span>),
+                DeError::Unsupported(s) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unsupported operation: {}&quot;</span>, s),
+                <span class="attribute">#[cfg(feature = <span class="string">&quot;overlapped-lists&quot;</span>)]
+                </span>DeError::TooManyEvents(s) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Deserializer buffers {} events, limit exceeded&quot;</span>, s),
             }
         }
     }
 
-    <span class="kw">impl</span> <span class="ident">::std::error::Error</span> <span class="kw">for</span> <span class="ident">DeError</span> {
-        <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="ident">dyn</span> <span class="ident">std::error::Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
-            <span class="kw">match</span> <span class="self">self</span> {
-                <span class="ident">DeError::Int</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-                <span class="ident">DeError::Float</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-                <span class="ident">DeError::Xml</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">e</span>),
-                <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+    <span class="kw">impl </span>::std::error::Error <span class="kw">for </span>DeError {
+        <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)&gt; {
+            <span class="kw">match </span><span class="self">self </span>{
+                DeError::InvalidXml(e) =&gt; <span class="prelude-val">Some</span>(e),
+                DeError::InvalidInt(e) =&gt; <span class="prelude-val">Some</span>(e),
+                DeError::InvalidFloat(e) =&gt; <span class="prelude-val">Some</span>(e),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
             }
         }
     }
 
-    <span class="kw">impl</span> <span class="ident">serde::de::Error</span> <span class="kw">for</span> <span class="ident">DeError</span> {
-        <span class="kw">fn</span> <span class="ident">custom</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt::Display</span><span class="op">&gt;</span>(<span class="ident">msg</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
-            <span class="ident">DeError::Custom</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>())
+    <span class="kw">impl </span>serde::de::Error <span class="kw">for </span>DeError {
+        <span class="kw">fn </span>custom&lt;T: fmt::Display&gt;(msg: T) -&gt; <span class="self">Self </span>{
+            DeError::Custom(msg.to_string())
         }
     }
 
-    <span class="kw">impl</span> <span class="ident">serde::ser::Error</span> <span class="kw">for</span> <span class="ident">DeError</span> {
-        <span class="kw">fn</span> <span class="ident">custom</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt::Display</span><span class="op">&gt;</span>(<span class="ident">msg</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
-            <span class="ident">DeError::Custom</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>())
+    <span class="kw">impl </span>serde::ser::Error <span class="kw">for </span>DeError {
+        <span class="kw">fn </span>custom&lt;T: fmt::Display&gt;(msg: T) -&gt; <span class="self">Self </span>{
+            DeError::Custom(msg.to_string())
         }
     }
 
-    <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DeError</span> {
-        <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">Error</span>) -&gt; <span class="self">Self</span> {
-            <span class="ident">DeError::Xml</span>(<span class="ident">e</span>)
+    <span class="kw">impl </span>From&lt;Error&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: Error) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::InvalidXml(e)
         }
     }
 
-    <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">std::num::ParseIntError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DeError</span> {
-        <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">std::num::ParseIntError</span>) -&gt; <span class="self">Self</span> {
-            <span class="ident">DeError::Int</span>(<span class="ident">e</span>)
+    <span class="kw">impl </span>From&lt;EscapeError&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: EscapeError) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::InvalidXml(e.into())
         }
     }
 
-    <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">std::num::ParseFloatError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DeError</span> {
-        <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">std::num::ParseFloatError</span>) -&gt; <span class="self">Self</span> {
-            <span class="ident">DeError::Float</span>(<span class="ident">e</span>)
+    <span class="kw">impl </span>From&lt;Utf8Error&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: Utf8Error) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::InvalidXml(e.into())
+        }
+    }
+
+    <span class="kw">impl </span>From&lt;FromUtf8Error&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: FromUtf8Error) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::InvalidXml(e.into())
+        }
+    }
+
+    <span class="kw">impl </span>From&lt;AttrError&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: AttrError) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::InvalidXml(e.into())
+        }
+    }
+
+    <span class="kw">impl </span>From&lt;ParseIntError&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: ParseIntError) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::InvalidInt(e)
+        }
+    }
+
+    <span class="kw">impl </span>From&lt;ParseFloatError&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: ParseFloatError) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::InvalidFloat(e)
+        }
+    }
+
+    <span class="kw">impl </span>From&lt;fmt::Error&gt; <span class="kw">for </span>DeError {
+        <span class="attribute">#[inline]
+        </span><span class="kw">fn </span>from(e: fmt::Error) -&gt; <span class="self">Self </span>{
+            <span class="self">Self</span>::Custom(e.to_string())
         }
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="quick_xml" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="quick_xml" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

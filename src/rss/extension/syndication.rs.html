@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/syndication.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>syndication.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../rss/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/syndication.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>syndication.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../rss/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -216,219 +211,218 @@
 <span id="211">211</span>
 <span id="212">212</span>
 <span id="213">213</span>
-</pre><pre class="rust"><code><span class="comment">// This file is part of rss.</span>
-<span class="comment">//</span>
-<span class="comment">// Copyright © 2015-2021 The rust-syndication Developers</span>
-<span class="comment">//</span>
-<span class="comment">// This program is free software; you can redistribute it and/or modify</span>
-<span class="comment">// it under the terms of the MIT License and/or Apache 2.0 License.</span>
+</pre><pre class="rust"><code><span class="comment">// This file is part of rss.
+//
+// Copyright © 2015-2021 The rust-syndication Developers
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the MIT License and/or Apache 2.0 License.
 
-<span class="kw">use</span> <span class="ident">std::collections::BTreeMap</span>;
-<span class="kw">use</span> <span class="ident">std::fmt</span>;
-<span class="kw">use</span> <span class="ident">std::io::Write</span>;
-<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
+</span><span class="kw">use </span>std::collections::BTreeMap;
+<span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::io::Write;
+<span class="kw">use </span>std::str::FromStr;
 
-<span class="kw">use</span> <span class="ident">quick_xml::Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::Writer</span>;
+<span class="kw">use </span>quick_xml::Error <span class="kw">as </span>XmlError;
+<span class="kw">use </span>quick_xml::Writer;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::extension::Extension</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::toxml::WriterExt</span>;
+<span class="kw">use </span><span class="kw">crate</span>::extension::Extension;
+<span class="kw">use </span><span class="kw">crate</span>::toxml::WriterExt;
 
-<span class="doccomment">/// The Syndication XML namespace.</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NAMESPACE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;http://purl.org/rss/1.0/modules/syndication/&quot;</span>;
+<span class="doccomment">/// The Syndication XML namespace.
+</span><span class="kw">pub const </span>NAMESPACE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;http://purl.org/rss/1.0/modules/syndication/&quot;</span>;
 
-<span class="doccomment">/// The unit of time between updates/refreshes</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">UpdatePeriod</span> {
-    <span class="doccomment">/// refresh hourly</span>
-    <span class="ident">Hourly</span>,
-    <span class="doccomment">/// refresh daily</span>
-    <span class="ident">Daily</span>,
-    <span class="doccomment">/// refresh weekly</span>
-    <span class="ident">Weekly</span>,
-    <span class="doccomment">/// refresh monthly</span>
-    <span class="ident">Monthly</span>,
-    <span class="doccomment">/// refresh yearly</span>
-    <span class="ident">Yearly</span>,
+<span class="doccomment">/// The unit of time between updates/refreshes
+</span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[derive(Debug, Clone, PartialEq)]
+</span><span class="kw">pub enum </span>UpdatePeriod {
+    <span class="doccomment">/// refresh hourly
+    </span>Hourly,
+    <span class="doccomment">/// refresh daily
+    </span>Daily,
+    <span class="doccomment">/// refresh weekly
+    </span>Weekly,
+    <span class="doccomment">/// refresh monthly
+    </span>Monthly,
+    <span class="doccomment">/// refresh yearly
+    </span>Yearly,
 }
 
-<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">UpdatePeriod</span> {
-    <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> ();
+<span class="kw">impl </span>FromStr <span class="kw">for </span>UpdatePeriod {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= ();
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">s</span> {
-            <span class="string">&quot;hourly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Hourly</span>),
-            <span class="string">&quot;daily&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Daily</span>),
-            <span class="string">&quot;weekly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Weekly</span>),
-            <span class="string">&quot;monthly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Monthly</span>),
-            <span class="string">&quot;yearly&quot;</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">UpdatePeriod::Yearly</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(()),
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+        <span class="kw">match </span>s {
+            <span class="string">&quot;hourly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Hourly),
+            <span class="string">&quot;daily&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Daily),
+            <span class="string">&quot;weekly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Weekly),
+            <span class="string">&quot;monthly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Monthly),
+            <span class="string">&quot;yearly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Yearly),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(()),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">UpdatePeriod</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">UpdatePeriod::Hourly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;hourly&quot;</span>),
-            <span class="ident">UpdatePeriod::Daily</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;daily&quot;</span>),
-            <span class="ident">UpdatePeriod::Weekly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;weekly&quot;</span>),
-            <span class="ident">UpdatePeriod::Monthly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;monthly&quot;</span>),
-            <span class="ident">UpdatePeriod::Yearly</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;yearly&quot;</span>),
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>UpdatePeriod {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            UpdatePeriod::Hourly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;hourly&quot;</span>),
+            UpdatePeriod::Daily =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;daily&quot;</span>),
+            UpdatePeriod::Weekly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;weekly&quot;</span>),
+            UpdatePeriod::Monthly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;monthly&quot;</span>),
+            UpdatePeriod::Yearly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;yearly&quot;</span>),
         }
     }
 }
 
-<span class="doccomment">/// An RSS syndication element extension.</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>, <span class="ident">derive</span>(<span class="ident">Builder</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(
-    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>,
-    <span class="ident">builder</span>(
-        <span class="ident">setter</span>(<span class="ident">into</span>),
-        <span class="ident">default</span>,
-        <span class="ident">build_fn</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;build_impl&quot;</span>, <span class="ident">private</span>, <span class="ident">error</span> <span class="op">=</span> <span class="string">&quot;never::Never&quot;</span>)
+<span class="doccomment">/// An RSS syndication element extension.
+</span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[derive(Debug, Clone, PartialEq)]
+#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(
+    feature = <span class="string">&quot;builders&quot;</span>,
+    builder(
+        setter(into),
+        default,
+        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
     )
-)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SyndicationExtension</span> {
-    <span class="doccomment">/// The refresh period for this channel</span>
-    <span class="kw">pub</span> <span class="ident">period</span>: <span class="ident">UpdatePeriod</span>,
-    <span class="doccomment">/// Number of periods between refreshes</span>
-    <span class="kw">pub</span> <span class="ident">frequency</span>: <span class="ident">u32</span>,
-    <span class="doccomment">/// Timestamp from which the refresh periods are calculated</span>
-    <span class="kw">pub</span> <span class="ident">base</span>: <span class="ident">String</span>,
+)]
+</span><span class="kw">pub struct </span>SyndicationExtension {
+    <span class="doccomment">/// The refresh period for this channel
+    </span><span class="kw">pub </span>period: UpdatePeriod,
+    <span class="doccomment">/// Number of periods between refreshes
+    </span><span class="kw">pub </span>frequency: u32,
+    <span class="doccomment">/// Timestamp from which the refresh periods are calculated
+    </span><span class="kw">pub </span>base: String,
 }
 
-<span class="kw">impl</span> <span class="ident">SyndicationExtension</span> {
-    <span class="doccomment">/// Retrieve the base timestamp from which the refresh periods are calculated</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">base</span>
+<span class="kw">impl </span>SyndicationExtension {
+    <span class="doccomment">/// Retrieve the base timestamp from which the refresh periods are calculated
+    </span><span class="kw">pub fn </span>base(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.base
     }
 
-    <span class="doccomment">/// Set the base from which the refresh periods are calculated</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_base</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
-        <span class="self">self</span>.<span class="ident">base</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">to_owned</span>();
+    <span class="doccomment">/// Set the base from which the refresh periods are calculated
+    </span><span class="kw">pub fn </span>set_base(<span class="kw-2">&amp;mut </span><span class="self">self</span>, base: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.base = base.to_owned();
     }
 
-    <span class="doccomment">/// Retrieve the number of periods between refreshes</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frequency</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
-        <span class="self">self</span>.<span class="ident">frequency</span>
+    <span class="doccomment">/// Retrieve the number of periods between refreshes
+    </span><span class="kw">pub fn </span>frequency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
+        <span class="self">self</span>.frequency
     }
 
-    <span class="doccomment">/// Set the number of periods between refreshes</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_frequency</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">frequency</span>: <span class="ident">u32</span>) {
-        <span class="self">self</span>.<span class="ident">frequency</span> <span class="op">=</span> <span class="ident">frequency</span>;
+    <span class="doccomment">/// Set the number of periods between refreshes
+    </span><span class="kw">pub fn </span>set_frequency(<span class="kw-2">&amp;mut </span><span class="self">self</span>, frequency: u32) {
+        <span class="self">self</span>.frequency = frequency;
     }
 
-    <span class="doccomment">/// Retrieve the refresh period for this channel</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">period</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">UpdatePeriod</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">period</span>
+    <span class="doccomment">/// Retrieve the refresh period for this channel
+    </span><span class="kw">pub fn </span>period(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>UpdatePeriod {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.period
     }
 
-    <span class="doccomment">/// Set the refresh period for this channel</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_period</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">period</span>: <span class="ident">UpdatePeriod</span>) {
-        <span class="self">self</span>.<span class="ident">period</span> <span class="op">=</span> <span class="ident">period</span>;
+    <span class="doccomment">/// Set the refresh period for this channel
+    </span><span class="kw">pub fn </span>set_period(<span class="kw-2">&amp;mut </span><span class="self">self</span>, period: UpdatePeriod) {
+        <span class="self">self</span>.period = period;
     }
 
-    <span class="doccomment">/// Serializes this extension to the nominated writer</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(
+    <span class="doccomment">/// Serializes this extension to the nominated writer
+    </span><span class="kw">pub fn </span>to_xml&lt;W: Write&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">namespaces</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
-        <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
-        <span class="kw">for</span> (<span class="ident">prefix</span>, <span class="ident">namespace</span>) <span class="kw">in</span> <span class="ident">namespaces</span> {
-            <span class="kw">if</span> <span class="ident">NAMESPACE</span> <span class="op">==</span> <span class="ident">namespace</span> {
-                <span class="ident">writer</span>.<span class="ident">write_text_element</span>(
-                    <span class="macro">format!</span>(<span class="string">&quot;{}:updatePeriod&quot;</span>, <span class="ident">prefix</span>),
-                    <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">period</span>.<span class="ident">to_string</span>(),
+        namespaces: <span class="kw-2">&amp;</span>BTreeMap&lt;String, String&gt;,
+        writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
+        <span class="kw">for </span>(prefix, namespace) <span class="kw">in </span>namespaces {
+            <span class="kw">if </span>NAMESPACE == namespace {
+                writer.write_text_element(
+                    <span class="macro">format!</span>(<span class="string">&quot;{}:updatePeriod&quot;</span>, prefix),
+                    <span class="kw-2">&amp;</span><span class="self">self</span>.period.to_string(),
                 )<span class="question-mark">?</span>;
-                <span class="ident">writer</span>.<span class="ident">write_text_element</span>(
-                    <span class="macro">format!</span>(<span class="string">&quot;{}:updateFrequency&quot;</span>, <span class="ident">prefix</span>),
-                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">frequency</span>),
+                writer.write_text_element(
+                    <span class="macro">format!</span>(<span class="string">&quot;{}:updateFrequency&quot;</span>, prefix),
+                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.frequency),
                 )<span class="question-mark">?</span>;
-                <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="macro">format!</span>(<span class="string">&quot;{}:updateBase&quot;</span>, <span class="ident">prefix</span>), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">base</span>)<span class="question-mark">?</span>;
+                writer.write_text_element(<span class="macro">format!</span>(<span class="string">&quot;{}:updateBase&quot;</span>, prefix), <span class="kw-2">&amp;</span><span class="self">self</span>.base)<span class="question-mark">?</span>;
             }
         }
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">SyndicationExtension</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident">SyndicationExtension</span> {
-            <span class="ident">period</span>: <span class="ident">UpdatePeriod::Daily</span>,
-            <span class="ident">frequency</span>: <span class="number">1</span>,
-            <span class="ident">base</span>: <span class="ident">String::from</span>(<span class="string">&quot;1970-01-01T00:00+00:00&quot;</span>),
+<span class="kw">impl </span>Default <span class="kw">for </span>SyndicationExtension {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        SyndicationExtension {
+            period: UpdatePeriod::Daily,
+            frequency: <span class="number">1</span>,
+            base: String::from(<span class="string">&quot;1970-01-01T00:00+00:00&quot;</span>),
         }
     }
 }
 
-<span class="doccomment">/// Retrieves the extensions for the nominated field and runs the callback if there is at least 1 extension value</span>
-<span class="kw">fn</span> <span class="ident">with_first_ext_value</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">map</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">f</span>: <span class="ident">F</span>)
-<span class="kw">where</span>
-    <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>),
+<span class="doccomment">/// Retrieves the extensions for the nominated field and runs the callback if there is at least 1 extension value
+</span><span class="kw">fn </span>with_first_ext_value&lt;<span class="lifetime">&#39;a</span>, F&gt;(map: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>BTreeMap&lt;String, Vec&lt;Extension&gt;&gt;, field: <span class="kw-2">&amp;</span>str, f: F)
+<span class="kw">where
+    </span>F: FnOnce(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str),
 {
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">extensions</span>) <span class="op">=</span> <span class="ident">map</span>.<span class="ident">get</span>(<span class="ident">field</span>) {
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">extensions</span>.<span class="ident">is_empty</span>() {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span> <span class="ident">extensions</span>[<span class="number">0</span>].<span class="ident">value</span>.<span class="ident">as_ref</span>() {
-                <span class="ident">f</span>(<span class="ident">v</span>);
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(extensions) = map.get(field) {
+        <span class="kw">if </span>!extensions.is_empty() {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(v) = extensions[<span class="number">0</span>].value.as_ref() {
+                f(v);
             }
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">SyndicationExtension</span> {
-    <span class="doccomment">/// Creates a `SyndicationExtension` using the specified `BTreeMap`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_map</span>(<span class="ident">map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Extension</span><span class="op">&gt;</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">syn</span> <span class="op">=</span> <span class="ident">SyndicationExtension::default</span>();
+<span class="kw">impl </span>SyndicationExtension {
+    <span class="doccomment">/// Creates a `SyndicationExtension` using the specified `BTreeMap`.
+    </span><span class="kw">pub fn </span>from_map(map: BTreeMap&lt;String, Vec&lt;Extension&gt;&gt;) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="kw-2">mut </span>syn = SyndicationExtension::default();
 
-        <span class="ident">with_first_ext_value</span>(<span class="kw-2">&amp;</span><span class="ident">map</span>, <span class="string">&quot;updatePeriod&quot;</span>, <span class="op">|</span><span class="ident">value</span><span class="op">|</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">update_period</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>() {
-                <span class="ident">syn</span>.<span class="ident">period</span> <span class="op">=</span> <span class="ident">update_period</span>
+        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">&quot;updatePeriod&quot;</span>, |value| {
+            <span class="kw">if let </span><span class="prelude-val">Ok</span>(update_period) = value.parse() {
+                syn.period = update_period
             }
         });
-        <span class="ident">with_first_ext_value</span>(<span class="kw-2">&amp;</span><span class="ident">map</span>, <span class="string">&quot;updateFrequency&quot;</span>, <span class="op">|</span><span class="ident">value</span><span class="op">|</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">frequency</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">parse</span>() {
-                <span class="ident">syn</span>.<span class="ident">frequency</span> <span class="op">=</span> <span class="ident">frequency</span>
+        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">&quot;updateFrequency&quot;</span>, |value| {
+            <span class="kw">if let </span><span class="prelude-val">Ok</span>(frequency) = value.parse() {
+                syn.frequency = frequency
             }
         });
-        <span class="ident">with_first_ext_value</span>(<span class="kw-2">&amp;</span><span class="ident">map</span>, <span class="string">&quot;updateBase&quot;</span>, <span class="op">|</span><span class="ident">value</span><span class="op">|</span> <span class="ident">syn</span>.<span class="ident">base</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_owned</span>());
+        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">&quot;updateBase&quot;</span>, |value| syn.base = value.to_owned());
 
-        <span class="ident">syn</span>
+        syn
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">SyndicationExtensionBuilder</span> {
-    <span class="doccomment">/// Builds a new `SyndicationExtension`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">SyndicationExtension</span> {
-        <span class="self">self</span>.<span class="ident">build_impl</span>().<span class="ident">unwrap</span>()
+<span class="attribute">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+</span><span class="kw">impl </span>SyndicationExtensionBuilder {
+    <span class="doccomment">/// Builds a new `SyndicationExtension`.
+    </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; SyndicationExtension {
+        <span class="self">self</span>.build_impl().unwrap()
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">test_builder</span>() {
+    <span class="attribute">#[test]
+    #[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+    </span><span class="kw">fn </span>test_builder() {
         <span class="macro">assert_eq!</span>(
-            <span class="ident">SyndicationExtensionBuilder::default</span>()
-                .<span class="ident">period</span>(<span class="ident">UpdatePeriod::Weekly</span>)
-                .<span class="ident">frequency</span>(<span class="number">2_u32</span>)
-                .<span class="ident">base</span>(<span class="string">&quot;2021-01-01T00:00+00:00&quot;</span>)
-                .<span class="ident">build</span>(),
-            <span class="ident">SyndicationExtension</span> {
-                <span class="ident">period</span>: <span class="ident">UpdatePeriod::Weekly</span>,
-                <span class="ident">frequency</span>: <span class="number">2</span>,
-                <span class="ident">base</span>: <span class="string">&quot;2021-01-01T00:00+00:00&quot;</span>.<span class="ident">to_string</span>(),
+            SyndicationExtensionBuilder::default()
+                .period(UpdatePeriod::Weekly)
+                .frequency(<span class="number">2_u32</span>)
+                .base(<span class="string">&quot;2021-01-01T00:00+00:00&quot;</span>)
+                .build(),
+            SyndicationExtension {
+                period: UpdatePeriod::Weekly,
+                frequency: <span class="number">2</span>,
+                base: <span class="string">&quot;2021-01-01T00:00+00:00&quot;</span>.to_string(),
             }
         );
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

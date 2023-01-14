@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.10.2/src/setter.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>setter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.12.0/src/setter.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>setter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -550,180 +545,285 @@
 <span id="545">545</span>
 <span id="546">546</span>
 <span id="547">547</span>
-</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy::useless_let_if_seq</span>)]</span>
-<span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span>};
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">ToTokens</span>, <span class="ident">TokenStreamExt</span>};
-<span class="kw">use</span> <span class="ident">syn</span>;
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+</pre><pre class="rust"><code><span class="attribute">#![allow(clippy::useless_let_if_seq)]
+</span><span class="kw">use </span>std::borrow::Cow;
 
-<span class="kw">use</span> <span class="ident">BuilderPattern</span>;
-<span class="kw">use</span> <span class="ident">DeprecationNotes</span>;
+<span class="kw">use </span>proc_macro2::{Span, TokenStream};
+<span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
+<span class="kw">use </span>syn;
 
-<span class="doccomment">/// Setter for the struct fields in the build method, implementing</span>
-<span class="doccomment">/// `quote::ToTokens`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Examples</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Will expand to something like the following (depending on settings):</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust,ignore</span>
-<span class="doccomment">/// # extern crate proc_macro2;</span>
-<span class="doccomment">/// # #[macro_use]</span>
-<span class="doccomment">/// # extern crate quote;</span>
-<span class="doccomment">/// # extern crate syn;</span>
-<span class="doccomment">/// # #[macro_use]</span>
-<span class="doccomment">/// # extern crate derive_builder_core;</span>
-<span class="doccomment">/// # use derive_builder_core::{Setter, BuilderPattern};</span>
-<span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// #     let mut setter = default_setter!();</span>
-<span class="doccomment">/// #     setter.pattern = BuilderPattern::Mutable;</span>
-<span class="doccomment">/// #</span>
-<span class="doccomment">/// #     assert_eq!(quote!(#setter).to_string(), quote!(</span>
-<span class="doccomment">/// # #[allow(unused_mut)]</span>
-<span class="doccomment">/// pub fn foo(&amp;mut self, value: Foo) -&gt; &amp;mut Self {</span>
-<span class="doccomment">///     let mut new = self;</span>
-<span class="doccomment">///     new.foo = ::derive_builder::export::core::option::Option::Some(value);</span>
-<span class="doccomment">///     new</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">/// #     ).to_string());</span>
-<span class="doccomment">/// # }</span>
-<span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Setter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Enables code generation for this setter fn.</span>
-    <span class="kw">pub</span> <span class="ident">setter_enabled</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Enables code generation for the `try_` variant of this setter fn.</span>
-    <span class="kw">pub</span> <span class="ident">try_setter</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Visibility of the setter, e.g. `syn::Visibility::Public`.</span>
-    <span class="kw">pub</span> <span class="ident">visibility</span>: <span class="ident">syn::Visibility</span>,
-    <span class="doccomment">/// How the setter method takes and returns `self` (e.g. mutably).</span>
-    <span class="kw">pub</span> <span class="ident">pattern</span>: <span class="ident">BuilderPattern</span>,
-    <span class="doccomment">/// Attributes which will be attached to this setter fn.</span>
-    <span class="kw">pub</span> <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">syn::Attribute</span>],
-    <span class="doccomment">/// Name of this setter fn.</span>
-    <span class="kw">pub</span> <span class="ident">ident</span>: <span class="ident">syn::Ident</span>,
-    <span class="doccomment">/// Name of the target field.</span>
-    <span class="kw">pub</span> <span class="ident">field_ident</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Ident</span>,
-    <span class="doccomment">/// Type of the target field.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The corresonding builder field will be `Option&lt;field_type&gt;`.</span>
-    <span class="kw">pub</span> <span class="ident">field_type</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Type</span>,
-    <span class="doccomment">/// Make the setter generic over `Into&lt;T&gt;`, where `T` is the field type.</span>
-    <span class="kw">pub</span> <span class="ident">generic_into</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Make the setter remove the Option wrapper from the setter, remove the need to call Some(...).</span>
-    <span class="doccomment">/// when combined with into, the into is used on the content Type of the Option.</span>
-    <span class="kw">pub</span> <span class="ident">strip_option</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Emit deprecation notes to the user.</span>
-    <span class="kw">pub</span> <span class="ident">deprecation_notes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">DeprecationNotes</span>,
-    <span class="doccomment">/// Emit extend method.</span>
-    <span class="kw">pub</span> <span class="ident">each</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Ident</span><span class="op">&gt;</span>,
+<span class="kw">use </span>BuilderFieldType;
+<span class="kw">use </span>BuilderPattern;
+<span class="kw">use </span>DeprecationNotes;
+<span class="kw">use </span>Each;
+
+<span class="doccomment">/// Setter for the struct fields in the build method, implementing
+/// `quote::ToTokens`.
+///
+/// # Examples
+///
+/// Will expand to something like the following (depending on settings):
+///
+/// ```rust,ignore
+/// # extern crate proc_macro2;
+/// # #[macro_use]
+/// # extern crate quote;
+/// # extern crate syn;
+/// # #[macro_use]
+/// # extern crate derive_builder_core;
+/// # use derive_builder_core::{Setter, BuilderPattern};
+/// # fn main() {
+/// #     let mut setter = default_setter!();
+/// #     setter.pattern = BuilderPattern::Mutable;
+/// #
+/// #     assert_eq!(quote!(#setter).to_string(), quote!(
+/// # #[allow(unused_mut)]
+/// pub fn foo(&amp;mut self, value: Foo) -&gt; &amp;mut Self {
+///     let mut new = self;
+///     new.foo = ::derive_builder::export::core::option::Option::Some(value);
+///     new
+/// }
+/// #     ).to_string());
+/// # }
+/// ```
+</span><span class="attribute">#[derive(Debug, Clone)]
+</span><span class="kw">pub struct </span>Setter&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Path to the root of the derive_builder crate.
+    </span><span class="kw">pub </span>crate_root: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Path,
+    <span class="doccomment">/// Enables code generation for this setter fn.
+    </span><span class="kw">pub </span>setter_enabled: bool,
+    <span class="doccomment">/// Enables code generation for the `try_` variant of this setter fn.
+    </span><span class="kw">pub </span>try_setter: bool,
+    <span class="doccomment">/// Visibility of the setter, e.g. `syn::Visibility::Public`.
+    </span><span class="kw">pub </span>visibility: Cow&lt;<span class="lifetime">&#39;a</span>, syn::Visibility&gt;,
+    <span class="doccomment">/// How the setter method takes and returns `self` (e.g. mutably).
+    </span><span class="kw">pub </span>pattern: BuilderPattern,
+    <span class="doccomment">/// Attributes which will be attached to this setter fn.
+    </span><span class="kw">pub </span>attrs: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[syn::Attribute],
+    <span class="doccomment">/// Name of this setter fn.
+    </span><span class="kw">pub </span>ident: syn::Ident,
+    <span class="doccomment">/// Name of the target field.
+    </span><span class="kw">pub </span>field_ident: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Ident,
+    <span class="doccomment">/// Type of the builder field.
+    ///
+    /// The corresonding builder field will be `Option&lt;field_type&gt;`.
+    </span><span class="kw">pub </span>field_type: BuilderFieldType&lt;<span class="lifetime">&#39;a</span>&gt;,
+    <span class="doccomment">/// Make the setter generic over `Into&lt;T&gt;`, where `T` is the field type.
+    </span><span class="kw">pub </span>generic_into: bool,
+    <span class="doccomment">/// Make the setter remove the Option wrapper from the setter, remove the need to call Some(...).
+    /// when combined with into, the into is used on the content Type of the Option.
+    </span><span class="kw">pub </span>strip_option: bool,
+    <span class="doccomment">/// Emit deprecation notes to the user.
+    </span><span class="kw">pub </span>deprecation_notes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>DeprecationNotes,
+    <span class="doccomment">/// Emit extend method.
+    </span><span class="kw">pub </span>each: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Each&gt;,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">Setter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">setter_enabled</span> {
-            <span class="kw">let</span> <span class="ident">field_type</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">field_type</span>;
-            <span class="kw">let</span> <span class="ident">pattern</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pattern</span>;
-            <span class="kw">let</span> <span class="ident">vis</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">visibility</span>;
-            <span class="kw">let</span> <span class="ident">field_ident</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">field_ident</span>;
-            <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ident</span>;
-            <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">attrs</span>;
-            <span class="kw">let</span> <span class="ident">deprecation_notes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">deprecation_notes</span>;
-            <span class="kw">let</span> (<span class="ident">ty</span>, <span class="ident">stripped_option</span>) <span class="op">=</span> {
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">strip_option</span> {
-                    <span class="kw">match</span> <span class="ident">extract_type_from_option</span>(<span class="ident">field_type</span>) {
-                        <span class="prelude-val">Some</span>(<span class="ident">ty</span>) =&gt; (<span class="ident">ty</span>, <span class="bool-val">true</span>),
-                        <span class="prelude-val">None</span> =&gt; (<span class="ident">field_type</span>, <span class="bool-val">false</span>),
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>Setter&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">if </span><span class="self">self</span>.setter_enabled {
+            <span class="kw">let </span>crate_root = <span class="self">self</span>.crate_root;
+            <span class="kw">let </span>pattern = <span class="self">self</span>.pattern;
+            <span class="kw">let </span>vis = <span class="kw-2">&amp;</span><span class="self">self</span>.visibility;
+            <span class="kw">let </span>field_ident = <span class="self">self</span>.field_ident;
+            <span class="kw">let </span>ident = <span class="kw-2">&amp;</span><span class="self">self</span>.ident;
+            <span class="kw">let </span>attrs = <span class="self">self</span>.attrs;
+            <span class="kw">let </span>deprecation_notes = <span class="self">self</span>.deprecation_notes;
+
+            <span class="kw">let </span>self_param: TokenStream;
+            <span class="kw">let </span>return_ty: TokenStream;
+            <span class="kw">let </span>self_into_return_ty: TokenStream;
+
+            <span class="kw">match </span>pattern {
+                BuilderPattern::Owned =&gt; {
+                    self_param = <span class="macro">quote!</span>(<span class="self">self</span>);
+                    return_ty = <span class="macro">quote!</span>(<span class="self">Self</span>);
+                    self_into_return_ty = <span class="macro">quote!</span>(<span class="self">self</span>);
+                }
+                BuilderPattern::Mutable =&gt; {
+                    self_param = <span class="macro">quote!</span>(<span class="kw-2">&amp;mut </span><span class="self">self</span>);
+                    return_ty = <span class="macro">quote!</span>(<span class="kw-2">&amp;mut </span><span class="self">Self</span>);
+                    self_into_return_ty = <span class="macro">quote!</span>(<span class="self">self</span>);
+                }
+                BuilderPattern::Immutable =&gt; {
+                    self_param = <span class="macro">quote!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
+                    return_ty = <span class="macro">quote!</span>(<span class="self">Self</span>);
+                    self_into_return_ty =
+                        <span class="macro">quote!</span>(#crate_root::export::core::clone::Clone::clone(<span class="self">self</span>));
+                }
+            };
+
+            <span class="kw">let </span>ty_params: TokenStream;
+            <span class="kw">let </span>param_ty: TokenStream;
+            <span class="kw">let </span><span class="kw-2">mut </span>into_value: TokenStream;
+
+            <span class="kw">let </span>(field_type, builder_field_is_option) = <span class="self">self</span>.field_type.setter_type_info();
+
+            <span class="kw">let </span>(ty, stripped_option) = {
+                <span class="kw">if </span><span class="self">self</span>.strip_option {
+                    <span class="kw">match </span>extract_type_from_option(field_type) {
+                        <span class="prelude-val">Some</span>(ty) =&gt; (ty, <span class="bool-val">true</span>),
+                        <span class="prelude-val">None </span>=&gt; (field_type, <span class="bool-val">false</span>),
                     }
-                } <span class="kw">else</span> {
-                    (<span class="ident">field_type</span>, <span class="bool-val">false</span>)
+                } <span class="kw">else </span>{
+                    (field_type, <span class="bool-val">false</span>)
                 }
             };
 
-            <span class="kw">let</span> <span class="ident">self_param</span>: <span class="ident">TokenStream</span>;
-            <span class="kw">let</span> <span class="ident">return_ty</span>: <span class="ident">TokenStream</span>;
-            <span class="kw">let</span> <span class="ident">self_into_return_ty</span>: <span class="ident">TokenStream</span>;
-
-            <span class="kw">match</span> <span class="ident">pattern</span> {
-                <span class="ident">BuilderPattern::Owned</span> =&gt; {
-                    <span class="ident">self_param</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="self">self</span>);
-                    <span class="ident">return_ty</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="self">Self</span>);
-                    <span class="ident">self_into_return_ty</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="self">self</span>);
-                }
-                <span class="ident">BuilderPattern::Mutable</span> =&gt; {
-                    <span class="ident">self_param</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>);
-                    <span class="ident">return_ty</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="kw-2">&amp;mut</span> <span class="self">Self</span>);
-                    <span class="ident">self_into_return_ty</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="self">self</span>);
-                }
-                <span class="ident">BuilderPattern::Immutable</span> =&gt; {
-                    <span class="ident">self_param</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>);
-                    <span class="ident">return_ty</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="self">Self</span>);
-                    <span class="ident">self_into_return_ty</span> <span class="op">=</span>
-                        <span class="macro">quote!</span>(<span class="ident">::derive_builder::export::core::clone::Clone::clone</span>(<span class="self">self</span>));
-                }
-            };
-
-            <span class="kw">let</span> <span class="ident">ty_params</span>: <span class="ident">TokenStream</span>;
-            <span class="kw">let</span> <span class="ident">param_ty</span>: <span class="ident">TokenStream</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">into_value</span>: <span class="ident">TokenStream</span>;
-
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">generic_into</span> {
-                <span class="ident">ty_params</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::Into</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span><span class="op">&gt;</span>);
-                <span class="ident">param_ty</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="ident">VALUE</span>);
-                <span class="ident">into_value</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="ident">value</span>.<span class="ident">into</span>());
-            } <span class="kw">else</span> {
-                <span class="ident">ty_params</span> <span class="op">=</span> <span class="macro">quote!</span>();
-                <span class="ident">param_ty</span> <span class="op">=</span> <span class="macro">quote!</span>(#<span class="ident">ty</span>);
-                <span class="ident">into_value</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="ident">value</span>);
+            <span class="kw">if </span><span class="self">self</span>.generic_into {
+                ty_params = <span class="macro">quote!</span>(&lt;VALUE: #crate_root::export::core::convert::Into&lt;#ty&gt;&gt;);
+                param_ty = <span class="macro">quote!</span>(VALUE);
+                into_value = <span class="macro">quote!</span>(value.into());
+            } <span class="kw">else </span>{
+                ty_params = <span class="macro">quote!</span>();
+                param_ty = <span class="macro">quote!</span>(#ty);
+                into_value = <span class="macro">quote!</span>(value);
             }
-            <span class="kw">if</span> <span class="ident">stripped_option</span> {
-                <span class="ident">into_value</span> <span class="op">=</span>
-                    <span class="macro">quote!</span>(<span class="ident">::derive_builder::export::core::option::Option::Some</span>(#<span class="ident">into_value</span>));
+            <span class="comment">// If both `stripped_option` and `builder_field_is_option`, the target field is `Option&lt;field_type&gt;`,
+            // the builder field is `Option&lt;Option&lt;field_type&gt;&gt;`, and the setter takes `file_type`, so we must wrap it twice.
+            </span><span class="kw">if </span>stripped_option {
+                into_value = wrap_expression_in_some(crate_root, into_value);
             }
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #(#<span class="ident">attrs</span>)<span class="op">*</span>
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                #<span class="ident">vis</span> <span class="kw">fn</span> #<span class="ident">ident</span> #<span class="ident">ty_params</span> (#<span class="ident">self_param</span>, <span class="ident">value</span>: #<span class="ident">param_ty</span>)
-                    -&gt; #<span class="ident">return_ty</span>
+            <span class="kw">if </span>builder_field_is_option {
+                into_value = wrap_expression_in_some(crate_root, into_value);
+            }
+
+            tokens.append_all(<span class="macro">quote!</span>(
+                #(#attrs)*
+                <span class="attribute">#[allow(unused_mut)]
+                </span>#vis <span class="kw">fn </span>#ident #ty_params (#self_param, value: #param_ty)
+                    -&gt; #return_ty
                 {
-                    #<span class="ident">deprecation_notes</span>
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> #<span class="ident">self_into_return_ty</span>;
-                    <span class="ident">new</span>.#<span class="ident">field_ident</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(#<span class="ident">into_value</span>);
-                    <span class="ident">new</span>
+                    #deprecation_notes
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = #self_into_return_ty;
+                    new.#field_ident = #into_value;
+                    new
                 }
             ));
 
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">try_setter</span> {
-                <span class="kw">let</span> <span class="ident">try_ty_params</span> <span class="op">=</span>
-                    <span class="macro">quote!</span>(<span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::TryInto</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span><span class="op">&gt;</span>);
-                <span class="kw">let</span> <span class="ident">try_ident</span> <span class="op">=</span> <span class="ident">syn::Ident::new</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;try_{}&quot;</span>, <span class="ident">ident</span>), <span class="ident">Span::call_site</span>());
+            <span class="kw">if </span><span class="self">self</span>.try_setter {
+                <span class="kw">let </span>try_ty_params =
+                    <span class="macro">quote!</span>(&lt;VALUE: #crate_root::export::core::convert::TryInto&lt;#ty&gt;&gt;);
+                <span class="kw">let </span>try_ident = syn::Ident::new(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;try_{}&quot;</span>, ident), Span::call_site());
 
-                <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                    #(#<span class="ident">attrs</span>)<span class="op">*</span>
-                    #<span class="ident">vis</span> <span class="kw">fn</span> #<span class="ident">try_ident</span> #<span class="ident">try_ty_params</span> (#<span class="ident">self_param</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>)
-                        -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span>#<span class="ident">return_ty</span>, <span class="ident">VALUE::Error</span><span class="op">&gt;</span>
+                <span class="kw">let </span><span class="kw-2">mut </span>converted = <span class="macro">quote! </span>{converted};
+                <span class="kw">if </span>builder_field_is_option {
+                    converted = wrap_expression_in_some(crate_root, converted);
+                }
+
+                tokens.append_all(<span class="macro">quote!</span>(
+                    #(#attrs)*
+                    #vis <span class="kw">fn </span>#try_ident #try_ty_params (#self_param, value: VALUE)
+                        -&gt; #crate_root::export::core::result::Result&lt;#return_ty, VALUE::Error&gt;
                     {
-                        <span class="kw">let</span> <span class="ident">converted</span> : #<span class="ident">ty</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>;
-                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> #<span class="ident">self_into_return_ty</span>;
-                        <span class="ident">new</span>.#<span class="ident">field_ident</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">converted</span>);
-                        <span class="prelude-val">Ok</span>(<span class="ident">new</span>)
+                        <span class="kw">let </span>converted : #ty = value.try_into()<span class="question-mark">?</span>;
+                        <span class="kw">let </span><span class="kw-2">mut </span>new = #self_into_return_ty;
+                        new.#field_ident = #converted;
+                        <span class="prelude-val">Ok</span>(new)
                     }
                 ));
             }
 
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">ident_each</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">each</span> {
-                <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                    #(#<span class="ident">attrs</span>)<span class="op">*</span>
-                    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                    #<span class="ident">vis</span> <span class="kw">fn</span> #<span class="ident">ident_each</span> <span class="op">&lt;</span><span class="ident">VALUE</span><span class="op">&gt;</span>(#<span class="ident">self_param</span>, <span class="ident">item</span>: <span class="ident">VALUE</span>) -&gt; #<span class="ident">return_ty</span>
-                    <span class="kw">where</span>
-                        #<span class="ident">ty</span>: <span class="ident">::derive_builder::export::core::default::Default</span> <span class="op">+</span> <span class="ident">::derive_builder::export::core::iter::Extend</span><span class="op">&lt;</span><span class="ident">VALUE</span><span class="op">&gt;</span>,
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(each) = <span class="self">self</span>.each {
+                <span class="kw">let </span>ident_each = <span class="kw-2">&amp;</span>each.name;
+
+                <span class="comment">// Access the collection to extend, initialising with default value if necessary.
+                </span><span class="kw">let </span>get_initialized_collection = <span class="kw">if </span>stripped_option {
+                    <span class="comment">// Outer (builder) Option -&gt; Inner (field) Option -&gt; collection.
+                    </span><span class="macro">quote!</span>(get_or_insert_with(|| <span class="prelude-val">Some</span>(
+                        #crate_root::export::core::default::Default::default()
+                    ))
+                    .get_or_insert_with(#crate_root::export::core::default::Default::default))
+                } <span class="kw">else </span>{
+                    <span class="comment">// Outer (builder) Option -&gt; collection.
+                    </span><span class="macro">quote!</span>(get_or_insert_with(
+                        #crate_root::export::core::default::Default::default
+                    ))
+                };
+
+                <span class="kw">let </span>ty_params: TokenStream;
+                <span class="kw">let </span>param_ty: TokenStream;
+                <span class="kw">let </span>into_item: TokenStream;
+
+                <span class="kw">if </span>each.into {
+                    ty_params = <span class="macro">quote!</span>(&lt;VALUE, FROM_VALUE: #crate_root::export::core::convert::Into&lt;VALUE&gt;&gt;);
+                    param_ty = <span class="macro">quote!</span>(FROM_VALUE);
+                    into_item = <span class="macro">quote!</span>(#crate_root::export::core::convert::Into::into(item));
+                } <span class="kw">else </span>{
+                    ty_params = <span class="macro">quote!</span>(&lt;VALUE&gt;);
+                    param_ty = <span class="macro">quote!</span>(VALUE);
+                    into_item = <span class="macro">quote!</span>(item);
+                }
+
+                tokens.append_all(<span class="macro">quote!</span>(
+                    #(#attrs)*
+                    <span class="attribute">#[allow(unused_mut)]
+                    </span>#vis <span class="kw">fn </span>#ident_each #ty_params(#self_param, item: #param_ty) -&gt; #return_ty
+                    <span class="kw">where
+                        </span>#ty: #crate_root::export::core::default::Default + #crate_root::export::core::iter::Extend&lt;VALUE&gt;,
                     {
-                        #<span class="ident">deprecation_notes</span>
-                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> #<span class="ident">self_into_return_ty</span>;
-                        <span class="ident">new</span>.#<span class="ident">field_ident</span>
-                            .<span class="ident">get_or_insert_with</span>(<span class="ident">::derive_builder::export::core::default::Default::default</span>)
-                            .<span class="ident">extend</span>(<span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">item</span>));
-                        <span class="ident">new</span>
+                        #deprecation_notes
+                        <span class="kw">let </span><span class="kw-2">mut </span>new = #self_into_return_ty;
+                        new.#field_ident
+                            .#get_initialized_collection
+                            .extend(#crate_root::export::core::option::Option::Some(#into_item));
+                        new
                     }
                 ));
             }
@@ -731,372 +831,378 @@
     }
 }
 
-<span class="comment">// adapted from https://stackoverflow.com/a/55277337/469066</span>
-<span class="comment">// Note that since syn is a parser, it works with tokens.</span>
-<span class="comment">// We cannot know for sure that this is an Option.</span>
-<span class="comment">// The user could, for example, `type MaybeString = std::option::Option&lt;String&gt;`</span>
-<span class="comment">// We cannot handle those arbitrary names.</span>
-<span class="kw">fn</span> <span class="ident">extract_type_from_option</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Type</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">syn::Type</span><span class="op">&gt;</span> {
-    <span class="kw">use</span> <span class="ident">syn::punctuated::Pair</span>;
-    <span class="kw">use</span> <span class="ident">syn::token::Colon2</span>;
-    <span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">GenericArgument</span>, <span class="ident">Path</span>, <span class="ident">PathArguments</span>, <span class="ident">PathSegment</span>};
+<span class="doccomment">/// Returns expression wrapping `bare_value` in `Some`
+</span><span class="kw">fn </span>wrap_expression_in_some(crate_root: <span class="kw-2">&amp;</span>syn::Path, bare_value: <span class="kw">impl </span>ToTokens) -&gt; TokenStream {
+    <span class="macro">quote!</span>( #crate_root::export::core::option::Option::Some(#bare_value) )
+}
 
-    <span class="kw">fn</span> <span class="ident">extract_type_path</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Type</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Path</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">ty</span> {
-            <span class="ident">syn::Type::Path</span>(<span class="kw-2">ref</span> <span class="ident">typepath</span>) <span class="kw">if</span> <span class="ident">typepath</span>.<span class="ident">qself</span>.<span class="ident">is_none</span>() =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">typepath</span>.<span class="ident">path</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+<span class="comment">// adapted from https://stackoverflow.com/a/55277337/469066
+// Note that since syn is a parser, it works with tokens.
+// We cannot know for sure that this is an Option.
+// The user could, for example, `type MaybeString = std::option::Option&lt;String&gt;`
+// We cannot handle those arbitrary names.
+</span><span class="kw">fn </span>extract_type_from_option(ty: <span class="kw-2">&amp;</span>syn::Type) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>syn::Type&gt; {
+    <span class="kw">use </span>syn::punctuated::Pair;
+    <span class="kw">use </span>syn::token::Colon2;
+    <span class="kw">use </span>syn::{GenericArgument, Path, PathArguments, PathSegment};
+
+    <span class="kw">fn </span>extract_type_path(ty: <span class="kw-2">&amp;</span>syn::Type) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Path&gt; {
+        <span class="kw">match </span><span class="kw-2">*</span>ty {
+            syn::Type::Path(<span class="kw-2">ref </span>typepath) <span class="kw">if </span>typepath.qself.is_none() =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>typepath.path),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="comment">// TODO store (with lazy static) precomputed parsing of Option when support of rust 1.18 will be removed (incompatible with lazy_static)</span>
-    <span class="comment">// TODO maybe optimization, reverse the order of segments</span>
-    <span class="kw">fn</span> <span class="ident">extract_option_segment</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Pair</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PathSegment</span>, <span class="kw-2">&amp;</span><span class="ident">Colon2</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">idents_of_path</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">iter</span>().<span class="ident">fold</span>(<span class="ident">String::new</span>(), <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">acc</span>, <span class="ident">v</span><span class="op">|</span> {
-            <span class="ident">acc</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>());
-            <span class="ident">acc</span>.<span class="ident">push</span>(<span class="string">&#39;|&#39;</span>);
-            <span class="ident">acc</span>
+    <span class="comment">// TODO store (with lazy static) precomputed parsing of Option when support of rust 1.18 will be removed (incompatible with lazy_static)
+    // TODO maybe optimization, reverse the order of segments
+    </span><span class="kw">fn </span>extract_option_segment(path: <span class="kw-2">&amp;</span>Path) -&gt; <span class="prelude-ty">Option</span>&lt;Pair&lt;<span class="kw-2">&amp;</span>PathSegment, <span class="kw-2">&amp;</span>Colon2&gt;&gt; {
+        <span class="kw">let </span>idents_of_path = path.segments.iter().fold(String::new(), |<span class="kw-2">mut </span>acc, v| {
+            acc.push_str(<span class="kw-2">&amp;</span>v.ident.to_string());
+            acc.push(<span class="string">&#39;|&#39;</span>);
+            acc
         });
         <span class="macro">vec!</span>[<span class="string">&quot;Option|&quot;</span>, <span class="string">&quot;std|option|Option|&quot;</span>, <span class="string">&quot;core|option|Option|&quot;</span>]
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">find</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">idents_of_path</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">s</span>)
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">last</span>().<span class="ident">map</span>(<span class="ident">Pair::End</span>))
+            .into_iter()
+            .find(|s| idents_of_path == <span class="kw-2">*</span>s)
+            .and_then(|<span class="kw">_</span>| path.segments.last().map(Pair::End))
     }
 
-    <span class="ident">extract_type_path</span>(<span class="ident">ty</span>)
-        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">path</span><span class="op">|</span> <span class="ident">extract_option_segment</span>(<span class="ident">path</span>))
-        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">pair_path_segment</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">type_params</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">pair_path_segment</span>.<span class="ident">into_value</span>().<span class="ident">arguments</span>;
-            <span class="comment">// It should have only on angle-bracketed param (&quot;&lt;String&gt;&quot;):</span>
-            <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">type_params</span> {
-                <span class="ident">PathArguments::AngleBracketed</span>(<span class="kw-2">ref</span> <span class="ident">params</span>) =&gt; <span class="ident">params</span>.<span class="ident">args</span>.<span class="ident">first</span>(),
-                <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+    extract_type_path(ty)
+        .and_then(extract_option_segment)
+        .and_then(|pair_path_segment| {
+            <span class="kw">let </span>type_params = <span class="kw-2">&amp;</span>pair_path_segment.into_value().arguments;
+            <span class="comment">// It should have only on angle-bracketed param (&quot;&lt;String&gt;&quot;):
+            </span><span class="kw">match </span><span class="kw-2">*</span>type_params {
+                PathArguments::AngleBracketed(<span class="kw-2">ref </span>params) =&gt; params.args.first(),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
             }
         })
-        .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">generic_arg</span><span class="op">|</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">generic_arg</span> {
-            <span class="ident">GenericArgument::Type</span>(<span class="kw-2">ref</span> <span class="ident">ty</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">ty</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
+        .and_then(|generic_arg| <span class="kw">match </span><span class="kw-2">*</span>generic_arg {
+            GenericArgument::Type(<span class="kw-2">ref </span>ty) =&gt; <span class="prelude-val">Some</span>(ty),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         })
 }
 
-<span class="doccomment">/// Helper macro for unit tests. This is _only_ public in order to be accessible</span>
-<span class="doccomment">/// from doc-tests too.</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules!</span> <span class="ident">default_setter</span> {
+<span class="doccomment">/// Helper macro for unit tests. This is _only_ public in order to be accessible
+/// from doc-tests too.
+</span><span class="attribute">#[doc(hidden)]
+#[macro_export]
+</span><span class="macro">macro_rules! </span>default_setter {
     () =&gt; {
-        <span class="ident">Setter</span> {
-            <span class="ident">setter_enabled</span>: <span class="bool-val">true</span>,
-            <span class="ident">try_setter</span>: <span class="bool-val">false</span>,
-            <span class="ident">visibility</span>: <span class="ident">syn::parse_str</span>(<span class="string">&quot;pub&quot;</span>).<span class="ident">unwrap</span>(),
-            <span class="ident">pattern</span>: <span class="ident">BuilderPattern::Mutable</span>,
-            <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="macro">vec!</span>[],
-            <span class="ident">ident</span>: <span class="ident">syn::Ident::new</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">::proc_macro2::Span::call_site</span>()),
-            <span class="ident">field_ident</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident::new</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">::proc_macro2::Span::call_site</span>()),
-            <span class="ident">field_type</span>: <span class="kw-2">&amp;</span><span class="ident">syn::parse_str</span>(<span class="string">&quot;Foo&quot;</span>).<span class="ident">unwrap</span>(),
-            <span class="ident">generic_into</span>: <span class="bool-val">false</span>,
-            <span class="ident">strip_option</span>: <span class="bool-val">false</span>,
-            <span class="ident">deprecation_notes</span>: <span class="kw-2">&amp;</span><span class="ident">Default::default</span>(),
-            <span class="ident">each</span>: <span class="prelude-val">None</span>,
-        };
+        Setter {
+            <span class="comment">// Deliberately don&#39;t use the default value here - make sure
+            // that all test cases are passing crate_root through properly.
+            </span>crate_root: <span class="kw-2">&amp;</span><span class="macro">parse_quote!</span>(::db),
+            setter_enabled: <span class="bool-val">true</span>,
+            try_setter: <span class="bool-val">false</span>,
+            visibility: ::std::borrow::Cow::Owned(<span class="macro">parse_quote!</span>(<span class="kw">pub</span>)),
+            pattern: BuilderPattern::Mutable,
+            attrs: <span class="kw-2">&amp;</span><span class="macro">vec!</span>[],
+            ident: syn::Ident::new(<span class="string">&quot;foo&quot;</span>, ::proc_macro2::Span::call_site()),
+            field_ident: <span class="kw-2">&amp;</span>syn::Ident::new(<span class="string">&quot;foo&quot;</span>, ::proc_macro2::Span::call_site()),
+            field_type: BuilderFieldType::Optional(Box::leak(Box::new(<span class="macro">parse_quote!</span>(Foo)))),
+            generic_into: <span class="bool-val">false</span>,
+            strip_option: <span class="bool-val">false</span>,
+            deprecation_notes: <span class="kw-2">&amp;</span>Default::default(),
+            each: <span class="prelude-val">None</span>,
+        }
     };
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="attribute">#[allow(unused_imports)]
+    </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">immutable</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">pattern</span> <span class="op">=</span> <span class="ident">BuilderPattern::Immutable</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>immutable() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.pattern = BuilderPattern::Immutable;
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) -&gt; <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::clone::Clone::clone</span>(<span class="self">self</span>);
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>);
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo(<span class="kw-2">&amp;</span><span class="self">self</span>, value: Foo) -&gt; <span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = ::db::export::core::clone::Clone::clone(<span class="self">self</span>);
+                    new.foo = ::db::export::core::option::Option::Some(value);
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">mutable</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">pattern</span> <span class="op">=</span> <span class="ident">BuilderPattern::Mutable</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>mutable() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.pattern = BuilderPattern::Mutable;
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>);
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Foo) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(value);
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">owned</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">pattern</span> <span class="op">=</span> <span class="ident">BuilderPattern::Owned</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>owned() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.pattern = BuilderPattern::Owned;
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) -&gt; <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>);
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo(<span class="self">self</span>, value: Foo) -&gt; <span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(value);
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">private</span>() {
-        <span class="kw">let</span> <span class="ident">vis</span> <span class="op">=</span> <span class="ident">syn::Visibility::Inherited</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>private() {
+        <span class="kw">let </span>vis = Cow::Owned(syn::Visibility::Inherited);
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">visibility</span> <span class="op">=</span> <span class="ident">vis</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.visibility = vis;
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>);
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">fn </span>foo(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Foo) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(value);
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">generic</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">generic_into</span> <span class="op">=</span> <span class="bool-val">true</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>generic() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.generic_into = <span class="bool-val">true</span>;
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
-                    <span class="ident">value</span>: <span class="ident">VALUE</span>
-                ) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>.<span class="ident">into</span>());
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo&lt;VALUE: ::db::export::core::convert::Into&lt;Foo&gt;&gt;(
+                    <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+                    value: VALUE
+                ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(value.into());
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">strip_option</span>() {
-        <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">syn::parse_str</span>(<span class="string">&quot;Option&lt;Foo&gt;&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">strip_option</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">setter</span>.<span class="ident">field_type</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">ty</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>strip_option() {
+        <span class="kw">let </span>ty = <span class="macro">parse_quote!</span>(<span class="prelude-ty">Option</span>&lt;Foo&gt;);
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.strip_option = <span class="bool-val">true</span>;
+        setter.field_type = BuilderFieldType::Optional(<span class="kw-2">&amp;</span>ty);
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(
-                        <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>)
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Foo) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(
+                        ::db::export::core::option::Option::Some(value)
                     );
-                    <span class="ident">new</span>
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">strip_option_into</span>() {
-        <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">syn::parse_str</span>(<span class="string">&quot;Option&lt;Foo&gt;&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">strip_option</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">setter</span>.<span class="ident">generic_into</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">setter</span>.<span class="ident">field_type</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">ty</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>strip_option_into() {
+        <span class="kw">let </span>ty = <span class="macro">parse_quote!</span>(<span class="prelude-ty">Option</span>&lt;Foo&gt;);
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.strip_option = <span class="bool-val">true</span>;
+        setter.generic_into = <span class="bool-val">true</span>;
+        setter.field_type = BuilderFieldType::Optional(<span class="kw-2">&amp;</span>ty);
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
-                    <span class="ident">value</span>: <span class="ident">VALUE</span>
-                ) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(
-                        <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>.<span class="ident">into</span>())
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo&lt;VALUE: ::db::export::core::convert::Into&lt;Foo&gt;&gt;(
+                    <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+                    value: VALUE
+                ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(
+                        ::db::export::core::option::Option::Some(value.into())
                     );
-                    <span class="ident">new</span>
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="comment">// including try_setter</span>
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">full</span>() {
-        <span class="comment">//named!(outer_attrs -&gt; Vec&lt;syn::Attribute&gt;, many0!(syn::Attribute::parse_outer));</span>
-        <span class="comment">//let attrs = outer_attrs.parse_str(&quot;#[some_attr]&quot;).unwrap();</span>
-        <span class="kw">let</span> <span class="ident">attrs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">syn::Attribute</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="macro">parse_quote!</span>(<span class="attribute">#[<span class="ident">some_attr</span>]</span>)];
+    <span class="comment">// including try_setter
+    </span><span class="attribute">#[test]
+    </span><span class="kw">fn </span>full() {
+        <span class="comment">//named!(outer_attrs -&gt; Vec&lt;syn::Attribute&gt;, many0!(syn::Attribute::parse_outer));
+        //let attrs = outer_attrs.parse_str(&quot;#[some_attr]&quot;).unwrap();
+        </span><span class="kw">let </span>attrs: Vec&lt;syn::Attribute&gt; = <span class="macro">vec!</span>[<span class="macro">parse_quote!</span>(<span class="attribute">#[some_attr]</span>)];
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">deprecated</span> <span class="op">=</span> <span class="ident">DeprecationNotes::default</span>();
-        <span class="ident">deprecated</span>.<span class="ident">push</span>(<span class="string">&quot;Some example.&quot;</span>.<span class="ident">to_string</span>());
+        <span class="kw">let </span><span class="kw-2">mut </span>deprecated = DeprecationNotes::default();
+        deprecated.push(<span class="string">&quot;Some example.&quot;</span>.to_string());
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">attrs</span> <span class="op">=</span> <span class="ident">attrs</span>.<span class="ident">as_slice</span>();
-        <span class="ident">setter</span>.<span class="ident">generic_into</span> <span class="op">=</span> <span class="bool-val">true</span>;
-        <span class="ident">setter</span>.<span class="ident">deprecation_notes</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">deprecated</span>;
-        <span class="ident">setter</span>.<span class="ident">try_setter</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.attrs = attrs.as_slice();
+        setter.generic_into = <span class="bool-val">true</span>;
+        setter.deprecation_notes = <span class="kw-2">&amp;</span>deprecated;
+        setter.try_setter = <span class="bool-val">true</span>;
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-            <span class="attribute">#[<span class="ident">some_attr</span>]</span>
-            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span> <span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                #<span class="ident">deprecated</span>
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>.<span class="ident">into</span>());
-                <span class="ident">new</span>
+            <span class="attribute">#[some_attr]
+            #[allow(unused_mut)]
+            </span><span class="kw">pub fn </span>foo &lt;VALUE: ::db::export::core::convert::Into&lt;Foo&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: VALUE) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                #deprecated
+                <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                new.foo = ::db::export::core::option::Option::Some(value.into());
+                new
             }
 
-            <span class="attribute">#[<span class="ident">some_attr</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::TryInto</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">VALUE</span>)
-                -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span><span class="kw-2">&amp;mut</span> <span class="self">Self</span>, <span class="ident">VALUE::Error</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">converted</span> : <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>;
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">converted</span>);
-                <span class="prelude-val">Ok</span>(<span class="ident">new</span>)
+            <span class="attribute">#[some_attr]
+            </span><span class="kw">pub fn </span>try_foo&lt;VALUE: ::db::export::core::convert::TryInto&lt;Foo&gt;&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: VALUE)
+                -&gt; ::db::export::core::result::Result&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>, VALUE::Error&gt; {
+                <span class="kw">let </span>converted : Foo = value.try_into()<span class="question-mark">?</span>;
+                <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                new.foo = ::db::export::core::option::Option::Some(converted);
+                <span class="prelude-val">Ok</span>(new)
             }
-        ).<span class="ident">to_string</span>()
+        ).to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">no_std</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">pattern</span> <span class="op">=</span> <span class="ident">BuilderPattern::Immutable</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>no_std() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.pattern = BuilderPattern::Immutable;
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) -&gt; <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::clone::Clone::clone</span>(<span class="self">self</span>);
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>);
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo(<span class="kw-2">&amp;</span><span class="self">self</span>, value: Foo) -&gt; <span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = ::db::export::core::clone::Clone::clone(<span class="self">self</span>);
+                    new.foo = ::db::export::core::option::Option::Some(value);
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">no_std_generic</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">generic_into</span> <span class="op">=</span> <span class="bool-val">true</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>no_std_generic() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.generic_into = <span class="bool-val">true</span>;
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::Into</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
-                    <span class="ident">value</span>: <span class="ident">VALUE</span>
-                ) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>.<span class="ident">into</span>());
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo&lt;VALUE: ::db::export::core::convert::Into&lt;Foo&gt;&gt;(
+                    <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+                    value: VALUE
+                ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(value.into());
+                    new
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">setter_disabled</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">setter_enabled</span> <span class="op">=</span> <span class="bool-val">false</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>setter_disabled() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter = <span class="macro">default_setter!</span>();
+        setter.setter_enabled = <span class="bool-val">false</span>;
 
-        <span class="macro">assert_eq!</span>(<span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(), <span class="macro">quote!</span>().<span class="ident">to_string</span>());
+        <span class="macro">assert_eq!</span>(<span class="macro">quote!</span>(#setter).to_string(), <span class="macro">quote!</span>().to_string());
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_setter</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">setter</span>: <span class="ident">Setter</span> <span class="op">=</span> <span class="macro">default_setter!</span>();
-        <span class="ident">setter</span>.<span class="ident">pattern</span> <span class="op">=</span> <span class="ident">BuilderPattern::Mutable</span>;
-        <span class="ident">setter</span>.<span class="ident">try_setter</span> <span class="op">=</span> <span class="bool-val">true</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>try_setter() {
+        <span class="kw">let </span><span class="kw-2">mut </span>setter: Setter = <span class="macro">default_setter!</span>();
+        setter.pattern = BuilderPattern::Mutable;
+        setter.try_setter = <span class="bool-val">true</span>;
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">setter</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#setter).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foo</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Foo</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">value</span>);
-                    <span class="ident">new</span>
+                <span class="attribute">#[allow(unused_mut)]
+                </span><span class="kw">pub fn </span>foo(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Foo) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(value);
+                    new
                 }
 
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_foo</span><span class="op">&lt;</span><span class="ident">VALUE</span>: <span class="ident">::derive_builder::export::core::convert::TryInto</span><span class="op">&lt;</span><span class="ident">Foo</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-                    <span class="kw-2">&amp;mut</span> <span class="self">self</span>,
-                    <span class="ident">value</span>: <span class="ident">VALUE</span>
-                ) -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span><span class="kw-2">&amp;mut</span> <span class="self">Self</span>, <span class="ident">VALUE::Error</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">converted</span>: <span class="ident">Foo</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="self">self</span>;
-                    <span class="ident">new</span>.<span class="ident">foo</span> <span class="op">=</span> <span class="ident">::derive_builder::export::core::option::Option::Some</span>(<span class="ident">converted</span>);
-                    <span class="prelude-val">Ok</span>(<span class="ident">new</span>)
+                <span class="kw">pub fn </span>try_foo&lt;VALUE: ::db::export::core::convert::TryInto&lt;Foo&gt;&gt;(
+                    <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+                    value: VALUE
+                ) -&gt; ::db::export::core::result::Result&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>, VALUE::Error&gt; {
+                    <span class="kw">let </span>converted: Foo = value.try_into()<span class="question-mark">?</span>;
+                    <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">self</span>;
+                    new.foo = ::db::export::core::option::Option::Some(converted);
+                    <span class="prelude-val">Ok</span>(new)
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">extract_type_from_option_on_simple_type</span>() {
-        <span class="kw">let</span> <span class="ident">ty_foo</span> <span class="op">=</span> <span class="ident">syn::parse_str</span>(<span class="string">&quot;Foo&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq!</span>(<span class="ident">extract_type_from_option</span>(<span class="kw-2">&amp;</span><span class="ident">ty_foo</span>), <span class="prelude-val">None</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>extract_type_from_option_on_simple_type() {
+        <span class="kw">let </span>ty_foo = <span class="macro">parse_quote!</span>(Foo);
+        <span class="macro">assert_eq!</span>(extract_type_from_option(<span class="kw-2">&amp;</span>ty_foo), <span class="prelude-val">None</span>);
 
-        <span class="kw">for</span> <span class="ident">s</span> <span class="kw">in</span> <span class="macro">vec!</span>[
-            <span class="string">&quot;Option&lt;Foo&gt;&quot;</span>,
-            <span class="string">&quot;std::option::Option&lt;Foo&gt;&quot;</span>,
-            <span class="string">&quot;::std::option::Option&lt;Foo&gt;&quot;</span>,
-            <span class="string">&quot;core::option::Option&lt;Foo&gt;&quot;</span>,
-            <span class="string">&quot;::core::option::Option&lt;Foo&gt;&quot;</span>,
+        <span class="kw">for </span>s <span class="kw">in </span><span class="macro">vec!</span>[
+            <span class="macro">parse_quote!</span>(<span class="prelude-ty">Option</span>&lt;Foo&gt;),
+            <span class="macro">parse_quote!</span>(std::option::Option&lt;Foo&gt;),
+            <span class="macro">parse_quote!</span>(::std::option::Option&lt;Foo&gt;),
+            <span class="macro">parse_quote!</span>(core::option::Option&lt;Foo&gt;),
+            <span class="macro">parse_quote!</span>(::core::option::Option&lt;Foo&gt;),
         ] {
-            <span class="kw">let</span> <span class="ident">ty_foo_opt</span> <span class="op">=</span> <span class="ident">syn::parse_str</span>(<span class="ident">s</span>).<span class="ident">unwrap</span>();
-            <span class="macro">assert_eq!</span>(<span class="ident">extract_type_from_option</span>(<span class="kw-2">&amp;</span><span class="ident">ty_foo_opt</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">ty_foo</span>));
+            <span class="macro">assert_eq!</span>(extract_type_from_option(<span class="kw-2">&amp;</span>s), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>ty_foo));
         }
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

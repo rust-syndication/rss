@@ -1,1 +1,1 @@
-initSidebarItems({"derive":[["FromDeriveInput",""],["FromField",""],["FromMeta",""],["FromMetaItem",""],["FromTypeParam",""],["FromVariant",""]]});
+window.SIDEBAR_ITEMS = {"derive":[["FromAttributes",""],["FromDeriveInput",""],["FromField",""],["FromMeta",""],["FromMetaItem",""],["FromTypeParam",""],["FromVariant",""]]};

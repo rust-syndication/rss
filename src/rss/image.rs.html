@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/image.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>image.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../rss/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/image.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>image.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../rss/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -312,315 +307,314 @@
 <span id="307">307</span>
 <span id="308">308</span>
 <span id="309">309</span>
-</pre><pre class="rust"><code><span class="comment">// This file is part of rss.</span>
-<span class="comment">//</span>
-<span class="comment">// Copyright © 2015-2021 The rust-syndication Developers</span>
-<span class="comment">//</span>
-<span class="comment">// This program is free software; you can redistribute it and/or modify</span>
-<span class="comment">// it under the terms of the MIT License and/or Apache 2.0 License.</span>
+</pre><pre class="rust"><code><span class="comment">// This file is part of rss.
+//
+// Copyright © 2015-2021 The rust-syndication Developers
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the MIT License and/or Apache 2.0 License.
 
-<span class="kw">use</span> <span class="ident">std::io</span>::{<span class="ident">BufRead</span>, <span class="ident">Write</span>};
+</span><span class="kw">use </span>std::io::{BufRead, Write};
 
-<span class="kw">use</span> <span class="ident">quick_xml::events::attributes::Attributes</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">Event</span>};
-<span class="kw">use</span> <span class="ident">quick_xml::Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::Reader</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::Writer</span>;
+<span class="kw">use </span>quick_xml::events::attributes::Attributes;
+<span class="kw">use </span>quick_xml::events::{BytesEnd, BytesStart, Event};
+<span class="kw">use </span>quick_xml::Error <span class="kw">as </span>XmlError;
+<span class="kw">use </span>quick_xml::Reader;
+<span class="kw">use </span>quick_xml::Writer;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error::Error</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::toxml</span>::{<span class="ident">ToXml</span>, <span class="ident">WriterExt</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util::element_text</span>;
+<span class="kw">use </span><span class="kw">crate</span>::error::Error;
+<span class="kw">use </span><span class="kw">crate</span>::toxml::{ToXml, WriterExt};
+<span class="kw">use </span><span class="kw">crate</span>::util::{decode, element_text, skip};
 
-<span class="doccomment">/// Represents an image in an RSS feed.</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>, <span class="ident">derive</span>(<span class="ident">Builder</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(
-    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>,
-    <span class="ident">builder</span>(
-        <span class="ident">setter</span>(<span class="ident">into</span>),
-        <span class="ident">default</span>,
-        <span class="ident">build_fn</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;build_impl&quot;</span>, <span class="ident">private</span>, <span class="ident">error</span> <span class="op">=</span> <span class="string">&quot;never::Never&quot;</span>)
+<span class="doccomment">/// Represents an image in an RSS feed.
+</span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[derive(Debug, Default, Clone, PartialEq)]
+#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(
+    feature = <span class="string">&quot;builders&quot;</span>,
+    builder(
+        setter(into),
+        default,
+        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
     )
-)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Image</span> {
-    <span class="doccomment">/// The URL of the image.</span>
-    <span class="kw">pub</span> <span class="ident">url</span>: <span class="ident">String</span>,
-    <span class="doccomment">/// A description of the image. This is used in the HTML `alt` attribute.</span>
-    <span class="kw">pub</span> <span class="ident">title</span>: <span class="ident">String</span>,
-    <span class="doccomment">/// The URL that the image links to.</span>
-    <span class="kw">pub</span> <span class="ident">link</span>: <span class="ident">String</span>,
-    <span class="doccomment">/// The width of the image.</span>
-    <span class="kw">pub</span> <span class="ident">width</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The height of the image.</span>
-    <span class="kw">pub</span> <span class="ident">height</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The text for the HTML `title` attribute of the link formed around the image.</span>
-    <span class="kw">pub</span> <span class="ident">description</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+)]
+</span><span class="kw">pub struct </span>Image {
+    <span class="doccomment">/// The URL of the image.
+    </span><span class="kw">pub </span>url: String,
+    <span class="doccomment">/// A description of the image. This is used in the HTML `alt` attribute.
+    </span><span class="kw">pub </span>title: String,
+    <span class="doccomment">/// The URL that the image links to.
+    </span><span class="kw">pub </span>link: String,
+    <span class="doccomment">/// The width of the image.
+    </span><span class="kw">pub </span>width: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The height of the image.
+    </span><span class="kw">pub </span>height: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The text for the HTML `title` attribute of the link formed around the image.
+    </span><span class="kw">pub </span>description: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Image</span> {
-    <span class="doccomment">/// Return the URL of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_url(&quot;http://example.com/image.png&quot;);</span>
-    <span class="doccomment">/// assert_eq!(image.url(), &quot;http://example.com/image.png&quot;);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">url</span>.<span class="ident">as_str</span>()
+<span class="kw">impl </span>Image {
+    <span class="doccomment">/// Return the URL of this image.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_url(&quot;http://example.com/image.png&quot;);
+    /// assert_eq!(image.url(), &quot;http://example.com/image.png&quot;);
+    /// ```
+    </span><span class="kw">pub fn </span>url(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.url.as_str()
     }
 
-    <span class="doccomment">/// Set the URL of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_url(&quot;http://example.com/image.png&quot;);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_url</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">url</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the URL of this image.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_url(&quot;http://example.com/image.png&quot;);
+    /// ```
+    </span><span class="kw">pub fn </span>set_url&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, url: V)
+    <span class="kw">where
+        </span>V: Into&lt;String&gt;,
     {
-        <span class="self">self</span>.<span class="ident">url</span> <span class="op">=</span> <span class="ident">url</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.url = url.into();
     }
 
-    <span class="doccomment">/// Return the description of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is used in the HTML `alt` attribute.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_title(&quot;Example image&quot;);</span>
-    <span class="doccomment">/// assert_eq!(image.title(), &quot;Example image&quot;);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">title</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">title</span>.<span class="ident">as_str</span>()
+    <span class="doccomment">/// Return the description of this image.
+    ///
+    /// This is used in the HTML `alt` attribute.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_title(&quot;Example image&quot;);
+    /// assert_eq!(image.title(), &quot;Example image&quot;);
+    /// ```
+    </span><span class="kw">pub fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.title.as_str()
     }
 
-    <span class="doccomment">/// Set the description of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is used in the HTML `alt` attribute.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_title(&quot;Example image&quot;);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_title</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the description of this image.
+    ///
+    /// This is used in the HTML `alt` attribute.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_title(&quot;Example image&quot;);
+    /// ```
+    </span><span class="kw">pub fn </span>set_title&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: V)
+    <span class="kw">where
+        </span>V: Into&lt;String&gt;,
     {
-        <span class="self">self</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.title = title.into();
     }
 
-    <span class="doccomment">/// Return the URL that this image links to.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_link(&quot;http://example.com&quot;);</span>
-    <span class="doccomment">/// assert_eq!(image.link(), &quot;http://example.com&quot;);</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">link</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">link</span>.<span class="ident">as_str</span>()
+    <span class="doccomment">/// Return the URL that this image links to.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_link(&quot;http://example.com&quot;);
+    /// assert_eq!(image.link(), &quot;http://example.com&quot;);
+    </span><span class="kw">pub fn </span>link(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.link.as_str()
     }
 
-    <span class="doccomment">/// Set the URL that this image links to.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_link(&quot;http://example.com&quot;);</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_link</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">link</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the URL that this image links to.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_link(&quot;http://example.com&quot;);
+    </span><span class="kw">pub fn </span>set_link&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, link: V)
+    <span class="kw">where
+        </span>V: Into&lt;String&gt;,
     {
-        <span class="self">self</span>.<span class="ident">link</span> <span class="op">=</span> <span class="ident">link</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.link = link.into();
     }
 
-    <span class="doccomment">/// Return the width of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the width is `None` the default value should be considered to be `80`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_width(&quot;80&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(image.width(), Some(&quot;80&quot;));</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">width</span>.<span class="ident">as_deref</span>()
+    <span class="doccomment">/// Return the width of this image.
+    ///
+    /// If the width is `None` the default value should be considered to be `80`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_width(&quot;80&quot;.to_string());
+    /// assert_eq!(image.width(), Some(&quot;80&quot;));
+    </span><span class="kw">pub fn </span>width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.width.as_deref()
     }
 
-    <span class="doccomment">/// Set the width of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_width(&quot;80&quot;.to_string());</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_width</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">width</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the width of this image.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_width(&quot;80&quot;.to_string());
+    </span><span class="kw">pub fn </span>set_width&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, width: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">width</span> <span class="op">=</span> <span class="ident">width</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.width = width.into();
     }
 
-    <span class="doccomment">/// Return the height of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the height is `None` the default value should be considered to be `31`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_height(&quot;31&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(image.height(), Some(&quot;31&quot;));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">height</span>.<span class="ident">as_deref</span>()
+    <span class="doccomment">/// Return the height of this image.
+    ///
+    /// If the height is `None` the default value should be considered to be `31`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_height(&quot;31&quot;.to_string());
+    /// assert_eq!(image.height(), Some(&quot;31&quot;));
+    /// ```
+    </span><span class="kw">pub fn </span>height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.height.as_deref()
     }
 
-    <span class="doccomment">/// Set the height of this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the height is `None` the default value should be considered to be `31`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_height(&quot;31&quot;.to_string());</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_height</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">height</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the height of this image.
+    ///
+    /// If the height is `None` the default value should be considered to be `31`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_height(&quot;31&quot;.to_string());
+    /// ```
+    </span><span class="kw">pub fn </span>set_height&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, height: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">height</span> <span class="op">=</span> <span class="ident">height</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.height = height.into();
     }
 
-    <span class="doccomment">/// Return the title for the link formed around this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_description(&quot;Example Title&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(image.description(), Some(&quot;Example Title&quot;));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">description</span>.<span class="ident">as_deref</span>()
+    <span class="doccomment">/// Return the title for the link formed around this image.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_description(&quot;Example Title&quot;.to_string());
+    /// assert_eq!(image.description(), Some(&quot;Example Title&quot;));
+    /// ```
+    </span><span class="kw">pub fn </span>description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.description.as_deref()
     }
 
-    <span class="doccomment">/// Set the title for the link formed around this image.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use rss::Image;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut image = Image::default();</span>
-    <span class="doccomment">/// image.set_description(&quot;Example Title&quot;.to_string());</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_description</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">description</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the title for the link formed around this image.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rss::Image;
+    ///
+    /// let mut image = Image::default();
+    /// image.set_description(&quot;Example Title&quot;.to_string());
+    /// ```
+    </span><span class="kw">pub fn </span>set_description&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, description: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">description</span> <span class="op">=</span> <span class="ident">description</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.description = description.into();
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Image</span> {
-    <span class="doccomment">/// Builds an Image from source XML</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>, <span class="kw">_</span>: <span class="ident">Attributes</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">image</span> <span class="op">=</span> <span class="ident">Image::default</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+<span class="kw">impl </span>Image {
+    <span class="doccomment">/// Builds an Image from source XML
+    </span><span class="kw">pub fn </span>from_xml&lt;R: BufRead&gt;(reader: <span class="kw-2">&amp;mut </span>Reader&lt;R&gt;, <span class="kw">_</span>: Attributes) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>image = Image::default();
+        <span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::new();
 
-        <span class="kw">loop</span> {
-            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
-                <span class="ident">Event::Start</span>(<span class="ident">element</span>) =&gt; <span class="kw">match</span> <span class="ident">element</span>.<span class="ident">name</span>() {
-                    <span class="string">b&quot;url&quot;</span> =&gt; <span class="ident">image</span>.<span class="ident">url</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
-                    <span class="string">b&quot;title&quot;</span> =&gt; <span class="ident">image</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
-                    <span class="string">b&quot;link&quot;</span> =&gt; <span class="ident">image</span>.<span class="ident">link</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>.<span class="ident">unwrap_or_default</span>(),
-                    <span class="string">b&quot;width&quot;</span> =&gt; <span class="ident">image</span>.<span class="ident">width</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;height&quot;</span> =&gt; <span class="ident">image</span>.<span class="ident">height</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="string">b&quot;description&quot;</span> =&gt; <span class="ident">image</span>.<span class="ident">description</span> <span class="op">=</span> <span class="ident">element_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-                    <span class="ident">n</span> =&gt; <span class="ident">reader</span>.<span class="ident">read_to_end</span>(<span class="ident">n</span>, <span class="kw-2">&amp;mut</span> <span class="ident">Vec::new</span>())<span class="question-mark">?</span>,
+        <span class="kw">loop </span>{
+            <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf)<span class="question-mark">? </span>{
+                Event::Start(element) =&gt; <span class="kw">match </span>decode(element.name().as_ref(), reader)<span class="question-mark">?</span>.as_ref() {
+                    <span class="string">&quot;url&quot; </span>=&gt; image.url = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
+                    <span class="string">&quot;title&quot; </span>=&gt; image.title = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
+                    <span class="string">&quot;link&quot; </span>=&gt; image.link = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
+                    <span class="string">&quot;width&quot; </span>=&gt; image.width = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">&quot;height&quot; </span>=&gt; image.height = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">&quot;description&quot; </span>=&gt; image.description = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="kw">_ </span>=&gt; skip(element.name(), reader)<span class="question-mark">?</span>,
                 },
-                <span class="ident">Event::End</span>(<span class="kw">_</span>) =&gt; <span class="kw">break</span>,
-                <span class="ident">Event::Eof</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
-                <span class="kw">_</span> =&gt; {}
+                Event::End(<span class="kw">_</span>) =&gt; <span class="kw">break</span>,
+                Event::Eof =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Eof),
+                <span class="kw">_ </span>=&gt; {}
             }
 
-            <span class="ident">buf</span>.<span class="ident">clear</span>();
+            buf.clear();
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">image</span>)
+        <span class="prelude-val">Ok</span>(image)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="ident">Image</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="string">b&quot;image&quot;</span>;
+<span class="kw">impl </span>ToXml <span class="kw">for </span>Image {
+    <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
+        <span class="kw">let </span>name = <span class="string">&quot;image&quot;</span>;
 
-        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Start</span>(<span class="ident">BytesStart::borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>())))<span class="question-mark">?</span>;
+        writer.write_event(Event::Start(BytesStart::new(name)))<span class="question-mark">?</span>;
 
-        <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;url&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">url</span>)<span class="question-mark">?</span>;
-        <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;title&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">title</span>)<span class="question-mark">?</span>;
-        <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;link&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">link</span>)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">&quot;url&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.url)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">&quot;title&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.title)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">&quot;link&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.link)<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">width</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">width</span>.<span class="ident">as_ref</span>() {
-            <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;width&quot;</span>, <span class="ident">width</span>)<span class="question-mark">?</span>;
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(width) = <span class="self">self</span>.width.as_ref() {
+            writer.write_text_element(<span class="string">&quot;width&quot;</span>, width)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">height</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">height</span>.<span class="ident">as_ref</span>() {
-            <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;height&quot;</span>, <span class="ident">height</span>)<span class="question-mark">?</span>;
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(height) = <span class="self">self</span>.height.as_ref() {
+            writer.write_text_element(<span class="string">&quot;height&quot;</span>, height)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">description</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">description</span>.<span class="ident">as_ref</span>() {
-            <span class="ident">writer</span>.<span class="ident">write_text_element</span>(<span class="string">b&quot;description&quot;</span>, <span class="ident">description</span>)<span class="question-mark">?</span>;
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(description) = <span class="self">self</span>.description.as_ref() {
+            writer.write_text_element(<span class="string">&quot;description&quot;</span>, description)<span class="question-mark">?</span>;
         }
 
-        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
+        writer.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">ImageBuilder</span> {
-    <span class="doccomment">/// Builds a new `Image`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Image</span> {
-        <span class="self">self</span>.<span class="ident">build_impl</span>().<span class="ident">unwrap</span>()
+<span class="attribute">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+</span><span class="kw">impl </span>ImageBuilder {
+    <span class="doccomment">/// Builds a new `Image`.
+    </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Image {
+        <span class="self">self</span>.build_impl().unwrap()
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

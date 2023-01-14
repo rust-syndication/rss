@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/options/input_field.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>input_field.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/options/input_field.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>input_field.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -157,160 +152,201 @@
 <span id="152">152</span>
 <span id="153">153</span>
 <span id="154">154</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
 
-<span class="kw">use</span> <span class="ident">syn</span>;
+<span class="kw">use </span><span class="kw">crate</span>::codegen;
+<span class="kw">use </span><span class="kw">crate</span>::options::{Core, DefaultExpression, ParseAttribute};
+<span class="kw">use crate</span>::{Error, FromMeta, <span class="prelude-ty">Result</span>};
 
-<span class="kw">use</span> <span class="ident">codegen</span>;
-<span class="kw">use</span> <span class="ident">options</span>::{<span class="ident">Core</span>, <span class="ident">DefaultExpression</span>, <span class="ident">ParseAttribute</span>};
-<span class="kw">use</span> {<span class="ident">Error</span>, <span class="ident">FromMeta</span>, <span class="prelude-ty">Result</span>};
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>InputField {
+    <span class="kw">pub </span>ident: syn::Ident,
+    <span class="kw">pub </span>attr_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="kw">pub </span>ty: syn::Type,
+    <span class="kw">pub </span>default: <span class="prelude-ty">Option</span>&lt;DefaultExpression&gt;,
+    <span class="kw">pub </span>with: <span class="prelude-ty">Option</span>&lt;syn::Path&gt;,
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InputField</span> {
-    <span class="kw">pub</span> <span class="ident">ident</span>: <span class="ident">syn::Ident</span>,
-    <span class="kw">pub</span> <span class="ident">attr_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">ty</span>: <span class="ident">syn::Type</span>,
-    <span class="kw">pub</span> <span class="ident">default</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DefaultExpression</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">with</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn::Path</span><span class="op">&gt;</span>,
-
-    <span class="doccomment">/// If `true`, generated code will not look for this field in the input meta item,</span>
-    <span class="doccomment">/// instead always falling back to either `InputField::default` or `Default::default`.</span>
-    <span class="kw">pub</span> <span class="ident">skip</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span> <span class="ident">post_transform</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">codegen::PostfixTransform</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">multiple</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// If `true`, generated code will not look for this field in the input meta item,
+    /// instead always falling back to either `InputField::default` or `Default::default`.
+    </span><span class="kw">pub </span>skip: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="kw">pub </span>post_transform: <span class="prelude-ty">Option</span>&lt;codegen::PostfixTransform&gt;,
+    <span class="kw">pub </span>multiple: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">InputField</span> {
-    <span class="doccomment">/// Generate a view into this field that can be used for code generation.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_codegen_field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">codegen::Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">codegen::Field</span> {
-            <span class="ident">ident</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ident</span>,
-            <span class="ident">name_in_attr</span>: <span class="self">self</span>
-                .<span class="ident">attr_name</span>
-                .<span class="ident">as_ref</span>()
-                .<span class="ident">map_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Cow::Owned</span>(<span class="self">self</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>()), <span class="ident">Cow::Borrowed</span>),
-            <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ty</span>,
-            <span class="ident">default_expression</span>: <span class="self">self</span>.<span class="ident">as_codegen_default</span>(),
-            <span class="ident">with_path</span>: <span class="self">self</span>.<span class="ident">with</span>.<span class="ident">as_ref</span>().<span class="ident">map_or_else</span>(
-                <span class="op">|</span><span class="op">|</span> <span class="ident">Cow::Owned</span>(<span class="macro">parse_quote!</span>(<span class="ident">::darling::FromMeta::from_meta</span>)),
-                <span class="ident">Cow::Borrowed</span>,
+<span class="kw">impl </span>InputField {
+    <span class="doccomment">/// Generate a view into this field that can be used for code generation.
+    </span><span class="kw">pub fn </span>as_codegen_field(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; codegen::Field&lt;<span class="lifetime">&#39;_</span>&gt; {
+        codegen::Field {
+            ident: <span class="kw-2">&amp;</span><span class="self">self</span>.ident,
+            name_in_attr: <span class="self">self
+                </span>.attr_name
+                .as_ref()
+                .map_or_else(|| Cow::Owned(<span class="self">self</span>.ident.to_string()), Cow::Borrowed),
+            ty: <span class="kw-2">&amp;</span><span class="self">self</span>.ty,
+            default_expression: <span class="self">self</span>.as_codegen_default(),
+            with_path: <span class="self">self</span>.with.as_ref().map_or_else(
+                || Cow::Owned(<span class="macro">parse_quote!</span>(::darling::FromMeta::from_meta)),
+                Cow::Borrowed,
             ),
-            <span class="ident">skip</span>: <span class="self">self</span>.<span class="ident">skip</span>,
-            <span class="ident">post_transform</span>: <span class="self">self</span>.<span class="ident">post_transform</span>.<span class="ident">as_ref</span>(),
-            <span class="ident">multiple</span>: <span class="self">self</span>.<span class="ident">multiple</span>,
+            skip: <span class="self">self</span>.skip.unwrap_or_default(),
+            post_transform: <span class="self">self</span>.post_transform.as_ref(),
+            multiple: <span class="self">self</span>.multiple.unwrap_or_default(),
         }
     }
 
-    <span class="doccomment">/// Generate a codegen::DefaultExpression for this field. This requires the field name</span>
-    <span class="doccomment">/// in the `Inherit` case.</span>
-    <span class="kw">fn</span> <span class="ident">as_codegen_default</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">codegen::DefaultExpression</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">default</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">expr</span><span class="op">|</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">expr</span> {
-            <span class="ident">DefaultExpression::Explicit</span>(<span class="kw-2">ref</span> <span class="ident">path</span>) =&gt; <span class="ident">codegen::DefaultExpression::Explicit</span>(<span class="ident">path</span>),
-            <span class="ident">DefaultExpression::Inherit</span> =&gt; <span class="ident">codegen::DefaultExpression::Inherit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ident</span>),
-            <span class="ident">DefaultExpression::Trait</span> =&gt; <span class="ident">codegen::DefaultExpression::Trait</span>,
+    <span class="doccomment">/// Generate a codegen::DefaultExpression for this field. This requires the field name
+    /// in the `Inherit` case.
+    </span><span class="kw">fn </span>as_codegen_default(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;codegen::DefaultExpression&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+        <span class="self">self</span>.default.as_ref().map(|expr| <span class="kw">match </span><span class="kw-2">*</span>expr {
+            DefaultExpression::Explicit(<span class="kw-2">ref </span>path) =&gt; codegen::DefaultExpression::Explicit(path),
+            DefaultExpression::Inherit =&gt; codegen::DefaultExpression::Inherit(<span class="kw-2">&amp;</span><span class="self">self</span>.ident),
+            DefaultExpression::Trait =&gt; codegen::DefaultExpression::Trait,
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ident</span>: <span class="ident">syn::Ident</span>, <span class="ident">ty</span>: <span class="ident">syn::Type</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">InputField</span> {
-            <span class="ident">ident</span>,
-            <span class="ident">ty</span>,
-            <span class="ident">attr_name</span>: <span class="prelude-val">None</span>,
-            <span class="ident">default</span>: <span class="prelude-val">None</span>,
-            <span class="ident">with</span>: <span class="prelude-val">None</span>,
-            <span class="ident">skip</span>: <span class="bool-val">false</span>,
-            <span class="ident">post_transform</span>: <span class="ident">Default::default</span>(),
-            <span class="ident">multiple</span>: <span class="bool-val">false</span>,
+    <span class="kw">fn </span>new(ident: syn::Ident, ty: syn::Type) -&gt; <span class="self">Self </span>{
+        InputField {
+            ident,
+            ty,
+            attr_name: <span class="prelude-val">None</span>,
+            default: <span class="prelude-val">None</span>,
+            with: <span class="prelude-val">None</span>,
+            skip: <span class="prelude-val">None</span>,
+            post_transform: Default::default(),
+            multiple: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_field</span>(<span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Field</span>, <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Core</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">f</span>
-            .<span class="ident">ident</span>
-            .<span class="ident">clone</span>()
-            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">syn::Ident::new</span>(<span class="string">&quot;__unnamed&quot;</span>, <span class="ident">::proc_macro2::Span::call_site</span>()));
-        <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">f</span>.<span class="ident">ty</span>.<span class="ident">clone</span>();
-        <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">ident</span>, <span class="ident">ty</span>).<span class="ident">parse_attributes</span>(<span class="kw-2">&amp;</span><span class="ident">f</span>.<span class="ident">attrs</span>)<span class="question-mark">?</span>;
+    <span class="kw">pub fn </span>from_field(f: <span class="kw-2">&amp;</span>syn::Field, parent: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Core&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>ident = f
+            .ident
+            .clone()
+            .unwrap_or_else(|| syn::Ident::new(<span class="string">&quot;__unnamed&quot;</span>, ::proc_macro2::Span::call_site()));
+        <span class="kw">let </span>ty = f.ty.clone();
+        <span class="kw">let </span>base = <span class="self">Self</span>::new(ident, ty).parse_attributes(<span class="kw-2">&amp;</span>f.attrs)<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">container</span>) <span class="op">=</span> <span class="ident">parent</span> {
-            <span class="ident">base</span>.<span class="ident">with_inherited</span>(<span class="ident">container</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">base</span>)
-        }
+        <span class="prelude-val">Ok</span>(<span class="kw">if let </span><span class="prelude-val">Some</span>(container) = parent {
+            base.with_inherited(container)
+        } <span class="kw">else </span>{
+            base
+        })
     }
 
-    <span class="doccomment">/// Apply inherited settings from the container. This is done _after_ parsing</span>
-    <span class="doccomment">/// to ensure deference to explicit field-level settings.</span>
-    <span class="kw">fn</span> <span class="ident">with_inherited</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">parent</span>: <span class="kw-2">&amp;</span><span class="ident">Core</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="comment">// explicit renamings take precedence over rename rules on the container,</span>
-        <span class="comment">// but in the absence of an explicit name we apply the rule.</span>
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">attr_name</span>.<span class="ident">is_none</span>() {
-            <span class="self">self</span>.<span class="ident">attr_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">parent</span>.<span class="ident">rename_rule</span>.<span class="ident">apply_to_field</span>(<span class="self">self</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>()));
+    <span class="doccomment">/// Apply inherited settings from the container. This is done _after_ parsing
+    /// to ensure deference to explicit field-level settings.
+    </span><span class="kw">fn </span>with_inherited(<span class="kw-2">mut </span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span>Core) -&gt; <span class="self">Self </span>{
+        <span class="comment">// explicit renamings take precedence over rename rules on the container,
+        // but in the absence of an explicit name we apply the rule.
+        </span><span class="kw">if </span><span class="self">self</span>.attr_name.is_none() {
+            <span class="self">self</span>.attr_name = <span class="prelude-val">Some</span>(parent.rename_rule.apply_to_field(<span class="self">self</span>.ident.to_string()));
         }
 
-        <span class="comment">// Determine the default expression for this field, based on three pieces of information:</span>
-        <span class="comment">// 1. Will we look for this field in the attribute?</span>
-        <span class="comment">// 1. Is there a locally-defined default?</span>
-        <span class="comment">// 1. Did the parent define a default?</span>
-        <span class="self">self</span>.<span class="ident">default</span> <span class="op">=</span> <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">skip</span>, <span class="self">self</span>.<span class="ident">default</span>.<span class="ident">is_some</span>(), <span class="ident">parent</span>.<span class="ident">default</span>.<span class="ident">is_some</span>()) {
-            <span class="comment">// If we have a default, use it.</span>
-            (<span class="kw">_</span>, <span class="bool-val">true</span>, <span class="kw">_</span>) =&gt; <span class="self">self</span>.<span class="ident">default</span>,
+        <span class="comment">// Determine the default expression for this field, based on three pieces of information:
+        // 1. Will we look for this field in the attribute?
+        // 1. Is there a locally-defined default?
+        // 1. Did the parent define a default?
+        </span><span class="self">self</span>.default = <span class="kw">match </span>(
+            <span class="self">self</span>.skip.unwrap_or_default(),
+            <span class="self">self</span>.default.is_some(),
+            parent.default.is_some(),
+        ) {
+            <span class="comment">// If we have a default, use it.
+            </span>(<span class="kw">_</span>, <span class="bool-val">true</span>, <span class="kw">_</span>) =&gt; <span class="self">self</span>.default,
 
-            <span class="comment">// If there isn&#39;t an explicit default but the struct sets a default, we&#39;ll</span>
-            <span class="comment">// inherit from that.</span>
-            (<span class="kw">_</span>, <span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">DefaultExpression::Inherit</span>),
+            <span class="comment">// If there isn&#39;t an explicit default but the struct sets a default, we&#39;ll
+            // inherit from that.
+            </span>(<span class="kw">_</span>, <span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="prelude-val">Some</span>(DefaultExpression::Inherit),
 
-            <span class="comment">// If we&#39;re skipping the field and no defaults have been expressed then we should</span>
-            <span class="comment">// use the ::darling::export::Default trait.</span>
-            (<span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">DefaultExpression::Trait</span>),
+            <span class="comment">// If we&#39;re skipping the field and no defaults have been expressed then we should
+            // use the ::darling::export::Default trait.
+            </span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">Some</span>(DefaultExpression::Trait),
 
-            <span class="comment">// If we don&#39;t have or need a default, then leave it blank.</span>
-            (<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">None</span>,
+            <span class="comment">// If we don&#39;t have or need a default, then leave it blank.
+            </span>(<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="prelude-val">None</span>,
         };
 
-        <span class="prelude-val">Ok</span>(<span class="self">self</span>)
-    }
+        <span class="self">self
+    </span>}
 }
 
-<span class="kw">impl</span> <span class="ident">ParseAttribute</span> <span class="kw">for</span> <span class="ident">InputField</span> {
-    <span class="kw">fn</span> <span class="ident">parse_nested</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">mi</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Meta</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">mi</span>.<span class="ident">path</span>();
+<span class="kw">impl </span>ParseAttribute <span class="kw">for </span>InputField {
+    <span class="kw">fn </span>parse_nested(<span class="kw-2">&amp;mut </span><span class="self">self</span>, mi: <span class="kw-2">&amp;</span>syn::Meta) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>path = mi.path();
 
-        <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;rename&quot;</span>) {
-            <span class="self">self</span>.<span class="ident">attr_name</span> <span class="op">=</span> <span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;default&quot;</span>) {
-            <span class="self">self</span>.<span class="ident">default</span> <span class="op">=</span> <span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;with&quot;</span>) {
-            <span class="self">self</span>.<span class="ident">with</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>);
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;skip&quot;</span>) {
-            <span class="self">self</span>.<span class="ident">skip</span> <span class="op">=</span> <span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;map&quot;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;and_then&quot;</span>) {
-            <span class="kw">let</span> <span class="ident">transformer</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">get_ident</span>().<span class="ident">unwrap</span>().<span class="ident">clone</span>();
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">post_transform</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">post_transform</span> {
-                <span class="kw">if</span> <span class="ident">transformer</span> <span class="op">==</span> <span class="ident">post_transform</span>.<span class="ident">transformer</span> {
-                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::duplicate_field</span>(<span class="kw-2">&amp;</span><span class="ident">transformer</span>.<span class="ident">to_string</span>()).<span class="ident">with_span</span>(<span class="ident">mi</span>));
-                } <span class="kw">else</span> {
-                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::custom</span>(<span class="macro">format!</span>(
+        <span class="kw">if </span>path.is_ident(<span class="string">&quot;rename&quot;</span>) {
+            <span class="kw">if </span><span class="self">self</span>.attr_name.is_some() {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+            }
+
+            <span class="self">self</span>.attr_name = FromMeta::from_meta(mi)<span class="question-mark">?</span>;
+        } <span class="kw">else if </span>path.is_ident(<span class="string">&quot;default&quot;</span>) {
+            <span class="kw">if </span><span class="self">self</span>.default.is_some() {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+            }
+            <span class="self">self</span>.default = FromMeta::from_meta(mi)<span class="question-mark">?</span>;
+        } <span class="kw">else if </span>path.is_ident(<span class="string">&quot;with&quot;</span>) {
+            <span class="kw">if </span><span class="self">self</span>.with.is_some() {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+            }
+
+            <span class="self">self</span>.with = <span class="prelude-val">Some</span>(FromMeta::from_meta(mi)<span class="question-mark">?</span>);
+        } <span class="kw">else if </span>path.is_ident(<span class="string">&quot;skip&quot;</span>) {
+            <span class="kw">if </span><span class="self">self</span>.skip.is_some() {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+            }
+
+            <span class="self">self</span>.skip = FromMeta::from_meta(mi)<span class="question-mark">?</span>;
+        } <span class="kw">else if </span>path.is_ident(<span class="string">&quot;map&quot;</span>) || path.is_ident(<span class="string">&quot;and_then&quot;</span>) {
+            <span class="kw">let </span>transformer = path.get_ident().unwrap().clone();
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(post_transform) = <span class="kw-2">&amp;</span><span class="self">self</span>.post_transform {
+                <span class="kw">if </span>transformer == post_transform.transformer {
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+                } <span class="kw">else </span>{
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::custom(<span class="macro">format!</span>(
                         <span class="string">&quot;Options `{}` and `{}` are mutually exclusive&quot;</span>,
-                        <span class="ident">transformer</span>, <span class="ident">post_transform</span>.<span class="ident">transformer</span>
+                        transformer, post_transform.transformer
                     ))
-                    .<span class="ident">with_span</span>(<span class="ident">mi</span>));
+                    .with_span(mi));
                 }
             }
 
-            <span class="self">self</span>.<span class="ident">post_transform</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">codegen::PostfixTransform::new</span>(
-                <span class="ident">transformer</span>,
-                <span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>,
+            <span class="self">self</span>.post_transform = <span class="prelude-val">Some</span>(codegen::PostfixTransform::new(
+                transformer,
+                FromMeta::from_meta(mi)<span class="question-mark">?</span>,
             ));
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;multiple&quot;</span>) {
-            <span class="self">self</span>.<span class="ident">multiple</span> <span class="op">=</span> <span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>;
-        } <span class="kw">else</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::unknown_field_path</span>(<span class="ident">path</span>).<span class="ident">with_span</span>(<span class="ident">mi</span>));
+        } <span class="kw">else if </span>path.is_ident(<span class="string">&quot;multiple&quot;</span>) {
+            <span class="kw">if </span><span class="self">self</span>.multiple.is_some() {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+            }
+
+            <span class="self">self</span>.multiple = FromMeta::from_meta(mi)<span class="question-mark">?</span>;
+        } <span class="kw">else </span>{
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::unknown_field_path(path).with_span(mi));
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../darling_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../darling_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -50,53 +45,56 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
-</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;256&quot;</span>]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diagnostics&quot;</span>, <span class="ident">feature</span>(<span class="ident">proc_macro_diagnostic</span>))]</span>
+<span id="48">48</span>
+<span id="49">49</span>
+</pre><pre class="rust"><code><span class="attribute">#![recursion_limit = <span class="string">&quot;256&quot;</span>]
+#![cfg_attr(feature = <span class="string">&quot;diagnostics&quot;</span>, feature(proc_macro_diagnostic))]
 
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">quote</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">syn</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">fnv</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ident_case</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diagnostics&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro2</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;suggestions&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">strsim</span>;
+#[macro_use]
+</span><span class="kw">extern crate </span>quote;
+<span class="attribute">#[macro_use]
+</span><span class="kw">extern crate </span>syn;
+<span class="kw">extern crate </span>fnv;
+<span class="kw">extern crate </span>ident_case;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;diagnostics&quot;</span>)]
+</span><span class="kw">extern crate </span>proc_macro;
+<span class="kw">extern crate </span>proc_macro2;
+<span class="attribute">#[cfg(feature = <span class="string">&quot;suggestions&quot;</span>)]
+</span><span class="kw">extern crate </span>strsim;
 
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">mod</span> <span class="ident">macros_private</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">mod</span> <span class="ident">macros_public</span>;
+<span class="attribute">#[macro_use]
+</span><span class="kw">mod </span>macros_private;
+<span class="attribute">#[macro_use]
+</span><span class="kw">mod </span>macros_public;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ast</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">codegen</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">derive</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">error</span>;
-<span class="kw">mod</span> <span class="ident">from_derive_input</span>;
-<span class="kw">mod</span> <span class="ident">from_field</span>;
-<span class="kw">mod</span> <span class="ident">from_generic_param</span>;
-<span class="kw">mod</span> <span class="ident">from_generics</span>;
-<span class="kw">mod</span> <span class="ident">from_meta</span>;
-<span class="kw">mod</span> <span class="ident">from_type_param</span>;
-<span class="kw">mod</span> <span class="ident">from_variant</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">options</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">usage</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">util</span>;
+<span class="kw">pub mod </span>ast;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>codegen;
+<span class="kw">pub mod </span>derive;
+<span class="kw">pub mod </span>error;
+<span class="kw">mod </span>from_attributes;
+<span class="kw">mod </span>from_derive_input;
+<span class="kw">mod </span>from_field;
+<span class="kw">mod </span>from_generic_param;
+<span class="kw">mod </span>from_generics;
+<span class="kw">mod </span>from_meta;
+<span class="kw">mod </span>from_type_param;
+<span class="kw">mod </span>from_variant;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>options;
+<span class="kw">pub mod </span>usage;
+<span class="kw">pub mod </span>util;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">from_derive_input::FromDeriveInput</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">from_field::FromField</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">from_generic_param::FromGenericParam</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">from_generics::FromGenerics</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">from_meta::FromMeta</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">from_type_param::FromTypeParam</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">from_variant::FromVariant</span>;
+<span class="kw">pub use </span><span class="self">self</span>::error::{Error, <span class="prelude-ty">Result</span>};
+<span class="kw">pub use </span><span class="self">self</span>::from_attributes::FromAttributes;
+<span class="kw">pub use </span><span class="self">self</span>::from_derive_input::FromDeriveInput;
+<span class="kw">pub use </span><span class="self">self</span>::from_field::FromField;
+<span class="kw">pub use </span><span class="self">self</span>::from_generic_param::FromGenericParam;
+<span class="kw">pub use </span><span class="self">self</span>::from_generics::FromGenerics;
+<span class="kw">pub use </span><span class="self">self</span>::from_meta::FromMeta;
+<span class="kw">pub use </span><span class="self">self</span>::from_type_param::FromTypeParam;
+<span class="kw">pub use </span><span class="self">self</span>::from_variant::FromVariant;
 
-<span class="comment">// Re-export tokenizer</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">quote::ToTokens</span>;
+<span class="comment">// Re-export tokenizer
+</span><span class="attribute">#[doc(hidden)]
+</span><span class="kw">pub use </span>quote::ToTokens;
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/codegen/variant_data.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant_data.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/codegen/variant_data.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant_data.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -96,99 +91,108 @@
 <span id="91">91</span>
 <span id="92">92</span>
 <span id="93">93</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+</pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::TokenStream;
 
-<span class="kw">use</span> <span class="ident">ast::Fields</span>;
-<span class="kw">use</span> <span class="ident">ast::Style</span>;
-<span class="kw">use</span> <span class="ident">codegen::Field</span>;
+<span class="kw">use </span><span class="kw">crate</span>::ast::{Fields, Style};
+<span class="kw">use </span><span class="kw">crate</span>::codegen::Field;
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FieldsGen</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">fields</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Fields</span><span class="op">&lt;</span><span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">allow_unknown_fields</span>: <span class="ident">bool</span>,
+<span class="kw">pub struct </span>FieldsGen&lt;<span class="lifetime">&#39;a</span>&gt; {
+    fields: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Fields&lt;Field&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+    allow_unknown_fields: bool,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">FieldsGen</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">fields</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Fields</span><span class="op">&lt;</span><span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">allow_unknown_fields</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">fields</span>,
-            <span class="ident">allow_unknown_fields</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; FieldsGen&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">pub fn </span>new(fields: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Fields&lt;Field&lt;<span class="lifetime">&#39;a</span>&gt;&gt;, allow_unknown_fields: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            fields,
+            allow_unknown_fields,
         }
     }
 
-    <span class="doccomment">/// Create declarations for all the fields in the struct.</span>
-    <span class="kw">pub</span>(<span class="kw">in</span> <span class="ident">codegen</span>) <span class="kw">fn</span> <span class="ident">declarations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">fields</span> {
-            <span class="ident">Fields</span> {
-                <span class="ident">style</span>: <span class="ident">Style::Struct</span>,
-                <span class="kw-2">ref</span> <span class="ident">fields</span>,
+    <span class="doccomment">/// Create declarations for all the fields in the struct.
+    </span><span class="kw">pub</span>(<span class="kw">in </span><span class="kw">crate</span>::codegen) <span class="kw">fn </span>declarations(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self</span>.fields {
+            Fields {
+                style: Style::Struct,
+                <span class="kw-2">ref </span>fields,
                 ..
             } =&gt; {
-                <span class="kw">let</span> <span class="ident">vdr</span> <span class="op">=</span> <span class="ident">fields</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="ident">Field::as_declaration</span>);
-                <span class="macro">quote!</span>(#(#<span class="ident">vdr</span>)<span class="kw-2">*</span>)
+                <span class="kw">let </span>vdr = fields.iter().map(Field::as_declaration);
+                <span class="macro">quote!</span>(#(#vdr)<span class="kw-2">*</span>)
             }
-            <span class="kw">_</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;FieldsGen doesn&#39;t support tuples yet&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;FieldsGen doesn&#39;t support tuples yet&quot;</span>),
         }
     }
 
-    <span class="doccomment">/// Generate the loop which walks meta items looking for property matches.</span>
-    <span class="kw">pub</span>(<span class="kw">in</span> <span class="ident">codegen</span>) <span class="kw">fn</span> <span class="ident">core_loop</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span> {
-        <span class="kw">let</span> <span class="ident">arms</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">fields</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">Field::as_match</span>);
+    <span class="doccomment">/// Generate the loop which walks meta items looking for property matches.
+    </span><span class="kw">pub</span>(<span class="kw">in </span><span class="kw">crate</span>::codegen) <span class="kw">fn </span>core_loop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream {
+        <span class="kw">let </span>arms = <span class="self">self</span>.fields.as_ref().map(Field::as_match);
 
-        <span class="comment">// If we&#39;re allowing unknown fields, then handling one is a no-op.</span>
-        <span class="comment">// Otherwise, we&#39;re going to push a new spanned error pointing at the field.</span>
-        <span class="kw">let</span> <span class="ident">handle_unknown</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">allow_unknown_fields</span> {
+        <span class="comment">// If we&#39;re allowing unknown fields, then handling one is a no-op.
+        // Otherwise, we&#39;re going to push a new spanned error pointing at the field.
+        </span><span class="kw">let </span>handle_unknown = <span class="kw">if </span><span class="self">self</span>.allow_unknown_fields {
             <span class="macro">quote!</span>()
-        } <span class="kw">else</span> {
-            <span class="comment">// We can&#39;t call `unknown_field_with_alts` with an empty slice, or else it fails to</span>
-            <span class="comment">// infer the type of the slice item.</span>
-            <span class="kw">let</span> <span class="ident">err_fn</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">arms</span>.<span class="ident">is_empty</span>() {
-                <span class="macro">quote!</span>(<span class="ident">unknown_field</span>(<span class="ident">__other</span>))
-            } <span class="kw">else</span> {
-                <span class="kw">let</span> <span class="ident">names</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">fields</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">Field::as_name</span>);
-                <span class="kw">let</span> <span class="ident">names</span> <span class="op">=</span> <span class="ident">names</span>.<span class="ident">iter</span>();
-                <span class="macro">quote!</span>(<span class="ident">unknown_field_with_alts</span>(<span class="ident">__other</span>, <span class="kw-2">&amp;</span>[#(#<span class="ident">names</span>),<span class="kw-2">*</span>]))
+        } <span class="kw">else </span>{
+            <span class="comment">// We can&#39;t call `unknown_field_with_alts` with an empty slice, or else it fails to
+            // infer the type of the slice item.
+            </span><span class="kw">let </span>err_fn = <span class="kw">if </span>arms.is_empty() {
+                <span class="macro">quote!</span>(unknown_field(__other))
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>names = <span class="self">self</span>.fields.as_ref().map(Field::as_name);
+                <span class="kw">let </span>names = names.iter();
+                <span class="macro">quote!</span>(unknown_field_with_alts(__other, <span class="kw-2">&amp;</span>[#(#names),<span class="kw-2">*</span>]))
             };
 
-            <span class="macro">quote!</span> {
-                <span class="ident">__errors</span>.<span class="ident">push</span>(<span class="ident">::darling::Error</span>::#<span class="ident">err_fn</span>.<span class="ident">with_span</span>(<span class="ident">__inner</span>));
+            <span class="macro">quote! </span>{
+                __errors.push(::darling::Error::#err_fn.with_span(__inner));
             }
         };
-        <span class="kw">let</span> <span class="ident">arms</span> <span class="op">=</span> <span class="ident">arms</span>.<span class="ident">iter</span>();
+        <span class="kw">let </span>arms = arms.iter();
 
         <span class="macro">quote!</span>(
-            <span class="kw">for</span> <span class="ident">__item</span> <span class="kw">in</span> <span class="ident">__items</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="ident">::syn::NestedMeta::Meta</span>(<span class="kw-2">ref</span> <span class="ident">__inner</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">__item</span> {
-                    <span class="kw">let</span> <span class="ident">__name</span> <span class="op">=</span> <span class="ident">__inner</span>.<span class="ident">path</span>().<span class="ident">segments</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">join</span>(<span class="string">&quot;::&quot;</span>);
-                    <span class="kw">match</span> <span class="ident">__name</span>.<span class="ident">as_str</span>() {
-                        #(#<span class="ident">arms</span>)<span class="op">*</span>
-                        <span class="ident">__other</span> =&gt; { #<span class="ident">handle_unknown</span> }
+            <span class="kw">for </span>__item <span class="kw">in </span>__items {
+                <span class="kw">match </span><span class="kw-2">*</span>__item {
+                    ::syn::NestedMeta::Meta(<span class="kw-2">ref </span>__inner) =&gt; {
+                        <span class="kw">let </span>__name = ::darling::util::path_to_string(__inner.path());
+                        <span class="kw">match </span>__name.as_str() {
+                            #(#arms)*
+                            __other =&gt; { #handle_unknown }
+                        }
+                    }
+                    ::syn::NestedMeta::Lit(<span class="kw-2">ref </span>__inner) =&gt; {
+                        __errors.push(::darling::Error::unsupported_format(<span class="string">&quot;literal&quot;</span>)
+                            .with_span(__inner));
                     }
                 }
             }
         )
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">require_fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">fields</span> {
-            <span class="ident">Fields</span> {
-                <span class="ident">style</span>: <span class="ident">Style::Struct</span>,
-                <span class="kw-2">ref</span> <span class="ident">fields</span>,
+    <span class="kw">pub fn </span>require_fields(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self</span>.fields {
+            Fields {
+                style: Style::Struct,
+                <span class="kw-2">ref </span>fields,
                 ..
             } =&gt; {
-                <span class="kw">let</span> <span class="ident">checks</span> <span class="op">=</span> <span class="ident">fields</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="ident">Field::as_presence_check</span>);
-                <span class="macro">quote!</span>(#(#<span class="ident">checks</span>)<span class="kw-2">*</span>)
+                <span class="kw">let </span>checks = fields.iter().map(Field::as_presence_check);
+                <span class="macro">quote!</span>(#(#checks)<span class="kw-2">*</span>)
             }
-            <span class="kw">_</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;FieldsGen doesn&#39;t support tuples for requirement checks&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;FieldsGen doesn&#39;t support tuples for requirement checks&quot;</span>),
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">in</span> <span class="ident">codegen</span>) <span class="kw">fn</span> <span class="ident">initializers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span> {
-        <span class="kw">let</span> <span class="ident">inits</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">fields</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">Field::as_initializer</span>);
-        <span class="kw">let</span> <span class="ident">inits</span> <span class="op">=</span> <span class="ident">inits</span>.<span class="ident">iter</span>();
+    <span class="kw">pub</span>(<span class="kw">in </span><span class="kw">crate</span>::codegen) <span class="kw">fn </span>initializers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream {
+        <span class="kw">let </span>inits = <span class="self">self</span>.fields.as_ref().map(Field::as_initializer);
+        <span class="kw">let </span>inits = inits.iter();
 
-        <span class="macro">quote!</span>(#(#<span class="ident">inits</span>),<span class="kw-2">*</span>)
+        <span class="macro">quote!</span>(#(#inits),<span class="kw-2">*</span>)
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

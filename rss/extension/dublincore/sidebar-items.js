@@ -1,1 +1,1 @@
-initSidebarItems({"constant":[["NAMESPACE","The Dublin Core XML namespace."]],"struct":[["DublinCoreExtension","A Dublin Core element extension."],["DublinCoreExtensionBuilder","Builder for `DublinCoreExtension`."]]});
+window.SIDEBAR_ITEMS = {"constant":[["NAMESPACE","The Dublin Core XML namespace."]],"struct":[["DublinCoreExtension","A Dublin Core element extension."],["DublinCoreExtensionBuilder","Builder for `DublinCoreExtension`."]]};

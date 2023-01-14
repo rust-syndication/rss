@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/codegen/variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/codegen/variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -161,164 +156,163 @@
 <span id="156">156</span>
 <span id="157">157</span>
 <span id="158">158</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
 
-<span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">ToTokens</span>, <span class="ident">TokenStreamExt</span>};
-<span class="kw">use</span> <span class="ident">syn::Ident</span>;
+<span class="kw">use </span>proc_macro2::TokenStream;
+<span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
+<span class="kw">use </span>syn::Ident;
 
-<span class="kw">use</span> <span class="ident">ast::Fields</span>;
-<span class="kw">use</span> <span class="ident">codegen::error</span>::{<span class="ident">ErrorCheck</span>, <span class="ident">ErrorDeclaration</span>};
-<span class="kw">use</span> <span class="ident">codegen</span>::{<span class="ident">Field</span>, <span class="ident">FieldsGen</span>};
-<span class="kw">use</span> <span class="ident">usage</span>::{<span class="self">self</span>, <span class="ident">IdentRefSet</span>, <span class="ident">IdentSet</span>, <span class="ident">UsesTypeParams</span>};
+<span class="kw">use </span><span class="kw">crate</span>::ast::Fields;
+<span class="kw">use </span><span class="kw">crate</span>::codegen::error::{ErrorCheck, ErrorDeclaration};
+<span class="kw">use </span><span class="kw">crate</span>::codegen::{Field, FieldsGen};
+<span class="kw">use </span><span class="kw">crate</span>::usage::{<span class="self">self</span>, IdentRefSet, IdentSet, UsesTypeParams};
 
-<span class="doccomment">/// A variant of the enum which is deriving `FromMeta`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// The name which will appear in code passed to the `FromMeta` input.</span>
-    <span class="kw">pub</span> <span class="ident">name_in_attr</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+<span class="doccomment">/// A variant of the enum which is deriving `FromMeta`.
+</span><span class="attribute">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Variant&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// The name which will appear in code passed to the `FromMeta` input.
+    </span><span class="kw">pub </span>name_in_attr: Cow&lt;<span class="lifetime">&#39;a</span>, String&gt;,
 
-    <span class="doccomment">/// The name of the variant which will be returned for a given `name_in_attr`.</span>
-    <span class="kw">pub</span> <span class="ident">variant_ident</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Ident</span>,
+    <span class="doccomment">/// The name of the variant which will be returned for a given `name_in_attr`.
+    </span><span class="kw">pub </span>variant_ident: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ident,
 
-    <span class="doccomment">/// The name of the parent enum type.</span>
-    <span class="kw">pub</span> <span class="ident">ty_ident</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Ident</span>,
+    <span class="doccomment">/// The name of the parent enum type.
+    </span><span class="kw">pub </span>ty_ident: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ident,
 
-    <span class="kw">pub</span> <span class="ident">data</span>: <span class="ident">Fields</span><span class="op">&lt;</span><span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub </span>data: Fields&lt;Field&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
 
-    <span class="doccomment">/// Whether or not the variant should be skipped in the generated code.</span>
-    <span class="kw">pub</span> <span class="ident">skip</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// Whether or not the variant should be skipped in the generated code.
+    </span><span class="kw">pub </span>skip: bool,
 
-    <span class="kw">pub</span> <span class="ident">allow_unknown_fields</span>: <span class="ident">bool</span>,
+    <span class="kw">pub </span>allow_unknown_fields: bool,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_name</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name_in_attr</span>
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Variant&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">pub fn </span>as_name(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.name_in_attr
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_unit_match_arm</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">UnitMatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">UnitMatchArm</span>(<span class="self">self</span>)
+    <span class="kw">pub fn </span>as_unit_match_arm(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; UnitMatchArm&lt;<span class="lifetime">&#39;a</span>&gt; {
+        UnitMatchArm(<span class="self">self</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_data_match_arm</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">DataMatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">DataMatchArm</span>(<span class="self">self</span>)
+    <span class="kw">pub fn </span>as_data_match_arm(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; DataMatchArm&lt;<span class="lifetime">&#39;a</span>&gt; {
+        DataMatchArm(<span class="self">self</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">UsesTypeParams</span> <span class="kw">for</span> <span class="ident">Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">uses_type_params</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; UsesTypeParams <span class="kw">for </span>Variant&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>uses_type_params&lt;<span class="lifetime">&#39;b</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">usage::Options</span>,
-        <span class="ident">type_set</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">IdentSet</span>,
-    ) -&gt; <span class="ident">IdentRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">uses_type_params</span>(<span class="ident">options</span>, <span class="ident">type_set</span>)
+        options: <span class="kw-2">&amp;</span>usage::Options,
+        type_set: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span>IdentSet,
+    ) -&gt; IdentRefSet&lt;<span class="lifetime">&#39;b</span>&gt; {
+        <span class="self">self</span>.data.uses_type_params(options, type_set)
     }
 }
 
-<span class="doccomment">/// Code generator for an enum variant in a unit match position.</span>
-<span class="doccomment">/// This is placed in generated `from_string` calls for the parent enum.</span>
-<span class="doccomment">/// Value-carrying variants wrapped in this type will emit code to produce an &quot;unsupported format&quot; error.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UnitMatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// Code generator for an enum variant in a unit match position.
+/// This is placed in generated `from_string` calls for the parent enum.
+/// Value-carrying variants wrapped in this type will emit code to produce an &quot;unsupported format&quot; error.
+</span><span class="kw">pub struct </span>UnitMatchArm&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Variant&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">UnitMatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>UnitMatchArm&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>val: <span class="kw-2">&amp;</span>Variant&lt;<span class="lifetime">&#39;a</span>&gt; = <span class="self">self</span>.<span class="number">0</span>;
 
-        <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">skip</span> {
+        <span class="kw">if </span>val.skip {
             <span class="kw">return</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">name_in_attr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">val</span>.<span class="ident">name_in_attr</span>;
+        <span class="kw">let </span>name_in_attr = <span class="kw-2">&amp;</span>val.name_in_attr;
 
-        <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">data</span>.<span class="ident">is_unit</span>() {
-            <span class="kw">let</span> <span class="ident">variant_ident</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">variant_ident</span>;
-            <span class="kw">let</span> <span class="ident">ty_ident</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">ty_ident</span>;
+        <span class="kw">if </span>val.data.is_unit() {
+            <span class="kw">let </span>variant_ident = val.variant_ident;
+            <span class="kw">let </span>ty_ident = val.ty_ident;
 
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #<span class="ident">name_in_attr</span> =&gt; <span class="ident">::darling::export::Ok</span>(#<span class="ident">ty_ident</span>::#<span class="ident">variant_ident</span>),
+            tokens.append_all(<span class="macro">quote!</span>(
+                #name_in_attr =&gt; ::darling::export::Ok(#ty_ident::#variant_ident),
             ));
-        } <span class="kw">else</span> {
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #<span class="ident">name_in_attr</span> =&gt; <span class="ident">::darling::export::Err</span>(<span class="ident">::darling::Error::unsupported_format</span>(<span class="string">&quot;literal&quot;</span>)),
+        } <span class="kw">else </span>{
+            tokens.append_all(<span class="macro">quote!</span>(
+                #name_in_attr =&gt; ::darling::export::Err(::darling::Error::unsupported_format(<span class="string">&quot;literal&quot;</span>)),
             ));
         }
     }
 }
 
-<span class="doccomment">/// Code generator for an enum variant in a data-carrying match position.</span>
-<span class="doccomment">/// This is placed in generated `from_list` calls for the parent enum.</span>
-<span class="doccomment">/// Unit variants wrapped in this type will emit code to produce an &quot;unsupported format&quot; error.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DataMatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// Code generator for an enum variant in a data-carrying match position.
+/// This is placed in generated `from_list` calls for the parent enum.
+/// Unit variants wrapped in this type will emit code to produce an &quot;unsupported format&quot; error.
+</span><span class="kw">pub struct </span>DataMatchArm&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Variant&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">DataMatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>DataMatchArm&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>val: <span class="kw-2">&amp;</span>Variant&lt;<span class="lifetime">&#39;a</span>&gt; = <span class="self">self</span>.<span class="number">0</span>;
 
-        <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">skip</span> {
+        <span class="kw">if </span>val.skip {
             <span class="kw">return</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">name_in_attr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">val</span>.<span class="ident">name_in_attr</span>;
-        <span class="kw">let</span> <span class="ident">variant_ident</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">variant_ident</span>;
-        <span class="kw">let</span> <span class="ident">ty_ident</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">ty_ident</span>;
+        <span class="kw">let </span>name_in_attr = <span class="kw-2">&amp;</span>val.name_in_attr;
+        <span class="kw">let </span>variant_ident = val.variant_ident;
+        <span class="kw">let </span>ty_ident = val.ty_ident;
 
-        <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">data</span>.<span class="ident">is_unit</span>() {
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #<span class="ident">name_in_attr</span> =&gt; <span class="ident">::darling::export::Err</span>(<span class="ident">::darling::Error::unsupported_format</span>(<span class="string">&quot;list&quot;</span>)),
+        <span class="kw">if </span>val.data.is_unit() {
+            tokens.append_all(<span class="macro">quote!</span>(
+                #name_in_attr =&gt; ::darling::export::Err(::darling::Error::unsupported_format(<span class="string">&quot;list&quot;</span>)),
             ));
 
             <span class="kw">return</span>;
         }
 
-        <span class="kw">let</span> <span class="ident">vdg</span> <span class="op">=</span> <span class="ident">FieldsGen::new</span>(<span class="kw-2">&amp;</span><span class="ident">val</span>.<span class="ident">data</span>, <span class="ident">val</span>.<span class="ident">allow_unknown_fields</span>);
+        <span class="kw">let </span>vdg = FieldsGen::new(<span class="kw-2">&amp;</span>val.data, val.allow_unknown_fields);
 
-        <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">data</span>.<span class="ident">is_struct</span>() {
-            <span class="kw">let</span> <span class="ident">declare_errors</span> <span class="op">=</span> <span class="ident">ErrorDeclaration::default</span>();
-            <span class="kw">let</span> <span class="ident">check_errors</span> <span class="op">=</span> <span class="ident">ErrorCheck::with_location</span>(<span class="kw-2">&amp;</span><span class="ident">name_in_attr</span>);
-            <span class="kw">let</span> <span class="ident">require_fields</span> <span class="op">=</span> <span class="ident">vdg</span>.<span class="ident">require_fields</span>();
-            <span class="kw">let</span> <span class="ident">decls</span> <span class="op">=</span> <span class="ident">vdg</span>.<span class="ident">declarations</span>();
-            <span class="kw">let</span> <span class="ident">core_loop</span> <span class="op">=</span> <span class="ident">vdg</span>.<span class="ident">core_loop</span>();
-            <span class="kw">let</span> <span class="ident">inits</span> <span class="op">=</span> <span class="ident">vdg</span>.<span class="ident">initializers</span>();
+        <span class="kw">if </span>val.data.is_struct() {
+            <span class="kw">let </span>declare_errors = ErrorDeclaration::default();
+            <span class="kw">let </span>check_errors = ErrorCheck::with_location(name_in_attr);
+            <span class="kw">let </span>require_fields = vdg.require_fields();
+            <span class="kw">let </span>decls = vdg.declarations();
+            <span class="kw">let </span>core_loop = vdg.core_loop();
+            <span class="kw">let </span>inits = vdg.initializers();
 
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #<span class="ident">name_in_attr</span> =&gt; {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">::syn::Meta::List</span>(<span class="kw-2">ref</span> <span class="ident">__data</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">__nested</span> {
-                        <span class="kw">let</span> <span class="ident">__items</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">__data</span>.<span class="ident">nested</span>;
+            tokens.append_all(<span class="macro">quote!</span>(
+                #name_in_attr =&gt; {
+                    <span class="kw">if let </span>::syn::Meta::List(<span class="kw-2">ref </span>__data) = <span class="kw-2">*</span>__nested {
+                        <span class="kw">let </span>__items = <span class="kw-2">&amp;</span>__data.nested;
 
-                        #<span class="ident">declare_errors</span>
+                        #declare_errors
 
-                        #<span class="ident">decls</span>
+                        #decls
 
-                        #<span class="ident">core_loop</span>
+                        #core_loop
 
-                        #<span class="ident">require_fields</span>
+                        #require_fields
 
-                        #<span class="ident">check_errors</span>
+                        #check_errors
 
-                        <span class="ident">::darling::export::Ok</span>(#<span class="ident">ty_ident</span>::#<span class="ident">variant_ident</span> {
-                            #<span class="ident">inits</span>
+                        ::darling::export::Ok(#ty_ident::#variant_ident {
+                            #inits
                         })
-                    } <span class="kw">else</span> {
-                        <span class="ident">::darling::export::Err</span>(<span class="ident">::darling::Error::unsupported_format</span>(<span class="string">&quot;non-list&quot;</span>))
+                    } <span class="kw">else </span>{
+                        ::darling::export::Err(::darling::Error::unsupported_format(<span class="string">&quot;non-list&quot;</span>))
                     }
                 }
             ));
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">val</span>.<span class="ident">data</span>.<span class="ident">is_newtype</span>() {
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #<span class="ident">name_in_attr</span> =&gt; {
-                    <span class="ident">::darling::export::Ok</span>(
-                        #<span class="ident">ty_ident</span>::#<span class="ident">variant_ident</span>(
-                            <span class="ident">::darling::FromMeta::from_meta</span>(<span class="ident">__nested</span>)
-                                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">at</span>(#<span class="ident">name_in_attr</span>))<span class="question-mark">?</span>)
+        } <span class="kw">else if </span>val.data.is_newtype() {
+            tokens.append_all(<span class="macro">quote!</span>(
+                #name_in_attr =&gt; {
+                    ::darling::export::Ok(
+                        #ty_ident::#variant_ident(
+                            ::darling::FromMeta::from_meta(__nested)
+                                .map_err(|e| e.at(#name_in_attr))<span class="question-mark">?</span>)
                     )
                 }
             ));
-        } <span class="kw">else</span> {
+        } <span class="kw">else </span>{
             <span class="macro">panic!</span>(<span class="string">&quot;Match arms aren&#39;t supported for tuple variants yet&quot;</span>);
         }
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

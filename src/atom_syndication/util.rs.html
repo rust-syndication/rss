@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atom_syndication-0.11.0/src/util.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>util.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../atom_syndication/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../atom_syndication/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../atom_syndication/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atom_syndication-0.12.0/src/util.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>util.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atom_syndication/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -197,200 +192,265 @@
 <span id="192">192</span>
 <span id="193">193</span>
 <span id="194">194</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::io::BufRead</span>;
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+</pre><pre class="rust"><code><span class="kw">use </span>quick_xml::{
+    escape::escape,
+    events::{attributes::Attribute, Event},
+    name::QName,
+    Reader,
+};
 
-<span class="kw">use</span> <span class="ident">quick_xml::events::Event</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::Reader</span>;
+<span class="kw">use </span><span class="kw">crate</span>::error::{Error, XmlError};
+<span class="kw">use </span>std::borrow::Cow;
+<span class="kw">use </span>std::io::BufRead;
+<span class="kw">use </span>std::str::FromStr;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error::Error</span>;
-<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
+<span class="doccomment">/// Alias of `::chrono::DateTime&lt;::chrono::FixedOffset&gt;`
+</span><span class="kw">pub type </span>FixedDateTime = ::chrono::DateTime&lt;::chrono::FixedOffset&gt;;
 
-<span class="doccomment">/// Alias of `::chrono::DateTime&lt;::chrono::FixedOffset&gt;`</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">FixedDateTime</span> <span class="op">=</span> <span class="ident">::chrono::DateTime</span><span class="op">&lt;</span><span class="ident">::chrono::FixedOffset</span><span class="op">&gt;</span>;
-
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_fixed_datetime</span>() -&gt; <span class="ident">FixedDateTime</span> {
-    <span class="ident">FixedDateTime::from_str</span>(<span class="string">&quot;1970-01-01T00:00:00Z&quot;</span>).<span class="ident">unwrap</span>()
+<span class="kw">pub fn </span>default_fixed_datetime() -&gt; FixedDateTime {
+    FixedDateTime::from_str(<span class="string">&quot;1970-01-01T00:00:00Z&quot;</span>).unwrap()
 }
 
-<span class="kw">fn</span> <span class="ident">non_empty</span>(<span class="ident">string</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="op">!</span><span class="ident">string</span>.<span class="ident">is_empty</span>() {
-        <span class="prelude-val">Some</span>(<span class="ident">string</span>)
-    } <span class="kw">else</span> {
-        <span class="prelude-val">None</span>
-    }
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>decode&lt;<span class="lifetime">&#39;s</span>, <span class="lifetime">&#39;r</span>, B: BufRead&gt;(
+    bytes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>[u8],
+    reader: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Reader&lt;B&gt;,
+) -&gt; <span class="prelude-ty">Result</span>&lt;Cow&lt;<span class="lifetime">&#39;s</span>, str&gt;, Error&gt; {
+    <span class="kw">let </span>text = reader.decoder().decode(bytes).map_err(XmlError::new)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(text)
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atom_text</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="ident">reader</span>.<span class="ident">expand_empty_elements</span>(<span class="bool-val">false</span>);
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>attr_value&lt;<span class="lifetime">&#39;s</span>, <span class="lifetime">&#39;r</span>, B: BufRead&gt;(
+    attr: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>Attribute&lt;<span class="lifetime">&#39;s</span>&gt;,
+    reader: <span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Reader&lt;B&gt;,
+) -&gt; <span class="prelude-ty">Result</span>&lt;Cow&lt;<span class="lifetime">&#39;s</span>, str&gt;, Error&gt; {
+    <span class="kw">let </span>value = attr
+        .decode_and_unescape_value(reader)
+        .map_err(XmlError::new)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(value)
+}
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">innerbuf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">depth</span> <span class="op">=</span> <span class="number">0</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">String::new</span>();
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>skip&lt;B: BufRead&gt;(end: QName&lt;<span class="lifetime">&#39;_</span>&gt;, reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    reader
+        .read_to_end_into(end, <span class="kw-2">&amp;mut </span>Vec::new())
+        .map_err(XmlError::new)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
+}
 
-    <span class="kw">loop</span> {
-        <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">innerbuf</span>)<span class="question-mark">?</span> {
-            <span class="ident">Event::Start</span>(<span class="ident">start</span>) =&gt; {
-                <span class="ident">depth</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&lt;&#39;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">start</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>);
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&gt;&#39;</span>);
+<span class="kw">fn </span>non_empty(string: String) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
+    <span class="kw">if </span>!string.is_empty() {
+        <span class="prelude-val">Some</span>(string)
+    } <span class="kw">else </span>{
+        <span class="prelude-val">None
+    </span>}
+}
+
+<span class="kw">pub fn </span>atom_text&lt;B: BufRead&gt;(reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;String&gt;, Error&gt; {
+    reader.expand_empty_elements(<span class="bool-val">false</span>);
+
+    <span class="kw">let </span><span class="kw-2">mut </span>innerbuf = Vec::new();
+    <span class="kw">let </span><span class="kw-2">mut </span>depth = <span class="number">0</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>result = String::new();
+
+    <span class="kw">loop </span>{
+        <span class="kw">match </span>reader
+            .read_event_into(<span class="kw-2">&amp;mut </span>innerbuf)
+            .map_err(XmlError::new)<span class="question-mark">?
+        </span>{
+            Event::Start(start) =&gt; {
+                depth += <span class="number">1</span>;
+                result.push(<span class="string">&#39;&lt;&#39;</span>);
+                result.push_str(decode(<span class="kw-2">&amp;</span>start, reader)<span class="question-mark">?</span>.as_ref());
+                result.push(<span class="string">&#39;&gt;&#39;</span>);
             }
-            <span class="ident">Event::End</span>(<span class="ident">end</span>) =&gt; {
-                <span class="kw">if</span> <span class="ident">depth</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0</span> {
+            Event::End(end) =&gt; {
+                <span class="kw">if </span>depth &lt;= <span class="number">0 </span>{
                     <span class="kw">break</span>;
                 }
-                <span class="ident">depth</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;/&quot;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">reader</span>.<span class="ident">decode</span>(<span class="ident">end</span>.<span class="ident">name</span>()));
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&gt;&#39;</span>);
+                depth -= <span class="number">1</span>;
+                result.push_str(<span class="string">&quot;&lt;/&quot;</span>);
+                result.push_str(decode(end.name().as_ref(), reader)<span class="question-mark">?</span>.as_ref());
+                result.push(<span class="string">&#39;&gt;&#39;</span>);
             }
-            <span class="ident">Event::Empty</span>(<span class="ident">start</span>) =&gt; {
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&lt;&#39;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">start</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;/&gt;&quot;</span>);
+            Event::Empty(start) =&gt; {
+                result.push(<span class="string">&#39;&lt;&#39;</span>);
+                result.push_str(decode(<span class="kw-2">&amp;</span>start, reader)<span class="question-mark">?</span>.as_ref());
+                result.push_str(<span class="string">&quot;/&gt;&quot;</span>);
             }
-            <span class="ident">Event::CData</span>(<span class="ident">text</span>) =&gt; {
-                <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">decoded</span>);
+            Event::CData(text) =&gt; {
+                result.push_str(decode(<span class="kw-2">&amp;</span>text, reader)<span class="question-mark">?</span>.as_ref());
             }
-            <span class="ident">Event::Text</span>(<span class="ident">text</span>) =&gt; {
-                <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">decoded</span>);
+            Event::Text(text) =&gt; {
+                <span class="kw">let </span>decoded = text.unescape().map_err(XmlError::new)<span class="question-mark">?</span>;
+                result.push_str(<span class="kw-2">&amp;</span>decoded);
             }
-            <span class="ident">Event::Comment</span>(<span class="ident">text</span>) =&gt; {
-                <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;!--&quot;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">decoded</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;--&gt;&quot;</span>);
+            Event::Comment(text) =&gt; {
+                <span class="kw">let </span>decoded = text.unescape().map_err(XmlError::new)<span class="question-mark">?</span>;
+                result.push_str(<span class="string">&quot;&lt;!--&quot;</span>);
+                result.push_str(<span class="kw-2">&amp;</span>decoded);
+                result.push_str(<span class="string">&quot;--&gt;&quot;</span>);
             }
-            <span class="ident">Event::Decl</span>(<span class="ident">_decl</span>) =&gt; {}
-            <span class="ident">Event::PI</span>(<span class="ident">_text</span>) =&gt; {}
-            <span class="ident">Event::DocType</span>(<span class="ident">_text</span>) =&gt; {}
-            <span class="ident">Event::Eof</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
+            Event::Decl(_decl) =&gt; {}
+            Event::PI(_text) =&gt; {}
+            Event::DocType(_text) =&gt; {}
+            Event::Eof =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Eof),
         }
 
-        <span class="ident">innerbuf</span>.<span class="ident">clear</span>();
+        innerbuf.clear();
     }
 
-    <span class="ident">reader</span>.<span class="ident">expand_empty_elements</span>(<span class="bool-val">true</span>);
+    reader.expand_empty_elements(<span class="bool-val">true</span>);
 
-    <span class="prelude-val">Ok</span>(<span class="ident">non_empty</span>(<span class="ident">result</span>))
+    <span class="prelude-val">Ok</span>(non_empty(result))
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atom_xhtml</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="ident">reader</span>.<span class="ident">expand_empty_elements</span>(<span class="bool-val">false</span>);
+<span class="kw">pub fn </span>atom_xhtml&lt;B: BufRead&gt;(reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;String&gt;, Error&gt; {
+    reader.expand_empty_elements(<span class="bool-val">false</span>);
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">innerbuf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">depth</span> <span class="op">=</span> <span class="number">0</span>;
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">String::new</span>();
+    <span class="kw">let </span><span class="kw-2">mut </span>innerbuf = Vec::new();
+    <span class="kw">let </span><span class="kw-2">mut </span>depth = <span class="number">0</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>result = String::new();
 
-    <span class="kw">loop</span> {
-        <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">innerbuf</span>)<span class="question-mark">?</span> {
-            <span class="ident">Event::Start</span>(<span class="ident">start</span>) =&gt; {
-                <span class="ident">depth</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&lt;&#39;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">start</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>);
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&gt;&#39;</span>);
+    <span class="kw">loop </span>{
+        <span class="kw">match </span>reader
+            .read_event_into(<span class="kw-2">&amp;mut </span>innerbuf)
+            .map_err(XmlError::new)<span class="question-mark">?
+        </span>{
+            Event::Start(start) =&gt; {
+                depth += <span class="number">1</span>;
+                result.push(<span class="string">&#39;&lt;&#39;</span>);
+                result.push_str(decode(<span class="kw-2">&amp;</span>start, reader)<span class="question-mark">?</span>.as_ref());
+                result.push(<span class="string">&#39;&gt;&#39;</span>);
             }
-            <span class="ident">Event::End</span>(<span class="ident">end</span>) =&gt; {
-                <span class="kw">if</span> <span class="ident">depth</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0</span> {
+            Event::End(end) =&gt; {
+                <span class="kw">if </span>depth &lt;= <span class="number">0 </span>{
                     <span class="kw">break</span>;
                 }
-                <span class="ident">depth</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;/&quot;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">reader</span>.<span class="ident">decode</span>(<span class="ident">end</span>.<span class="ident">name</span>()));
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&gt;&#39;</span>);
+                depth -= <span class="number">1</span>;
+                result.push_str(<span class="string">&quot;&lt;/&quot;</span>);
+                result.push_str(decode(end.name().as_ref(), reader)<span class="question-mark">?</span>.as_ref());
+                result.push(<span class="string">&#39;&gt;&#39;</span>);
             }
-            <span class="ident">Event::Empty</span>(<span class="ident">start</span>) =&gt; {
-                <span class="ident">result</span>.<span class="ident">push</span>(<span class="string">&#39;&lt;&#39;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">start</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;/&gt;&quot;</span>);
+            Event::Empty(start) =&gt; {
+                result.push(<span class="string">&#39;&lt;&#39;</span>);
+                result.push_str(decode(<span class="kw-2">&amp;</span>start, reader)<span class="question-mark">?</span>.as_ref());
+                result.push_str(<span class="string">&quot;/&gt;&quot;</span>);
             }
-            <span class="ident">Event::CData</span>(<span class="ident">text</span>) =&gt; {
-                <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode</span>(<span class="ident">text</span>.<span class="ident">escaped</span>());
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">decoded</span>);
+            Event::CData(text) =&gt; {
+                result.push_str(escape(decode(<span class="kw-2">&amp;</span>text, reader)<span class="question-mark">?</span>.as_ref()).as_ref());
             }
-            <span class="ident">Event::Text</span>(<span class="ident">text</span>) =&gt; {
-                <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">decode</span>(<span class="ident">text</span>.<span class="ident">escaped</span>());
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">decoded</span>);
+            Event::Text(text) =&gt; {
+                <span class="kw">let </span>decoded = text.unescape().map_err(XmlError::new)<span class="question-mark">?</span>;
+                result.push_str(escape(decoded.as_ref()).as_ref());
             }
-            <span class="ident">Event::Comment</span>(<span class="ident">text</span>) =&gt; {
-                <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">unescape_and_decode</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>;
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;&lt;!--&quot;</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="ident">decoded</span>);
-                <span class="ident">result</span>.<span class="ident">push_str</span>(<span class="string">&quot;--&gt;&quot;</span>);
+            Event::Comment(text) =&gt; {
+                <span class="kw">let </span>decoded = text.unescape().map_err(XmlError::new)<span class="question-mark">?</span>;
+                result.push_str(<span class="string">&quot;&lt;!--&quot;</span>);
+                result.push_str(<span class="kw-2">&amp;</span>decoded);
+                result.push_str(<span class="string">&quot;--&gt;&quot;</span>);
             }
-            <span class="ident">Event::Decl</span>(<span class="ident">_decl</span>) =&gt; {}
-            <span class="ident">Event::PI</span>(<span class="ident">_text</span>) =&gt; {}
-            <span class="ident">Event::DocType</span>(<span class="ident">_text</span>) =&gt; {}
-            <span class="ident">Event::Eof</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
+            Event::Decl(_decl) =&gt; {}
+            Event::PI(_text) =&gt; {}
+            Event::DocType(_text) =&gt; {}
+            Event::Eof =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Eof),
         }
 
-        <span class="ident">innerbuf</span>.<span class="ident">clear</span>();
+        innerbuf.clear();
     }
 
-    <span class="ident">reader</span>.<span class="ident">expand_empty_elements</span>(<span class="bool-val">true</span>);
+    reader.expand_empty_elements(<span class="bool-val">true</span>);
 
-    <span class="prelude-val">Ok</span>(<span class="ident">non_empty</span>(<span class="ident">result</span>))
+    <span class="prelude-val">Ok</span>(non_empty(result))
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">atom_datetime</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FixedDateTime</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">datetime_text</span>) <span class="op">=</span> <span class="ident">atom_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span> {
-        <span class="kw">match</span> <span class="ident">diligent_date_parser::parse_date</span>(<span class="kw-2">&amp;</span><span class="ident">datetime_text</span>) {
-            <span class="prelude-val">None</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::WrongDatetime</span>(<span class="ident">datetime_text</span>)),
-            <span class="prelude-val">Some</span>(<span class="ident">datetime</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">datetime</span>)),
+<span class="kw">pub fn </span>atom_datetime&lt;B: BufRead&gt;(reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;FixedDateTime&gt;, Error&gt; {
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(datetime_text) = atom_text(reader)<span class="question-mark">? </span>{
+        <span class="kw">match </span>diligent_date_parser::parse_date(<span class="kw-2">&amp;</span>datetime_text) {
+            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(Error::WrongDatetime(datetime_text)),
+            <span class="prelude-val">Some</span>(datetime) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(datetime)),
         }
-    } <span class="kw">else</span> {
+    } <span class="kw">else </span>{
         <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error::Error</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>test {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">crate</span>::error::Error;
 
-    <span class="kw">fn</span> <span class="ident">read_x</span>(<span class="ident">xml</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">Reader::from_reader</span>(<span class="ident">xml</span>.<span class="ident">as_bytes</span>());
-        <span class="ident">reader</span>.<span class="ident">expand_empty_elements</span>(<span class="bool-val">true</span>);
-        <span class="kw">loop</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
-                <span class="ident">Event::Start</span>(<span class="ident">element</span>) <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="string">b&quot;text&quot;</span> =&gt; {
-                    <span class="kw">return</span> <span class="ident">atom_text</span>(<span class="kw-2">&amp;mut</span> <span class="ident">reader</span>)
+    <span class="kw">fn </span>read_x(xml: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;String&gt;, Error&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>reader = Reader::from_reader(xml.as_bytes());
+        reader.expand_empty_elements(<span class="bool-val">true</span>);
+        <span class="kw">loop </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::new();
+            <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf).map_err(XmlError::new)<span class="question-mark">? </span>{
+                Event::Start(element) =&gt; {
+                    <span class="kw">return match </span>decode(element.name().as_ref(), <span class="kw-2">&amp;</span>reader)<span class="question-mark">? </span>{
+                        Cow::Borrowed(<span class="string">&quot;text&quot;</span>) =&gt; atom_text(<span class="kw-2">&amp;mut </span>reader),
+                        Cow::Borrowed(<span class="string">&quot;raw&quot;</span>) =&gt; atom_xhtml(<span class="kw-2">&amp;mut </span>reader),
+                        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::InvalidStartTag),
+                    }
                 }
-                <span class="ident">Event::Start</span>(<span class="ident">element</span>) <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="string">b&quot;raw&quot;</span> =&gt; {
-                    <span class="kw">return</span> <span class="ident">atom_xhtml</span>(<span class="kw-2">&amp;mut</span> <span class="ident">reader</span>)
-                }
-                <span class="ident">Event::Start</span>(<span class="kw">_</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::InvalidStartTag</span>),
-                <span class="ident">Event::Eof</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
-                <span class="kw">_</span> =&gt; {}
+                Event::Eof =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Eof),
+                <span class="kw">_ </span>=&gt; {}
             }
         }
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_read_text</span>() {
-        <span class="kw">let</span> <span class="ident">xml_fragment</span> <span class="op">=</span> <span class="string">r#&quot;&lt;text&gt;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_read_text() {
+        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;text&gt;
             Text with ampersand &amp;amp; &amp;lt;tag&amp;gt; and &lt;unescaped-empty-tag /&gt;.
         &lt;/text&gt;&quot;#</span>;
         <span class="macro">assert_eq!</span>(
-            <span class="ident">read_x</span>(<span class="ident">xml_fragment</span>).<span class="ident">unwrap</span>().<span class="ident">unwrap</span>().<span class="ident">trim</span>(),
-            <span class="string">&quot;Text with ampersand &amp; &lt;tag&gt; and &lt;unescaped-empty-tag /&gt;.&quot;</span>
-        );
+            read_x(xml_fragment).unwrap().unwrap().trim(),
+            <span class="string">&quot;Text with ampersand &amp; &lt;tag&gt; and &lt;unescaped-empty-tag /&gt;.&quot;
+        </span>);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_read_xhtml</span>() {
-        <span class="kw">let</span> <span class="ident">xml_fragment</span> <span class="op">=</span> <span class="string">r#&quot;&lt;raw&gt;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_read_xhtml() {
+        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;raw&gt;
             &lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;
         &lt;/raw&gt;&quot;#</span>;
         <span class="macro">assert_eq!</span>(
-            <span class="ident">read_x</span>(<span class="ident">xml_fragment</span>).<span class="ident">unwrap</span>().<span class="ident">unwrap</span>().<span class="ident">trim</span>(),
-            <span class="string">r#&quot;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&quot;#</span>
-        );
+            read_x(xml_fragment).unwrap().unwrap().trim(),
+            <span class="string">r#&quot;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&quot;#
+        </span>);
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="atom_syndication" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="atom_syndication" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

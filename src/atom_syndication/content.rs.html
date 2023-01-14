@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atom_syndication-0.11.0/src/content.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>content.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../atom_syndication/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../atom_syndication/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../atom_syndication/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/atom_syndication-0.12.0/src/content.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>content.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../atom_syndication/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -342,345 +337,374 @@
 <span id="337">337</span>
 <span id="338">338</span>
 <span id="339">339</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::io</span>::{<span class="ident">BufRead</span>, <span class="ident">Write</span>};
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
+<span class="kw">use </span>std::io::{BufRead, Write};
 
-<span class="kw">use</span> <span class="ident">quick_xml::events::attributes::Attributes</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">BytesText</span>, <span class="ident">Event</span>};
-<span class="kw">use</span> <span class="ident">quick_xml::Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::Reader</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::Writer</span>;
+<span class="kw">use </span>quick_xml::events::attributes::Attributes;
+<span class="kw">use </span>quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
+<span class="kw">use </span>quick_xml::Reader;
+<span class="kw">use </span>quick_xml::Writer;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error::Error</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::fromxml::FromXml</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::toxml::ToXml</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::util</span>::{<span class="ident">atom_text</span>, <span class="ident">atom_xhtml</span>};
+<span class="kw">use </span><span class="kw">crate</span>::error::{Error, XmlError};
+<span class="kw">use </span><span class="kw">crate</span>::fromxml::FromXml;
+<span class="kw">use </span><span class="kw">crate</span>::toxml::ToXml;
+<span class="kw">use </span><span class="kw">crate</span>::util::{atom_text, atom_xhtml, attr_value, decode};
 
-<span class="doccomment">/// Represents the content of an Atom entry</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>))]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>, <span class="ident">derive</span>(<span class="ident">Builder</span>))]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(
-    <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>,
-    <span class="ident">builder</span>(
-        <span class="ident">setter</span>(<span class="ident">into</span>),
-        <span class="ident">default</span>,
-        <span class="ident">build_fn</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;build_impl&quot;</span>, <span class="ident">private</span>, <span class="ident">error</span> <span class="op">=</span> <span class="string">&quot;never::Never&quot;</span>)
+<span class="doccomment">/// Represents the content of an Atom entry
+</span><span class="attribute">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Deserialize, Serialize))]
+#[derive(Debug, Default, Clone, PartialEq)]
+#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(
+    feature = <span class="string">&quot;builders&quot;</span>,
+    builder(
+        setter(into),
+        default,
+        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
     )
-)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Content</span> {
-    <span class="doccomment">/// Base URL for resolving any relative references found in the element.</span>
-    <span class="kw">pub</span> <span class="ident">base</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Indicates the natural language for the element.</span>
-    <span class="kw">pub</span> <span class="ident">lang</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The text value of the content.</span>
-    <span class="kw">pub</span> <span class="ident">value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The URI of where the content can be found.</span>
-    <span class="kw">pub</span> <span class="ident">src</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Either &quot;text&quot;, &quot;html&quot;, &quot;xhtml&quot;, or the MIME type of the content.</span>
-    <span class="kw">pub</span> <span class="ident">content_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+)]
+</span><span class="kw">pub struct </span>Content {
+    <span class="doccomment">/// Base URL for resolving any relative references found in the element.
+    </span><span class="kw">pub </span>base: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Indicates the natural language for the element.
+    </span><span class="kw">pub </span>lang: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The text value of the content.
+    </span><span class="kw">pub </span>value: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// The URI of where the content can be found.
+    </span><span class="kw">pub </span>src: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="doccomment">/// Either &quot;text&quot;, &quot;html&quot;, &quot;xhtml&quot;, or the MIME type of the content.
+    </span><span class="kw">pub </span>content_type: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Content</span> {
-    <span class="doccomment">/// Return base URL of the content.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">base</span>.<span class="ident">as_deref</span>()
+<span class="kw">impl </span>Content {
+    <span class="doccomment">/// Return base URL of the content.
+    </span><span class="kw">pub fn </span>base(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.base.as_deref()
     }
 
-    <span class="doccomment">/// Set base URL of the content.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_base</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set base URL of the content.
+    </span><span class="kw">pub fn </span>set_base&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, base: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">base</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.base = base.into();
     }
 
-    <span class="doccomment">/// Return natural language of the content.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lang</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">lang</span>.<span class="ident">as_deref</span>()
+    <span class="doccomment">/// Return natural language of the content.
+    </span><span class="kw">pub fn </span>lang(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.lang.as_deref()
     }
 
-    <span class="doccomment">/// Set the base URL of the content.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_lang</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">lang</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the base URL of the content.
+    </span><span class="kw">pub fn </span>set_lang&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, lang: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">lang</span> <span class="op">=</span> <span class="ident">lang</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.lang = lang.into();
     }
 
-    <span class="doccomment">/// Return the text value of the content.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the `content_type` is neither `&quot;text&quot;`, `&quot;html&quot;`, or `&quot;xhtml&quot;` then the value should</span>
-    <span class="doccomment">/// be a base64 encoded document of the indicated MIME type.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use atom_syndication::Content;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut content = Content::default();</span>
-    <span class="doccomment">/// content.set_value(&quot;Example content&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(content.value(), Some(&quot;Example content&quot;));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">as_deref</span>()
+    <span class="doccomment">/// Return the text value of the content.
+    ///
+    /// If the `content_type` is neither `&quot;text&quot;`, `&quot;html&quot;`, or `&quot;xhtml&quot;` then the value should
+    /// be a base64 encoded document of the indicated MIME type.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use atom_syndication::Content;
+    ///
+    /// let mut content = Content::default();
+    /// content.set_value(&quot;Example content&quot;.to_string());
+    /// assert_eq!(content.value(), Some(&quot;Example content&quot;));
+    /// ```
+    </span><span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.value.as_deref()
     }
 
-    <span class="doccomment">/// Set the text value of the content.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use atom_syndication::Content;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut content = Content::default();</span>
-    <span class="doccomment">/// content.set_value(&quot;Example content&quot;.to_string());</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_value</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the text value of the content.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use atom_syndication::Content;
+    ///
+    /// let mut content = Content::default();
+    /// content.set_value(&quot;Example content&quot;.to_string());
+    /// ```
+    </span><span class="kw">pub fn </span>set_value&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">value</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.value = value.into();
     }
 
-    <span class="doccomment">/// Return the URI where the content can be found.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use atom_syndication::Content;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut content = Content::default();</span>
-    <span class="doccomment">/// content.set_src(&quot;http://example.com/content.html&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(content.src(), Some(&quot;http://example.com/content.html&quot;));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">src</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">src</span>.<span class="ident">as_deref</span>()
+    <span class="doccomment">/// Return the URI where the content can be found.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use atom_syndication::Content;
+    ///
+    /// let mut content = Content::default();
+    /// content.set_src(&quot;http://example.com/content.html&quot;.to_string());
+    /// assert_eq!(content.src(), Some(&quot;http://example.com/content.html&quot;));
+    /// ```
+    </span><span class="kw">pub fn </span>src(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.src.as_deref()
     }
 
-    <span class="doccomment">/// Set the URI where the content can be found.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use atom_syndication::Content;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut content = Content::default();</span>
-    <span class="doccomment">/// content.set_src(&quot;http://example.com/content.html&quot;.to_string());</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_src</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">src</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the URI where the content can be found.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use atom_syndication::Content;
+    ///
+    /// let mut content = Content::default();
+    /// content.set_src(&quot;http://example.com/content.html&quot;.to_string());
+    /// ```
+    </span><span class="kw">pub fn </span>set_src&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, src: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">src</span> <span class="op">=</span> <span class="ident">src</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.src = src.into();
     }
 
-    <span class="doccomment">/// Return the type of the content.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The type is either `&quot;text&quot;`, `&quot;html&quot;`, `&quot;xhtml&quot;`, or the MIME type of the content.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use atom_syndication::Content;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut content = Content::default();</span>
-    <span class="doccomment">/// content.set_content_type(&quot;image/png&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(content.content_type(), Some(&quot;image/png&quot;));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">content_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">as_deref</span>()
+    <span class="doccomment">/// Return the type of the content.
+    ///
+    /// The type is either `&quot;text&quot;`, `&quot;html&quot;`, `&quot;xhtml&quot;`, or the MIME type of the content.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use atom_syndication::Content;
+    ///
+    /// let mut content = Content::default();
+    /// content.set_content_type(&quot;image/png&quot;.to_string());
+    /// assert_eq!(content.content_type(), Some(&quot;image/png&quot;));
+    /// ```
+    </span><span class="kw">pub fn </span>content_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.content_type.as_deref()
     }
 
-    <span class="doccomment">/// Set the type of the content.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use atom_syndication::Content;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut content = Content::default();</span>
-    <span class="doccomment">/// content.set_content_type(&quot;image/png&quot;.to_string());</span>
-    <span class="doccomment">/// assert_eq!(content.content_type(), Some(&quot;image/png&quot;));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_content_type</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">content_type</span>: <span class="ident">V</span>)
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Set the type of the content.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use atom_syndication::Content;
+    ///
+    /// let mut content = Content::default();
+    /// content.set_content_type(&quot;image/png&quot;.to_string());
+    /// assert_eq!(content.content_type(), Some(&quot;image/png&quot;));
+    /// ```
+    </span><span class="kw">pub fn </span>set_content_type&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, content_type: V)
+    <span class="kw">where
+        </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
     {
-        <span class="self">self</span>.<span class="ident">content_type</span> <span class="op">=</span> <span class="ident">content_type</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.content_type = content_type.into();
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FromXml</span> <span class="kw">for</span> <span class="ident">Content</span> {
-    <span class="kw">fn</span> <span class="ident">from_xml</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(
-        <span class="ident">reader</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Reader</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
-        <span class="kw-2">mut</span> <span class="ident">atts</span>: <span class="ident">Attributes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">Content::default</span>();
+<span class="kw">impl </span>FromXml <span class="kw">for </span>Content {
+    <span class="kw">fn </span>from_xml&lt;B: BufRead&gt;(
+        reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;,
+        <span class="kw-2">mut </span>atts: Attributes&lt;<span class="lifetime">&#39;_</span>&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>content = Content::default();
 
-        <span class="kw">for</span> <span class="ident">att</span> <span class="kw">in</span> <span class="ident">atts</span>.<span class="ident">with_checks</span>(<span class="bool-val">false</span>).<span class="ident">flatten</span>() {
-            <span class="kw">match</span> <span class="ident">att</span>.<span class="ident">key</span> {
-                <span class="string">b&quot;xml:base&quot;</span> =&gt; <span class="ident">content</span>.<span class="ident">base</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">att</span>.<span class="ident">unescape_and_decode_value</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>),
-                <span class="string">b&quot;xml:lang&quot;</span> =&gt; <span class="ident">content</span>.<span class="ident">lang</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">att</span>.<span class="ident">unescape_and_decode_value</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>),
-                <span class="string">b&quot;type&quot;</span> =&gt; <span class="ident">content</span>.<span class="ident">content_type</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">att</span>.<span class="ident">unescape_and_decode_value</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>),
-                <span class="string">b&quot;src&quot;</span> =&gt; <span class="ident">content</span>.<span class="ident">src</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">att</span>.<span class="ident">unescape_and_decode_value</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>),
-                <span class="kw">_</span> =&gt; {}
+        <span class="kw">for </span>att <span class="kw">in </span>atts.with_checks(<span class="bool-val">false</span>).flatten() {
+            <span class="kw">match </span>decode(att.key.as_ref(), reader)<span class="question-mark">? </span>{
+                Cow::Borrowed(<span class="string">&quot;xml:base&quot;</span>) =&gt; {
+                    content.base = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
+                }
+                Cow::Borrowed(<span class="string">&quot;xml:lang&quot;</span>) =&gt; {
+                    content.lang = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
+                }
+                Cow::Borrowed(<span class="string">&quot;type&quot;</span>) =&gt; {
+                    content.content_type = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
+                }
+                Cow::Borrowed(<span class="string">&quot;src&quot;</span>) =&gt; {
+                    content.src = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
+                }
+                <span class="kw">_ </span>=&gt; {}
             }
         }
 
-        <span class="ident">content</span>.<span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">content</span>.<span class="ident">content_type</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">t</span>) <span class="kw">if</span> <span class="ident">t</span> <span class="op">==</span> <span class="string">&quot;xhtml&quot;</span> =&gt; <span class="ident">atom_xhtml</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
-            <span class="kw">_</span> =&gt; <span class="ident">atom_text</span>(<span class="ident">reader</span>)<span class="question-mark">?</span>,
+        content.value = <span class="kw">match </span>content.content_type {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>t) <span class="kw">if </span>t == <span class="string">&quot;xhtml&quot; </span>=&gt; atom_xhtml(reader)<span class="question-mark">?</span>,
+            <span class="kw">_ </span>=&gt; atom_text(reader)<span class="question-mark">?</span>,
         };
 
-        <span class="prelude-val">Ok</span>(<span class="ident">content</span>)
+        <span class="prelude-val">Ok</span>(content)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="ident">Content</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="string">b&quot;content&quot;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">element</span> <span class="op">=</span> <span class="ident">BytesStart::borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>());
+<span class="kw">impl </span>ToXml <span class="kw">for </span>Content {
+    <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
+        <span class="kw">let </span>name = <span class="string">&quot;content&quot;</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>element = BytesStart::new(name);
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">base</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">base</span> {
-            <span class="ident">element</span>.<span class="ident">push_attribute</span>((<span class="string">&quot;xml:base&quot;</span>, <span class="ident">base</span>.<span class="ident">as_str</span>()));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>base) = <span class="self">self</span>.base {
+            element.push_attribute((<span class="string">&quot;xml:base&quot;</span>, base.as_str()));
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">lang</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">lang</span> {
-            <span class="ident">element</span>.<span class="ident">push_attribute</span>((<span class="string">&quot;xml:lang&quot;</span>, <span class="ident">lang</span>.<span class="ident">as_str</span>()));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>lang) = <span class="self">self</span>.lang {
+            element.push_attribute((<span class="string">&quot;xml:lang&quot;</span>, lang.as_str()));
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">content_type</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">content_type</span> {
-            <span class="kw">if</span> <span class="ident">content_type</span> <span class="op">==</span> <span class="string">&quot;xhtml&quot;</span> {
-                <span class="ident">element</span>.<span class="ident">push_attribute</span>((<span class="string">&quot;type&quot;</span>, <span class="string">&quot;xhtml&quot;</span>));
-            } <span class="kw">else</span> {
-                <span class="ident">element</span>.<span class="ident">push_attribute</span>((<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">content_type</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>content_type) = <span class="self">self</span>.content_type {
+            <span class="kw">if </span>content_type == <span class="string">&quot;xhtml&quot; </span>{
+                element.push_attribute((<span class="string">&quot;type&quot;</span>, <span class="string">&quot;xhtml&quot;</span>));
+            } <span class="kw">else </span>{
+                element.push_attribute((<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;**</span>content_type));
             }
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">src</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">src</span> {
-            <span class="ident">element</span>.<span class="ident">push_attribute</span>((<span class="string">&quot;src&quot;</span>, <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">src</span>));
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>src) = <span class="self">self</span>.src {
+            element.push_attribute((<span class="string">&quot;src&quot;</span>, <span class="kw-2">&amp;**</span>src));
         }
 
-        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Start</span>(<span class="ident">element</span>))<span class="question-mark">?</span>;
+        writer
+            .write_event(Event::Start(element))
+            .map_err(XmlError::new)<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">value</span> {
-            <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::Text</span>(
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">as_deref</span>() <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="string">&quot;xhtml&quot;</span>) {
-                    <span class="ident">BytesText::from_escaped</span>(<span class="ident">value</span>.<span class="ident">as_bytes</span>())
-                } <span class="kw">else</span> {
-                    <span class="ident">BytesText::from_plain</span>(<span class="ident">value</span>.<span class="ident">as_bytes</span>())
-                },
-            ))<span class="question-mark">?</span>;
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>value) = <span class="self">self</span>.value {
+            writer
+                .write_event(Event::Text(
+                    <span class="kw">if </span><span class="self">self</span>.content_type.as_deref() == <span class="prelude-val">Some</span>(<span class="string">&quot;xhtml&quot;</span>) {
+                        BytesText::from_escaped(value)
+                    } <span class="kw">else </span>{
+                        BytesText::new(value)
+                    },
+                ))
+                .map_err(XmlError::new)<span class="question-mark">?</span>;
         }
 
-        <span class="ident">writer</span>.<span class="ident">write_event</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
+        writer
+            .write_event(Event::End(BytesEnd::new(name)))
+            .map_err(XmlError::new)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;builders&quot;</span>)]</span>
-<span class="kw">impl</span> <span class="ident">ContentBuilder</span> {
-    <span class="doccomment">/// Builds a new `Content`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Content</span> {
-        <span class="self">self</span>.<span class="ident">build_impl</span>().<span class="ident">unwrap</span>()
+<span class="attribute">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+</span><span class="kw">impl </span>ContentBuilder {
+    <span class="doccomment">/// Builds a new `Content`.
+    </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Content {
+        <span class="self">self</span>.build_impl().unwrap()
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error::Error</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>test {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">crate</span>::error::Error;
+    <span class="kw">use </span><span class="kw">crate</span>::util::decode;
 
-    <span class="kw">fn</span> <span class="ident">lines</span>(<span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="ident">text</span>.<span class="ident">lines</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">line</span><span class="op">|</span> <span class="ident">line</span>.<span class="ident">trim</span>())
-            .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">line</span><span class="op">|</span> <span class="op">!</span><span class="ident">line</span>.<span class="ident">is_empty</span>())
-            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
+    <span class="kw">fn </span>lines(text: <span class="kw-2">&amp;</span>str) -&gt; Vec&lt;<span class="kw-2">&amp;</span>str&gt; {
+        text.lines()
+            .map(|line| line.trim())
+            .filter(|line| !line.is_empty())
+            .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
     }
 
-    <span class="kw">fn</span> <span class="ident">to_xml</span>(<span class="ident">content</span>: <span class="kw-2">&amp;</span><span class="ident">Content</span>) -&gt; <span class="ident">String</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">writer</span> <span class="op">=</span> <span class="ident">Writer::new_with_indent</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buffer</span>, <span class="string">b&#39; &#39;</span>, <span class="number">4</span>);
-        <span class="ident">content</span>.<span class="ident">to_xml</span>(<span class="kw-2">&amp;mut</span> <span class="ident">writer</span>).<span class="ident">unwrap</span>();
-        <span class="ident">String::from_utf8</span>(<span class="ident">buffer</span>).<span class="ident">unwrap</span>()
+    <span class="kw">fn </span>to_xml(content: <span class="kw-2">&amp;</span>Content) -&gt; String {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer = Vec::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>writer = Writer::new_with_indent(<span class="kw-2">&amp;mut </span>buffer, <span class="string">b&#39; &#39;</span>, <span class="number">4</span>);
+        content.to_xml(<span class="kw-2">&amp;mut </span>writer).unwrap();
+        String::from_utf8(buffer).unwrap()
     }
 
-    <span class="kw">fn</span> <span class="ident">from_xml</span>(<span class="ident">xml</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Content</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">Reader::from_reader</span>(<span class="ident">xml</span>.<span class="ident">as_bytes</span>());
-        <span class="ident">reader</span>.<span class="ident">expand_empty_elements</span>(<span class="bool-val">true</span>);
+    <span class="kw">fn </span>from_xml(xml: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Content, Error&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>reader = Reader::from_reader(xml.as_bytes());
+        reader.expand_empty_elements(<span class="bool-val">true</span>);
 
-        <span class="kw">loop</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-            <span class="kw">match</span> <span class="ident">reader</span>.<span class="ident">read_event</span>(<span class="kw-2">&amp;mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span> {
-                <span class="ident">Event::Start</span>(<span class="ident">element</span>) =&gt; {
-                    <span class="kw">if</span> <span class="ident">element</span>.<span class="ident">name</span>() <span class="op">==</span> <span class="string">b&quot;content&quot;</span> {
-                        <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">Content::from_xml</span>(<span class="kw-2">&amp;mut</span> <span class="ident">reader</span>, <span class="ident">element</span>.<span class="ident">attributes</span>())<span class="question-mark">?</span>;
-                        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">content</span>);
-                    } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::InvalidStartTag</span>);
+        <span class="kw">loop </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::new();
+            <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf).map_err(XmlError::new)<span class="question-mark">? </span>{
+                Event::Start(element) =&gt; {
+                    <span class="kw">if </span>decode(element.name().as_ref(), <span class="kw-2">&amp;</span>reader)<span class="question-mark">? </span>== <span class="string">&quot;content&quot; </span>{
+                        <span class="kw">let </span>content = Content::from_xml(<span class="kw-2">&amp;mut </span>reader, element.attributes())<span class="question-mark">?</span>;
+                        <span class="kw">return </span><span class="prelude-val">Ok</span>(content);
+                    } <span class="kw">else </span>{
+                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidStartTag);
                     }
                 }
-                <span class="ident">Event::Eof</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Eof</span>),
-                <span class="kw">_</span> =&gt; {}
+                Event::Eof =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Eof),
+                <span class="kw">_ </span>=&gt; {}
             }
         }
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_plain_text</span>() {
-        <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">Content</span> {
-            <span class="ident">value</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;Text with ampersand &amp; &lt;tag&gt;.&quot;</span>.<span class="ident">into</span>()),
-            ..<span class="ident">Default::default</span>()
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_plain_text() {
+        <span class="kw">let </span>content = Content {
+            value: <span class="prelude-val">Some</span>(<span class="string">&quot;Text with ampersand &amp; &lt;tag&gt;.&quot;</span>.into()),
+            ..Default::default()
         };
-        <span class="kw">let</span> <span class="ident">xml_fragment</span> <span class="op">=</span> <span class="string">r#&quot;&lt;content&gt;Text with ampersand &amp;amp; &amp;lt;tag&amp;gt;.&lt;/content&gt;&quot;#</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">to_xml</span>(<span class="kw-2">&amp;</span><span class="ident">content</span>), <span class="ident">xml_fragment</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">from_xml</span>(<span class="ident">xml_fragment</span>).<span class="ident">unwrap</span>(), <span class="ident">content</span>);
+        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;content&gt;Text with ampersand &amp;amp; &amp;lt;tag&amp;gt;.&lt;/content&gt;&quot;#</span>;
+        <span class="macro">assert_eq!</span>(to_xml(<span class="kw-2">&amp;</span>content), xml_fragment);
+        <span class="macro">assert_eq!</span>(from_xml(xml_fragment).unwrap(), content);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_html</span>() {
-        <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">Content</span> {
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;html&quot;</span>.<span class="ident">into</span>()),
-            <span class="ident">value</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;Markup with ampersand, &lt;tag&gt;, &amp; &lt;/closing-tag&gt;.&quot;</span>.<span class="ident">into</span>()),
-            ..<span class="ident">Default::default</span>()
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_html() {
+        <span class="kw">let </span>content = Content {
+            content_type: <span class="prelude-val">Some</span>(<span class="string">&quot;html&quot;</span>.into()),
+            value: <span class="prelude-val">Some</span>(<span class="string">&quot;Markup with ampersand, &lt;tag&gt;, &amp; &lt;/closing-tag&gt;.&quot;</span>.into()),
+            ..Default::default()
         };
-        <span class="kw">let</span> <span class="ident">xml_fragment</span> <span class="op">=</span> <span class="string">r#&quot;&lt;content type=&quot;html&quot;&gt;Markup with ampersand, &amp;lt;tag&amp;gt;, &amp;amp; &amp;lt;/closing-tag&amp;gt;.&lt;/content&gt;&quot;#</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">to_xml</span>(<span class="kw-2">&amp;</span><span class="ident">content</span>), <span class="ident">xml_fragment</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">from_xml</span>(<span class="ident">xml_fragment</span>).<span class="ident">unwrap</span>(), <span class="ident">content</span>);
+        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;content type=&quot;html&quot;&gt;Markup with ampersand, &amp;lt;tag&amp;gt;, &amp;amp; &amp;lt;/closing-tag&amp;gt;.&lt;/content&gt;&quot;#</span>;
+        <span class="macro">assert_eq!</span>(to_xml(<span class="kw-2">&amp;</span>content), xml_fragment);
+        <span class="macro">assert_eq!</span>(from_xml(xml_fragment).unwrap(), content);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_xhtml</span>() {
-        <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">Content</span> {
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;xhtml&quot;</span>.<span class="ident">into</span>()),
-            <span class="ident">value</span>: <span class="prelude-val">Some</span>(<span class="string">r#&quot;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&quot;#</span>.<span class="ident">into</span>()),
-            ..<span class="ident">Default::default</span>()
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_xhtml() {
+        <span class="kw">let </span>content = Content {
+            content_type: <span class="prelude-val">Some</span>(<span class="string">&quot;xhtml&quot;</span>.into()),
+            value: <span class="prelude-val">Some</span>(<span class="string">r#&quot;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&quot;#</span>.into()),
+            ..Default::default()
         };
-        <span class="kw">let</span> <span class="ident">xml_fragment</span> <span class="op">=</span>
+        <span class="kw">let </span>xml_fragment =
             <span class="string">r#&quot;&lt;content type=&quot;xhtml&quot;&gt;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&lt;/content&gt;&quot;#</span>;
-        <span class="macro">assert_eq!</span>(<span class="ident">to_xml</span>(<span class="kw-2">&amp;</span><span class="ident">content</span>), <span class="ident">xml_fragment</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">from_xml</span>(<span class="ident">xml_fragment</span>).<span class="ident">unwrap</span>(), <span class="ident">content</span>);
+        <span class="macro">assert_eq!</span>(to_xml(<span class="kw-2">&amp;</span>content), xml_fragment);
+        <span class="macro">assert_eq!</span>(from_xml(xml_fragment).unwrap(), content);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_write_image</span>() {
-        <span class="kw">let</span> <span class="ident">content</span> <span class="op">=</span> <span class="ident">Content</span> {
-            <span class="ident">content_type</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;image/png&quot;</span>.<span class="ident">into</span>()),
-            <span class="ident">src</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;http://example.com/image.png&quot;</span>.<span class="ident">into</span>()),
-            ..<span class="ident">Default::default</span>()
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>test_write_image() {
+        <span class="kw">let </span>content = Content {
+            content_type: <span class="prelude-val">Some</span>(<span class="string">&quot;image/png&quot;</span>.into()),
+            src: <span class="prelude-val">Some</span>(<span class="string">&quot;http://example.com/image.png&quot;</span>.into()),
+            ..Default::default()
         };
         <span class="macro">assert_eq!</span>(
-            <span class="ident">lines</span>(<span class="kw-2">&amp;</span><span class="ident">to_xml</span>(<span class="kw-2">&amp;</span><span class="ident">content</span>)),
-            <span class="ident">lines</span>(
+            lines(<span class="kw-2">&amp;</span>to_xml(<span class="kw-2">&amp;</span>content)),
+            lines(
                 <span class="string">r#&quot;
                     &lt;content type=&quot;image/png&quot; src=&quot;http://example.com/image.png&quot;&gt;
                     &lt;/content&gt;
-                &quot;#</span>
-            )
+                &quot;#
+            </span>)
         );
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="atom_syndication" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="atom_syndication" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

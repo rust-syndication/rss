@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/codegen/field.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>field.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/codegen/field.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>field.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -192,170 +187,134 @@
 <span id="187">187</span>
 <span id="188">188</span>
 <span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
-<span id="200">200</span>
-<span id="201">201</span>
-<span id="202">202</span>
-<span id="203">203</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
 
-<span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">ToTokens</span>, <span class="ident">TokenStreamExt</span>};
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">Ident</span>, <span class="ident">Path</span>, <span class="ident">Type</span>};
+<span class="kw">use </span>proc_macro2::TokenStream;
+<span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
+<span class="kw">use </span>syn::{Ident, Path, Type};
 
-<span class="kw">use</span> <span class="ident">codegen</span>::{<span class="ident">DefaultExpression</span>, <span class="ident">PostfixTransform</span>};
-<span class="kw">use</span> <span class="ident">usage</span>::{<span class="self">self</span>, <span class="ident">IdentRefSet</span>, <span class="ident">IdentSet</span>, <span class="ident">UsesTypeParams</span>};
+<span class="kw">use </span><span class="kw">crate</span>::codegen::{DefaultExpression, PostfixTransform};
+<span class="kw">use </span><span class="kw">crate</span>::usage::{<span class="self">self</span>, IdentRefSet, IdentSet, UsesTypeParams};
 
-<span class="doccomment">/// Properties needed to generate code for a field in all the contexts</span>
-<span class="doccomment">/// where one may appear.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// The name presented to the user of the library. This will appear</span>
-    <span class="doccomment">/// in error messages and will be looked when parsing names.</span>
-    <span class="kw">pub</span> <span class="ident">name_in_attr</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Properties needed to generate code for a field in all the contexts
+/// where one may appear.
+</span><span class="attribute">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Field&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// The name presented to the user of the library. This will appear
+    /// in error messages and will be looked when parsing names.
+    </span><span class="kw">pub </span>name_in_attr: Cow&lt;<span class="lifetime">&#39;a</span>, String&gt;,
 
-    <span class="doccomment">/// The name presented to the author of the library. This will appear</span>
-    <span class="doccomment">/// in the setters or temporary variables which contain the values.</span>
-    <span class="kw">pub</span> <span class="ident">ident</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Ident</span>,
+    <span class="doccomment">/// The name presented to the author of the library. This will appear
+    /// in the setters or temporary variables which contain the values.
+    </span><span class="kw">pub </span>ident: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ident,
 
-    <span class="doccomment">/// The type of the field in the input.</span>
-    <span class="kw">pub</span> <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Type</span>,
-    <span class="kw">pub</span> <span class="ident">default_expression</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DefaultExpression</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">with_path</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Path</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">post_transform</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PostfixTransform</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">skip</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span> <span class="ident">multiple</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// The type of the field in the input.
+    </span><span class="kw">pub </span>ty: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Type,
+    <span class="kw">pub </span>default_expression: <span class="prelude-ty">Option</span>&lt;DefaultExpression&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+    <span class="kw">pub </span>with_path: Cow&lt;<span class="lifetime">&#39;a</span>, Path&gt;,
+    <span class="kw">pub </span>post_transform: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>PostfixTransform&gt;,
+    <span class="kw">pub </span>skip: bool,
+    <span class="kw">pub </span>multiple: bool,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_name</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name_in_attr</span>
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Field&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">pub fn </span>as_name(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.name_in_attr
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_declaration</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">Declaration</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">Declaration</span>(<span class="self">self</span>, <span class="op">!</span><span class="self">self</span>.<span class="ident">skip</span>)
+    <span class="kw">pub fn </span>as_declaration(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; Declaration&lt;<span class="lifetime">&#39;a</span>&gt; {
+        Declaration(<span class="self">self</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_match</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">MatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">MatchArm</span>(<span class="self">self</span>)
+    <span class="kw">pub fn </span>as_match(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; MatchArm&lt;<span class="lifetime">&#39;a</span>&gt; {
+        MatchArm(<span class="self">self</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_initializer</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">Initializer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">Initializer</span>(<span class="self">self</span>)
+    <span class="kw">pub fn </span>as_initializer(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; Initializer&lt;<span class="lifetime">&#39;a</span>&gt; {
+        Initializer(<span class="self">self</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_presence_check</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">CheckMissing</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">CheckMissing</span>(<span class="self">self</span>)
+    <span class="kw">pub fn </span>as_presence_check(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; CheckMissing&lt;<span class="lifetime">&#39;a</span>&gt; {
+        CheckMissing(<span class="self">self</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">UsesTypeParams</span> <span class="kw">for</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">uses_type_params</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; UsesTypeParams <span class="kw">for </span>Field&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>uses_type_params&lt;<span class="lifetime">&#39;b</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">usage::Options</span>,
-        <span class="ident">type_set</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">IdentSet</span>,
-    ) -&gt; <span class="ident">IdentRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">ty</span>.<span class="ident">uses_type_params</span>(<span class="ident">options</span>, <span class="ident">type_set</span>)
+        options: <span class="kw-2">&amp;</span>usage::Options,
+        type_set: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span>IdentSet,
+    ) -&gt; IdentRefSet&lt;<span class="lifetime">&#39;b</span>&gt; {
+        <span class="self">self</span>.ty.uses_type_params(options, type_set)
     }
 }
 
-<span class="doccomment">/// An individual field during variable declaration in the generated parsing method.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Declaration</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">bool</span>);
+<span class="doccomment">/// An individual field during variable declaration in the generated parsing method.
+</span><span class="kw">pub struct </span>Declaration&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Field&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Declaration</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Creates a new declaration with the given field and mutability.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">mutable</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">Declaration</span>(<span class="ident">field</span>, <span class="ident">mutable</span>)
-    }
-}
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>Declaration&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>field: <span class="kw-2">&amp;</span>Field = <span class="self">self</span>.<span class="number">0</span>;
+        <span class="kw">let </span>ident = field.ident;
+        <span class="kw">let </span>ty = field.ty;
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">Declaration</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">ident</span>;
-        <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">ty</span>;
-
-        <span class="kw">let</span> <span class="ident">mutable</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="number">1</span> { <span class="macro">quote!</span>(<span class="kw-2">mut</span>) } <span class="kw">else</span> { <span class="macro">quote!</span>() };
-
-        <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="kw">if</span> <span class="ident">field</span>.<span class="ident">multiple</span> {
-            <span class="comment">// This is NOT mutable, as it will be declared mutable only temporarily.</span>
-            <span class="macro">quote!</span>(<span class="kw">let</span> #<span class="ident">mutable</span> #<span class="ident">ident</span>: #<span class="ident">ty</span> <span class="op">=</span> <span class="ident">::darling::export::Default::default</span>();)
-        } <span class="kw">else</span> {
-            <span class="macro">quote!</span>(<span class="kw">let</span> #<span class="ident">mutable</span> #<span class="ident">ident</span>: (<span class="ident">bool</span>, <span class="ident">::darling::export::Option</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>) <span class="op">=</span> (<span class="bool-val">false</span>, <span class="prelude-val">None</span>);)
+        tokens.append_all(<span class="kw">if </span>field.multiple {
+            <span class="comment">// This is NOT mutable, as it will be declared mutable only temporarily.
+            </span><span class="macro">quote!</span>(<span class="kw">let </span><span class="kw-2">mut </span>#ident: #ty = ::darling::export::Default::default();)
+        } <span class="kw">else </span>{
+            <span class="macro">quote!</span>(<span class="kw">let </span><span class="kw-2">mut </span>#ident: (bool, ::darling::export::Option&lt;#ty&gt;) = (<span class="bool-val">false</span>, <span class="prelude-val">None</span>);)
         });
     }
 }
 
-<span class="doccomment">/// Represents an individual field in the match.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// Represents an individual field in the match.
+</span><span class="kw">pub struct </span>MatchArm&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Field&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">MatchArm</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">field</span>.<span class="ident">skip</span> {
-            <span class="kw">let</span> <span class="ident">name_str</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">name_in_attr</span>;
-            <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">ident</span>;
-            <span class="kw">let</span> <span class="ident">with_path</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">with_path</span>;
-            <span class="kw">let</span> <span class="ident">post_transform</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">post_transform</span>.<span class="ident">as_ref</span>();
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>MatchArm&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>field: <span class="kw-2">&amp;</span>Field = <span class="self">self</span>.<span class="number">0</span>;
+        <span class="kw">if </span>!field.skip {
+            <span class="kw">let </span>name_str = <span class="kw-2">&amp;</span>field.name_in_attr;
+            <span class="kw">let </span>ident = field.ident;
+            <span class="kw">let </span>with_path = <span class="kw-2">&amp;</span>field.with_path;
+            <span class="kw">let </span>post_transform = field.post_transform.as_ref();
 
-            <span class="comment">// Errors include the location of the bad input, so we compute that here.</span>
-            <span class="comment">// Fields that take multiple values add the index of the error for convenience,</span>
-            <span class="comment">// while single-value fields only expose the name in the input attribute.</span>
-            <span class="kw">let</span> <span class="ident">location</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">field</span>.<span class="ident">multiple</span> {
-                <span class="comment">// we use the local variable `len` here because location is accessed via</span>
-                <span class="comment">// a closure, and the borrow checker gets very unhappy if we try to immutably</span>
-                <span class="comment">// borrow `#ident` in that closure when it was declared `mut` outside.</span>
-                <span class="macro">quote!</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}[{}]&quot;</span>, #<span class="ident">name_str</span>, <span class="ident">__len</span>))
-            } <span class="kw">else</span> {
-                <span class="macro">quote!</span>(#<span class="ident">name_str</span>)
+            <span class="comment">// Errors include the location of the bad input, so we compute that here.
+            // Fields that take multiple values add the index of the error for convenience,
+            // while single-value fields only expose the name in the input attribute.
+            </span><span class="kw">let </span>location = <span class="kw">if </span>field.multiple {
+                <span class="comment">// we use the local variable `len` here because location is accessed via
+                // a closure, and the borrow checker gets very unhappy if we try to immutably
+                // borrow `#ident` in that closure when it was declared `mut` outside.
+                </span><span class="macro">quote!</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}[{}]&quot;</span>, #name_str, __len))
+            } <span class="kw">else </span>{
+                <span class="macro">quote!</span>(#name_str)
             };
 
-            <span class="comment">// Add the span immediately on extraction failure, so that it&#39;s as specific as possible.</span>
-            <span class="comment">// The behavior of `with_span` makes this safe to do; if the child applied an</span>
-            <span class="comment">// even-more-specific span, our attempt here will not overwrite that and will only cost</span>
-            <span class="comment">// us one `if` check.</span>
-            <span class="kw">let</span> <span class="ident">extractor</span> <span class="op">=</span> <span class="macro">quote!</span>(#<span class="ident">with_path</span>(<span class="ident">__inner</span>)#<span class="ident">post_transform</span>.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">with_span</span>(<span class="kw-2">&amp;</span><span class="ident">__inner</span>).<span class="ident">at</span>(#<span class="ident">location</span>)));
+            <span class="comment">// Add the span immediately on extraction failure, so that it&#39;s as specific as possible.
+            // The behavior of `with_span` makes this safe to do; if the child applied an
+            // even-more-specific span, our attempt here will not overwrite that and will only cost
+            // us one `if` check.
+            </span><span class="kw">let </span>extractor = <span class="macro">quote!</span>(#with_path(__inner)#post_transform.map_err(|e| e.with_span(<span class="kw-2">&amp;</span>__inner).at(#location)));
 
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="kw">if</span> <span class="ident">field</span>.<span class="ident">multiple</span> {
+            tokens.append_all(<span class="kw">if </span>field.multiple {
                 <span class="macro">quote!</span>(
-                    #<span class="ident">name_str</span> =&gt; {
-                        <span class="comment">// Store the index of the name we&#39;re assessing in case we need</span>
-                        <span class="comment">// it for error reporting.</span>
-                        <span class="kw">let</span> <span class="ident">__len</span> <span class="op">=</span> #<span class="ident">ident</span>.<span class="ident">len</span>();
-                        <span class="kw">match</span> #<span class="ident">extractor</span> {
-                            <span class="ident">::darling::export::Ok</span>(<span class="ident">__val</span>) =&gt; {
-                                #<span class="ident">ident</span>.<span class="ident">push</span>(<span class="ident">__val</span>)
-                            }
-                            <span class="ident">::darling::export::Err</span>(<span class="ident">__err</span>) =&gt; {
-                                <span class="ident">__errors</span>.<span class="ident">push</span>(<span class="ident">__err</span>)
-                            }
+                    #name_str =&gt; {
+                        <span class="comment">// Store the index of the name we&#39;re assessing in case we need
+                        // it for error reporting.
+                        </span><span class="kw">let </span>__len = #ident.len();
+                        <span class="kw">if let </span>::darling::export::Some(__val) = __errors.handle(#extractor) {
+                            #ident.push(__val)
                         }
                     }
                 )
-            } <span class="kw">else</span> {
+            } <span class="kw">else </span>{
                 <span class="macro">quote!</span>(
-                    #<span class="ident">name_str</span> =&gt; {
-                        <span class="kw">if</span> <span class="op">!</span>#<span class="ident">ident</span>.<span class="number">0</span> {
-                            <span class="kw">match</span> #<span class="ident">extractor</span> {
-                                <span class="ident">::darling::export::Ok</span>(<span class="ident">__val</span>) =&gt; {
-                                    #<span class="ident">ident</span> <span class="op">=</span> (<span class="bool-val">true</span>, <span class="ident">::darling::export::Some</span>(<span class="ident">__val</span>));
-                                }
-                                <span class="ident">::darling::export::Err</span>(<span class="ident">__err</span>) =&gt; {
-                                    #<span class="ident">ident</span> <span class="op">=</span> (<span class="bool-val">true</span>, <span class="prelude-val">None</span>);
-                                    <span class="ident">__errors</span>.<span class="ident">push</span>(<span class="ident">__err</span>);
-                                }
-                            }
-                        } <span class="kw">else</span> {
-                            <span class="ident">__errors</span>.<span class="ident">push</span>(<span class="ident">::darling::Error::duplicate_field</span>(#<span class="ident">name_str</span>).<span class="ident">with_span</span>(<span class="kw-2">&amp;</span><span class="ident">__inner</span>));
+                    #name_str =&gt; {
+                        <span class="kw">if </span>!#ident.<span class="number">0 </span>{
+                            #ident = (<span class="bool-val">true</span>, __errors.handle(#extractor));
+                        } <span class="kw">else </span>{
+                            __errors.push(::darling::Error::duplicate_field(#name_str).with_span(<span class="kw-2">&amp;</span>__inner));
                         }
                     }
                 )
@@ -364,51 +323,58 @@
     }
 }
 
-<span class="doccomment">/// Wrapper to generate initialization code for a field.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Initializer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// Wrapper to generate initialization code for a field.
+</span><span class="kw">pub struct </span>Initializer&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Field&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">Initializer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">ident</span>;
-        <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="kw">if</span> <span class="ident">field</span>.<span class="ident">multiple</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">expr</span>) <span class="op">=</span> <span class="ident">field</span>.<span class="ident">default_expression</span> {
-                <span class="macro">quote!</span>(#<span class="ident">ident</span>: <span class="kw">if</span> <span class="op">!</span>#<span class="ident">ident</span>.<span class="ident">is_empty</span>() {
-                    #<span class="ident">ident</span>
-                } <span class="kw">else</span> {
-                    #<span class="ident">expr</span>
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>Initializer&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>field: <span class="kw-2">&amp;</span>Field = <span class="self">self</span>.<span class="number">0</span>;
+        <span class="kw">let </span>ident = field.ident;
+        tokens.append_all(<span class="kw">if </span>field.multiple {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>expr) = field.default_expression {
+                <span class="macro">quote!</span>(#ident: <span class="kw">if </span>!#ident.is_empty() {
+                    #ident
+                } <span class="kw">else </span>{
+                    #expr
                 })
-            } <span class="kw">else</span> {
-                <span class="macro">quote!</span>(#<span class="ident">ident</span>: #<span class="ident">ident</span>)
+            } <span class="kw">else </span>{
+                <span class="macro">quote!</span>(#ident: #ident)
             }
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">expr</span>) <span class="op">=</span> <span class="ident">field</span>.<span class="ident">default_expression</span> {
-            <span class="macro">quote!</span>(#<span class="ident">ident</span>: <span class="kw">match</span> #<span class="ident">ident</span>.<span class="number">1</span> {
-                <span class="ident">::darling::export::Some</span>(<span class="ident">__val</span>) =&gt; <span class="ident">__val</span>,
-                <span class="ident">::darling::export::None</span> =&gt; #<span class="ident">expr</span>,
+        } <span class="kw">else if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>expr) = field.default_expression {
+            <span class="macro">quote!</span>(#ident: <span class="kw">match </span>#ident.<span class="number">1 </span>{
+                ::darling::export::Some(__val) =&gt; __val,
+                ::darling::export::None =&gt; #expr,
             })
-        } <span class="kw">else</span> {
-            <span class="macro">quote!</span>(#<span class="ident">ident</span>: #<span class="ident">ident</span>.<span class="number">1</span>.<span class="ident">expect</span>(<span class="string">&quot;Uninitialized fields without defaults were already checked&quot;</span>))
+        } <span class="kw">else </span>{
+            <span class="macro">quote!</span>(#ident: #ident.<span class="number">1</span>.expect(<span class="string">&quot;Uninitialized fields without defaults were already checked&quot;</span>))
         });
     }
 }
 
-<span class="doccomment">/// Creates an error if a field has no value and no default.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CheckMissing</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Field</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
+<span class="doccomment">/// Creates an error if a field has no value and no default.
+</span><span class="kw">pub struct </span>CheckMissing&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Field&lt;<span class="lifetime">&#39;a</span>&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">CheckMissing</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="number">0</span>.<span class="ident">multiple</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">default_expression</span>.<span class="ident">is_none</span>() {
-            <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">ident</span>;
-            <span class="kw">let</span> <span class="ident">name_in_attr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.<span class="ident">name_in_attr</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>CheckMissing&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">if </span>!<span class="self">self</span>.<span class="number">0</span>.multiple &amp;&amp; <span class="self">self</span>.<span class="number">0</span>.default_expression.is_none() {
+            <span class="kw">let </span>ident = <span class="self">self</span>.<span class="number">0</span>.ident;
+            <span class="kw">let </span>ty = <span class="self">self</span>.<span class="number">0</span>.ty;
+            <span class="kw">let </span>name_in_attr = <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.name_in_attr;
 
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span> {
-                <span class="kw">if</span> <span class="op">!</span>#<span class="ident">ident</span>.<span class="number">0</span> {
-                    <span class="ident">__errors</span>.<span class="ident">push</span>(<span class="ident">::darling::Error::missing_field</span>(#<span class="ident">name_in_attr</span>));
+            tokens.append_all(<span class="macro">quote! </span>{
+                <span class="kw">if </span>!#ident.<span class="number">0 </span>{
+                    <span class="kw">match </span>&lt;#ty <span class="kw">as </span>::darling::FromMeta&gt;::from_none() {
+                        ::darling::export::Some(__type_fallback) =&gt; {
+                            #ident.<span class="number">1 </span>= ::darling::export::Some(__type_fallback);
+                        }
+                        ::darling::export::None =&gt; {
+                            __errors.push(::darling::Error::missing_field(#name_in_attr))
+                        }
+                    }
                 }
             })
         }
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

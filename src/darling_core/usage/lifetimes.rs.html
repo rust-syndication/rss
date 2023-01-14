@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/usage/lifetimes.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lifetimes.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/usage/lifetimes.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lifetimes.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -329,332 +324,331 @@
 <span id="324">324</span>
 <span id="325">325</span>
 <span id="326">326</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">fnv::FnvHashSet</span>;
-<span class="kw">use</span> <span class="ident">syn::punctuated::Punctuated</span>;
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="self">self</span>, <span class="ident">Lifetime</span>, <span class="ident">Type</span>};
+</pre><pre class="rust"><code><span class="kw">use </span>fnv::FnvHashSet;
+<span class="kw">use </span>syn::punctuated::Punctuated;
+<span class="kw">use </span>syn::{Lifetime, Type};
 
-<span class="kw">use</span> <span class="ident">usage::Options</span>;
+<span class="kw">use </span><span class="kw">crate</span>::usage::Options;
 
-<span class="doccomment">/// A set of lifetimes.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">LifetimeSet</span> <span class="op">=</span> <span class="ident">FnvHashSet</span><span class="op">&lt;</span><span class="ident">Lifetime</span><span class="op">&gt;</span>;
+<span class="doccomment">/// A set of lifetimes.
+</span><span class="kw">pub type </span>LifetimeSet = FnvHashSet&lt;Lifetime&gt;;
 
-<span class="doccomment">/// A set of references to lifetimes.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">FnvHashSet</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Lifetime</span><span class="op">&gt;</span>;
+<span class="doccomment">/// A set of references to lifetimes.
+</span><span class="kw">pub type </span>LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; = FnvHashSet&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Lifetime&gt;;
 
-<span class="doccomment">/// Searcher for finding lifetimes in a syntax tree.</span>
-<span class="doccomment">/// This can be used to determine which lifetimes must be emitted in generated code.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">UsesLifetimes</span> {
-    <span class="doccomment">/// Returns the subset of the queried lifetimes that are used by the implementing syntax element.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method only accounts for direct usage by the element; indirect usage via bounds or `where`</span>
-    <span class="doccomment">/// predicates are not detected.</span>
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="doccomment">/// Searcher for finding lifetimes in a syntax tree.
+/// This can be used to determine which lifetimes must be emitted in generated code.
+</span><span class="kw">pub trait </span>UsesLifetimes {
+    <span class="doccomment">/// Returns the subset of the queried lifetimes that are used by the implementing syntax element.
+    ///
+    /// This method only accounts for direct usage by the element; indirect usage via bounds or `where`
+    /// predicates are not detected.
+    </span><span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt;;
 
-    <span class="doccomment">/// Find all used lifetimes, then clone them and return that set.</span>
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes_cloned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>, <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="ident">LifetimeSet</span>) -&gt; <span class="ident">LifetimeSet</span> {
-        <span class="self">self</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>)
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">cloned</span>()
-            .<span class="ident">collect</span>()
+    <span class="doccomment">/// Find all used lifetimes, then clone them and return that set.
+    </span><span class="kw">fn </span>uses_lifetimes_cloned(<span class="kw-2">&amp;</span><span class="self">self</span>, options: <span class="kw-2">&amp;</span>Options, lifetimes: <span class="kw-2">&amp;</span>LifetimeSet) -&gt; LifetimeSet {
+        <span class="self">self</span>.uses_lifetimes(options, lifetimes)
+            .into_iter()
+            .cloned()
+            .collect()
     }
 }
 
-<span class="doccomment">/// Searcher for finding lifetimes in an iterator.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This trait extends iterators, providing a way to turn a filtered list of fields or variants into a set</span>
-<span class="doccomment">/// of lifetimes.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CollectLifetimes</span> {
-    <span class="doccomment">/// Consume an iterator, accumulating all lifetimes in the elements which occur in `lifetimes`.</span>
-    <span class="kw">fn</span> <span class="ident">collect_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="doccomment">/// Searcher for finding lifetimes in an iterator.
+///
+/// This trait extends iterators, providing a way to turn a filtered list of fields or variants into a set
+/// of lifetimes.
+</span><span class="kw">pub trait </span>CollectLifetimes {
+    <span class="doccomment">/// Consume an iterator, accumulating all lifetimes in the elements which occur in `lifetimes`.
+    </span><span class="kw">fn </span>collect_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt;;
 
-    <span class="doccomment">/// Consume an iterator using `collect_lifetimes`, then clone all found lifetimes and return that set.</span>
-    <span class="kw">fn</span> <span class="ident">collect_lifetimes_cloned</span>(<span class="self">self</span>, <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>, <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="ident">LifetimeSet</span>) -&gt; <span class="ident">LifetimeSet</span>;
+    <span class="doccomment">/// Consume an iterator using `collect_lifetimes`, then clone all found lifetimes and return that set.
+    </span><span class="kw">fn </span>collect_lifetimes_cloned(<span class="self">self</span>, options: <span class="kw-2">&amp;</span>Options, lifetimes: <span class="kw-2">&amp;</span>LifetimeSet) -&gt; LifetimeSet;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span>, <span class="ident">I</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">CollectLifetimes</span> <span class="kw">for</span> <span class="ident">T</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="ident">I</span><span class="op">&gt;</span>,
-    <span class="ident">I</span>: <span class="lifetime">&#39;i</span> <span class="op">+</span> <span class="ident">UsesLifetimes</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;i</span>, I, T&gt; CollectLifetimes <span class="kw">for </span>T
+<span class="kw">where
+    </span>T: IntoIterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;i </span>I&gt;,
+    I: <span class="lifetime">&#39;i </span>+ UsesLifetimes,
 {
-    <span class="kw">fn</span> <span class="ident">collect_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+    <span class="kw">fn </span>collect_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">into_iter</span>()
-            .<span class="ident">fold</span>(<span class="ident">Default::default</span>(), <span class="op">|</span><span class="kw-2">mut</span> <span class="ident">state</span>, <span class="ident">value</span><span class="op">|</span> {
-                <span class="ident">state</span>.<span class="ident">extend</span>(<span class="ident">value</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>));
-                <span class="ident">state</span>
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="self">self</span>.into_iter()
+            .fold(Default::default(), |<span class="kw-2">mut </span>state, value| {
+                state.extend(value.uses_lifetimes(options, lifetimes));
+                state
             })
     }
 
-    <span class="kw">fn</span> <span class="ident">collect_lifetimes_cloned</span>(<span class="self">self</span>, <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>, <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="ident">LifetimeSet</span>) -&gt; <span class="ident">LifetimeSet</span> {
-        <span class="self">self</span>.<span class="ident">collect_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>)
-            .<span class="ident">into_iter</span>()
-            .<span class="ident">cloned</span>()
-            .<span class="ident">collect</span>()
+    <span class="kw">fn </span>collect_lifetimes_cloned(<span class="self">self</span>, options: <span class="kw-2">&amp;</span>Options, lifetimes: <span class="kw-2">&amp;</span>LifetimeSet) -&gt; LifetimeSet {
+        <span class="self">self</span>.collect_lifetimes(options, lifetimes)
+            .into_iter()
+            .cloned()
+            .collect()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">UsesLifetimes</span><span class="op">&gt;</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl</span>&lt;T: UsesLifetimes&gt; UsesLifetimes <span class="kw">for </span>Vec&lt;T&gt; {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">collect_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>)
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="self">self</span>.collect_lifetimes(options, lifetimes)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">UsesLifetimes</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">Punctuated</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl</span>&lt;T: UsesLifetimes, U&gt; UsesLifetimes <span class="kw">for </span>Punctuated&lt;T, U&gt; {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">collect_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>)
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="self">self</span>.collect_lifetimes(options, lifetimes)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">UsesLifetimes</span><span class="op">&gt;</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl</span>&lt;T: UsesLifetimes&gt; UsesLifetimes <span class="kw">for </span><span class="prelude-ty">Option</span>&lt;T&gt; {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">as_ref</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>))
-            .<span class="ident">unwrap_or_default</span>()
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="self">self</span>.as_ref()
+            .map(|v| v.uses_lifetimes(options, lifetimes))
+            .unwrap_or_default()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">Lifetime</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>, <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">lifetimes</span>.<span class="ident">iter</span>().<span class="ident">filter</span>(<span class="op">|</span><span class="ident">lt</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">lt</span> <span class="op">==</span> <span class="self">self</span>).<span class="ident">collect</span>()
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>Lifetime {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span>Options, lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        lifetimes.iter().filter(|lt| <span class="kw-2">*</span>lt == <span class="self">self</span>).collect()
     }
 }
 
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::AngleBracketedGenericArguments</span>, <span class="ident">args</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::BareFnArg</span>, <span class="ident">ty</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::Binding</span>, <span class="ident">ty</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::BoundLifetimes</span>, <span class="ident">lifetimes</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::Constraint</span>, <span class="ident">bounds</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::DataEnum</span>, <span class="ident">variants</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::DataStruct</span>, <span class="ident">fields</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::DataUnion</span>, <span class="ident">fields</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::Field</span>, <span class="ident">ty</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::FieldsNamed</span>, <span class="ident">named</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::LifetimeDef</span>, <span class="ident">lifetime</span>, <span class="ident">bounds</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::ParenthesizedGenericArguments</span>, <span class="ident">inputs</span>, <span class="ident">output</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::Path</span>, <span class="ident">segments</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::PathSegment</span>, <span class="ident">arguments</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::PredicateEq</span>, <span class="ident">lhs_ty</span>, <span class="ident">rhs_ty</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::PredicateLifetime</span>, <span class="ident">lifetime</span>, <span class="ident">bounds</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::PredicateType</span>, <span class="ident">lifetimes</span>, <span class="ident">bounded_ty</span>, <span class="ident">bounds</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::QSelf</span>, <span class="ident">ty</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TraitBound</span>, <span class="ident">path</span>, <span class="ident">lifetimes</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeArray</span>, <span class="ident">elem</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeBareFn</span>, <span class="ident">inputs</span>, <span class="ident">output</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeGroup</span>, <span class="ident">elem</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeImplTrait</span>, <span class="ident">bounds</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeParen</span>, <span class="ident">elem</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypePtr</span>, <span class="ident">elem</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeReference</span>, <span class="ident">lifetime</span>, <span class="ident">elem</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeSlice</span>, <span class="ident">elem</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeTuple</span>, <span class="ident">elems</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::TypeTraitObject</span>, <span class="ident">bounds</span>);
-<span class="macro">uses_lifetimes!</span>(<span class="ident">syn::Variant</span>, <span class="ident">fields</span>);
+<span class="macro">uses_lifetimes!</span>(syn::AngleBracketedGenericArguments, args);
+<span class="macro">uses_lifetimes!</span>(syn::BareFnArg, ty);
+<span class="macro">uses_lifetimes!</span>(syn::Binding, ty);
+<span class="macro">uses_lifetimes!</span>(syn::BoundLifetimes, lifetimes);
+<span class="macro">uses_lifetimes!</span>(syn::Constraint, bounds);
+<span class="macro">uses_lifetimes!</span>(syn::DataEnum, variants);
+<span class="macro">uses_lifetimes!</span>(syn::DataStruct, fields);
+<span class="macro">uses_lifetimes!</span>(syn::DataUnion, fields);
+<span class="macro">uses_lifetimes!</span>(syn::Field, ty);
+<span class="macro">uses_lifetimes!</span>(syn::FieldsNamed, named);
+<span class="macro">uses_lifetimes!</span>(syn::LifetimeDef, lifetime, bounds);
+<span class="macro">uses_lifetimes!</span>(syn::ParenthesizedGenericArguments, inputs, output);
+<span class="macro">uses_lifetimes!</span>(syn::Path, segments);
+<span class="macro">uses_lifetimes!</span>(syn::PathSegment, arguments);
+<span class="macro">uses_lifetimes!</span>(syn::PredicateEq, lhs_ty, rhs_ty);
+<span class="macro">uses_lifetimes!</span>(syn::PredicateLifetime, lifetime, bounds);
+<span class="macro">uses_lifetimes!</span>(syn::PredicateType, lifetimes, bounded_ty, bounds);
+<span class="macro">uses_lifetimes!</span>(syn::QSelf, ty);
+<span class="macro">uses_lifetimes!</span>(syn::TraitBound, path, lifetimes);
+<span class="macro">uses_lifetimes!</span>(syn::TypeArray, elem);
+<span class="macro">uses_lifetimes!</span>(syn::TypeBareFn, inputs, output);
+<span class="macro">uses_lifetimes!</span>(syn::TypeGroup, elem);
+<span class="macro">uses_lifetimes!</span>(syn::TypeImplTrait, bounds);
+<span class="macro">uses_lifetimes!</span>(syn::TypeParen, elem);
+<span class="macro">uses_lifetimes!</span>(syn::TypePtr, elem);
+<span class="macro">uses_lifetimes!</span>(syn::TypeReference, lifetime, elem);
+<span class="macro">uses_lifetimes!</span>(syn::TypeSlice, elem);
+<span class="macro">uses_lifetimes!</span>(syn::TypeTuple, elems);
+<span class="macro">uses_lifetimes!</span>(syn::TypeTraitObject, bounds);
+<span class="macro">uses_lifetimes!</span>(syn::Variant, fields);
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::Data</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::Data {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">syn::Data::Struct</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::Data::Enum</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::Data::Union</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            syn::Data::Struct(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::Data::Enum(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::Data::Union(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">Type</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>Type {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Type::Slice</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Array</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Ptr</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Reference</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::BareFn</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Tuple</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Path</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Paren</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Group</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::TraitObject</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::ImplTrait</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">Type::Macro</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Type::Verbatim</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Type::Infer</span>(<span class="kw">_</span>) <span class="op">|</span> <span class="ident">Type::Never</span>(<span class="kw">_</span>) =&gt; {
-                <span class="ident">Default::default</span>()
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            Type::Slice(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Array(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Ptr(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Reference(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::BareFn(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Tuple(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Path(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Paren(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Group(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::TraitObject(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::ImplTrait(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            Type::Macro(<span class="kw">_</span>) | Type::Verbatim(<span class="kw">_</span>) | Type::Infer(<span class="kw">_</span>) | Type::Never(<span class="kw">_</span>) =&gt; {
+                Default::default()
             }
-            <span class="kw">_</span> =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unknown syn::Type: {:?}&quot;</span>, <span class="self">self</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unknown syn::Type: {:?}&quot;</span>, <span class="self">self</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::Fields</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::Fields {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">collect_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>)
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="self">self</span>.collect_lifetimes(options, lifetimes)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::TypePath</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::TypePath {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hits</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">path</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>);
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>hits = <span class="self">self</span>.path.uses_lifetimes(options, lifetimes);
 
-        <span class="kw">if</span> <span class="ident">options</span>.<span class="ident">include_type_path_qself</span>() {
-            <span class="ident">hits</span>.<span class="ident">extend</span>(<span class="self">self</span>.<span class="ident">qself</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>));
+        <span class="kw">if </span>options.include_type_path_qself() {
+            hits.extend(<span class="self">self</span>.qself.uses_lifetimes(options, lifetimes));
         }
 
-        <span class="ident">hits</span>
+        hits
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::ReturnType</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::ReturnType {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn::ReturnType::Type</span>(<span class="kw">_</span>, <span class="kw-2">ref</span> <span class="ident">ty</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">ty</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>)
-        } <span class="kw">else</span> {
-            <span class="ident">Default::default</span>()
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::PathArguments</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">syn::PathArguments::None</span> =&gt; <span class="ident">Default::default</span>(),
-            <span class="ident">syn::PathArguments::AngleBracketed</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::PathArguments::Parenthesized</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">if let </span>syn::ReturnType::Type(<span class="kw">_</span>, <span class="kw-2">ref </span>ty) = <span class="kw-2">*</span><span class="self">self </span>{
+            ty.uses_lifetimes(options, lifetimes)
+        } <span class="kw">else </span>{
+            Default::default()
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::WherePredicate</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::PathArguments {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">syn::WherePredicate::Type</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::WherePredicate::Lifetime</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::WherePredicate::Eq</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            syn::PathArguments::None =&gt; Default::default(),
+            syn::PathArguments::AngleBracketed(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::PathArguments::Parenthesized(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::GenericArgument</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::WherePredicate {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">syn::GenericArgument::Type</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::GenericArgument::Binding</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::GenericArgument::Lifetime</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::GenericArgument::Constraint</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::GenericArgument::Const</span>(<span class="kw">_</span>) =&gt; <span class="ident">Default::default</span>(),
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            syn::WherePredicate::Type(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::WherePredicate::Lifetime(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::WherePredicate::Eq(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">UsesLifetimes</span> <span class="kw">for</span> <span class="ident">syn::TypeParamBound</span> {
-    <span class="kw">fn</span> <span class="ident">uses_lifetimes</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::GenericArgument {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">Options</span>,
-        <span class="ident">lifetimes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LifetimeSet</span>,
-    ) -&gt; <span class="ident">LifetimeRefSet</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">syn::TypeParamBound::Trait</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
-            <span class="ident">syn::TypeParamBound::Lifetime</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) =&gt; <span class="ident">v</span>.<span class="ident">uses_lifetimes</span>(<span class="ident">options</span>, <span class="ident">lifetimes</span>),
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            syn::GenericArgument::Type(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::GenericArgument::Binding(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::GenericArgument::Lifetime(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::GenericArgument::Constraint(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::GenericArgument::Const(<span class="kw">_</span>) =&gt; Default::default(),
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">proc_macro2::Span</span>;
-    <span class="kw">use</span> <span class="ident">syn</span>::{<span class="self">self</span>, <span class="ident">DeriveInput</span>};
-
-    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::UsesLifetimes</span>;
-    <span class="kw">use</span> <span class="ident">usage::GenericsExt</span>;
-    <span class="kw">use</span> <span class="ident">usage::Purpose</span>::<span class="kw-2">*</span>;
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">struct_named</span>() {
-        <span class="kw">let</span> <span class="ident">input</span>: <span class="ident">DeriveInput</span> <span class="op">=</span> <span class="macro">parse_quote!</span> {
-            <span class="kw">struct</span> <span class="ident">Foo</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-                <span class="ident">parent</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">Bar</span>,
-                <span class="ident">child</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Baz</span>,
-            }
-        };
-        <span class="kw">let</span> <span class="ident">omitted</span> <span class="op">=</span> <span class="ident">syn::Lifetime::new</span>(<span class="string">&quot;&#39;c&quot;</span>, <span class="ident">Span::call_site</span>());
-
-        <span class="kw">let</span> <span class="ident">lifetimes</span> <span class="op">=</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lt</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">generics</span>.<span class="ident">declared_lifetimes</span>();
-            <span class="ident">lt</span>.<span class="ident">insert</span>(<span class="ident">omitted</span>);
-            <span class="ident">lt</span>
-        };
-
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">data</span>.<span class="ident">uses_lifetimes</span>(<span class="kw-2">&amp;</span><span class="ident">BoundImpl</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="ident">lifetimes</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">matches</span>.<span class="ident">len</span>(), <span class="number">2</span>);
+<span class="kw">impl </span>UsesLifetimes <span class="kw">for </span>syn::TypeParamBound {
+    <span class="kw">fn </span>uses_lifetimes&lt;<span class="lifetime">&#39;a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        options: <span class="kw-2">&amp;</span>Options,
+        lifetimes: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>LifetimeSet,
+    ) -&gt; LifetimeRefSet&lt;<span class="lifetime">&#39;a</span>&gt; {
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            syn::TypeParamBound::Trait(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+            syn::TypeParamBound::Lifetime(<span class="kw-2">ref </span>v) =&gt; v.uses_lifetimes(options, lifetimes),
+        }
     }
+}
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">qself</span>() {
-        <span class="kw">let</span> <span class="ident">input</span>: <span class="ident">DeriveInput</span> <span class="op">=</span> <span class="macro">parse_quote!</span> {
-            <span class="kw">struct</span> <span class="ident">Foo</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-                <span class="ident">parent</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">Bar</span>,
-                <span class="ident">child</span>: <span class="op">&lt;</span><span class="ident">Bar</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">MyIterator</span><span class="op">&gt;</span><span class="ident">::Item</span>,
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>proc_macro2::Span;
+    <span class="kw">use </span>syn::DeriveInput;
+
+    <span class="kw">use </span><span class="kw">super</span>::UsesLifetimes;
+    <span class="kw">use </span><span class="kw">crate</span>::usage::GenericsExt;
+    <span class="kw">use </span><span class="kw">crate</span>::usage::Purpose::<span class="kw-2">*</span>;
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>struct_named() {
+        <span class="kw">let </span>input: DeriveInput = <span class="macro">parse_quote! </span>{
+            <span class="kw">struct </span>Foo&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>&gt; {
+                parent: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span>Bar,
+                child: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Baz,
             }
         };
-        <span class="kw">let</span> <span class="ident">lifetimes</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">generics</span>.<span class="ident">declared_lifetimes</span>();
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">data</span>.<span class="ident">uses_lifetimes</span>(<span class="kw-2">&amp;</span><span class="ident">BoundImpl</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="ident">lifetimes</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">matches</span>.<span class="ident">len</span>(), <span class="number">1</span>);
+        <span class="kw">let </span>omitted = syn::Lifetime::new(<span class="string">&quot;&#39;c&quot;</span>, Span::call_site());
 
-        <span class="kw">let</span> <span class="ident">decl_matches</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">data</span>.<span class="ident">uses_lifetimes</span>(<span class="kw-2">&amp;</span><span class="ident">Declare</span>.<span class="ident">into</span>(), <span class="kw-2">&amp;</span><span class="ident">lifetimes</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">decl_matches</span>.<span class="ident">len</span>(), <span class="number">2</span>);
+        <span class="kw">let </span>lifetimes = {
+            <span class="kw">let </span><span class="kw-2">mut </span>lt = input.generics.declared_lifetimes();
+            lt.insert(omitted);
+            lt
+        };
+
+        <span class="kw">let </span>matches = input.data.uses_lifetimes(<span class="kw-2">&amp;</span>BoundImpl.into(), <span class="kw-2">&amp;</span>lifetimes);
+        <span class="macro">assert_eq!</span>(matches.len(), <span class="number">2</span>);
+    }
+
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>qself() {
+        <span class="kw">let </span>input: DeriveInput = <span class="macro">parse_quote! </span>{
+            <span class="kw">struct </span>Foo&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>&gt; {
+                parent: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span>Bar,
+                child: &lt;Bar&lt;<span class="lifetime">&#39;a</span>&gt; <span class="kw">as </span>MyIterator&gt;::Item,
+            }
+        };
+        <span class="kw">let </span>lifetimes = input.generics.declared_lifetimes();
+        <span class="kw">let </span>matches = input.data.uses_lifetimes(<span class="kw-2">&amp;</span>BoundImpl.into(), <span class="kw-2">&amp;</span>lifetimes);
+        <span class="macro">assert_eq!</span>(matches.len(), <span class="number">1</span>);
+
+        <span class="kw">let </span>decl_matches = input.data.uses_lifetimes(<span class="kw-2">&amp;</span>Declare.into(), <span class="kw-2">&amp;</span>lifetimes);
+        <span class="macro">assert_eq!</span>(decl_matches.len(), <span class="number">2</span>);
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

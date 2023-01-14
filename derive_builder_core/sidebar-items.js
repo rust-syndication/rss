@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["builder_for_struct","Derive a builder for a struct"]]});
+window.SIDEBAR_ITEMS = {"fn":[["builder_for_struct","Derive a builder for a struct"]]};

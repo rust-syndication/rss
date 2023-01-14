@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/options/shape.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>shape.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/options/shape.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>shape.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -271,274 +266,279 @@
 <span id="266">266</span>
 <span id="267">267</span>
 <span id="268">268</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Types for &quot;shape&quot; validation. This allows types deriving `FromDeriveInput` etc. to declare</span>
-<span class="doccomment">//! that they only work on - for example - structs with named fields, or newtype enum variants.</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Types for &quot;shape&quot; validation. This allows types deriving `FromDeriveInput` etc. to declare
+//! that they only work on - for example - structs with named fields, or newtype enum variants.
 
-<span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">ToTokens</span>, <span class="ident">TokenStreamExt</span>};
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">Meta</span>, <span class="ident">NestedMeta</span>};
+</span><span class="kw">use </span>proc_macro2::TokenStream;
+<span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
+<span class="kw">use </span>syn::{Meta, NestedMeta};
 
-<span class="kw">use</span> {<span class="ident">Error</span>, <span class="ident">FromMeta</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use crate</span>::{Error, FromMeta, <span class="prelude-ty">Result</span>};
 
-<span class="doccomment">/// Receiver struct for shape validation. Shape validation allows a deriving type</span>
-<span class="doccomment">/// to declare that it only accepts - for example - named structs, or newtype enum</span>
-<span class="doccomment">/// variants.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Usage</span>
-<span class="doccomment">/// Because `Shape` implements `FromMeta`, the name of the field where it appears is</span>
-<span class="doccomment">/// controlled by the struct that declares `Shape` as a member. That field name is</span>
-<span class="doccomment">/// shown as `ignore` below.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust,ignore</span>
-<span class="doccomment">/// #[ignore(any, struct_named, enum_newtype)]</span>
-<span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Shape</span> {
-    <span class="ident">enum_values</span>: <span class="ident">DataShape</span>,
-    <span class="ident">struct_values</span>: <span class="ident">DataShape</span>,
-    <span class="ident">any</span>: <span class="ident">bool</span>,
+<span class="doccomment">/// Receiver struct for shape validation. Shape validation allows a deriving type
+/// to declare that it only accepts - for example - named structs, or newtype enum
+/// variants.
+///
+/// # Usage
+/// Because `Shape` implements `FromMeta`, the name of the field where it appears is
+/// controlled by the struct that declares `Shape` as a member. That field name is
+/// shown as `ignore` below.
+///
+/// ```rust,ignore
+/// #[ignore(any, struct_named, enum_newtype)]
+/// ```
+</span><span class="attribute">#[derive(Debug, Clone)]
+</span><span class="kw">pub struct </span>Shape {
+    enum_values: DataShape,
+    struct_values: DataShape,
+    any: bool,
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Shape</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
-        <span class="ident">Shape</span> {
-            <span class="ident">enum_values</span>: <span class="ident">DataShape::new</span>(<span class="string">&quot;enum_&quot;</span>),
-            <span class="ident">struct_values</span>: <span class="ident">DataShape::new</span>(<span class="string">&quot;struct_&quot;</span>),
-            <span class="ident">any</span>: <span class="ident">Default::default</span>(),
+<span class="kw">impl </span>Default <span class="kw">for </span>Shape {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        Shape {
+            enum_values: DataShape::new(<span class="string">&quot;enum_&quot;</span>),
+            struct_values: DataShape::new(<span class="string">&quot;struct_&quot;</span>),
+            any: Default::default(),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">FromMeta</span> <span class="kw">for</span> <span class="ident">Shape</span> {
-    <span class="kw">fn</span> <span class="ident">from_list</span>(<span class="ident">items</span>: <span class="kw-2">&amp;</span>[<span class="ident">NestedMeta</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">Shape::default</span>();
-        <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="ident">items</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">NestedMeta::Meta</span>(<span class="ident">Meta::Path</span>(<span class="kw-2">ref</span> <span class="ident">path</span>)) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">item</span> {
-                <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">first</span>().<span class="ident">unwrap</span>().<span class="ident">ident</span>;
-                <span class="kw">let</span> <span class="ident">word</span> <span class="op">=</span> <span class="ident">ident</span>.<span class="ident">to_string</span>();
-                <span class="kw">if</span> <span class="ident">word</span> <span class="op">==</span> <span class="string">&quot;any&quot;</span> {
-                    <span class="ident">new</span>.<span class="ident">any</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">word</span>.<span class="ident">starts_with</span>(<span class="string">&quot;enum_&quot;</span>) {
-                    <span class="ident">new</span>.<span class="ident">enum_values</span>
-                        .<span class="ident">set_word</span>(<span class="kw-2">&amp;</span><span class="ident">word</span>)
-                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">with_span</span>(<span class="kw-2">&amp;</span><span class="ident">ident</span>))<span class="question-mark">?</span>;
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">word</span>.<span class="ident">starts_with</span>(<span class="string">&quot;struct_&quot;</span>) {
-                    <span class="ident">new</span>.<span class="ident">struct_values</span>
-                        .<span class="ident">set_word</span>(<span class="kw-2">&amp;</span><span class="ident">word</span>)
-                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">with_span</span>(<span class="kw-2">&amp;</span><span class="ident">ident</span>))<span class="question-mark">?</span>;
-                } <span class="kw">else</span> {
-                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::unknown_value</span>(<span class="kw-2">&amp;</span><span class="ident">word</span>).<span class="ident">with_span</span>(<span class="kw-2">&amp;</span><span class="ident">ident</span>));
+<span class="kw">impl </span>FromMeta <span class="kw">for </span>Shape {
+    <span class="kw">fn </span>from_list(items: <span class="kw-2">&amp;</span>[NestedMeta]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>new = Shape::default();
+        <span class="kw">for </span>item <span class="kw">in </span>items {
+            <span class="kw">if let </span>NestedMeta::Meta(Meta::Path(<span class="kw-2">ref </span>path)) = <span class="kw-2">*</span>item {
+                <span class="kw">let </span>ident = <span class="kw-2">&amp;</span>path.segments.first().unwrap().ident;
+                <span class="kw">let </span>word = ident.to_string();
+                <span class="kw">if </span>word == <span class="string">&quot;any&quot; </span>{
+                    new.any = <span class="bool-val">true</span>;
+                } <span class="kw">else if </span>word.starts_with(<span class="string">&quot;enum_&quot;</span>) {
+                    new.enum_values
+                        .set_word(<span class="kw-2">&amp;</span>word)
+                        .map_err(|e| e.with_span(<span class="kw-2">&amp;</span>ident))<span class="question-mark">?</span>;
+                } <span class="kw">else if </span>word.starts_with(<span class="string">&quot;struct_&quot;</span>) {
+                    new.struct_values
+                        .set_word(<span class="kw-2">&amp;</span>word)
+                        .map_err(|e| e.with_span(<span class="kw-2">&amp;</span>ident))<span class="question-mark">?</span>;
+                } <span class="kw">else </span>{
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::unknown_value(<span class="kw-2">&amp;</span>word).with_span(<span class="kw-2">&amp;</span>ident));
                 }
-            } <span class="kw">else</span> {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::unsupported_format</span>(<span class="string">&quot;non-word&quot;</span>).<span class="ident">with_span</span>(<span class="ident">item</span>));
+            } <span class="kw">else </span>{
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::unsupported_format(<span class="string">&quot;non-word&quot;</span>).with_span(item));
             }
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">new</span>)
+        <span class="prelude-val">Ok</span>(new)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">Shape</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">fn_body</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">any</span> {
-            <span class="macro">quote!</span>(<span class="ident">::darling::export::Ok</span>(()))
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">en</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">enum_values</span>;
-            <span class="kw">let</span> <span class="ident">st</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">struct_values</span>;
-            <span class="macro">quote!</span> {
-                <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">__body</span> {
-                    <span class="ident">::syn::Data::Enum</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) =&gt; {
-                        <span class="kw">fn</span> <span class="ident">validate_variant</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">::syn::Fields</span>) -&gt; <span class="ident">::darling::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-                            #<span class="ident">en</span>
-                        }
+<span class="kw">impl </span>ToTokens <span class="kw">for </span>Shape {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>fn_body = <span class="kw">if </span><span class="self">self</span>.any {
+            <span class="macro">quote!</span>(::darling::export::Ok(()))
+        } <span class="kw">else </span>{
+            <span class="kw">let </span>en = <span class="kw-2">&amp;</span><span class="self">self</span>.enum_values;
+            <span class="kw">let </span>st = <span class="kw-2">&amp;</span><span class="self">self</span>.struct_values;
 
-                        <span class="kw">for</span> <span class="ident">variant</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">variants</span> {
-                            <span class="ident">validate_variant</span>(<span class="kw-2">&amp;</span><span class="ident">variant</span>.<span class="ident">fields</span>)<span class="question-mark">?</span>;
-                        }
+            <span class="kw">let </span>enum_validation = <span class="kw">if </span>en.supports_none() {
+                <span class="kw">let </span>ty = en.prefix.trim_end_matches(<span class="string">&#39;_&#39;</span>);
+                <span class="macro">quote!</span>(<span class="kw">return </span>::darling::export::Err(::darling::Error::unsupported_shape(#ty));)
+            } <span class="kw">else </span>{
+                <span class="macro">quote! </span>{
+                    <span class="kw">fn </span>validate_variant(data: <span class="kw-2">&amp;</span>::syn::Fields) -&gt; ::darling::Result&lt;()&gt; {
+                        #en
+                    }
 
-                        <span class="prelude-val">Ok</span>(())
+                    <span class="kw">for </span>variant <span class="kw">in </span><span class="kw-2">&amp;</span>data.variants {
+                        validate_variant(<span class="kw-2">&amp;</span>variant.fields)<span class="question-mark">?</span>;
                     }
-                    <span class="ident">::syn::Data::Struct</span>(<span class="kw-2">ref</span> <span class="ident">struct_data</span>) =&gt; {
-                        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">struct_data</span>.<span class="ident">fields</span>;
-                        #<span class="ident">st</span>
+
+                    <span class="prelude-val">Ok</span>(())
+                }
+            };
+
+            <span class="macro">quote! </span>{
+                <span class="kw">match </span><span class="kw-2">*</span>__body {
+                    ::syn::Data::Enum(<span class="kw-2">ref </span>data) =&gt; {
+                        #enum_validation
                     }
-                    <span class="ident">::syn::Data::Union</span>(<span class="kw">_</span>) =&gt; <span class="macro">unreachable!</span>(),
+                    ::syn::Data::Struct(<span class="kw-2">ref </span>struct_data) =&gt; {
+                        <span class="kw">let </span>data = <span class="kw-2">&amp;</span>struct_data.fields;
+                        #st
+                    }
+                    ::syn::Data::Union(<span class="kw">_</span>) =&gt; <span class="macro">unreachable!</span>(),
                 }
             }
         };
 
-        <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span> {
-            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_variables</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">__validate_body</span>(<span class="ident">__body</span>: <span class="kw-2">&amp;</span><span class="ident">::syn::Data</span>) -&gt; <span class="ident">::darling::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-                #<span class="ident">fn_body</span>
+        tokens.append_all(<span class="macro">quote! </span>{
+            <span class="attribute">#[allow(unused_variables)]
+            </span><span class="kw">fn </span>__validate_body(__body: <span class="kw-2">&amp;</span>::syn::Data) -&gt; ::darling::Result&lt;()&gt; {
+                #fn_body
             }
         });
     }
 }
 
-<span class="doccomment">/// Receiver for shape information within a struct or enum context. See `Shape` for more information</span>
-<span class="doccomment">/// on valid uses of shape validation.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DataShape</span> {
-    <span class="doccomment">/// The kind of shape being described. This can be `struct_` or `enum_`.</span>
-    <span class="ident">prefix</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-    <span class="ident">newtype</span>: <span class="ident">bool</span>,
-    <span class="ident">named</span>: <span class="ident">bool</span>,
-    <span class="ident">tuple</span>: <span class="ident">bool</span>,
-    <span class="ident">unit</span>: <span class="ident">bool</span>,
-    <span class="ident">any</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Control whether the emitted code should be inside a function or not.</span>
-    <span class="doccomment">/// This is `true` when creating a `Shape` for `FromDeriveInput`, but false</span>
-    <span class="doccomment">/// when deriving `FromVariant`.</span>
-    <span class="ident">embedded</span>: <span class="ident">bool</span>,
+<span class="doccomment">/// Receiver for shape information within a struct or enum context. See `Shape` for more information
+/// on valid uses of shape validation.
+</span><span class="attribute">#[derive(Debug, Clone, Default, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>DataShape {
+    <span class="doccomment">/// The kind of shape being described. This can be `struct_` or `enum_`.
+    </span>prefix: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+    newtype: bool,
+    named: bool,
+    tuple: bool,
+    unit: bool,
+    any: bool,
+    <span class="doccomment">/// Control whether the emitted code should be inside a function or not.
+    /// This is `true` when creating a `Shape` for `FromDeriveInput`, but false
+    /// when deriving `FromVariant`.
+    </span>embedded: bool,
 }
 
-<span class="kw">impl</span> <span class="ident">DataShape</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">prefix</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">DataShape</span> {
-            <span class="ident">prefix</span>,
-            <span class="ident">embedded</span>: <span class="bool-val">true</span>,
-            ..<span class="ident">Default::default</span>()
+<span class="kw">impl </span>DataShape {
+    <span class="kw">fn </span>new(prefix: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str) -&gt; <span class="self">Self </span>{
+        DataShape {
+            prefix,
+            embedded: <span class="bool-val">true</span>,
+            ..Default::default()
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">supports_none</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
-        <span class="op">!</span>(<span class="self">self</span>.<span class="ident">any</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">newtype</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">named</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">tuple</span> <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">unit</span>)
+    <span class="kw">fn </span>supports_none(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        !(<span class="self">self</span>.any || <span class="self">self</span>.newtype || <span class="self">self</span>.named || <span class="self">self</span>.tuple || <span class="self">self</span>.unit)
     }
 
-    <span class="kw">fn</span> <span class="ident">set_word</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">word</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">word</span>.<span class="ident">trim_start_matches</span>(<span class="self">self</span>.<span class="ident">prefix</span>) {
-            <span class="string">&quot;newtype&quot;</span> =&gt; {
-                <span class="self">self</span>.<span class="ident">newtype</span> <span class="op">=</span> <span class="bool-val">true</span>;
+    <span class="kw">fn </span>set_word(<span class="kw-2">&amp;mut </span><span class="self">self</span>, word: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">match </span>word.trim_start_matches(<span class="self">self</span>.prefix) {
+            <span class="string">&quot;newtype&quot; </span>=&gt; {
+                <span class="self">self</span>.newtype = <span class="bool-val">true</span>;
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="string">&quot;named&quot;</span> =&gt; {
-                <span class="self">self</span>.<span class="ident">named</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="string">&quot;named&quot; </span>=&gt; {
+                <span class="self">self</span>.named = <span class="bool-val">true</span>;
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="string">&quot;tuple&quot;</span> =&gt; {
-                <span class="self">self</span>.<span class="ident">tuple</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="string">&quot;tuple&quot; </span>=&gt; {
+                <span class="self">self</span>.tuple = <span class="bool-val">true</span>;
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="string">&quot;unit&quot;</span> =&gt; {
-                <span class="self">self</span>.<span class="ident">unit</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="string">&quot;unit&quot; </span>=&gt; {
+                <span class="self">self</span>.unit = <span class="bool-val">true</span>;
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="string">&quot;any&quot;</span> =&gt; {
-                <span class="self">self</span>.<span class="ident">any</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="string">&quot;any&quot; </span>=&gt; {
+                <span class="self">self</span>.any = <span class="bool-val">true</span>;
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">Error::unknown_value</span>(<span class="ident">word</span>)),
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">FromMeta</span> <span class="kw">for</span> <span class="ident">DataShape</span> {
-    <span class="kw">fn</span> <span class="ident">from_list</span>(<span class="ident">items</span>: <span class="kw-2">&amp;</span>[<span class="ident">NestedMeta</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">errors</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">DataShape::default</span>();
-
-        <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="ident">items</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">NestedMeta::Meta</span>(<span class="ident">Meta::Path</span>(<span class="kw-2">ref</span> <span class="ident">path</span>)) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">item</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">new</span>.<span class="ident">set_word</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">first</span>().<span class="ident">unwrap</span>().<span class="ident">ident</span>.<span class="ident">to_string</span>()) {
-                    <span class="ident">errors</span>.<span class="ident">push</span>(<span class="ident">e</span>.<span class="ident">with_span</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>));
-                }
-            } <span class="kw">else</span> {
-                <span class="ident">errors</span>.<span class="ident">push</span>(<span class="ident">Error::unsupported_format</span>(<span class="string">&quot;non-word&quot;</span>).<span class="ident">with_span</span>(<span class="ident">item</span>));
-            }
-        }
-
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">errors</span>.<span class="ident">is_empty</span>() {
-            <span class="prelude-val">Err</span>(<span class="ident">Error::multiple</span>(<span class="ident">errors</span>))
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">new</span>)
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::unknown_value(word)),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">DataShape</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">any</span> {
-            <span class="macro">quote!</span>(<span class="ident">::darling::export::Ok</span>(()))
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">supports_none</span>() {
-            <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">trim_end_matches</span>(<span class="string">&#39;_&#39;</span>);
-            <span class="macro">quote!</span>(<span class="ident">::darling::export::Err</span>(<span class="ident">::darling::Error::unsupported_shape</span>(#<span class="ident">ty</span>)))
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">unit</span> <span class="op">=</span> <span class="ident">match_arm</span>(<span class="string">&quot;unit&quot;</span>, <span class="self">self</span>.<span class="ident">unit</span>);
-            <span class="kw">let</span> <span class="ident">newtype</span> <span class="op">=</span> <span class="ident">match_arm</span>(<span class="string">&quot;newtype&quot;</span>, <span class="self">self</span>.<span class="ident">newtype</span>);
-            <span class="kw">let</span> <span class="ident">named</span> <span class="op">=</span> <span class="ident">match_arm</span>(<span class="string">&quot;named&quot;</span>, <span class="self">self</span>.<span class="ident">named</span>);
-            <span class="kw">let</span> <span class="ident">tuple</span> <span class="op">=</span> <span class="ident">match_arm</span>(<span class="string">&quot;tuple&quot;</span>, <span class="self">self</span>.<span class="ident">tuple</span>);
-            <span class="macro">quote!</span> {
-                <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">data</span> {
-                    <span class="ident">::syn::Fields::Unit</span> =&gt; #<span class="ident">unit</span>,
-                    <span class="ident">::syn::Fields::Unnamed</span>(<span class="kw-2">ref</span> <span class="ident">fields</span>) <span class="kw">if</span> <span class="ident">fields</span>.<span class="ident">unnamed</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> =&gt; #<span class="ident">newtype</span>,
-                    <span class="ident">::syn::Fields::Unnamed</span>(<span class="kw">_</span>) =&gt; #<span class="ident">tuple</span>,
-                    <span class="ident">::syn::Fields::Named</span>(<span class="kw">_</span>) =&gt; #<span class="ident">named</span>,
+<span class="kw">impl </span>FromMeta <span class="kw">for </span>DataShape {
+    <span class="kw">fn </span>from_list(items: <span class="kw-2">&amp;</span>[NestedMeta]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>errors = Error::accumulator();
+        <span class="kw">let </span><span class="kw-2">mut </span>new = DataShape::default();
+
+        <span class="kw">for </span>item <span class="kw">in </span>items {
+            <span class="kw">if let </span>NestedMeta::Meta(Meta::Path(<span class="kw-2">ref </span>path)) = <span class="kw-2">*</span>item {
+                errors.handle(new.set_word(<span class="kw-2">&amp;</span>path.segments.first().unwrap().ident.to_string()));
+            } <span class="kw">else </span>{
+                errors.push(Error::unsupported_format(<span class="string">&quot;non-word&quot;</span>).with_span(item));
+            }
+        }
+
+        errors.finish_with(new)
+    }
+}
+
+<span class="kw">impl </span>ToTokens <span class="kw">for </span>DataShape {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>body = <span class="kw">if </span><span class="self">self</span>.any {
+            <span class="macro">quote!</span>(::darling::export::Ok(()))
+        } <span class="kw">else if </span><span class="self">self</span>.supports_none() {
+            <span class="kw">let </span>ty = <span class="self">self</span>.prefix.trim_end_matches(<span class="string">&#39;_&#39;</span>);
+            <span class="macro">quote!</span>(::darling::export::Err(::darling::Error::unsupported_shape(#ty)))
+        } <span class="kw">else </span>{
+            <span class="kw">let </span>unit = match_arm(<span class="string">&quot;unit&quot;</span>, <span class="self">self</span>.unit);
+            <span class="kw">let </span>newtype = match_arm(<span class="string">&quot;newtype&quot;</span>, <span class="self">self</span>.newtype);
+            <span class="kw">let </span>named = match_arm(<span class="string">&quot;named&quot;</span>, <span class="self">self</span>.named);
+            <span class="kw">let </span>tuple = match_arm(<span class="string">&quot;tuple&quot;</span>, <span class="self">self</span>.tuple);
+            <span class="macro">quote! </span>{
+                <span class="kw">match </span><span class="kw-2">*</span>data {
+                    ::syn::Fields::Unit =&gt; #unit,
+                    ::syn::Fields::Unnamed(<span class="kw-2">ref </span>fields) <span class="kw">if </span>fields.unnamed.len() == <span class="number">1 </span>=&gt; #newtype,
+                    ::syn::Fields::Unnamed(<span class="kw">_</span>) =&gt; #tuple,
+                    ::syn::Fields::Named(<span class="kw">_</span>) =&gt; #named,
                 }
             }
         };
 
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">embedded</span> {
-            <span class="ident">body</span>.<span class="ident">to_tokens</span>(<span class="ident">tokens</span>);
-        } <span class="kw">else</span> {
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span> {
-                <span class="kw">fn</span> <span class="ident">__validate_data</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">::syn::Fields</span>) -&gt; <span class="ident">::darling::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-                    #<span class="ident">body</span>
+        <span class="kw">if </span><span class="self">self</span>.embedded {
+            body.to_tokens(tokens);
+        } <span class="kw">else </span>{
+            tokens.append_all(<span class="macro">quote! </span>{
+                <span class="kw">fn </span>__validate_data(data: <span class="kw-2">&amp;</span>::syn::Fields) -&gt; ::darling::Result&lt;()&gt; {
+                    #body
                 }
             });
         }
     }
 }
 
-<span class="kw">fn</span> <span class="ident">match_arm</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">is_supported</span>: <span class="ident">bool</span>) -&gt; <span class="ident">TokenStream</span> {
-    <span class="kw">if</span> <span class="ident">is_supported</span> {
-        <span class="macro">quote!</span>(<span class="ident">::darling::export::Ok</span>(()))
-    } <span class="kw">else</span> {
-        <span class="macro">quote!</span>(<span class="ident">::darling::export::Err</span>(<span class="ident">::darling::Error::unsupported_shape</span>(#<span class="ident">name</span>)))
+<span class="kw">fn </span>match_arm(name: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str, is_supported: bool) -&gt; TokenStream {
+    <span class="kw">if </span>is_supported {
+        <span class="macro">quote!</span>(::darling::export::Ok(()))
+    } <span class="kw">else </span>{
+        <span class="macro">quote!</span>(::darling::export::Err(::darling::Error::unsupported_shape(#name)))
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
-    <span class="kw">use</span> <span class="ident">syn</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>proc_macro2::TokenStream;
 
-    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::Shape</span>;
-    <span class="kw">use</span> <span class="ident">FromMeta</span>;
+    <span class="kw">use </span><span class="kw">super</span>::Shape;
+    <span class="kw">use </span><span class="kw">crate</span>::FromMeta;
 
-    <span class="doccomment">/// parse a string as a syn::Meta instance.</span>
-    <span class="kw">fn</span> <span class="ident">pm</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) -&gt; <span class="ident">::std::result::Result</span><span class="op">&lt;</span><span class="ident">syn::Meta</span>, <span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">attribute</span>: <span class="ident">syn::Attribute</span> <span class="op">=</span> <span class="macro">parse_quote!</span>(<span class="attribute">#[#<span class="ident">tokens</span>]</span>);
-        <span class="ident">attribute</span>.<span class="ident">parse_meta</span>().<span class="ident">or</span>(<span class="prelude-val">Err</span>(<span class="string">&quot;Unable to parse&quot;</span>.<span class="ident">into</span>()))
+    <span class="doccomment">/// parse a string as a syn::Meta instance.
+    </span><span class="kw">fn </span>pm(tokens: TokenStream) -&gt; ::std::result::Result&lt;syn::Meta, String&gt; {
+        <span class="kw">let </span>attribute: syn::Attribute = <span class="macro">parse_quote!</span>(<span class="attribute">#[#tokens]</span>);
+        attribute.parse_meta().map_err(|<span class="kw">_</span>| <span class="string">&quot;Unable to parse&quot;</span>.into())
     }
 
-    <span class="kw">fn</span> <span class="ident">fm</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FromMeta</span><span class="op">&gt;</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) -&gt; <span class="ident">T</span> {
-        <span class="ident">FromMeta::from_meta</span>(<span class="kw-2">&amp;</span><span class="ident">pm</span>(<span class="ident">tokens</span>).<span class="ident">expect</span>(<span class="string">&quot;Tests should pass well-formed input&quot;</span>))
-            .<span class="ident">expect</span>(<span class="string">&quot;Tests should pass valid input&quot;</span>)
+    <span class="kw">fn </span>fm&lt;T: FromMeta&gt;(tokens: TokenStream) -&gt; T {
+        FromMeta::from_meta(<span class="kw-2">&amp;</span>pm(tokens).expect(<span class="string">&quot;Tests should pass well-formed input&quot;</span>))
+            .expect(<span class="string">&quot;Tests should pass valid input&quot;</span>)
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">supports_any</span>() {
-        <span class="kw">let</span> <span class="ident">decl</span> <span class="op">=</span> <span class="ident">fm</span>::<span class="op">&lt;</span><span class="ident">Shape</span><span class="op">&gt;</span>(<span class="macro">quote!</span>(<span class="ident">ignore</span>(<span class="ident">any</span>)));
-        <span class="macro">assert_eq!</span>(<span class="ident">decl</span>.<span class="ident">any</span>, <span class="bool-val">true</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>supports_any() {
+        <span class="kw">let </span>decl = fm::&lt;Shape&gt;(<span class="macro">quote!</span>(ignore(any)));
+        <span class="macro">assert!</span>(decl.any);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">supports_struct</span>() {
-        <span class="kw">let</span> <span class="ident">decl</span> <span class="op">=</span> <span class="ident">fm</span>::<span class="op">&lt;</span><span class="ident">Shape</span><span class="op">&gt;</span>(<span class="macro">quote!</span>(<span class="ident">ignore</span>(<span class="ident">struct_any</span>, <span class="ident">struct_newtype</span>)));
-        <span class="macro">assert_eq!</span>(<span class="ident">decl</span>.<span class="ident">struct_values</span>.<span class="ident">any</span>, <span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">decl</span>.<span class="ident">struct_values</span>.<span class="ident">newtype</span>, <span class="bool-val">true</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>supports_struct() {
+        <span class="kw">let </span>decl = fm::&lt;Shape&gt;(<span class="macro">quote!</span>(ignore(struct_any, struct_newtype)));
+        <span class="macro">assert!</span>(decl.struct_values.any);
+        <span class="macro">assert!</span>(decl.struct_values.newtype);
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">supports_mixed</span>() {
-        <span class="kw">let</span> <span class="ident">decl</span> <span class="op">=</span> <span class="ident">fm</span>::<span class="op">&lt;</span><span class="ident">Shape</span><span class="op">&gt;</span>(<span class="macro">quote!</span>(<span class="ident">ignore</span>(<span class="ident">struct_newtype</span>, <span class="ident">enum_newtype</span>, <span class="ident">enum_tuple</span>)));
-        <span class="macro">assert_eq!</span>(<span class="ident">decl</span>.<span class="ident">struct_values</span>.<span class="ident">newtype</span>, <span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">decl</span>.<span class="ident">enum_values</span>.<span class="ident">newtype</span>, <span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">decl</span>.<span class="ident">enum_values</span>.<span class="ident">tuple</span>, <span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(<span class="ident">decl</span>.<span class="ident">struct_values</span>.<span class="ident">any</span>, <span class="bool-val">false</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>supports_mixed() {
+        <span class="kw">let </span>decl = fm::&lt;Shape&gt;(<span class="macro">quote!</span>(ignore(struct_newtype, enum_newtype, enum_tuple)));
+        <span class="macro">assert!</span>(decl.struct_values.newtype);
+        <span class="macro">assert!</span>(decl.enum_values.newtype);
+        <span class="macro">assert!</span>(decl.enum_values.tuple);
+        <span class="macro">assert!</span>(!decl.struct_values.any);
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.10.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.12.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -91,94 +86,101 @@
 <span id="86">86</span>
 <span id="87">87</span>
 <span id="88">88</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Internal helper library for the `derive_builder` crate.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! **Important Note**:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! * You are probably looking for the [`derive_builder`] crate,</span>
-<span class="doccomment">//!   which wraps this crate and is much more ergonomic to use.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ## Purpose</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This is an internal helper library of [`derive_builder`], which allows for</span>
-<span class="doccomment">//! all the logic of builder creation to be decoupled from the proc-macro entry</span>
-<span class="doccomment">//! point.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [`derive_builder`]: https://!crates.io/crates/derive_builder</span>
-<span class="doccomment">//! [`derive_builder_core`]: https://!crates.io/crates/derive_builder_core</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Internal helper library for the `derive_builder` crate.
+//!
+//! **Important Note**:
+//!
+//! * You are probably looking for the [`derive_builder`] crate,
+//!   which wraps this crate and is much more ergonomic to use.
+//!
+//! ## Purpose
+//!
+//! This is an internal helper library of [`derive_builder`], which allows for
+//! all the logic of builder creation to be decoupled from the proc-macro entry
+//! point.
+//!
+//!
+//! [`derive_builder`]: https://!crates.io/crates/derive_builder
+//! [`derive_builder_core`]: https://!crates.io/crates/derive_builder_core
 
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">warnings</span>, <span class="ident">missing_docs</span>)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;100&quot;</span>)]</span>
+</span><span class="attribute">#![deny(warnings, missing_docs)]
+#![cfg_attr(test, recursion_limit = <span class="string">&quot;100&quot;</span>)]
 
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">darling</span>;
+#[macro_use]
+</span><span class="kw">extern crate </span>darling;
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro2</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">syn</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">quote</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">pretty_assertions</span>;
+<span class="kw">extern crate </span>proc_macro;
+<span class="kw">extern crate </span>proc_macro2;
+<span class="attribute">#[macro_use]
+</span><span class="kw">extern crate </span>syn;
+<span class="attribute">#[macro_use]
+</span><span class="kw">extern crate </span>quote;
+<span class="attribute">#[cfg(test)]
+#[macro_use]
+</span><span class="kw">extern crate </span>pretty_assertions;
 
-<span class="kw">mod</span> <span class="ident">block</span>;
-<span class="kw">mod</span> <span class="ident">build_method</span>;
-<span class="kw">mod</span> <span class="ident">builder</span>;
-<span class="kw">mod</span> <span class="ident">builder_field</span>;
-<span class="kw">mod</span> <span class="ident">deprecation_notes</span>;
-<span class="kw">mod</span> <span class="ident">doc_comment</span>;
-<span class="kw">mod</span> <span class="ident">initializer</span>;
-<span class="kw">mod</span> <span class="ident">macro_options</span>;
-<span class="kw">mod</span> <span class="ident">options</span>;
-<span class="kw">mod</span> <span class="ident">setter</span>;
+<span class="kw">mod </span>block;
+<span class="kw">mod </span>build_method;
+<span class="kw">mod </span>builder;
+<span class="kw">mod </span>builder_field;
+<span class="kw">mod </span>change_span;
+<span class="kw">mod </span>default_expression;
+<span class="kw">mod </span>deprecation_notes;
+<span class="kw">mod </span>doc_comment;
+<span class="kw">mod </span>initializer;
+<span class="kw">mod </span>macro_options;
+<span class="kw">mod </span>options;
+<span class="kw">mod </span>setter;
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">block::Block</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">build_method::BuildMethod</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">builder::Builder</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">builder_field::BuilderField</span>;
-<span class="kw">use</span> <span class="ident">darling::FromDeriveInput</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">deprecation_notes::DeprecationNotes</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">doc_comment::doc_comment_from</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">initializer::Initializer</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">options::BuilderPattern</span>;
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">setter::Setter</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>block::BlockContents;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>build_method::BuildMethod;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>builder::Builder;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>builder_field::{BuilderField, BuilderFieldType};
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>change_span::change_span;
+<span class="kw">use </span>darling::FromDeriveInput;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>default_expression::DefaultExpression;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>deprecation_notes::DeprecationNotes;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>doc_comment::doc_comment_from;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>initializer::{FieldConversion, Initializer};
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>options::{BuilderPattern, Each};
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>setter::Setter;
 
-<span class="kw">const</span> <span class="ident">DEFAULT_STRUCT_NAME</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;__default&quot;</span>;
+<span class="kw">const </span>DEFAULT_STRUCT_NAME: <span class="kw-2">&amp;</span>str = <span class="string">&quot;__default&quot;</span>;
 
-<span class="doccomment">/// Derive a builder for a struct</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder_for_struct</span>(<span class="ident">ast</span>: <span class="ident">syn::DeriveInput</span>) -&gt; <span class="ident">proc_macro2::TokenStream</span> {
-    <span class="kw">let</span> <span class="ident">opts</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">macro_options::Options::from_derive_input</span>(<span class="kw-2">&amp;</span><span class="ident">ast</span>) {
-        <span class="prelude-val">Ok</span>(<span class="ident">val</span>) =&gt; <span class="ident">val</span>,
-        <span class="prelude-val">Err</span>(<span class="ident">err</span>) =&gt; {
-            <span class="kw">return</span> <span class="ident">err</span>.<span class="ident">write_errors</span>();
+<span class="doccomment">/// Derive a builder for a struct
+</span><span class="kw">pub fn </span>builder_for_struct(ast: syn::DeriveInput) -&gt; proc_macro2::TokenStream {
+    <span class="kw">let </span>opts = <span class="kw">match </span>macro_options::Options::from_derive_input(<span class="kw-2">&amp;</span>ast) {
+        <span class="prelude-val">Ok</span>(val) =&gt; val,
+        <span class="prelude-val">Err</span>(err) =&gt; {
+            <span class="kw">return </span>err.write_errors();
         }
     };
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">opts</span>.<span class="ident">as_builder</span>();
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">build_fn</span> <span class="op">=</span> <span class="ident">opts</span>.<span class="ident">as_build_method</span>();
+    <span class="kw">let </span><span class="kw-2">mut </span>builder = opts.as_builder();
+    <span class="kw">let </span><span class="kw-2">mut </span>build_fn = opts.as_build_method();
 
-    <span class="ident">builder</span>.<span class="ident">doc_comment</span>(<span class="macro">format!</span>(
+    builder.doc_comment(<span class="macro">format!</span>(
         <span class="macro">include_str!</span>(<span class="string">&quot;doc_tpl/builder_struct.md&quot;</span>),
-        <span class="ident">struct_name</span> <span class="op">=</span> <span class="ident">ast</span>.<span class="ident">ident</span>
+        struct_name = ast.ident
     ));
-    <span class="ident">build_fn</span>.<span class="ident">doc_comment</span>(<span class="macro">format!</span>(
+    build_fn.doc_comment(<span class="macro">format!</span>(
         <span class="macro">include_str!</span>(<span class="string">&quot;doc_tpl/builder_method.md&quot;</span>),
-        <span class="ident">struct_name</span> <span class="op">=</span> <span class="ident">ast</span>.<span class="ident">ident</span>
+        struct_name = ast.ident
     ));
 
-    <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="ident">opts</span>.<span class="ident">fields</span>() {
-        <span class="ident">builder</span>.<span class="ident">push_field</span>(<span class="ident">field</span>.<span class="ident">as_builder_field</span>());
-        <span class="ident">builder</span>.<span class="ident">push_setter_fn</span>(<span class="ident">field</span>.<span class="ident">as_setter</span>());
-        <span class="ident">build_fn</span>.<span class="ident">push_initializer</span>(<span class="ident">field</span>.<span class="ident">as_initializer</span>());
+    <span class="kw">for </span>field <span class="kw">in </span>opts.fields() {
+        builder.push_field(field.as_builder_field());
+        builder.push_setter_fn(field.as_setter());
+        build_fn.push_initializer(field.as_initializer());
     }
 
-    <span class="ident">builder</span>.<span class="ident">push_build_fn</span>(<span class="ident">build_fn</span>);
+    builder.push_build_fn(build_fn);
 
-    <span class="macro">quote!</span>(#<span class="ident">builder</span>)
+    <span class="macro">quote!</span>(#builder)
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

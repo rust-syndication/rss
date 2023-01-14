@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/codegen/outer_from_impl.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>outer_from_impl.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/codegen/outer_from_impl.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>outer_from_impl.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -63,66 +58,65 @@
 <span id="58">58</span>
 <span id="59">59</span>
 <span id="60">60</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">ToTokens</span>, <span class="ident">TokenStreamExt</span>};
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">GenericParam</span>, <span class="ident">Generics</span>, <span class="ident">Path</span>, <span class="ident">TraitBound</span>, <span class="ident">TraitBoundModifier</span>, <span class="ident">TypeParamBound</span>};
+</pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::TokenStream;
+<span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
+<span class="kw">use </span>syn::{GenericParam, Generics, Path, TraitBound, TraitBoundModifier, TypeParamBound};
 
-<span class="kw">use</span> <span class="ident">codegen::TraitImpl</span>;
-<span class="kw">use</span> <span class="ident">usage::IdentSet</span>;
+<span class="kw">use </span><span class="kw">crate</span>::codegen::TraitImpl;
+<span class="kw">use </span><span class="kw">crate</span>::usage::IdentSet;
 
-<span class="doccomment">/// Wrapper for &quot;outer From&quot; traits, such as `FromDeriveInput`, `FromVariant`, and `FromField`.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">OuterFromImpl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Gets the path of the trait being implemented.</span>
-    <span class="kw">fn</span> <span class="ident">trait_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Path</span>;
+<span class="doccomment">/// Wrapper for &quot;outer From&quot; traits, such as `FromDeriveInput`, `FromVariant`, and `FromField`.
+</span><span class="kw">pub trait </span>OuterFromImpl&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Gets the path of the trait being implemented.
+    </span><span class="kw">fn </span>trait_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Path;
 
-    <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">TraitImpl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
+    <span class="kw">fn </span>base(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>TraitImpl&lt;<span class="lifetime">&#39;a</span>&gt;;
 
-    <span class="kw">fn</span> <span class="ident">trait_bound</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Path</span> {
-        <span class="self">self</span>.<span class="ident">trait_path</span>()
+    <span class="kw">fn </span>trait_bound(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Path {
+        <span class="self">self</span>.trait_path()
     }
 
-    <span class="kw">fn</span> <span class="ident">wrap</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToTokens</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">body</span>: <span class="ident">T</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">base</span>();
-        <span class="kw">let</span> <span class="ident">trayt</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">trait_path</span>();
-        <span class="kw">let</span> <span class="ident">ty_ident</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">ident</span>;
-        <span class="comment">// The type parameters used in non-skipped, non-magic fields.</span>
-        <span class="comment">// These must impl `FromMeta` unless they have custom bounds.</span>
-        <span class="kw">let</span> <span class="ident">used</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">used_type_params</span>();
-        <span class="kw">let</span> <span class="ident">generics</span> <span class="op">=</span> <span class="ident">compute_impl_bounds</span>(<span class="self">self</span>.<span class="ident">trait_bound</span>(), <span class="ident">base</span>.<span class="ident">generics</span>.<span class="ident">clone</span>(), <span class="kw-2">&amp;</span><span class="ident">used</span>);
-        <span class="kw">let</span> (<span class="ident">impl_generics</span>, <span class="ident">ty_generics</span>, <span class="ident">where_clause</span>) <span class="op">=</span> <span class="ident">generics</span>.<span class="ident">split_for_impl</span>();
+    <span class="kw">fn </span>wrap&lt;T: ToTokens&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, body: T, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>base = <span class="self">self</span>.base();
+        <span class="kw">let </span>trayt = <span class="self">self</span>.trait_path();
+        <span class="kw">let </span>ty_ident = base.ident;
+        <span class="comment">// The type parameters used in non-skipped, non-magic fields.
+        // These must impl `FromMeta` unless they have custom bounds.
+        </span><span class="kw">let </span>used = base.used_type_params();
+        <span class="kw">let </span>generics = compute_impl_bounds(<span class="self">self</span>.trait_bound(), base.generics.clone(), <span class="kw-2">&amp;</span>used);
+        <span class="kw">let </span>(impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
-        <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-            <span class="kw">impl</span> #<span class="ident">impl_generics</span> #<span class="ident">trayt</span> <span class="kw">for</span> #<span class="ident">ty_ident</span> #<span class="ident">ty_generics</span>
-                #<span class="ident">where_clause</span>
+        tokens.append_all(<span class="macro">quote!</span>(
+            <span class="kw">impl </span>#impl_generics #trayt <span class="kw">for </span>#ty_ident #ty_generics
+                #where_clause
             {
-                #<span class="ident">body</span>
+                #body
             }
         ));
     }
 }
 
-<span class="kw">fn</span> <span class="ident">compute_impl_bounds</span>(<span class="ident">bound</span>: <span class="ident">Path</span>, <span class="kw-2">mut</span> <span class="ident">generics</span>: <span class="ident">Generics</span>, <span class="ident">applies_to</span>: <span class="kw-2">&amp;</span><span class="ident">IdentSet</span>) -&gt; <span class="ident">Generics</span> {
-    <span class="kw">if</span> <span class="ident">generics</span>.<span class="ident">params</span>.<span class="ident">is_empty</span>() {
-        <span class="kw">return</span> <span class="ident">generics</span>;
+<span class="kw">fn </span>compute_impl_bounds(bound: Path, <span class="kw-2">mut </span>generics: Generics, applies_to: <span class="kw-2">&amp;</span>IdentSet) -&gt; Generics {
+    <span class="kw">if </span>generics.params.is_empty() {
+        <span class="kw">return </span>generics;
     }
 
-    <span class="kw">let</span> <span class="ident">added_bound</span> <span class="op">=</span> <span class="ident">TypeParamBound::Trait</span>(<span class="ident">TraitBound</span> {
-        <span class="ident">paren_token</span>: <span class="prelude-val">None</span>,
-        <span class="ident">modifier</span>: <span class="ident">TraitBoundModifier::None</span>,
-        <span class="ident">lifetimes</span>: <span class="prelude-val">None</span>,
-        <span class="ident">path</span>: <span class="ident">bound</span>,
+    <span class="kw">let </span>added_bound = TypeParamBound::Trait(TraitBound {
+        paren_token: <span class="prelude-val">None</span>,
+        modifier: TraitBoundModifier::None,
+        lifetimes: <span class="prelude-val">None</span>,
+        path: bound,
     });
 
-    <span class="kw">for</span> <span class="ident">param</span> <span class="kw">in</span> <span class="ident">generics</span>.<span class="ident">params</span>.<span class="ident">iter_mut</span>() {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GenericParam::Type</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">typ</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">param</span> {
-            <span class="kw">if</span> <span class="ident">applies_to</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">typ</span>.<span class="ident">ident</span>) {
-                <span class="ident">typ</span>.<span class="ident">bounds</span>.<span class="ident">push</span>(<span class="ident">added_bound</span>.<span class="ident">clone</span>());
+    <span class="kw">for </span>param <span class="kw">in </span>generics.params.iter_mut() {
+        <span class="kw">if let </span>GenericParam::Type(<span class="kw-2">ref mut </span>typ) = <span class="kw-2">*</span>param {
+            <span class="kw">if </span>applies_to.contains(<span class="kw-2">&amp;</span>typ.ident) {
+                typ.bounds.push(added_bound.clone());
             }
         }
     }
 
-    <span class="ident">generics</span>
+    generics
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/ast/generics.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>generics.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/ast/generics.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>generics.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -193,204 +188,195 @@
 <span id="188">188</span>
 <span id="189">189</span>
 <span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Types for working with generics</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Types for working with generics
 
-<span class="kw">use</span> <span class="ident">std::iter::Iterator</span>;
-<span class="kw">use</span> <span class="ident">std::slice::Iter</span>;
+</span><span class="kw">use </span>std::iter::Iterator;
+<span class="kw">use </span>std::slice::Iter;
 
-<span class="kw">use</span> <span class="ident">syn</span>;
+<span class="kw">use crate</span>::{FromGenericParam, FromGenerics, FromTypeParam, <span class="prelude-ty">Result</span>};
 
-<span class="kw">use</span> {<span class="ident">FromGenericParam</span>, <span class="ident">FromGenerics</span>, <span class="ident">FromTypeParam</span>, <span class="prelude-ty">Result</span>};
+<span class="doccomment">/// Extension trait for `GenericParam` to support getting values by variant.
+///
+/// # Usage
+/// `darling::ast::Generics` needs a way to test its params array in order to iterate over type params.
+/// Rather than require callers to use `darling::ast::GenericParam` in all cases, this trait makes that
+/// polymorphic.
+</span><span class="kw">pub trait </span>GenericParamExt {
+    <span class="doccomment">/// The type this GenericParam uses to represent type params and their bounds
+    </span><span class="kw">type </span>TypeParam;
+    <span class="kw">type </span>LifetimeDef;
+    <span class="kw">type </span>ConstParam;
 
-<span class="doccomment">/// Extension trait for `GenericParam` to support getting values by variant.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Usage</span>
-<span class="doccomment">/// `darling::ast::Generics` needs a way to test its params array in order to iterate over type params.</span>
-<span class="doccomment">/// Rather than require callers to use `darling::ast::GenericParam` in all cases, this trait makes that</span>
-<span class="doccomment">/// polymorphic.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">GenericParamExt</span> {
-    <span class="doccomment">/// The type this GenericParam uses to represent type params and their bounds</span>
-    <span class="kw">type</span> <span class="ident">TypeParam</span>;
-    <span class="kw">type</span> <span class="ident">LifetimeDef</span>;
-    <span class="kw">type</span> <span class="ident">ConstParam</span>;
+    <span class="doccomment">/// If this GenericParam is a type param, get the underlying value.
+    </span><span class="kw">fn </span>as_type_param(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::TypeParam&gt; {
+        <span class="prelude-val">None
+    </span>}
 
-    <span class="doccomment">/// If this GenericParam is a type param, get the underlying value.</span>
-    <span class="kw">fn</span> <span class="ident">as_type_param</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::TypeParam</span><span class="op">&gt;</span> {
-        <span class="prelude-val">None</span>
+    <span class="doccomment">/// If this GenericParam is a lifetime, get the underlying value.
+    </span><span class="kw">fn </span>as_lifetime_def(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::LifetimeDef&gt; {
+        <span class="prelude-val">None
+    </span>}
+
+    <span class="doccomment">/// If this GenericParam is a const param, get the underlying value.
+    </span><span class="kw">fn </span>as_const_param(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::ConstParam&gt; {
+        <span class="prelude-val">None
+    </span>}
+}
+
+<span class="kw">impl </span>GenericParamExt <span class="kw">for </span>syn::GenericParam {
+    <span class="kw">type </span>TypeParam = syn::TypeParam;
+    <span class="kw">type </span>LifetimeDef = syn::LifetimeDef;
+    <span class="kw">type </span>ConstParam = syn::ConstParam;
+
+    <span class="kw">fn </span>as_type_param(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::TypeParam&gt; {
+        <span class="kw">if let </span>syn::GenericParam::Type(<span class="kw-2">ref </span>val) = <span class="kw-2">*</span><span class="self">self </span>{
+            <span class="prelude-val">Some</span>(val)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
     }
 
-    <span class="doccomment">/// If this GenericParam is a lifetime, get the underlying value.</span>
-    <span class="kw">fn</span> <span class="ident">as_lifetime_def</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::LifetimeDef</span><span class="op">&gt;</span> {
-        <span class="prelude-val">None</span>
+    <span class="kw">fn </span>as_lifetime_def(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::LifetimeDef&gt; {
+        <span class="kw">if let </span>syn::GenericParam::Lifetime(<span class="kw-2">ref </span>val) = <span class="kw-2">*</span><span class="self">self </span>{
+            <span class="prelude-val">Some</span>(val)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
     }
 
-    <span class="doccomment">/// If this GenericParam is a const param, get the underlying value.</span>
-    <span class="kw">fn</span> <span class="ident">as_const_param</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::ConstParam</span><span class="op">&gt;</span> {
-        <span class="prelude-val">None</span>
+    <span class="kw">fn </span>as_const_param(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::ConstParam&gt; {
+        <span class="kw">if let </span>syn::GenericParam::Const(<span class="kw-2">ref </span>val) = <span class="kw-2">*</span><span class="self">self </span>{
+            <span class="prelude-val">Some</span>(val)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
     }
 }
 
-<span class="kw">impl</span> <span class="ident">GenericParamExt</span> <span class="kw">for</span> <span class="ident">syn::GenericParam</span> {
-    <span class="kw">type</span> <span class="ident">TypeParam</span> <span class="op">=</span> <span class="ident">syn::TypeParam</span>;
-    <span class="kw">type</span> <span class="ident">LifetimeDef</span> <span class="op">=</span> <span class="ident">syn::LifetimeDef</span>;
-    <span class="kw">type</span> <span class="ident">ConstParam</span> <span class="op">=</span> <span class="ident">syn::ConstParam</span>;
+<span class="kw">impl </span>GenericParamExt <span class="kw">for </span>syn::TypeParam {
+    <span class="kw">type </span>TypeParam = syn::TypeParam;
+    <span class="kw">type </span>LifetimeDef = ();
+    <span class="kw">type </span>ConstParam = ();
 
-    <span class="kw">fn</span> <span class="ident">as_type_param</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::TypeParam</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn::GenericParam::Type</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">val</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
-    }
-
-    <span class="kw">fn</span> <span class="ident">as_lifetime_def</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::LifetimeDef</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn::GenericParam::Lifetime</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">val</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
-    }
-
-    <span class="kw">fn</span> <span class="ident">as_const_param</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::ConstParam</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn::GenericParam::Const</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">val</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">GenericParamExt</span> <span class="kw">for</span> <span class="ident">syn::TypeParam</span> {
-    <span class="kw">type</span> <span class="ident">TypeParam</span> <span class="op">=</span> <span class="ident">syn::TypeParam</span>;
-    <span class="kw">type</span> <span class="ident">LifetimeDef</span> <span class="op">=</span> ();
-    <span class="kw">type</span> <span class="ident">ConstParam</span> <span class="op">=</span> ();
-
-    <span class="kw">fn</span> <span class="ident">as_type_param</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::TypeParam</span><span class="op">&gt;</span> {
+    <span class="kw">fn </span>as_type_param(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>::TypeParam&gt; {
         <span class="prelude-val">Some</span>(<span class="self">self</span>)
     }
 }
 
-<span class="doccomment">/// A mirror of `syn::GenericParam` which is generic over all its contents.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">GenericParam</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">syn::TypeParam</span>, <span class="ident">L</span> <span class="op">=</span> <span class="ident">syn::LifetimeDef</span>, <span class="ident">C</span> <span class="op">=</span> <span class="ident">syn::ConstParam</span><span class="op">&gt;</span> {
-    <span class="ident">Type</span>(<span class="ident">T</span>),
-    <span class="ident">Lifetime</span>(<span class="ident">L</span>),
-    <span class="ident">Const</span>(<span class="ident">C</span>),
+<span class="doccomment">/// A mirror of `syn::GenericParam` which is generic over all its contents.
+</span><span class="attribute">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub enum </span>GenericParam&lt;T = syn::TypeParam, L = syn::LifetimeDef, C = syn::ConstParam&gt; {
+    Type(T),
+    Lifetime(L),
+    Const(C),
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FromTypeParam</span><span class="op">&gt;</span> <span class="ident">FromTypeParam</span> <span class="kw">for</span> <span class="ident">GenericParam</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from_type_param</span>(<span class="ident">type_param</span>: <span class="kw-2">&amp;</span><span class="ident">syn::TypeParam</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">GenericParam::Type</span>(<span class="ident">FromTypeParam::from_type_param</span>(
-            <span class="ident">type_param</span>,
+<span class="kw">impl</span>&lt;T: FromTypeParam&gt; FromTypeParam <span class="kw">for </span>GenericParam&lt;T&gt; {
+    <span class="kw">fn </span>from_type_param(type_param: <span class="kw-2">&amp;</span>syn::TypeParam) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="prelude-val">Ok</span>(GenericParam::Type(FromTypeParam::from_type_param(
+            type_param,
         )<span class="question-mark">?</span>))
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FromTypeParam</span><span class="op">&gt;</span> <span class="ident">FromGenericParam</span> <span class="kw">for</span> <span class="ident">GenericParam</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from_generic_param</span>(<span class="ident">param</span>: <span class="kw-2">&amp;</span><span class="ident">syn::GenericParam</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="kw-2">*</span><span class="ident">param</span> {
-            <span class="ident">syn::GenericParam::Type</span>(<span class="kw-2">ref</span> <span class="ident">ty</span>) =&gt; {
-                <span class="ident">GenericParam::Type</span>(<span class="ident">FromTypeParam::from_type_param</span>(<span class="ident">ty</span>)<span class="question-mark">?</span>)
+<span class="kw">impl</span>&lt;T: FromTypeParam&gt; FromGenericParam <span class="kw">for </span>GenericParam&lt;T&gt; {
+    <span class="kw">fn </span>from_generic_param(param: <span class="kw-2">&amp;</span>syn::GenericParam) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="kw-2">*</span>param {
+            syn::GenericParam::Type(<span class="kw-2">ref </span>ty) =&gt; {
+                GenericParam::Type(FromTypeParam::from_type_param(ty)<span class="question-mark">?</span>)
             }
-            <span class="ident">syn::GenericParam::Lifetime</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) =&gt; <span class="ident">GenericParam::Lifetime</span>(<span class="ident">val</span>.<span class="ident">clone</span>()),
-            <span class="ident">syn::GenericParam::Const</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) =&gt; <span class="ident">GenericParam::Const</span>(<span class="ident">val</span>.<span class="ident">clone</span>()),
+            syn::GenericParam::Lifetime(<span class="kw-2">ref </span>val) =&gt; GenericParam::Lifetime(val.clone()),
+            syn::GenericParam::Const(<span class="kw-2">ref </span>val) =&gt; GenericParam::Const(val.clone()),
         })
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">L</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="ident">GenericParamExt</span> <span class="kw">for</span> <span class="ident">GenericParam</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">L</span>, <span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">TypeParam</span> <span class="op">=</span> <span class="ident">T</span>;
-    <span class="kw">type</span> <span class="ident">LifetimeDef</span> <span class="op">=</span> <span class="ident">L</span>;
-    <span class="kw">type</span> <span class="ident">ConstParam</span> <span class="op">=</span> <span class="ident">C</span>;
+<span class="kw">impl</span>&lt;T, L, C&gt; GenericParamExt <span class="kw">for </span>GenericParam&lt;T, L, C&gt; {
+    <span class="kw">type </span>TypeParam = T;
+    <span class="kw">type </span>LifetimeDef = L;
+    <span class="kw">type </span>ConstParam = C;
 
-    <span class="kw">fn</span> <span class="ident">as_type_param</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GenericParam::Type</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">val</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
+    <span class="kw">fn </span>as_type_param(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
+        <span class="kw">if let </span>GenericParam::Type(<span class="kw-2">ref </span>val) = <span class="kw-2">*</span><span class="self">self </span>{
+            <span class="prelude-val">Some</span>(val)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
     }
 
-    <span class="kw">fn</span> <span class="ident">as_lifetime_def</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">L</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GenericParam::Lifetime</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">val</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
+    <span class="kw">fn </span>as_lifetime_def(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>L&gt; {
+        <span class="kw">if let </span>GenericParam::Lifetime(<span class="kw-2">ref </span>val) = <span class="kw-2">*</span><span class="self">self </span>{
+            <span class="prelude-val">Some</span>(val)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
     }
 
-    <span class="kw">fn</span> <span class="ident">as_const_param</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">C</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GenericParam::Const</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">val</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
-    }
-}
-
-<span class="doccomment">/// A mirror of the `syn::Generics` type which can contain arbitrary representations</span>
-<span class="doccomment">/// of params and where clauses.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Generics</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">W</span> <span class="op">=</span> <span class="ident">syn::WhereClause</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="ident">params</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">where_clause</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">W</span><span class="op">&gt;</span> <span class="ident">Generics</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">W</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">type_params</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) -&gt; <span class="ident">TypeParams</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span><span class="op">&gt;</span> {
-        <span class="ident">TypeParams</span>(<span class="self">self</span>.<span class="ident">params</span>.<span class="ident">iter</span>())
+    <span class="kw">fn </span>as_const_param(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>C&gt; {
+        <span class="kw">if let </span>GenericParam::Const(<span class="kw-2">ref </span>val) = <span class="kw-2">*</span><span class="self">self </span>{
+            <span class="prelude-val">Some</span>(val)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>}
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">FromGenericParam</span><span class="op">&gt;</span> <span class="ident">FromGenerics</span> <span class="kw">for</span> <span class="ident">Generics</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from_generics</span>(<span class="ident">generics</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Generics</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">Generics</span> {
-            <span class="ident">params</span>: <span class="ident">generics</span>
-                .<span class="ident">params</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">map</span>(<span class="ident">FromGenericParam::from_generic_param</span>)
-                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>,
-            <span class="ident">where_clause</span>: <span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">clone</span>(),
+<span class="doccomment">/// A mirror of the `syn::Generics` type which can contain arbitrary representations
+/// of params and where clauses.
+</span><span class="attribute">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>Generics&lt;P, W = syn::WhereClause&gt; {
+    <span class="kw">pub </span>params: Vec&lt;P&gt;,
+    <span class="kw">pub </span>where_clause: <span class="prelude-ty">Option</span>&lt;W&gt;,
+}
+
+<span class="kw">impl</span>&lt;P, W&gt; Generics&lt;P, W&gt; {
+    <span class="kw">pub fn </span>type_params(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TypeParams&lt;<span class="lifetime">&#39;_</span>, P&gt; {
+        TypeParams(<span class="self">self</span>.params.iter())
+    }
+}
+
+<span class="kw">impl</span>&lt;P: FromGenericParam&gt; FromGenerics <span class="kw">for </span>Generics&lt;P&gt; {
+    <span class="kw">fn </span>from_generics(generics: <span class="kw-2">&amp;</span>syn::Generics) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="prelude-val">Ok</span>(Generics {
+            params: generics
+                .params
+                .iter()
+                .map(FromGenericParam::from_generic_param)
+                .collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;P&gt;&gt;&gt;()<span class="question-mark">?</span>,
+            where_clause: generics.where_clause.clone(),
         })
     }
 }
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TypeParams</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span><span class="op">&gt;</span>);
+<span class="kw">pub struct </span>TypeParams&lt;<span class="lifetime">&#39;a</span>, P: <span class="lifetime">&#39;a</span>&gt;(Iter&lt;<span class="lifetime">&#39;a</span>, P&gt;);
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">GenericParamExt</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">TypeParams</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="op">&lt;</span><span class="ident">P</span> <span class="kw">as</span> <span class="ident">GenericParamExt</span><span class="op">&gt;</span><span class="ident">::TypeParam</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, P: GenericParamExt&gt; Iterator <span class="kw">for </span>TypeParams&lt;<span class="lifetime">&#39;a</span>, P&gt; {
+    <span class="kw">type </span>Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>&lt;P <span class="kw">as </span>GenericParamExt&gt;::TypeParam;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">next</span>();
-        <span class="kw">match</span> <span class="ident">next</span> {
-            <span class="prelude-val">None</span> =&gt; <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">v</span>) =&gt; <span class="kw">match</span> <span class="ident">v</span>.<span class="ident">as_type_param</span>() {
-                <span class="prelude-val">Some</span>(<span class="ident">val</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">val</span>),
-                <span class="prelude-val">None</span> =&gt; <span class="self">self</span>.<span class="ident">next</span>(),
+    <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
+        <span class="kw">let </span>next = <span class="self">self</span>.<span class="number">0</span>.next();
+        <span class="kw">match </span>next {
+            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(v) =&gt; <span class="kw">match </span>v.as_type_param() {
+                <span class="prelude-val">Some</span>(val) =&gt; <span class="prelude-val">Some</span>(val),
+                <span class="prelude-val">None </span>=&gt; <span class="self">self</span>.next(),
             },
         }
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">syn</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use super</span>::{GenericParam, Generics};
+    <span class="kw">use </span><span class="kw">crate</span>::FromGenerics;
 
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">GenericParam</span>, <span class="ident">Generics</span>};
-    <span class="kw">use</span> <span class="ident">FromGenerics</span>;
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">generics</span>() {
-        <span class="kw">let</span> <span class="ident">g</span>: <span class="ident">syn::Generics</span> <span class="op">=</span> <span class="macro">parse_quote!</span>(<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
-        <span class="kw">let</span> <span class="ident">deified</span>: <span class="ident">Generics</span><span class="op">&lt;</span><span class="ident">GenericParam</span><span class="op">&lt;</span><span class="ident">syn::Ident</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">FromGenerics::from_generics</span>(<span class="kw-2">&amp;</span><span class="ident">g</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert!</span>(<span class="ident">deified</span>.<span class="ident">params</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span>);
-        <span class="macro">assert!</span>(<span class="ident">deified</span>.<span class="ident">where_clause</span>.<span class="ident">is_none</span>());
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>generics() {
+        <span class="kw">let </span>g: syn::Generics = <span class="macro">parse_quote!</span>(&lt;T&gt;);
+        <span class="kw">let </span>deified: Generics&lt;GenericParam&lt;syn::Ident&gt;&gt; = FromGenerics::from_generics(<span class="kw-2">&amp;</span>g).unwrap();
+        <span class="macro">assert!</span>(deified.params.len() == <span class="number">1</span>);
+        <span class="macro">assert!</span>(deified.where_clause.is_none());
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

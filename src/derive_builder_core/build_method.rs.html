@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.10.2/src/build_method.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>build_method.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.12.0/src/build_method.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>build_method.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -251,106 +246,124 @@
 <span id="246">246</span>
 <span id="247">247</span>
 <span id="248">248</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">doc_comment_from</span>;
-<span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span>};
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">ToTokens</span>, <span class="ident">TokenStreamExt</span>};
-<span class="kw">use</span> <span class="ident">syn</span>;
-<span class="kw">use</span> <span class="ident">syn::spanned::Spanned</span>;
-<span class="kw">use</span> <span class="ident">Block</span>;
-<span class="kw">use</span> <span class="ident">BuilderPattern</span>;
-<span class="kw">use</span> <span class="ident">Initializer</span>;
-<span class="kw">use</span> <span class="ident">DEFAULT_STRUCT_NAME</span>;
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
 
-<span class="doccomment">/// Initializer for the struct fields in the build method, implementing</span>
-<span class="doccomment">/// `quote::ToTokens`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Examples</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Will expand to something like the following (depending on settings):</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust,ignore</span>
-<span class="doccomment">/// # extern crate proc_macro2;</span>
-<span class="doccomment">/// # #[macro_use]</span>
-<span class="doccomment">/// # extern crate quote;</span>
-<span class="doccomment">/// # extern crate syn;</span>
-<span class="doccomment">/// # #[macro_use(default_build_method)]</span>
-<span class="doccomment">/// # extern crate derive_builder_core;</span>
-<span class="doccomment">/// # use derive_builder_core::{BuildMethod, BuilderPattern};</span>
-<span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// #    let build_method = default_build_method!();</span>
-<span class="doccomment">/// #</span>
-<span class="doccomment">/// #    assert_eq!(quote!(#build_method).to_string(), quote!(</span>
-<span class="doccomment">/// pub fn build(&amp;self) -&gt; ::derive_builder::export::core::result::Result&lt;Foo, FooBuilderError&gt; {</span>
-<span class="doccomment">///     Ok(Foo {</span>
-<span class="doccomment">///         foo: self.foo,</span>
-<span class="doccomment">///     })</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">/// #    ).to_string());</span>
-<span class="doccomment">/// # }</span>
-<span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BuildMethod</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Enables code generation for this build method.</span>
-    <span class="kw">pub</span> <span class="ident">enabled</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Name of this build fn.</span>
-    <span class="kw">pub</span> <span class="ident">ident</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Ident</span>,
-    <span class="doccomment">/// Visibility of the build method, e.g. `syn::Visibility::Public`.</span>
-    <span class="kw">pub</span> <span class="ident">visibility</span>: <span class="ident">syn::Visibility</span>,
-    <span class="doccomment">/// How the build method takes and returns `self` (e.g. mutably).</span>
-    <span class="kw">pub</span> <span class="ident">pattern</span>: <span class="ident">BuilderPattern</span>,
-    <span class="doccomment">/// Type of the target field.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The corresonding builder field will be `Option&lt;field_type&gt;`.</span>
-    <span class="kw">pub</span> <span class="ident">target_ty</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Ident</span>,
-    <span class="doccomment">/// Type parameters and lifetimes attached to this builder struct.</span>
-    <span class="kw">pub</span> <span class="ident">target_ty_generics</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn::TypeGenerics</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Type of error.</span>
-    <span class="kw">pub</span> <span class="ident">error_ty</span>: <span class="ident">syn::Path</span>,
-    <span class="doccomment">/// Field initializers for the target type.</span>
-    <span class="kw">pub</span> <span class="ident">initializers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenStream</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Doc-comment of the builder struct.</span>
-    <span class="kw">pub</span> <span class="ident">doc_comment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn::Attribute</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Default value for the whole struct.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This will be in scope for all initializers as `__default`.</span>
-    <span class="kw">pub</span> <span class="ident">default_struct</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Block</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Validation function with signature `&amp;FooBuilder -&gt; Result&lt;(), String&gt;`</span>
-    <span class="doccomment">/// to call before the macro-provided struct buildout.</span>
-    <span class="kw">pub</span> <span class="ident">validate_fn</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Path</span><span class="op">&gt;</span>,
+<span class="kw">use </span>doc_comment_from;
+<span class="kw">use </span>proc_macro2::{Span, TokenStream};
+<span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
+<span class="kw">use </span>syn;
+<span class="kw">use </span>syn::spanned::Spanned;
+<span class="kw">use </span>BuilderPattern;
+<span class="kw">use </span>Initializer;
+<span class="kw">use </span>DEFAULT_STRUCT_NAME;
+
+<span class="kw">use </span><span class="kw">crate</span>::DefaultExpression;
+
+<span class="doccomment">/// Initializer for the struct fields in the build method, implementing
+/// `quote::ToTokens`.
+///
+/// # Examples
+///
+/// Will expand to something like the following (depending on settings):
+///
+/// ```rust,ignore
+/// # extern crate proc_macro2;
+/// # #[macro_use]
+/// # extern crate quote;
+/// # extern crate syn;
+/// # #[macro_use(default_build_method)]
+/// # extern crate derive_builder_core;
+/// # use derive_builder_core::{BuildMethod, BuilderPattern};
+/// # fn main() {
+/// #    let build_method = default_build_method!();
+/// #
+/// #    assert_eq!(quote!(#build_method).to_string(), quote!(
+/// pub fn build(&amp;self) -&gt; ::derive_builder::export::core::result::Result&lt;Foo, FooBuilderError&gt; {
+///     Ok(Foo {
+///         foo: self.foo,
+///     })
+/// }
+/// #    ).to_string());
+/// # }
+/// ```
+</span><span class="attribute">#[derive(Debug)]
+</span><span class="kw">pub struct </span>BuildMethod&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Path to the root of the derive_builder crate.
+    </span><span class="kw">pub </span>crate_root: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Path,
+    <span class="doccomment">/// Enables code generation for this build method.
+    </span><span class="kw">pub </span>enabled: bool,
+    <span class="doccomment">/// Name of this build fn.
+    </span><span class="kw">pub </span>ident: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Ident,
+    <span class="doccomment">/// Visibility of the build method, e.g. `syn::Visibility::Public`.
+    </span><span class="kw">pub </span>visibility: Cow&lt;<span class="lifetime">&#39;a</span>, syn::Visibility&gt;,
+    <span class="doccomment">/// How the build method takes and returns `self` (e.g. mutably).
+    </span><span class="kw">pub </span>pattern: BuilderPattern,
+    <span class="doccomment">/// Type of the target field.
+    ///
+    /// The corresonding builder field will be `Option&lt;field_type&gt;`.
+    </span><span class="kw">pub </span>target_ty: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Ident,
+    <span class="doccomment">/// Type parameters and lifetimes attached to this builder struct.
+    </span><span class="kw">pub </span>target_ty_generics: <span class="prelude-ty">Option</span>&lt;syn::TypeGenerics&lt;<span class="lifetime">&#39;a</span>&gt;&gt;,
+    <span class="doccomment">/// Type of error.
+    </span><span class="kw">pub </span>error_ty: syn::Path,
+    <span class="doccomment">/// Field initializers for the target type.
+    </span><span class="kw">pub </span>initializers: Vec&lt;TokenStream&gt;,
+    <span class="doccomment">/// Doc-comment of the builder struct.
+    </span><span class="kw">pub </span>doc_comment: <span class="prelude-ty">Option</span>&lt;syn::Attribute&gt;,
+    <span class="doccomment">/// Default value for the whole struct.
+    ///
+    /// This will be in scope for all initializers as `__default`.
+    </span><span class="kw">pub </span>default_struct: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>DefaultExpression&gt;,
+    <span class="doccomment">/// Validation function with signature `&amp;FooBuilder -&gt; Result&lt;(), String&gt;`
+    /// to call before the macro-provided struct buildout.
+    </span><span class="kw">pub </span>validate_fn: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Path&gt;,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">BuildMethod</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ident</span>;
-        <span class="kw">let</span> <span class="ident">vis</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">visibility</span>;
-        <span class="kw">let</span> <span class="ident">target_ty</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">target_ty</span>;
-        <span class="kw">let</span> <span class="ident">target_ty_generics</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">target_ty_generics</span>;
-        <span class="kw">let</span> <span class="ident">initializers</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">initializers</span>;
-        <span class="kw">let</span> <span class="ident">self_param</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">pattern</span> {
-            <span class="ident">BuilderPattern::Owned</span> =&gt; <span class="macro">quote!</span>(<span class="self">self</span>),
-            <span class="ident">BuilderPattern::Mutable</span> <span class="op">|</span> <span class="ident">BuilderPattern::Immutable</span> =&gt; <span class="macro">quote!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>),
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>BuildMethod&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>ident = <span class="kw-2">&amp;</span><span class="self">self</span>.ident;
+        <span class="kw">let </span>vis = <span class="kw-2">&amp;</span><span class="self">self</span>.visibility;
+        <span class="kw">let </span>target_ty = <span class="kw-2">&amp;</span><span class="self">self</span>.target_ty;
+        <span class="kw">let </span>target_ty_generics = <span class="kw-2">&amp;</span><span class="self">self</span>.target_ty_generics;
+        <span class="kw">let </span>initializers = <span class="kw-2">&amp;</span><span class="self">self</span>.initializers;
+        <span class="kw">let </span>self_param = <span class="kw">match </span><span class="self">self</span>.pattern {
+            BuilderPattern::Owned =&gt; <span class="macro">quote!</span>(<span class="self">self</span>),
+            BuilderPattern::Mutable | BuilderPattern::Immutable =&gt; <span class="macro">quote!</span>(<span class="kw-2">&amp;</span><span class="self">self</span>),
         };
-        <span class="kw">let</span> <span class="ident">doc_comment</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">doc_comment</span>;
-        <span class="kw">let</span> <span class="ident">default_struct</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">default_struct</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">default_expr</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">syn::Ident::new</span>(<span class="ident">DEFAULT_STRUCT_NAME</span>, <span class="ident">Span::call_site</span>());
-            <span class="macro">quote!</span>(<span class="kw">let</span> #<span class="ident">ident</span>: #<span class="ident">target_ty</span> #<span class="ident">target_ty_generics</span> <span class="op">=</span> #<span class="ident">default_expr</span>;)
+        <span class="kw">let </span>doc_comment = <span class="kw-2">&amp;</span><span class="self">self</span>.doc_comment;
+        <span class="kw">let </span>default_struct = <span class="self">self</span>.default_struct.as_ref().map(|default_expr| {
+            <span class="kw">let </span>default_expr = default_expr.with_crate_root(<span class="self">self</span>.crate_root);
+            <span class="kw">let </span>ident = syn::Ident::new(DEFAULT_STRUCT_NAME, Span::call_site());
+            <span class="macro">quote!</span>(<span class="kw">let </span>#ident: #target_ty #target_ty_generics = #default_expr;)
         });
-        <span class="kw">let</span> <span class="ident">validate_fn</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">validate_fn</span>
-            .<span class="ident">as_ref</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">vfn</span><span class="op">|</span> <span class="macro">quote_spanned!</span>(<span class="ident">vfn</span>.<span class="ident">span</span>() =&gt; #<span class="ident">vfn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)<span class="question-mark">?</span>;));
-        <span class="kw">let</span> <span class="ident">error_ty</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">error_ty</span>;
+        <span class="kw">let </span>validate_fn = <span class="self">self
+            </span>.validate_fn
+            .as_ref()
+            .map(|vfn| <span class="macro">quote_spanned!</span>(vfn.span() =&gt; #vfn(<span class="kw-2">&amp;</span><span class="self">self</span>)<span class="question-mark">?</span>;));
+        <span class="kw">let </span>error_ty = <span class="kw-2">&amp;</span><span class="self">self</span>.error_ty;
 
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">enabled</span> {
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #<span class="ident">doc_comment</span>
-                #<span class="ident">vis</span> <span class="kw">fn</span> #<span class="ident">ident</span>(#<span class="ident">self_param</span>)
-                    -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span>#<span class="ident">target_ty</span> #<span class="ident">target_ty_generics</span>, #<span class="ident">error_ty</span><span class="op">&gt;</span>
+        <span class="kw">if </span><span class="self">self</span>.enabled {
+            <span class="kw">let </span>crate_root = <span class="kw-2">&amp;</span><span class="self">self</span>.crate_root;
+            tokens.append_all(<span class="macro">quote!</span>(
+                #doc_comment
+                #vis <span class="kw">fn </span>#ident(#self_param)
+                    -&gt; #crate_root::export::core::result::Result&lt;#target_ty #target_ty_generics, #error_ty&gt;
                 {
-                    #<span class="ident">validate_fn</span>
-                    #<span class="ident">default_struct</span>
-                    <span class="prelude-val">Ok</span>(#<span class="ident">target_ty</span> {
-                        #(#<span class="ident">initializers</span>)<span class="op">*</span>
+                    #validate_fn
+                    #default_struct
+                    <span class="prelude-val">Ok</span>(#target_ty {
+                        #(#initializers)*
                     })
                 }
             ))
@@ -358,147 +371,150 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">BuildMethod</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Set a doc-comment for this item.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">doc_comment</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">s</span>: <span class="ident">String</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">doc_comment</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">doc_comment_from</span>(<span class="ident">s</span>));
-        <span class="self">self</span>
-    }
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; BuildMethod&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Set a doc-comment for this item.
+    </span><span class="kw">pub fn </span>doc_comment(<span class="kw-2">&amp;mut </span><span class="self">self</span>, s: String) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.doc_comment = <span class="prelude-val">Some</span>(doc_comment_from(s));
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Populate the `BuildMethod` with appropriate initializers of the</span>
-    <span class="doccomment">/// underlying struct.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// For each struct field this must be called with the appropriate</span>
-    <span class="doccomment">/// initializer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_initializer</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">init</span>: <span class="ident">Initializer</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">initializers</span>.<span class="ident">push</span>(<span class="macro">quote!</span>(#<span class="ident">init</span>));
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Populate the `BuildMethod` with appropriate initializers of the
+    /// underlying struct.
+    ///
+    /// For each struct field this must be called with the appropriate
+    /// initializer.
+    </span><span class="kw">pub fn </span>push_initializer(<span class="kw-2">&amp;mut </span><span class="self">self</span>, init: Initializer) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.initializers.push(<span class="macro">quote!</span>(#init));
+        <span class="self">self
+    </span>}
 }
 
-<span class="comment">// pub struct BuildMethodError {</span>
-<span class="comment">//     is_generated: bool,</span>
-<span class="comment">//     ident: syn::Ident,</span>
-<span class="comment">// }</span>
+<span class="comment">// pub struct BuildMethodError {
+//     is_generated: bool,
+//     ident: syn::Ident,
+// }
 
-<span class="doccomment">/// Helper macro for unit tests. This is _only_ public in order to be accessible</span>
-<span class="doccomment">/// from doc-tests too.</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules!</span> <span class="ident">default_build_method</span> {
+</span><span class="doccomment">/// Helper macro for unit tests. This is _only_ public in order to be accessible
+/// from doc-tests too.
+</span><span class="attribute">#[doc(hidden)]
+#[macro_export]
+</span><span class="macro">macro_rules! </span>default_build_method {
     () =&gt; {
-        <span class="ident">BuildMethod</span> {
-            <span class="ident">enabled</span>: <span class="bool-val">true</span>,
-            <span class="ident">ident</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident::new</span>(<span class="string">&quot;build&quot;</span>, <span class="ident">::proc_macro2::Span::call_site</span>()),
-            <span class="ident">visibility</span>: <span class="ident">syn::parse_str</span>(<span class="string">&quot;pub&quot;</span>).<span class="ident">unwrap</span>(),
-            <span class="ident">pattern</span>: <span class="ident">BuilderPattern::Mutable</span>,
-            <span class="ident">target_ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident::new</span>(<span class="string">&quot;Foo&quot;</span>, <span class="ident">::proc_macro2::Span::call_site</span>()),
-            <span class="ident">target_ty_generics</span>: <span class="prelude-val">None</span>,
-            <span class="ident">error_ty</span>: <span class="macro">syn::parse_quote!</span>(<span class="ident">FooBuilderError</span>),
-            <span class="ident">initializers</span>: <span class="macro">vec!</span>[<span class="macro">quote!</span>(<span class="ident">foo</span>: <span class="self">self</span>.<span class="ident">foo</span>,)],
-            <span class="ident">doc_comment</span>: <span class="prelude-val">None</span>,
-            <span class="ident">default_struct</span>: <span class="prelude-val">None</span>,
-            <span class="ident">validate_fn</span>: <span class="prelude-val">None</span>,
+        BuildMethod {
+            <span class="comment">// Deliberately don&#39;t use the default value here - make sure
+            // that all test cases are passing crate_root through properly.
+            </span>crate_root: <span class="kw-2">&amp;</span><span class="macro">parse_quote!</span>(::db),
+            enabled: <span class="bool-val">true</span>,
+            ident: <span class="kw-2">&amp;</span>syn::Ident::new(<span class="string">&quot;build&quot;</span>, ::proc_macro2::Span::call_site()),
+            visibility: ::std::borrow::Cow::Owned(<span class="macro">syn::parse_quote!</span>(<span class="kw">pub</span>)),
+            pattern: BuilderPattern::Mutable,
+            target_ty: <span class="kw-2">&amp;</span>syn::Ident::new(<span class="string">&quot;Foo&quot;</span>, ::proc_macro2::Span::call_site()),
+            target_ty_generics: <span class="prelude-val">None</span>,
+            error_ty: <span class="macro">syn::parse_quote!</span>(FooBuilderError),
+            initializers: <span class="macro">vec!</span>[<span class="macro">quote!</span>(foo: <span class="self">self</span>.foo,)],
+            doc_comment: <span class="prelude-val">None</span>,
+            default_struct: <span class="prelude-val">None</span>,
+            validate_fn: <span class="prelude-val">None</span>,
         }
     };
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="attribute">#[allow(unused_imports)]
+    </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">std</span>() {
-        <span class="kw">let</span> <span class="ident">build_method</span> <span class="op">=</span> <span class="macro">default_build_method!</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>std() {
+        <span class="kw">let </span>build_method = <span class="macro">default_build_method!</span>();
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">build_method</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#build_method).to_string(),
             <span class="macro">quote!</span>(
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span><span class="ident">Foo</span>, <span class="ident">FooBuilderError</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Ok</span>(<span class="ident">Foo</span> {
-                        <span class="ident">foo</span>: <span class="self">self</span>.<span class="ident">foo</span>,
+                <span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ::db::export::core::result::Result&lt;Foo, FooBuilderError&gt; {
+                    <span class="prelude-val">Ok</span>(Foo {
+                        foo: <span class="self">self</span>.foo,
                     })
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_struct</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">build_method</span> <span class="op">=</span> <span class="macro">default_build_method!</span>();
-        <span class="ident">build_method</span>.<span class="ident">default_struct</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;Default::default()&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>default_struct() {
+        <span class="kw">let </span><span class="kw-2">mut </span>build_method = <span class="macro">default_build_method!</span>();
+        <span class="kw">let </span>alt_default =
+            DefaultExpression::explicit::&lt;syn::Expr&gt;(<span class="macro">parse_quote!</span>(Default::default()));
+        build_method.default_struct = <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>alt_default);
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">build_method</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#build_method).to_string(),
             <span class="macro">quote!</span>(
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span><span class="ident">Foo</span>, <span class="ident">FooBuilderError</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">__default</span>: <span class="ident">Foo</span> <span class="op">=</span> { <span class="ident">Default::default</span>() };
-                    <span class="prelude-val">Ok</span>(<span class="ident">Foo</span> {
-                        <span class="ident">foo</span>: <span class="self">self</span>.<span class="ident">foo</span>,
+                <span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ::db::export::core::result::Result&lt;Foo, FooBuilderError&gt; {
+                    <span class="kw">let </span>__default: Foo = { Default::default() };
+                    <span class="prelude-val">Ok</span>(Foo {
+                        foo: <span class="self">self</span>.foo,
                     })
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">skip</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">build_method</span> <span class="op">=</span> <span class="macro">default_build_method!</span>();
-        <span class="ident">build_method</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="bool-val">false</span>;
-        <span class="ident">build_method</span>.<span class="ident">enabled</span> <span class="op">=</span> <span class="bool-val">false</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>skip() {
+        <span class="kw">let </span><span class="kw-2">mut </span>build_method = <span class="macro">default_build_method!</span>();
+        build_method.enabled = <span class="bool-val">false</span>;
+        build_method.enabled = <span class="bool-val">false</span>;
 
-        <span class="macro">assert_eq!</span>(<span class="macro">quote!</span>(#<span class="ident">build_method</span>).<span class="ident">to_string</span>(), <span class="macro">quote!</span>().<span class="ident">to_string</span>());
+        <span class="macro">assert_eq!</span>(<span class="macro">quote!</span>(#build_method).to_string(), <span class="macro">quote!</span>().to_string());
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">rename</span>() {
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">syn::Ident::new</span>(<span class="string">&quot;finish&quot;</span>, <span class="ident">Span::call_site</span>());
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">build_method</span>: <span class="ident">BuildMethod</span> <span class="op">=</span> <span class="macro">default_build_method!</span>();
-        <span class="ident">build_method</span>.<span class="ident">ident</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">ident</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>rename() {
+        <span class="kw">let </span>ident = syn::Ident::new(<span class="string">&quot;finish&quot;</span>, Span::call_site());
+        <span class="kw">let </span><span class="kw-2">mut </span>build_method: BuildMethod = <span class="macro">default_build_method!</span>();
+        build_method.ident = <span class="kw-2">&amp;</span>ident;
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">build_method</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#build_method).to_string(),
             <span class="macro">quote!</span>(
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span><span class="ident">Foo</span>, <span class="ident">FooBuilderError</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Ok</span>(<span class="ident">Foo</span> {
-                        <span class="ident">foo</span>: <span class="self">self</span>.<span class="ident">foo</span>,
+                <span class="kw">pub fn </span>finish(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ::db::export::core::result::Result&lt;Foo, FooBuilderError&gt; {
+                    <span class="prelude-val">Ok</span>(Foo {
+                        foo: <span class="self">self</span>.foo,
                     })
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">validation</span>() {
-        <span class="kw">let</span> <span class="ident">validate_path</span>: <span class="ident">syn::Path</span> <span class="op">=</span> <span class="ident">syn::parse_str</span>(<span class="string">&quot;IpsumBuilder::validate&quot;</span>)
-            .<span class="ident">expect</span>(<span class="string">&quot;Statically-entered path should be valid&quot;</span>);
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>validation() {
+        <span class="kw">let </span>validate_path: syn::Path = <span class="macro">parse_quote!</span>(IpsumBuilder::validate);
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">build_method</span>: <span class="ident">BuildMethod</span> <span class="op">=</span> <span class="macro">default_build_method!</span>();
-        <span class="ident">build_method</span>.<span class="ident">validate_fn</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">validate_path</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>build_method: BuildMethod = <span class="macro">default_build_method!</span>();
+        build_method.validate_fn = <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>validate_path);
 
-        <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
-        <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">build_method</span>).<span class="ident">to_string</span>(),
+        <span class="attribute">#[rustfmt::skip]
+        </span><span class="macro">assert_eq!</span>(
+            <span class="macro">quote!</span>(#build_method).to_string(),
             <span class="macro">quote!</span>(
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">::derive_builder::export::core::result::Result</span><span class="op">&lt;</span><span class="ident">Foo</span>, <span class="ident">FooBuilderError</span><span class="op">&gt;</span> {
-                    <span class="ident">IpsumBuilder::validate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)<span class="question-mark">?</span>;
+                <span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ::db::export::core::result::Result&lt;Foo, FooBuilderError&gt; {
+                    IpsumBuilder::validate(<span class="kw-2">&amp;</span><span class="self">self</span>)<span class="question-mark">?</span>;
 
-                    <span class="prelude-val">Ok</span>(<span class="ident">Foo</span> {
-                        <span class="ident">foo</span>: <span class="self">self</span>.<span class="ident">foo</span>,
+                    <span class="prelude-val">Ok</span>(Foo {
+                        foo: <span class="self">self</span>.foo,
                     })
                 }
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

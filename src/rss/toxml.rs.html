@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/toxml.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>toxml.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../rss/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../rss/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/toxml.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>toxml.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../rss/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -116,119 +111,118 @@
 <span id="111">111</span>
 <span id="112">112</span>
 <span id="113">113</span>
-</pre><pre class="rust"><code><span class="comment">// This file is part of rss.</span>
-<span class="comment">//</span>
-<span class="comment">// Copyright © 2015-2021 The rust-syndication Developers</span>
-<span class="comment">//</span>
-<span class="comment">// This program is free software; you can redistribute it and/or modify</span>
-<span class="comment">// it under the terms of the MIT License and/or Apache 2.0 License.</span>
+</pre><pre class="rust"><code><span class="comment">// This file is part of rss.
+//
+// Copyright © 2015-2021 The rust-syndication Developers
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the MIT License and/or Apache 2.0 License.
 
-<span class="kw">use</span> <span class="ident">std::collections::BTreeMap</span>;
-<span class="kw">use</span> <span class="ident">std::io::Write</span>;
+</span><span class="kw">use </span>std::collections::BTreeMap;
+<span class="kw">use </span>std::io::Write;
 
-<span class="kw">use</span> <span class="ident">quick_xml::events</span>::{<span class="ident">BytesEnd</span>, <span class="ident">BytesStart</span>, <span class="ident">BytesText</span>, <span class="ident">Event</span>};
-<span class="kw">use</span> <span class="ident">quick_xml::Error</span> <span class="kw">as</span> <span class="ident">XmlError</span>;
-<span class="kw">use</span> <span class="ident">quick_xml::Writer</span>;
+<span class="kw">use </span>quick_xml::events::{BytesCData, BytesEnd, BytesStart, BytesText, Event};
+<span class="kw">use </span>quick_xml::Error <span class="kw">as </span>XmlError;
+<span class="kw">use </span>quick_xml::Writer;
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ToXml</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>;
+<span class="kw">pub trait </span>ToXml {
+    <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;;
 
-    <span class="kw">fn</span> <span class="ident">used_namespaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="ident">BTreeMap::new</span>()
+    <span class="kw">fn </span>used_namespaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BTreeMap&lt;String, String&gt; {
+        BTreeMap::new()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">ToXml</span><span class="op">&gt;</span> <span class="ident">ToXml</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span> {
-    <span class="kw">fn</span> <span class="ident">to_xml</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span> {
-        (<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">to_xml</span>(<span class="ident">writer</span>)
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: ToXml&gt; ToXml <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T {
+    <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
+        (<span class="kw-2">*</span><span class="self">self</span>).to_xml(writer)
     }
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">WriterExt</span> {
-    <span class="kw">fn</span> <span class="ident">write_text_element</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>, <span class="ident">text</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">N</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>;
+<span class="kw">pub trait </span>WriterExt {
+    <span class="kw">fn </span>write_text_element&lt;N, T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: N, text: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>N: AsRef&lt;str&gt;,
+        T: AsRef&lt;str&gt;;
 
-    <span class="kw">fn</span> <span class="ident">write_text_elements</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>, <span class="ident">values</span>: <span class="ident">I</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">N</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">fn </span>write_text_elements&lt;N, T, I&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: N, values: I) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>N: AsRef&lt;str&gt;,
+        T: AsRef&lt;str&gt;,
+        I: IntoIterator&lt;Item = T&gt;;
 
-    <span class="kw">fn</span> <span class="ident">write_cdata_element</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>, <span class="ident">text</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">N</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>;
+    <span class="kw">fn </span>write_cdata_element&lt;N, T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: N, text: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>N: AsRef&lt;str&gt;,
+        T: AsRef&lt;str&gt;;
 
-    <span class="kw">fn</span> <span class="ident">write_object</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">object</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T</span>: <span class="ident">ToXml</span>;
+    <span class="kw">fn </span>write_object&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, object: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>T: ToXml;
 
-    <span class="kw">fn</span> <span class="ident">write_objects</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">objects</span>: <span class="ident">I</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T</span>: <span class="ident">ToXml</span>,
-        <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">fn </span>write_objects&lt;T, I&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, objects: I) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>T: ToXml,
+        I: IntoIterator&lt;Item = T&gt;;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">WriterExt</span> <span class="kw">for</span> <span class="ident">Writer</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">write_text_element</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>, <span class="ident">text</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">N</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
+<span class="kw">impl</span>&lt;W: Write&gt; WriterExt <span class="kw">for </span>Writer&lt;W&gt; {
+    <span class="kw">fn </span>write_text_element&lt;N, T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: N, text: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>N: AsRef&lt;str&gt;,
+        T: AsRef&lt;str&gt;,
     {
-        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">as_ref</span>();
-        <span class="self">self</span>.<span class="ident">write_event</span>(<span class="ident">Event::Start</span>(<span class="ident">BytesStart::borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>())))<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="ident">write_event</span>(<span class="ident">Event::Text</span>(<span class="ident">BytesText::from_plain_str</span>(<span class="ident">text</span>.<span class="ident">as_ref</span>())))<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="ident">write_event</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
+        <span class="kw">let </span>name = name.as_ref();
+        <span class="self">self</span>.write_event(Event::Start(BytesStart::new(name)))<span class="question-mark">?</span>;
+        <span class="self">self</span>.write_event(Event::Text(BytesText::new(text.as_ref())))<span class="question-mark">?</span>;
+        <span class="self">self</span>.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">write_text_elements</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>, <span class="ident">values</span>: <span class="ident">I</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">N</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="kw">fn </span>write_text_elements&lt;N, T, I&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: N, values: I) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>N: AsRef&lt;str&gt;,
+        T: AsRef&lt;str&gt;,
+        I: IntoIterator&lt;Item = T&gt;,
     {
-        <span class="kw">for</span> <span class="ident">value</span> <span class="kw">in</span> <span class="ident">values</span> {
-            <span class="self">self</span>.<span class="ident">write_text_element</span>(<span class="kw-2">&amp;</span><span class="ident">name</span>, <span class="ident">value</span>)<span class="question-mark">?</span>;
+        <span class="kw">for </span>value <span class="kw">in </span>values {
+            <span class="self">self</span>.write_text_element(<span class="kw-2">&amp;</span>name, value)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">write_cdata_element</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>, <span class="ident">text</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">N</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
-        <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="kw">fn </span>write_cdata_element&lt;N, T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: N, text: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>N: AsRef&lt;str&gt;,
+        T: AsRef&lt;str&gt;,
     {
-        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">as_ref</span>();
-        <span class="self">self</span>.<span class="ident">write_event</span>(<span class="ident">Event::Start</span>(<span class="ident">BytesStart::borrowed</span>(<span class="ident">name</span>, <span class="ident">name</span>.<span class="ident">len</span>())))<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="ident">write_event</span>(<span class="ident">Event::CData</span>(<span class="ident">BytesText::from_escaped</span>(<span class="ident">text</span>.<span class="ident">as_ref</span>())))<span class="question-mark">?</span>;
-        <span class="self">self</span>.<span class="ident">write_event</span>(<span class="ident">Event::End</span>(<span class="ident">BytesEnd::borrowed</span>(<span class="ident">name</span>)))<span class="question-mark">?</span>;
+        <span class="kw">let </span>name = name.as_ref();
+        <span class="self">self</span>.write_event(Event::Start(BytesStart::new(name)))<span class="question-mark">?</span>;
+        <span class="self">self</span>.write_event(Event::CData(BytesCData::new(text.as_ref())))<span class="question-mark">?</span>;
+        <span class="self">self</span>.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">write_object</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">object</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T</span>: <span class="ident">ToXml</span>,
+    <span class="attribute">#[inline]
+    </span><span class="kw">fn </span>write_object&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, object: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>T: ToXml,
     {
-        <span class="ident">object</span>.<span class="ident">to_xml</span>(<span class="self">self</span>)
+        object.to_xml(<span class="self">self</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">write_objects</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">objects</span>: <span class="ident">I</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">XmlError</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T</span>: <span class="ident">ToXml</span>,
-        <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="kw">fn </span>write_objects&lt;T, I&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, objects: I) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt;
+    <span class="kw">where
+        </span>T: ToXml,
+        I: IntoIterator&lt;Item = T&gt;,
     {
-        <span class="kw">for</span> <span class="ident">object</span> <span class="kw">in</span> <span class="ident">objects</span> {
-            <span class="ident">object</span>.<span class="ident">to_xml</span>(<span class="self">self</span>)<span class="question-mark">?</span>;
+        <span class="kw">for </span>object <span class="kw">in </span>objects {
+            object.to_xml(<span class="self">self</span>)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="rss" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

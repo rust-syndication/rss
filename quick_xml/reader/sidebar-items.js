@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["NsReader","A low level encoding-agnostic XML event reader that performs namespace resolution."],["Reader","A low level encoding-agnostic XML event reader."]],"type":[["Span","Range of input in bytes, that corresponds to some piece of XML"]]};

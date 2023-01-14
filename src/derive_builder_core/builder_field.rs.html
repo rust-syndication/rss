@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.10.2/src/builder_field.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>builder_field.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../derive_builder_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/derive_builder_core-0.12.0/src/builder_field.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>builder_field.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../derive_builder_core/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -148,151 +143,260 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">ToTokens</span>, <span class="ident">TokenStreamExt</span>};
-<span class="kw">use</span> <span class="ident">syn</span>;
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
 
-<span class="doccomment">/// Field for the builder struct, implementing `quote::ToTokens`.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Examples</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Will expand to something like the following (depending on settings):</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust,ignore</span>
-<span class="doccomment">/// # extern crate proc_macro2;</span>
-<span class="doccomment">/// # #[macro_use]</span>
-<span class="doccomment">/// # extern crate quote;</span>
-<span class="doccomment">/// # #[macro_use]</span>
-<span class="doccomment">/// # extern crate syn;</span>
-<span class="doccomment">/// # #[macro_use]</span>
-<span class="doccomment">/// # extern crate derive_builder_core;</span>
-<span class="doccomment">/// # use derive_builder_core::{BuilderField, BuilderPattern};</span>
-<span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// #    let attrs = vec![parse_quote!(#[some_attr])];</span>
-<span class="doccomment">/// #    let mut field = default_builder_field!();</span>
-<span class="doccomment">/// #    field.attrs = attrs.as_slice();</span>
-<span class="doccomment">/// #</span>
-<span class="doccomment">/// #    assert_eq!(quote!(#field).to_string(), quote!(</span>
-<span class="doccomment">/// #[some_attr] pub foo: ::derive_builder::export::core::option::Option&lt;String&gt;,</span>
-<span class="doccomment">/// #    ).to_string());</span>
-<span class="doccomment">/// # }</span>
-<span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BuilderField</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Name of the target field.</span>
-    <span class="kw">pub</span> <span class="ident">field_ident</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Ident</span>,
-    <span class="doccomment">/// Type of the target field.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The corresonding builder field will be `Option&lt;field_type&gt;`.</span>
-    <span class="kw">pub</span> <span class="ident">field_type</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Type</span>,
-    <span class="doccomment">/// Whether the builder implements a setter for this field.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note: We will fallback to `PhantomData` if the setter is disabled</span>
-    <span class="doccomment">///       to hack around issues with unused generic type parameters - at</span>
-    <span class="doccomment">///       least for now.</span>
-    <span class="kw">pub</span> <span class="ident">field_enabled</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Visibility of this builder field, e.g. `syn::Visibility::Public`.</span>
-    <span class="kw">pub</span> <span class="ident">field_visibility</span>: <span class="ident">syn::Visibility</span>,
-    <span class="doccomment">/// Attributes which will be attached to this builder field.</span>
-    <span class="kw">pub</span> <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">syn::Attribute</span>],
+<span class="kw">use </span>proc_macro2::TokenStream;
+<span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
+<span class="kw">use </span>syn;
+
+<span class="doccomment">/// Field for the builder struct, implementing `quote::ToTokens`.
+///
+/// # Examples
+///
+/// Will expand to something like the following (depending on settings):
+///
+/// ```rust,ignore
+/// # extern crate proc_macro2;
+/// # #[macro_use]
+/// # extern crate quote;
+/// # #[macro_use]
+/// # extern crate syn;
+/// # #[macro_use]
+/// # extern crate derive_builder_core;
+/// # use derive_builder_core::{BuilderField, BuilderPattern};
+/// # fn main() {
+/// #    let attrs = vec![parse_quote!(#[some_attr])];
+/// #    let mut field = default_builder_field!();
+/// #    field.attrs = attrs.as_slice();
+/// #
+/// #    assert_eq!(quote!(#field).to_string(), quote!(
+/// #[some_attr] pub foo: ::derive_builder::export::core::option::Option&lt;String&gt;,
+/// #    ).to_string());
+/// # }
+/// ```
+</span><span class="attribute">#[derive(Debug, Clone)]
+</span><span class="kw">pub struct </span>BuilderField&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Path to the root of the derive_builder crate.
+    </span><span class="kw">pub </span>crate_root: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Path,
+    <span class="doccomment">/// Name of the target field.
+    </span><span class="kw">pub </span>field_ident: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Ident,
+    <span class="doccomment">/// Type of the builder field.
+    </span><span class="kw">pub </span>field_type: BuilderFieldType&lt;<span class="lifetime">&#39;a</span>&gt;,
+    <span class="doccomment">/// Visibility of this builder field, e.g. `syn::Visibility::Public`.
+    </span><span class="kw">pub </span>field_visibility: Cow&lt;<span class="lifetime">&#39;a</span>, syn::Visibility&gt;,
+    <span class="doccomment">/// Attributes which will be attached to this builder field.
+    </span><span class="kw">pub </span>attrs: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[syn::Attribute],
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">BuilderField</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">to_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tokens</span>: <span class="kw-2">&amp;mut</span> <span class="ident">TokenStream</span>) {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">field_enabled</span> {
-            <span class="kw">let</span> <span class="ident">vis</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">field_visibility</span>;
-            <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">field_ident</span>;
-            <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">field_type</span>;
-            <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">attrs</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>BuilderField&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>ident = <span class="self">self</span>.field_ident;
+        <span class="kw">let </span>vis = <span class="kw-2">&amp;</span><span class="self">self</span>.field_visibility;
+        <span class="kw">let </span>ty = <span class="kw-2">&amp;</span><span class="self">self</span>.field_type.with_crate_root(<span class="self">self</span>.crate_root);
+        <span class="kw">let </span>attrs = <span class="self">self</span>.attrs;
+        tokens.append_all(<span class="macro">quote!</span>(
+            #(#attrs)* #vis #ident: #ty,
+        ));
+    }
+}
 
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #(#<span class="ident">attrs</span>)<span class="op">*</span> #<span class="ident">vis</span> #<span class="ident">ident</span>: <span class="ident">::derive_builder::export::core::option::Option</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>,
-            ));
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">field_ident</span>;
-            <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">field_type</span>;
-            <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">attrs</span>;
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; BuilderField&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Emits a struct field initializer that initializes the field to `Default::default`.
+    </span><span class="kw">pub fn </span>default_initializer_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream {
+        <span class="kw">let </span>ident = <span class="self">self</span>.field_ident;
+        <span class="kw">let </span>crate_root = <span class="self">self</span>.crate_root;
+        <span class="macro">quote! </span>{ #ident : #crate_root::export::core::default::Default::default(), }
+    }
+}
 
-            <span class="ident">tokens</span>.<span class="ident">append_all</span>(<span class="macro">quote!</span>(
-                #(#<span class="ident">attrs</span>)<span class="op">*</span> #<span class="ident">ident</span>: <span class="ident">::derive_builder::export::core::marker::PhantomData</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>,
-            ));
+<span class="doccomment">/// The type of a field in the builder struct
+</span><span class="attribute">#[derive(Debug, Clone)]
+</span><span class="kw">pub enum </span>BuilderFieldType&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// The corresonding builder field will be `Option&lt;field_type&gt;`.
+    </span>Optional(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Type),
+    <span class="doccomment">/// The corresponding builder field will be just this type
+    </span>Precise(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Type),
+    <span class="doccomment">/// The corresponding builder field will be a PhantomData
+    ///
+    /// We do this if if the field is disabled.  We mustn&#39;t just completely omit the field from the builder:
+    /// if we did that, the builder might have unused generic parameters (since we copy the generics from
+    /// the target struct).   Using a PhantomData of the original field type provides the right generic usage
+    /// (and the right variance).  The alternative would be to give the user a way to separately control
+    /// the generics of the builder struct, which would be very awkward to use and complex to document.
+    /// We could just include the field anyway, as `Option&lt;T&gt;`, but this is wasteful of space, and it
+    /// seems good to explicitly suppress the existence of a variable that won&#39;t be set or read.
+    </span>Phantom(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Type),
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; BuilderFieldType&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Obtain type information for the builder field setter
+    ///
+    /// Return value:
+    ///  * `.0`: type of the argument to the setter function
+    ///          (before application of `strip_option`, `into`)
+    ///  * `.1`: whether the builder field is `Option&lt;type&gt;` rather than just `type`
+    </span><span class="kw">pub fn </span>setter_type_info(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Type, bool) {
+        <span class="kw">match </span><span class="self">self </span>{
+            BuilderFieldType::Optional(ty) =&gt; (ty, <span class="bool-val">true</span>),
+            BuilderFieldType::Precise(ty) =&gt; (ty, <span class="bool-val">false</span>),
+            BuilderFieldType::Phantom(_ty) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;phantom fields should never have setters&quot;</span>),
+        }
+    }
+
+    <span class="kw">fn </span>with_crate_root(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, crate_root: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Path) -&gt; BuilderFieldTypeWithCrateRoot&lt;<span class="lifetime">&#39;a</span>&gt; {
+        BuilderFieldTypeWithCrateRoot {
+            crate_root,
+            field_type: <span class="self">self</span>,
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">BuilderField</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Emits a struct field initializer that initializes the field to `Default::default`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_initializer_tokens</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span> {
-        <span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">field_ident</span>;
-        <span class="macro">quote!</span> { #<span class="ident">ident</span> : <span class="ident">::derive_builder::export::core::default::Default::default</span>(), }
+<span class="kw">struct </span>BuilderFieldTypeWithCrateRoot&lt;<span class="lifetime">&#39;a</span>&gt; {
+    crate_root: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Path,
+    field_type: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>BuilderFieldType&lt;<span class="lifetime">&#39;a</span>&gt;,
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>BuilderFieldTypeWithCrateRoot&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
+        <span class="kw">let </span>crate_root = <span class="self">self</span>.crate_root;
+        <span class="kw">match </span><span class="self">self</span>.field_type {
+            BuilderFieldType::Optional(ty) =&gt; tokens.append_all(<span class="macro">quote!</span>(
+                #crate_root::export::core::option::Option&lt;#ty&gt;
+            )),
+            BuilderFieldType::Precise(ty) =&gt; ty.to_tokens(tokens),
+            BuilderFieldType::Phantom(ty) =&gt; tokens.append_all(<span class="macro">quote!</span>(
+                #crate_root::export::core::marker::PhantomData&lt;#ty&gt;
+            )),
+        }
     }
 }
 
-<span class="doccomment">/// Helper macro for unit tests. This is _only_ public in order to be accessible</span>
-<span class="doccomment">/// from doc-tests too.</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules!</span> <span class="ident">default_builder_field</span> {
+<span class="doccomment">/// Helper macro for unit tests. This is _only_ public in order to be accessible
+/// from doc-tests too.
+</span><span class="attribute">#[cfg(test)] </span><span class="comment">// This contains a Box::leak, so is suitable only for tests
+</span><span class="attribute">#[doc(hidden)]
+#[macro_export]
+</span><span class="macro">macro_rules! </span>default_builder_field {
     () =&gt; {{
-        <span class="ident">BuilderField</span> {
-            <span class="ident">field_ident</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident::new</span>(<span class="string">&quot;foo&quot;</span>, <span class="ident">::proc_macro2::Span::call_site</span>()),
-            <span class="ident">field_type</span>: <span class="kw-2">&amp;</span><span class="ident">syn::parse_str</span>(<span class="string">&quot;String&quot;</span>).<span class="ident">unwrap</span>(),
-            <span class="ident">field_enabled</span>: <span class="bool-val">true</span>,
-            <span class="ident">field_visibility</span>: <span class="ident">syn::parse_str</span>(<span class="string">&quot;pub&quot;</span>).<span class="ident">unwrap</span>(),
-            <span class="ident">attrs</span>: <span class="kw-2">&amp;</span>[<span class="macro">parse_quote!</span>(<span class="attribute">#[<span class="ident">some_attr</span>]</span>)],
+        BuilderField {
+            <span class="comment">// Deliberately don&#39;t use the default value here - make sure
+            // that all test cases are passing crate_root through properly.
+            </span>crate_root: <span class="kw-2">&amp;</span><span class="macro">parse_quote!</span>(::db),
+            field_ident: <span class="kw-2">&amp;</span>syn::Ident::new(<span class="string">&quot;foo&quot;</span>, ::proc_macro2::Span::call_site()),
+            field_type: BuilderFieldType::Optional(Box::leak(Box::new(<span class="macro">parse_quote!</span>(String)))),
+            field_visibility: ::std::borrow::Cow::Owned(<span class="macro">parse_quote!</span>(<span class="kw">pub</span>)),
+            attrs: <span class="kw-2">&amp;</span>[<span class="macro">parse_quote!</span>(<span class="attribute">#[some_attr]</span>)],
         }
     }};
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="attribute">#[allow(unused_imports)]
+    </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">setter_enabled</span>() {
-        <span class="kw">let</span> <span class="ident">field</span> <span class="op">=</span> <span class="macro">default_builder_field!</span>();
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>setter_enabled() {
+        <span class="kw">let </span>field = <span class="macro">default_builder_field!</span>();
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">field</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#field).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">some_attr</span>]</span> <span class="kw">pub</span> <span class="ident">foo</span>: <span class="ident">::derive_builder::export::core::option::Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+                <span class="attribute">#[some_attr] </span><span class="kw">pub </span>foo: ::db::export::core::option::Option&lt;String&gt;,
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">setter_disabled</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">field</span> <span class="op">=</span> <span class="macro">default_builder_field!</span>();
-        <span class="ident">field</span>.<span class="ident">field_enabled</span> <span class="op">=</span> <span class="bool-val">false</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>setter_disabled() {
+        <span class="kw">let </span><span class="kw-2">mut </span>field = <span class="macro">default_builder_field!</span>();
+        field.field_visibility = Cow::Owned(syn::Visibility::Inherited);
+        field.field_type = <span class="kw">match </span>field.field_type {
+            BuilderFieldType::Optional(ty) =&gt; BuilderFieldType::Phantom(ty),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
+        };
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">field</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#field).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">some_attr</span>]</span>
-                <span class="ident">foo</span>: <span class="ident">::derive_builder::export::core::marker::PhantomData</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+                <span class="attribute">#[some_attr]
+                </span>foo: ::db::export::core::marker::PhantomData&lt;String&gt;,
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">private_field</span>() {
-        <span class="kw">let</span> <span class="ident">private</span> <span class="op">=</span> <span class="ident">syn::Visibility::Inherited</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">field</span> <span class="op">=</span> <span class="macro">default_builder_field!</span>();
-        <span class="ident">field</span>.<span class="ident">field_visibility</span> <span class="op">=</span> <span class="ident">private</span>;
+    <span class="attribute">#[test]
+    </span><span class="kw">fn </span>private_field() {
+        <span class="kw">let </span>private = Cow::Owned(syn::Visibility::Inherited);
+        <span class="kw">let </span><span class="kw-2">mut </span>field = <span class="macro">default_builder_field!</span>();
+        field.field_visibility = private;
 
         <span class="macro">assert_eq!</span>(
-            <span class="macro">quote!</span>(#<span class="ident">field</span>).<span class="ident">to_string</span>(),
+            <span class="macro">quote!</span>(#field).to_string(),
             <span class="macro">quote!</span>(
-                <span class="attribute">#[<span class="ident">some_attr</span>]</span>
-                <span class="ident">foo</span>: <span class="ident">::derive_builder::export::core::option::Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+                <span class="attribute">#[some_attr]
+                </span>foo: ::db::export::core::option::Option&lt;String&gt;,
             )
-            .<span class="ident">to_string</span>()
+            .to_string()
         );
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="derive_builder_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

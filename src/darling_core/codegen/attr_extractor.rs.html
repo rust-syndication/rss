@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/codegen/attr_extractor.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>attr_extractor.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/codegen/attr_extractor.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>attr_extractor.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -118,131 +113,120 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
-<span id="119">119</span>
-<span id="120">120</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::TokenStream;
 
-<span class="kw">use</span> <span class="ident">options::ForwardAttrs</span>;
-<span class="kw">use</span> <span class="ident">util::PathList</span>;
+<span class="kw">use </span><span class="kw">crate</span>::options::ForwardAttrs;
+<span class="kw">use </span><span class="kw">crate</span>::util::PathList;
 
-<span class="doccomment">/// Infrastructure for generating an attribute extractor.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ExtractAttribute</span> {
-    <span class="doccomment">/// A set of mutable declarations for all members of the implementing type.</span>
-    <span class="kw">fn</span> <span class="ident">local_declarations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span>;
+<span class="doccomment">/// Infrastructure for generating an attribute extractor.
+</span><span class="kw">pub trait </span>ExtractAttribute {
+    <span class="doccomment">/// A set of mutable declarations for all members of the implementing type.
+    </span><span class="kw">fn </span>local_declarations(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream;
 
-    <span class="doccomment">/// A set of immutable declarations for all members of the implementing type.</span>
-    <span class="doccomment">/// This is used in the case where a deriving struct handles no attributes and therefore can</span>
-    <span class="doccomment">/// never change its default state.</span>
-    <span class="kw">fn</span> <span class="ident">immutable_declarations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span>;
+    <span class="doccomment">/// Gets the list of attribute names that should be parsed by the extractor.
+    </span><span class="kw">fn </span>attr_names(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>PathList;
 
-    <span class="doccomment">/// Gets the list of attribute names that should be parsed by the extractor.</span>
-    <span class="kw">fn</span> <span class="ident">attr_names</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">PathList</span>;
+    <span class="kw">fn </span>forwarded_attrs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ForwardAttrs&gt;;
 
-    <span class="kw">fn</span> <span class="ident">forwarded_attrs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">ForwardAttrs</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Gets the name used by the generated impl to return to the `syn` item passed as input.
+    </span><span class="kw">fn </span>param_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream;
 
-    <span class="doccomment">/// Gets the name used by the generated impl to return to the `syn` item passed as input.</span>
-    <span class="kw">fn</span> <span class="ident">param_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span>;
-
-    <span class="doccomment">/// Gets the core from-meta-item loop that should be used on matching attributes.</span>
-    <span class="kw">fn</span> <span class="ident">core_loop</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span>;
-
-    <span class="kw">fn</span> <span class="ident">declarations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span> {
-        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">attr_names</span>().<span class="ident">is_empty</span>() {
-            <span class="self">self</span>.<span class="ident">local_declarations</span>()
-        } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">immutable_declarations</span>()
-        }
+    <span class="doccomment">/// Get the tokens to access a borrowed list of attributes where extraction will take place.
+    ///
+    /// By default, this will be `&amp;#input.attrs` where `#input` is `self.param_name()`.
+    </span><span class="kw">fn </span>attrs_accessor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream {
+        <span class="kw">let </span>input = <span class="self">self</span>.param_name();
+        <span class="macro">quote!</span>(<span class="kw-2">&amp;</span>#input.attrs)
     }
 
-    <span class="doccomment">/// Generates the main extraction loop.</span>
-    <span class="kw">fn</span> <span class="ident">extractor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">TokenStream</span> {
-        <span class="kw">let</span> <span class="ident">declarations</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">declarations</span>();
+    <span class="doccomment">/// Gets the core from-meta-item loop that should be used on matching attributes.
+    </span><span class="kw">fn </span>core_loop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream;
 
-        <span class="kw">let</span> <span class="ident">will_parse_any</span> <span class="op">=</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">attr_names</span>().<span class="ident">is_empty</span>();
-        <span class="kw">let</span> <span class="ident">will_fwd_any</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">forwarded_attrs</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">fa</span><span class="op">|</span> <span class="op">!</span><span class="ident">fa</span>.<span class="ident">is_empty</span>())
-            .<span class="ident">unwrap_or_default</span>();
+    <span class="doccomment">/// Generates the main extraction loop.
+    </span><span class="kw">fn </span>extractor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TokenStream {
+        <span class="kw">let </span>declarations = <span class="self">self</span>.local_declarations();
 
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">will_parse_any</span> <span class="op">|</span><span class="op">|</span> <span class="ident">will_fwd_any</span>) {
-            <span class="kw">return</span> <span class="macro">quote!</span> {
-                #<span class="ident">declarations</span>
+        <span class="kw">let </span>will_parse_any = !<span class="self">self</span>.attr_names().is_empty();
+        <span class="kw">let </span>will_fwd_any = <span class="self">self
+            </span>.forwarded_attrs()
+            .map(|fa| !fa.is_empty())
+            .unwrap_or_default();
+
+        <span class="kw">if </span>!(will_parse_any || will_fwd_any) {
+            <span class="kw">return </span><span class="macro">quote! </span>{
+                #declarations
             };
         }
 
-        <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">param_name</span>();
+        <span class="kw">let </span>attrs_accessor = <span class="self">self</span>.attrs_accessor();
 
-        <span class="comment">// The block for parsing attributes whose names have been claimed by the target</span>
-        <span class="comment">// struct. If no attributes were claimed, this is a pass-through.</span>
-        <span class="kw">let</span> <span class="ident">parse_handled</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">will_parse_any</span> {
-            <span class="kw">let</span> <span class="ident">attr_names</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">attr_names</span>().<span class="ident">to_strings</span>();
-            <span class="kw">let</span> <span class="ident">core_loop</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">core_loop</span>();
+        <span class="comment">// The block for parsing attributes whose names have been claimed by the target
+        // struct. If no attributes were claimed, this is a pass-through.
+        </span><span class="kw">let </span>parse_handled = <span class="kw">if </span>will_parse_any {
+            <span class="kw">let </span>attr_names = <span class="self">self</span>.attr_names().to_strings();
+            <span class="kw">let </span>core_loop = <span class="self">self</span>.core_loop();
             <span class="macro">quote!</span>(
-                #(#<span class="ident">attr_names</span>)<span class="op">|</span><span class="op">*</span> =&gt; {
-                    <span class="kw">match</span> <span class="ident">::darling::util::parse_attribute_to_meta_list</span>(<span class="ident">__attr</span>) {
-                        <span class="ident">::darling::export::Ok</span>(<span class="ident">__data</span>) =&gt; {
-                            <span class="kw">if</span> <span class="ident">__data</span>.<span class="ident">nested</span>.<span class="ident">is_empty</span>() {
+                #(#attr_names)|* =&gt; {
+                    <span class="kw">match </span>::darling::util::parse_attribute_to_meta_list(__attr) {
+                        ::darling::export::Ok(__data) =&gt; {
+                            <span class="kw">if </span>__data.nested.is_empty() {
                                 <span class="kw">continue</span>;
                             }
 
-                            <span class="kw">let</span> <span class="ident">__items</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">__data</span>.<span class="ident">nested</span>;
+                            <span class="kw">let </span>__items = <span class="kw-2">&amp;</span>__data.nested;
 
-                            #<span class="ident">core_loop</span>
+                            #core_loop
                         }
-                        <span class="comment">// darling was asked to handle this attribute name, but the actual attribute</span>
-                        <span class="comment">// isn&#39;t one that darling can work with. This either indicates a typing error</span>
-                        <span class="comment">// or some misunderstanding of the meta attribute syntax; in either case, the</span>
-                        <span class="comment">// caller should get a useful error.</span>
-                        <span class="ident">::darling::export::Err</span>(<span class="ident">__err</span>) =&gt; {
-                            <span class="ident">__errors</span>.<span class="ident">push</span>(<span class="ident">__err</span>);
+                        <span class="comment">// darling was asked to handle this attribute name, but the actual attribute
+                        // isn&#39;t one that darling can work with. This either indicates a typing error
+                        // or some misunderstanding of the meta attribute syntax; in either case, the
+                        // caller should get a useful error.
+                        </span>::darling::export::Err(__err) =&gt; {
+                            __errors.push(__err);
                         }
                     }
                 }
             )
-        } <span class="kw">else</span> {
+        } <span class="kw">else </span>{
             <span class="macro">quote!</span>()
         };
 
-        <span class="comment">// Specifies the behavior for unhandled attributes. They will either be silently ignored or</span>
-        <span class="comment">// forwarded to the inner struct for later analysis.</span>
-        <span class="kw">let</span> <span class="ident">forward_unhandled</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">will_fwd_any</span> {
-            <span class="ident">forwards_to_local</span>(<span class="self">self</span>.<span class="ident">forwarded_attrs</span>().<span class="ident">unwrap</span>())
-        } <span class="kw">else</span> {
-            <span class="macro">quote!</span>(<span class="kw">_</span> =&gt; <span class="kw">continue</span>)
+        <span class="comment">// Specifies the behavior for unhandled attributes. They will either be silently ignored or
+        // forwarded to the inner struct for later analysis.
+        </span><span class="kw">let </span>forward_unhandled = <span class="kw">if </span>will_fwd_any {
+            forwards_to_local(<span class="self">self</span>.forwarded_attrs().unwrap())
+        } <span class="kw">else </span>{
+            <span class="macro">quote!</span>(<span class="kw">_ </span>=&gt; <span class="kw">continue</span>)
         };
 
         <span class="macro">quote!</span>(
-            #<span class="ident">declarations</span>
-            <span class="kw">use</span> <span class="ident">::darling::ToTokens</span>;
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">__fwd_attrs</span>: <span class="ident">::darling::export::Vec</span><span class="op">&lt;</span><span class="ident">::syn::Attribute</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec!</span>[];
+            #declarations
+            <span class="kw">use </span>::darling::ToTokens;
+            <span class="kw">let </span><span class="kw-2">mut </span>__fwd_attrs: ::darling::export::Vec&lt;::syn::Attribute&gt; = <span class="macro">vec!</span>[];
 
-            <span class="kw">for</span> <span class="ident">__attr</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>#<span class="ident">input</span>.<span class="ident">attrs</span> {
-                <span class="comment">// Filter attributes based on name</span>
-                <span class="kw">match</span>  <span class="ident">::darling::export::ToString::to_string</span>(<span class="kw-2">&amp;</span><span class="ident">__attr</span>.<span class="ident">path</span>.<span class="ident">clone</span>().<span class="ident">into_token_stream</span>()).<span class="ident">as_str</span>() {
-                    #<span class="ident">parse_handled</span>
-                    #<span class="ident">forward_unhandled</span>
+            <span class="kw">for </span>__attr <span class="kw">in </span>#attrs_accessor {
+                <span class="comment">// Filter attributes based on name
+                </span><span class="kw">match  </span>::darling::export::ToString::to_string(<span class="kw-2">&amp;</span>__attr.path.clone().into_token_stream()).as_str() {
+                    #parse_handled
+                    #forward_unhandled
                 }
             }
         )
     }
 }
 
-<span class="kw">fn</span> <span class="ident">forwards_to_local</span>(<span class="ident">behavior</span>: <span class="kw-2">&amp;</span><span class="ident">ForwardAttrs</span>) -&gt; <span class="ident">TokenStream</span> {
-    <span class="kw">let</span> <span class="ident">push_command</span> <span class="op">=</span> <span class="macro">quote!</span>(<span class="ident">__fwd_attrs</span>.<span class="ident">push</span>(<span class="ident">__attr</span>.<span class="ident">clone</span>()));
-    <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">behavior</span> {
-        <span class="ident">ForwardAttrs::All</span> =&gt; <span class="macro">quote!</span>(<span class="kw">_</span> =&gt; #<span class="ident">push_command</span>),
-        <span class="ident">ForwardAttrs::Only</span>(<span class="kw-2">ref</span> <span class="ident">idents</span>) =&gt; {
-            <span class="kw">let</span> <span class="ident">names</span> <span class="op">=</span> <span class="ident">idents</span>.<span class="ident">to_strings</span>();
+<span class="kw">fn </span>forwards_to_local(behavior: <span class="kw-2">&amp;</span>ForwardAttrs) -&gt; TokenStream {
+    <span class="kw">let </span>push_command = <span class="macro">quote!</span>(__fwd_attrs.push(__attr.clone()));
+    <span class="kw">match </span><span class="kw-2">*</span>behavior {
+        ForwardAttrs::All =&gt; <span class="macro">quote!</span>(<span class="kw">_ </span>=&gt; #push_command),
+        ForwardAttrs::Only(<span class="kw-2">ref </span>idents) =&gt; {
+            <span class="kw">let </span>names = idents.to_strings();
             <span class="macro">quote!</span>(
-                #(#<span class="ident">names</span>)<span class="op">|</span><span class="op">*</span> =&gt; #<span class="ident">push_command</span>,
-                <span class="kw">_</span> =&gt; <span class="kw">continue</span>,
+                #(#names)|* =&gt; #push_command,
+                <span class="kw">_ </span>=&gt; <span class="kw">continue</span>,
             )
         }
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>

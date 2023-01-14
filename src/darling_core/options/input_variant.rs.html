@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.12.4/src/options/input_variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>input_variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../../darling_core/index.html"><div class="logo-container"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/darling_core-0.14.2/src/options/input_variant.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>input_variant.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../darling_core/index.html"><img class="rust-logo" src="../../../rust-logo.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -101,104 +96,115 @@
 <span id="96">96</span>
 <span id="97">97</span>
 <span id="98">98</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
+<span id="99">99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+</pre><pre class="rust"><code><span class="kw">use </span>std::borrow::Cow;
 
-<span class="kw">use</span> <span class="ident">syn</span>;
+<span class="kw">use </span><span class="kw">crate</span>::ast::Fields;
+<span class="kw">use </span><span class="kw">crate</span>::codegen;
+<span class="kw">use </span><span class="kw">crate</span>::options::{Core, InputField, ParseAttribute};
+<span class="kw">use crate</span>::{Error, FromMeta, <span class="prelude-ty">Result</span>};
 
-<span class="kw">use</span> <span class="ident">ast::Fields</span>;
-<span class="kw">use</span> <span class="ident">codegen</span>;
-<span class="kw">use</span> <span class="ident">options</span>::{<span class="ident">Core</span>, <span class="ident">InputField</span>, <span class="ident">ParseAttribute</span>};
-<span class="kw">use</span> {<span class="ident">Error</span>, <span class="ident">FromMeta</span>, <span class="prelude-ty">Result</span>};
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InputVariant</span> {
-    <span class="ident">ident</span>: <span class="ident">syn::Ident</span>,
-    <span class="ident">attr_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">data</span>: <span class="ident">Fields</span><span class="op">&lt;</span><span class="ident">InputField</span><span class="op">&gt;</span>,
-    <span class="ident">skip</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Whether or not unknown fields are acceptable in this</span>
-    <span class="ident">allow_unknown_fields</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>InputVariant {
+    ident: syn::Ident,
+    attr_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    data: Fields&lt;InputField&gt;,
+    skip: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+    <span class="doccomment">/// Whether or not unknown fields are acceptable in this
+    </span>allow_unknown_fields: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">InputVariant</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_codegen_variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">ty_ident</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">syn::Ident</span>) -&gt; <span class="ident">codegen::Variant</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">codegen::Variant</span> {
-            <span class="ident">ty_ident</span>,
-            <span class="ident">variant_ident</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ident</span>,
-            <span class="ident">name_in_attr</span>: <span class="self">self</span>
-                .<span class="ident">attr_name</span>
-                .<span class="ident">as_ref</span>()
-                .<span class="ident">map_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Cow::Owned</span>(<span class="self">self</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>()), <span class="ident">Cow::Borrowed</span>),
-            <span class="ident">data</span>: <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">InputField::as_codegen_field</span>),
-            <span class="ident">skip</span>: <span class="self">self</span>.<span class="ident">skip</span>,
-            <span class="ident">allow_unknown_fields</span>: <span class="self">self</span>.<span class="ident">allow_unknown_fields</span>.<span class="ident">unwrap_or_default</span>(),
+<span class="kw">impl </span>InputVariant {
+    <span class="kw">pub fn </span>as_codegen_variant&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, ty_ident: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>syn::Ident) -&gt; codegen::Variant&lt;<span class="lifetime">&#39;a</span>&gt; {
+        codegen::Variant {
+            ty_ident,
+            variant_ident: <span class="kw-2">&amp;</span><span class="self">self</span>.ident,
+            name_in_attr: <span class="self">self
+                </span>.attr_name
+                .as_ref()
+                .map_or_else(|| Cow::Owned(<span class="self">self</span>.ident.to_string()), Cow::Borrowed),
+            data: <span class="self">self</span>.data.as_ref().map(InputField::as_codegen_field),
+            skip: <span class="self">self</span>.skip.unwrap_or_default(),
+            allow_unknown_fields: <span class="self">self</span>.allow_unknown_fields.unwrap_or_default(),
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_variant</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Variant</span>, <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Core</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">starter</span> <span class="op">=</span> (<span class="ident">InputVariant</span> {
-            <span class="ident">ident</span>: <span class="ident">v</span>.<span class="ident">ident</span>.<span class="ident">clone</span>(),
-            <span class="ident">attr_name</span>: <span class="ident">Default::default</span>(),
-            <span class="ident">data</span>: <span class="ident">Fields::empty_from</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">fields</span>),
-            <span class="ident">skip</span>: <span class="ident">Default::default</span>(),
-            <span class="ident">allow_unknown_fields</span>: <span class="prelude-val">None</span>,
+    <span class="kw">pub fn </span>from_variant(v: <span class="kw-2">&amp;</span>syn::Variant, parent: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Core&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>starter = (InputVariant {
+            ident: v.ident.clone(),
+            attr_name: Default::default(),
+            data: Fields::empty_from(<span class="kw-2">&amp;</span>v.fields),
+            skip: Default::default(),
+            allow_unknown_fields: <span class="prelude-val">None</span>,
         })
-        .<span class="ident">parse_attributes</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>.<span class="ident">attrs</span>)<span class="question-mark">?</span>;
+        .parse_attributes(<span class="kw-2">&amp;</span>v.attrs)<span class="question-mark">?</span>;
 
-        <span class="ident">starter</span>.<span class="ident">data</span>.<span class="ident">fields</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">v</span>.<span class="ident">fields</span> {
-            <span class="ident">syn::Fields::Unit</span> =&gt; <span class="macro">vec!</span>[],
-            <span class="ident">syn::Fields::Unnamed</span>(<span class="kw-2">ref</span> <span class="ident">fields</span>) =&gt; {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">items</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">fields</span>.<span class="ident">unnamed</span>.<span class="ident">len</span>());
-                <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">fields</span>.<span class="ident">unnamed</span> {
-                    <span class="ident">items</span>.<span class="ident">push</span>(<span class="ident">InputField::from_field</span>(<span class="ident">item</span>, <span class="ident">parent</span>)<span class="question-mark">?</span>);
+        starter.data.fields = <span class="kw">match </span>v.fields {
+            syn::Fields::Unit =&gt; <span class="macro">vec!</span>[],
+            syn::Fields::Unnamed(<span class="kw-2">ref </span>fields) =&gt; {
+                <span class="kw">let </span><span class="kw-2">mut </span>items = Vec::with_capacity(fields.unnamed.len());
+                <span class="kw">for </span>item <span class="kw">in </span><span class="kw-2">&amp;</span>fields.unnamed {
+                    items.push(InputField::from_field(item, parent)<span class="question-mark">?</span>);
                 }
 
-                <span class="ident">items</span>
+                items
             }
-            <span class="ident">syn::Fields::Named</span>(<span class="kw-2">ref</span> <span class="ident">fields</span>) =&gt; {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">items</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">fields</span>.<span class="ident">named</span>.<span class="ident">len</span>());
-                <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">fields</span>.<span class="ident">named</span> {
-                    <span class="ident">items</span>.<span class="ident">push</span>(<span class="ident">InputField::from_field</span>(<span class="ident">item</span>, <span class="ident">parent</span>)<span class="question-mark">?</span>);
+            syn::Fields::Named(<span class="kw-2">ref </span>fields) =&gt; {
+                <span class="kw">let </span><span class="kw-2">mut </span>items = Vec::with_capacity(fields.named.len());
+                <span class="kw">for </span>item <span class="kw">in </span><span class="kw-2">&amp;</span>fields.named {
+                    items.push(InputField::from_field(item, parent)<span class="question-mark">?</span>);
                 }
 
-                <span class="ident">items</span>
+                items
             }
         };
 
-        <span class="prelude-val">Ok</span>(<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">p</span>) <span class="op">=</span> <span class="ident">parent</span> {
-            <span class="ident">starter</span>.<span class="ident">with_inherited</span>(<span class="ident">p</span>)
-        } <span class="kw">else</span> {
-            <span class="ident">starter</span>
+        <span class="prelude-val">Ok</span>(<span class="kw">if let </span><span class="prelude-val">Some</span>(p) = parent {
+            starter.with_inherited(p)
+        } <span class="kw">else </span>{
+            starter
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">with_inherited</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">parent</span>: <span class="kw-2">&amp;</span><span class="ident">Core</span>) -&gt; <span class="self">Self</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">attr_name</span>.<span class="ident">is_none</span>() {
-            <span class="self">self</span>.<span class="ident">attr_name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">parent</span>.<span class="ident">rename_rule</span>.<span class="ident">apply_to_variant</span>(<span class="self">self</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>()));
+    <span class="kw">fn </span>with_inherited(<span class="kw-2">mut </span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span>Core) -&gt; <span class="self">Self </span>{
+        <span class="kw">if </span><span class="self">self</span>.attr_name.is_none() {
+            <span class="self">self</span>.attr_name = <span class="prelude-val">Some</span>(parent.rename_rule.apply_to_variant(<span class="self">self</span>.ident.to_string()));
         }
 
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">allow_unknown_fields</span>.<span class="ident">is_none</span>() {
-            <span class="self">self</span>.<span class="ident">allow_unknown_fields</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">parent</span>.<span class="ident">allow_unknown_fields</span>.<span class="ident">is_some</span>());
+        <span class="kw">if </span><span class="self">self</span>.allow_unknown_fields.is_none() {
+            <span class="self">self</span>.allow_unknown_fields = <span class="prelude-val">Some</span>(parent.allow_unknown_fields.unwrap_or_default());
         }
 
-        <span class="self">self</span>
-    }
+        <span class="self">self
+    </span>}
 }
 
-<span class="kw">impl</span> <span class="ident">ParseAttribute</span> <span class="kw">for</span> <span class="ident">InputVariant</span> {
-    <span class="kw">fn</span> <span class="ident">parse_nested</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">mi</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Meta</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">mi</span>.<span class="ident">path</span>();
-        <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;rename&quot;</span>) {
-            <span class="self">self</span>.<span class="ident">attr_name</span> <span class="op">=</span> <span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(())
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;skip&quot;</span>) {
-            <span class="self">self</span>.<span class="ident">skip</span> <span class="op">=</span> <span class="ident">FromMeta::from_meta</span>(<span class="ident">mi</span>)<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(())
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">Error::unknown_field_path</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>).<span class="ident">with_span</span>(<span class="ident">mi</span>))
+<span class="kw">impl </span>ParseAttribute <span class="kw">for </span>InputVariant {
+    <span class="kw">fn </span>parse_nested(<span class="kw-2">&amp;mut </span><span class="self">self</span>, mi: <span class="kw-2">&amp;</span>syn::Meta) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>path = mi.path();
+        <span class="kw">if </span>path.is_ident(<span class="string">&quot;rename&quot;</span>) {
+            <span class="kw">if </span><span class="self">self</span>.attr_name.is_some() {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+            }
+
+            <span class="self">self</span>.attr_name = FromMeta::from_meta(mi)<span class="question-mark">?</span>;
+        } <span class="kw">else if </span>path.is_ident(<span class="string">&quot;skip&quot;</span>) {
+            <span class="kw">if </span><span class="self">self</span>.skip.is_some() {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(Error::duplicate_field_path(path).with_span(mi));
+            }
+
+            <span class="self">self</span>.skip = FromMeta::from_meta(mi)<span class="question-mark">?</span>;
+        } <span class="kw">else </span>{
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::unknown_field_path(path).with_span(mi));
         }
+
+        <span class="prelude-val">Ok</span>(())
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.61.0 (fe5b13d68 2022-05-18)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="darling_core" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>
