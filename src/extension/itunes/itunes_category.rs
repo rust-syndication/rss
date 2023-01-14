@@ -101,8 +101,8 @@ impl ITunesCategory {
 
 impl ToXml for ITunesCategory {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"itunes:category";
-        let mut element = BytesStart::borrowed(name, name.len());
+        let name = "itunes:category";
+        let mut element = BytesStart::new(name);
         element.push_attribute(("text", &*self.text));
         writer.write_event(Event::Start(element))?;
 
@@ -110,7 +110,7 @@ impl ToXml for ITunesCategory {
             subcategory.to_xml(writer)?;
         }
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 }

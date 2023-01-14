@@ -15,7 +15,7 @@ use quick_xml::Writer;
 
 use crate::error::Error;
 use crate::toxml::ToXml;
-use crate::util::element_text;
+use crate::util::{decode, element_text};
 
 /// Represents the GUID of an RSS item.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -121,7 +121,7 @@ impl Guid {
         let mut guid = Guid::default();
 
         for attr in atts.with_checks(false).flatten() {
-            if attr.key == b"isPermaLink" {
+            if decode(attr.key.as_ref(), reader)?.as_ref() == "isPermaLink" {
                 guid.permalink = &*attr.value != b"false";
                 break;
             }
@@ -134,17 +134,14 @@ impl Guid {
 
 impl ToXml for Guid {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"guid";
-        let mut element = BytesStart::borrowed(name, name.len());
+        let name = "guid";
+        let mut element = BytesStart::new(name);
         if !self.permalink {
             element.push_attribute(("isPermaLink", "false"));
         }
-
         writer.write_event(Event::Start(element))?;
-
-        writer.write_event(Event::Text(BytesText::from_plain_str(&self.value)))?;
-
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::Text(BytesText::new(&self.value)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 }

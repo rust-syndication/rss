@@ -29,7 +29,7 @@ use crate::image::Image;
 use crate::item::Item;
 use crate::textinput::TextInput;
 use crate::toxml::{ToXml, WriterExt};
-use crate::util::element_text;
+use crate::util::{attr_value, decode, element_text, skip};
 
 /// Represents the channel of an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -1034,7 +1034,6 @@ impl Channel {
         reader.trim_text(true).expand_empty_elements(true);
         let mut namespaces = BTreeMap::new();
         let mut buf = Vec::new();
-        let mut skip_buf = Vec::new();
 
         let mut channel: Option<Channel> = None;
 
@@ -1045,51 +1044,53 @@ impl Channel {
 
         // find opening element
         loop {
-            match reader.read_event(&mut buf)? {
-                Event::Start(element) => {
-                    if element.name() == b"rss" || element.name() == b"rdf:RDF" {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), &reader)?.as_ref() {
+                    "rss" | "rdf:RDF" => {
                         for attr in element.attributes().with_checks(false).flatten() {
-                            if attr.key.starts_with(b"xmlns:") {
-                                let prefix = str::from_utf8(&attr.key[6..])?.to_string();
-                                let namespace = attr.unescape_and_decode_value(&reader)?;
-                                namespaces.insert(prefix, namespace);
+                            let key = decode(attr.key.as_ref(), &reader)?;
+                            if let Some(ns) = key.strip_prefix("xmlns:") {
+                                namespaces.insert(
+                                    ns.to_string(),
+                                    attr_value(&attr, &reader)?.to_string(),
+                                );
                             }
                         }
-
                         break;
-                    } else {
+                    }
+                    _ => {
                         return Err(Error::InvalidStartTag);
                     }
-                }
+                },
                 Event::Eof => return Err(Error::Eof),
                 _ => continue,
             }
         }
 
         loop {
-            match reader.read_event(&mut buf)? {
-                Event::Start(element) => match element.name() {
-                    b"channel" => {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), &reader)?.as_ref() {
+                    "channel" => {
                         let inner =
                             Channel::from_xml(&namespaces, &mut reader, element.attributes())?;
                         channel = Some(inner);
                     }
-                    b"item" => {
+                    "item" => {
                         let item = Item::from_xml(&namespaces, &mut reader, element.attributes())?;
                         if items.is_none() {
                             items = Some(Vec::new());
                         }
                         items.as_mut().unwrap().push(item);
                     }
-                    b"image" => {
+                    "image" => {
                         let inner = Image::from_xml(&mut reader, element.attributes())?;
                         image = Some(inner);
                     }
-                    b"textinput" => {
+                    "textinput" => {
                         let inner = TextInput::from_xml(&mut reader, element.attributes())?;
                         text_input = Some(inner);
                     }
-                    name => reader.read_to_end(name, &mut skip_buf)?,
+                    _ => skip(element.name(), &mut reader)?,
                 },
                 Event::End(_) | Event::Eof => break,
                 _ => {}
@@ -1119,10 +1120,10 @@ impl Channel {
     }
 
     fn write<W: Write>(&self, mut writer: Writer<W>) -> Result<W, Error> {
-        writer.write_event(Event::Decl(BytesDecl::new(b"1.0", Some(b"utf-8"), None)))?;
+        writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("utf-8"), None)))?;
 
-        let name = b"rss";
-        let mut element = BytesStart::borrowed(name, name.len());
+        let name = "rss";
+        let mut element = BytesStart::new(name);
         element.push_attribute(("version", "2.0"));
 
         let used_namespaces = self.used_namespaces();
@@ -1137,7 +1138,7 @@ impl Channel {
 
         self.to_xml(&mut writer)?;
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
 
         Ok(writer.into_inner())
     }
@@ -1198,83 +1199,83 @@ impl Channel {
         let mut skip_buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf)? {
-                Event::Start(element) => match element.name() {
-                    b"category" => {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), reader)?.as_ref() {
+                    "category" => {
                         let category = Category::from_xml(reader, element.attributes())?;
                         channel.categories.push(category);
                     }
-                    b"cloud" => {
-                        let cloud = Cloud::from_xml(reader, element.attributes())?;
+                    "cloud" => {
+                        let cloud = Cloud::from_xml(reader, &element)?;
                         channel.cloud = Some(cloud);
                     }
-                    b"image" => {
+                    "image" => {
                         let image = Image::from_xml(reader, element.attributes())?;
                         channel.image = Some(image);
                     }
-                    b"textInput" => {
+                    "textInput" => {
                         let text_input = TextInput::from_xml(reader, element.attributes())?;
                         channel.text_input = Some(text_input);
                     }
-                    b"item" => {
+                    "item" => {
                         let item = Item::from_xml(namespaces, reader, element.attributes())?;
                         channel.items.push(item);
                     }
-                    b"title" => {
+                    "title" => {
                         if let Some(content) = element_text(reader)? {
                             channel.title = content;
                         }
                     }
-                    b"link" => {
+                    "link" => {
                         if let Some(content) = element_text(reader)? {
                             channel.link = content;
                         }
                     }
-                    b"description" => {
+                    "description" => {
                         if let Some(content) = element_text(reader)? {
                             channel.description = content;
                         }
                     }
-                    b"language" => channel.language = element_text(reader)?,
-                    b"copyright" => channel.copyright = element_text(reader)?,
-                    b"managingEditor" => {
+                    "language" => channel.language = element_text(reader)?,
+                    "copyright" => channel.copyright = element_text(reader)?,
+                    "managingEditor" => {
                         channel.managing_editor = element_text(reader)?;
                     }
-                    b"webMaster" => channel.webmaster = element_text(reader)?,
-                    b"pubDate" => channel.pub_date = element_text(reader)?,
-                    b"lastBuildDate" => {
+                    "webMaster" => channel.webmaster = element_text(reader)?,
+                    "pubDate" => channel.pub_date = element_text(reader)?,
+                    "lastBuildDate" => {
                         channel.last_build_date = element_text(reader)?;
                     }
-                    b"generator" => channel.generator = element_text(reader)?,
-                    b"rating" => channel.rating = element_text(reader)?,
-                    b"docs" => channel.docs = element_text(reader)?,
-                    b"ttl" => channel.ttl = element_text(reader)?,
-                    b"skipHours" => loop {
+                    "generator" => channel.generator = element_text(reader)?,
+                    "rating" => channel.rating = element_text(reader)?,
+                    "docs" => channel.docs = element_text(reader)?,
+                    "ttl" => channel.ttl = element_text(reader)?,
+                    "skipHours" => loop {
                         skip_buf.clear();
-                        match reader.read_event(&mut skip_buf)? {
+                        match reader.read_event_into(&mut skip_buf)? {
                             Event::Start(element) => {
-                                if element.name() == b"hour" {
+                                if decode(element.name().as_ref(), reader)?.as_ref() == "hour" {
                                     if let Some(content) = element_text(reader)? {
                                         channel.skip_hours.push(content);
                                     }
                                 } else {
-                                    reader.read_to_end(element.name(), &mut Vec::new())?;
+                                    skip(element.name(), reader)?;
                                 }
                             }
                             Event::End(_) | Event::Eof => break,
                             _ => {}
                         }
                     },
-                    b"skipDays" => loop {
+                    "skipDays" => loop {
                         skip_buf.clear();
-                        match reader.read_event(&mut skip_buf)? {
+                        match reader.read_event_into(&mut skip_buf)? {
                             Event::Start(element) => {
-                                if element.name() == b"day" {
+                                if decode(element.name().as_ref(), reader)?.as_ref() == "day" {
                                     if let Some(content) = element_text(reader)? {
                                         channel.skip_days.push(content);
                                     }
                                 } else {
-                                    reader.read_to_end(element.name(), &mut Vec::new())?;
+                                    skip(element.name(), reader)?;
                                 }
                             }
                             Event::End(_) | Event::Eof => break,
@@ -1282,7 +1283,7 @@ impl Channel {
                         }
                     },
                     n => {
-                        if let Some((ns, name)) = extension_name(element.name()) {
+                        if let Some((ns, name)) = extension_name(n) {
                             parse_extension(
                                 reader,
                                 element.attributes(),
@@ -1291,7 +1292,7 @@ impl Channel {
                                 &mut channel.extensions,
                             )?;
                         } else {
-                            reader.read_to_end(n, &mut skip_buf)?;
+                            skip(element.name(), reader)?;
                         }
                     }
                 },
@@ -1333,50 +1334,50 @@ impl Channel {
 
 impl ToXml for Channel {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"channel";
+        let name = "channel";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(Event::Start(BytesStart::new(name)))?;
 
-        writer.write_text_element(b"title", &self.title)?;
-        writer.write_text_element(b"link", &self.link)?;
-        writer.write_text_element(b"description", &self.description)?;
+        writer.write_text_element("title", &self.title)?;
+        writer.write_text_element("link", &self.link)?;
+        writer.write_text_element("description", &self.description)?;
 
         if let Some(language) = self.language.as_ref() {
-            writer.write_text_element(b"language", language)?;
+            writer.write_text_element("language", language)?;
         }
 
         if let Some(copyright) = self.copyright.as_ref() {
-            writer.write_text_element(b"copyright", copyright)?;
+            writer.write_text_element("copyright", copyright)?;
         }
 
         if let Some(managing_editor) = self.managing_editor.as_ref() {
-            writer.write_text_element(b"managingEditor", managing_editor)?;
+            writer.write_text_element("managingEditor", managing_editor)?;
         }
 
         if let Some(webmaster) = self.webmaster.as_ref() {
-            writer.write_text_element(b"webMaster", webmaster)?;
+            writer.write_text_element("webMaster", webmaster)?;
         }
 
         if let Some(pub_date) = self.pub_date.as_ref() {
-            writer.write_text_element(b"pubDate", pub_date)?;
+            writer.write_text_element("pubDate", pub_date)?;
         }
 
         if let Some(last_build_date) = self.last_build_date.as_ref() {
-            writer.write_text_element(b"lastBuildDate", last_build_date)?;
+            writer.write_text_element("lastBuildDate", last_build_date)?;
         }
 
         writer.write_objects(&self.categories)?;
 
         if let Some(generator) = self.generator.as_ref() {
-            writer.write_text_element(b"generator", generator)?;
+            writer.write_text_element("generator", generator)?;
         }
 
         if let Some(rating) = self.rating.as_ref() {
-            writer.write_text_element(b"rating", rating)?;
+            writer.write_text_element("rating", rating)?;
         }
 
         if let Some(docs) = self.docs.as_ref() {
-            writer.write_text_element(b"docs", docs)?;
+            writer.write_text_element("docs", docs)?;
         }
 
         if let Some(cloud) = self.cloud.as_ref() {
@@ -1384,7 +1385,7 @@ impl ToXml for Channel {
         }
 
         if let Some(ttl) = self.ttl.as_ref() {
-            writer.write_text_element(b"ttl", ttl)?;
+            writer.write_text_element("ttl", ttl)?;
         }
 
         if let Some(image) = self.image.as_ref() {
@@ -1396,21 +1397,21 @@ impl ToXml for Channel {
         }
 
         if !self.skip_hours.is_empty() {
-            let name = b"skipHours";
-            writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+            let name = "skipHours";
+            writer.write_event(Event::Start(BytesStart::new(name)))?;
             for hour in &self.skip_hours {
-                writer.write_text_element(b"hour", hour)?;
+                writer.write_text_element("hour", hour)?;
             }
-            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+            writer.write_event(Event::End(BytesEnd::new(name)))?;
         }
 
         if !self.skip_days.is_empty() {
-            let name = b"skipDays";
-            writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+            let name = "skipDays";
+            writer.write_event(Event::Start(BytesStart::new(name)))?;
             for day in &self.skip_days {
-                writer.write_text_element(b"day", day)?;
+                writer.write_text_element("day", day)?;
             }
-            writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+            writer.write_event(Event::End(BytesEnd::new(name)))?;
         }
 
         for map in self.extensions.values() {
@@ -1440,7 +1441,7 @@ impl ToXml for Channel {
 
         writer.write_objects(&self.items)?;
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 

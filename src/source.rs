@@ -15,7 +15,7 @@ use quick_xml::Writer;
 
 use crate::error::Error;
 use crate::toxml::ToXml;
-use crate::util::element_text;
+use crate::util::{attr_value, decode, element_text};
 
 /// Represents the source of an RSS item.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -111,8 +111,8 @@ impl Source {
         let mut source = Source::default();
 
         for attr in atts.with_checks(false).flatten() {
-            if attr.key == b"url" {
-                source.url = attr.unescape_and_decode_value(reader)?;
+            if decode(attr.key.as_ref(), reader)?.as_ref() == "url" {
+                source.url = attr_value(&attr, reader)?.to_string();
                 break;
             }
         }
@@ -124,17 +124,17 @@ impl Source {
 
 impl ToXml for Source {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"source";
-        let mut element = BytesStart::borrowed(name, name.len());
+        let name = "source";
+        let mut element = BytesStart::new(name);
         element.push_attribute(("url", &*self.url));
 
         writer.write_event(Event::Start(element))?;
 
         if let Some(ref text) = self.title {
-            writer.write_event(Event::Text(BytesText::from_plain_str(text)))?;
+            writer.write_event(Event::Text(BytesText::new(text)))?;
         }
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 }

@@ -7,7 +7,6 @@
 
 use std::io::{BufRead, Write};
 
-use quick_xml::events::attributes::Attributes;
 use quick_xml::events::{BytesStart, Event};
 use quick_xml::Error as XmlError;
 use quick_xml::Reader;
@@ -15,6 +14,7 @@ use quick_xml::Writer;
 
 use crate::error::Error;
 use crate::toxml::ToXml;
+use crate::util::{attr_value, decode, skip};
 
 /// Represents a cloud in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -205,34 +205,26 @@ impl Cloud {
 
 impl Cloud {
     /// Builds a Cloud from source XML
-    pub fn from_xml<R: BufRead>(
+    pub fn from_xml<'s, R: BufRead>(
         reader: &mut Reader<R>,
-        mut atts: Attributes,
+        element: &'s BytesStart<'s>,
     ) -> Result<Self, Error> {
         let mut cloud = Cloud::default();
 
-        for att in atts.with_checks(false).flatten() {
-            match att.key {
-                b"domain" => {
-                    cloud.domain = att.unescape_and_decode_value(reader)?;
+        for att in element.attributes().with_checks(false).flatten() {
+            match decode(att.key.as_ref(), reader)?.as_ref() {
+                "domain" => cloud.domain = attr_value(&att, reader)?.to_string(),
+                "port" => cloud.port = attr_value(&att, reader)?.to_string(),
+                "path" => cloud.path = attr_value(&att, reader)?.to_string(),
+                "registerProcedure" => {
+                    cloud.register_procedure = attr_value(&att, reader)?.to_string()
                 }
-                b"port" => {
-                    cloud.port = att.unescape_and_decode_value(reader)?;
-                }
-                b"path" => {
-                    cloud.path = att.unescape_and_decode_value(reader)?;
-                }
-                b"registerProcedure" => {
-                    cloud.register_procedure = att.unescape_and_decode_value(reader)?;
-                }
-                b"protocol" => {
-                    cloud.protocol = att.unescape_and_decode_value(reader)?;
-                }
+                "protocol" => cloud.protocol = attr_value(&att, reader)?.to_string(),
                 _ => {}
             }
         }
 
-        reader.read_to_end(b"cloud", &mut Vec::new())?;
+        skip(element.name(), reader)?;
 
         Ok(cloud)
     }
@@ -240,8 +232,8 @@ impl Cloud {
 
 impl ToXml for Cloud {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"cloud";
-        let mut element = BytesStart::borrowed(name, name.len());
+        let name = "cloud";
+        let mut element = BytesStart::new(name);
 
         element.push_attribute(("domain", self.domain.as_str()));
         element.push_attribute(("port", self.port.as_str()));

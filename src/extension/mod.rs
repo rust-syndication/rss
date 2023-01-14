@@ -102,20 +102,19 @@ impl Extension {
 
 impl ToXml for Extension {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = self.name.as_bytes();
-        let mut element = BytesStart::borrowed_name(name);
+        let mut element = BytesStart::new(&self.name);
         element.extend_attributes(self.attrs.iter().map(|a| (a.0.as_str(), a.1.as_str())));
         writer.write_event(Event::Start(element))?;
 
         if let Some(ref value) = self.value {
-            writer.write_event(Event::Text(BytesText::from_plain_str(value)))?;
+            writer.write_event(Event::Text(BytesText::new(value)))?;
         }
 
         for extension in self.children.values().flatten() {
             extension.to_xml(writer)?;
         }
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(&self.name)))?;
         Ok(())
     }
 }

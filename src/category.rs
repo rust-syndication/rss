@@ -15,7 +15,7 @@ use quick_xml::Writer;
 
 use crate::error::Error;
 use crate::toxml::ToXml;
-use crate::util::element_text;
+use crate::util::{attr_value, decode, element_text};
 
 /// Represents a category in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -111,8 +111,8 @@ impl Category {
         let mut category = Category::default();
 
         for attr in atts.with_checks(false).flatten() {
-            if attr.key == b"domain" {
-                category.domain = Some(attr.unescape_and_decode_value(reader)?);
+            if decode(attr.key.as_ref(), reader)?.as_ref() == "domain" {
+                category.domain = Some(attr_value(&attr, reader)?.to_string());
                 break;
             }
         }
@@ -124,14 +124,14 @@ impl Category {
 
 impl ToXml for Category {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"category";
-        let mut element = BytesStart::borrowed(name, name.len());
+        let name = "category";
+        let mut element = BytesStart::new(name);
         if let Some(ref domain) = self.domain {
             element.push_attribute(("domain", &**domain));
         }
         writer.write_event(Event::Start(element))?;
-        writer.write_event(Event::Text(BytesText::from_plain_str(&self.name)))?;
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::Text(BytesText::new(&self.name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 }

@@ -81,8 +81,7 @@ impl AtomExtension {
 impl ToXml for AtomExtension {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         for link in &self.links {
-            let name = b"link";
-            let mut element = BytesStart::borrowed(name, name.len());
+            let mut element = BytesStart::new("link");
             element.push_attribute(("href", &*link.href));
             element.push_attribute(("rel", &*link.rel));
 

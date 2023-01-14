@@ -15,7 +15,7 @@ use quick_xml::Writer;
 
 use crate::error::Error;
 use crate::toxml::{ToXml, WriterExt};
-use crate::util::element_text;
+use crate::util::{decode, element_text, skip};
 
 /// Represents a text input for an RSS channel.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -177,15 +177,15 @@ impl TextInput {
         let mut buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf)? {
-                Event::Start(element) => match element.name() {
-                    b"title" => text_input.title = element_text(reader)?.unwrap_or_default(),
-                    b"description" => {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), reader)?.as_ref() {
+                    "title" => text_input.title = element_text(reader)?.unwrap_or_default(),
+                    "description" => {
                         text_input.description = element_text(reader)?.unwrap_or_default()
                     }
-                    b"name" => text_input.name = element_text(reader)?.unwrap_or_default(),
-                    b"link" => text_input.link = element_text(reader)?.unwrap_or_default(),
-                    n => reader.read_to_end(n, &mut Vec::new())?,
+                    "name" => text_input.name = element_text(reader)?.unwrap_or_default(),
+                    "link" => text_input.link = element_text(reader)?.unwrap_or_default(),
+                    _ => skip(element.name(), reader)?,
                 },
                 Event::End(_) => break,
                 Event::Eof => return Err(Error::Eof),
@@ -201,16 +201,16 @@ impl TextInput {
 
 impl ToXml for TextInput {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"textInput";
+        let name = "textInput";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(Event::Start(BytesStart::new(name)))?;
 
-        writer.write_text_element(b"title", &self.title)?;
-        writer.write_text_element(b"description", &self.description)?;
-        writer.write_text_element(b"name", &self.name)?;
-        writer.write_text_element(b"link", &self.link)?;
+        writer.write_text_element("title", &self.title)?;
+        writer.write_text_element("description", &self.description)?;
+        writer.write_text_element("name", &self.name)?;
+        writer.write_text_element("link", &self.link)?;
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 }

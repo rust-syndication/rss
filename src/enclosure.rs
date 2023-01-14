@@ -7,7 +7,6 @@
 
 use std::io::{BufRead, Write};
 
-use quick_xml::events::attributes::Attributes;
 use quick_xml::events::{BytesStart, Event};
 use quick_xml::Error as XmlError;
 use quick_xml::Reader;
@@ -15,6 +14,7 @@ use quick_xml::Writer;
 
 use crate::error::Error;
 use crate::toxml::ToXml;
+use crate::util::{attr_value, decode, skip};
 
 /// Represents an enclosure in an RSS item.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -137,38 +137,29 @@ impl Enclosure {
 
 impl Enclosure {
     /// Builds an Enclosure from source XML
-    pub fn from_xml<R: BufRead>(
+    pub fn from_xml<'s, R: BufRead>(
         reader: &mut Reader<R>,
-        mut atts: Attributes,
+        element: &'s BytesStart<'s>,
     ) -> Result<Self, Error> {
         let mut enclosure = Enclosure::default();
-
-        for attr in atts.with_checks(false).flatten() {
-            match attr.key {
-                b"url" => {
-                    enclosure.url = attr.unescape_and_decode_value(reader)?;
-                }
-                b"length" => {
-                    enclosure.length = attr.unescape_and_decode_value(reader)?;
-                }
-                b"type" => {
-                    enclosure.mime_type = attr.unescape_and_decode_value(reader)?;
-                }
+        for attr in element.attributes().with_checks(false).flatten() {
+            match decode(attr.key.as_ref(), reader)?.as_ref() {
+                "url" => enclosure.url = attr_value(&attr, reader)?.to_string(),
+                "length" => enclosure.length = attr_value(&attr, reader)?.to_string(),
+                "type" => enclosure.mime_type = attr_value(&attr, reader)?.to_string(),
                 _ => {}
             }
         }
-
-        reader.read_to_end(b"enclosure", &mut Vec::new())?;
-
+        skip(element.name(), reader)?;
         Ok(enclosure)
     }
 }
 
 impl ToXml for Enclosure {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"enclosure";
+        let name = "enclosure";
 
-        let mut element = BytesStart::borrowed(name, name.len());
+        let mut element = BytesStart::new(name);
 
         element.push_attribute(("url", self.url.as_str()));
         element.push_attribute(("length", self.length.as_str()));

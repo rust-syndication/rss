@@ -15,7 +15,7 @@ use quick_xml::Writer;
 
 use crate::error::Error;
 use crate::toxml::{ToXml, WriterExt};
-use crate::util::element_text;
+use crate::util::{decode, element_text, skip};
 
 /// Represents an image in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -251,15 +251,15 @@ impl Image {
         let mut buf = Vec::new();
 
         loop {
-            match reader.read_event(&mut buf)? {
-                Event::Start(element) => match element.name() {
-                    b"url" => image.url = element_text(reader)?.unwrap_or_default(),
-                    b"title" => image.title = element_text(reader)?.unwrap_or_default(),
-                    b"link" => image.link = element_text(reader)?.unwrap_or_default(),
-                    b"width" => image.width = element_text(reader)?,
-                    b"height" => image.height = element_text(reader)?,
-                    b"description" => image.description = element_text(reader)?,
-                    n => reader.read_to_end(n, &mut Vec::new())?,
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), reader)?.as_ref() {
+                    "url" => image.url = element_text(reader)?.unwrap_or_default(),
+                    "title" => image.title = element_text(reader)?.unwrap_or_default(),
+                    "link" => image.link = element_text(reader)?.unwrap_or_default(),
+                    "width" => image.width = element_text(reader)?,
+                    "height" => image.height = element_text(reader)?,
+                    "description" => image.description = element_text(reader)?,
+                    _ => skip(element.name(), reader)?,
                 },
                 Event::End(_) => break,
                 Event::Eof => return Err(Error::Eof),
@@ -275,27 +275,27 @@ impl Image {
 
 impl ToXml for Image {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
-        let name = b"image";
+        let name = "image";
 
-        writer.write_event(Event::Start(BytesStart::borrowed(name, name.len())))?;
+        writer.write_event(Event::Start(BytesStart::new(name)))?;
 
-        writer.write_text_element(b"url", &self.url)?;
-        writer.write_text_element(b"title", &self.title)?;
-        writer.write_text_element(b"link", &self.link)?;
+        writer.write_text_element("url", &self.url)?;
+        writer.write_text_element("title", &self.title)?;
+        writer.write_text_element("link", &self.link)?;
 
         if let Some(width) = self.width.as_ref() {
-            writer.write_text_element(b"width", width)?;
+            writer.write_text_element("width", width)?;
         }
 
         if let Some(height) = self.height.as_ref() {
-            writer.write_text_element(b"height", height)?;
+            writer.write_text_element("height", height)?;
         }
 
         if let Some(description) = self.description.as_ref() {
-            writer.write_text_element(b"description", description)?;
+            writer.write_text_element("description", description)?;
         }
 
-        writer.write_event(Event::End(BytesEnd::borrowed(name)))?;
+        writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
 }
