@@ -152,10 +152,10 @@ item.set_pub_date(<span class="string">&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;
 <span class="kw">use </span>chrono::{FixedOffset, TimeZone, Utc};
 
 <span class="kw">let </span><span class="kw-2">mut </span>item = Item::default();
-item.set_pub_date(Utc.ymd(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>).and_hms(<span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).to_rfc2822());
+item.set_pub_date(Utc.with_ymd_and_hms(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap().to_rfc2822());
 <span class="macro">assert_eq!</span>(item.pub_date(), <span class="prelude-val">Some</span>(<span class="string">&quot;Sun, 01 Jan 2017 12:00:00 +0000&quot;</span>));
 
-item.set_pub_date(FixedOffset::east(<span class="number">2 </span>* <span class="number">3600</span>).ymd(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>).and_hms(<span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).to_rfc2822());
+item.set_pub_date(FixedOffset::east_opt(<span class="number">2 </span>* <span class="number">3600</span>).unwrap().with_ymd_and_hms(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap().to_rfc2822());
 <span class="macro">assert_eq!</span>(item.pub_date(), <span class="prelude-val">Some</span>(<span class="string">&quot;Sun, 01 Jan 2017 12:00:00 +0200&quot;</span>));</code></pre></div>
 </div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.source" class="method has-srclink"><a class="srclink rightside" href="../src/rss/item.rs.html#402-404">source</a><h4 class="code-header">pub fn <a href="#method.source" class="fnname">source</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.66.1/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="struct.Source.html" title="struct rss::Source">Source</a>&gt;</h4></section></summary><div class="docblock"><p>Return the source URL for this item.</p>
 <h5 id="examples-18"><a href="#examples-18">Examples</a></h5>

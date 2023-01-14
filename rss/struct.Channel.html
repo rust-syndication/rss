@@ -161,7 +161,7 @@ channel.set_pub_date(<span class="string">&quot;Sun, 1 Jan 2017 12:00:00 GMT&quo
 <span class="kw">use </span>chrono::{TimeZone, Utc};
 
 <span class="kw">let </span><span class="kw-2">mut </span>channel = Channel::default();
-channel.set_pub_date(Utc.ymd(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>).and_hms(<span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).to_rfc2822());
+channel.set_pub_date(Utc.with_ymd_and_hms(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap().to_rfc2822());
 <span class="macro">assert_eq!</span>(channel.pub_date(), <span class="prelude-val">Some</span>(<span class="string">&quot;Sun, 01 Jan 2017 12:00:00 +0000&quot;</span>));</code></pre></div>
 </div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.last_build_date" class="method has-srclink"><a class="srclink rightside" href="../src/rss/channel.rs.html#391-393">source</a><h4 class="code-header">pub fn <a href="#method.last_build_date" class="fnname">last_build_date</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.66.1/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/1.66.1/std/primitive.str.html">str</a>&gt;</h4></section></summary><div class="docblock"><p>Return the time that the content of this channel was last changed as an RFC822 timestamp.</p>
 <h5 id="examples-16"><a href="#examples-16">Examples</a></h5>
@@ -182,7 +182,7 @@ channel.set_last_build_date(<span class="string">&quot;Sun, 1 Jan 2017 12:00:00 
 <span class="kw">use </span>chrono::{TimeZone, Utc};
 
 <span class="kw">let </span><span class="kw-2">mut </span>channel = Channel::default();
-channel.set_last_build_date(Utc.ymd(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>).and_hms(<span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).to_rfc2822());
+channel.set_last_build_date(Utc.with_ymd_and_hms(<span class="number">2017</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap().to_rfc2822());
 <span class="macro">assert_eq!</span>(channel.last_build_date(), <span class="prelude-val">Some</span>(<span class="string">&quot;Sun, 01 Jan 2017 12:00:00 +0000&quot;</span>));</code></pre></div>
 </div></details><details class="rustdoc-toggle method-toggle" open><summary><section id="method.categories" class="method has-srclink"><a class="srclink rightside" href="../src/rss/channel.rs.html#437-439">source</a><h4 class="code-header">pub fn <a href="#method.categories" class="fnname">categories</a>(&amp;self) -&gt; &amp;[<a class="struct" href="struct.Category.html" title="struct rss::Category">Category</a>]</h4></section></summary><div class="docblock"><p>Return the categories that this channel belongs to.</p>
 <h5 id="examples-18"><a href="#examples-18">Examples</a></h5>
