@@ -81,7 +81,7 @@ impl AtomExtension {
 impl ToXml for AtomExtension {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         for link in &self.links {
-            let mut element = BytesStart::new("link");
+            let mut element = BytesStart::new("atom:link");
             element.push_attribute(("href", &*link.href));
             element.push_attribute(("rel", &*link.rel));
 
@@ -104,6 +104,12 @@ impl ToXml for AtomExtension {
             writer.write_event(Event::Empty(element))?;
         }
         Ok(())
+    }
+
+    fn used_namespaces(&self) -> BTreeMap<String, String> {
+        let mut namespaces = BTreeMap::new();
+        namespaces.insert("atom".to_owned(), NAMESPACE.to_owned());
+        namespaces
     }
 }
 

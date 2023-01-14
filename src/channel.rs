@@ -1456,6 +1456,10 @@ impl ToXml for Channel {
         if let Some(ext) = self.dublin_core_ext() {
             namespaces.extend(ext.used_namespaces());
         }
+        #[cfg(feature = "atom")]
+        if let Some(ext) = self.atom_ext() {
+            namespaces.extend(ext.used_namespaces());
+        }
         namespaces
     }
 }

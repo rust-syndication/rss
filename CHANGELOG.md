@@ -3,6 +3,7 @@
 ## 2.x.x - Unreleased
 
 - Upgrade `quick_xml` to `0.27`, `derive_builder` to `0.12`, and `atom_syndication` to `0.12` [`#143`](https://github.com/rust-syndication/rss/pull/143)
+- Correct serialization of atom extension [`#144`](https://github.com/rust-syndication/rss/pull/144)
 
 ## 2.0.1 - 2022-04-17
 
