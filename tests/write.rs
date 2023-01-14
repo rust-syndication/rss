@@ -2,7 +2,7 @@ extern crate rss;
 
 use rss::{
     extension, CategoryBuilder, Channel, ChannelBuilder, CloudBuilder, EnclosureBuilder,
-    GuidBuilder, ImageBuilder, ItemBuilder, SourceBuilder, TextInputBuilder,
+    GuidBuilder, ImageBuilder, Item, ItemBuilder, SourceBuilder, TextInputBuilder,
 };
 use std::collections::BTreeMap;
 
@@ -294,5 +294,101 @@ fn test_escape() {
             .as_ref()
             .unwrap(),
         "<title>"
+    );
+}
+
+#[test]
+fn test_write_link() {
+    let channel = Channel {
+        title: "Channel title".into(),
+        link: "http://example.com/feed".into(),
+        items: vec![Item {
+            link: Some("http://example.com/post1".into()),
+            ..Default::default()
+        }],
+        ..Default::default()
+    };
+
+    let buf = channel.pretty_write_to(Vec::new(), b' ', 4).unwrap();
+    assert_eq!(
+        std::str::from_utf8(&buf).unwrap(),
+        r#"<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Channel title</title>
+        <link>http://example.com/feed</link>
+        <description></description>
+        <item>
+            <link>http://example.com/post1</link>
+        </item>
+    </channel>
+</rss>"#
+    );
+}
+
+#[cfg(feature = "atom")]
+#[test]
+fn test_atom_write_channel() {
+    let channel = Channel {
+        title: "Channel title".into(),
+        atom_ext: Some(rss::extension::atom::AtomExtension {
+            links: vec![rss::extension::atom::Link {
+                rel: "self".into(),
+                href: "http://example.com/feed".into(),
+                ..Default::default()
+            }],
+        }),
+        ..Default::default()
+    };
+
+    let buf = channel.pretty_write_to(Vec::new(), b' ', 4).unwrap();
+    assert_eq!(
+        std::str::from_utf8(&buf).unwrap(),
+        r#"<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Channel title</title>
+        <link></link>
+        <description></description>
+        <atom:link href="http://example.com/feed" rel="self"/>
+    </channel>
+</rss>"#
+    );
+}
+
+#[cfg(feature = "atom")]
+#[test]
+fn test_atom_write_item() {
+    let channel = Channel {
+        title: "Channel title".into(),
+        items: vec![Item {
+            link: Some("http://example.com/post1".into()),
+            atom_ext: Some(rss::extension::atom::AtomExtension {
+                links: vec![rss::extension::atom::Link {
+                    rel: "related".into(),
+                    href: "http://example.com/post1".into(),
+                    ..Default::default()
+                }],
+            }),
+            ..Default::default()
+        }],
+        ..Default::default()
+    };
+
+    let buf = channel.pretty_write_to(Vec::new(), b' ', 4).unwrap();
+    assert_eq!(
+        std::str::from_utf8(&buf).unwrap(),
+        r#"<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Channel title</title>
+        <link></link>
+        <description></description>
+        <item>
+            <link>http://example.com/post1</link>
+            <atom:link href="http://example.com/post1" rel="related"/>
+        </item>
+    </channel>
+</rss>"#
     );
 }
