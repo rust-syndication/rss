@@ -374,10 +374,10 @@ impl Item {
     /// use chrono::{FixedOffset, TimeZone, Utc};
     ///
     /// let mut item = Item::default();
-    /// item.set_pub_date(Utc.ymd(2017, 1, 1).and_hms(12, 0, 0).to_rfc2822());
+    /// item.set_pub_date(Utc.with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
     /// assert_eq!(item.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
     ///
-    /// item.set_pub_date(FixedOffset::east(2 * 3600).ymd(2017, 1, 1).and_hms(12, 0, 0).to_rfc2822());
+    /// item.set_pub_date(FixedOffset::east_opt(2 * 3600).unwrap().with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
     /// assert_eq!(item.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 +0200"));
     /// # }
     /// ```

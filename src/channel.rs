@@ -366,7 +366,7 @@ impl Channel {
     /// use chrono::{TimeZone, Utc};
     ///
     /// let mut channel = Channel::default();
-    /// channel.set_pub_date(Utc.ymd(2017, 1, 1).and_hms(12, 0, 0).to_rfc2822());
+    /// channel.set_pub_date(Utc.with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
     /// assert_eq!(channel.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
     /// # }
     /// ```
@@ -412,7 +412,7 @@ impl Channel {
     /// use chrono::{TimeZone, Utc};
     ///
     /// let mut channel = Channel::default();
-    /// channel.set_last_build_date(Utc.ymd(2017, 1, 1).and_hms(12, 0, 0).to_rfc2822());
+    /// channel.set_last_build_date(Utc.with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
     /// assert_eq!(channel.last_build_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
     /// # }
     /// ```
