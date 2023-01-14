@@ -1476,6 +1476,10 @@
 <span id="1476">1476</span>
 <span id="1477">1477</span>
 <span id="1478">1478</span>
+<span id="1479">1479</span>
+<span id="1480">1480</span>
+<span id="1481">1481</span>
+<span id="1482">1482</span>
 </pre><pre class="rust"><code><span class="comment">// This file is part of rss.
 //
 // Copyright © 2015-2021 The rust-syndication Developers
@@ -2932,6 +2936,10 @@
             namespaces.extend(ext.used_namespaces());
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.dublin_core_ext() {
+            namespaces.extend(ext.used_namespaces());
+        }
+        <span class="attribute">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.atom_ext() {
             namespaces.extend(ext.used_namespaces());
         }
         namespaces
