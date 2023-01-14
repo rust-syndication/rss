@@ -945,3 +945,25 @@ fn read_escaped() {
     let parsed_channel = output.parse::<Channel>().unwrap();
     assert_eq!(channel, parsed_channel);
 }
+
+#[test]
+fn read_multiple_links() {
+    let input = r#"
+        <rss version="2.0">
+            <channel>
+                <link>https://www.coindesk.com</link>
+                <link href="https://www.coindesk.com/arc/outboundfeeds/rss/?outputType=xml" rel="self" type="application/rss+xml"/>
+                <link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
+                <atom:link href="https://www.coindesk.com/arc/outboundfeeds/rss/?outputType=xml" rel="self" type="application/rss+xml"/>
+            </channel>
+            <item>
+                <link href="https://www.coindesk.com/arc/outboundfeeds/rss/?outputType=xml" rel="self" type="application/atom+xml"/>
+                <link>https://www.coindesk.com/policy/2023/01/14/doj-objects-to-ftxs-choice-of-lawyers-citing-conflict-of-interest/?utm_medium=referral&amp;utm_source=rss&amp;utm_campaign=headlines</link>
+                <link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
+            </item>
+        </rss>
+    "#;
+    let channel = input.parse::<Channel>().unwrap();
+    assert_eq!(channel.link(), "https://www.coindesk.com");
+    assert_eq!(channel.items[0].link.as_ref().unwrap(), "https://www.coindesk.com/policy/2023/01/14/doj-objects-to-ftxs-choice-of-lawyers-citing-conflict-of-interest/?utm_medium=referral&utm_source=rss&utm_campaign=headlines");
+}
