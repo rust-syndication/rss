@@ -2,6 +2,10 @@
 
 ## 2.x.x - Unreleased
 
+## 2.0.3 - 2023-03-27
+
+- Upgrade `quick_xml` to `0.28` [`#146`](https://github.com/rust-syndication/rss/pull/146)
+
 ## 2.0.2 - 2023-01-14
 
 - Upgrade `quick_xml` to `0.27`, `derive_builder` to `0.12`, and `atom_syndication` to `0.12` [`#143`](https://github.com/rust-syndication/rss/pull/143)
