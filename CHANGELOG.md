@@ -5,6 +5,7 @@
 ## 2.0.3 - 2023-03-27
 
 - Upgrade `quick_xml` to `0.28` [`#146`](https://github.com/rust-syndication/rss/pull/146)
+- Switch to Rust 2021 [`#147`](https://github.com/rust-syndication/rss/pull/147)
 
 ## 2.0.2 - 2023-01-14
 
