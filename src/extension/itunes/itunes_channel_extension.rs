@@ -12,7 +12,7 @@ use quick_xml::events::{BytesStart, Event};
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
-use super::{parse_categories, parse_image, parse_owner};
+use super::{parse_categories, parse_image, parse_owner, NAMESPACE};
 use crate::extension::itunes::{ITunesCategory, ITunesOwner};
 use crate::extension::util::remove_extension_value;
 use crate::extension::Extension;
@@ -552,6 +552,12 @@ impl ToXml for ITunesChannelExtension {
         }
 
         Ok(())
+    }
+
+    fn used_namespaces(&self) -> BTreeMap<String, String> {
+        let mut namespaces = BTreeMap::new();
+        namespaces.insert("itunes".to_owned(), NAMESPACE.to_owned());
+        namespaces
     }
 }
 

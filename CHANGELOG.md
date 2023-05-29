@@ -2,6 +2,8 @@
 
 ## 2.x.x - Unreleased
 
+- Fix iTunes extension writing [`#151`](https://github.com/rust-syndication/rss/pull/151)
+
 ## 2.0.3 - 2023-03-27
 
 - Upgrade `quick_xml` to `0.28` [`#146`](https://github.com/rust-syndication/rss/pull/146)
