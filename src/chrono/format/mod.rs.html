@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.24/src/format/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../chrono/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.25/src/format/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-be46fdc453a55015.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../chrono/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1077,6 +1077,9 @@
 <a href="#1077" id="1077">1077</a>
 <a href="#1078" id="1078">1078</a>
 <a href="#1079" id="1079">1079</a>
+<a href="#1080" id="1080">1080</a>
+<a href="#1081" id="1081">1081</a>
+<a href="#1082" id="1082">1082</a>
 </pre><pre class="rust"><code><span class="comment">// This is a part of Chrono.
 // See README.md and LICENSE.txt for details.
 
@@ -1095,9 +1098,9 @@
 //! C&#39;s `strftime` format. The available options can be found [here](./strftime/index.html).
 //!
 //! # Example
-//! ```rust
-//! # use std::error::Error;
-//! use chrono::prelude::*;
+</span><span class="attr">#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), doc = <span class="string">&quot;```ignore&quot;</span>)]
+#![cfg_attr(feature = <span class="string">&quot;std&quot;</span>, doc = <span class="string">&quot;```rust&quot;</span>)]
+</span><span class="doccomment">//! use chrono::{TimeZone, Utc};
 //!
 //! let date_time = Utc.with_ymd_and_hms(2020, 11, 10, 0, 1, 32).unwrap();
 //!
@@ -1135,7 +1138,7 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>locales;
 
-<span class="kw">pub use </span>parse::parse;
+<span class="kw">pub use </span>parse::{parse, parse_and_remainder};
 <span class="kw">pub use </span>parsed::Parsed;
 <span class="doccomment">/// L10n locales.
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
@@ -1286,27 +1289,27 @@
     ///
     /// It does not support parsing, its use in the parser is an immediate failure.
     </span>TimezoneName,
-    <span class="doccomment">/// Offset from the local time to UTC (`+09:00` or `-04:00` or `+00:00`).
+    <span class="doccomment">/// Offset from the local time to UTC (`+09:00` or `-0400` or `+00:00`).
     ///
-    /// In the parser, the colon can be omitted and/or surrounded with any amount of whitespace.
+    /// In the parser, the colon may be omitted,
     /// The offset is limited from `-24:00` to `+24:00`,
     /// which is the same as [`FixedOffset`](../offset/struct.FixedOffset.html)&#39;s range.
     </span>TimezoneOffsetColon,
     <span class="doccomment">/// Offset from the local time to UTC with seconds (`+09:00:00` or `-04:00:00` or `+00:00:00`).
     ///
-    /// In the parser, the colon can be omitted and/or surrounded with any amount of whitespace.
+    /// In the parser, the colon may be omitted,
     /// The offset is limited from `-24:00:00` to `+24:00:00`,
     /// which is the same as [`FixedOffset`](../offset/struct.FixedOffset.html)&#39;s range.
     </span>TimezoneOffsetDoubleColon,
     <span class="doccomment">/// Offset from the local time to UTC without minutes (`+09` or `-04` or `+00`).
     ///
-    /// In the parser, the colon can be omitted and/or surrounded with any amount of whitespace.
+    /// In the parser, the colon may be omitted,
     /// The offset is limited from `-24` to `+24`,
     /// which is the same as [`FixedOffset`](../offset/struct.FixedOffset.html)&#39;s range.
     </span>TimezoneOffsetTripleColon,
-    <span class="doccomment">/// Offset from the local time to UTC (`+09:00` or `-04:00` or `Z`).
+    <span class="doccomment">/// Offset from the local time to UTC (`+09:00` or `-0400` or `Z`).
     ///
-    /// In the parser, the colon can be omitted and/or surrounded with any amount of whitespace,
+    /// In the parser, the colon may be omitted,
     /// and `Z` can be either in upper case or in lower case.
     /// The offset is limited from `-24:00` to `+24:00`,
     /// which is the same as [`FixedOffset`](../offset/struct.FixedOffset.html)&#39;s range.
@@ -1435,7 +1438,8 @@
 }
 
 <span class="doccomment">/// The category of parse error
-</span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq, Copy, Hash)]
+</span><span class="attr">#[allow(clippy::manual_non_exhaustive)]
+#[derive(Debug, Clone, PartialEq, Eq, Copy, Hash)]
 </span><span class="kw">pub enum </span>ParseErrorKind {
     <span class="doccomment">/// Given field is out of permitted range.
     </span>OutOfRange,
@@ -1465,7 +1469,7 @@
     <span class="doccomment">/// There was an error on the formatting string, or there were non-supported formating items.
     </span>BadFormat,
 
-    <span class="comment">// TODO: Change this to `#[non_exhaustive]` (on the enum) when MSRV is increased
+    <span class="comment">// TODO: Change this to `#[non_exhaustive]` (on the enum) with the next breaking release.
     </span><span class="attr">#[doc(hidden)]
     </span>__Nonexhaustive,
 }
@@ -1589,8 +1593,6 @@
 ) -&gt; fmt::Result {
     <span class="kw">let </span>locale = Locales::new(locale);
 
-    <span class="kw">use </span>num_integer::{div_floor, mod_floor};
-
     <span class="kw">match </span><span class="kw-2">*</span>item {
         Item::Literal(s) | Item::Space(s) =&gt; result.push_str(s),
         <span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
@@ -1604,11 +1606,11 @@
 
             <span class="kw">let </span>(width, v) = <span class="kw">match </span><span class="kw-2">*</span>spec {
                 Year =&gt; (<span class="number">4</span>, date.map(|d| i64::from(d.year()))),
-                YearDiv100 =&gt; (<span class="number">2</span>, date.map(|d| div_floor(i64::from(d.year()), <span class="number">100</span>))),
-                YearMod100 =&gt; (<span class="number">2</span>, date.map(|d| mod_floor(i64::from(d.year()), <span class="number">100</span>))),
+                YearDiv100 =&gt; (<span class="number">2</span>, date.map(|d| i64::from(d.year()).div_euclid(<span class="number">100</span>))),
+                YearMod100 =&gt; (<span class="number">2</span>, date.map(|d| i64::from(d.year()).rem_euclid(<span class="number">100</span>))),
                 IsoYear =&gt; (<span class="number">4</span>, date.map(|d| i64::from(d.iso_week().year()))),
-                IsoYearDiv100 =&gt; (<span class="number">2</span>, date.map(|d| div_floor(i64::from(d.iso_week().year()), <span class="number">100</span>))),
-                IsoYearMod100 =&gt; (<span class="number">2</span>, date.map(|d| mod_floor(i64::from(d.iso_week().year()), <span class="number">100</span>))),
+                IsoYearDiv100 =&gt; (<span class="number">2</span>, date.map(|d| i64::from(d.iso_week().year()).div_euclid(<span class="number">100</span>))),
+                IsoYearMod100 =&gt; (<span class="number">2</span>, date.map(|d| i64::from(d.iso_week().year()).rem_euclid(<span class="number">100</span>))),
                 Month =&gt; (<span class="number">2</span>, date.map(|d| i64::from(d.month()))),
                 Day =&gt; (<span class="number">2</span>, date.map(|d| i64::from(d.day()))),
                 WeekFromSun =&gt; (<span class="number">2</span>, date.map(|d| i64::from(week_from_sun(d)))),
@@ -1946,6 +1948,7 @@
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
 </span><span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, I: Iterator&lt;Item = B&gt; + Clone, B: Borrow&lt;Item&lt;<span class="lifetime">&#39;a</span>&gt;&gt;&gt; DelayedFormat&lt;I&gt; {
     <span class="doccomment">/// Makes a new `DelayedFormat` value out of local date and time.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(date: <span class="prelude-ty">Option</span>&lt;NaiveDate&gt;, time: <span class="prelude-ty">Option</span>&lt;NaiveTime&gt;, items: I) -&gt; DelayedFormat&lt;I&gt; {
         DelayedFormat {
             date,
@@ -1958,6 +1961,7 @@
     }
 
     <span class="doccomment">/// Makes a new `DelayedFormat` value out of local date and time and UTC offset.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new_with_offset&lt;Off&gt;(
         date: <span class="prelude-ty">Option</span>&lt;NaiveDate&gt;,
         time: <span class="prelude-ty">Option</span>&lt;NaiveTime&gt;,
@@ -1981,6 +1985,7 @@
     <span class="doccomment">/// Makes a new `DelayedFormat` value out of local date and time and locale.
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)))]
+    #[must_use]
     </span><span class="kw">pub fn </span>new_with_locale(
         date: <span class="prelude-ty">Option</span>&lt;NaiveDate&gt;,
         time: <span class="prelude-ty">Option</span>&lt;NaiveTime&gt;,
@@ -1993,6 +1998,7 @@
     <span class="doccomment">/// Makes a new `DelayedFormat` value out of local date and time, UTC offset and locale.
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)))]
+    #[must_use]
     </span><span class="kw">pub fn </span>new_with_offset_and_locale&lt;Off&gt;(
         date: <span class="prelude-ty">Option</span>&lt;NaiveDate&gt;,
         time: <span class="prelude-ty">Option</span>&lt;NaiveTime&gt;,
@@ -2157,4 +2163,4 @@
     }
 }
 </code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.1 (8460ca823 2023-03-20)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>

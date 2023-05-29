@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.24/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../chrono/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.25/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../chrono/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -525,6 +525,7 @@
 <a href="#525" id="525">525</a>
 <a href="#526" id="526">526</a>
 <a href="#527" id="527">527</a>
+<a href="#528" id="528">528</a>
 </pre><pre class="rust"><code><span class="doccomment">//! # Chrono: Date and Time for Rust
 //!
 //! It aims to be a feature-complete superset of
@@ -637,8 +638,9 @@
 //! or in the local time zone
 //! ([`Local::now()`](./offset/struct.Local.html#method.now)).
 //!
-//! ```rust
-//! use chrono::prelude::*;
+</span><span class="attr">#![cfg_attr(not(feature = <span class="string">&quot;clock&quot;</span>), doc = <span class="string">&quot;```ignore&quot;</span>)]
+#![cfg_attr(feature = <span class="string">&quot;clock&quot;</span>, doc = <span class="string">&quot;```rust&quot;</span>)]
+</span><span class="doccomment">//! use chrono::prelude::*;
 //!
 //! let utc: DateTime&lt;Utc&gt; = Utc::now();       // e.g. `2014-11-28T12:45:59.324310806Z`
 //! let local: DateTime&lt;Local&gt; = Local::now(); // e.g. `2014-11-28T21:45:59.324310806+09:00`
@@ -649,25 +651,30 @@
 //! This is a bit verbose due to Rust&#39;s lack of function and method overloading,
 //! but in turn we get a rich combination of initialization methods.
 //!
-//! ```rust
-//! use chrono::prelude::*;
+</span><span class="attr">#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), doc = <span class="string">&quot;```ignore&quot;</span>)]
+#![cfg_attr(feature = <span class="string">&quot;std&quot;</span>, doc = <span class="string">&quot;```rust&quot;</span>)]
+</span><span class="doccomment">//! use chrono::prelude::*;
 //! use chrono::offset::LocalResult;
 //!
-//! let dt = Utc.with_ymd_and_hms(2014, 7, 8, 9, 10, 11).unwrap(); // `2014-07-08T09:10:11Z`
-//! // July 8 is 188th day of the year 2014 (`o` for &quot;ordinal&quot;)
-//! assert_eq!(dt, Utc.yo(2014, 189).and_hms_opt(9, 10, 11).unwrap());
-//! // July 8 is Tuesday in ISO week 28 of the year 2014.
-//! assert_eq!(dt, Utc.isoywd(2014, 28, Weekday::Tue).and_hms_opt(9, 10, 11).unwrap());
+//! # fn doctest() -&gt; Option&lt;()&gt; {
 //!
-//! let dt = NaiveDate::from_ymd_opt(2014, 7, 8).unwrap().and_hms_milli_opt(9, 10, 11, 12).unwrap().and_local_timezone(Utc).unwrap(); // `2014-07-08T09:10:11.012Z`
-//! assert_eq!(dt, NaiveDate::from_ymd_opt(2014, 7, 8).unwrap().and_hms_micro_opt(9, 10, 11, 12_000).unwrap().and_local_timezone(Utc).unwrap());
-//! assert_eq!(dt, NaiveDate::from_ymd_opt(2014, 7, 8).unwrap().and_hms_nano_opt(9, 10, 11, 12_000_000).unwrap().and_local_timezone(Utc).unwrap());
+//! let dt = Utc.with_ymd_and_hms(2014, 7, 8, 9, 10, 11).unwrap(); // `2014-07-08T09:10:11Z`
+//! assert_eq!(dt, NaiveDate::from_ymd_opt(2014, 7, 8)?.and_hms_opt(9, 10, 11)?.and_local_timezone(Utc).unwrap());
+//!
+//! // July 8 is 188th day of the year 2014 (`o` for &quot;ordinal&quot;)
+//! assert_eq!(dt, NaiveDate::from_yo_opt(2014, 189)?.and_hms_opt(9, 10, 11)?.and_utc());
+//! // July 8 is Tuesday in ISO week 28 of the year 2014.
+//! assert_eq!(dt, NaiveDate::from_isoywd_opt(2014, 28, Weekday::Tue)?.and_hms_opt(9, 10, 11)?.and_utc());
+//!
+//! let dt = NaiveDate::from_ymd_opt(2014, 7, 8)?.and_hms_milli_opt(9, 10, 11, 12)?.and_local_timezone(Utc).unwrap(); // `2014-07-08T09:10:11.012Z`
+//! assert_eq!(dt, NaiveDate::from_ymd_opt(2014, 7, 8)?.and_hms_micro_opt(9, 10, 11, 12_000)?.and_local_timezone(Utc).unwrap());
+//! assert_eq!(dt, NaiveDate::from_ymd_opt(2014, 7, 8)?.and_hms_nano_opt(9, 10, 11, 12_000_000)?.and_local_timezone(Utc).unwrap());
 //!
 //! // dynamic verification
-//! assert_eq!(Utc.ymd_opt(2014, 7, 8).and_hms_opt(21, 15, 33),
-//!            LocalResult::Single(Utc.with_ymd_and_hms(2014, 7, 8, 21, 15, 33).unwrap()));
-//! assert_eq!(Utc.ymd_opt(2014, 7, 8).and_hms_opt(80, 15, 33), LocalResult::None);
-//! assert_eq!(Utc.ymd_opt(2014, 7, 38).and_hms_opt(21, 15, 33), LocalResult::None);
+//! assert_eq!(Utc.with_ymd_and_hms(2014, 7, 8, 21, 15, 33),
+//!            LocalResult::Single(NaiveDate::from_ymd_opt(2014, 7, 8)?.and_hms_opt(21, 15, 33)?.and_utc()));
+//! assert_eq!(Utc.with_ymd_and_hms(2014, 7, 8, 80, 15, 33), LocalResult::None);
+//! assert_eq!(Utc.with_ymd_and_hms(2014, 7, 38, 21, 15, 33), LocalResult::None);
 //!
 //! // other time zone objects can be used to construct a local datetime.
 //! // obviously, `local_dt` is normally different from `dt`, but `fixed_dt` should be identical.
@@ -675,6 +682,9 @@
 //! let fixed_dt = FixedOffset::east_opt(9 * 3600).unwrap().from_local_datetime(&amp;NaiveDate::from_ymd_opt(2014, 7, 8).unwrap().and_hms_milli_opt(18, 10, 11, 12).unwrap()).unwrap();
 //! assert_eq!(dt, fixed_dt);
 //! # let _ = local_dt;
+//! # Some(())
+//! # }
+//! # doctest().unwrap();
 //! ```
 //!
 //! Various properties are available to the date and time, and can be altered individually.
@@ -744,6 +754,7 @@
 //! The `unstable-locales` feature requires and implies at least the `alloc` feature.
 //!
 //! ```rust
+//! # #[allow(unused_imports)]
 //! use chrono::prelude::*;
 //!
 //! # #[cfg(feature = &quot;unstable-locales&quot;)]
@@ -841,45 +852,19 @@
 //! [`DateTime.timestamp_subsec_nanos`](./struct.DateTime.html#method.timestamp_subsec_nanos)
 //! to get the number of additional number of nanoseconds.
 //!
-//! ```rust
-//! // We need the trait in scope to use Utc::timestamp().
+</span><span class="attr">#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), doc = <span class="string">&quot;```ignore&quot;</span>)]
+#![cfg_attr(feature = <span class="string">&quot;std&quot;</span>, doc = <span class="string">&quot;```rust&quot;</span>)]
+</span><span class="doccomment">//! // We need the trait in scope to use Utc::timestamp().
 //! use chrono::{DateTime, TimeZone, Utc};
 //!
 //! // Construct a datetime from epoch:
-//! let dt = Utc.timestamp(1_500_000_000, 0);
+//! let dt = Utc.timestamp_opt(1_500_000_000, 0).unwrap();
 //! assert_eq!(dt.to_rfc2822(), &quot;Fri, 14 Jul 2017 02:40:00 +0000&quot;);
 //!
 //! // Get epoch value from a datetime:
 //! let dt = DateTime::parse_from_rfc2822(&quot;Fri, 14 Jul 2017 02:40:00 +0000&quot;).unwrap();
 //! assert_eq!(dt.timestamp(), 1_500_000_000);
 //! ```
-//!
-//! ### Individual date
-//!
-//! Chrono also provides an individual date type ([**`Date`**](./struct.Date.html)).
-//! It also has time zones attached, and have to be constructed via time zones.
-//! Most operations available to `DateTime` are also available to `Date` whenever appropriate.
-//!
-//! ```rust
-//! use chrono::prelude::*;
-//! use chrono::offset::LocalResult;
-//!
-//! # // these *may* fail, but only very rarely. just rerun the test if you were that unfortunate ;)
-//! assert_eq!(Utc::today(), Utc::now().date());
-//! assert_eq!(Local::today(), Local::now().date());
-//!
-//! assert_eq!(Utc.ymd_opt(2014, 11, 28).unwrap().weekday(), Weekday::Fri);
-//! assert_eq!(Utc.ymd_opt(2014, 11, 31), LocalResult::None);
-//! assert_eq!(NaiveDate::from_ymd_opt(2014, 11, 28).unwrap().and_hms_milli_opt(7, 8, 9, 10).unwrap().and_local_timezone(Utc).unwrap().format(&quot;%H%M%S&quot;).to_string(),
-//!            &quot;070809&quot;);
-//! ```
-//!
-//! There is no timezone-aware `Time` due to the lack of usefulness and also the complexity.
-//!
-//! `DateTime` has [`date`](./struct.DateTime.html#method.date) method
-//! which returns a `Date` which represents its date component.
-//! There is also a [`time`](./struct.DateTime.html#method.time) method,
-//! which simply returns a naive local time described below.
 //!
 //! ### Naive date and time
 //!
@@ -925,7 +910,7 @@
 //! Advanced time zone handling is not yet supported.
 //! For now you can try the [Chrono-tz](https://github.com/chronotope/chrono-tz/) crate instead.
 
-</span><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://docs.rs/chrono/latest/&quot;</span>)]
+</span><span class="attr">#![doc(html_root_url = <span class="string">&quot;https://docs.rs/chrono/latest/&quot;</span>, test(attr(deny(warnings))))]
 #![cfg_attr(feature = <span class="string">&quot;bench&quot;</span>, feature(test))] </span><span class="comment">// lib stability features as per RFC #507
 </span><span class="attr">#![deny(missing_docs)]
 #![deny(missing_debug_implementations)]
@@ -944,6 +929,8 @@
 </span><span class="kw">mod </span>oldtime;
 <span class="comment">// this reexport is to aid the transition and should not be in the prelude!
 </span><span class="kw">pub use </span>oldtime::{Duration, OutOfRangeError};
+
+<span class="kw">use </span>core::fmt;
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;__doctest&quot;</span>)]
 #[cfg_attr(feature = <span class="string">&quot;__doctest&quot;</span>, cfg(doctest))]
@@ -1029,28 +1016,43 @@
 <span class="doccomment">/// Serialization/Deserialization with serde.
 ///
 /// This module provides default implementations for `DateTime` using the [RFC 3339][1] format and various
-/// alternatives for use with serde&#39;s [`with` annotation][1].
+/// alternatives for use with serde&#39;s [`with` annotation][2].
 ///
 /// *Available on crate feature &#39;serde&#39; only.*
 ///
 /// [1]: https://tools.ietf.org/html/rfc3339
-/// [2]: https://serde.rs/attributes.html#field-attributes
+/// [2]: https://serde.rs/field-attrs.html#with
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
 </span><span class="kw">pub mod </span>serde {
     <span class="kw">pub use </span><span class="kw">super</span>::datetime::serde::<span class="kw-2">*</span>;
 }
 
-<span class="doccomment">/// MSRV 1.42
-</span><span class="attr">#[cfg(test)]
-#[macro_export]
-</span><span class="macro">macro_rules! </span>matches {
-    (<span class="macro-nonterminal">$expression</span>:expr, $(|)<span class="question-mark">? </span>$( <span class="macro-nonterminal">$pattern</span>:pat )|+ $( <span class="kw">if </span><span class="macro-nonterminal">$guard</span>: expr )<span class="question-mark">? </span>$(,)<span class="question-mark">?</span>) =&gt; {
-        <span class="kw">match </span><span class="macro-nonterminal">$expression </span>{
-            $( <span class="macro-nonterminal">$pattern </span>)|+ $( <span class="kw">if </span><span class="macro-nonterminal">$guard </span>)<span class="question-mark">? </span>=&gt; <span class="bool-val">true</span>,
-            <span class="kw">_ </span>=&gt; <span class="bool-val">false
-        </span>}
+<span class="doccomment">/// Out of range error type used in various converting APIs
+</span><span class="attr">#[derive(Clone, Copy, Hash, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>OutOfRange {
+    _private: (),
+}
+
+<span class="kw">impl </span>OutOfRange {
+    <span class="kw">const fn </span>new() -&gt; OutOfRange {
+        OutOfRange { _private: () }
     }
 }
+
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>OutOfRange {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;out of range&quot;</span>)
+    }
+}
+
+<span class="kw">impl </span>fmt::Debug <span class="kw">for </span>OutOfRange {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;out of range&quot;</span>)
+    }
+}
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+</span><span class="kw">impl </span>std::error::Error <span class="kw">for </span>OutOfRange {}
 </code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.1 (8460ca823 2023-03-20)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.24/src/date.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>date.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../chrono/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.25/src/date.rs`."><title>date.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../chrono/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -643,6 +643,33 @@
 <a href="#643" id="643">643</a>
 <a href="#644" id="644">644</a>
 <a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
 </pre><pre class="rust"><code><span class="comment">// This is a part of Chrono.
 // See README.md and LICENSE.txt for details.
 
@@ -722,6 +749,7 @@
     </span><span class="comment">//
     // note: this constructor is purposely not named to `new` to discourage the direct usage.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>from_utc(date: NaiveDate, offset: Tz::Offset) -&gt; Date&lt;Tz&gt; {
         Date { date, offset }
     }
@@ -731,6 +759,7 @@
     ///
     /// Panics on invalid datetime.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_time(<span class="kw-2">&amp;</span><span class="self">self</span>, time: NaiveTime) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         <span class="kw">let </span>localdt = <span class="self">self</span>.naive_local().and_time(time);
         <span class="self">self</span>.timezone().from_local_datetime(<span class="kw-2">&amp;</span>localdt).single()
@@ -742,6 +771,7 @@
     /// Panics on invalid hour, minute and/or second.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;Use and_hms_opt() instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32) -&gt; DateTime&lt;Tz&gt; {
         <span class="self">self</span>.and_hms_opt(hour, min, sec).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -751,6 +781,7 @@
     ///
     /// Returns `None` on invalid hour, minute and/or second.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_opt(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         NaiveTime::from_hms_opt(hour, min, sec).and_then(|time| <span class="self">self</span>.and_time(time))
     }
@@ -762,6 +793,7 @@
     /// Panics on invalid hour, minute, second and/or millisecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;Use and_hms_milli_opt() instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_milli(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32, milli: u32) -&gt; DateTime&lt;Tz&gt; {
         <span class="self">self</span>.and_hms_milli_opt(hour, min, sec, milli).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -772,6 +804,7 @@
     ///
     /// Returns `None` on invalid hour, minute, second and/or millisecond.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_milli_opt(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         hour: u32,
@@ -789,6 +822,7 @@
     /// Panics on invalid hour, minute, second and/or microsecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;Use and_hms_micro_opt() instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_micro(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32, micro: u32) -&gt; DateTime&lt;Tz&gt; {
         <span class="self">self</span>.and_hms_micro_opt(hour, min, sec, micro).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -799,6 +833,7 @@
     ///
     /// Returns `None` on invalid hour, minute, second and/or microsecond.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_micro_opt(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         hour: u32,
@@ -816,6 +851,7 @@
     /// Panics on invalid hour, minute, second and/or nanosecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;Use and_hms_nano_opt() instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_nano(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32, nano: u32) -&gt; DateTime&lt;Tz&gt; {
         <span class="self">self</span>.and_hms_nano_opt(hour, min, sec, nano).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -826,6 +862,7 @@
     ///
     /// Returns `None` on invalid hour, minute, second and/or nanosecond.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_nano_opt(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         hour: u32,
@@ -841,6 +878,7 @@
     /// Panics when `self` is the last representable date.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;Use succ_opt() instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>succ(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Date&lt;Tz&gt; {
         <span class="self">self</span>.succ_opt().expect(<span class="string">&quot;out of bound&quot;</span>)
     }
@@ -849,6 +887,7 @@
     ///
     /// Returns `None` when `self` is the last representable date.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>succ_opt(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Date&lt;Tz&gt;&gt; {
         <span class="self">self</span>.date.succ_opt().map(|date| Date::from_utc(date, <span class="self">self</span>.offset.clone()))
     }
@@ -858,6 +897,7 @@
     /// Panics when `self` is the first representable date.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;Use pred_opt() instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>pred(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Date&lt;Tz&gt; {
         <span class="self">self</span>.pred_opt().expect(<span class="string">&quot;out of bound&quot;</span>)
     }
@@ -866,18 +906,21 @@
     ///
     /// Returns `None` when `self` is the first representable date.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>pred_opt(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Date&lt;Tz&gt;&gt; {
         <span class="self">self</span>.date.pred_opt().map(|date| Date::from_utc(date, <span class="self">self</span>.offset.clone()))
     }
 
     <span class="doccomment">/// Retrieves an associated offset from UTC.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>offset(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Tz::Offset {
         <span class="kw-2">&amp;</span><span class="self">self</span>.offset
     }
 
     <span class="doccomment">/// Retrieves an associated time zone.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>timezone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Tz {
         TimeZone::from_offset(<span class="kw-2">&amp;</span><span class="self">self</span>.offset)
     }
@@ -885,6 +928,7 @@
     <span class="doccomment">/// Changes the associated time zone.
     /// This does not change the actual `Date` (but will change the string representation).
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>with_timezone&lt;Tz2: TimeZone&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, tz: <span class="kw-2">&amp;</span>Tz2) -&gt; Date&lt;Tz2&gt; {
         tz.from_utc_date(<span class="kw-2">&amp;</span><span class="self">self</span>.date)
     }
@@ -893,6 +937,7 @@
     ///
     /// Returns `None` when it will result in overflow.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>checked_add_signed(<span class="self">self</span>, rhs: OldDuration) -&gt; <span class="prelude-ty">Option</span>&lt;Date&lt;Tz&gt;&gt; {
         <span class="kw">let </span>date = <span class="self">self</span>.date.checked_add_signed(rhs)<span class="question-mark">?</span>;
         <span class="prelude-val">Some</span>(Date { date, offset: <span class="self">self</span>.offset })
@@ -902,6 +947,7 @@
     ///
     /// Returns `None` when it will result in overflow.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>checked_sub_signed(<span class="self">self</span>, rhs: OldDuration) -&gt; <span class="prelude-ty">Option</span>&lt;Date&lt;Tz&gt;&gt; {
         <span class="kw">let </span>date = <span class="self">self</span>.date.checked_sub_signed(rhs)<span class="question-mark">?</span>;
         <span class="prelude-val">Some</span>(Date { date, offset: <span class="self">self</span>.offset })
@@ -913,12 +959,14 @@
     /// This does not overflow or underflow at all,
     /// as all possible output fits in the range of `Duration`.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>signed_duration_since&lt;Tz2: TimeZone&gt;(<span class="self">self</span>, rhs: Date&lt;Tz2&gt;) -&gt; OldDuration {
         <span class="self">self</span>.date.signed_duration_since(rhs.date)
     }
 
     <span class="doccomment">/// Returns a view to the naive UTC date.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>naive_utc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveDate {
         <span class="self">self</span>.date
     }
@@ -929,11 +977,13 @@
     /// because the offset is restricted to never exceed one day,
     /// but provided for the consistency.
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>naive_local(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveDate {
         <span class="self">self</span>.date
     }
 
     <span class="doccomment">/// Returns the number of whole years from the given `base` until `self`.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>years_since(<span class="kw-2">&amp;</span><span class="self">self</span>, base: <span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
         <span class="self">self</span>.date.years_since(base.date)
     }
@@ -960,6 +1010,7 @@
     </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format_with_items&lt;<span class="lifetime">&#39;a</span>, I, B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, items: I) -&gt; DelayedFormat&lt;I&gt;
     <span class="kw">where
         </span>I: Iterator&lt;Item = B&gt; + Clone,
@@ -974,6 +1025,7 @@
     </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; DelayedFormat&lt;StrftimeItems&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
         <span class="self">self</span>.format_with_items(StrftimeItems::new(fmt))
     }
@@ -982,6 +1034,7 @@
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format_localized_with_items&lt;<span class="lifetime">&#39;a</span>, I, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         items: I,
@@ -1006,6 +1059,7 @@
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format_localized&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         fmt: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -1289,4 +1343,4 @@
     }
 }
 </code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.1 (8460ca823 2023-03-20)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>

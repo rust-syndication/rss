@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Attr","A struct representing a key/value XML or HTML attribute."],["AttrError","Errors that can be raised during parsing attributes."]],"struct":[["Attribute","A struct representing a key/value XML attribute."],["Attributes","Iterator over XML attributes."]]};
+window.SIDEBAR_ITEMS = {"enum":["Attr","AttrError"],"struct":["Attribute","Attributes"]};

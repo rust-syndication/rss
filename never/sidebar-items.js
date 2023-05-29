@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["Never","A type that can never be constructed."]]};
+window.SIDEBAR_ITEMS = {"enum":["Never"]};

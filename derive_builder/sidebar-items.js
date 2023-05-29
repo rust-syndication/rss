@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"derive":[["Builder","Create a builder struct for the deriving struct."]],"struct":[["UninitializedFieldError","Runtime error when a `build()` method is called and one or more required fields do not have a value."]]};
+window.SIDEBAR_ITEMS = {"derive":["Builder"],"struct":["UninitializedFieldError"]};

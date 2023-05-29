@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":[["dublincore","Types and methods for Dublin Core extensions."],["itunes","Types and methods for iTunes extensions."],["syndication","Types and methods for Syndication extensions."]],"struct":[["Extension","A namespaced extension such as iTunes or Dublin Core."],["ExtensionBuilder","Builder for `Extension`."]],"type":[["ExtensionMap","A map of extension namespace prefixes to local names to elements."]]};
+window.SIDEBAR_ITEMS = {"mod":["dublincore","itunes","syndication"],"struct":["Extension","ExtensionBuilder"],"type":["ExtensionMap"]};

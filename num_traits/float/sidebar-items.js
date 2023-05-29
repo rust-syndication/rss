@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["FloatConst",""],["FloatCore","Generic trait for floating point numbers that works with `no_std`."]]};
+window.SIDEBAR_ITEMS = {"trait":["FloatConst","FloatCore"]};

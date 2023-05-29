@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Extension","A namespaced extension."],["ExtensionBuilder","Builder for `Extension`."]],"type":[["ExtensionMap","A map of extension namespace prefixes to local names to elements."]]};
+window.SIDEBAR_ITEMS = {"struct":["Extension","ExtensionBuilder"],"type":["ExtensionMap"]};

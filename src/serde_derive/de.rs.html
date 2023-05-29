@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_derive-1.0.158/src/de.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>de.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../serde_derive/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_derive-1.0.163/src/de.rs`."><title>de.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../static.files/ayu-be46fdc453a55015.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../serde_derive/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3144,6 +3144,17 @@
 <a href="#3144" id="3144">3144</a>
 <a href="#3145" id="3145">3145</a>
 <a href="#3146" id="3146">3146</a>
+<a href="#3147" id="3147">3147</a>
+<a href="#3148" id="3148">3148</a>
+<a href="#3149" id="3149">3149</a>
+<a href="#3150" id="3150">3150</a>
+<a href="#3151" id="3151">3151</a>
+<a href="#3152" id="3152">3152</a>
+<a href="#3153" id="3153">3153</a>
+<a href="#3154" id="3154">3154</a>
+<a href="#3155" id="3155">3155</a>
+<a href="#3156" id="3156">3156</a>
+<a href="#3157" id="3157">3157</a>
 </pre><pre class="rust"><code><span class="kw">use </span>proc_macro2::{Literal, Span, TokenStream};
 <span class="kw">use </span>quote::ToTokens;
 <span class="kw">use </span>syn::punctuated::Punctuated;
@@ -3215,8 +3226,6 @@
 
     <span class="prelude-val">Ok</span>(dummy::wrap_in_const(
         cont.attrs.custom_serde_path(),
-        <span class="string">&quot;DESERIALIZE&quot;</span>,
-        ident,
         impl_block,
     ))
 }
@@ -3565,7 +3574,8 @@
     <span class="kw">let </span>expecting = cattrs.expecting().unwrap_or(<span class="kw-2">&amp;</span>expecting);
 
     <span class="macro">quote_block! </span>{
-        <span class="kw">struct </span>__Visitor;
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Visitor;
 
         <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; _serde::de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>__Visitor {
             <span class="kw">type </span>Value = #this_type;
@@ -3661,7 +3671,8 @@
     };
 
     <span class="macro">quote_block! </span>{
-        <span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
             marker: _serde::__private::PhantomData&lt;#this_type #ty_generics&gt;,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
         }
@@ -3751,7 +3762,8 @@
     <span class="kw">let </span>place_life = place_lifetime();
 
     <span class="macro">quote_block! </span>{
-        <span class="kw">struct </span>__Visitor #in_place_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Visitor #in_place_impl_generics #where_clause {
             place: <span class="kw-2">&amp;</span>#place_life <span class="kw-2">mut </span>#this_type #ty_generics,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
         }
@@ -4166,7 +4178,8 @@
     <span class="macro">quote_block! </span>{
         #field_visitor
 
-        <span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
             marker: _serde::__private::PhantomData&lt;#this_type #ty_generics&gt;,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
         }
@@ -4278,7 +4291,8 @@
     <span class="prelude-val">Some</span>(<span class="macro">quote_block! </span>{
         #field_visitor
 
-        <span class="kw">struct </span>__Visitor #in_place_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Visitor #in_place_impl_generics #where_clause {
             place: <span class="kw-2">&amp;</span>#place_life <span class="kw-2">mut </span>#this_type #ty_generics,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
         }
@@ -4349,7 +4363,8 @@
     <span class="kw">let </span>variants_stmt = {
         <span class="kw">let </span>variant_names = variant_names_idents.iter().map(|(name, <span class="kw">_</span>, <span class="kw">_</span>)| name);
         <span class="macro">quote! </span>{
-            <span class="kw">const </span>VARIANTS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#variant_names),* ];
+            <span class="attr">#[doc(hidden)]
+            </span><span class="kw">const </span>VARIANTS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#variant_names),* ];
         }
     };
 
@@ -4421,7 +4436,8 @@
     <span class="macro">quote_block! </span>{
         #variant_visitor
 
-        <span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
             marker: _serde::__private::PhantomData&lt;#this_type #ty_generics&gt;,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
         }
@@ -4668,7 +4684,8 @@
 
         #variants_stmt
 
-        <span class="kw">struct </span>__Seed #de_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Seed #de_impl_generics #where_clause {
             field: __Field,
             marker: _serde::__private::PhantomData&lt;#this_type #ty_generics&gt;,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
@@ -4687,7 +4704,8 @@
             }
         }
 
-        <span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__Visitor #de_impl_generics #where_clause {
             marker: _serde::__private::PhantomData&lt;#this_type #ty_generics&gt;,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
         }
@@ -4789,7 +4807,8 @@
             }
         }
 
-        <span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[#tag, #content];
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[#tag, #content];
         _serde::Deserializer::deserialize_struct(
             __deserializer,
             #type_name,
@@ -5100,12 +5119,14 @@
 
     <span class="macro">quote_block! </span>{
         <span class="attr">#[allow(non_camel_case_types)]
+        #[doc(hidden)]
         </span><span class="kw">enum </span>__Field #lifetime {
             #(#field_idents,)*
             #ignore_variant
         }
 
-        <span class="kw">struct </span>__FieldVisitor;
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__FieldVisitor;
 
         <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; _serde::de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>__FieldVisitor {
             <span class="kw">type </span>Value = __Field #lifetime;
@@ -5192,12 +5213,14 @@
         <span class="prelude-val">None
     </span>} <span class="kw">else if </span>is_variant {
         <span class="kw">let </span>variants = <span class="macro">quote! </span>{
-            <span class="kw">const </span>VARIANTS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#names),* ];
+            <span class="attr">#[doc(hidden)]
+            </span><span class="kw">const </span>VARIANTS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#names),* ];
         };
         <span class="prelude-val">Some</span>(variants)
     } <span class="kw">else </span>{
         <span class="kw">let </span>fields = <span class="macro">quote! </span>{
-            <span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#names),* ];
+            <span class="attr">#[doc(hidden)]
+            </span><span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#names),* ];
         };
         <span class="prelude-val">Some</span>(fields)
     };
@@ -5218,7 +5241,8 @@
     <span class="macro">quote_block! </span>{
         #names_const
 
-        <span class="kw">struct </span>__FieldVisitor #de_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__FieldVisitor #de_impl_generics #where_clause {
             marker: _serde::__private::PhantomData&lt;#this_type #ty_generics&gt;,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
         }
@@ -5552,7 +5576,8 @@
             .flat_map(|(<span class="kw">_</span>, <span class="kw">_</span>, aliases)| aliases);
 
         <span class="macro">quote_block! </span>{
-            <span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#field_names),* ];
+            <span class="attr">#[doc(hidden)]
+            </span><span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#field_names),* ];
         }
     };
 
@@ -5830,7 +5855,8 @@
     <span class="kw">let </span>fields_stmt = {
         <span class="kw">let </span>field_names = field_names_idents.iter().map(|(name, <span class="kw">_</span>, <span class="kw">_</span>)| name);
         <span class="macro">quote_block! </span>{
-            <span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#field_names),* ];
+            <span class="attr">#[doc(hidden)]
+            </span><span class="kw">const </span>FIELDS: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str] = <span class="kw-2">&amp;</span>[ #(#field_names),* ];
         }
     };
 
@@ -6010,7 +6036,8 @@
     <span class="kw">let </span>delife = params.borrowed.de_lifetime();
 
     <span class="kw">let </span>wrapper = <span class="macro">quote! </span>{
-        <span class="kw">struct </span>__DeserializeWith #de_impl_generics #where_clause {
+        <span class="attr">#[doc(hidden)]
+        </span><span class="kw">struct </span>__DeserializeWith #de_impl_generics #where_clause {
             value: #value_ty,
             phantom: _serde::__private::PhantomData&lt;#this_type #ty_generics&gt;,
             lifetime: _serde::__private::PhantomData&lt;<span class="kw-2">&amp;</span>#delife ()&gt;,
@@ -6214,23 +6241,31 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;deserialize_in_place&quot;</span>)]
 </span><span class="kw">struct </span>InPlaceTypeGenerics&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Parameters);
 
+<span class="kw">fn </span>de_type_generics_to_tokens(
+    <span class="kw-2">mut </span>generics: syn::Generics,
+    borrowed: <span class="kw-2">&amp;</span>BorrowedLifetimes,
+    tokens: <span class="kw-2">&amp;mut </span>TokenStream,
+) {
+    <span class="kw">if </span>borrowed.de_lifetime_param().is_some() {
+        <span class="kw">let </span>def = syn::LifetimeParam {
+            attrs: Vec::new(),
+            lifetime: syn::Lifetime::new(<span class="string">&quot;&#39;de&quot;</span>, Span::call_site()),
+            colon_token: <span class="prelude-val">None</span>,
+            bounds: Punctuated::new(),
+        };
+        <span class="comment">// Prepend &#39;de lifetime to list of generics
+        </span>generics.params = <span class="prelude-val">Some</span>(syn::GenericParam::Lifetime(def))
+            .into_iter()
+            .chain(generics.params)
+            .collect();
+    }
+    <span class="kw">let </span>(<span class="kw">_</span>, ty_generics, <span class="kw">_</span>) = generics.split_for_impl();
+    ty_generics.to_tokens(tokens);
+}
+
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ToTokens <span class="kw">for </span>DeTypeGenerics&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
-        <span class="kw">let </span><span class="kw-2">mut </span>generics = <span class="self">self</span>.<span class="number">0</span>.generics.clone();
-        <span class="kw">if </span><span class="self">self</span>.<span class="number">0</span>.borrowed.de_lifetime_param().is_some() {
-            <span class="kw">let </span>def = syn::LifetimeParam {
-                attrs: Vec::new(),
-                lifetime: syn::Lifetime::new(<span class="string">&quot;&#39;de&quot;</span>, Span::call_site()),
-                colon_token: <span class="prelude-val">None</span>,
-                bounds: Punctuated::new(),
-            };
-            generics.params = <span class="prelude-val">Some</span>(syn::GenericParam::Lifetime(def))
-                .into_iter()
-                .chain(generics.params)
-                .collect();
-        }
-        <span class="kw">let </span>(<span class="kw">_</span>, ty_generics, <span class="kw">_</span>) = generics.split_for_impl();
-        ty_generics.to_tokens(tokens);
+        de_type_generics_to_tokens(<span class="self">self</span>.<span class="number">0</span>.generics.clone(), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.borrowed, tokens);
     }
 }
 
@@ -6243,20 +6278,7 @@
             .chain(generics.params)
             .collect();
 
-        <span class="kw">if </span><span class="self">self</span>.<span class="number">0</span>.borrowed.de_lifetime_param().is_some() {
-            <span class="kw">let </span>def = syn::LifetimeParam {
-                attrs: Vec::new(),
-                lifetime: syn::Lifetime::new(<span class="string">&quot;&#39;de&quot;</span>, Span::call_site()),
-                colon_token: <span class="prelude-val">None</span>,
-                bounds: Punctuated::new(),
-            };
-            generics.params = <span class="prelude-val">Some</span>(syn::GenericParam::Lifetime(def))
-                .into_iter()
-                .chain(generics.params)
-                .collect();
-        }
-        <span class="kw">let </span>(<span class="kw">_</span>, ty_generics, <span class="kw">_</span>) = generics.split_for_impl();
-        ty_generics.to_tokens(tokens);
+        de_type_generics_to_tokens(generics, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.borrowed, tokens);
     }
 }
 
@@ -6291,4 +6313,4 @@
     (de_impl_generics, de_ty_generics, ty_generics, where_clause)
 }
 </code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="serde_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.1 (8460ca823 2023-03-20)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="serde_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>

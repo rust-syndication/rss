@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"derive":[["Builder","Create a builder struct for the deriving struct."]]};
+window.SIDEBAR_ITEMS = {"derive":["Builder"]};

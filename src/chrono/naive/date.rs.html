@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.24/src/naive/date.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>date.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../chrono/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.25/src/naive/date.rs`."><title>date.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c4dbdcde0fbd8430.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-db279b6232be9c13.css"><link rel="stylesheet" disabled href="../../../static.files/dark-cf923f49f397b216.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-be46fdc453a55015.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-1b95b7cca98b26e5.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-98a684e84ae5b08b.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../chrono/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -2995,6 +2995,154 @@
 <a href="#2995" id="2995">2995</a>
 <a href="#2996" id="2996">2996</a>
 <a href="#2997" id="2997">2997</a>
+<a href="#2998" id="2998">2998</a>
+<a href="#2999" id="2999">2999</a>
+<a href="#3000" id="3000">3000</a>
+<a href="#3001" id="3001">3001</a>
+<a href="#3002" id="3002">3002</a>
+<a href="#3003" id="3003">3003</a>
+<a href="#3004" id="3004">3004</a>
+<a href="#3005" id="3005">3005</a>
+<a href="#3006" id="3006">3006</a>
+<a href="#3007" id="3007">3007</a>
+<a href="#3008" id="3008">3008</a>
+<a href="#3009" id="3009">3009</a>
+<a href="#3010" id="3010">3010</a>
+<a href="#3011" id="3011">3011</a>
+<a href="#3012" id="3012">3012</a>
+<a href="#3013" id="3013">3013</a>
+<a href="#3014" id="3014">3014</a>
+<a href="#3015" id="3015">3015</a>
+<a href="#3016" id="3016">3016</a>
+<a href="#3017" id="3017">3017</a>
+<a href="#3018" id="3018">3018</a>
+<a href="#3019" id="3019">3019</a>
+<a href="#3020" id="3020">3020</a>
+<a href="#3021" id="3021">3021</a>
+<a href="#3022" id="3022">3022</a>
+<a href="#3023" id="3023">3023</a>
+<a href="#3024" id="3024">3024</a>
+<a href="#3025" id="3025">3025</a>
+<a href="#3026" id="3026">3026</a>
+<a href="#3027" id="3027">3027</a>
+<a href="#3028" id="3028">3028</a>
+<a href="#3029" id="3029">3029</a>
+<a href="#3030" id="3030">3030</a>
+<a href="#3031" id="3031">3031</a>
+<a href="#3032" id="3032">3032</a>
+<a href="#3033" id="3033">3033</a>
+<a href="#3034" id="3034">3034</a>
+<a href="#3035" id="3035">3035</a>
+<a href="#3036" id="3036">3036</a>
+<a href="#3037" id="3037">3037</a>
+<a href="#3038" id="3038">3038</a>
+<a href="#3039" id="3039">3039</a>
+<a href="#3040" id="3040">3040</a>
+<a href="#3041" id="3041">3041</a>
+<a href="#3042" id="3042">3042</a>
+<a href="#3043" id="3043">3043</a>
+<a href="#3044" id="3044">3044</a>
+<a href="#3045" id="3045">3045</a>
+<a href="#3046" id="3046">3046</a>
+<a href="#3047" id="3047">3047</a>
+<a href="#3048" id="3048">3048</a>
+<a href="#3049" id="3049">3049</a>
+<a href="#3050" id="3050">3050</a>
+<a href="#3051" id="3051">3051</a>
+<a href="#3052" id="3052">3052</a>
+<a href="#3053" id="3053">3053</a>
+<a href="#3054" id="3054">3054</a>
+<a href="#3055" id="3055">3055</a>
+<a href="#3056" id="3056">3056</a>
+<a href="#3057" id="3057">3057</a>
+<a href="#3058" id="3058">3058</a>
+<a href="#3059" id="3059">3059</a>
+<a href="#3060" id="3060">3060</a>
+<a href="#3061" id="3061">3061</a>
+<a href="#3062" id="3062">3062</a>
+<a href="#3063" id="3063">3063</a>
+<a href="#3064" id="3064">3064</a>
+<a href="#3065" id="3065">3065</a>
+<a href="#3066" id="3066">3066</a>
+<a href="#3067" id="3067">3067</a>
+<a href="#3068" id="3068">3068</a>
+<a href="#3069" id="3069">3069</a>
+<a href="#3070" id="3070">3070</a>
+<a href="#3071" id="3071">3071</a>
+<a href="#3072" id="3072">3072</a>
+<a href="#3073" id="3073">3073</a>
+<a href="#3074" id="3074">3074</a>
+<a href="#3075" id="3075">3075</a>
+<a href="#3076" id="3076">3076</a>
+<a href="#3077" id="3077">3077</a>
+<a href="#3078" id="3078">3078</a>
+<a href="#3079" id="3079">3079</a>
+<a href="#3080" id="3080">3080</a>
+<a href="#3081" id="3081">3081</a>
+<a href="#3082" id="3082">3082</a>
+<a href="#3083" id="3083">3083</a>
+<a href="#3084" id="3084">3084</a>
+<a href="#3085" id="3085">3085</a>
+<a href="#3086" id="3086">3086</a>
+<a href="#3087" id="3087">3087</a>
+<a href="#3088" id="3088">3088</a>
+<a href="#3089" id="3089">3089</a>
+<a href="#3090" id="3090">3090</a>
+<a href="#3091" id="3091">3091</a>
+<a href="#3092" id="3092">3092</a>
+<a href="#3093" id="3093">3093</a>
+<a href="#3094" id="3094">3094</a>
+<a href="#3095" id="3095">3095</a>
+<a href="#3096" id="3096">3096</a>
+<a href="#3097" id="3097">3097</a>
+<a href="#3098" id="3098">3098</a>
+<a href="#3099" id="3099">3099</a>
+<a href="#3100" id="3100">3100</a>
+<a href="#3101" id="3101">3101</a>
+<a href="#3102" id="3102">3102</a>
+<a href="#3103" id="3103">3103</a>
+<a href="#3104" id="3104">3104</a>
+<a href="#3105" id="3105">3105</a>
+<a href="#3106" id="3106">3106</a>
+<a href="#3107" id="3107">3107</a>
+<a href="#3108" id="3108">3108</a>
+<a href="#3109" id="3109">3109</a>
+<a href="#3110" id="3110">3110</a>
+<a href="#3111" id="3111">3111</a>
+<a href="#3112" id="3112">3112</a>
+<a href="#3113" id="3113">3113</a>
+<a href="#3114" id="3114">3114</a>
+<a href="#3115" id="3115">3115</a>
+<a href="#3116" id="3116">3116</a>
+<a href="#3117" id="3117">3117</a>
+<a href="#3118" id="3118">3118</a>
+<a href="#3119" id="3119">3119</a>
+<a href="#3120" id="3120">3120</a>
+<a href="#3121" id="3121">3121</a>
+<a href="#3122" id="3122">3122</a>
+<a href="#3123" id="3123">3123</a>
+<a href="#3124" id="3124">3124</a>
+<a href="#3125" id="3125">3125</a>
+<a href="#3126" id="3126">3126</a>
+<a href="#3127" id="3127">3127</a>
+<a href="#3128" id="3128">3128</a>
+<a href="#3129" id="3129">3129</a>
+<a href="#3130" id="3130">3130</a>
+<a href="#3131" id="3131">3131</a>
+<a href="#3132" id="3132">3132</a>
+<a href="#3133" id="3133">3133</a>
+<a href="#3134" id="3134">3134</a>
+<a href="#3135" id="3135">3135</a>
+<a href="#3136" id="3136">3136</a>
+<a href="#3137" id="3137">3137</a>
+<a href="#3138" id="3138">3138</a>
+<a href="#3139" id="3139">3139</a>
+<a href="#3140" id="3140">3140</a>
+<a href="#3141" id="3141">3141</a>
+<a href="#3142" id="3142">3142</a>
+<a href="#3143" id="3143">3143</a>
+<a href="#3144" id="3144">3144</a>
+<a href="#3145" id="3145">3145</a>
 </pre><pre class="rust"><code><span class="comment">// This is a part of Chrono.
 // See README.md and LICENSE.txt for details.
 
@@ -3006,8 +3154,6 @@
 <span class="kw">use </span>core::ops::{Add, AddAssign, RangeInclusive, Sub, SubAssign};
 <span class="kw">use </span>core::{fmt, str};
 
-<span class="kw">use </span>num_integer::div_mod_floor;
-<span class="kw">use </span>num_traits::ToPrimitive;
 <span class="attr">#[cfg(feature = <span class="string">&quot;rkyv&quot;</span>)]
 </span><span class="kw">use </span>rkyv::{Archive, Deserialize, Serialize};
 
@@ -3017,8 +3163,10 @@
 
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
 </span><span class="kw">use </span><span class="kw">crate</span>::format::DelayedFormat;
-<span class="kw">use </span><span class="kw">crate</span>::format::{parse, write_hundreds, ParseError, ParseResult, Parsed, StrftimeItems};
-<span class="kw">use </span><span class="kw">crate</span>::format::{Item, Numeric, Pad};
+<span class="kw">use </span><span class="kw">crate</span>::format::{
+    parse, parse_and_remainder, write_hundreds, Item, Numeric, Pad, ParseError, ParseResult,
+    Parsed, StrftimeItems,
+};
 <span class="kw">use </span><span class="kw">crate</span>::month::Months;
 <span class="kw">use </span><span class="kw">crate</span>::naive::{IsoWeek, NaiveDateTime, NaiveTime};
 <span class="kw">use </span><span class="kw">crate</span>::oldtime::Duration <span class="kw">as </span>OldDuration;
@@ -3074,11 +3222,15 @@
     /// assert!(week.first_day() &lt;= date);
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>first_day(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveDate {
-        <span class="kw">let </span>start = <span class="self">self</span>.start.num_days_from_monday();
-        <span class="kw">let </span>end = <span class="self">self</span>.date.weekday().num_days_from_monday();
-        <span class="kw">let </span>days = <span class="kw">if </span>start &gt; end { <span class="number">7 </span>- start + end } <span class="kw">else </span>{ end - start };
-        <span class="self">self</span>.date - Duration::days(days.into())
+        <span class="kw">let </span>start = <span class="self">self</span>.start.num_days_from_monday() <span class="kw">as </span>i32;
+        <span class="kw">let </span>ref_day = <span class="self">self</span>.date.weekday().num_days_from_monday() <span class="kw">as </span>i32;
+        <span class="comment">// Calculate the number of days to subtract from `self.date`.
+        // Do not construct an intermediate date beyond `self.date`, because that may be out of
+        // range if `date` is close to `NaiveDate::MAX`.
+        </span><span class="kw">let </span>days = start - ref_day - <span class="kw">if </span>start &gt; ref_day { <span class="number">7 </span>} <span class="kw">else </span>{ <span class="number">0 </span>};
+        <span class="self">self</span>.date.diff_days(days <span class="kw">as </span>i64).unwrap()
     }
 
     <span class="doccomment">/// Returns a date representing the last day of the week.
@@ -3093,8 +3245,15 @@
     /// assert!(week.last_day() &gt;= date);
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>last_day(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveDate {
-        <span class="self">self</span>.first_day() + Duration::days(<span class="number">6</span>)
+        <span class="kw">let </span>end = <span class="self">self</span>.start.pred().num_days_from_monday() <span class="kw">as </span>i32;
+        <span class="kw">let </span>ref_day = <span class="self">self</span>.date.weekday().num_days_from_monday() <span class="kw">as </span>i32;
+        <span class="comment">// Calculate the number of days to add to `self.date`.
+        // Do not construct an intermediate date before `self.date` (like with `first_day()`),
+        // because that may be out of range if `date` is close to `NaiveDate::MIN`.
+        </span><span class="kw">let </span>days = end - ref_day + <span class="kw">if </span>end &lt; ref_day { <span class="number">7 </span>} <span class="kw">else </span>{ <span class="number">0 </span>};
+        <span class="self">self</span>.date.diff_days(days <span class="kw">as </span>i64).unwrap()
     }
 
     <span class="doccomment">/// Returns a [`RangeInclusive&lt;T&gt;`] representing the whole week bounded by
@@ -3112,6 +3271,7 @@
     /// assert!(days.contains(&amp;date));
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>days(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RangeInclusive&lt;NaiveDate&gt; {
         <span class="self">self</span>.first_day()..=<span class="self">self</span>.last_day()
     }
@@ -3134,8 +3294,7 @@
 }
 
 <span class="doccomment">/// ISO 8601 calendar date without timezone.
-/// Allows for every [proleptic Gregorian date](#calendar-date)
-/// from Jan 1, 262145 BCE to Dec 31, 262143 CE.
+/// Allows for every [proleptic Gregorian date] from Jan 1, 262145 BCE to Dec 31, 262143 CE.
 /// Also supports the conversion from ISO 8601 ordinal and week date.
 ///
 /// # Calendar Date
@@ -3181,6 +3340,8 @@
 /// The year number is the same as that of the [calendar date](#calendar-date).
 ///
 /// This is currently the internal format of Chrono&#39;s date types.
+///
+/// [proleptic Gregorian date]: crate::NaiveDate#calendar-date
 </span><span class="attr">#[derive(PartialEq, Eq, Hash, PartialOrd, Ord, Copy, Clone)]
 #[cfg_attr(feature = <span class="string">&quot;rkyv&quot;</span>, derive(Archive, Deserialize, Serialize))]
 </span><span class="kw">pub struct </span>NaiveDate {
@@ -3236,19 +3397,35 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>weeks_from(<span class="kw-2">&amp;</span><span class="self">self</span>, day: Weekday) -&gt; i32 {
         (<span class="self">self</span>.ordinal() <span class="kw">as </span>i32 - <span class="self">self</span>.weekday().num_days_from(day) <span class="kw">as </span>i32 + <span class="number">6</span>) / <span class="number">7
     </span>}
-    <span class="doccomment">/// Makes a new `NaiveDate` from year and packed ordinal-flags, with a verification.
-    </span><span class="kw">fn </span>from_of(year: i32, of: Of) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="kw">if </span>(MIN_YEAR..=MAX_YEAR).contains(<span class="kw-2">&amp;</span>year) &amp;&amp; of.valid() {
-            <span class="kw">let </span>Of(of) = of;
-            <span class="prelude-val">Some</span>(NaiveDate { ymdf: (year &lt;&lt; <span class="number">13</span>) | (of <span class="kw">as </span>DateImpl) })
-        } <span class="kw">else </span>{
-            <span class="prelude-val">None
+
+    <span class="doccomment">/// Makes a new `NaiveDate` from year, ordinal and flags.
+    /// Does not check whether the flags are correct for the provided year.
+    </span><span class="kw">const fn </span>from_ordinal_and_flags(
+        year: i32,
+        ordinal: u32,
+        flags: YearFlags,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
+        <span class="kw">if </span>year &lt; MIN_YEAR || year &gt; MAX_YEAR {
+            <span class="kw">return </span><span class="prelude-val">None</span>; <span class="comment">// Out-of-range
+        </span>}
+        <span class="comment">// Enable debug check once the MSRV &gt;= 1.57 (panicking in const feature)
+        // debug_assert!(YearFlags::from_year(year).0 == flags.0);
+        </span><span class="kw">match </span>Of::new(ordinal, flags) {
+            <span class="prelude-val">Some</span>(of) =&gt; <span class="prelude-val">Some</span>(NaiveDate { ymdf: (year &lt;&lt; <span class="number">13</span>) | (of.inner() <span class="kw">as </span>DateImpl) }),
+            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>, <span class="comment">// Invalid: Ordinal outside of the nr of days in a year with those flags.
         </span>}
     }
 
-    <span class="doccomment">/// Makes a new `NaiveDate` from year and packed month-day-flags, with a verification.
-    </span><span class="kw">fn </span>from_mdf(year: i32, mdf: Mdf) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        NaiveDate::from_of(year, mdf.to_of())
+    <span class="doccomment">/// Makes a new `NaiveDate` from year and packed month-day-flags.
+    /// Does not check whether the flags are correct for the provided year.
+    </span><span class="kw">const fn </span>from_mdf(year: i32, mdf: Mdf) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
+        <span class="kw">if </span>year &lt; MIN_YEAR || year &gt; MAX_YEAR {
+            <span class="kw">return </span><span class="prelude-val">None</span>; <span class="comment">// Out-of-range
+        </span>}
+        <span class="kw">match </span>mdf.to_of() {
+            <span class="prelude-val">Some</span>(of) =&gt; <span class="prelude-val">Some</span>(NaiveDate { ymdf: (year &lt;&lt; <span class="number">13</span>) | (of.inner() <span class="kw">as </span>DateImpl) }),
+            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>, <span class="comment">// Non-existing date
+        </span>}
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` from the [calendar date](#calendar-date)
@@ -3256,6 +3433,7 @@
     ///
     /// Panics on the out-of-range date, invalid month and/or day.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_ymd_opt()` instead&quot;</span>)]
+    #[must_use]
     </span><span class="kw">pub fn </span>from_ymd(year: i32, month: u32, day: u32) -&gt; NaiveDate {
         NaiveDate::from_ymd_opt(year, month, day).expect(<span class="string">&quot;invalid or out-of-range date&quot;</span>)
     }
@@ -3279,6 +3457,7 @@
     /// assert!(from_ymd_opt(400000, 1, 1).is_none());
     /// assert!(from_ymd_opt(-400000, 1, 1).is_none());
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>from_ymd_opt(year: i32, month: u32, day: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
         <span class="kw">let </span>flags = YearFlags::from_year(year);
         NaiveDate::from_mdf(year, Mdf::new(month, day, flags)<span class="question-mark">?</span>)
@@ -3289,6 +3468,7 @@
     ///
     /// Panics on the out-of-range date and/or invalid day of year.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_yo_opt()` instead&quot;</span>)]
+    #[must_use]
     </span><span class="kw">pub fn </span>from_yo(year: i32, ordinal: u32) -&gt; NaiveDate {
         NaiveDate::from_yo_opt(year, ordinal).expect(<span class="string">&quot;invalid or out-of-range date&quot;</span>)
     }
@@ -3313,9 +3493,10 @@
     /// assert!(from_yo_opt(400000, 1).is_none());
     /// assert!(from_yo_opt(-400000, 1).is_none());
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>from_yo_opt(year: i32, ordinal: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
         <span class="kw">let </span>flags = YearFlags::from_year(year);
-        NaiveDate::from_of(year, Of::new(ordinal, flags)<span class="question-mark">?</span>)
+        NaiveDate::from_ordinal_and_flags(year, ordinal, flags)
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` from the [ISO week date](#week-date)
@@ -3324,6 +3505,7 @@
     ///
     /// Panics on the out-of-range date and/or invalid week number.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_isoywd_opt()` instead&quot;</span>)]
+    #[must_use]
     </span><span class="kw">pub fn </span>from_isoywd(year: i32, week: u32, weekday: Weekday) -&gt; NaiveDate {
         NaiveDate::from_isoywd_opt(year, week, weekday).expect(<span class="string">&quot;invalid or out-of-range date&quot;</span>)
     }
@@ -3339,7 +3521,7 @@
     /// ```
     /// use chrono::{NaiveDate, Weekday};
     ///
-    /// let from_ymd = NaiveDate::from_ymd;
+    /// let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
     /// let from_isoywd_opt = NaiveDate::from_isoywd_opt;
     ///
     /// assert_eq!(from_isoywd_opt(2015, 0, Weekday::Sun), None);
@@ -3355,7 +3537,7 @@
     ///
     /// ```
     /// # use chrono::{NaiveDate, Weekday};
-    /// # let from_ymd = NaiveDate::from_ymd;
+    /// # let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
     /// # let from_isoywd_opt = NaiveDate::from_isoywd_opt;
     /// //           Mo Tu We Th Fr Sa Su
     /// // 2014-W52  22 23 24 25 26 27 28    has 4+ days of new year,
@@ -3372,6 +3554,7 @@
     /// assert_eq!(from_isoywd_opt(2015, 54, Weekday::Mon), None);
     /// assert_eq!(from_isoywd_opt(2016, 1, Weekday::Mon), Some(from_ymd(2016, 1, 4)));
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>from_isoywd_opt(year: i32, week: u32, weekday: Weekday) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
         <span class="kw">let </span>flags = YearFlags::from_year(year);
         <span class="kw">let </span>nweeks = flags.nisoweeks();
@@ -3382,20 +3565,21 @@
             <span class="kw">if </span>weekord &lt;= delta {
                 <span class="comment">// ordinal &lt; 1, previous year
                 </span><span class="kw">let </span>prevflags = YearFlags::from_year(year - <span class="number">1</span>);
-                NaiveDate::from_of(
+                NaiveDate::from_ordinal_and_flags(
                     year - <span class="number">1</span>,
-                    Of::new(weekord + prevflags.ndays() - delta, prevflags)<span class="question-mark">?</span>,
+                    weekord + prevflags.ndays() - delta,
+                    prevflags,
                 )
             } <span class="kw">else </span>{
                 <span class="kw">let </span>ordinal = weekord - delta;
                 <span class="kw">let </span>ndays = flags.ndays();
                 <span class="kw">if </span>ordinal &lt;= ndays {
                     <span class="comment">// this year
-                    </span>NaiveDate::from_of(year, Of::new(ordinal, flags)<span class="question-mark">?</span>)
+                    </span>NaiveDate::from_ordinal_and_flags(year, ordinal, flags)
                 } <span class="kw">else </span>{
                     <span class="comment">// ordinal &gt; ndays, next year
                     </span><span class="kw">let </span>nextflags = YearFlags::from_year(year + <span class="number">1</span>);
-                    NaiveDate::from_of(year + <span class="number">1</span>, Of::new(ordinal - ndays, nextflags)<span class="question-mark">?</span>)
+                    NaiveDate::from_ordinal_and_flags(year + <span class="number">1</span>, ordinal - ndays, nextflags)
                 }
             }
         } <span class="kw">else </span>{
@@ -3409,6 +3593,7 @@
     /// Panics if the date is out of range.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_num_days_from_ce_opt()` instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>from_num_days_from_ce(days: i32) -&gt; NaiveDate {
         NaiveDate::from_num_days_from_ce_opt(days).expect(<span class="string">&quot;out-of-range date&quot;</span>)
     }
@@ -3433,12 +3618,13 @@
     /// assert_eq!(from_ndays_opt(100_000_000),  None);
     /// assert_eq!(from_ndays_opt(-100_000_000), None);
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>from_num_days_from_ce_opt(days: i32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="kw">let </span>days = days + <span class="number">365</span>; <span class="comment">// make December 31, 1 BCE equal to day 0
+        <span class="kw">let </span>days = days.checked_add(<span class="number">365</span>)<span class="question-mark">?</span>; <span class="comment">// make December 31, 1 BCE equal to day 0
         </span><span class="kw">let </span>(year_div_400, cycle) = div_mod_floor(days, <span class="number">146_097</span>);
         <span class="kw">let </span>(year_mod_400, ordinal) = internals::cycle_to_yo(cycle <span class="kw">as </span>u32);
         <span class="kw">let </span>flags = YearFlags::from_year_mod_400(year_mod_400 <span class="kw">as </span>i32);
-        NaiveDate::from_of(year_div_400 * <span class="number">400 </span>+ year_mod_400 <span class="kw">as </span>i32, Of::new(ordinal, flags)<span class="question-mark">?</span>)
+        NaiveDate::from_ordinal_and_flags(year_div_400 * <span class="number">400 </span>+ year_mod_400 <span class="kw">as </span>i32, ordinal, flags)
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` by counting the number of occurrences of a particular day-of-week
@@ -3452,6 +3638,7 @@
     ///
     /// `n` is 1-indexed.  Passing `n=0` will cause a panic.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_weekday_of_month_opt()` instead&quot;</span>)]
+    #[must_use]
     </span><span class="kw">pub fn </span>from_weekday_of_month(year: i32, month: u32, weekday: Weekday, n: u8) -&gt; NaiveDate {
         NaiveDate::from_weekday_of_month_opt(year, month, weekday, n).expect(<span class="string">&quot;out-of-range date&quot;</span>)
     }
@@ -3468,6 +3655,7 @@
     ///
     /// Returns `None` if `n` out-of-range; ie. if `n` is larger than the number of `weekday` in
     /// `month` (eg. the 6th Friday of March 2017), or if `n == 0`.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>from_weekday_of_month_opt(
         year: i32,
         month: u32,
@@ -3531,6 +3719,28 @@
         parsed.to_naive_date()
     }
 
+    <span class="doccomment">/// Parses a string from a user-specified format into a new `NaiveDate` value, and a slice with
+    /// the remaining portion of the string.
+    /// See the [`format::strftime` module](../format/strftime/index.html)
+    /// on the supported escape sequences.
+    ///
+    /// Similar to [`parse_from_str`](#method.parse_from_str).
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// # use chrono::{NaiveDate};
+    /// let (date, remainder) = NaiveDate::parse_and_remainder(
+    ///     &quot;2015-02-18 trailing text&quot;, &quot;%Y-%m-%d&quot;).unwrap();
+    /// assert_eq!(date, NaiveDate::from_ymd_opt(2015, 2, 18).unwrap());
+    /// assert_eq!(remainder, &quot; trailing text&quot;);
+    /// ```
+    </span><span class="kw">pub fn </span>parse_and_remainder&lt;<span class="lifetime">&#39;a</span>&gt;(s: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, fmt: <span class="kw-2">&amp;</span>str) -&gt; ParseResult&lt;(NaiveDate, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str)&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>parsed = Parsed::new();
+        <span class="kw">let </span>remainder = parse_and_remainder(<span class="kw-2">&amp;mut </span>parsed, s, StrftimeItems::new(fmt))<span class="question-mark">?</span>;
+        parsed.to_naive_date().map(|d| (d, remainder))
+    }
+
     <span class="doccomment">/// Add a duration in [`Months`] to the date
     ///
     /// If the day would be out of range for the resulting month, use the last day for that month.
@@ -3548,6 +3758,7 @@
     ///     Some(NaiveDate::from_ymd_opt(2022, 9, 30).unwrap())
     /// );
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_add_months(<span class="self">self</span>, months: Months) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">if </span>months.<span class="number">0 </span>== <span class="number">0 </span>{
             <span class="kw">return </span><span class="prelude-val">Some</span>(<span class="self">self</span>);
@@ -3578,6 +3789,7 @@
     ///     None
     /// );
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_sub_months(<span class="self">self</span>, months: Months) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">if </span>months.<span class="number">0 </span>== <span class="number">0 </span>{
             <span class="kw">return </span><span class="prelude-val">Some</span>(<span class="self">self</span>);
@@ -3651,6 +3863,7 @@
     ///     None
     /// );
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_add_days(<span class="self">self</span>, days: Days) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">if </span>days.<span class="number">0 </span>== <span class="number">0 </span>{
             <span class="kw">return </span><span class="prelude-val">Some</span>(<span class="self">self</span>);
@@ -3674,6 +3887,7 @@
     ///     None
     /// );
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_sub_days(<span class="self">self</span>, days: Days) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">if </span>days.<span class="number">0 </span>== <span class="number">0 </span>{
             <span class="kw">return </span><span class="prelude-val">Some</span>(<span class="self">self</span>);
@@ -3705,6 +3919,7 @@
     /// assert_eq!(dt.time(), t);
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub const fn </span>and_time(<span class="kw-2">&amp;</span><span class="self">self</span>, time: NaiveTime) -&gt; NaiveDateTime {
         NaiveDateTime::new(<span class="kw-2">*</span><span class="self">self</span>, time)
     }
@@ -3717,6 +3932,7 @@
     /// Panics on invalid hour, minute and/or second.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `and_hms_opt()` instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32) -&gt; NaiveDateTime {
         <span class="self">self</span>.and_hms_opt(hour, min, sec).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -3740,6 +3956,7 @@
     /// assert!(d.and_hms_opt(24, 34, 56).is_none());
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_opt(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDateTime&gt; {
         NaiveTime::from_hms_opt(hour, min, sec).map(|time| <span class="self">self</span>.and_time(time))
     }
@@ -3752,6 +3969,7 @@
     /// Panics on invalid hour, minute, second and/or millisecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `and_hms_milli_opt()` instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_milli(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32, milli: u32) -&gt; NaiveDateTime {
         <span class="self">self</span>.and_hms_milli_opt(hour, min, sec, milli).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -3777,6 +3995,7 @@
     /// assert!(d.and_hms_milli_opt(24, 34, 56,   789).is_none());
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_milli_opt(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         hour: u32,
@@ -3801,7 +4020,7 @@
     ///
     /// let d = NaiveDate::from_ymd_opt(2015, 6, 3).unwrap();
     ///
-    /// let dt: NaiveDateTime = d.and_hms_micro(12, 34, 56, 789_012);
+    /// let dt: NaiveDateTime = d.and_hms_micro_opt(12, 34, 56, 789_012).unwrap();
     /// assert_eq!(dt.year(), 2015);
     /// assert_eq!(dt.weekday(), Weekday::Wed);
     /// assert_eq!(dt.second(), 56);
@@ -3809,6 +4028,7 @@
     /// ```
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `and_hms_micro_opt()` instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_micro(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32, micro: u32) -&gt; NaiveDateTime {
         <span class="self">self</span>.and_hms_micro_opt(hour, min, sec, micro).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -3834,6 +4054,7 @@
     /// assert!(d.and_hms_micro_opt(24, 34, 56,   789_012).is_none());
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_micro_opt(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         hour: u32,
@@ -3852,6 +4073,7 @@
     /// Panics on invalid hour, minute, second and/or nanosecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `and_hms_nano_opt()` instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_nano(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32, min: u32, sec: u32, nano: u32) -&gt; NaiveDateTime {
         <span class="self">self</span>.and_hms_nano_opt(hour, min, sec, nano).expect(<span class="string">&quot;invalid time&quot;</span>)
     }
@@ -3877,6 +4099,7 @@
     /// assert!(d.and_hms_nano_opt(24, 34, 56,   789_012_345).is_none());
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>and_hms_nano_opt(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         hour: u32,
@@ -3896,7 +4119,7 @@
     <span class="doccomment">/// Returns the packed ordinal-flags.
     </span><span class="attr">#[inline]
     </span><span class="kw">const fn </span>of(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Of {
-        Of((<span class="self">self</span>.ymdf &amp; <span class="number">0b1_1111_1111_1111</span>) <span class="kw">as </span>u32)
+        Of::from_date_impl(<span class="self">self</span>.ymdf)
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` with the packed month-day-flags changed.
@@ -3904,20 +4127,16 @@
     /// Returns `None` when the resulting `NaiveDate` would be invalid.
     </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_mdf(<span class="kw-2">&amp;</span><span class="self">self</span>, mdf: Mdf) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="self">self</span>.with_of(mdf.to_of())
+        <span class="prelude-val">Some</span>(<span class="self">self</span>.with_of(mdf.to_of()<span class="question-mark">?</span>))
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` with the packed ordinal-flags changed.
     ///
     /// Returns `None` when the resulting `NaiveDate` would be invalid.
+    /// Does not check if the year flags match the year.
     </span><span class="attr">#[inline]
-    </span><span class="kw">fn </span>with_of(<span class="kw-2">&amp;</span><span class="self">self</span>, of: Of) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="kw">if </span>of.valid() {
-            <span class="kw">let </span>Of(of) = of;
-            <span class="prelude-val">Some</span>(NaiveDate { ymdf: (<span class="self">self</span>.ymdf &amp; !<span class="number">0b1_1111_1111_1111</span>) | of <span class="kw">as </span>DateImpl })
-        } <span class="kw">else </span>{
-            <span class="prelude-val">None
-        </span>}
+    </span><span class="kw">const fn </span>with_of(<span class="kw-2">&amp;</span><span class="self">self</span>, of: Of) -&gt; NaiveDate {
+        NaiveDate { ymdf: (<span class="self">self</span>.ymdf &amp; !<span class="number">0b1_1111_1111_1111</span>) | of.inner() <span class="kw">as </span>DateImpl }
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` for the next calendar date.
@@ -3925,6 +4144,7 @@
     /// Panics when `self` is the last representable date.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `succ_opt()` instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>succ(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveDate {
         <span class="self">self</span>.succ_opt().expect(<span class="string">&quot;out of bound&quot;</span>)
     }
@@ -3943,8 +4163,12 @@
     /// assert_eq!(NaiveDate::MAX.succ_opt(), None);
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>succ_opt(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="self">self</span>.with_of(<span class="self">self</span>.of().succ()).or_else(|| NaiveDate::from_ymd_opt(<span class="self">self</span>.year() + <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>))
+        <span class="kw">match </span><span class="self">self</span>.of().succ() {
+            <span class="prelude-val">Some</span>(of) =&gt; <span class="prelude-val">Some</span>(<span class="self">self</span>.with_of(of)),
+            <span class="prelude-val">None </span>=&gt; NaiveDate::from_ymd_opt(<span class="self">self</span>.year() + <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>),
+        }
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` for the previous calendar date.
@@ -3952,6 +4176,7 @@
     /// Panics when `self` is the first representable date.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `pred_opt()` instead&quot;</span>)]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>pred(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveDate {
         <span class="self">self</span>.pred_opt().expect(<span class="string">&quot;out of bound&quot;</span>)
     }
@@ -3970,8 +4195,12 @@
     /// assert_eq!(NaiveDate::MIN.pred_opt(), None);
     /// ```
     </span><span class="attr">#[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>pred_opt(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="self">self</span>.with_of(<span class="self">self</span>.of().pred()).or_else(|| NaiveDate::from_ymd_opt(<span class="self">self</span>.year() - <span class="number">1</span>, <span class="number">12</span>, <span class="number">31</span>))
+        <span class="kw">match </span><span class="self">self</span>.of().pred() {
+            <span class="prelude-val">Some</span>(of) =&gt; <span class="prelude-val">Some</span>(<span class="self">self</span>.with_of(of)),
+            <span class="prelude-val">None </span>=&gt; NaiveDate::from_ymd_opt(<span class="self">self</span>.year() - <span class="number">1</span>, <span class="number">12</span>, <span class="number">31</span>),
+        }
     }
 
     <span class="doccomment">/// Adds the `days` part of given `Duration` to the current date.
@@ -3992,17 +4221,18 @@
     /// assert_eq!(d.checked_add_signed(Duration::days(-1_000_000_000)), None);
     /// assert_eq!(NaiveDate::MAX.checked_add_signed(Duration::days(1)), None);
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_add_signed(<span class="self">self</span>, rhs: OldDuration) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
         <span class="kw">let </span>year = <span class="self">self</span>.year();
         <span class="kw">let </span>(<span class="kw-2">mut </span>year_div_400, year_mod_400) = div_mod_floor(year, <span class="number">400</span>);
         <span class="kw">let </span>cycle = internals::yo_to_cycle(year_mod_400 <span class="kw">as </span>u32, <span class="self">self</span>.of().ordinal());
-        <span class="kw">let </span>cycle = (cycle <span class="kw">as </span>i32).checked_add(rhs.num_days().to_i32()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>cycle = (cycle <span class="kw">as </span>i32).checked_add(i32::try_from(rhs.num_days()).ok()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>(cycle_div_400y, cycle) = div_mod_floor(cycle, <span class="number">146_097</span>);
         year_div_400 += cycle_div_400y;
 
         <span class="kw">let </span>(year_mod_400, ordinal) = internals::cycle_to_yo(cycle <span class="kw">as </span>u32);
         <span class="kw">let </span>flags = YearFlags::from_year_mod_400(year_mod_400 <span class="kw">as </span>i32);
-        NaiveDate::from_of(year_div_400 * <span class="number">400 </span>+ year_mod_400 <span class="kw">as </span>i32, Of::new(ordinal, flags)<span class="question-mark">?</span>)
+        NaiveDate::from_ordinal_and_flags(year_div_400 * <span class="number">400 </span>+ year_mod_400 <span class="kw">as </span>i32, ordinal, flags)
     }
 
     <span class="doccomment">/// Subtracts the `days` part of given `Duration` from the current date.
@@ -4023,17 +4253,18 @@
     /// assert_eq!(d.checked_sub_signed(Duration::days(-1_000_000_000)), None);
     /// assert_eq!(NaiveDate::MIN.checked_sub_signed(Duration::days(1)), None);
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_sub_signed(<span class="self">self</span>, rhs: OldDuration) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
         <span class="kw">let </span>year = <span class="self">self</span>.year();
         <span class="kw">let </span>(<span class="kw-2">mut </span>year_div_400, year_mod_400) = div_mod_floor(year, <span class="number">400</span>);
         <span class="kw">let </span>cycle = internals::yo_to_cycle(year_mod_400 <span class="kw">as </span>u32, <span class="self">self</span>.of().ordinal());
-        <span class="kw">let </span>cycle = (cycle <span class="kw">as </span>i32).checked_sub(rhs.num_days().to_i32()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>cycle = (cycle <span class="kw">as </span>i32).checked_sub(i32::try_from(rhs.num_days()).ok()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>(cycle_div_400y, cycle) = div_mod_floor(cycle, <span class="number">146_097</span>);
         year_div_400 += cycle_div_400y;
 
         <span class="kw">let </span>(year_mod_400, ordinal) = internals::cycle_to_yo(cycle <span class="kw">as </span>u32);
         <span class="kw">let </span>flags = YearFlags::from_year_mod_400(year_mod_400 <span class="kw">as </span>i32);
-        NaiveDate::from_of(year_div_400 * <span class="number">400 </span>+ year_mod_400 <span class="kw">as </span>i32, Of::new(ordinal, flags)<span class="question-mark">?</span>)
+        NaiveDate::from_ordinal_and_flags(year_div_400 * <span class="number">400 </span>+ year_mod_400 <span class="kw">as </span>i32, ordinal, flags)
     }
 
     <span class="doccomment">/// Subtracts another `NaiveDate` from the current date.
@@ -4047,7 +4278,7 @@
     /// ```
     /// use chrono::{Duration, NaiveDate};
     ///
-    /// let from_ymd = NaiveDate::from_ymd;
+    /// let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
     /// let since = NaiveDate::signed_duration_since;
     ///
     /// assert_eq!(since(from_ymd(2014, 1, 1), from_ymd(2014, 1, 1)), Duration::zero());
@@ -4058,6 +4289,7 @@
     /// assert_eq!(since(from_ymd(2014, 1, 1), from_ymd(2010, 1, 1)), Duration::days(365*4 + 1));
     /// assert_eq!(since(from_ymd(2014, 1, 1), from_ymd(1614, 1, 1)), Duration::days(365*400 + 97));
     /// ```
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>signed_duration_since(<span class="self">self</span>, rhs: NaiveDate) -&gt; OldDuration {
         <span class="kw">let </span>year1 = <span class="self">self</span>.year();
         <span class="kw">let </span>year2 = rhs.year();
@@ -4071,6 +4303,7 @@
     }
 
     <span class="doccomment">/// Returns the number of whole years from the given `base` until `self`.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>years_since(<span class="kw-2">&amp;</span><span class="self">self</span>, base: <span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>years = <span class="self">self</span>.year() - base.year();
         <span class="kw">if </span>(<span class="self">self</span>.month(), <span class="self">self</span>.day()) &lt; (base.month(), base.day()) {
@@ -4113,6 +4346,7 @@
     </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format_with_items&lt;<span class="lifetime">&#39;a</span>, I, B&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, items: I) -&gt; DelayedFormat&lt;I&gt;
     <span class="kw">where
         </span>I: Iterator&lt;Item = B&gt; + Clone,
@@ -4156,6 +4390,7 @@
     </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; DelayedFormat&lt;StrftimeItems&lt;<span class="lifetime">&#39;a</span>&gt;&gt; {
         <span class="self">self</span>.format_with_items(StrftimeItems::new(fmt))
     }
@@ -4164,6 +4399,7 @@
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format_localized_with_items&lt;<span class="lifetime">&#39;a</span>, I, B&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         items: I,
@@ -4183,6 +4419,7 @@
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)))]
     #[inline]
+    #[must_use]
     </span><span class="kw">pub fn </span>format_localized&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         fmt: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -4342,7 +4579,7 @@
     ///     let d = NaiveDate::from_ymd_opt(y, m, 1).unwrap();
     ///
     ///     // ...is preceded by the last day of the original month
-    ///     d.pred().day()
+    ///     d.pred_opt().unwrap().day()
     /// }
     ///
     /// assert_eq!(ndays_in_month(2015, 8), 31);
@@ -4398,7 +4635,7 @@
     ///     let d = NaiveDate::from_ymd_opt(year + 1, 1, 1).unwrap();
     ///
     ///     // ...is preceded by the last day of the original year
-    ///     d.pred().ordinal()
+    ///     d.pred_opt().unwrap().ordinal()
     /// }
     ///
     /// assert_eq!(ndays_in_year(2015), 365);
@@ -4518,7 +4755,8 @@
     /// ```
     </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_month0(<span class="kw-2">&amp;</span><span class="self">self</span>, month0: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="self">self</span>.with_mdf(<span class="self">self</span>.mdf().with_month(month0 + <span class="number">1</span>)<span class="question-mark">?</span>)
+        <span class="kw">let </span>month = month0.checked_add(<span class="number">1</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.with_mdf(<span class="self">self</span>.mdf().with_month(month)<span class="question-mark">?</span>)
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` with the day of month (starting from 1) changed.
@@ -4556,7 +4794,8 @@
     /// ```
     </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_day0(<span class="kw-2">&amp;</span><span class="self">self</span>, day0: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="self">self</span>.with_mdf(<span class="self">self</span>.mdf().with_day(day0 + <span class="number">1</span>)<span class="question-mark">?</span>)
+        <span class="kw">let </span>day = day0.checked_add(<span class="number">1</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.with_mdf(<span class="self">self</span>.mdf().with_day(day)<span class="question-mark">?</span>)
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` with the day of year (starting from 1) changed.
@@ -4580,7 +4819,7 @@
     /// ```
     </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_ordinal(<span class="kw-2">&amp;</span><span class="self">self</span>, ordinal: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="self">self</span>.with_of(<span class="self">self</span>.of().with_ordinal(ordinal)<span class="question-mark">?</span>)
+        <span class="self">self</span>.of().with_ordinal(ordinal).map(|of| <span class="self">self</span>.with_of(of))
     }
 
     <span class="doccomment">/// Makes a new `NaiveDate` with the day of year (starting from 0) changed.
@@ -4604,22 +4843,22 @@
     /// ```
     </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_ordinal0(<span class="kw-2">&amp;</span><span class="self">self</span>, ordinal0: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDate&gt; {
-        <span class="self">self</span>.with_of(<span class="self">self</span>.of().with_ordinal(ordinal0 + <span class="number">1</span>)<span class="question-mark">?</span>)
+        <span class="kw">let </span>ordinal = ordinal0.checked_add(<span class="number">1</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.with_ordinal(ordinal)
     }
 }
 
 <span class="doccomment">/// An addition of `Duration` to `NaiveDate` discards the fractional days,
 /// rounding to the closest integral number of days towards `Duration::zero()`.
 ///
-/// Panics on underflow or overflow.
-/// Use [`NaiveDate::checked_add_signed`](#method.checked_add_signed) to detect that.
+/// Panics on underflow or overflow. Use [`NaiveDate::checked_add_signed`] to detect that.
 ///
 /// # Example
 ///
 /// ```
 /// use chrono::{Duration, NaiveDate};
 ///
-/// let from_ymd = NaiveDate::from_ymd;
+/// let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
 ///
 /// assert_eq!(from_ymd(2014, 1, 1) + Duration::zero(),             from_ymd(2014, 1, 1));
 /// assert_eq!(from_ymd(2014, 1, 1) + Duration::seconds(86399),     from_ymd(2014, 1, 1));
@@ -4630,6 +4869,8 @@
 /// assert_eq!(from_ymd(2014, 1, 1) + Duration::days(365*4 + 1),    from_ymd(2018, 1, 1));
 /// assert_eq!(from_ymd(2014, 1, 1) + Duration::days(365*400 + 97), from_ymd(2414, 1, 1));
 /// ```
+///
+/// [`NaiveDate::checked_add_signed`]: crate::NaiveDate::checked_add_signed
 </span><span class="kw">impl </span>Add&lt;OldDuration&gt; <span class="kw">for </span>NaiveDate {
     <span class="kw">type </span>Output = NaiveDate;
 
@@ -4658,9 +4899,9 @@
     /// # Example
     ///
     /// ```
-    /// use chrono::{Duration, NaiveDate, Months};
+    /// use chrono::{NaiveDate, Months};
     ///
-    /// let from_ymd = NaiveDate::from_ymd;
+    /// let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
     ///
     /// assert_eq!(from_ymd(2014, 1, 1) + Months::new(1), from_ymd(2014, 2, 1));
     /// assert_eq!(from_ymd(2014, 1, 1) + Months::new(11), from_ymd(2014, 12, 1));
@@ -4686,9 +4927,9 @@
     /// # Example
     ///
     /// ```
-    /// use chrono::{Duration, NaiveDate, Months};
+    /// use chrono::{NaiveDate, Months};
     ///
-    /// let from_ymd = NaiveDate::from_ymd;
+    /// let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
     ///
     /// assert_eq!(from_ymd(2014, 1, 1) - Months::new(11), from_ymd(2013, 2, 1));
     /// assert_eq!(from_ymd(2014, 1, 1) - Months::new(12), from_ymd(2013, 1, 1));
@@ -4719,15 +4960,14 @@
 /// rounding to the closest integral number of days towards `Duration::zero()`.
 /// It is the same as the addition with a negated `Duration`.
 ///
-/// Panics on underflow or overflow.
-/// Use [`NaiveDate::checked_sub_signed`](#method.checked_sub_signed) to detect that.
+/// Panics on underflow or overflow. Use [`NaiveDate::checked_sub_signed`] to detect that.
 ///
 /// # Example
 ///
 /// ```
 /// use chrono::{Duration, NaiveDate};
 ///
-/// let from_ymd = NaiveDate::from_ymd;
+/// let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
 ///
 /// assert_eq!(from_ymd(2014, 1, 1) - Duration::zero(),             from_ymd(2014, 1, 1));
 /// assert_eq!(from_ymd(2014, 1, 1) - Duration::seconds(86399),     from_ymd(2014, 1, 1));
@@ -4738,6 +4978,8 @@
 /// assert_eq!(from_ymd(2014, 1, 1) - Duration::days(365*4 + 1),    from_ymd(2010, 1, 1));
 /// assert_eq!(from_ymd(2014, 1, 1) - Duration::days(365*400 + 97), from_ymd(1614, 1, 1));
 /// ```
+///
+/// [`NaiveDate::checked_sub_signed`]: crate::NaiveDate::checked_sub_signed
 </span><span class="kw">impl </span>Sub&lt;OldDuration&gt; <span class="kw">for </span>NaiveDate {
     <span class="kw">type </span>Output = NaiveDate;
 
@@ -4768,7 +5010,7 @@
 /// ```
 /// use chrono::{Duration, NaiveDate};
 ///
-/// let from_ymd = NaiveDate::from_ymd;
+/// let from_ymd = |y, m, d| NaiveDate::from_ymd_opt(y, m, d).unwrap();
 ///
 /// assert_eq!(from_ymd(2014, 1, 1) - from_ymd(2014, 1, 1), Duration::zero());
 /// assert_eq!(from_ymd(2014, 1, 1) - from_ymd(2013, 12, 31), Duration::days(1));
@@ -4784,6 +5026,12 @@
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>sub(<span class="self">self</span>, rhs: NaiveDate) -&gt; OldDuration {
         <span class="self">self</span>.signed_duration_since(rhs)
+    }
+}
+
+<span class="kw">impl </span>From&lt;NaiveDateTime&gt; <span class="kw">for </span>NaiveDate {
+    <span class="kw">fn </span>from(naive_datetime: NaiveDateTime) -&gt; <span class="self">Self </span>{
+        naive_datetime.date()
     }
 }
 
@@ -4959,13 +5207,10 @@
     <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; ParseResult&lt;NaiveDate&gt; {
         <span class="kw">const </span>ITEMS: <span class="kw-2">&amp;</span>[Item&lt;<span class="lifetime">&#39;static</span>&gt;] = <span class="kw-2">&amp;</span>[
             Item::Numeric(Numeric::Year, Pad::Zero),
-            Item::Space(<span class="string">&quot;&quot;</span>),
             Item::Literal(<span class="string">&quot;-&quot;</span>),
             Item::Numeric(Numeric::Month, Pad::Zero),
-            Item::Space(<span class="string">&quot;&quot;</span>),
             Item::Literal(<span class="string">&quot;-&quot;</span>),
             Item::Numeric(Numeric::Day, Pad::Zero),
-            Item::Space(<span class="string">&quot;&quot;</span>),
         ];
 
         <span class="kw">let </span><span class="kw-2">mut </span>parsed = Parsed::new();
@@ -4988,6 +5233,10 @@
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         NaiveDate::from_ymd_opt(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>).unwrap()
     }
+}
+
+<span class="kw">fn </span>div_mod_floor(val: i32, div: i32) -&gt; (i32, i32) {
+    (val.div_euclid(div), val.rem_euclid(div))
 }
 
 <span class="attr">#[cfg(all(test, any(feature = <span class="string">&quot;rustc-serialize&quot;</span>, feature = <span class="string">&quot;serde&quot;</span>)))]
@@ -5205,7 +5454,7 @@
         </span><span class="macro">assert_eq!</span>(
             NaiveDate::from_ymd_opt(<span class="number">2022</span>, <span class="number">8</span>, <span class="number">3</span>)
                 .unwrap()
-                .checked_sub_months(Months::new((i32::MIN <span class="kw">as </span>i64).abs() <span class="kw">as </span>u32 + <span class="number">1</span>)),
+                .checked_sub_months(Months::new(i32::MIN.unsigned_abs() + <span class="number">1</span>)),
             <span class="prelude-val">None
         </span>);
 
@@ -5456,6 +5705,9 @@
         <span class="macro">assert_eq!</span>(from_ndays_from_ce(NaiveDate::MIN.num_days_from_ce() - <span class="number">1</span>), <span class="prelude-val">None</span>);
         <span class="macro">assert_eq!</span>(from_ndays_from_ce(NaiveDate::MAX.num_days_from_ce()), <span class="prelude-val">Some</span>(NaiveDate::MAX));
         <span class="macro">assert_eq!</span>(from_ndays_from_ce(NaiveDate::MAX.num_days_from_ce() + <span class="number">1</span>), <span class="prelude-val">None</span>);
+
+        <span class="macro">assert_eq!</span>(from_ndays_from_ce(i32::MIN), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(from_ndays_from_ce(i32::MAX), <span class="prelude-val">None</span>);
     }
 
     <span class="attr">#[test]
@@ -5767,24 +6019,28 @@
         <span class="comment">// valid cases
         </span><span class="kw">let </span>valid = [
             <span class="string">&quot;-0000000123456-1-2&quot;</span>,
-            <span class="string">&quot;    -123456 - 1 - 2    &quot;</span>,
+            <span class="string">&quot;-123456-1-2&quot;</span>,
             <span class="string">&quot;-12345-1-2&quot;</span>,
             <span class="string">&quot;-1234-12-31&quot;</span>,
             <span class="string">&quot;-7-6-5&quot;</span>,
             <span class="string">&quot;350-2-28&quot;</span>,
             <span class="string">&quot;360-02-29&quot;</span>,
             <span class="string">&quot;0360-02-29&quot;</span>,
-            <span class="string">&quot;2015-2 -18&quot;</span>,
+            <span class="string">&quot;2015-2-18&quot;</span>,
+            <span class="string">&quot;2015-02-18&quot;</span>,
             <span class="string">&quot;+70-2-18&quot;</span>,
             <span class="string">&quot;+70000-2-18&quot;</span>,
             <span class="string">&quot;+00007-2-18&quot;</span>,
         ];
         <span class="kw">for </span><span class="kw-2">&amp;</span>s <span class="kw">in </span><span class="kw-2">&amp;</span>valid {
+            <span class="macro">eprintln!</span>(<span class="string">&quot;test_date_from_str valid {:?}&quot;</span>, s);
             <span class="kw">let </span>d = <span class="kw">match </span>s.parse::&lt;NaiveDate&gt;() {
                 <span class="prelude-val">Ok</span>(d) =&gt; d,
                 <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;parsing `{}` has failed: {}&quot;</span>, s, e),
             };
+            <span class="macro">eprintln!</span>(<span class="string">&quot;d {:?} (NaiveDate)&quot;</span>, d);
             <span class="kw">let </span>s_ = <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, d);
+            <span class="macro">eprintln!</span>(<span class="string">&quot;s_ {:?}&quot;</span>, s_);
             <span class="comment">// `s` and `s_` may differ, but `s.parse()` and `s_.parse()` must be same
             </span><span class="kw">let </span>d_ = <span class="kw">match </span>s_.parse::&lt;NaiveDate&gt;() {
                 <span class="prelude-val">Ok</span>(d) =&gt; d,
@@ -5792,6 +6048,7 @@
                     <span class="macro">panic!</span>(<span class="string">&quot;`{}` is parsed into `{:?}`, but reparsing that has failed: {}&quot;</span>, s, d, e)
                 }
             };
+            <span class="macro">eprintln!</span>(<span class="string">&quot;d_ {:?} (NaiveDate)&quot;</span>, d_);
             <span class="macro">assert!</span>(
                 d == d_,
                 <span class="string">&quot;`{}` is parsed into `{:?}`, but reparsed result \
@@ -5804,14 +6061,37 @@
 
         <span class="comment">// some invalid cases
         // since `ParseErrorKind` is private, all we can do is to check if there was an error
-        </span><span class="macro">assert!</span>(<span class="string">&quot;&quot;</span>.parse::&lt;NaiveDate&gt;().is_err());
-        <span class="macro">assert!</span>(<span class="string">&quot;x&quot;</span>.parse::&lt;NaiveDate&gt;().is_err());
-        <span class="macro">assert!</span>(<span class="string">&quot;2014&quot;</span>.parse::&lt;NaiveDate&gt;().is_err());
-        <span class="macro">assert!</span>(<span class="string">&quot;2014-01&quot;</span>.parse::&lt;NaiveDate&gt;().is_err());
-        <span class="macro">assert!</span>(<span class="string">&quot;2014-01-00&quot;</span>.parse::&lt;NaiveDate&gt;().is_err());
-        <span class="macro">assert!</span>(<span class="string">&quot;2014-13-57&quot;</span>.parse::&lt;NaiveDate&gt;().is_err());
-        <span class="macro">assert!</span>(<span class="string">&quot;9999999-9-9&quot;</span>.parse::&lt;NaiveDate&gt;().is_err()); <span class="comment">// out-of-bounds
-    </span>}
+        </span><span class="kw">let </span>invalid = [
+            <span class="string">&quot;&quot;</span>,                        <span class="comment">// empty
+            </span><span class="string">&quot;x&quot;</span>,                       <span class="comment">// invalid
+            </span><span class="string">&quot;Fri, 09 Aug 2013 GMT&quot;</span>,    <span class="comment">// valid date, wrong format
+            </span><span class="string">&quot;Sat Jun 30 2012&quot;</span>,         <span class="comment">// valid date, wrong format
+            </span><span class="string">&quot;1441497364.649&quot;</span>,          <span class="comment">// valid datetime, wrong format
+            </span><span class="string">&quot;+1441497364.649&quot;</span>,         <span class="comment">// valid datetime, wrong format
+            </span><span class="string">&quot;+1441497364&quot;</span>,             <span class="comment">// valid datetime, wrong format
+            </span><span class="string">&quot;2014/02/03&quot;</span>,              <span class="comment">// valid date, wrong format
+            </span><span class="string">&quot;2014&quot;</span>,                    <span class="comment">// datetime missing data
+            </span><span class="string">&quot;2014-01&quot;</span>,                 <span class="comment">// datetime missing data
+            </span><span class="string">&quot;2014-01-00&quot;</span>,              <span class="comment">// invalid day
+            </span><span class="string">&quot;2014-11-32&quot;</span>,              <span class="comment">// invalid day
+            </span><span class="string">&quot;2014-13-01&quot;</span>,              <span class="comment">// invalid month
+            </span><span class="string">&quot;2014-13-57&quot;</span>,              <span class="comment">// invalid month, day
+            </span><span class="string">&quot;2001 -02-03&quot;</span>,             <span class="comment">// space after year
+            </span><span class="string">&quot;2001- 02-03&quot;</span>,             <span class="comment">// space before month
+            </span><span class="string">&quot;2001 - 02-03&quot;</span>,            <span class="comment">// space around year-month divider
+            </span><span class="string">&quot;2001-02 -03&quot;</span>,             <span class="comment">// space after month
+            </span><span class="string">&quot;2001-02- 03&quot;</span>,             <span class="comment">// space before day
+            </span><span class="string">&quot;2001-02 - 03&quot;</span>,            <span class="comment">// space around month-day divider
+            </span><span class="string">&quot;2001-02-03 &quot;</span>,             <span class="comment">// trailing space
+            </span><span class="string">&quot; 2001-02-03&quot;</span>,             <span class="comment">// leading space
+            </span><span class="string">&quot;    -123456 - 1 - 2    &quot;</span>, <span class="comment">// many spaces
+            </span><span class="string">&quot;9999999-9-9&quot;</span>,             <span class="comment">// invalid year (out of bounds)
+        </span>];
+        <span class="kw">for </span><span class="kw-2">&amp;</span>s <span class="kw">in </span><span class="kw-2">&amp;</span>invalid {
+            <span class="macro">eprintln!</span>(<span class="string">&quot;test_date_from_str invalid {:?}&quot;</span>, s);
+            <span class="macro">assert!</span>(s.parse::&lt;NaiveDate&gt;().is_err());
+        }
+    }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_date_parse_from_str() {
@@ -5821,7 +6101,7 @@
             <span class="prelude-val">Ok</span>(ymd(<span class="number">2014</span>, <span class="number">5</span>, <span class="number">7</span>))
         ); <span class="comment">// ignore time and offset
         </span><span class="macro">assert_eq!</span>(
-            NaiveDate::parse_from_str(<span class="string">&quot;2015-W06-1=2015-033&quot;</span>, <span class="string">&quot;%G-W%V-%u = %Y-%j&quot;</span>),
+            NaiveDate::parse_from_str(<span class="string">&quot;2015-W06-1=2015-033&quot;</span>, <span class="string">&quot;%G-W%V-%u=%Y-%j&quot;</span>),
             <span class="prelude-val">Ok</span>(ymd(<span class="number">2015</span>, <span class="number">2</span>, <span class="number">2</span>))
         );
         <span class="macro">assert_eq!</span>(
@@ -5912,21 +6192,29 @@
     </span><span class="kw">fn </span>test_naiveweek() {
         <span class="kw">let </span>date = NaiveDate::from_ymd_opt(<span class="number">2022</span>, <span class="number">5</span>, <span class="number">18</span>).unwrap();
         <span class="kw">let </span>asserts = <span class="macro">vec!</span>[
-            (Weekday::Mon, <span class="string">&quot;2022-05-16&quot;</span>, <span class="string">&quot;2022-05-22&quot;</span>),
-            (Weekday::Tue, <span class="string">&quot;2022-05-17&quot;</span>, <span class="string">&quot;2022-05-23&quot;</span>),
-            (Weekday::Wed, <span class="string">&quot;2022-05-18&quot;</span>, <span class="string">&quot;2022-05-24&quot;</span>),
-            (Weekday::Thu, <span class="string">&quot;2022-05-12&quot;</span>, <span class="string">&quot;2022-05-18&quot;</span>),
-            (Weekday::Fri, <span class="string">&quot;2022-05-13&quot;</span>, <span class="string">&quot;2022-05-19&quot;</span>),
-            (Weekday::Sat, <span class="string">&quot;2022-05-14&quot;</span>, <span class="string">&quot;2022-05-20&quot;</span>),
-            (Weekday::Sun, <span class="string">&quot;2022-05-15&quot;</span>, <span class="string">&quot;2022-05-21&quot;</span>),
+            (Weekday::Mon, <span class="string">&quot;Mon 2022-05-16&quot;</span>, <span class="string">&quot;Sun 2022-05-22&quot;</span>),
+            (Weekday::Tue, <span class="string">&quot;Tue 2022-05-17&quot;</span>, <span class="string">&quot;Mon 2022-05-23&quot;</span>),
+            (Weekday::Wed, <span class="string">&quot;Wed 2022-05-18&quot;</span>, <span class="string">&quot;Tue 2022-05-24&quot;</span>),
+            (Weekday::Thu, <span class="string">&quot;Thu 2022-05-12&quot;</span>, <span class="string">&quot;Wed 2022-05-18&quot;</span>),
+            (Weekday::Fri, <span class="string">&quot;Fri 2022-05-13&quot;</span>, <span class="string">&quot;Thu 2022-05-19&quot;</span>),
+            (Weekday::Sat, <span class="string">&quot;Sat 2022-05-14&quot;</span>, <span class="string">&quot;Fri 2022-05-20&quot;</span>),
+            (Weekday::Sun, <span class="string">&quot;Sun 2022-05-15&quot;</span>, <span class="string">&quot;Sat 2022-05-21&quot;</span>),
         ];
         <span class="kw">for </span>(start, first_day, last_day) <span class="kw">in </span>asserts {
             <span class="kw">let </span>week = date.week(start);
             <span class="kw">let </span>days = week.days();
-            <span class="macro">assert_eq!</span>(<span class="prelude-val">Ok</span>(week.first_day()), NaiveDate::parse_from_str(first_day, <span class="string">&quot;%Y-%m-%d&quot;</span>));
-            <span class="macro">assert_eq!</span>(<span class="prelude-val">Ok</span>(week.last_day()), NaiveDate::parse_from_str(last_day, <span class="string">&quot;%Y-%m-%d&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="prelude-val">Ok</span>(week.first_day()), NaiveDate::parse_from_str(first_day, <span class="string">&quot;%a %Y-%m-%d&quot;</span>));
+            <span class="macro">assert_eq!</span>(<span class="prelude-val">Ok</span>(week.last_day()), NaiveDate::parse_from_str(last_day, <span class="string">&quot;%a %Y-%m-%d&quot;</span>));
             <span class="macro">assert!</span>(days.contains(<span class="kw-2">&amp;</span>date));
         }
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_naiveweek_min_max() {
+        <span class="kw">let </span>date_max = NaiveDate::MAX;
+        <span class="macro">assert!</span>(date_max.week(Weekday::Mon).first_day() &lt;= date_max);
+        <span class="kw">let </span>date_min = NaiveDate::MIN;
+        <span class="macro">assert!</span>(date_min.week(Weekday::Mon).last_day() &gt;= date_min);
     }
 
     <span class="attr">#[test]
@@ -5991,6 +6279,14 @@
             }
         }
     }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_with_0_overflow() {
+        <span class="kw">let </span>dt = NaiveDate::from_ymd_opt(<span class="number">2023</span>, <span class="number">4</span>, <span class="number">18</span>).unwrap();
+        <span class="macro">assert!</span>(dt.with_month0(<span class="number">4294967295</span>).is_none());
+        <span class="macro">assert!</span>(dt.with_day0(<span class="number">4294967295</span>).is_none());
+        <span class="macro">assert!</span>(dt.with_ordinal0(<span class="number">4294967295</span>).is_none());
+    }
 }
 </code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.1 (8460ca823 2023-03-20)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0 (84c898d65 2023-04-16)" data-search-js="search-8a59a8356673ec1f.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
