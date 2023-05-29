@@ -1,8 +1,9 @@
 extern crate rss;
 
 use rss::{
-    extension, CategoryBuilder, Channel, ChannelBuilder, CloudBuilder, EnclosureBuilder,
-    GuidBuilder, ImageBuilder, Item, ItemBuilder, SourceBuilder, TextInputBuilder,
+    extension, extension::itunes::ITunesChannelExtensionBuilder, CategoryBuilder, Channel,
+    ChannelBuilder, CloudBuilder, EnclosureBuilder, GuidBuilder, ImageBuilder, Item, ItemBuilder,
+    SourceBuilder, TextInputBuilder,
 };
 use std::collections::BTreeMap;
 
@@ -103,6 +104,33 @@ fn write_itunes() {
     let input = include_str!("data/itunes.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
     test_write!(channel);
+}
+
+#[test]
+fn write_itunes_namespace() {
+    let itunes_extention = ITunesChannelExtensionBuilder::default()
+        .author(Some("author".to_string()))
+        .build();
+    let channel = rss::ChannelBuilder::default()
+        .title("Channel Title")
+        .link("http://example.com")
+        .description("Channel Description")
+        .itunes_ext(itunes_extention)
+        .build();
+
+    let xml = String::from_utf8(channel.pretty_write_to(Vec::new(), b' ', 4).unwrap()).unwrap();
+    assert_eq!(
+        xml,
+        r##"<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+    <channel>
+        <title>Channel Title</title>
+        <link>http://example.com</link>
+        <description>Channel Description</description>
+        <itunes:author>author</itunes:author>
+    </channel>
+</rss>"##
+    );
 }
 
 #[test]
