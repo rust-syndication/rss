@@ -2,6 +2,8 @@
 
 ## 2.x.x - Unreleased
 
+## 2.0.4 - 2023-05-29
+
 - Fix iTunes extension writing [`#151`](https://github.com/rust-syndication/rss/pull/151)
 
 ## 2.0.3 - 2023-03-27
