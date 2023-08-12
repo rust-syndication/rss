@@ -21,7 +21,9 @@ use crate::error::Error;
 use crate::extension::atom;
 use crate::extension::dublincore;
 use crate::extension::itunes;
-use crate::extension::util::{extension_name, parse_extension};
+use crate::extension::util::{
+    extension_entry, extension_name, parse_extension_element, read_namespace_declarations,
+};
 use crate::extension::ExtensionMap;
 use crate::guid::Guid;
 use crate::source::Source;
@@ -609,10 +611,13 @@ impl Item {
     pub fn from_xml<R: BufRead>(
         namespaces: &BTreeMap<String, String>,
         reader: &mut Reader<R>,
-        _: Attributes,
+        atts: Attributes,
     ) -> Result<Self, Error> {
         let mut item = Item::default();
+        let mut extensions = ExtensionMap::new();
         let mut buf = Vec::new();
+
+        let namespaces = read_namespace_declarations(reader, atts, namespaces)?;
 
         loop {
             match reader.read_event_into(&mut buf)? {
@@ -642,14 +647,24 @@ impl Item {
                     "pubDate" => item.pub_date = element_text(reader)?,
                     "content:encoded" => item.content = element_text(reader)?,
                     n => {
-                        if let Some((ns, name)) = extension_name(n) {
-                            parse_extension(
+                        if let Some((prefix, name)) = extension_name(n) {
+                            let scope_namespases = read_namespace_declarations(
                                 reader,
                                 element.attributes(),
-                                ns,
-                                name,
-                                &mut item.extensions,
+                                namespaces.as_ref(),
                             )?;
+                            let ext_ns = scope_namespases.get(prefix).map(|s| s.as_str());
+                            let ext = parse_extension_element(reader, element.attributes())?;
+                            match ext_ns {
+                                #[cfg(feature = "atom")]
+                                Some(ns @ atom::NAMESPACE) => {
+                                    extension_entry(&mut extensions, ns, name).push(ext);
+                                }
+                                Some(ns @ itunes::NAMESPACE) | Some(ns @ dublincore::NAMESPACE) => {
+                                    extension_entry(&mut extensions, ns, name).push(ext);
+                                }
+                                _ => extension_entry(&mut item.extensions, prefix, name).push(ext),
+                            }
                         } else {
                             skip(element.name(), reader)?;
                         }
@@ -662,25 +677,16 @@ impl Item {
             buf.clear();
         }
 
-        if !item.extensions.is_empty() {
-            // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
-            for (prefix, namespace) in namespaces {
-                match namespace.as_ref() {
-                    #[cfg(feature = "atom")]
-                    atom::NAMESPACE => item
-                        .extensions
-                        .remove(prefix)
-                        .map(|v| item.atom_ext = Some(atom::AtomExtension::from_map(v))),
-                    itunes::NAMESPACE => item
-                        .extensions
-                        .remove(prefix)
-                        .map(|v| item.itunes_ext = Some(itunes::ITunesItemExtension::from_map(v))),
-                    dublincore::NAMESPACE => item.extensions.remove(prefix).map(|v| {
-                        item.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v))
-                    }),
-                    _ => None,
-                };
-            }
+        // Process each of the namespaces we know
+        #[cfg(feature = "atom")]
+        if let Some(v) = extensions.remove(atom::NAMESPACE) {
+            item.atom_ext = Some(atom::AtomExtension::from_map(v));
+        }
+        if let Some(v) = extensions.remove(itunes::NAMESPACE) {
+            item.itunes_ext = Some(itunes::ITunesItemExtension::from_map(v))
+        }
+        if let Some(v) = extensions.remove(dublincore::NAMESPACE) {
+            item.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v))
         }
 
         Ok(item)

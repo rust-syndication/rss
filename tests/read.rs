@@ -967,3 +967,35 @@ fn read_multiple_links() {
     assert_eq!(channel.link(), "https://www.coindesk.com");
     assert_eq!(channel.items[0].link.as_ref().unwrap(), "https://www.coindesk.com/policy/2023/01/14/doj-objects-to-ftxs-choice-of-lawyers-citing-conflict-of-interest/?utm_medium=referral&utm_source=rss&utm_campaign=headlines");
 }
+
+#[test]
+fn read_local_namespace() {
+    let input = r#"
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss>
+        <channel>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Creator</dc:creator>
+        </channel>
+    </rss>
+    "#;
+    let channel = input.parse::<Channel>().unwrap();
+
+    assert!(channel.dublin_core_ext().is_some());
+    assert_eq!(channel.dublin_core_ext().unwrap().creators, vec!["Creator"]);
+}
+
+#[test]
+fn read_local_namespace_hijack() {
+    let input = r#"
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+        <channel>
+            <itunes:creator xmlns:itunes="http://purl.org/dc/elements/1.1/">Creator</itunes:creator>
+        </channel>
+    </rss>
+    "#;
+    let channel = input.parse::<Channel>().unwrap();
+
+    assert!(channel.dublin_core_ext().is_some());
+    assert_eq!(channel.dublin_core_ext().unwrap().creators, vec!["Creator"]);
+}

@@ -2,6 +2,8 @@
 
 ## 2.x.x - Unreleased
 
+- Take into account namespaces declared locally [`#155`](https://github.com/rust-syndication/rss/pull/155)
+
 ## 2.0.5 - 2023-07-26
 
 - Upgrade `quick_xml` to `0.30` [`#153`](https://github.com/rust-syndication/rss/pull/153)

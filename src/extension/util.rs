@@ -5,6 +5,7 @@
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
+use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::io::BufRead;
 use std::str;
@@ -17,36 +18,46 @@ use crate::error::Error;
 use crate::extension::{Extension, ExtensionMap};
 use crate::util::{attr_value, decode};
 
-pub fn extension_name(element_name: &str) -> Option<(&str, &str)> {
+pub(crate) fn read_namespace_declarations<'m, R>(
+    reader: &mut Reader<R>,
+    mut atts: Attributes,
+    base: &'m BTreeMap<String, String>,
+) -> Result<Cow<'m, BTreeMap<String, String>>, Error>
+where
+    R: BufRead,
+{
+    let mut namespaces = Cow::Borrowed(base);
+    for attr in atts.with_checks(false).flatten() {
+        let key = decode(attr.key.as_ref(), &reader)?;
+        if let Some(ns) = key.strip_prefix("xmlns:") {
+            namespaces
+                .to_mut()
+                .insert(ns.to_string(), attr_value(&attr, &reader)?.to_string());
+        }
+    }
+    Ok(namespaces)
+}
+
+pub(crate) fn extension_name(element_name: &str) -> Option<(&str, &str)> {
     let mut split = element_name.splitn(2, ':');
     let ns = split.next().filter(|ns| !ns.is_empty())?;
     let name = split.next()?;
     Some((ns, name))
 }
 
-pub fn parse_extension<R>(
-    reader: &mut Reader<R>,
-    atts: Attributes,
+pub(crate) fn extension_entry<'e>(
+    extensions: &'e mut ExtensionMap,
     ns: &str,
     name: &str,
-    extensions: &mut ExtensionMap,
-) -> Result<(), Error>
-where
-    R: BufRead,
-{
-    let ext = parse_extension_element(reader, atts)?;
-
+) -> &'e mut Vec<Extension> {
     let map = extensions
         .entry(ns.to_string())
         .or_insert_with(BTreeMap::new);
 
-    let items = map.entry(name.to_string()).or_insert_with(Vec::new);
-    items.push(ext);
-
-    Ok(())
+    map.entry(name.to_string()).or_insert_with(Vec::new)
 }
 
-fn parse_extension_element<R: BufRead>(
+pub(crate) fn parse_extension_element<R: BufRead>(
     reader: &mut Reader<R>,
     mut atts: Attributes,
 ) -> Result<Extension, Error> {

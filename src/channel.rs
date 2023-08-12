@@ -23,13 +23,15 @@ use crate::extension::atom;
 use crate::extension::dublincore;
 use crate::extension::itunes;
 use crate::extension::syndication;
-use crate::extension::util::{extension_name, parse_extension};
+use crate::extension::util::{
+    extension_entry, extension_name, parse_extension_element, read_namespace_declarations,
+};
 use crate::extension::ExtensionMap;
 use crate::image::Image;
 use crate::item::Item;
 use crate::textinput::TextInput;
 use crate::toxml::{ToXml, WriterExt};
-use crate::util::{attr_value, decode, element_text, skip};
+use crate::util::{decode, element_text, skip};
 
 /// Represents the channel of an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -1032,7 +1034,7 @@ impl Channel {
     pub fn read_from<R: BufRead>(reader: R) -> Result<Channel, Error> {
         let mut reader = Reader::from_reader(reader);
         reader.trim_text(true).expand_empty_elements(true);
-        let mut namespaces = BTreeMap::new();
+        let namespaces;
         let mut buf = Vec::new();
 
         let mut channel: Option<Channel> = None;
@@ -1047,15 +1049,12 @@ impl Channel {
             match reader.read_event_into(&mut buf)? {
                 Event::Start(element) => match decode(element.name().as_ref(), &reader)?.as_ref() {
                     "rss" | "rdf:RDF" => {
-                        for attr in element.attributes().with_checks(false).flatten() {
-                            let key = decode(attr.key.as_ref(), &reader)?;
-                            if let Some(ns) = key.strip_prefix("xmlns:") {
-                                namespaces.insert(
-                                    ns.to_string(),
-                                    attr_value(&attr, &reader)?.to_string(),
-                                );
-                            }
-                        }
+                        namespaces = read_namespace_declarations(
+                            &mut reader,
+                            element.attributes(),
+                            &BTreeMap::new(),
+                        )?
+                        .into_owned();
                         break;
                     }
                     _ => {
@@ -1192,11 +1191,14 @@ impl Channel {
     pub fn from_xml<R: BufRead>(
         namespaces: &BTreeMap<String, String>,
         reader: &mut Reader<R>,
-        _: Attributes,
+        atts: Attributes,
     ) -> Result<Self, Error> {
         let mut channel = Channel::default();
+        let mut extensions = ExtensionMap::new();
         let mut buf = Vec::new();
         let mut skip_buf = Vec::new();
+
+        let namespaces = read_namespace_declarations(reader, atts, namespaces)?;
 
         loop {
             match reader.read_event_into(&mut buf)? {
@@ -1218,7 +1220,8 @@ impl Channel {
                         channel.text_input = Some(text_input);
                     }
                     "item" => {
-                        let item = Item::from_xml(namespaces, reader, element.attributes())?;
+                        let item =
+                            Item::from_xml(namespaces.as_ref(), reader, element.attributes())?;
                         channel.items.push(item);
                     }
                     "title" => {
@@ -1283,14 +1286,28 @@ impl Channel {
                         }
                     },
                     n => {
-                        if let Some((ns, name)) = extension_name(n) {
-                            parse_extension(
+                        if let Some((prefix, name)) = extension_name(n) {
+                            let scope_namespases = read_namespace_declarations(
                                 reader,
                                 element.attributes(),
-                                ns,
-                                name,
-                                &mut channel.extensions,
+                                namespaces.as_ref(),
                             )?;
+                            let ext_ns = scope_namespases.get(prefix).map(|s| s.as_str());
+                            let ext = parse_extension_element(reader, element.attributes())?;
+                            match ext_ns {
+                                #[cfg(feature = "atom")]
+                                Some(ns @ atom::NAMESPACE) => {
+                                    extension_entry(&mut extensions, ns, name).push(ext);
+                                }
+                                Some(ns @ itunes::NAMESPACE)
+                                | Some(ns @ dublincore::NAMESPACE)
+                                | Some(ns @ syndication::NAMESPACE) => {
+                                    extension_entry(&mut extensions, ns, name).push(ext);
+                                }
+                                _ => {
+                                    extension_entry(&mut channel.extensions, prefix, name).push(ext)
+                                }
+                            }
                         } else {
                             skip(element.name(), reader)?;
                         }
@@ -1304,28 +1321,19 @@ impl Channel {
             buf.clear();
         }
 
-        if !channel.extensions.is_empty() {
-            // Process each of the namespaces we know (note that the values are not removed prior and reused to support pass-through of unknown extensions)
-            for (prefix, namespace) in namespaces {
-                match namespace.as_ref() {
-                    #[cfg(feature = "atom")]
-                    atom::NAMESPACE => channel
-                        .extensions
-                        .remove(prefix)
-                        .map(|v| channel.atom_ext = Some(atom::AtomExtension::from_map(v))),
-                    itunes::NAMESPACE => channel.extensions.remove(prefix).map(|v| {
-                        channel.itunes_ext = Some(itunes::ITunesChannelExtension::from_map(v))
-                    }),
-                    dublincore::NAMESPACE => channel.extensions.remove(prefix).map(|v| {
-                        channel.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v))
-                    }),
-                    syndication::NAMESPACE => channel.extensions.remove(prefix).map(|v| {
-                        channel.syndication_ext =
-                            Some(syndication::SyndicationExtension::from_map(v))
-                    }),
-                    _ => None,
-                };
-            }
+        // Process each of the namespaces we know
+        #[cfg(feature = "atom")]
+        if let Some(v) = extensions.remove(atom::NAMESPACE) {
+            channel.atom_ext = Some(atom::AtomExtension::from_map(v));
+        }
+        if let Some(v) = extensions.remove(itunes::NAMESPACE) {
+            channel.itunes_ext = Some(itunes::ITunesChannelExtension::from_map(v));
+        }
+        if let Some(v) = extensions.remove(dublincore::NAMESPACE) {
+            channel.dublin_core_ext = Some(dublincore::DublinCoreExtension::from_map(v));
+        }
+        if let Some(v) = extensions.remove(syndication::NAMESPACE) {
+            channel.syndication_ext = Some(syndication::SyndicationExtension::from_map(v));
         }
 
         Ok(channel)
