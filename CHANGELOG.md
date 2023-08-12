@@ -2,6 +2,8 @@
 
 ## 2.x.x - Unreleased
 
+## 2.0.6 - 2023-08-12
+
 - Take into account namespaces declared locally [`#155`](https://github.com/rust-syndication/rss/pull/155)
 
 ## 2.0.5 - 2023-07-26
