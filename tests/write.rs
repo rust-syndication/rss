@@ -108,14 +108,14 @@ fn write_itunes() {
 
 #[test]
 fn write_itunes_namespace() {
-    let itunes_extention = ITunesChannelExtensionBuilder::default()
+    let itunes_extension = ITunesChannelExtensionBuilder::default()
         .author(Some("author".to_string()))
         .build();
     let channel = rss::ChannelBuilder::default()
         .title("Channel Title")
         .link("http://example.com")
         .description("Channel Description")
-        .itunes_ext(itunes_extention)
+        .itunes_ext(itunes_extension)
         .build();
 
     let xml = String::from_utf8(channel.pretty_write_to(Vec::new(), b' ', 4).unwrap()).unwrap();
