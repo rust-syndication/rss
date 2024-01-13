@@ -3,6 +3,7 @@
 ## 2.x.x - Unreleased
 
 - Update `chrono` to 0.4.31 [`#160`](https://github.com/rust-syndication/rss/pull/160)
+- Change how iTunes extension is detected. Use case insensitive comparison of a namespace [`#159`](https://github.com/rust-syndication/rss/pull/159)
 
 ## 2.0.6 - 2023-08-12
 
