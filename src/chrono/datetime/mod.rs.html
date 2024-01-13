@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.26/src/datetime/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-f3501f0f5ae15dfb.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.1 (eb26296b5 2023-08-03)" data-search-js="search-4926e5fc22a5646a.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f0540c1d82cde29b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../chrono/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.31/src/datetime/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1404,42 +1404,284 @@
 <a href="#1404" id="1404">1404</a>
 <a href="#1405" id="1405">1405</a>
 <a href="#1406" id="1406">1406</a>
+<a href="#1407" id="1407">1407</a>
+<a href="#1408" id="1408">1408</a>
+<a href="#1409" id="1409">1409</a>
+<a href="#1410" id="1410">1410</a>
+<a href="#1411" id="1411">1411</a>
+<a href="#1412" id="1412">1412</a>
+<a href="#1413" id="1413">1413</a>
+<a href="#1414" id="1414">1414</a>
+<a href="#1415" id="1415">1415</a>
+<a href="#1416" id="1416">1416</a>
+<a href="#1417" id="1417">1417</a>
+<a href="#1418" id="1418">1418</a>
+<a href="#1419" id="1419">1419</a>
+<a href="#1420" id="1420">1420</a>
+<a href="#1421" id="1421">1421</a>
+<a href="#1422" id="1422">1422</a>
+<a href="#1423" id="1423">1423</a>
+<a href="#1424" id="1424">1424</a>
+<a href="#1425" id="1425">1425</a>
+<a href="#1426" id="1426">1426</a>
+<a href="#1427" id="1427">1427</a>
+<a href="#1428" id="1428">1428</a>
+<a href="#1429" id="1429">1429</a>
+<a href="#1430" id="1430">1430</a>
+<a href="#1431" id="1431">1431</a>
+<a href="#1432" id="1432">1432</a>
+<a href="#1433" id="1433">1433</a>
+<a href="#1434" id="1434">1434</a>
+<a href="#1435" id="1435">1435</a>
+<a href="#1436" id="1436">1436</a>
+<a href="#1437" id="1437">1437</a>
+<a href="#1438" id="1438">1438</a>
+<a href="#1439" id="1439">1439</a>
+<a href="#1440" id="1440">1440</a>
+<a href="#1441" id="1441">1441</a>
+<a href="#1442" id="1442">1442</a>
+<a href="#1443" id="1443">1443</a>
+<a href="#1444" id="1444">1444</a>
+<a href="#1445" id="1445">1445</a>
+<a href="#1446" id="1446">1446</a>
+<a href="#1447" id="1447">1447</a>
+<a href="#1448" id="1448">1448</a>
+<a href="#1449" id="1449">1449</a>
+<a href="#1450" id="1450">1450</a>
+<a href="#1451" id="1451">1451</a>
+<a href="#1452" id="1452">1452</a>
+<a href="#1453" id="1453">1453</a>
+<a href="#1454" id="1454">1454</a>
+<a href="#1455" id="1455">1455</a>
+<a href="#1456" id="1456">1456</a>
+<a href="#1457" id="1457">1457</a>
+<a href="#1458" id="1458">1458</a>
+<a href="#1459" id="1459">1459</a>
+<a href="#1460" id="1460">1460</a>
+<a href="#1461" id="1461">1461</a>
+<a href="#1462" id="1462">1462</a>
+<a href="#1463" id="1463">1463</a>
+<a href="#1464" id="1464">1464</a>
+<a href="#1465" id="1465">1465</a>
+<a href="#1466" id="1466">1466</a>
+<a href="#1467" id="1467">1467</a>
+<a href="#1468" id="1468">1468</a>
+<a href="#1469" id="1469">1469</a>
+<a href="#1470" id="1470">1470</a>
+<a href="#1471" id="1471">1471</a>
+<a href="#1472" id="1472">1472</a>
+<a href="#1473" id="1473">1473</a>
+<a href="#1474" id="1474">1474</a>
+<a href="#1475" id="1475">1475</a>
+<a href="#1476" id="1476">1476</a>
+<a href="#1477" id="1477">1477</a>
+<a href="#1478" id="1478">1478</a>
+<a href="#1479" id="1479">1479</a>
+<a href="#1480" id="1480">1480</a>
+<a href="#1481" id="1481">1481</a>
+<a href="#1482" id="1482">1482</a>
+<a href="#1483" id="1483">1483</a>
+<a href="#1484" id="1484">1484</a>
+<a href="#1485" id="1485">1485</a>
+<a href="#1486" id="1486">1486</a>
+<a href="#1487" id="1487">1487</a>
+<a href="#1488" id="1488">1488</a>
+<a href="#1489" id="1489">1489</a>
+<a href="#1490" id="1490">1490</a>
+<a href="#1491" id="1491">1491</a>
+<a href="#1492" id="1492">1492</a>
+<a href="#1493" id="1493">1493</a>
+<a href="#1494" id="1494">1494</a>
+<a href="#1495" id="1495">1495</a>
+<a href="#1496" id="1496">1496</a>
+<a href="#1497" id="1497">1497</a>
+<a href="#1498" id="1498">1498</a>
+<a href="#1499" id="1499">1499</a>
+<a href="#1500" id="1500">1500</a>
+<a href="#1501" id="1501">1501</a>
+<a href="#1502" id="1502">1502</a>
+<a href="#1503" id="1503">1503</a>
+<a href="#1504" id="1504">1504</a>
+<a href="#1505" id="1505">1505</a>
+<a href="#1506" id="1506">1506</a>
+<a href="#1507" id="1507">1507</a>
+<a href="#1508" id="1508">1508</a>
+<a href="#1509" id="1509">1509</a>
+<a href="#1510" id="1510">1510</a>
+<a href="#1511" id="1511">1511</a>
+<a href="#1512" id="1512">1512</a>
+<a href="#1513" id="1513">1513</a>
+<a href="#1514" id="1514">1514</a>
+<a href="#1515" id="1515">1515</a>
+<a href="#1516" id="1516">1516</a>
+<a href="#1517" id="1517">1517</a>
+<a href="#1518" id="1518">1518</a>
+<a href="#1519" id="1519">1519</a>
+<a href="#1520" id="1520">1520</a>
+<a href="#1521" id="1521">1521</a>
+<a href="#1522" id="1522">1522</a>
+<a href="#1523" id="1523">1523</a>
+<a href="#1524" id="1524">1524</a>
+<a href="#1525" id="1525">1525</a>
+<a href="#1526" id="1526">1526</a>
+<a href="#1527" id="1527">1527</a>
+<a href="#1528" id="1528">1528</a>
+<a href="#1529" id="1529">1529</a>
+<a href="#1530" id="1530">1530</a>
+<a href="#1531" id="1531">1531</a>
+<a href="#1532" id="1532">1532</a>
+<a href="#1533" id="1533">1533</a>
+<a href="#1534" id="1534">1534</a>
+<a href="#1535" id="1535">1535</a>
+<a href="#1536" id="1536">1536</a>
+<a href="#1537" id="1537">1537</a>
+<a href="#1538" id="1538">1538</a>
+<a href="#1539" id="1539">1539</a>
+<a href="#1540" id="1540">1540</a>
+<a href="#1541" id="1541">1541</a>
+<a href="#1542" id="1542">1542</a>
+<a href="#1543" id="1543">1543</a>
+<a href="#1544" id="1544">1544</a>
+<a href="#1545" id="1545">1545</a>
+<a href="#1546" id="1546">1546</a>
+<a href="#1547" id="1547">1547</a>
+<a href="#1548" id="1548">1548</a>
+<a href="#1549" id="1549">1549</a>
+<a href="#1550" id="1550">1550</a>
+<a href="#1551" id="1551">1551</a>
+<a href="#1552" id="1552">1552</a>
+<a href="#1553" id="1553">1553</a>
+<a href="#1554" id="1554">1554</a>
+<a href="#1555" id="1555">1555</a>
+<a href="#1556" id="1556">1556</a>
+<a href="#1557" id="1557">1557</a>
+<a href="#1558" id="1558">1558</a>
+<a href="#1559" id="1559">1559</a>
+<a href="#1560" id="1560">1560</a>
+<a href="#1561" id="1561">1561</a>
+<a href="#1562" id="1562">1562</a>
+<a href="#1563" id="1563">1563</a>
+<a href="#1564" id="1564">1564</a>
+<a href="#1565" id="1565">1565</a>
+<a href="#1566" id="1566">1566</a>
+<a href="#1567" id="1567">1567</a>
+<a href="#1568" id="1568">1568</a>
+<a href="#1569" id="1569">1569</a>
+<a href="#1570" id="1570">1570</a>
+<a href="#1571" id="1571">1571</a>
+<a href="#1572" id="1572">1572</a>
+<a href="#1573" id="1573">1573</a>
+<a href="#1574" id="1574">1574</a>
+<a href="#1575" id="1575">1575</a>
+<a href="#1576" id="1576">1576</a>
+<a href="#1577" id="1577">1577</a>
+<a href="#1578" id="1578">1578</a>
+<a href="#1579" id="1579">1579</a>
+<a href="#1580" id="1580">1580</a>
+<a href="#1581" id="1581">1581</a>
+<a href="#1582" id="1582">1582</a>
+<a href="#1583" id="1583">1583</a>
+<a href="#1584" id="1584">1584</a>
+<a href="#1585" id="1585">1585</a>
+<a href="#1586" id="1586">1586</a>
+<a href="#1587" id="1587">1587</a>
+<a href="#1588" id="1588">1588</a>
+<a href="#1589" id="1589">1589</a>
+<a href="#1590" id="1590">1590</a>
+<a href="#1591" id="1591">1591</a>
+<a href="#1592" id="1592">1592</a>
+<a href="#1593" id="1593">1593</a>
+<a href="#1594" id="1594">1594</a>
+<a href="#1595" id="1595">1595</a>
+<a href="#1596" id="1596">1596</a>
+<a href="#1597" id="1597">1597</a>
+<a href="#1598" id="1598">1598</a>
+<a href="#1599" id="1599">1599</a>
+<a href="#1600" id="1600">1600</a>
+<a href="#1601" id="1601">1601</a>
+<a href="#1602" id="1602">1602</a>
+<a href="#1603" id="1603">1603</a>
+<a href="#1604" id="1604">1604</a>
+<a href="#1605" id="1605">1605</a>
+<a href="#1606" id="1606">1606</a>
+<a href="#1607" id="1607">1607</a>
+<a href="#1608" id="1608">1608</a>
+<a href="#1609" id="1609">1609</a>
+<a href="#1610" id="1610">1610</a>
+<a href="#1611" id="1611">1611</a>
+<a href="#1612" id="1612">1612</a>
+<a href="#1613" id="1613">1613</a>
+<a href="#1614" id="1614">1614</a>
+<a href="#1615" id="1615">1615</a>
+<a href="#1616" id="1616">1616</a>
+<a href="#1617" id="1617">1617</a>
+<a href="#1618" id="1618">1618</a>
+<a href="#1619" id="1619">1619</a>
+<a href="#1620" id="1620">1620</a>
+<a href="#1621" id="1621">1621</a>
+<a href="#1622" id="1622">1622</a>
+<a href="#1623" id="1623">1623</a>
+<a href="#1624" id="1624">1624</a>
+<a href="#1625" id="1625">1625</a>
+<a href="#1626" id="1626">1626</a>
+<a href="#1627" id="1627">1627</a>
+<a href="#1628" id="1628">1628</a>
+<a href="#1629" id="1629">1629</a>
+<a href="#1630" id="1630">1630</a>
+<a href="#1631" id="1631">1631</a>
+<a href="#1632" id="1632">1632</a>
+<a href="#1633" id="1633">1633</a>
+<a href="#1634" id="1634">1634</a>
+<a href="#1635" id="1635">1635</a>
+<a href="#1636" id="1636">1636</a>
+<a href="#1637" id="1637">1637</a>
+<a href="#1638" id="1638">1638</a>
+<a href="#1639" id="1639">1639</a>
+<a href="#1640" id="1640">1640</a>
+<a href="#1641" id="1641">1641</a>
+<a href="#1642" id="1642">1642</a>
+<a href="#1643" id="1643">1643</a>
+<a href="#1644" id="1644">1644</a>
+<a href="#1645" id="1645">1645</a>
+<a href="#1646" id="1646">1646</a>
+<a href="#1647" id="1647">1647</a>
+<a href="#1648" id="1648">1648</a>
+<a href="#1649" id="1649">1649</a>
+<a href="#1650" id="1650">1650</a>
+<a href="#1651" id="1651">1651</a>
+<a href="#1652" id="1652">1652</a>
 </pre></div><pre class="rust"><code><span class="comment">// This is a part of Chrono.
 // See README.md and LICENSE.txt for details.
 
 </span><span class="doccomment">//! ISO 8601 date and time with time zone.
 
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;alloc&quot;</span>)]
-</span><span class="kw">extern crate </span>alloc;
-
-<span class="attr">#[cfg(all(not(feature = <span class="string">&quot;std&quot;</span>), feature = <span class="string">&quot;alloc&quot;</span>))]
-</span><span class="kw">use </span>alloc::string::{String, ToString};
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
-</span><span class="kw">use </span>core::borrow::Borrow;
+</span><span class="attr">#[cfg(all(not(feature = <span class="string">&quot;std&quot;</span>), feature = <span class="string">&quot;alloc&quot;</span>))]
+</span><span class="kw">use </span>alloc::string::String;
+<span class="kw">use </span>core::borrow::Borrow;
 <span class="kw">use </span>core::cmp::Ordering;
 <span class="kw">use </span>core::fmt::Write;
 <span class="kw">use </span>core::ops::{Add, AddAssign, Sub, SubAssign};
+<span class="kw">use </span>core::time::Duration;
 <span class="kw">use </span>core::{fmt, hash, str};
 <span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-</span><span class="kw">use </span>std::string::ToString;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, test))]
 </span><span class="kw">use </span>std::time::{SystemTime, UNIX_EPOCH};
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
-</span><span class="kw">use </span><span class="kw">crate</span>::format::DelayedFormat;
+<span class="kw">use </span><span class="kw">crate</span>::duration::Duration <span class="kw">as </span>OldDuration;
 <span class="attr">#[cfg(feature = <span class="string">&quot;unstable-locales&quot;</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::format::Locale;
-<span class="kw">use </span><span class="kw">crate</span>::format::{parse, parse_and_remainder, ParseError, ParseResult, Parsed, StrftimeItems};
-<span class="kw">use </span><span class="kw">crate</span>::format::{Fixed, Item};
+<span class="kw">use </span><span class="kw">crate</span>::format::{
+    parse, parse_and_remainder, parse_rfc3339, Fixed, Item, ParseError, ParseResult, Parsed,
+    StrftimeItems, TOO_LONG,
+};
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
+</span><span class="kw">use </span><span class="kw">crate</span>::format::{write_rfc3339, DelayedFormat};
 <span class="kw">use </span><span class="kw">crate</span>::naive::{Days, IsoWeek, NaiveDate, NaiveDateTime, NaiveTime};
 <span class="attr">#[cfg(feature = <span class="string">&quot;clock&quot;</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::offset::Local;
 <span class="kw">use </span><span class="kw">crate</span>::offset::{FixedOffset, Offset, TimeZone, Utc};
-<span class="kw">use </span><span class="kw">crate</span>::oldtime::Duration <span class="kw">as </span>OldDuration;
 <span class="attr">#[allow(deprecated)]
 </span><span class="kw">use </span><span class="kw">crate</span>::Date;
-<span class="kw">use </span><span class="kw">crate</span>::Months;
-<span class="kw">use crate</span>::{Datelike, Timelike, Weekday};
+<span class="kw">use crate</span>::{Datelike, Months, Timelike, Weekday};
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;rkyv&quot;</span>)]
 </span><span class="kw">use </span>rkyv::{Archive, Deserialize, Serialize};
@@ -1459,6 +1701,7 @@
 ///
 /// See the `TimeZone::to_rfc3339_opts` function for usage.
 </span><span class="attr">#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
+#[allow(clippy::manual_non_exhaustive)]
 </span><span class="kw">pub enum </span>SecondsFormat {
     <span class="doccomment">/// Format whole seconds only, with no decimal point nor subseconds.
     </span>Secs,
@@ -1505,62 +1748,78 @@
 </span><span class="kw">pub const </span>MAX_DATETIME: DateTime&lt;Utc&gt; = DateTime::&lt;Utc&gt;::MAX_UTC;
 
 <span class="kw">impl</span>&lt;Tz: TimeZone&gt; DateTime&lt;Tz&gt; {
-    <span class="doccomment">/// Makes a new `DateTime` with given *UTC* datetime and offset.
-    /// The local datetime should be constructed via the `TimeZone` trait.
+    <span class="doccomment">/// Makes a new `DateTime` from its components: a `NaiveDateTime` in UTC and an `Offset`.
+    ///
+    /// This is a low-level method, intended for use cases such as deserializing a `DateTime` or
+    /// passing it through FFI.
+    ///
+    /// For regular use you will probably want to use a method such as
+    /// [`TimeZone::from_local_datetime`] or [`NaiveDateTime::and_local_timezone`] instead.
     ///
     /// # Example
     ///
-    /// ```
-    /// use chrono::{DateTime, TimeZone, NaiveDateTime, Utc};
+    </span><span class="attr">#[cfg_attr(not(feature = <span class="string">&quot;clock&quot;</span>), doc = <span class="string">&quot;```ignore&quot;</span>)]
+    #[cfg_attr(feature = <span class="string">&quot;clock&quot;</span>, doc = <span class="string">&quot;```rust&quot;</span>)]
+    </span><span class="doccomment">/// use chrono::{Local, DateTime};
     ///
-    /// let dt = DateTime::&lt;Utc&gt;::from_utc(NaiveDateTime::from_timestamp_opt(61, 0).unwrap(), Utc);
-    /// assert_eq!(Utc.timestamp_opt(61, 0).unwrap(), dt);
+    /// let dt = Local::now();
+    /// // Get components
+    /// let naive_utc = dt.naive_utc();
+    /// let offset = dt.offset().clone();
+    /// // Serialize, pass through FFI... and recreate the `DateTime`:
+    /// let dt_new = DateTime::&lt;Local&gt;::from_naive_utc_and_offset(naive_utc, offset);
+    /// assert_eq!(dt, dt_new);
     /// ```
-    </span><span class="comment">//
-    // note: this constructor is purposely not named to `new` to discourage the direct usage.
     </span><span class="attr">#[inline]
     #[must_use]
+    </span><span class="kw">pub fn </span>from_naive_utc_and_offset(datetime: NaiveDateTime, offset: Tz::Offset) -&gt; DateTime&lt;Tz&gt; {
+        DateTime { datetime, offset }
+    }
+
+    <span class="doccomment">/// Makes a new `DateTime` from its components: a `NaiveDateTime` in UTC and an `Offset`.
+    </span><span class="attr">#[inline]
+    #[must_use]
+    #[deprecated(
+        since = <span class="string">&quot;0.4.27&quot;</span>,
+        note = <span class="string">&quot;Use TimeZone::from_utc_datetime() or DateTime::from_naive_utc_and_offset instead&quot;
+    </span>)]
     </span><span class="kw">pub fn </span>from_utc(datetime: NaiveDateTime, offset: Tz::Offset) -&gt; DateTime&lt;Tz&gt; {
         DateTime { datetime, offset }
     }
 
-    <span class="doccomment">/// Makes a new `DateTime` with given **local** datetime and offset that
-    /// presents local timezone.
+    <span class="doccomment">/// Makes a new `DateTime` from a `NaiveDateTime` in *local* time and an `Offset`.
     ///
-    /// # Example
+    /// # Panics
     ///
-    /// ```
-    /// use chrono::DateTime;
-    /// use chrono::naive::NaiveDate;
-    /// use chrono::offset::{Utc, FixedOffset};
+    /// Panics if the local datetime can&#39;t be converted to UTC because it would be out of range.
     ///
-    /// let naivedatetime_utc = NaiveDate::from_ymd_opt(2000, 1, 12).unwrap().and_hms_opt(2, 0, 0).unwrap();
-    /// let datetime_utc = DateTime::&lt;Utc&gt;::from_utc(naivedatetime_utc, Utc);
-    ///
-    /// let timezone_east = FixedOffset::east_opt(8 * 60 * 60).unwrap();
-    /// let naivedatetime_east = NaiveDate::from_ymd_opt(2000, 1, 12).unwrap().and_hms_opt(10, 0, 0).unwrap();
-    /// let datetime_east = DateTime::&lt;FixedOffset&gt;::from_local(naivedatetime_east, timezone_east);
-    ///
-    /// let timezone_west = FixedOffset::west_opt(7 * 60 * 60).unwrap();
-    /// let naivedatetime_west = NaiveDate::from_ymd_opt(2000, 1, 11).unwrap().and_hms_opt(19, 0, 0).unwrap();
-    /// let datetime_west = DateTime::&lt;FixedOffset&gt;::from_local(naivedatetime_west, timezone_west);
-
-    /// assert_eq!(datetime_east, datetime_utc.with_timezone(&amp;timezone_east));
-    /// assert_eq!(datetime_west, datetime_utc.with_timezone(&amp;timezone_west));
-    /// ```
+    /// This can happen if `datetime` is near the end of the representable range of `NaiveDateTime`,
+    /// and the offset from UTC pushes it beyond that.
     </span><span class="attr">#[inline]
     #[must_use]
+    #[deprecated(
+        since = <span class="string">&quot;0.4.27&quot;</span>,
+        note = <span class="string">&quot;Use TimeZone::from_local_datetime() or NaiveDateTime::and_local_timezone instead&quot;
+    </span>)]
     </span><span class="kw">pub fn </span>from_local(datetime: NaiveDateTime, offset: Tz::Offset) -&gt; DateTime&lt;Tz&gt; {
         <span class="kw">let </span>datetime_utc = datetime - offset.fix();
 
         DateTime { datetime: datetime_utc, offset }
     }
 
-    <span class="doccomment">/// Retrieves a date component
+    <span class="doccomment">/// Retrieves the date component with an associated timezone.
     ///
     /// Unless you are immediately planning on turning this into a `DateTime`
-    /// with the same Timezone you should use the
-    /// [`date_naive`](DateTime::date_naive) method.
+    /// with the same timezone you should use the [`date_naive`](DateTime::date_naive) method.
+    ///
+    /// [`NaiveDate`] is a more well-defined type, and has more traits implemented on it,
+    /// so should be preferred to [`Date`] any time you truly want to operate on dates.
+    ///
+    /// # Panics
+    ///
+    /// [`DateTime`] internally stores the date and time in UTC with a [`NaiveDateTime`]. This
+    /// method will panic if the offset from UTC would push the local date outside of the
+    /// representable range of a [`Date`].
     </span><span class="attr">#[inline]
     #[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;Use `date_naive()` instead&quot;</span>)]
     #[allow(deprecated)]
@@ -1569,10 +1828,15 @@
         Date::from_utc(<span class="self">self</span>.naive_local().date(), <span class="self">self</span>.offset.clone())
     }
 
-    <span class="doccomment">/// Retrieves the Date without an associated timezone
+    <span class="doccomment">/// Retrieves the date component.
     ///
-    /// [`NaiveDate`] is a more well-defined type, and has more traits implemented on it,
-    /// so should be preferred to [`Date`] any time you truly want to operate on Dates.
+    /// # Panics
+    ///
+    /// [`DateTime`] internally stores the date and time in UTC with a [`NaiveDateTime`]. This
+    /// method will panic if the offset from UTC would push the local date outside of the
+    /// representable range of a [`NaiveDate`].
+    ///
+    /// # Example
     ///
     /// ```
     /// use chrono::prelude::*;
@@ -1588,8 +1852,7 @@
         NaiveDate::from_ymd_opt(local.year(), local.month(), local.day()).unwrap()
     }
 
-    <span class="doccomment">/// Retrieves a time component.
-    /// Unlike `date`, this is not associated to the time zone.
+    <span class="doccomment">/// Retrieves the time component.
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveTime {
@@ -1598,18 +1861,25 @@
 
     <span class="doccomment">/// Returns the number of non-leap seconds since January 1, 1970 0:00:00 UTC
     /// (aka &quot;UNIX timestamp&quot;).
+    ///
+    /// The reverse operation of creating a [`DateTime`] from a timestamp can be performed
+    /// using [`from_timestamp`](DateTime::from_timestamp) or [`TimeZone::timestamp_opt`].
+    ///
+    /// ```
+    /// use chrono::{DateTime, TimeZone, Utc};
+    ///
+    /// let dt: DateTime&lt;Utc&gt; = Utc.with_ymd_and_hms(2015, 5, 15, 0, 0, 0).unwrap();
+    /// assert_eq!(dt.timestamp(), 1431648000);
+    ///
+    /// assert_eq!(DateTime::from_timestamp(dt.timestamp(), dt.timestamp_subsec_nanos()).unwrap(), dt);
+    /// ```
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>timestamp(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
         <span class="self">self</span>.datetime.timestamp()
     }
 
-    <span class="doccomment">/// Returns the number of non-leap-milliseconds since January 1, 1970 UTC
-    ///
-    /// Note that this does reduce the number of years that can be represented
-    /// from ~584 Billion to ~584 Million. (If this is a problem, please file
-    /// an issue to let me know what domain needs millisecond precision over
-    /// billions of years, I&#39;m curious.)
+    <span class="doccomment">/// Returns the number of non-leap-milliseconds since January 1, 1970 UTC.
     ///
     /// # Example
     ///
@@ -1628,12 +1898,7 @@
         <span class="self">self</span>.datetime.timestamp_millis()
     }
 
-    <span class="doccomment">/// Returns the number of non-leap-microseconds since January 1, 1970 UTC
-    ///
-    /// Note that this does reduce the number of years that can be represented
-    /// from ~584 Billion to ~584 Thousand. (If this is a problem, please file
-    /// an issue to let me know what domain needs microsecond precision over
-    /// millennia, I&#39;m curious.)
+    <span class="doccomment">/// Returns the number of non-leap-microseconds since January 1, 1970 UTC.
     ///
     /// # Example
     ///
@@ -1652,12 +1917,32 @@
         <span class="self">self</span>.datetime.timestamp_micros()
     }
 
-    <span class="doccomment">/// Returns the number of non-leap-nanoseconds since January 1, 1970 UTC
+    <span class="doccomment">/// Returns the number of non-leap-nanoseconds since January 1, 1970 UTC.
     ///
-    /// Note that this does reduce the number of years that can be represented
-    /// from ~584 Billion to ~584. (If this is a problem, please file
-    /// an issue to let me know what domain needs nanosecond precision over
-    /// millennia, I&#39;m curious.)
+    /// # Panics
+    ///
+    /// An `i64` with nanosecond precision can span a range of ~584 years. This function panics on
+    /// an out of range `DateTime`.
+    ///
+    /// The dates that can be represented as nanoseconds are between 1677-09-21T00:12:44.0 and
+    /// 2262-04-11T23:47:16.854775804.
+    </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.31&quot;</span>, note = <span class="string">&quot;use `timestamp_nanos_opt()` instead&quot;</span>)]
+    #[inline]
+    #[must_use]
+    </span><span class="kw">pub fn </span>timestamp_nanos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
+        <span class="self">self</span>.timestamp_nanos_opt()
+            .expect(<span class="string">&quot;value can not be represented in a timestamp with nanosecond precision.&quot;</span>)
+    }
+
+    <span class="doccomment">/// Returns the number of non-leap-nanoseconds since January 1, 1970 UTC.
+    ///
+    /// # Panics
+    ///
+    /// An `i64` with nanosecond precision can span a range of ~584 years. This function panics on
+    /// an out of range `DateTime`.
+    ///
+    /// The dates that can be represented as nanoseconds are between 1677-09-21T00:12:44.0 and
+    /// 2262-04-11T23:47:16.854775804.
     ///
     /// # Example
     ///
@@ -1665,33 +1950,29 @@
     /// use chrono::{Utc, NaiveDate};
     ///
     /// let dt = NaiveDate::from_ymd_opt(1970, 1, 1).unwrap().and_hms_nano_opt(0, 0, 1, 444).unwrap().and_local_timezone(Utc).unwrap();
-    /// assert_eq!(dt.timestamp_nanos(), 1_000_000_444);
+    /// assert_eq!(dt.timestamp_nanos_opt(), Some(1_000_000_444));
     ///
     /// let dt = NaiveDate::from_ymd_opt(2001, 9, 9).unwrap().and_hms_nano_opt(1, 46, 40, 555).unwrap().and_local_timezone(Utc).unwrap();
-    /// assert_eq!(dt.timestamp_nanos(), 1_000_000_000_000_000_555);
+    /// assert_eq!(dt.timestamp_nanos_opt(), Some(1_000_000_000_000_000_555));
     /// ```
     </span><span class="attr">#[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>timestamp_nanos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
-        <span class="self">self</span>.datetime.timestamp_nanos()
+    </span><span class="kw">pub fn </span>timestamp_nanos_opt(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;i64&gt; {
+        <span class="self">self</span>.datetime.timestamp_nanos_opt()
     }
 
-    <span class="doccomment">/// Returns the number of milliseconds since the last second boundary
+    <span class="doccomment">/// Returns the number of milliseconds since the last second boundary.
     ///
-    /// warning: in event of a leap second, this may exceed 999
-    ///
-    /// note: this is not the number of milliseconds since January 1, 1970 0:00:00 UTC
+    /// In event of a leap second this may exceed 999.
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>timestamp_subsec_millis(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
         <span class="self">self</span>.datetime.timestamp_subsec_millis()
     }
 
-    <span class="doccomment">/// Returns the number of microseconds since the last second boundary
+    <span class="doccomment">/// Returns the number of microseconds since the last second boundary.
     ///
-    /// warning: in event of a leap second, this may exceed 999_999
-    ///
-    /// note: this is not the number of microseconds since January 1, 1970 0:00:00 UTC
+    /// In event of a leap second this may exceed 999,999.
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>timestamp_subsec_micros(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
@@ -1700,9 +1981,7 @@
 
     <span class="doccomment">/// Returns the number of nanoseconds since the last second boundary
     ///
-    /// warning: in event of a leap second, this may exceed 999_999_999
-    ///
-    /// note: this is not the number of nanoseconds since January 1, 1970 0:00:00 UTC
+    /// In event of a leap second this may exceed 999,999,999.
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>timestamp_subsec_nanos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
@@ -1724,7 +2003,8 @@
     }
 
     <span class="doccomment">/// Changes the associated time zone.
-    /// The returned `DateTime` references the same instant of time from the perspective of the provided time zone.
+    /// The returned `DateTime` references the same instant of time from the perspective of the
+    /// provided time zone.
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>with_timezone&lt;Tz2: TimeZone&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, tz: <span class="kw-2">&amp;</span>Tz2) -&gt; DateTime&lt;Tz2&gt; {
@@ -1741,7 +2021,9 @@
 
     <span class="doccomment">/// Adds given `Duration` to the current date and time.
     ///
-    /// Returns `None` when it will result in overflow.
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date would be out of range.
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>checked_add_signed(<span class="self">self</span>, rhs: OldDuration) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
@@ -1752,10 +2034,16 @@
 
     <span class="doccomment">/// Adds given `Months` to the current date and time.
     ///
-    /// Returns `None` when it will result in overflow, or if the
-    /// local time is not valid on the newly calculated date.
+    /// Uses the last day of the month if the day does not exist in the resulting month.
     ///
-    /// See [`NaiveDate::checked_add_months`] for more details on behavior
+    /// See [`NaiveDate::checked_add_months`] for more details on behavior.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date would be out of range.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_add_months(<span class="self">self</span>, rhs: Months) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         <span class="self">self</span>.naive_local()
@@ -1766,7 +2054,9 @@
 
     <span class="doccomment">/// Subtracts given `Duration` from the current date and time.
     ///
-    /// Returns `None` when it will result in overflow.
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date would be out of range.
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>checked_sub_signed(<span class="self">self</span>, rhs: OldDuration) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
@@ -1777,10 +2067,16 @@
 
     <span class="doccomment">/// Subtracts given `Months` from the current date and time.
     ///
-    /// Returns `None` when it will result in overflow, or if the
-    /// local time is not valid on the newly calculated date.
+    /// Uses the last day of the month if the day does not exist in the resulting month.
     ///
-    /// See [`NaiveDate::checked_sub_months`] for more details on behavior
+    /// See [`NaiveDate::checked_sub_months`] for more details on behavior.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date would be out of range.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_sub_months(<span class="self">self</span>, rhs: Months) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         <span class="self">self</span>.naive_local()
@@ -1789,9 +2085,14 @@
             .single()
     }
 
-    <span class="doccomment">/// Add a duration in [`Days`] to the date part of the `DateTime`
+    <span class="doccomment">/// Add a duration in [`Days`] to the date part of the `DateTime`.
     ///
-    /// Returns `None` if the resulting date would be out of range.
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date would be out of range.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_add_days(<span class="self">self</span>, days: Days) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="self">self</span>.naive_local()
@@ -1800,9 +2101,14 @@
             .single()
     }
 
-    <span class="doccomment">/// Subtract a duration in [`Days`] from the date part of the `DateTime`
+    <span class="doccomment">/// Subtract a duration in [`Days`] from the date part of the `DateTime`.
     ///
-    /// Returns `None` if the resulting date would be out of range.
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date would be out of range.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>checked_sub_days(<span class="self">self</span>, days: Days) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="self">self</span>.naive_local()
@@ -1815,8 +2121,11 @@
     /// This does not overflow or underflow at all.
     </span><span class="attr">#[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>signed_duration_since&lt;Tz2: TimeZone&gt;(<span class="self">self</span>, rhs: DateTime&lt;Tz2&gt;) -&gt; OldDuration {
-        <span class="self">self</span>.datetime.signed_duration_since(rhs.datetime)
+    </span><span class="kw">pub fn </span>signed_duration_since&lt;Tz2: TimeZone&gt;(
+        <span class="self">self</span>,
+        rhs: <span class="kw">impl </span>Borrow&lt;DateTime&lt;Tz2&gt;&gt;,
+    ) -&gt; OldDuration {
+        <span class="self">self</span>.datetime.signed_duration_since(rhs.borrow().datetime)
     }
 
     <span class="doccomment">/// Returns a view to the naive UTC datetime.
@@ -1827,6 +2136,12 @@
     }
 
     <span class="doccomment">/// Returns a view to the naive local datetime.
+    ///
+    /// # Panics
+    ///
+    /// [`DateTime`] internally stores the date and time in UTC with a [`NaiveDateTime`]. This
+    /// method will panic if the offset from UTC would push the local datetime outside of the
+    /// representable range of a [`NaiveDateTime`].
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub fn </span>naive_local(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; NaiveDateTime {
@@ -1834,6 +2149,10 @@
     }
 
     <span class="doccomment">/// Retrieve the elapsed years from now to the given [`DateTime`].
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if `base &lt; self`.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>years_since(<span class="kw-2">&amp;</span><span class="self">self</span>, base: <span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>years = <span class="self">self</span>.year() - base.year();
@@ -1851,10 +2170,114 @@
         }
     }
 
+    <span class="doccomment">/// Returns an RFC 2822 date and time string such as `Tue, 1 Jul 2003 10:52:37 +0200`.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the date can not be represented in this format: the year may not be negative and
+    /// can not have more than 4 digits.
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
+    #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
+    #[must_use]
+    </span><span class="kw">pub fn </span>to_rfc2822(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="kw">let </span><span class="kw-2">mut </span>result = String::with_capacity(<span class="number">32</span>);
+        <span class="kw">crate</span>::format::write_rfc2822(<span class="kw-2">&amp;mut </span>result, <span class="self">self</span>.naive_local(), <span class="self">self</span>.offset.fix())
+            .expect(<span class="string">&quot;writing rfc2822 datetime to string should never fail&quot;</span>);
+        result
+    }
+
+    <span class="doccomment">/// Returns an RFC 3339 and ISO 8601 date and time string such as `1996-12-19T16:39:57-08:00`.
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
+    #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
+    #[must_use]
+    </span><span class="kw">pub fn </span>to_rfc3339(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="comment">// For some reason a string with a capacity less than 32 is ca 20% slower when benchmarking.
+        </span><span class="kw">let </span><span class="kw-2">mut </span>result = String::with_capacity(<span class="number">32</span>);
+        <span class="kw">let </span>naive = <span class="self">self</span>.naive_local();
+        <span class="kw">let </span>offset = <span class="self">self</span>.offset.fix();
+        write_rfc3339(<span class="kw-2">&amp;mut </span>result, naive, offset, SecondsFormat::AutoSi, <span class="bool-val">false</span>)
+            .expect(<span class="string">&quot;writing rfc3339 datetime to string should never fail&quot;</span>);
+        result
+    }
+
+    <span class="doccomment">/// Return an RFC 3339 and ISO 8601 date and time string with subseconds
+    /// formatted as per `SecondsFormat`.
+    ///
+    /// If `use_z` is true and the timezone is UTC (offset 0), uses `Z` as
+    /// per [`Fixed::TimezoneOffsetColonZ`]. If `use_z` is false, uses
+    /// [`Fixed::TimezoneOffsetColon`]
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// # use chrono::{FixedOffset, SecondsFormat, TimeZone, Utc, NaiveDate};
+    /// let dt = NaiveDate::from_ymd_opt(2018, 1, 26).unwrap().and_hms_micro_opt(18, 30, 9, 453_829).unwrap().and_local_timezone(Utc).unwrap();
+    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Millis, false),
+    ///            &quot;2018-01-26T18:30:09.453+00:00&quot;);
+    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Millis, true),
+    ///            &quot;2018-01-26T18:30:09.453Z&quot;);
+    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Secs, true),
+    ///            &quot;2018-01-26T18:30:09Z&quot;);
+    ///
+    /// let pst = FixedOffset::east_opt(8 * 60 * 60).unwrap();
+    /// let dt = pst.from_local_datetime(&amp;NaiveDate::from_ymd_opt(2018, 1, 26).unwrap().and_hms_micro_opt(10, 30, 9, 453_829).unwrap()).unwrap();
+    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Secs, true),
+    ///            &quot;2018-01-26T10:30:09+08:00&quot;);
+    /// ```
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
+    #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
+    #[must_use]
+    </span><span class="kw">pub fn </span>to_rfc3339_opts(<span class="kw-2">&amp;</span><span class="self">self</span>, secform: SecondsFormat, use_z: bool) -&gt; String {
+        <span class="kw">let </span><span class="kw-2">mut </span>result = String::with_capacity(<span class="number">38</span>);
+        write_rfc3339(<span class="kw-2">&amp;mut </span>result, <span class="self">self</span>.naive_local(), <span class="self">self</span>.offset.fix(), secform, use_z)
+            .expect(<span class="string">&quot;writing rfc3339 datetime to string should never fail&quot;</span>);
+        result
+    }
+
     <span class="doccomment">/// The minimum possible `DateTime&lt;Utc&gt;`.
     </span><span class="kw">pub const </span>MIN_UTC: DateTime&lt;Utc&gt; = DateTime { datetime: NaiveDateTime::MIN, offset: Utc };
     <span class="doccomment">/// The maximum possible `DateTime&lt;Utc&gt;`.
     </span><span class="kw">pub const </span>MAX_UTC: DateTime&lt;Utc&gt; = DateTime { datetime: NaiveDateTime::MAX, offset: Utc };
+}
+
+<span class="kw">impl </span>DateTime&lt;Utc&gt; {
+    <span class="doccomment">/// Makes a new [`DateTime&lt;Utc&gt;`] from the number of non-leap seconds
+    /// since January 1, 1970 0:00:00 UTC (aka &quot;UNIX timestamp&quot;)
+    /// and the number of nanoseconds since the last whole non-leap second.
+    ///
+    /// This is guaranteed to round-trip with regard to [`timestamp`](DateTime::timestamp) and
+    /// [`timestamp_subsec_nanos`](DateTime::timestamp_subsec_nanos).
+    ///
+    /// If you need to create a `DateTime` with a [`TimeZone`] different from [`Utc`], use
+    /// [`TimeZone::timestamp_opt`] or [`DateTime::with_timezone`].
+    ///
+    /// The nanosecond part can exceed 1,000,000,000 in order to represent a
+    /// [leap second](NaiveTime#leap-second-handling), but only when `secs % 60 == 59`.
+    /// (The true &quot;UNIX timestamp&quot; cannot represent a leap second unambiguously.)
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` on out-of-range number of seconds and/or
+    /// invalid nanosecond, otherwise returns `Some(DateTime {...})`.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use chrono::{DateTime, Utc};
+    ///
+    /// let dt: DateTime&lt;Utc&gt; = DateTime::&lt;Utc&gt;::from_timestamp(1431648000, 0).expect(&quot;invalid timestamp&quot;);
+    ///
+    /// assert_eq!(dt.to_string(), &quot;2015-05-15 00:00:00 UTC&quot;);
+    /// assert_eq!(DateTime::from_timestamp(dt.timestamp(), dt.timestamp_subsec_nanos()).unwrap(), dt);
+    /// ```
+    </span><span class="attr">#[inline]
+    #[must_use]
+    </span><span class="kw">pub fn </span>from_timestamp(secs: i64, nsecs: u32) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        NaiveDateTime::from_timestamp_opt(secs, nsecs).as_ref().map(NaiveDateTime::and_utc)
+    }
+
+    <span class="doccomment">/// The Unix Epoch, 1970-01-01 00:00:00 UTC.
+    </span><span class="kw">pub const </span>UNIX_EPOCH: <span class="self">Self </span>= <span class="self">Self </span>{ datetime: NaiveDateTime::UNIX_EPOCH, offset: Utc };
 }
 
 <span class="kw">impl </span>Default <span class="kw">for </span>DateTime&lt;Utc&gt; {
@@ -1964,7 +2387,24 @@
     /// and returns a new [`DateTime`] instance with the parsed timezone as the [`FixedOffset`].
     ///
     /// RFC 2822 is the internet message standard that specifies the representation of times in HTTP
-    /// and email headers.
+    /// and email headers. It is the 2001 revision of RFC 822, and is itself revised as RFC 5322 in
+    /// 2008.
+    ///
+    /// # Support for the obsolete date format
+    ///
+    /// - A 2-digit year is interpreted to be a year in 1950-2049.
+    /// - The standard allows comments and whitespace between many of the tokens. See [4.3] and
+    ///   [Appendix A.5]
+    /// - Single letter &#39;military&#39; time zone names are parsed as a `-0000` offset.
+    ///   They were defined with the wrong sign in RFC 822 and corrected in RFC 2822. But because
+    ///   the meaning is now ambiguous, the standard says they should be be considered as `-0000`
+    ///   unless there is out-of-band information confirming their meaning.
+    ///   The exception is `Z`, which remains identical to `+0000`.
+    ///
+    /// [4.3]: https://www.rfc-editor.org/rfc/rfc2822#section-4.3
+    /// [Appendix A.5]: https://www.rfc-editor.org/rfc/rfc2822#appendix-A.5
+    ///
+    /// # Example
     ///
     /// ```
     /// # use chrono::{DateTime, FixedOffset, TimeZone};
@@ -1994,9 +2434,11 @@
     /// also simultaneously valid RFC 3339 values, but not all RFC 3339 values are valid ISO 8601
     /// values (or the other way around).
     </span><span class="kw">pub fn </span>parse_from_rfc3339(s: <span class="kw-2">&amp;</span>str) -&gt; ParseResult&lt;DateTime&lt;FixedOffset&gt;&gt; {
-        <span class="kw">const </span>ITEMS: <span class="kw-2">&amp;</span>[Item&lt;<span class="lifetime">&#39;static</span>&gt;] = <span class="kw-2">&amp;</span>[Item::Fixed(Fixed::RFC3339)];
         <span class="kw">let </span><span class="kw-2">mut </span>parsed = Parsed::new();
-        parse(<span class="kw-2">&amp;mut </span>parsed, s, ITEMS.iter())<span class="question-mark">?</span>;
+        <span class="kw">let </span>(s, <span class="kw">_</span>) = parse_rfc3339(<span class="kw-2">&amp;mut </span>parsed, s)<span class="question-mark">?</span>;
+        <span class="kw">if </span>!s.is_empty() {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(TOO_LONG);
+        }
         parsed.to_datetime()
     }
 
@@ -2064,99 +2506,8 @@
 <span class="kw">where
     </span>Tz::Offset: fmt::Display,
 {
-    <span class="doccomment">/// Returns an RFC 2822 date and time string such as `Tue, 1 Jul 2003 10:52:37 +0200`.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
-    #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
-    #[must_use]
-    </span><span class="kw">pub fn </span>to_rfc2822(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="kw">let </span><span class="kw-2">mut </span>result = String::with_capacity(<span class="number">32</span>);
-        <span class="kw">crate</span>::format::write_rfc2822(<span class="kw-2">&amp;mut </span>result, <span class="self">self</span>.naive_local(), <span class="self">self</span>.offset.fix())
-            .expect(<span class="string">&quot;writing rfc2822 datetime to string should never fail&quot;</span>);
-        result
-    }
-
-    <span class="doccomment">/// Returns an RFC 3339 and ISO 8601 date and time string such as `1996-12-19T16:39:57-08:00`.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
-    #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
-    #[must_use]
-    </span><span class="kw">pub fn </span>to_rfc3339(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="kw">let </span><span class="kw-2">mut </span>result = String::with_capacity(<span class="number">32</span>);
-        <span class="kw">crate</span>::format::write_rfc3339(<span class="kw-2">&amp;mut </span>result, <span class="self">self</span>.naive_local(), <span class="self">self</span>.offset.fix())
-            .expect(<span class="string">&quot;writing rfc3339 datetime to string should never fail&quot;</span>);
-        result
-    }
-
-    <span class="doccomment">/// Return an RFC 3339 and ISO 8601 date and time string with subseconds
-    /// formatted as per `SecondsFormat`.
-    ///
-    /// If `use_z` is true and the timezone is UTC (offset 0), uses `Z` as
-    /// per [`Fixed::TimezoneOffsetColonZ`]. If `use_z` is false, uses
-    /// [`Fixed::TimezoneOffsetColon`]
-    ///
-    /// # Examples
-    ///
-    /// ```rust
-    /// # use chrono::{FixedOffset, SecondsFormat, TimeZone, Utc, NaiveDate};
-    /// let dt = NaiveDate::from_ymd_opt(2018, 1, 26).unwrap().and_hms_micro_opt(18, 30, 9, 453_829).unwrap().and_local_timezone(Utc).unwrap();
-    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Millis, false),
-    ///            &quot;2018-01-26T18:30:09.453+00:00&quot;);
-    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Millis, true),
-    ///            &quot;2018-01-26T18:30:09.453Z&quot;);
-    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Secs, true),
-    ///            &quot;2018-01-26T18:30:09Z&quot;);
-    ///
-    /// let pst = FixedOffset::east_opt(8 * 60 * 60).unwrap();
-    /// let dt = pst.from_local_datetime(&amp;NaiveDate::from_ymd_opt(2018, 1, 26).unwrap().and_hms_micro_opt(10, 30, 9, 453_829).unwrap()).unwrap();
-    /// assert_eq!(dt.to_rfc3339_opts(SecondsFormat::Secs, true),
-    ///            &quot;2018-01-26T10:30:09+08:00&quot;);
-    /// ```
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
-    #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
-    #[must_use]
-    </span><span class="kw">pub fn </span>to_rfc3339_opts(<span class="kw-2">&amp;</span><span class="self">self</span>, secform: SecondsFormat, use_z: bool) -&gt; String {
-        <span class="kw">use </span><span class="kw">crate</span>::format::Numeric::<span class="kw-2">*</span>;
-        <span class="kw">use </span><span class="kw">crate</span>::format::Pad::Zero;
-        <span class="kw">use </span><span class="kw">crate</span>::SecondsFormat::<span class="kw-2">*</span>;
-
-        <span class="macro">debug_assert!</span>(secform != __NonExhaustive, <span class="string">&quot;Do not use __NonExhaustive!&quot;</span>);
-
-        <span class="kw">const </span>PREFIX: <span class="kw-2">&amp;</span>[Item&lt;<span class="lifetime">&#39;static</span>&gt;] = <span class="kw-2">&amp;</span>[
-            Item::Numeric(Year, Zero),
-            Item::Literal(<span class="string">&quot;-&quot;</span>),
-            Item::Numeric(Month, Zero),
-            Item::Literal(<span class="string">&quot;-&quot;</span>),
-            Item::Numeric(Day, Zero),
-            Item::Literal(<span class="string">&quot;T&quot;</span>),
-            Item::Numeric(Hour, Zero),
-            Item::Literal(<span class="string">&quot;:&quot;</span>),
-            Item::Numeric(Minute, Zero),
-            Item::Literal(<span class="string">&quot;:&quot;</span>),
-            Item::Numeric(Second, Zero),
-        ];
-
-        <span class="kw">let </span>ssitem = <span class="kw">match </span>secform {
-            Secs =&gt; <span class="prelude-val">None</span>,
-            Millis =&gt; <span class="prelude-val">Some</span>(Item::Fixed(Fixed::Nanosecond3)),
-            Micros =&gt; <span class="prelude-val">Some</span>(Item::Fixed(Fixed::Nanosecond6)),
-            Nanos =&gt; <span class="prelude-val">Some</span>(Item::Fixed(Fixed::Nanosecond9)),
-            AutoSi =&gt; <span class="prelude-val">Some</span>(Item::Fixed(Fixed::Nanosecond)),
-            __NonExhaustive =&gt; <span class="macro">unreachable!</span>(),
-        };
-
-        <span class="kw">let </span>tzitem = Item::Fixed(<span class="kw">if </span>use_z {
-            Fixed::TimezoneOffsetColonZ
-        } <span class="kw">else </span>{
-            Fixed::TimezoneOffsetColon
-        });
-
-        <span class="kw">match </span>ssitem {
-            <span class="prelude-val">None </span>=&gt; <span class="self">self</span>.format_with_items(PREFIX.iter().chain([tzitem].iter())).to_string(),
-            <span class="prelude-val">Some</span>(s) =&gt; <span class="self">self</span>.format_with_items(PREFIX.iter().chain([s, tzitem].iter())).to_string(),
-        }
-    }
-
     <span class="doccomment">/// Formats the combined date and time with the specified formatting items.
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
     #[must_use]
@@ -2181,7 +2532,7 @@
     /// let formatted = format!(&quot;{}&quot;, date_time.format(&quot;%d/%m/%Y %H:%M&quot;));
     /// assert_eq!(formatted, &quot;02/04/2017 12:50&quot;);
     /// ```
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
     #[must_use]
@@ -2270,36 +2621,113 @@
     }
 
     <span class="attr">#[inline]
+    </span><span class="doccomment">/// Makes a new `DateTime` with the year number changed, while keeping the same month and day.
+    ///
+    /// See also the [`NaiveDate::with_year`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date does not exist.
+    /// - When the `NaiveDateTime` would be out of range.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
     </span><span class="kw">fn </span>with_year(<span class="kw-2">&amp;</span><span class="self">self</span>, year: i32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_year(year))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the month number (starting from 1) changed.
+    ///
+    /// See also the [`NaiveDate::with_month`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date does not exist.
+    /// - The value for `month` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_month(<span class="kw-2">&amp;</span><span class="self">self</span>, month: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_month(month))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the month number (starting from 0) changed.
+    ///
+    /// See also the [`NaiveDate::with_month0`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date does not exist.
+    /// - The value for `month0` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_month0(<span class="kw-2">&amp;</span><span class="self">self</span>, month0: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_month0(month0))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the month number (starting from 0) changed.
+    ///
+    /// See also the [`NaiveDate::with_day`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date does not exist.
+    /// - The value for `day` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_day(<span class="kw-2">&amp;</span><span class="self">self</span>, day: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_day(day))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the month number (starting from 0) changed.
+    ///
+    /// See also the [`NaiveDate::with_day0`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date does not exist.
+    /// - The value for `day0` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_day0(<span class="kw-2">&amp;</span><span class="self">self</span>, day0: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_day0(day0))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the month number (starting from 0) changed.
+    ///
+    /// See also the [`NaiveDate::with_ordinal`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date does not exist.
+    /// - The value for `ordinal` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_ordinal(<span class="kw-2">&amp;</span><span class="self">self</span>, ordinal: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_ordinal(ordinal))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the month number (starting from 0) changed.
+    ///
+    /// See also the [`NaiveDate::with_ordinal0`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The resulting date does not exist.
+    /// - The value for `ordinal0` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_ordinal0(<span class="kw-2">&amp;</span><span class="self">self</span>, ordinal0: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_ordinal0(ordinal0))
     }
@@ -2323,22 +2751,65 @@
         <span class="self">self</span>.naive_local().nanosecond()
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the hour number changed.
+    ///
+    /// See also the [`NaiveTime::with_hour`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The value for `hour` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_hour(<span class="kw-2">&amp;</span><span class="self">self</span>, hour: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_hour(hour))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the minute number changed.
+    ///
+    /// See also the [`NaiveTime::with_minute`] method.
+    ///
+    /// # Errors
+    ///
+    /// - The value for `minute` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_minute(<span class="kw-2">&amp;</span><span class="self">self</span>, min: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_minute(min))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with the second number changed.
+    ///
+    /// As with the [`second`](#method.second) method,
+    /// the input range is restricted to 0 through 59.
+    ///
+    /// See also the [`NaiveTime::with_second`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if:
+    /// - The value for `second` is invalid.
+    /// - The local time at the resulting date does not exist or is ambiguous, for example during a
+    ///   daylight saving time transition.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_second(<span class="kw-2">&amp;</span><span class="self">self</span>, sec: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_second(sec))
     }
 
-    <span class="attr">#[inline]
+    <span class="doccomment">/// Makes a new `DateTime` with nanoseconds since the whole non-leap second changed.
+    ///
+    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
+    /// As with the [`NaiveDateTime::nanosecond`] method,
+    /// the input range can exceed 1,000,000,000 for leap seconds.
+    ///
+    /// See also the [`NaiveTime::with_nanosecond`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if `nanosecond &gt;= 2,000,000,000`.
+    </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_nanosecond(<span class="kw-2">&amp;</span><span class="self">self</span>, nano: u32) -&gt; <span class="prelude-ty">Option</span>&lt;DateTime&lt;Tz&gt;&gt; {
         map_local(<span class="self">self</span>, |datetime| datetime.with_nanosecond(nano))
     }
@@ -2398,6 +2869,17 @@
     }
 }
 
+<span class="kw">impl</span>&lt;Tz: TimeZone&gt; Add&lt;Duration&gt; <span class="kw">for </span>DateTime&lt;Tz&gt; {
+    <span class="kw">type </span>Output = DateTime&lt;Tz&gt;;
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>add(<span class="self">self</span>, rhs: Duration) -&gt; DateTime&lt;Tz&gt; {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="self">self</span>.checked_add_signed(rhs).expect(<span class="string">&quot;`DateTime + Duration` overflowed&quot;</span>)
+    }
+}
+
 <span class="kw">impl</span>&lt;Tz: TimeZone&gt; AddAssign&lt;OldDuration&gt; <span class="kw">for </span>DateTime&lt;Tz&gt; {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: OldDuration) {
@@ -2405,6 +2887,15 @@
             <span class="self">self</span>.datetime.checked_add_signed(rhs).expect(<span class="string">&quot;`DateTime + Duration` overflowed&quot;</span>);
         <span class="kw">let </span>tz = <span class="self">self</span>.timezone();
         <span class="kw-2">*</span><span class="self">self </span>= tz.from_utc_datetime(<span class="kw-2">&amp;</span>datetime);
+    }
+}
+
+<span class="kw">impl</span>&lt;Tz: TimeZone&gt; AddAssign&lt;Duration&gt; <span class="kw">for </span>DateTime&lt;Tz&gt; {
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: Duration) {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="kw-2">*</span><span class="self">self </span>+= rhs;
     }
 }
 
@@ -2425,6 +2916,17 @@
     }
 }
 
+<span class="kw">impl</span>&lt;Tz: TimeZone&gt; Sub&lt;Duration&gt; <span class="kw">for </span>DateTime&lt;Tz&gt; {
+    <span class="kw">type </span>Output = DateTime&lt;Tz&gt;;
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>sub(<span class="self">self</span>, rhs: Duration) -&gt; DateTime&lt;Tz&gt; {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="self">self</span>.checked_sub_signed(rhs).expect(<span class="string">&quot;`DateTime - Duration` overflowed&quot;</span>)
+    }
+}
+
 <span class="kw">impl</span>&lt;Tz: TimeZone&gt; SubAssign&lt;OldDuration&gt; <span class="kw">for </span>DateTime&lt;Tz&gt; {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>sub_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: OldDuration) {
@@ -2432,6 +2934,15 @@
             <span class="self">self</span>.datetime.checked_sub_signed(rhs).expect(<span class="string">&quot;`DateTime - Duration` overflowed&quot;</span>);
         <span class="kw">let </span>tz = <span class="self">self</span>.timezone();
         <span class="kw-2">*</span><span class="self">self </span>= tz.from_utc_datetime(<span class="kw-2">&amp;</span>datetime)
+    }
+}
+
+<span class="kw">impl</span>&lt;Tz: TimeZone&gt; SubAssign&lt;Duration&gt; <span class="kw">for </span>DateTime&lt;Tz&gt; {
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>sub_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: Duration) {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="kw-2">*</span><span class="self">self </span>-= rhs;
     }
 }
 
@@ -2448,6 +2959,15 @@
 
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>sub(<span class="self">self</span>, rhs: DateTime&lt;Tz&gt;) -&gt; OldDuration {
+        <span class="self">self</span>.signed_duration_since(rhs)
+    }
+}
+
+<span class="kw">impl</span>&lt;Tz: TimeZone&gt; Sub&lt;<span class="kw-2">&amp;</span>DateTime&lt;Tz&gt;&gt; <span class="kw">for </span>DateTime&lt;Tz&gt; {
+    <span class="kw">type </span>Output = OldDuration;
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>sub(<span class="self">self</span>, rhs: <span class="kw-2">&amp;</span>DateTime&lt;Tz&gt;) -&gt; OldDuration {
         <span class="self">self</span>.signed_duration_since(rhs)
     }
 }
@@ -2487,7 +3007,7 @@
 }
 
 <span class="doccomment">/// Accepts a relaxed form of RFC3339.
-/// A space or a &#39;T&#39; are acepted as the separator between the date and time
+/// A space or a &#39;T&#39; are accepted as the separator between the date and time
 /// parts.
 ///
 /// All of these examples are equivalent:
@@ -2508,7 +3028,7 @@
 }
 
 <span class="doccomment">/// Accepts a relaxed form of RFC3339.
-/// A space or a &#39;T&#39; are acepted as the separator between the date and time
+/// A space or a &#39;T&#39; are accepted as the separator between the date and time
 /// parts.
 ///
 /// All of these examples are equivalent:
@@ -2530,7 +3050,7 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, test))]
+<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;std&quot;</span>)))]
 </span><span class="kw">impl </span>From&lt;SystemTime&gt; <span class="kw">for </span>DateTime&lt;Utc&gt; {
     <span class="kw">fn </span>from(t: SystemTime) -&gt; DateTime&lt;Utc&gt; {
@@ -2559,12 +3079,10 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, test))]
+<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;std&quot;</span>)))]
 </span><span class="kw">impl</span>&lt;Tz: TimeZone&gt; From&lt;DateTime&lt;Tz&gt;&gt; <span class="kw">for </span>SystemTime {
     <span class="kw">fn </span>from(dt: DateTime&lt;Tz&gt;) -&gt; SystemTime {
-        <span class="kw">use </span>std::time::Duration;
-
         <span class="kw">let </span>sec = dt.timestamp();
         <span class="kw">let </span>nsec = dt.timestamp_subsec_nanos();
         <span class="kw">if </span>sec &lt; <span class="number">0 </span>{
@@ -2652,34 +3170,6 @@
     }
 }
 
-<span class="attr">#[test]
-</span><span class="kw">fn </span>test_add_sub_months() {
-    <span class="kw">let </span>utc_dt = Utc.with_ymd_and_hms(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap();
-    <span class="macro">assert_eq!</span>(utc_dt + Months::new(<span class="number">15</span>), Utc.with_ymd_and_hms(<span class="number">2019</span>, <span class="number">12</span>, <span class="number">5</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap());
-
-    <span class="kw">let </span>utc_dt = Utc.with_ymd_and_hms(<span class="number">2020</span>, <span class="number">1</span>, <span class="number">31</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap();
-    <span class="macro">assert_eq!</span>(utc_dt + Months::new(<span class="number">1</span>), Utc.with_ymd_and_hms(<span class="number">2020</span>, <span class="number">2</span>, <span class="number">29</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap());
-    <span class="macro">assert_eq!</span>(utc_dt + Months::new(<span class="number">2</span>), Utc.with_ymd_and_hms(<span class="number">2020</span>, <span class="number">3</span>, <span class="number">31</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap());
-
-    <span class="kw">let </span>utc_dt = Utc.with_ymd_and_hms(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap();
-    <span class="macro">assert_eq!</span>(utc_dt - Months::new(<span class="number">15</span>), Utc.with_ymd_and_hms(<span class="number">2017</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap());
-
-    <span class="kw">let </span>utc_dt = Utc.with_ymd_and_hms(<span class="number">2020</span>, <span class="number">3</span>, <span class="number">31</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap();
-    <span class="macro">assert_eq!</span>(utc_dt - Months::new(<span class="number">1</span>), Utc.with_ymd_and_hms(<span class="number">2020</span>, <span class="number">2</span>, <span class="number">29</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap());
-    <span class="macro">assert_eq!</span>(utc_dt - Months::new(<span class="number">2</span>), Utc.with_ymd_and_hms(<span class="number">2020</span>, <span class="number">1</span>, <span class="number">31</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap());
-}
-
-<span class="attr">#[test]
-</span><span class="kw">fn </span>test_auto_conversion() {
-    <span class="kw">let </span>utc_dt = Utc.with_ymd_and_hms(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">23</span>, <span class="number">58</span>, <span class="number">0</span>).unwrap();
-    <span class="kw">let </span>cdt_dt = FixedOffset::west_opt(<span class="number">5 </span>* <span class="number">60 </span>* <span class="number">60</span>)
-        .unwrap()
-        .with_ymd_and_hms(<span class="number">2018</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">18</span>, <span class="number">58</span>, <span class="number">0</span>)
-        .unwrap();
-    <span class="kw">let </span>utc_dt2: DateTime&lt;Utc&gt; = cdt_dt.into();
-    <span class="macro">assert_eq!</span>(utc_dt, utc_dt2);
-}
-
 <span class="attr">#[cfg(all(test, any(feature = <span class="string">&quot;rustc-serialize&quot;</span>, feature = <span class="string">&quot;serde&quot;</span>)))]
 </span><span class="kw">fn </span>test_encodable_json&lt;FUtc, FFixed, E&gt;(to_string_utc: FUtc, to_string_fixed: FFixed)
 <span class="kw">where
@@ -2704,7 +3194,9 @@
             <span class="kw-2">&amp;</span>FixedOffset::east_opt(<span class="number">3650</span>).unwrap().with_ymd_and_hms(<span class="number">2014</span>, <span class="number">7</span>, <span class="number">24</span>, <span class="number">12</span>, <span class="number">34</span>, <span class="number">6</span>).unwrap()
         )
         .ok(),
-        <span class="prelude-val">Some</span>(<span class="string">r#&quot;&quot;2014-07-24T12:34:06+01:00:50&quot;&quot;#</span>.into())
+        <span class="comment">// An offset with seconds is not allowed by RFC 3339, so we round it to the nearest minute.
+        // In this case `+01:00:50` becomes `+01:01`
+        </span><span class="prelude-val">Some</span>(<span class="string">r#&quot;&quot;2014-07-24T12:34:06+01:01&quot;&quot;#</span>.into())
     );
 }
 
@@ -2752,7 +3244,7 @@
     <span class="comment">// we don&#39;t know the exact local offset but we can check that
     // the conversion didn&#39;t change the instant itself
     </span><span class="macro">assert_eq!</span>(
-        local_from_str(<span class="string">r#&quot;&quot;2014-07-24T12:34:06Z&quot;&quot;#</span>).expect(<span class="string">&quot;local shouuld parse&quot;</span>),
+        local_from_str(<span class="string">r#&quot;&quot;2014-07-24T12:34:06Z&quot;&quot;#</span>).expect(<span class="string">&quot;local should parse&quot;</span>),
         Utc.with_ymd_and_hms(<span class="number">2014</span>, <span class="number">7</span>, <span class="number">24</span>, <span class="number">12</span>, <span class="number">34</span>, <span class="number">6</span>).unwrap()
     );
     <span class="macro">assert_eq!</span>(

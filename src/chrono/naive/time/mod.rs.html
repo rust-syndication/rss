@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.26/src/naive/time/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-f3501f0f5ae15dfb.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.1 (eb26296b5 2023-08-03)" data-search-js="search-4926e5fc22a5646a.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../static.files/main-f0540c1d82cde29b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../chrono/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.31/src/naive/time/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1432,27 +1432,137 @@
 <a href="#1432" id="1432">1432</a>
 <a href="#1433" id="1433">1433</a>
 <a href="#1434" id="1434">1434</a>
+<a href="#1435" id="1435">1435</a>
+<a href="#1436" id="1436">1436</a>
+<a href="#1437" id="1437">1437</a>
+<a href="#1438" id="1438">1438</a>
+<a href="#1439" id="1439">1439</a>
+<a href="#1440" id="1440">1440</a>
+<a href="#1441" id="1441">1441</a>
+<a href="#1442" id="1442">1442</a>
+<a href="#1443" id="1443">1443</a>
+<a href="#1444" id="1444">1444</a>
+<a href="#1445" id="1445">1445</a>
+<a href="#1446" id="1446">1446</a>
+<a href="#1447" id="1447">1447</a>
+<a href="#1448" id="1448">1448</a>
+<a href="#1449" id="1449">1449</a>
+<a href="#1450" id="1450">1450</a>
+<a href="#1451" id="1451">1451</a>
+<a href="#1452" id="1452">1452</a>
+<a href="#1453" id="1453">1453</a>
+<a href="#1454" id="1454">1454</a>
+<a href="#1455" id="1455">1455</a>
+<a href="#1456" id="1456">1456</a>
+<a href="#1457" id="1457">1457</a>
+<a href="#1458" id="1458">1458</a>
+<a href="#1459" id="1459">1459</a>
+<a href="#1460" id="1460">1460</a>
+<a href="#1461" id="1461">1461</a>
+<a href="#1462" id="1462">1462</a>
+<a href="#1463" id="1463">1463</a>
+<a href="#1464" id="1464">1464</a>
+<a href="#1465" id="1465">1465</a>
+<a href="#1466" id="1466">1466</a>
+<a href="#1467" id="1467">1467</a>
+<a href="#1468" id="1468">1468</a>
+<a href="#1469" id="1469">1469</a>
+<a href="#1470" id="1470">1470</a>
+<a href="#1471" id="1471">1471</a>
+<a href="#1472" id="1472">1472</a>
+<a href="#1473" id="1473">1473</a>
+<a href="#1474" id="1474">1474</a>
+<a href="#1475" id="1475">1475</a>
+<a href="#1476" id="1476">1476</a>
+<a href="#1477" id="1477">1477</a>
+<a href="#1478" id="1478">1478</a>
+<a href="#1479" id="1479">1479</a>
+<a href="#1480" id="1480">1480</a>
+<a href="#1481" id="1481">1481</a>
+<a href="#1482" id="1482">1482</a>
+<a href="#1483" id="1483">1483</a>
+<a href="#1484" id="1484">1484</a>
+<a href="#1485" id="1485">1485</a>
+<a href="#1486" id="1486">1486</a>
+<a href="#1487" id="1487">1487</a>
+<a href="#1488" id="1488">1488</a>
+<a href="#1489" id="1489">1489</a>
+<a href="#1490" id="1490">1490</a>
+<a href="#1491" id="1491">1491</a>
+<a href="#1492" id="1492">1492</a>
+<a href="#1493" id="1493">1493</a>
+<a href="#1494" id="1494">1494</a>
+<a href="#1495" id="1495">1495</a>
+<a href="#1496" id="1496">1496</a>
+<a href="#1497" id="1497">1497</a>
+<a href="#1498" id="1498">1498</a>
+<a href="#1499" id="1499">1499</a>
+<a href="#1500" id="1500">1500</a>
+<a href="#1501" id="1501">1501</a>
+<a href="#1502" id="1502">1502</a>
+<a href="#1503" id="1503">1503</a>
+<a href="#1504" id="1504">1504</a>
+<a href="#1505" id="1505">1505</a>
+<a href="#1506" id="1506">1506</a>
+<a href="#1507" id="1507">1507</a>
+<a href="#1508" id="1508">1508</a>
+<a href="#1509" id="1509">1509</a>
+<a href="#1510" id="1510">1510</a>
+<a href="#1511" id="1511">1511</a>
+<a href="#1512" id="1512">1512</a>
+<a href="#1513" id="1513">1513</a>
+<a href="#1514" id="1514">1514</a>
+<a href="#1515" id="1515">1515</a>
+<a href="#1516" id="1516">1516</a>
+<a href="#1517" id="1517">1517</a>
+<a href="#1518" id="1518">1518</a>
+<a href="#1519" id="1519">1519</a>
+<a href="#1520" id="1520">1520</a>
+<a href="#1521" id="1521">1521</a>
+<a href="#1522" id="1522">1522</a>
+<a href="#1523" id="1523">1523</a>
+<a href="#1524" id="1524">1524</a>
+<a href="#1525" id="1525">1525</a>
+<a href="#1526" id="1526">1526</a>
+<a href="#1527" id="1527">1527</a>
+<a href="#1528" id="1528">1528</a>
+<a href="#1529" id="1529">1529</a>
+<a href="#1530" id="1530">1530</a>
+<a href="#1531" id="1531">1531</a>
+<a href="#1532" id="1532">1532</a>
+<a href="#1533" id="1533">1533</a>
+<a href="#1534" id="1534">1534</a>
+<a href="#1535" id="1535">1535</a>
+<a href="#1536" id="1536">1536</a>
+<a href="#1537" id="1537">1537</a>
+<a href="#1538" id="1538">1538</a>
+<a href="#1539" id="1539">1539</a>
+<a href="#1540" id="1540">1540</a>
+<a href="#1541" id="1541">1541</a>
+<a href="#1542" id="1542">1542</a>
 </pre></div><pre class="rust"><code><span class="comment">// This is a part of Chrono.
 // See README.md and LICENSE.txt for details.
 
 </span><span class="doccomment">//! ISO 8601 time without timezone.
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
 </span><span class="kw">use </span>core::borrow::Borrow;
 <span class="kw">use </span>core::ops::{Add, AddAssign, Sub, SubAssign};
+<span class="kw">use </span>core::time::Duration;
 <span class="kw">use </span>core::{fmt, str};
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;rkyv&quot;</span>)]
 </span><span class="kw">use </span>rkyv::{Archive, Deserialize, Serialize};
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+<span class="kw">use </span><span class="kw">crate</span>::duration::Duration <span class="kw">as </span>OldDuration;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::format::DelayedFormat;
 <span class="kw">use </span><span class="kw">crate</span>::format::{
     parse, parse_and_remainder, write_hundreds, Fixed, Item, Numeric, Pad, ParseError, ParseResult,
     Parsed, StrftimeItems,
 };
-<span class="kw">use </span><span class="kw">crate</span>::oldtime::Duration <span class="kw">as </span>OldDuration;
 <span class="kw">use </span><span class="kw">crate</span>::Timelike;
+<span class="kw">use crate</span>::{expect, try_opt};
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;rustc-serialize&quot;</span>)]
 </span><span class="kw">mod </span>rustc_serialize;
@@ -1534,7 +1644,8 @@
 /// (short for [`NaiveTime::overflowing_add_signed`](#method.overflowing_add_signed)):
 ///
 /// - `03:00:00 + 1s = 03:00:01`.
-/// - `03:00:59 + 60s = 03:02:00`.
+/// - `03:00:59 + 60s = 03:01:59`.
+/// - `03:00:59 + 61s = 03:02:00`.
 /// - `03:00:59 + 1s = 03:01:00`.
 /// - `03:00:60 + 1s = 03:01:00`.
 ///   Note that the sum is identical to the previous.
@@ -1602,22 +1713,33 @@
 /// assert_eq!(format!(&quot;{:?}&quot;, dt), &quot;2015-06-30T23:59:60Z&quot;);
 /// ```
 ///
-/// There are hypothetical leap seconds not on the minute boundary
-/// nevertheless supported by Chrono.
-/// They are allowed for the sake of completeness and consistency;
-/// there were several &quot;exotic&quot; time zone offsets with fractional minutes prior to UTC after all.
-/// For such cases the human-readable representation is ambiguous
-/// and would be read back to the next non-leap second.
+/// There are hypothetical leap seconds not on the minute boundary nevertheless supported by Chrono.
+/// They are allowed for the sake of completeness and consistency; there were several &quot;exotic&quot; time
+/// zone offsets with fractional minutes prior to UTC after all.
+/// For such cases the human-readable representation is ambiguous and would be read back to the next
+/// non-leap second.
+///
+/// A `NaiveTime` with a leap second that is not on a minute boundary can only be created from a
+/// [`DateTime`](crate::DateTime) with fractional minutes as offset, or using
+/// [`Timelike::with_nanosecond()`].
 ///
 /// ```
-/// use chrono::{DateTime, Utc, TimeZone, NaiveDate};
+/// use chrono::{FixedOffset, NaiveDate, TimeZone};
 ///
-/// let dt = NaiveDate::from_ymd_opt(2015, 6, 30).unwrap().and_hms_milli_opt(23, 56, 4, 1_000).unwrap().and_local_timezone(Utc).unwrap();
-/// assert_eq!(format!(&quot;{:?}&quot;, dt), &quot;2015-06-30T23:56:05Z&quot;);
+/// let paramaribo_pre1945 = FixedOffset::east_opt(-13236).unwrap(); // -03:40:36
+/// let leap_sec_2015 =
+///     NaiveDate::from_ymd_opt(2015, 6, 30).unwrap().and_hms_milli_opt(23, 59, 59, 1_000).unwrap();
+/// let dt1 = paramaribo_pre1945.from_utc_datetime(&amp;leap_sec_2015);
+/// assert_eq!(format!(&quot;{:?}&quot;, dt1), &quot;2015-06-30T20:19:24-03:40:36&quot;);
+/// assert_eq!(format!(&quot;{:?}&quot;, dt1.time()), &quot;20:19:24&quot;);
 ///
-/// let dt = Utc.with_ymd_and_hms(2015, 6, 30, 23, 56, 5).unwrap();
-/// assert_eq!(format!(&quot;{:?}&quot;, dt), &quot;2015-06-30T23:56:05Z&quot;);
-/// assert_eq!(DateTime::parse_from_rfc3339(&quot;2015-06-30T23:56:05Z&quot;).unwrap(), dt);
+/// let next_sec = NaiveDate::from_ymd_opt(2015, 7, 1).unwrap().and_hms_opt(0, 0, 0).unwrap();
+/// let dt2 = paramaribo_pre1945.from_utc_datetime(&amp;next_sec);
+/// assert_eq!(format!(&quot;{:?}&quot;, dt2), &quot;2015-06-30T20:19:24-03:40:36&quot;);
+/// assert_eq!(format!(&quot;{:?}&quot;, dt2.time()), &quot;20:19:24&quot;);
+///
+/// assert!(dt1.time() != dt2.time());
+/// assert!(dt1.time().to_string() == dt2.time().to_string());
 /// ```
 ///
 /// Since Chrono alone cannot determine any existence of leap seconds,
@@ -1632,9 +1754,14 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;arbitrary&quot;</span>)]
 </span><span class="kw">impl </span>arbitrary::Arbitrary&lt;<span class="lifetime">&#39;_</span>&gt; <span class="kw">for </span>NaiveTime {
     <span class="kw">fn </span>arbitrary(u: <span class="kw-2">&amp;mut </span>arbitrary::Unstructured) -&gt; arbitrary::Result&lt;NaiveTime&gt; {
-        <span class="kw">let </span>secs = u.int_in_range(<span class="number">0</span>..=<span class="number">86_399</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>nano = u.int_in_range(<span class="number">0</span>..=<span class="number">1_999_999_999</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>time = NaiveTime::from_num_seconds_from_midnight_opt(secs, nano)
+        <span class="kw">let </span>mins = u.int_in_range(<span class="number">0</span>..=<span class="number">1439</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>secs = u.int_in_range(<span class="number">0</span>..=<span class="number">60</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>nano = u.int_in_range(<span class="number">0</span>..=<span class="number">999_999_999</span>)<span class="question-mark">?</span>;
+        <span class="kw">if </span>secs == <span class="number">60 </span>{
+            secs = <span class="number">59</span>;
+            nano += <span class="number">1_000_000_000</span>;
+        }
+        <span class="kw">let </span>time = NaiveTime::from_num_seconds_from_midnight_opt(mins * <span class="number">60 </span>+ secs, nano)
             .expect(<span class="string">&quot;Could not generate a valid chrono::NaiveTime. It looks like implementation of Arbitrary for NaiveTime is erroneous.&quot;</span>);
         <span class="prelude-val">Ok</span>(time)
     }
@@ -1646,18 +1773,22 @@
     /// No [leap second](#leap-second-handling) is allowed here;
     /// use `NaiveTime::from_hms_*` methods with a subsecond parameter instead.
     ///
+    /// # Panics
+    ///
     /// Panics on invalid hour, minute and/or second.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_hms_opt()` instead&quot;</span>)]
     #[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>from_hms(hour: u32, min: u32, sec: u32) -&gt; NaiveTime {
-        NaiveTime::from_hms_opt(hour, min, sec).expect(<span class="string">&quot;invalid time&quot;</span>)
+    </span><span class="kw">pub const fn </span>from_hms(hour: u32, min: u32, sec: u32) -&gt; NaiveTime {
+        <span class="macro">expect!</span>(NaiveTime::from_hms_opt(hour, min, sec), <span class="string">&quot;invalid time&quot;</span>)
     }
 
     <span class="doccomment">/// Makes a new `NaiveTime` from hour, minute and second.
     ///
-    /// No [leap second](#leap-second-handling) is allowed here;
-    /// use `NaiveTime::from_hms_*_opt` methods with a subsecond parameter instead.
+    /// The millisecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `sec == 59`.
+    ///
+    /// # Errors
     ///
     /// Returns `None` on invalid hour, minute and/or second.
     ///
@@ -1685,18 +1816,22 @@
     /// The millisecond part can exceed 1,000
     /// in order to represent the [leap second](#leap-second-handling).
     ///
+    /// # Panics
+    ///
     /// Panics on invalid hour, minute, second and/or millisecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_hms_milli_opt()` instead&quot;</span>)]
     #[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>from_hms_milli(hour: u32, min: u32, sec: u32, milli: u32) -&gt; NaiveTime {
-        NaiveTime::from_hms_milli_opt(hour, min, sec, milli).expect(<span class="string">&quot;invalid time&quot;</span>)
+    </span><span class="kw">pub const fn </span>from_hms_milli(hour: u32, min: u32, sec: u32, milli: u32) -&gt; NaiveTime {
+        <span class="macro">expect!</span>(NaiveTime::from_hms_milli_opt(hour, min, sec, milli), <span class="string">&quot;invalid time&quot;</span>)
     }
 
     <span class="doccomment">/// Makes a new `NaiveTime` from hour, minute, second and millisecond.
     ///
-    /// The millisecond part can exceed 1,000
-    /// in order to represent the [leap second](#leap-second-handling).
+    /// The millisecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `sec == 59`.
+    ///
+    /// # Errors
     ///
     /// Returns `None` on invalid hour, minute, second and/or millisecond.
     ///
@@ -1717,29 +1852,37 @@
     /// ```
     </span><span class="attr">#[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>from_hms_milli_opt(hour: u32, min: u32, sec: u32, milli: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveTime&gt; {
-        milli
-            .checked_mul(<span class="number">1_000_000</span>)
-            .and_then(|nano| NaiveTime::from_hms_nano_opt(hour, min, sec, nano))
+    </span><span class="kw">pub const fn </span>from_hms_milli_opt(
+        hour: u32,
+        min: u32,
+        sec: u32,
+        milli: u32,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveTime&gt; {
+        <span class="kw">let </span>nano = <span class="macro">try_opt!</span>(milli.checked_mul(<span class="number">1_000_000</span>));
+        NaiveTime::from_hms_nano_opt(hour, min, sec, nano)
     }
 
     <span class="doccomment">/// Makes a new `NaiveTime` from hour, minute, second and microsecond.
     ///
-    /// The microsecond part can exceed 1,000,000
-    /// in order to represent the [leap second](#leap-second-handling).
+    /// The microsecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `sec == 59`.
+    ///
+    /// # Panics
     ///
     /// Panics on invalid hour, minute, second and/or microsecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_hms_micro_opt()` instead&quot;</span>)]
     #[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>from_hms_micro(hour: u32, min: u32, sec: u32, micro: u32) -&gt; NaiveTime {
-        NaiveTime::from_hms_micro_opt(hour, min, sec, micro).expect(<span class="string">&quot;invalid time&quot;</span>)
+    </span><span class="kw">pub const fn </span>from_hms_micro(hour: u32, min: u32, sec: u32, micro: u32) -&gt; NaiveTime {
+        <span class="macro">expect!</span>(NaiveTime::from_hms_micro_opt(hour, min, sec, micro), <span class="string">&quot;invalid time&quot;</span>)
     }
 
     <span class="doccomment">/// Makes a new `NaiveTime` from hour, minute, second and microsecond.
     ///
-    /// The microsecond part can exceed 1,000,000
-    /// in order to represent the [leap second](#leap-second-handling).
+    /// The microsecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `sec == 59`.
+    ///
+    /// # Errors
     ///
     /// Returns `None` on invalid hour, minute, second and/or microsecond.
     ///
@@ -1760,27 +1903,37 @@
     /// ```
     </span><span class="attr">#[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>from_hms_micro_opt(hour: u32, min: u32, sec: u32, micro: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveTime&gt; {
-        micro.checked_mul(<span class="number">1_000</span>).and_then(|nano| NaiveTime::from_hms_nano_opt(hour, min, sec, nano))
+    </span><span class="kw">pub const fn </span>from_hms_micro_opt(
+        hour: u32,
+        min: u32,
+        sec: u32,
+        micro: u32,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveTime&gt; {
+        <span class="kw">let </span>nano = <span class="macro">try_opt!</span>(micro.checked_mul(<span class="number">1_000</span>));
+        NaiveTime::from_hms_nano_opt(hour, min, sec, nano)
     }
 
     <span class="doccomment">/// Makes a new `NaiveTime` from hour, minute, second and nanosecond.
     ///
-    /// The nanosecond part can exceed 1,000,000,000
-    /// in order to represent the [leap second](#leap-second-handling).
+    /// The nanosecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `sec == 59`.
+    ///
+    /// # Panics
     ///
     /// Panics on invalid hour, minute, second and/or nanosecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_hms_nano_opt()` instead&quot;</span>)]
     #[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>from_hms_nano(hour: u32, min: u32, sec: u32, nano: u32) -&gt; NaiveTime {
-        NaiveTime::from_hms_nano_opt(hour, min, sec, nano).expect(<span class="string">&quot;invalid time&quot;</span>)
+    </span><span class="kw">pub const fn </span>from_hms_nano(hour: u32, min: u32, sec: u32, nano: u32) -&gt; NaiveTime {
+        <span class="macro">expect!</span>(NaiveTime::from_hms_nano_opt(hour, min, sec, nano), <span class="string">&quot;invalid time&quot;</span>)
     }
 
     <span class="doccomment">/// Makes a new `NaiveTime` from hour, minute, second and nanosecond.
     ///
-    /// The nanosecond part can exceed 1,000,000,000
-    /// in order to represent the [leap second](#leap-second-handling).
+    /// The nanosecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `sec == 59`.
+    ///
+    /// # Errors
     ///
     /// Returns `None` on invalid hour, minute, second and/or nanosecond.
     ///
@@ -1802,7 +1955,10 @@
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub const fn </span>from_hms_nano_opt(hour: u32, min: u32, sec: u32, nano: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveTime&gt; {
-        <span class="kw">if </span>hour &gt;= <span class="number">24 </span>|| min &gt;= <span class="number">60 </span>|| sec &gt;= <span class="number">60 </span>|| nano &gt;= <span class="number">2_000_000_000 </span>{
+        <span class="kw">if </span>(hour &gt;= <span class="number">24 </span>|| min &gt;= <span class="number">60 </span>|| sec &gt;= <span class="number">60</span>)
+            || (nano &gt;= <span class="number">1_000_000_000 </span>&amp;&amp; sec != <span class="number">59</span>)
+            || nano &gt;= <span class="number">2_000_000_000
+        </span>{
             <span class="kw">return </span><span class="prelude-val">None</span>;
         }
         <span class="kw">let </span>secs = hour * <span class="number">3600 </span>+ min * <span class="number">60 </span>+ sec;
@@ -1811,21 +1967,25 @@
 
     <span class="doccomment">/// Makes a new `NaiveTime` from the number of seconds since midnight and nanosecond.
     ///
-    /// The nanosecond part can exceed 1,000,000,000
-    /// in order to represent the [leap second](#leap-second-handling).
+    /// The nanosecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `secs % 60 == 59`.
+    ///
+    /// # Panics
     ///
     /// Panics on invalid number of seconds and/or nanosecond.
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_num_seconds_from_midnight_opt()` instead&quot;</span>)]
     #[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>from_num_seconds_from_midnight(secs: u32, nano: u32) -&gt; NaiveTime {
-        NaiveTime::from_num_seconds_from_midnight_opt(secs, nano).expect(<span class="string">&quot;invalid time&quot;</span>)
+    </span><span class="kw">pub const fn </span>from_num_seconds_from_midnight(secs: u32, nano: u32) -&gt; NaiveTime {
+        <span class="macro">expect!</span>(NaiveTime::from_num_seconds_from_midnight_opt(secs, nano), <span class="string">&quot;invalid time&quot;</span>)
     }
 
     <span class="doccomment">/// Makes a new `NaiveTime` from the number of seconds since midnight and nanosecond.
     ///
-    /// The nanosecond part can exceed 1,000,000,000
-    /// in order to represent the [leap second](#leap-second-handling).
+    /// The nanosecond part is allowed to exceed 1,000,000,000 in order to represent a
+    /// [leap second](#leap-second-handling), but only when `secs % 60 == 59`.
+    ///
+    /// # Errors
     ///
     /// Returns `None` on invalid number of seconds and/or nanosecond.
     ///
@@ -1845,7 +2005,7 @@
     </span><span class="attr">#[inline]
     #[must_use]
     </span><span class="kw">pub const fn </span>from_num_seconds_from_midnight_opt(secs: u32, nano: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveTime&gt; {
-        <span class="kw">if </span>secs &gt;= <span class="number">86_400 </span>|| nano &gt;= <span class="number">2_000_000_000 </span>{
+        <span class="kw">if </span>secs &gt;= <span class="number">86_400 </span>|| nano &gt;= <span class="number">2_000_000_000 </span>|| (nano &gt;= <span class="number">1_000_000_000 </span>&amp;&amp; secs % <span class="number">60 </span>!= <span class="number">59</span>) {
             <span class="kw">return </span><span class="prelude-val">None</span>;
         }
         <span class="prelude-val">Some</span>(NaiveTime { secs, frac: nano })
@@ -1940,10 +2100,8 @@
         parsed.to_naive_time().map(|t| (t, remainder))
     }
 
-    <span class="doccomment">/// Adds given `Duration` to the current time,
-    /// and also returns the number of *seconds*
+    <span class="doccomment">/// Adds given `Duration` to the current time, and also returns the number of *seconds*
     /// in the integral number of days ignored from the addition.
-    /// (We cannot return `Duration` because it is subject to overflow or underflow.)
     ///
     /// # Example
     ///
@@ -2023,10 +2181,8 @@
         (NaiveTime { secs: secs <span class="kw">as </span>u32, frac: frac <span class="kw">as </span>u32 }, morerhssecs)
     }
 
-    <span class="doccomment">/// Subtracts given `Duration` from the current time,
-    /// and also returns the number of *seconds*
+    <span class="doccomment">/// Subtracts given `Duration` from the current time, and also returns the number of *seconds*
     /// in the integral number of days ignored from the subtraction.
-    /// (We cannot return `Duration` because it is subject to overflow or underflow.)
     ///
     /// # Example
     ///
@@ -2163,7 +2319,7 @@
     /// # let t = NaiveTime::from_hms_opt(23, 56, 4).unwrap();
     /// assert_eq!(format!(&quot;{}&quot;, t.format_with_items(fmt)), &quot;23:56:04&quot;);
     /// ```
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
     #[must_use]
@@ -2209,7 +2365,7 @@
     /// assert_eq!(format!(&quot;{}&quot;, t.format(&quot;%H:%M:%S%.6f&quot;)), &quot;23:56:04.012345&quot;);
     /// assert_eq!(format!(&quot;{}&quot;, t.format(&quot;%-I:%M %p&quot;)), &quot;11:56 PM&quot;);
     /// ```
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
     #[must_use]
@@ -2218,7 +2374,7 @@
     }
 
     <span class="doccomment">/// Returns a triple of the hour, minute and second numbers.
-    </span><span class="kw">fn </span>hms(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (u32, u32, u32) {
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>hms(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (u32, u32, u32) {
         <span class="kw">let </span>sec = <span class="self">self</span>.secs % <span class="number">60</span>;
         <span class="kw">let </span>mins = <span class="self">self</span>.secs / <span class="number">60</span>;
         <span class="kw">let </span>min = mins % <span class="number">60</span>;
@@ -2320,7 +2476,9 @@
 
     <span class="doccomment">/// Makes a new `NaiveTime` with the hour number changed.
     ///
-    /// Returns `None` when the resulting `NaiveTime` would be invalid.
+    /// # Errors
+    ///
+    /// Returns `None` if the value for `hour` is invalid.
     ///
     /// # Example
     ///
@@ -2342,7 +2500,9 @@
 
     <span class="doccomment">/// Makes a new `NaiveTime` with the minute number changed.
     ///
-    /// Returns `None` when the resulting `NaiveTime` would be invalid.
+    /// # Errors
+    ///
+    /// Returns `None` if the value for `minute` is invalid.
     ///
     /// # Example
     ///
@@ -2364,9 +2524,12 @@
 
     <span class="doccomment">/// Makes a new `NaiveTime` with the second number changed.
     ///
-    /// Returns `None` when the resulting `NaiveTime` would be invalid.
     /// As with the [`second`](#method.second) method,
     /// the input range is restricted to 0 through 59.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the value for `second` is invalid.
     ///
     /// # Example
     ///
@@ -2388,9 +2551,12 @@
 
     <span class="doccomment">/// Makes a new `NaiveTime` with nanoseconds since the whole non-leap second changed.
     ///
-    /// Returns `None` when the resulting `NaiveTime` would be invalid.
     /// As with the [`nanosecond`](#method.nanosecond) method,
     /// the input range can exceed 1,000,000,000 for leap seconds.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if `nanosecond &gt;= 2,000,000,000`.
     ///
     /// # Example
     ///
@@ -2410,9 +2576,9 @@
     ///
     /// ```
     /// # use chrono::{NaiveTime, Timelike};
-    /// # let dt = NaiveTime::from_hms_nano_opt(23, 56, 4, 12_345_678).unwrap();
-    /// assert_eq!(dt.with_nanosecond(1_333_333_333),
-    ///            Some(NaiveTime::from_hms_nano_opt(23, 56, 4, 1_333_333_333).unwrap()));
+    /// let dt = NaiveTime::from_hms_nano_opt(23, 56, 4, 12_345_678).unwrap();
+    /// let strange_leap_second = dt.with_nanosecond(1_333_333_333).unwrap();
+    /// assert_eq!(strange_leap_second.nanosecond(), 1_333_333_333);
     /// ```
     </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>with_nanosecond(<span class="kw-2">&amp;</span><span class="self">self</span>, nano: u32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveTime&gt; {
@@ -2508,6 +2674,26 @@
     }
 }
 
+<span class="kw">impl </span>Add&lt;Duration&gt; <span class="kw">for </span>NaiveTime {
+    <span class="kw">type </span>Output = NaiveTime;
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>add(<span class="self">self</span>, rhs: Duration) -&gt; NaiveTime {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="self">self</span>.overflowing_add_signed(rhs).<span class="number">0
+    </span>}
+}
+
+<span class="kw">impl </span>AddAssign&lt;Duration&gt; <span class="kw">for </span>NaiveTime {
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: Duration) {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="kw-2">*</span><span class="self">self </span>+= rhs;
+    }
+}
+
 <span class="doccomment">/// A subtraction of `Duration` from `NaiveTime` wraps around and never overflows or underflows.
 /// In particular the addition ignores integral number of days.
 /// It is the same as the addition with a negated `Duration`.
@@ -2567,6 +2753,26 @@
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>sub_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: OldDuration) {
         <span class="kw-2">*</span><span class="self">self </span>= <span class="self">self</span>.sub(rhs);
+    }
+}
+
+<span class="kw">impl </span>Sub&lt;Duration&gt; <span class="kw">for </span>NaiveTime {
+    <span class="kw">type </span>Output = NaiveTime;
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>sub(<span class="self">self</span>, rhs: Duration) -&gt; NaiveTime {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="self">self</span>.overflowing_sub_signed(rhs).<span class="number">0
+    </span>}
+}
+
+<span class="kw">impl </span>SubAssign&lt;Duration&gt; <span class="kw">for </span>NaiveTime {
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>sub_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: Duration) {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="kw-2">*</span><span class="self">self </span>-= rhs;
     }
 }
 
@@ -2731,26 +2937,36 @@
 /// let t = NaiveTime::from_hms_nano_opt(23, 59, 59, 1_234_567_890).unwrap(); // leap second
 /// assert_eq!(&quot;23:59:60.23456789&quot;.parse::&lt;NaiveTime&gt;(), Ok(t));
 ///
+/// // Seconds are optional
+/// let t = NaiveTime::from_hms_opt(23, 56, 0).unwrap();
+/// assert_eq!(&quot;23:56&quot;.parse::&lt;NaiveTime&gt;(), Ok(t));
+///
 /// assert!(&quot;foo&quot;.parse::&lt;NaiveTime&gt;().is_err());
 /// ```
 </span><span class="kw">impl </span>str::FromStr <span class="kw">for </span>NaiveTime {
     <span class="kw">type </span><span class="prelude-val">Err </span>= ParseError;
 
     <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; ParseResult&lt;NaiveTime&gt; {
-        <span class="kw">const </span>ITEMS: <span class="kw-2">&amp;</span>[Item&lt;<span class="lifetime">&#39;static</span>&gt;] = <span class="kw-2">&amp;</span>[
+        <span class="kw">const </span>HOUR_AND_MINUTE: <span class="kw-2">&amp;</span>[Item&lt;<span class="lifetime">&#39;static</span>&gt;] = <span class="kw-2">&amp;</span>[
             Item::Numeric(Numeric::Hour, Pad::Zero),
             Item::Space(<span class="string">&quot;&quot;</span>),
             Item::Literal(<span class="string">&quot;:&quot;</span>),
             Item::Numeric(Numeric::Minute, Pad::Zero),
+        ];
+        <span class="kw">const </span>SECOND_AND_NANOS: <span class="kw-2">&amp;</span>[Item&lt;<span class="lifetime">&#39;static</span>&gt;] = <span class="kw-2">&amp;</span>[
             Item::Space(<span class="string">&quot;&quot;</span>),
             Item::Literal(<span class="string">&quot;:&quot;</span>),
             Item::Numeric(Numeric::Second, Pad::Zero),
             Item::Fixed(Fixed::Nanosecond),
             Item::Space(<span class="string">&quot;&quot;</span>),
         ];
+        <span class="kw">const </span>TRAILING_WHITESPACE: [Item&lt;<span class="lifetime">&#39;static</span>&gt;; <span class="number">1</span>] = [Item::Space(<span class="string">&quot;&quot;</span>)];
 
         <span class="kw">let </span><span class="kw-2">mut </span>parsed = Parsed::new();
-        parse(<span class="kw-2">&amp;mut </span>parsed, s, ITEMS.iter())<span class="question-mark">?</span>;
+        <span class="kw">let </span>s = parse_and_remainder(<span class="kw-2">&amp;mut </span>parsed, s, HOUR_AND_MINUTE.iter())<span class="question-mark">?</span>;
+        <span class="comment">// Seconds are optional, don&#39;t fail if parsing them doesn&#39;t succeed.
+        </span><span class="kw">let </span>s = parse_and_remainder(<span class="kw-2">&amp;mut </span>parsed, s, SECOND_AND_NANOS.iter()).unwrap_or(s);
+        parse(<span class="kw-2">&amp;mut </span>parsed, s, TRAILING_WHITESPACE.iter())<span class="question-mark">?</span>;
         parsed.to_naive_time()
     }
 }

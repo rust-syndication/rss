@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.26/src/naive/datetime/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-f3501f0f5ae15dfb.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.1 (eb26296b5 2023-08-03)" data-search-js="search-4926e5fc22a5646a.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../static.files/main-f0540c1d82cde29b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../chrono/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.31/src/naive/datetime/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1946,28 +1946,150 @@
 <a href="#1946" id="1946">1946</a>
 <a href="#1947" id="1947">1947</a>
 <a href="#1948" id="1948">1948</a>
+<a href="#1949" id="1949">1949</a>
+<a href="#1950" id="1950">1950</a>
+<a href="#1951" id="1951">1951</a>
+<a href="#1952" id="1952">1952</a>
+<a href="#1953" id="1953">1953</a>
+<a href="#1954" id="1954">1954</a>
+<a href="#1955" id="1955">1955</a>
+<a href="#1956" id="1956">1956</a>
+<a href="#1957" id="1957">1957</a>
+<a href="#1958" id="1958">1958</a>
+<a href="#1959" id="1959">1959</a>
+<a href="#1960" id="1960">1960</a>
+<a href="#1961" id="1961">1961</a>
+<a href="#1962" id="1962">1962</a>
+<a href="#1963" id="1963">1963</a>
+<a href="#1964" id="1964">1964</a>
+<a href="#1965" id="1965">1965</a>
+<a href="#1966" id="1966">1966</a>
+<a href="#1967" id="1967">1967</a>
+<a href="#1968" id="1968">1968</a>
+<a href="#1969" id="1969">1969</a>
+<a href="#1970" id="1970">1970</a>
+<a href="#1971" id="1971">1971</a>
+<a href="#1972" id="1972">1972</a>
+<a href="#1973" id="1973">1973</a>
+<a href="#1974" id="1974">1974</a>
+<a href="#1975" id="1975">1975</a>
+<a href="#1976" id="1976">1976</a>
+<a href="#1977" id="1977">1977</a>
+<a href="#1978" id="1978">1978</a>
+<a href="#1979" id="1979">1979</a>
+<a href="#1980" id="1980">1980</a>
+<a href="#1981" id="1981">1981</a>
+<a href="#1982" id="1982">1982</a>
+<a href="#1983" id="1983">1983</a>
+<a href="#1984" id="1984">1984</a>
+<a href="#1985" id="1985">1985</a>
+<a href="#1986" id="1986">1986</a>
+<a href="#1987" id="1987">1987</a>
+<a href="#1988" id="1988">1988</a>
+<a href="#1989" id="1989">1989</a>
+<a href="#1990" id="1990">1990</a>
+<a href="#1991" id="1991">1991</a>
+<a href="#1992" id="1992">1992</a>
+<a href="#1993" id="1993">1993</a>
+<a href="#1994" id="1994">1994</a>
+<a href="#1995" id="1995">1995</a>
+<a href="#1996" id="1996">1996</a>
+<a href="#1997" id="1997">1997</a>
+<a href="#1998" id="1998">1998</a>
+<a href="#1999" id="1999">1999</a>
+<a href="#2000" id="2000">2000</a>
+<a href="#2001" id="2001">2001</a>
+<a href="#2002" id="2002">2002</a>
+<a href="#2003" id="2003">2003</a>
+<a href="#2004" id="2004">2004</a>
+<a href="#2005" id="2005">2005</a>
+<a href="#2006" id="2006">2006</a>
+<a href="#2007" id="2007">2007</a>
+<a href="#2008" id="2008">2008</a>
+<a href="#2009" id="2009">2009</a>
+<a href="#2010" id="2010">2010</a>
+<a href="#2011" id="2011">2011</a>
+<a href="#2012" id="2012">2012</a>
+<a href="#2013" id="2013">2013</a>
+<a href="#2014" id="2014">2014</a>
+<a href="#2015" id="2015">2015</a>
+<a href="#2016" id="2016">2016</a>
+<a href="#2017" id="2017">2017</a>
+<a href="#2018" id="2018">2018</a>
+<a href="#2019" id="2019">2019</a>
+<a href="#2020" id="2020">2020</a>
+<a href="#2021" id="2021">2021</a>
+<a href="#2022" id="2022">2022</a>
+<a href="#2023" id="2023">2023</a>
+<a href="#2024" id="2024">2024</a>
+<a href="#2025" id="2025">2025</a>
+<a href="#2026" id="2026">2026</a>
+<a href="#2027" id="2027">2027</a>
+<a href="#2028" id="2028">2028</a>
+<a href="#2029" id="2029">2029</a>
+<a href="#2030" id="2030">2030</a>
+<a href="#2031" id="2031">2031</a>
+<a href="#2032" id="2032">2032</a>
+<a href="#2033" id="2033">2033</a>
+<a href="#2034" id="2034">2034</a>
+<a href="#2035" id="2035">2035</a>
+<a href="#2036" id="2036">2036</a>
+<a href="#2037" id="2037">2037</a>
+<a href="#2038" id="2038">2038</a>
+<a href="#2039" id="2039">2039</a>
+<a href="#2040" id="2040">2040</a>
+<a href="#2041" id="2041">2041</a>
+<a href="#2042" id="2042">2042</a>
+<a href="#2043" id="2043">2043</a>
+<a href="#2044" id="2044">2044</a>
+<a href="#2045" id="2045">2045</a>
+<a href="#2046" id="2046">2046</a>
+<a href="#2047" id="2047">2047</a>
+<a href="#2048" id="2048">2048</a>
+<a href="#2049" id="2049">2049</a>
+<a href="#2050" id="2050">2050</a>
+<a href="#2051" id="2051">2051</a>
+<a href="#2052" id="2052">2052</a>
+<a href="#2053" id="2053">2053</a>
+<a href="#2054" id="2054">2054</a>
+<a href="#2055" id="2055">2055</a>
+<a href="#2056" id="2056">2056</a>
+<a href="#2057" id="2057">2057</a>
+<a href="#2058" id="2058">2058</a>
+<a href="#2059" id="2059">2059</a>
+<a href="#2060" id="2060">2060</a>
+<a href="#2061" id="2061">2061</a>
+<a href="#2062" id="2062">2062</a>
+<a href="#2063" id="2063">2063</a>
+<a href="#2064" id="2064">2064</a>
+<a href="#2065" id="2065">2065</a>
+<a href="#2066" id="2066">2066</a>
+<a href="#2067" id="2067">2067</a>
+<a href="#2068" id="2068">2068</a>
+<a href="#2069" id="2069">2069</a>
 </pre></div><pre class="rust"><code><span class="comment">// This is a part of Chrono.
 // See README.md and LICENSE.txt for details.
 
 </span><span class="doccomment">//! ISO 8601 date and time without timezone.
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
 </span><span class="kw">use </span>core::borrow::Borrow;
 <span class="kw">use </span>core::fmt::Write;
 <span class="kw">use </span>core::ops::{Add, AddAssign, Sub, SubAssign};
+<span class="kw">use </span>core::time::Duration;
 <span class="kw">use </span>core::{fmt, str};
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;rkyv&quot;</span>)]
 </span><span class="kw">use </span>rkyv::{Archive, Deserialize, Serialize};
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+<span class="kw">use </span><span class="kw">crate</span>::duration::Duration <span class="kw">as </span>OldDuration;
+<span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::format::DelayedFormat;
 <span class="kw">use </span><span class="kw">crate</span>::format::{parse, parse_and_remainder, ParseError, ParseResult, Parsed, StrftimeItems};
 <span class="kw">use </span><span class="kw">crate</span>::format::{Fixed, Item, Numeric, Pad};
 <span class="kw">use </span><span class="kw">crate</span>::naive::{Days, IsoWeek, NaiveDate, NaiveTime};
 <span class="kw">use </span><span class="kw">crate</span>::offset::Utc;
-<span class="kw">use </span><span class="kw">crate</span>::oldtime::Duration <span class="kw">as </span>OldDuration;
-<span class="kw">use crate</span>::{DateTime, Datelike, LocalResult, Months, TimeZone, Timelike, Weekday};
+<span class="kw">use crate</span>::{expect, DateTime, Datelike, LocalResult, Months, TimeZone, Timelike, Weekday};
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;rustc-serialize&quot;</span>)]
 </span><span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">mod </span>rustc_serialize;
@@ -2057,11 +2179,15 @@
     /// For a non-naive version of this function see
     /// [`TimeZone::timestamp`](../offset/trait.TimeZone.html#method.timestamp).
     ///
-    /// The nanosecond part can exceed 1,000,000,000 in order to represent the
-    /// [leap second](./struct.NaiveTime.html#leap-second-handling). (The true &quot;UNIX
-    /// timestamp&quot; cannot represent a leap second unambiguously.)
+    /// The nanosecond part can exceed 1,000,000,000 in order to represent a
+    /// [leap second](NaiveTime#leap-second-handling), but only when `secs % 60 == 59`.
+    /// (The true &quot;UNIX timestamp&quot; cannot represent a leap second unambiguously.)
     ///
-    /// Panics on the out-of-range number of seconds and/or invalid nanosecond.
+    /// # Panics
+    ///
+    /// Panics if the number of seconds would be out of range for a `NaiveDateTime` (more than
+    /// ca. 262,000 years away from common era), and panics on an invalid nanosecond (2 seconds or
+    /// more).
     </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.23&quot;</span>, note = <span class="string">&quot;use `from_timestamp_opt()` instead&quot;</span>)]
     #[inline]
     #[must_use]
@@ -2074,7 +2200,10 @@
     ///
     /// The UNIX epoch starts on midnight, January 1, 1970, UTC.
     ///
-    /// Returns `None` on an out-of-range number of milliseconds.
+    /// # Errors
+    ///
+    /// Returns `None` if the number of milliseconds would be out of range for a `NaiveDateTime`
+    /// (more than ca. 262,000 years away from common era)
     ///
     /// # Example
     ///
@@ -2103,7 +2232,10 @@
     ///
     /// The UNIX epoch starts on midnight, January 1, 1970, UTC.
     ///
-    /// Returns `None` on an out-of-range number of microseconds.
+    /// # Errors
+    ///
+    /// Returns `None` if the number of microseconds would be out of range for a `NaiveDateTime`
+    /// (more than ca. 262,000 years away from common era)
     ///
     /// # Example
     ///
@@ -2133,12 +2265,15 @@
     /// since the midnight UTC on January 1, 1970 (aka &quot;UNIX timestamp&quot;)
     /// and the number of nanoseconds since the last whole non-leap second.
     ///
-    /// The nanosecond part can exceed 1,000,000,000
-    /// in order to represent the [leap second](./struct.NaiveTime.html#leap-second-handling).
+    /// The nanosecond part can exceed 1,000,000,000 in order to represent a
+    /// [leap second](NaiveTime#leap-second-handling), but only when `secs % 60 == 59`.
     /// (The true &quot;UNIX timestamp&quot; cannot represent a leap second unambiguously.)
     ///
-    /// Returns `None` on the out-of-range number of seconds (more than 262 000 years away
-    /// from common era) and/or invalid nanosecond (2 seconds or more).
+    /// # Errors
+    ///
+    /// Returns `None` if the number of seconds would be out of range for a `NaiveDateTime` (more
+    /// than ca. 262,000 years away from common era), and panics on an invalid nanosecond
+    /// (2 seconds or more).
     ///
     /// # Example
     ///
@@ -2150,8 +2285,9 @@
     ///
     /// assert!(from_timestamp_opt(0, 0).is_some());
     /// assert!(from_timestamp_opt(0, 999_999_999).is_some());
-    /// assert!(from_timestamp_opt(0, 1_500_000_000).is_some()); // leap second
-    /// assert!(from_timestamp_opt(0, 2_000_000_000).is_none());
+    /// assert!(from_timestamp_opt(0, 1_500_000_000).is_none()); // invalid leap second
+    /// assert!(from_timestamp_opt(59, 1_500_000_000).is_some()); // leap second
+    /// assert!(from_timestamp_opt(59, 2_000_000_000).is_none());
     /// assert!(from_timestamp_opt(i64::MAX, 0).is_none());
     /// ```
     </span><span class="attr">#[inline]
@@ -2338,11 +2474,6 @@
     /// Note that this does *not* account for the timezone!
     /// The true &quot;UNIX timestamp&quot; would count seconds since the midnight *UTC* on the epoch.
     ///
-    /// Note also that this does reduce the number of years that can be
-    /// represented from ~584 Billion to ~584 Million. (If this is a problem,
-    /// please file an issue to let me know what domain needs millisecond
-    /// precision over billions of years, I&#39;m curious.)
-    ///
     /// # Example
     ///
     /// ```
@@ -2369,11 +2500,6 @@
     /// Note that this does *not* account for the timezone!
     /// The true &quot;UNIX timestamp&quot; would count seconds since the midnight *UTC* on the epoch.
     ///
-    /// Note also that this does reduce the number of years that can be
-    /// represented from ~584 Billion to ~584 Thousand. (If this is a problem,
-    /// please file an issue to let me know what domain needs microsecond
-    /// precision over millennia, I&#39;m curious.)
-    ///
     /// # Example
     ///
     /// ```
@@ -2399,13 +2525,31 @@
     ///
     /// # Panics
     ///
-    /// Note also that this does reduce the number of years that can be
-    /// represented from ~584 Billion to ~584 years. The dates that can be
-    /// represented as nanoseconds are between 1677-09-21T00:12:44.0 and
-    /// 2262-04-11T23:47:16.854775804.
+    /// An `i64` with nanosecond precision can span a range of ~584 years. This function panics on
+    /// an out of range `NaiveDateTime`.
     ///
-    /// (If this is a problem, please file an issue to let me know what domain
-    /// needs nanosecond precision over millennia, I&#39;m curious.)
+    /// The dates that can be represented as nanoseconds are between 1677-09-21T00:12:44.0 and
+    /// 2262-04-11T23:47:16.854775804.
+    </span><span class="attr">#[deprecated(since = <span class="string">&quot;0.4.31&quot;</span>, note = <span class="string">&quot;use `timestamp_nanos_opt()` instead&quot;</span>)]
+    #[inline]
+    #[must_use]
+    </span><span class="kw">pub fn </span>timestamp_nanos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
+        <span class="self">self</span>.timestamp_nanos_opt()
+            .expect(<span class="string">&quot;value can not be represented in a timestamp with nanosecond precision.&quot;</span>)
+    }
+
+    <span class="doccomment">/// Returns the number of non-leap *nanoseconds* since midnight on January 1, 1970.
+    ///
+    /// Note that this does *not* account for the timezone!
+    /// The true &quot;UNIX timestamp&quot; would count seconds since the midnight *UTC* on the epoch.
+    ///
+    /// # Errors
+    ///
+    /// An `i64` with nanosecond precision can span a range of ~584 years. This function returns
+    /// `None` on an out of range `NaiveDateTime`.
+    ///
+    /// The dates that can be represented as nanoseconds are between 1677-09-21T00:12:44.0 and
+    /// 2262-04-11T23:47:16.854775804.
     ///
     /// # Example
     ///
@@ -2413,12 +2557,12 @@
     /// use chrono::{NaiveDate, NaiveDateTime};
     ///
     /// let dt = NaiveDate::from_ymd_opt(1970, 1, 1).unwrap().and_hms_nano_opt(0, 0, 1, 444).unwrap();
-    /// assert_eq!(dt.timestamp_nanos(), 1_000_000_444);
+    /// assert_eq!(dt.timestamp_nanos_opt(), Some(1_000_000_444));
     ///
     /// let dt = NaiveDate::from_ymd_opt(2001, 9, 9).unwrap().and_hms_nano_opt(1, 46, 40, 555).unwrap();
     ///
     /// const A_BILLION: i64 = 1_000_000_000;
-    /// let nanos = dt.timestamp_nanos();
+    /// let nanos = dt.timestamp_nanos_opt().unwrap();
     /// assert_eq!(nanos, 1_000_000_000_000_000_555);
     /// assert_eq!(
     ///     Some(dt),
@@ -2427,9 +2571,27 @@
     /// ```
     </span><span class="attr">#[inline]
     #[must_use]
-    </span><span class="kw">pub fn </span>timestamp_nanos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
-        <span class="kw">let </span>as_ns = <span class="self">self</span>.timestamp() * <span class="number">1_000_000_000</span>;
-        as_ns + i64::from(<span class="self">self</span>.timestamp_subsec_nanos())
+    </span><span class="kw">pub fn </span>timestamp_nanos_opt(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;i64&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>timestamp = <span class="self">self</span>.timestamp();
+        <span class="kw">let </span><span class="kw-2">mut </span>timestamp_subsec_nanos = i64::from(<span class="self">self</span>.timestamp_subsec_nanos());
+
+        <span class="comment">// subsec nanos are always non-negative, however the timestamp itself (both in seconds and in nanos) can be
+        // negative. Now i64::MIN is NOT dividable by 1_000_000_000, so
+        //
+        //   (timestamp * 1_000_000_000) + nanos
+        //
+        // may underflow (even when in theory we COULD represent the datetime as i64) because we add the non-negative
+        // nanos AFTER the multiplication. This is fixed by converting the negative case to
+        //
+        //   ((timestamp + 1) * 1_000_000_000) + (ns - 1_000_000_000)
+        //
+        // Also see &lt;https://github.com/chronotope/chrono/issues/1289&gt;.
+        </span><span class="kw">if </span>timestamp &lt; <span class="number">0 </span>&amp;&amp; timestamp_subsec_nanos &gt; <span class="number">0 </span>{
+            timestamp_subsec_nanos -= <span class="number">1_000_000_000</span>;
+            timestamp += <span class="number">1</span>;
+        }
+
+        timestamp.checked_mul(<span class="number">1_000_000_000</span>).and_then(|ns| ns.checked_add(timestamp_subsec_nanos))
     }
 
     <span class="doccomment">/// Returns the number of milliseconds since the last whole non-leap second.
@@ -2505,7 +2667,9 @@
     /// except when the `NaiveDateTime` itself represents a leap second
     /// in which case the assumption becomes that **there is exactly a single leap second ever**.
     ///
-    /// Returns `None` when it will result in overflow.
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date would be out of range.
     ///
     /// # Example
     ///
@@ -2578,9 +2742,11 @@
 
     <span class="doccomment">/// Adds given `Months` to the current date and time.
     ///
-    /// Returns `None` when it will result in overflow.
+    /// Uses the last day of the month if the day does not exist in the resulting month.
     ///
-    /// Overflow returns `None`.
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date would be out of range.
     ///
     /// # Example
     ///
@@ -2611,7 +2777,9 @@
     /// except when the `NaiveDateTime` itself represents a leap second
     /// in which case the assumption becomes that **there is exactly a single leap second ever**.
     ///
-    /// Returns `None` when it will result in overflow.
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date would be out of range.
     ///
     /// # Example
     ///
@@ -2680,9 +2848,11 @@
 
     <span class="doccomment">/// Subtracts given `Months` from the current date and time.
     ///
-    /// Returns `None` when it will result in overflow.
+    /// Uses the last day of the month if the day does not exist in the resulting month.
     ///
-    /// Overflow returns `None`.
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date would be out of range.
     ///
     /// # Example
     ///
@@ -2792,7 +2962,7 @@
     /// # let dt = NaiveDate::from_ymd_opt(2015, 9, 5).unwrap().and_hms_opt(23, 56, 4).unwrap();
     /// assert_eq!(format!(&quot;{}&quot;, dt.format_with_items(fmt)), &quot;2015-09-05 23:56:04&quot;);
     /// ```
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
     #[must_use]
@@ -2836,7 +3006,7 @@
     /// assert_eq!(format!(&quot;{}&quot;, dt.format(&quot;%Y-%m-%d %H:%M:%S&quot;)), &quot;2015-09-05 23:56:04&quot;);
     /// assert_eq!(format!(&quot;{}&quot;, dt.format(&quot;around %l %p on %b %-d&quot;)), &quot;around 11 PM on Sep 5&quot;);
     /// ```
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>, test))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))]
     #[cfg_attr(docsrs, doc(cfg(any(feature = <span class="string">&quot;alloc&quot;</span>, feature = <span class="string">&quot;std&quot;</span>))))]
     #[inline]
     #[must_use]
@@ -2885,14 +3055,19 @@
 
     <span class="doccomment">/// The minimum possible `NaiveDateTime`.
     </span><span class="kw">pub const </span>MIN: <span class="self">Self </span>= <span class="self">Self </span>{ date: NaiveDate::MIN, time: NaiveTime::MIN };
+
     <span class="doccomment">/// The maximum possible `NaiveDateTime`.
     </span><span class="kw">pub const </span>MAX: <span class="self">Self </span>= <span class="self">Self </span>{ date: NaiveDate::MAX, time: NaiveTime::MAX };
+
+    <span class="doccomment">/// The Unix Epoch, 1970-01-01 00:00:00.
+    </span><span class="kw">pub const </span>UNIX_EPOCH: <span class="self">Self </span>=
+        <span class="macro">expect!</span>(NaiveDate::from_ymd_opt(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="string">&quot;&quot;</span>).and_time(NaiveTime::MIN);
 }
 
 <span class="kw">impl </span>Datelike <span class="kw">for </span>NaiveDateTime {
     <span class="doccomment">/// Returns the year number in the [calendar date](./struct.NaiveDate.html#calendar-date).
     ///
-    /// See also the [`NaiveDate::year`] method.
+    /// See also the [`NaiveDate::year`](./struct.NaiveDate.html#method.year) method.
     ///
     /// # Example
     ///
@@ -3043,11 +3218,15 @@
         <span class="self">self</span>.date.iso_week()
     }
 
-    <span class="doccomment">/// Makes a new `NaiveDateTime` with the year number changed.
-    ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
+    <span class="doccomment">/// Makes a new `NaiveDateTime` with the year number changed, while keeping the same month and
+    /// day.
     ///
     /// See also the [`NaiveDate::with_year`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date does not exist, or when the `NaiveDateTime` would be
+    /// out of range.
     ///
     /// # Example
     ///
@@ -3065,9 +3244,11 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the month number (starting from 1) changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
-    ///
     /// See also the [`NaiveDate::with_month`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date does not exist, or if the value for `month` is invalid.
     ///
     /// # Example
     ///
@@ -3086,9 +3267,12 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the month number (starting from 0) changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
-    ///
     /// See also the [`NaiveDate::with_month0`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date does not exist, or if the value for `month0` is
+    /// invalid.
     ///
     /// # Example
     ///
@@ -3107,9 +3291,11 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the day of month (starting from 1) changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
-    ///
     /// See also the [`NaiveDate::with_day`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date does not exist, or if the value for `day` is invalid.
     ///
     /// # Example
     ///
@@ -3127,9 +3313,11 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the day of month (starting from 0) changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
-    ///
     /// See also the [`NaiveDate::with_day0`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date does not exist, or if the value for `day0` is invalid.
     ///
     /// # Example
     ///
@@ -3147,9 +3335,12 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the day of year (starting from 1) changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
-    ///
     /// See also the [`NaiveDate::with_ordinal`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date does not exist, or if the value for `ordinal` is
+    /// invalid.
     ///
     /// # Example
     ///
@@ -3174,9 +3365,12 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the day of year (starting from 0) changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
-    ///
     /// See also the [`NaiveDate::with_ordinal0`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the resulting date does not exist, or if the value for `ordinal0` is
+    /// invalid.
     ///
     /// # Example
     ///
@@ -3273,9 +3467,11 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the hour number changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
-    ///
     /// See also the [`NaiveTime::with_hour`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the value for `hour` is invalid.
     ///
     /// # Example
     ///
@@ -3294,10 +3490,11 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the minute number changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid.
+    /// See also the [`NaiveTime::with_minute`] method.
     ///
-    /// See also the
-    /// [`NaiveTime::with_minute`] method.
+    /// # Errors
+    ///
+    /// Returns `None` if the value for `minute` is invalid.
     ///
     /// # Example
     ///
@@ -3316,11 +3513,14 @@
 
     <span class="doccomment">/// Makes a new `NaiveDateTime` with the second number changed.
     ///
-    /// Returns `None` when the resulting `NaiveDateTime` would be invalid. As
-    /// with the [`NaiveDateTime::second`] method, the input range is
-    /// restricted to 0 through 59.
+    /// As with the [`second`](#method.second) method,
+    /// the input range is restricted to 0 through 59.
     ///
     /// See also the [`NaiveTime::with_second`] method.
+    ///
+    /// # Errors
+    ///
+    /// Returns `None` if the value for `second` is invalid.
     ///
     /// # Example
     ///
@@ -3345,16 +3545,20 @@
     ///
     /// See also the [`NaiveTime::with_nanosecond`] method.
     ///
+    /// # Errors
+    ///
+    /// Returns `None` if `nanosecond &gt;= 2,000,000,000`.
+    ///
     /// # Example
     ///
     /// ```
     /// use chrono::{NaiveDate, NaiveDateTime, Timelike};
     ///
-    /// let dt: NaiveDateTime = NaiveDate::from_ymd_opt(2015, 9, 8).unwrap().and_hms_milli_opt(12, 34, 56, 789).unwrap();
+    /// let dt: NaiveDateTime = NaiveDate::from_ymd_opt(2015, 9, 8).unwrap().and_hms_milli_opt(12, 34, 59, 789).unwrap();
     /// assert_eq!(dt.with_nanosecond(333_333_333),
-    ///            Some(NaiveDate::from_ymd_opt(2015, 9, 8).unwrap().and_hms_nano_opt(12, 34, 56, 333_333_333).unwrap()));
+    ///            Some(NaiveDate::from_ymd_opt(2015, 9, 8).unwrap().and_hms_nano_opt(12, 34, 59, 333_333_333).unwrap()));
     /// assert_eq!(dt.with_nanosecond(1_333_333_333), // leap second
-    ///            Some(NaiveDate::from_ymd_opt(2015, 9, 8).unwrap().and_hms_nano_opt(12, 34, 56, 1_333_333_333).unwrap()));
+    ///            Some(NaiveDate::from_ymd_opt(2015, 9, 8).unwrap().and_hms_nano_opt(12, 34, 59, 1_333_333_333).unwrap()));
     /// assert_eq!(dt.with_nanosecond(2_000_000_000), None);
     /// ```
     </span><span class="attr">#[inline]
@@ -3369,7 +3573,9 @@
 /// second ever**, except when the `NaiveDateTime` itself represents a leap  second in which case
 /// the assumption becomes that **there is exactly a single leap second ever**.
 ///
-/// Panics on underflow or overflow. Use [`NaiveDateTime::checked_add_signed`]
+/// # Panics
+///
+/// Panics if the resulting date would be out of range. Use [`NaiveDateTime::checked_add_signed`]
 /// to detect that.
 ///
 /// # Example
@@ -3422,9 +3628,27 @@
     }
 }
 
+<span class="kw">impl </span>Add&lt;Duration&gt; <span class="kw">for </span>NaiveDateTime {
+    <span class="kw">type </span>Output = NaiveDateTime;
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>add(<span class="self">self</span>, rhs: Duration) -&gt; NaiveDateTime {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="self">self</span>.checked_add_signed(rhs).expect(<span class="string">&quot;`NaiveDateTime + Duration` overflowed&quot;</span>)
+    }
+}
+
 <span class="kw">impl </span>AddAssign&lt;OldDuration&gt; <span class="kw">for </span>NaiveDateTime {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: OldDuration) {
+        <span class="kw-2">*</span><span class="self">self </span>= <span class="self">self</span>.add(rhs);
+    }
+}
+
+<span class="kw">impl </span>AddAssign&lt;Duration&gt; <span class="kw">for </span>NaiveDateTime {
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>add_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: Duration) {
         <span class="kw-2">*</span><span class="self">self </span>= <span class="self">self</span>.add(rhs);
     }
 }
@@ -3531,9 +3755,27 @@
     }
 }
 
+<span class="kw">impl </span>Sub&lt;Duration&gt; <span class="kw">for </span>NaiveDateTime {
+    <span class="kw">type </span>Output = NaiveDateTime;
+
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>sub(<span class="self">self</span>, rhs: Duration) -&gt; NaiveDateTime {
+        <span class="kw">let </span>rhs = OldDuration::from_std(rhs)
+            .expect(<span class="string">&quot;overflow converting from core::time::Duration to chrono::Duration&quot;</span>);
+        <span class="self">self</span>.checked_sub_signed(rhs).expect(<span class="string">&quot;`NaiveDateTime - Duration` overflowed&quot;</span>)
+    }
+}
+
 <span class="kw">impl </span>SubAssign&lt;OldDuration&gt; <span class="kw">for </span>NaiveDateTime {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>sub_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: OldDuration) {
+        <span class="kw-2">*</span><span class="self">self </span>= <span class="self">self</span>.sub(rhs);
+    }
+}
+
+<span class="kw">impl </span>SubAssign&lt;Duration&gt; <span class="kw">for </span>NaiveDateTime {
+    <span class="attr">#[inline]
+    </span><span class="kw">fn </span>sub_assign(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rhs: Duration) {
         <span class="kw-2">*</span><span class="self">self </span>= <span class="self">self</span>.sub(rhs);
     }
 }

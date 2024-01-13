@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.26/src/round.rs`."><title>round.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-f3501f0f5ae15dfb.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.1 (eb26296b5 2023-08-03)" data-search-js="search-4926e5fc22a5646a.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f0540c1d82cde29b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../chrono/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.31/src/round.rs`."><title>round.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -773,20 +773,11 @@
 <a href="#773" id="773">773</a>
 <a href="#774" id="774">774</a>
 <a href="#775" id="775">775</a>
-<a href="#776" id="776">776</a>
-<a href="#777" id="777">777</a>
-<a href="#778" id="778">778</a>
-<a href="#779" id="779">779</a>
-<a href="#780" id="780">780</a>
-<a href="#781" id="781">781</a>
-<a href="#782" id="782">782</a>
-<a href="#783" id="783">783</a>
-<a href="#784" id="784">784</a>
 </pre></div><pre class="rust"><code><span class="comment">// This is a part of Chrono.
 // See README.md and LICENSE.txt for details.
 
 </span><span class="kw">use </span><span class="kw">crate</span>::datetime::DateTime;
-<span class="kw">use </span><span class="kw">crate</span>::oldtime::Duration;
+<span class="kw">use </span><span class="kw">crate</span>::duration::Duration;
 <span class="kw">use </span><span class="kw">crate</span>::NaiveDateTime;
 <span class="kw">use </span><span class="kw">crate</span>::TimeZone;
 <span class="kw">use </span><span class="kw">crate</span>::Timelike;
@@ -884,11 +875,11 @@
 /// will also fail if the `Duration` is bigger than the timestamp.
 </span><span class="kw">pub trait </span>DurationRound: Sized {
     <span class="doccomment">/// Error that can occur in rounding or truncating
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, test))]
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
     </span><span class="kw">type </span><span class="prelude-val">Err</span>: std::error::Error;
 
     <span class="doccomment">/// Error that can occur in rounding or truncating
-    </span><span class="attr">#[cfg(not(any(feature = <span class="string">&quot;std&quot;</span>, test)))]
+    </span><span class="attr">#[cfg(not(feature = <span class="string">&quot;std&quot;</span>))]
     </span><span class="kw">type </span><span class="prelude-val">Err</span>: fmt::Debug + fmt::Display;
 
     <span class="doccomment">/// Return a copy rounded by Duration.
@@ -926,9 +917,6 @@
     </span><span class="kw">fn </span>duration_trunc(<span class="self">self</span>, duration: Duration) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt;;
 }
 
-<span class="doccomment">/// The maximum number of seconds a DateTime can be to be represented as nanoseconds
-</span><span class="kw">const </span>MAX_SECONDS_TIMESTAMP_FOR_NANOS: i64 = <span class="number">9_223_372_036</span>;
-
 <span class="kw">impl</span>&lt;Tz: TimeZone&gt; DurationRound <span class="kw">for </span>DateTime&lt;Tz&gt; {
     <span class="kw">type </span><span class="prelude-val">Err </span>= RoundingError;
 
@@ -965,10 +953,7 @@
         <span class="kw">if </span>span &lt; <span class="number">0 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(RoundingError::DurationExceedsLimit);
         }
-        <span class="kw">if </span>naive.timestamp().abs() &gt; MAX_SECONDS_TIMESTAMP_FOR_NANOS {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(RoundingError::TimestampExceedsLimit);
-        }
-        <span class="kw">let </span>stamp = naive.timestamp_nanos();
+        <span class="kw">let </span>stamp = naive.timestamp_nanos_opt().ok_or(RoundingError::TimestampExceedsLimit)<span class="question-mark">?</span>;
         <span class="kw">if </span>span &gt; stamp.abs() {
             <span class="kw">return </span><span class="prelude-val">Err</span>(RoundingError::DurationExceedsTimestamp);
         }
@@ -1007,10 +992,7 @@
         <span class="kw">if </span>span &lt; <span class="number">0 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(RoundingError::DurationExceedsLimit);
         }
-        <span class="kw">if </span>naive.timestamp().abs() &gt; MAX_SECONDS_TIMESTAMP_FOR_NANOS {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(RoundingError::TimestampExceedsLimit);
-        }
-        <span class="kw">let </span>stamp = naive.timestamp_nanos();
+        <span class="kw">let </span>stamp = naive.timestamp_nanos_opt().ok_or(RoundingError::TimestampExceedsLimit)<span class="question-mark">?</span>;
         <span class="kw">if </span>span &gt; stamp.abs() {
             <span class="kw">return </span><span class="prelude-val">Err</span>(RoundingError::DurationExceedsTimestamp);
         }
@@ -1083,7 +1065,7 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, test))]
+<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;std&quot;</span>)))]
 </span><span class="kw">impl </span>std::error::Error <span class="kw">for </span>RoundingError {
     <span class="attr">#[allow(deprecated)]
@@ -1553,16 +1535,16 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>issue1010() {
-        <span class="kw">let </span>dt = NaiveDateTime::from_timestamp_opt(-<span class="number">4227854320</span>, <span class="number">1678774288</span>).unwrap();
-        <span class="kw">let </span>span = Duration::microseconds(-<span class="number">7019067213869040</span>);
+        <span class="kw">let </span>dt = NaiveDateTime::from_timestamp_opt(-<span class="number">4_227_854_320</span>, <span class="number">678_774_288</span>).unwrap();
+        <span class="kw">let </span>span = Duration::microseconds(-<span class="number">7_019_067_213_869_040</span>);
         <span class="macro">assert_eq!</span>(dt.duration_trunc(span), <span class="prelude-val">Err</span>(RoundingError::DurationExceedsLimit));
 
-        <span class="kw">let </span>dt = NaiveDateTime::from_timestamp_opt(<span class="number">320041586</span>, <span class="number">1920103021</span>).unwrap();
-        <span class="kw">let </span>span = Duration::nanoseconds(-<span class="number">8923838508697114584</span>);
+        <span class="kw">let </span>dt = NaiveDateTime::from_timestamp_opt(<span class="number">320_041_586</span>, <span class="number">920_103_021</span>).unwrap();
+        <span class="kw">let </span>span = Duration::nanoseconds(-<span class="number">8_923_838_508_697_114_584</span>);
         <span class="macro">assert_eq!</span>(dt.duration_round(span), <span class="prelude-val">Err</span>(RoundingError::DurationExceedsLimit));
 
-        <span class="kw">let </span>dt = NaiveDateTime::from_timestamp_opt(-<span class="number">2621440</span>, <span class="number">0</span>).unwrap();
-        <span class="kw">let </span>span = Duration::nanoseconds(-<span class="number">9223372036854771421</span>);
+        <span class="kw">let </span>dt = NaiveDateTime::from_timestamp_opt(-<span class="number">2_621_440</span>, <span class="number">0</span>).unwrap();
+        <span class="kw">let </span>span = Duration::nanoseconds(-<span class="number">9_223_372_036_854_771_421</span>);
         <span class="macro">assert_eq!</span>(dt.duration_round(span), <span class="prelude-val">Err</span>(RoundingError::DurationExceedsLimit));
     }
 }
