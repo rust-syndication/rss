@@ -1488,6 +1488,9 @@
 <a href="#1488" id="1488">1488</a>
 <a href="#1489" id="1489">1489</a>
 <a href="#1490" id="1490">1490</a>
+<a href="#1491" id="1491">1491</a>
+<a href="#1492" id="1492">1492</a>
+<a href="#1493" id="1493">1493</a>
 </pre></div><pre class="rust"><code><span class="comment">// This file is part of rss.
 //
 // Copyright © 2015-2021 The rust-syndication Developers
@@ -1511,7 +1514,7 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::extension::atom;
 <span class="kw">use </span><span class="kw">crate</span>::extension::dublincore;
-<span class="kw">use </span><span class="kw">crate</span>::extension::itunes;
+<span class="kw">use </span><span class="kw">crate</span>::extension::itunes::{<span class="self">self</span>, is_itunes_namespace};
 <span class="kw">use </span><span class="kw">crate</span>::extension::syndication;
 <span class="kw">use </span><span class="kw">crate</span>::extension::util::{
     extension_entry, extension_name, parse_extension_element, read_namespace_declarations,
@@ -2789,8 +2792,11 @@
                                 </span><span class="prelude-val">Some</span>(ns @ atom::NAMESPACE) =&gt; {
                                     extension_entry(<span class="kw-2">&amp;mut </span>extensions, ns, name).push(ext);
                                 }
-                                <span class="prelude-val">Some</span>(ns @ itunes::NAMESPACE)
-                                | <span class="prelude-val">Some</span>(ns @ dublincore::NAMESPACE)
+                                <span class="prelude-val">Some</span>(ns) <span class="kw">if </span>is_itunes_namespace(ns) =&gt; {
+                                    extension_entry(<span class="kw-2">&amp;mut </span>extensions, itunes::NAMESPACE, name)
+                                        .push(ext);
+                                }
+                                <span class="prelude-val">Some</span>(ns @ dublincore::NAMESPACE)
                                 | <span class="prelude-val">Some</span>(ns @ syndication::NAMESPACE) =&gt; {
                                     extension_entry(<span class="kw-2">&amp;mut </span>extensions, ns, name).push(ext);
                                 }

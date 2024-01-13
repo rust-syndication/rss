@@ -82,6 +82,14 @@
 <a href="#82" id="82">82</a>
 <a href="#83" id="83">83</a>
 <a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a>
+<a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
 </pre></div><pre class="rust"><code><span class="comment">// This file is part of rss.
 //
 // Copyright © 2015-2021 The rust-syndication Developers
@@ -105,6 +113,14 @@
 
 <span class="doccomment">/// The iTunes XML namespace.
 </span><span class="kw">pub const </span>NAMESPACE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;http://www.itunes.com/dtds/podcast-1.0.dtd&quot;</span>;
+
+<span class="doccomment">/// Formally XML namespace is case sensitive and this should be just an equality check.
+/// But many podcast publishers ignore this and use different case variations of the namespace.
+/// Hence this check is relaxed and ignores a case.
+</span><span class="attr">#[inline]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>is_itunes_namespace(ns: <span class="kw-2">&amp;</span>str) -&gt; bool {
+    ns.eq_ignore_ascii_case(NAMESPACE)
+}
 
 <span class="kw">fn </span>parse_image(map: <span class="kw-2">&amp;mut </span>BTreeMap&lt;String, Vec&lt;Extension&gt;&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
     <span class="kw">let </span><span class="kw-2">mut </span>element = <span class="kw">match </span>map.remove(<span class="string">&quot;image&quot;</span>).map(|<span class="kw-2">mut </span>v| v.remove(<span class="number">0</span>)) {
