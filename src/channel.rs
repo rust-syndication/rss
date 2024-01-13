@@ -369,7 +369,7 @@ impl Channel {
     ///
     /// let mut channel = Channel::default();
     /// channel.set_pub_date(Utc.with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
-    /// assert_eq!(channel.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
+    /// assert_eq!(channel.pub_date(), Some("Sun, 1 Jan 2017 12:00:00 +0000"));
     /// # }
     /// ```
     pub fn set_pub_date<V>(&mut self, pub_date: V)
@@ -415,7 +415,7 @@ impl Channel {
     ///
     /// let mut channel = Channel::default();
     /// channel.set_last_build_date(Utc.with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
-    /// assert_eq!(channel.last_build_date(), Some("Sun, 01 Jan 2017 12:00:00 +0000"));
+    /// assert_eq!(channel.last_build_date(), Some("Sun, 1 Jan 2017 12:00:00 +0000"));
     /// # }
     /// ```
     pub fn set_last_build_date<V>(&mut self, last_build_date: V)

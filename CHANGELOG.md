@@ -2,6 +2,8 @@
 
 ## 2.x.x - Unreleased
 
+- Update `chrono` to 0.4.31 [`#160`](https://github.com/rust-syndication/rss/pull/160)
+
 ## 2.0.6 - 2023-08-12
 
 - Take into account namespaces declared locally [`#155`](https://github.com/rust-syndication/rss/pull/155)
