@@ -21,7 +21,7 @@ use crate::error::Error;
 #[cfg(feature = "atom")]
 use crate::extension::atom;
 use crate::extension::dublincore;
-use crate::extension::itunes;
+use crate::extension::itunes::{self, is_itunes_namespace};
 use crate::extension::syndication;
 use crate::extension::util::{
     extension_entry, extension_name, parse_extension_element, read_namespace_declarations,
@@ -1299,8 +1299,11 @@ impl Channel {
                                 Some(ns @ atom::NAMESPACE) => {
                                     extension_entry(&mut extensions, ns, name).push(ext);
                                 }
-                                Some(ns @ itunes::NAMESPACE)
-                                | Some(ns @ dublincore::NAMESPACE)
+                                Some(ns) if is_itunes_namespace(ns) => {
+                                    extension_entry(&mut extensions, itunes::NAMESPACE, name)
+                                        .push(ext);
+                                }
+                                Some(ns @ dublincore::NAMESPACE)
                                 | Some(ns @ syndication::NAMESPACE) => {
                                     extension_entry(&mut extensions, ns, name).push(ext);
                                 }

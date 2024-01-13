@@ -22,6 +22,14 @@ pub use self::itunes_owner::*;
 /// The iTunes XML namespace.
 pub const NAMESPACE: &str = "http://www.itunes.com/dtds/podcast-1.0.dtd";
 
+/// Formally XML namespace is case sensitive and this should be just an equality check.
+/// But many podcast publishers ignore this and use different case variations of the namespace.
+/// Hence this check is relaxed and ignores a case.
+#[inline]
+pub(crate) fn is_itunes_namespace(ns: &str) -> bool {
+    ns.eq_ignore_ascii_case(NAMESPACE)
+}
+
 fn parse_image(map: &mut BTreeMap<String, Vec<Extension>>) -> Option<String> {
     let mut element = match map.remove("image").map(|mut v| v.remove(0)) {
         Some(element) => element,
