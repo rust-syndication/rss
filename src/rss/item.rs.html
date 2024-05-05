@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/item.rs`."><title>item.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/item.rs`."><title>item.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../rss/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -818,7 +820,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::category::Category;
 <span class="kw">use </span><span class="kw">crate</span>::enclosure::Enclosure;
 <span class="kw">use </span><span class="kw">crate</span>::error::Error;
-<span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::extension::atom;
 <span class="kw">use </span><span class="kw">crate</span>::extension::dublincore;
 <span class="kw">use </span><span class="kw">crate</span>::extension::itunes::{<span class="self">self</span>, is_itunes_namespace};
@@ -832,15 +834,15 @@
 <span class="kw">use </span><span class="kw">crate</span>::util::{decode, element_text, skip};
 
 <span class="doccomment">/// Represents an item in an RSS feed.
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>Item {
@@ -853,7 +855,7 @@
     <span class="doccomment">/// The email address of author of the item.
     </span><span class="kw">pub </span>author: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="doccomment">/// The categories the item belongs to.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;category&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"category"</span>)))]
     </span><span class="kw">pub </span>categories: Vec&lt;Category&gt;,
     <span class="doccomment">/// The URL for the comments page of the item.
     </span><span class="kw">pub </span>comments: <span class="prelude-ty">Option</span>&lt;String&gt;,
@@ -868,10 +870,10 @@
     <span class="doccomment">/// The HTML contents of the item.
     </span><span class="kw">pub </span>content: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="doccomment">/// The extensions for the item.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;extension&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"extension"</span>)))]
     </span><span class="kw">pub </span>extensions: ExtensionMap,
     <span class="doccomment">/// The Atom extension for the channel.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
     </span><span class="kw">pub </span>atom_ext: <span class="prelude-ty">Option</span>&lt;atom::AtomExtension&gt;,
     <span class="doccomment">/// The iTunes extension for the item.
     </span><span class="kw">pub </span>itunes_ext: <span class="prelude-ty">Option</span>&lt;itunes::ITunesItemExtension&gt;,
@@ -888,8 +890,8 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_title(&quot;Item Title&quot;.to_string());
-    /// assert_eq!(item.title(), Some(&quot;Item Title&quot;));
+    /// item.set_title("Item Title".to_string());
+    /// assert_eq!(item.title(), Some("Item Title"));
     /// ```
     </span><span class="kw">pub fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.title.as_deref()
@@ -903,7 +905,7 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_title(&quot;Item Title&quot;.to_string());
+    /// item.set_title("Item Title".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_title&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: V)
     <span class="kw">where
@@ -920,8 +922,8 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_link(&quot;http://example.com&quot;.to_string());
-    /// assert_eq!(item.link(), Some(&quot;http://example.com&quot;));
+    /// item.set_link("http://example.com".to_string());
+    /// assert_eq!(item.link(), Some("http://example.com"));
     /// ```
     </span><span class="kw">pub fn </span>link(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.link.as_deref()
@@ -935,7 +937,7 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_link(&quot;http://example.com&quot;.to_string());
+    /// item.set_link("http://example.com".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_link&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, link: V)
     <span class="kw">where
@@ -952,8 +954,8 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_description(&quot;Item description&quot;.to_string());
-    /// assert_eq!(item.description(), Some(&quot;Item description&quot;));
+    /// item.set_description("Item description".to_string());
+    /// assert_eq!(item.description(), Some("Item description"));
     /// ```
     </span><span class="kw">pub fn </span>description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.description.as_deref()
@@ -967,7 +969,7 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_description(&quot;Item description&quot;.to_string());
+    /// item.set_description("Item description".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_description&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, description: V)
     <span class="kw">where
@@ -984,8 +986,8 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_author(&quot;John Doe&quot;.to_string());
-    /// assert_eq!(item.author(), Some(&quot;John Doe&quot;));
+    /// item.set_author("John Doe".to_string());
+    /// assert_eq!(item.author(), Some("John Doe"));
     /// ```
     </span><span class="kw">pub fn </span>author(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.author.as_deref()
@@ -999,7 +1001,7 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_author(&quot;John Doe&quot;.to_string());
+    /// item.set_author("John Doe".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_author&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, author: V)
     <span class="kw">where
@@ -1053,8 +1055,8 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_comments(&quot;http://example.com&quot;.to_string());
-    /// assert_eq!(item.comments(), Some(&quot;http://example.com&quot;));
+    /// item.set_comments("http://example.com".to_string());
+    /// assert_eq!(item.comments(), Some("http://example.com"));
     /// ```
     </span><span class="kw">pub fn </span>comments(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.comments.as_deref()
@@ -1068,7 +1070,7 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_comments(&quot;http://example.com&quot;.to_string());
+    /// item.set_comments("http://example.com".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_comments&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, comments: V)
     <span class="kw">where
@@ -1149,8 +1151,8 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_pub_date(&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;.to_string());
-    /// assert_eq!(item.pub_date(), Some(&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;));
+    /// item.set_pub_date("Sun, 01 Jan 2017 12:00:00 GMT".to_string());
+    /// assert_eq!(item.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 GMT"));
     /// ```
     </span><span class="kw">pub fn </span>pub_date(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.pub_date.as_deref()
@@ -1165,23 +1167,23 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_pub_date(&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;.to_string());
-    /// assert_eq!(item.pub_date(), Some(&quot;Sun, 01 Jan 2017 12:00:00 GMT&quot;));
+    /// item.set_pub_date("Sun, 01 Jan 2017 12:00:00 GMT".to_string());
+    /// assert_eq!(item.pub_date(), Some("Sun, 01 Jan 2017 12:00:00 GMT"));
     /// ```
     ///
     /// ## Using chrono::DateTime
     /// ```
-    /// # #[cfg(feature = &quot;validation&quot;)]
+    /// # #[cfg(feature = "validation")]
     /// # {
     /// use rss::Item;
     /// use chrono::{FixedOffset, TimeZone, Utc};
     ///
     /// let mut item = Item::default();
     /// item.set_pub_date(Utc.with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
-    /// assert_eq!(item.pub_date(), Some(&quot;Sun, 1 Jan 2017 12:00:00 +0000&quot;));
+    /// assert_eq!(item.pub_date(), Some("Sun, 1 Jan 2017 12:00:00 +0000"));
     ///
     /// item.set_pub_date(FixedOffset::east_opt(2 * 3600).unwrap().with_ymd_and_hms(2017, 1, 1, 12, 0, 0).unwrap().to_rfc2822());
-    /// assert_eq!(item.pub_date(), Some(&quot;Sun, 1 Jan 2017 12:00:00 +0200&quot;));
+    /// assert_eq!(item.pub_date(), Some("Sun, 1 Jan 2017 12:00:00 +0200"));
     /// # }
     /// ```
     </span><span class="kw">pub fn </span>set_pub_date&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, pub_date: V)
@@ -1231,8 +1233,8 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_content(&quot;Item content&quot;.to_string());
-    /// assert_eq!(item.content(), Some(&quot;Item content&quot;));
+    /// item.set_content("Item content".to_string());
+    /// assert_eq!(item.content(), Some("Item content"));
     /// ```
     </span><span class="kw">pub fn </span>content(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.content.as_deref()
@@ -1246,7 +1248,7 @@
     /// use rss::Item;
     ///
     /// let mut item = Item::default();
-    /// item.set_content(&quot;Item content&quot;.to_string());
+    /// item.set_content("Item content".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_content&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, content: V)
     <span class="kw">where
@@ -1267,7 +1269,7 @@
     /// item.set_atom_ext(AtomExtension::default());
     /// assert!(item.atom_ext().is_some());
     /// ```
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
     </span><span class="kw">pub fn </span>atom_ext(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>atom::AtomExtension&gt; {
         <span class="self">self</span>.atom_ext.as_ref()
     }
@@ -1283,7 +1285,7 @@
     /// let mut item = Item::default();
     /// item.set_atom_ext(AtomExtension::default());
     /// ```
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
     </span><span class="kw">pub fn </span>set_atom_ext&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, atom_ext: V)
     <span class="kw">where
         </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;atom::AtomExtension&gt;&gt;,
@@ -1371,16 +1373,16 @@
     /// let extension = Extension::default();
     ///
     /// let mut item_map = BTreeMap::&lt;String, Vec&lt;Extension&gt;&gt;::new();
-    /// item_map.insert(&quot;ext:name&quot;.to_string(), vec![extension]);
+    /// item_map.insert("ext:name".to_string(), vec![extension]);
     ///
     /// let mut extension_map = ExtensionMap::default();
-    /// extension_map.insert(&quot;ext&quot;.to_string(), item_map);
+    /// extension_map.insert("ext".to_string(), item_map);
     ///
     /// let mut item = Item::default();
     /// item.set_extensions(extension_map);
     /// assert_eq!(item.extensions()
-    ///                .get(&quot;ext&quot;)
-    ///                .and_then(|m| m.get(&quot;ext:name&quot;))
+    ///                .get("ext")
+    ///                .and_then(|m| m.get("ext:name"))
     ///                .map(|v| v.len()),
     ///            Some(1));
     /// ```
@@ -1423,30 +1425,30 @@
         <span class="kw">loop </span>{
             <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf)<span class="question-mark">? </span>{
                 Event::Start(element) =&gt; <span class="kw">match </span>decode(element.name().as_ref(), reader)<span class="question-mark">?</span>.as_ref() {
-                    <span class="string">&quot;category&quot; </span>=&gt; {
+                    <span class="string">"category" </span>=&gt; {
                         <span class="kw">let </span>category = Category::from_xml(reader, element.attributes())<span class="question-mark">?</span>;
                         item.categories.push(category);
                     }
-                    <span class="string">&quot;guid&quot; </span>=&gt; {
+                    <span class="string">"guid" </span>=&gt; {
                         <span class="kw">let </span>guid = Guid::from_xml(reader, element.attributes())<span class="question-mark">?</span>;
                         item.guid = <span class="prelude-val">Some</span>(guid);
                     }
-                    <span class="string">&quot;enclosure&quot; </span>=&gt; item.enclosure = <span class="prelude-val">Some</span>(Enclosure::from_xml(reader, <span class="kw-2">&amp;</span>element)<span class="question-mark">?</span>),
-                    <span class="string">&quot;source&quot; </span>=&gt; {
+                    <span class="string">"enclosure" </span>=&gt; item.enclosure = <span class="prelude-val">Some</span>(Enclosure::from_xml(reader, <span class="kw-2">&amp;</span>element)<span class="question-mark">?</span>),
+                    <span class="string">"source" </span>=&gt; {
                         <span class="kw">let </span>source = Source::from_xml(reader, element.attributes())<span class="question-mark">?</span>;
                         item.source = <span class="prelude-val">Some</span>(source);
                     }
-                    <span class="string">&quot;title&quot; </span>=&gt; item.title = element_text(reader)<span class="question-mark">?</span>,
-                    <span class="string">&quot;link&quot; </span>=&gt; {
+                    <span class="string">"title" </span>=&gt; item.title = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"link" </span>=&gt; {
                         <span class="kw">if let </span><span class="prelude-val">Some</span>(link) = element_text(reader)<span class="question-mark">?</span>.filter(|text| !text.is_empty()) {
                             item.link = <span class="prelude-val">Some</span>(link);
                         }
                     }
-                    <span class="string">&quot;description&quot; </span>=&gt; item.description = element_text(reader)<span class="question-mark">?</span>,
-                    <span class="string">&quot;author&quot; </span>=&gt; item.author = element_text(reader)<span class="question-mark">?</span>,
-                    <span class="string">&quot;comments&quot; </span>=&gt; item.comments = element_text(reader)<span class="question-mark">?</span>,
-                    <span class="string">&quot;pubDate&quot; </span>=&gt; item.pub_date = element_text(reader)<span class="question-mark">?</span>,
-                    <span class="string">&quot;content:encoded&quot; </span>=&gt; item.content = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"description" </span>=&gt; item.description = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"author" </span>=&gt; item.author = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"comments" </span>=&gt; item.comments = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"pubDate" </span>=&gt; item.pub_date = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"content:encoded" </span>=&gt; item.content = element_text(reader)<span class="question-mark">?</span>,
                     n =&gt; {
                         <span class="kw">if let </span><span class="prelude-val">Some</span>((prefix, name)) = extension_name(n) {
                             <span class="kw">let </span>scope_namespases = read_namespace_declarations(
@@ -1457,7 +1459,7 @@
                             <span class="kw">let </span>ext_ns = scope_namespases.get(prefix).map(|s| s.as_str());
                             <span class="kw">let </span>ext = parse_extension_element(reader, element.attributes())<span class="question-mark">?</span>;
                             <span class="kw">match </span>ext_ns {
-                                <span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+                                <span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
                                 </span><span class="prelude-val">Some</span>(ns @ atom::NAMESPACE) =&gt; {
                                     extension_entry(<span class="kw-2">&amp;mut </span>extensions, ns, name).push(ext);
                                 }
@@ -1483,7 +1485,7 @@
         }
 
         <span class="comment">// Process each of the namespaces we know
-        </span><span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+        </span><span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(v) = extensions.remove(atom::NAMESPACE) {
             item.atom_ext = <span class="prelude-val">Some</span>(atom::AtomExtension::from_map(v));
         }
@@ -1500,30 +1502,30 @@
 
 <span class="kw">impl </span>ToXml <span class="kw">for </span>Item {
     <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
-        <span class="kw">let </span>name = <span class="string">&quot;item&quot;</span>;
+        <span class="kw">let </span>name = <span class="string">"item"</span>;
 
         writer.write_event(Event::Start(BytesStart::new(name)))<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(title) = <span class="self">self</span>.title.as_ref() {
-            writer.write_text_element(<span class="string">&quot;title&quot;</span>, title)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"title"</span>, title)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(link) = <span class="self">self</span>.link.as_ref() {
-            writer.write_text_element(<span class="string">&quot;link&quot;</span>, link)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"link"</span>, link)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(description) = <span class="self">self</span>.description.as_ref() {
-            writer.write_cdata_element(<span class="string">&quot;description&quot;</span>, description)<span class="question-mark">?</span>;
+            writer.write_cdata_element(<span class="string">"description"</span>, description)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(author) = <span class="self">self</span>.author.as_ref() {
-            writer.write_text_element(<span class="string">&quot;author&quot;</span>, author)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"author"</span>, author)<span class="question-mark">?</span>;
         }
 
         writer.write_objects(<span class="kw-2">&amp;</span><span class="self">self</span>.categories)<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(comments) = <span class="self">self</span>.comments.as_ref() {
-            writer.write_text_element(<span class="string">&quot;comments&quot;</span>, comments)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"comments"</span>, comments)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(enclosure) = <span class="self">self</span>.enclosure.as_ref() {
@@ -1535,7 +1537,7 @@
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(pub_date) = <span class="self">self</span>.pub_date.as_ref() {
-            writer.write_text_element(<span class="string">&quot;pubDate&quot;</span>, pub_date)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"pubDate"</span>, pub_date)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(source) = <span class="self">self</span>.source.as_ref() {
@@ -1543,7 +1545,7 @@
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(content) = <span class="self">self</span>.content.as_ref() {
-            writer.write_cdata_element(<span class="string">&quot;content:encoded&quot;</span>, content)<span class="question-mark">?</span>;
+            writer.write_cdata_element(<span class="string">"content:encoded"</span>, content)<span class="question-mark">?</span>;
         }
 
         <span class="kw">for </span>map <span class="kw">in </span><span class="self">self</span>.extensions.values() {
@@ -1554,7 +1556,7 @@
             }
         }
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.atom_ext.as_ref() {
             ext.to_xml(writer)<span class="question-mark">?</span>;
         }
@@ -1575,8 +1577,8 @@
         <span class="kw">let </span><span class="kw-2">mut </span>namespaces = BTreeMap::new();
         <span class="kw">if </span><span class="self">self</span>.content.is_some() {
             namespaces.insert(
-                <span class="string">&quot;content&quot;</span>.to_owned(),
-                <span class="string">&quot;http://purl.org/rss/1.0/modules/content/&quot;</span>.to_owned(),
+                <span class="string">"content"</span>.to_owned(),
+                <span class="string">"http://purl.org/rss/1.0/modules/content/"</span>.to_owned(),
             );
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.itunes_ext() {
@@ -1585,7 +1587,7 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.dublin_core_ext() {
             namespaces.extend(ext.used_namespaces());
         }
-        <span class="attr">#[cfg(feature = <span class="string">&quot;atom&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.atom_ext() {
             namespaces.extend(ext.used_namespaces());
         }
@@ -1593,7 +1595,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>ItemBuilder {
     <span class="doccomment">/// Builds a new `Item`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Item {

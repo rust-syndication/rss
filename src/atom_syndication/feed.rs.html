@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/feed.rs`."><title>feed.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/feed.rs`."><title>feed.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../atom_syndication/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1080,15 +1082,15 @@
 }
 
 <span class="doccomment">/// Represents an Atom feed
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Deserialize, Serialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Deserialize, Serialize))]
 #[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>Feed {
@@ -1099,20 +1101,20 @@
     <span class="doccomment">/// The last time the feed was modified in a significant way.
     </span><span class="kw">pub </span>updated: FixedDateTime,
     <span class="doccomment">/// The authors of the feed.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;author&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"author"</span>)))]
     </span><span class="kw">pub </span>authors: Vec&lt;Person&gt;,
     <span class="doccomment">/// The categories that the feed belongs to.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;category&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"category"</span>)))]
     </span><span class="kw">pub </span>categories: Vec&lt;Category&gt;,
     <span class="doccomment">/// The contributors to the feed.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;contributor&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"contributor"</span>)))]
     </span><span class="kw">pub </span>contributors: Vec&lt;Person&gt;,
     <span class="doccomment">/// The software used to generate the feed.
     </span><span class="kw">pub </span>generator: <span class="prelude-ty">Option</span>&lt;Generator&gt;,
     <span class="doccomment">/// A small image which provides visual identification for the feed.
     </span><span class="kw">pub </span>icon: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="doccomment">/// The Web pages related to the feed.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;link&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"link"</span>)))]
     </span><span class="kw">pub </span>links: Vec&lt;Link&gt;,
     <span class="doccomment">/// A larger image which provides visual identification for the feed.
     </span><span class="kw">pub </span>logo: <span class="prelude-ty">Option</span>&lt;String&gt;,
@@ -1121,13 +1123,13 @@
     <span class="doccomment">/// A human-readable description or subtitle for the feed.
     </span><span class="kw">pub </span>subtitle: <span class="prelude-ty">Option</span>&lt;Text&gt;,
     <span class="doccomment">/// The entries contained in the feed.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;entry&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"entry"</span>)))]
     </span><span class="kw">pub </span>entries: Vec&lt;Entry&gt;,
     <span class="doccomment">/// The extensions for the feed.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;extension&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"extension"</span>)))]
     </span><span class="kw">pub </span>extensions: ExtensionMap,
     <span class="doccomment">/// The namespaces present in the feed tag.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;namespace&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"namespace"</span>)))]
     </span><span class="kw">pub </span>namespaces: BTreeMap&lt;String, String&gt;,
     <span class="doccomment">/// Base URL for resolving any relative references found in the element.
     </span><span class="kw">pub </span>base: <span class="prelude-ty">Option</span>&lt;String&gt;,
@@ -1145,7 +1147,7 @@
     /// use std::fs::File;
     /// use atom_syndication::Feed;
     ///
-    /// let file = File::open(&quot;example.xml&quot;).unwrap();
+    /// let file = File::open("example.xml").unwrap();
     /// let feed = Feed::read_from(BufReader::new(file)).unwrap();
     /// ```
     </span><span class="kw">pub fn </span>read_from&lt;B: BufRead&gt;(reader: B) -&gt; <span class="prelude-ty">Result</span>&lt;Feed, Error&gt; {
@@ -1157,7 +1159,7 @@
         <span class="kw">loop </span>{
             <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf).map_err(XmlError::new)<span class="question-mark">? </span>{
                 Event::Start(element) =&gt; {
-                    <span class="kw">if </span>decode(element.name().as_ref(), <span class="kw-2">&amp;</span>reader)<span class="question-mark">? </span>== <span class="string">&quot;feed&quot; </span>{
+                    <span class="kw">if </span>decode(element.name().as_ref(), <span class="kw-2">&amp;</span>reader)<span class="question-mark">? </span>== <span class="string">"feed" </span>{
                         <span class="kw">return </span>Feed::from_xml(<span class="kw-2">&amp;mut </span>reader, element.attributes());
                     } <span class="kw">else </span>{
                         <span class="kw">return </span><span class="prelude-val">Err</span>(Error::InvalidStartTag);
@@ -1184,14 +1186,14 @@
     ///
     /// # fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
     /// let feed = Feed {
-    ///     title: &quot;Feed Title&quot;.into(),
-    ///     id: &quot;Feed ID&quot;.into(),
+    ///     title: "Feed Title".into(),
+    ///     id: "Feed ID".into(),
     ///     ..Default::default()
     /// };
     ///
     /// let out = feed.write_to(Vec::new())?;
-    /// assert_eq!(&amp;out, br#&quot;&lt;?xml version=&quot;1.0&quot;?&gt;
-    /// &lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;&lt;title&gt;Feed Title&lt;/title&gt;&lt;id&gt;Feed ID&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;&quot;#);
+    /// assert_eq!(&amp;out, br#"&lt;?xml version="1.0"?&gt;
+    /// &lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;&lt;title&gt;Feed Title&lt;/title&gt;&lt;id&gt;Feed ID&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;"#);
     /// # Ok(()) }
     /// ```
     </span><span class="kw">pub fn </span>write_to&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: W) -&gt; <span class="prelude-ty">Result</span>&lt;W, Error&gt; {
@@ -1209,8 +1211,8 @@
     ///
     /// # fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
     /// let feed = Feed {
-    ///     title: &quot;Feed Title&quot;.into(),
-    ///     id: &quot;Feed ID&quot;.into(),
+    ///     title: "Feed Title".into(),
+    ///     id: "Feed ID".into(),
     ///     ..Default::default()
     /// };
     ///
@@ -1220,11 +1222,11 @@
     ///     indent_size: Some(2),
     /// };
     /// feed.write_with_config(&amp;mut out, config)?;
-    /// assert_eq!(&amp;out, br#&quot;&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+    /// assert_eq!(&amp;out, br#"&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
     ///   &lt;title&gt;Feed Title&lt;/title&gt;
     ///   &lt;id&gt;Feed ID&lt;/id&gt;
     ///   &lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;
-    /// &lt;/feed&gt;&quot;#);
+    /// &lt;/feed&gt;"#);
     /// # Ok(()) }
     /// ```
     </span><span class="kw">pub fn </span>write_with_config&lt;W: Write&gt;(
@@ -1233,15 +1235,15 @@
         write_config: WriteConfig,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;W, Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>writer = <span class="kw">match </span>write_config.indent_size {
-            <span class="prelude-val">Some</span>(indent_size) =&gt; Writer::new_with_indent(writer, <span class="string">b&#39; &#39;</span>, indent_size),
+            <span class="prelude-val">Some</span>(indent_size) =&gt; Writer::new_with_indent(writer, <span class="string">b' '</span>, indent_size),
             <span class="prelude-val">None </span>=&gt; Writer::new(writer),
         };
         <span class="kw">if </span>write_config.write_document_declaration {
             writer
-                .write_event(Event::Decl(BytesDecl::new(<span class="string">&quot;1.0&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)))
+                .write_event(Event::Decl(BytesDecl::new(<span class="string">"1.0"</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)))
                 .map_err(XmlError::new)<span class="question-mark">?</span>;
             writer
-                .write_event(Event::Text(BytesText::from_escaped(<span class="string">&quot;\n&quot;</span>)))
+                .write_event(Event::Text(BytesText::from_escaped(<span class="string">"\n"</span>)))
                 .map_err(XmlError::new)<span class="question-mark">?</span>;
         }
         <span class="self">self</span>.to_xml(<span class="kw-2">&amp;mut </span>writer)<span class="question-mark">?</span>;
@@ -1256,8 +1258,8 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_title(&quot;Feed Title&quot;);
-    /// assert_eq!(feed.title(), &quot;Feed Title&quot;);
+    /// feed.set_title("Feed Title");
+    /// assert_eq!(feed.title(), "Feed Title");
     /// ```
     </span><span class="kw">pub fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Text {
         <span class="kw-2">&amp;</span><span class="self">self</span>.title
@@ -1271,7 +1273,7 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_title(&quot;Feed Title&quot;);
+    /// feed.set_title("Feed Title");
     /// ```
     </span><span class="kw">pub fn </span>set_title&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: V)
     <span class="kw">where
@@ -1288,8 +1290,8 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_id(&quot;urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6&quot;);
-    /// assert_eq!(feed.id(), &quot;urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6&quot;);
+    /// feed.set_id("urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6");
+    /// assert_eq!(feed.id(), "urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6");
     /// ```
     </span><span class="kw">pub fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.id.as_str()
@@ -1303,7 +1305,7 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_id(&quot;urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6&quot;);
+    /// feed.set_id("urn:uuid:60a76c80-d399-11d9-b91C-0003939e0af6");
     /// ```
     </span><span class="kw">pub fn </span>set_id&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, id: V)
     <span class="kw">where
@@ -1322,8 +1324,8 @@
     /// use std::str::FromStr;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_updated(FixedDateTime::from_str(&quot;2017-06-03T15:15:44-05:00&quot;).unwrap());
-    /// assert_eq!(feed.updated().to_rfc3339(), &quot;2017-06-03T15:15:44-05:00&quot;);
+    /// feed.set_updated(FixedDateTime::from_str("2017-06-03T15:15:44-05:00").unwrap());
+    /// assert_eq!(feed.updated().to_rfc3339(), "2017-06-03T15:15:44-05:00");
     /// ```
     </span><span class="kw">pub fn </span>updated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>FixedDateTime {
         <span class="kw-2">&amp;</span><span class="self">self</span>.updated
@@ -1339,7 +1341,7 @@
     /// use std::str::FromStr;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_updated(FixedDateTime::from_str(&quot;2017-06-03T15:15:44-05:00&quot;).unwrap());
+    /// feed.set_updated(FixedDateTime::from_str("2017-06-03T15:15:44-05:00").unwrap());
     /// ```
     </span><span class="kw">pub fn </span>set_updated&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, updated: V)
     <span class="kw">where
@@ -1484,8 +1486,8 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_icon(&quot;http://example.com/icon.png&quot;.to_string());
-    /// assert_eq!(feed.icon(), Some(&quot;http://example.com/icon.png&quot;));
+    /// feed.set_icon("http://example.com/icon.png".to_string());
+    /// assert_eq!(feed.icon(), Some("http://example.com/icon.png"));
     /// ```
     </span><span class="kw">pub fn </span>icon(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.icon.as_deref()
@@ -1499,7 +1501,7 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_icon(&quot;http://example.com/icon.png&quot;.to_string());
+    /// feed.set_icon("http://example.com/icon.png".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_icon&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, icon: V)
     <span class="kw">where
@@ -1548,8 +1550,8 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_logo(&quot;http://example.com/logo.png&quot;.to_string());
-    /// assert_eq!(feed.logo(), Some(&quot;http://example.com/logo.png&quot;));
+    /// feed.set_logo("http://example.com/logo.png".to_string());
+    /// assert_eq!(feed.logo(), Some("http://example.com/logo.png"));
     /// ```
     </span><span class="kw">pub fn </span>logo(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.logo.as_deref()
@@ -1563,7 +1565,7 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_logo(&quot;http://example.com/logo.png&quot;.to_string());
+    /// feed.set_logo("http://example.com/logo.png".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_logo&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, logo: V)
     <span class="kw">where
@@ -1580,8 +1582,8 @@
     /// use atom_syndication::{Feed, Text};
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_rights(Text::from(&quot;© 2017 John Doe&quot;));
-    /// assert_eq!(feed.rights().map(Text::as_str), Some(&quot;© 2017 John Doe&quot;));
+    /// feed.set_rights(Text::from("© 2017 John Doe"));
+    /// assert_eq!(feed.rights().map(Text::as_str), Some("© 2017 John Doe"));
     /// ```
     </span><span class="kw">pub fn </span>rights(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Text&gt; {
         <span class="self">self</span>.rights.as_ref()
@@ -1595,7 +1597,7 @@
     /// use atom_syndication::{Feed, Text};
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_rights(Text::from(&quot;© 2017 John Doe&quot;));
+    /// feed.set_rights(Text::from("© 2017 John Doe"));
     /// ```
     </span><span class="kw">pub fn </span>set_rights&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rights: V)
     <span class="kw">where
@@ -1612,8 +1614,8 @@
     /// use atom_syndication::{Feed, Text};
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_subtitle(Text::from(&quot;Feed subtitle&quot;));
-    /// assert_eq!(feed.subtitle().map(Text::as_str), Some(&quot;Feed subtitle&quot;));
+    /// feed.set_subtitle(Text::from("Feed subtitle"));
+    /// assert_eq!(feed.subtitle().map(Text::as_str), Some("Feed subtitle"));
     /// ```
     </span><span class="kw">pub fn </span>subtitle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Text&gt; {
         <span class="self">self</span>.subtitle.as_ref()
@@ -1627,7 +1629,7 @@
     /// use atom_syndication::{Feed, Text};
     ///
     /// let mut feed = Feed::default();
-    /// feed.set_subtitle(Text::from(&quot;Feed subtitle&quot;));
+    /// feed.set_subtitle(Text::from("Feed subtitle"));
     /// ```
     </span><span class="kw">pub fn </span>set_subtitle&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, subtitle: V)
     <span class="kw">where
@@ -1680,16 +1682,16 @@
     /// let extension = Extension::default();
     ///
     /// let mut item_map = BTreeMap::&lt;String, Vec&lt;Extension&gt;&gt;::new();
-    /// item_map.insert(&quot;ext:name&quot;.to_string(), vec![extension]);
+    /// item_map.insert("ext:name".to_string(), vec![extension]);
     ///
     /// let mut extension_map = ExtensionMap::default();
-    /// extension_map.insert(&quot;ext&quot;.to_string(), item_map);
+    /// extension_map.insert("ext".to_string(), item_map);
     ///
     /// let mut feed = Feed::default();
     /// feed.set_extensions(extension_map);
     /// assert_eq!(feed.extensions()
-    ///                .get(&quot;ext&quot;)
-    ///                .and_then(|m| m.get(&quot;ext:name&quot;))
+    ///                .get("ext")
+    ///                .and_then(|m| m.get("ext:name"))
     ///                .map(|v| v.len()),
     ///            Some(1));
     /// ```
@@ -1724,11 +1726,11 @@
     /// use atom_syndication::Feed;
     ///
     /// let mut namespaces = BTreeMap::new();
-    /// namespaces.insert(&quot;ext&quot;.to_string(), &quot;http://example.com&quot;.to_string());
+    /// namespaces.insert("ext".to_string(), "http://example.com".to_string());
     ///
     /// let mut feed = Feed::default();
     /// feed.set_namespaces(namespaces);
-    /// assert_eq!(feed.namespaces().get(&quot;ext&quot;).map(|s| s.as_str()), Some(&quot;http://example.com&quot;));
+    /// assert_eq!(feed.namespaces().get("ext").map(|s| s.as_str()), Some("http://example.com"));
     /// ```
     </span><span class="kw">pub fn </span>namespaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>BTreeMap&lt;String, String&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.namespaces
@@ -1782,22 +1784,22 @@
 <span class="kw">impl </span>FromXml <span class="kw">for </span>Feed {
     <span class="kw">fn </span>from_xml&lt;B: BufRead&gt;(
         reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;,
-        <span class="kw-2">mut </span>atts: Attributes&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="kw-2">mut </span>atts: Attributes&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>feed = Feed::default();
         <span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::new();
 
         <span class="kw">for </span>att <span class="kw">in </span>atts.with_checks(<span class="bool-val">false</span>).flatten() {
             <span class="kw">match </span>decode(att.key.as_ref(), reader)<span class="question-mark">? </span>{
-                Cow::Borrowed(<span class="string">&quot;xml:base&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"xml:base"</span>) =&gt; {
                     feed.base = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string())
                 }
-                Cow::Borrowed(<span class="string">&quot;xml:lang&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"xml:lang"</span>) =&gt; {
                     feed.lang = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string())
                 }
-                Cow::Borrowed(<span class="string">&quot;xmlns:dc&quot;</span>) =&gt; {}
+                Cow::Borrowed(<span class="string">"xmlns:dc"</span>) =&gt; {}
                 key =&gt; {
-                    <span class="kw">if let </span><span class="prelude-val">Some</span>(ns) = key.strip_prefix(<span class="string">&quot;xmlns:&quot;</span>) {
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(ns) = key.strip_prefix(<span class="string">"xmlns:"</span>) {
                         feed.namespaces
                             .insert(ns.to_string(), attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
                     }
@@ -1808,39 +1810,39 @@
         <span class="kw">loop </span>{
             <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf).map_err(XmlError::new)<span class="question-mark">? </span>{
                 Event::Start(element) =&gt; <span class="kw">match </span>decode(element.name().as_ref(), reader)<span class="question-mark">? </span>{
-                    Cow::Borrowed(<span class="string">&quot;title&quot;</span>) =&gt; {
+                    Cow::Borrowed(<span class="string">"title"</span>) =&gt; {
                         feed.title = Text::from_xml(reader, element.attributes())<span class="question-mark">?
                     </span>}
-                    Cow::Borrowed(<span class="string">&quot;id&quot;</span>) =&gt; feed.id = atom_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
-                    Cow::Borrowed(<span class="string">&quot;updated&quot;</span>) =&gt; {
+                    Cow::Borrowed(<span class="string">"id"</span>) =&gt; feed.id = atom_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
+                    Cow::Borrowed(<span class="string">"updated"</span>) =&gt; {
                         feed.updated = atom_datetime(reader)<span class="question-mark">?</span>.unwrap_or_else(default_fixed_datetime)
                     }
-                    Cow::Borrowed(<span class="string">&quot;author&quot;</span>) =&gt; feed
+                    Cow::Borrowed(<span class="string">"author"</span>) =&gt; feed
                         .authors
                         .push(Person::from_xml(reader, element.attributes())<span class="question-mark">?</span>),
-                    Cow::Borrowed(<span class="string">&quot;category&quot;</span>) =&gt; {
+                    Cow::Borrowed(<span class="string">"category"</span>) =&gt; {
                         feed.categories.push(Category::from_xml(reader, <span class="kw-2">&amp;</span>element)<span class="question-mark">?</span>);
                         skip(element.name(), reader)<span class="question-mark">?</span>;
                     }
-                    Cow::Borrowed(<span class="string">&quot;contributor&quot;</span>) =&gt; feed
+                    Cow::Borrowed(<span class="string">"contributor"</span>) =&gt; feed
                         .contributors
                         .push(Person::from_xml(reader, element.attributes())<span class="question-mark">?</span>),
-                    Cow::Borrowed(<span class="string">&quot;generator&quot;</span>) =&gt; {
+                    Cow::Borrowed(<span class="string">"generator"</span>) =&gt; {
                         feed.generator = <span class="prelude-val">Some</span>(Generator::from_xml(reader, element.attributes())<span class="question-mark">?</span>)
                     }
-                    Cow::Borrowed(<span class="string">&quot;icon&quot;</span>) =&gt; feed.icon = atom_text(reader)<span class="question-mark">?</span>,
-                    Cow::Borrowed(<span class="string">&quot;link&quot;</span>) =&gt; {
+                    Cow::Borrowed(<span class="string">"icon"</span>) =&gt; feed.icon = atom_text(reader)<span class="question-mark">?</span>,
+                    Cow::Borrowed(<span class="string">"link"</span>) =&gt; {
                         feed.links.push(Link::from_xml(reader, <span class="kw-2">&amp;</span>element)<span class="question-mark">?</span>);
                         skip(element.name(), reader)<span class="question-mark">?</span>;
                     }
-                    Cow::Borrowed(<span class="string">&quot;logo&quot;</span>) =&gt; feed.logo = atom_text(reader)<span class="question-mark">?</span>,
-                    Cow::Borrowed(<span class="string">&quot;rights&quot;</span>) =&gt; {
+                    Cow::Borrowed(<span class="string">"logo"</span>) =&gt; feed.logo = atom_text(reader)<span class="question-mark">?</span>,
+                    Cow::Borrowed(<span class="string">"rights"</span>) =&gt; {
                         feed.rights = <span class="prelude-val">Some</span>(Text::from_xml(reader, element.attributes())<span class="question-mark">?</span>)
                     }
-                    Cow::Borrowed(<span class="string">&quot;subtitle&quot;</span>) =&gt; {
+                    Cow::Borrowed(<span class="string">"subtitle"</span>) =&gt; {
                         feed.subtitle = <span class="prelude-val">Some</span>(Text::from_xml(reader, element.attributes())<span class="question-mark">?</span>)
                     }
-                    Cow::Borrowed(<span class="string">&quot;entry&quot;</span>) =&gt; feed
+                    Cow::Borrowed(<span class="string">"entry"</span>) =&gt; feed
                         .entries
                         .push(Entry::from_xml(reader, element.attributes())<span class="question-mark">?</span>),
                     n =&gt; {
@@ -1871,52 +1873,52 @@
 
 <span class="kw">impl </span>ToXml <span class="kw">for </span>Feed {
     <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
-        <span class="kw">let </span>name = <span class="string">&quot;feed&quot;</span>;
+        <span class="kw">let </span>name = <span class="string">"feed"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>element = BytesStart::new(name);
-        element.push_attribute((<span class="string">&quot;xmlns&quot;</span>, <span class="string">&quot;http://www.w3.org/2005/Atom&quot;</span>));
+        element.push_attribute((<span class="string">"xmlns"</span>, <span class="string">"http://www.w3.org/2005/Atom"</span>));
 
         <span class="kw">for </span>(ns, uri) <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.namespaces {
-            element.push_attribute((<span class="macro">format!</span>(<span class="string">&quot;xmlns:{}&quot;</span>, ns).as_bytes(), uri.as_bytes()));
+            element.push_attribute((<span class="macro">format!</span>(<span class="string">"xmlns:{}"</span>, ns).as_bytes(), uri.as_bytes()));
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>base) = <span class="self">self</span>.base {
-            element.push_attribute((<span class="string">&quot;xml:base&quot;</span>, base.as_str()));
+            element.push_attribute((<span class="string">"xml:base"</span>, base.as_str()));
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>lang) = <span class="self">self</span>.lang {
-            element.push_attribute((<span class="string">&quot;xml:lang&quot;</span>, lang.as_str()));
+            element.push_attribute((<span class="string">"xml:lang"</span>, lang.as_str()));
         }
 
         writer
             .write_event(Event::Start(element))
             .map_err(XmlError::new)<span class="question-mark">?</span>;
-        writer.write_object_named(<span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="string">&quot;title&quot;</span>)<span class="question-mark">?</span>;
-        writer.write_text_element(<span class="string">&quot;id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.id)<span class="question-mark">?</span>;
-        writer.write_text_element(<span class="string">&quot;updated&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.updated.to_rfc3339())<span class="question-mark">?</span>;
-        writer.write_objects_named(<span class="kw-2">&amp;</span><span class="self">self</span>.authors, <span class="string">&quot;author&quot;</span>)<span class="question-mark">?</span>;
+        writer.write_object_named(<span class="kw-2">&amp;</span><span class="self">self</span>.title, <span class="string">"title"</span>)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">"id"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.id)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">"updated"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.updated.to_rfc3339())<span class="question-mark">?</span>;
+        writer.write_objects_named(<span class="kw-2">&amp;</span><span class="self">self</span>.authors, <span class="string">"author"</span>)<span class="question-mark">?</span>;
         writer.write_objects(<span class="kw-2">&amp;</span><span class="self">self</span>.categories)<span class="question-mark">?</span>;
-        writer.write_objects_named(<span class="kw-2">&amp;</span><span class="self">self</span>.contributors, <span class="string">&quot;contributor&quot;</span>)<span class="question-mark">?</span>;
+        writer.write_objects_named(<span class="kw-2">&amp;</span><span class="self">self</span>.contributors, <span class="string">"contributor"</span>)<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>generator) = <span class="self">self</span>.generator {
             writer.write_object(generator)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>icon) = <span class="self">self</span>.icon {
-            writer.write_text_element(<span class="string">&quot;icon&quot;</span>, icon)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"icon"</span>, icon)<span class="question-mark">?</span>;
         }
 
         writer.write_objects(<span class="kw-2">&amp;</span><span class="self">self</span>.links)<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>logo) = <span class="self">self</span>.logo {
-            writer.write_text_element(<span class="string">&quot;logo&quot;</span>, logo)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"logo"</span>, logo)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>rights) = <span class="self">self</span>.rights {
-            writer.write_object_named(rights, <span class="string">&quot;rights&quot;</span>)<span class="question-mark">?</span>;
+            writer.write_object_named(rights, <span class="string">"rights"</span>)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>subtitle) = <span class="self">self</span>.subtitle {
-            writer.write_object_named(subtitle, <span class="string">&quot;subtitle&quot;</span>)<span class="question-mark">?</span>;
+            writer.write_object_named(subtitle, <span class="string">"subtitle"</span>)<span class="question-mark">?</span>;
         }
 
         writer.write_objects(<span class="kw-2">&amp;</span><span class="self">self</span>.entries)<span class="question-mark">?</span>;
@@ -1975,7 +1977,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>FeedBuilder {
     <span class="doccomment">/// Builds a new `Feed`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Feed {
@@ -1990,8 +1992,8 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_default() {
         <span class="kw">let </span>feed = Feed::default();
-        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;&lt;title&gt;&lt;/title&gt;&lt;id&gt;&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;&quot;#</span>;
+        <span class="kw">let </span>xml_fragment = <span class="string">r#"&lt;?xml version="1.0"?&gt;
+&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;&lt;title&gt;&lt;/title&gt;&lt;id&gt;&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;"#</span>;
         <span class="macro">assert_eq!</span>(feed.to_string(), xml_fragment);
         <span class="kw">let </span>loaded_feed = Feed::read_from(xml_fragment.as_bytes()).unwrap();
         <span class="macro">assert_eq!</span>(loaded_feed, feed);
@@ -2002,15 +2004,15 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_base_and_lang() {
         <span class="kw">let </span><span class="kw-2">mut </span>feed = Feed::default();
-        feed.set_base(<span class="prelude-val">Some</span>(<span class="string">&quot;http://example.com/blog/&quot;</span>.into()));
-        feed.set_lang(<span class="prelude-val">Some</span>(<span class="string">&quot;fr_FR&quot;</span>.into()));
-        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xml:base=&quot;http://example.com/blog/&quot; xml:lang=&quot;fr_FR&quot;&gt;&lt;title&gt;&lt;/title&gt;&lt;id&gt;&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;&quot;#</span>;
+        feed.set_base(<span class="prelude-val">Some</span>(<span class="string">"http://example.com/blog/"</span>.into()));
+        feed.set_lang(<span class="prelude-val">Some</span>(<span class="string">"fr_FR"</span>.into()));
+        <span class="kw">let </span>xml_fragment = <span class="string">r#"&lt;?xml version="1.0"?&gt;
+&lt;feed xmlns="http://www.w3.org/2005/Atom" xml:base="http://example.com/blog/" xml:lang="fr_FR"&gt;&lt;title&gt;&lt;/title&gt;&lt;id&gt;&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;"#</span>;
         <span class="macro">assert_eq!</span>(feed.to_string(), xml_fragment);
         <span class="kw">let </span>loaded_feed = Feed::read_from(xml_fragment.as_bytes()).unwrap();
         <span class="macro">assert_eq!</span>(loaded_feed, feed);
-        <span class="macro">assert_eq!</span>(loaded_feed.base(), <span class="prelude-val">Some</span>(<span class="string">&quot;http://example.com/blog/&quot;</span>));
-        <span class="macro">assert_eq!</span>(loaded_feed.lang(), <span class="prelude-val">Some</span>(<span class="string">&quot;fr_FR&quot;</span>));
+        <span class="macro">assert_eq!</span>(loaded_feed.base(), <span class="prelude-val">Some</span>(<span class="string">"http://example.com/blog/"</span>));
+        <span class="macro">assert_eq!</span>(loaded_feed.lang(), <span class="prelude-val">Some</span>(<span class="string">"fr_FR"</span>));
     }
 
     <span class="attr">#[test]
@@ -2027,7 +2029,7 @@
             .unwrap();
         <span class="macro">assert_eq!</span>(
             String::from_utf8_lossy(<span class="kw-2">&amp;</span>xml),
-            <span class="string">r#&quot;&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;&lt;title&gt;&lt;/title&gt;&lt;id&gt;&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;&quot;#
+            <span class="string">r#"&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;&lt;title&gt;&lt;/title&gt;&lt;id&gt;&lt;/id&gt;&lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;&lt;/feed&gt;"#
         </span>);
     }
 
@@ -2045,12 +2047,12 @@
             .unwrap();
         <span class="macro">assert_eq!</span>(
             String::from_utf8_lossy(<span class="kw-2">&amp;</span>xml),
-            <span class="string">r#&quot;&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+            <span class="string">r#"&lt;?xml version="1.0"?&gt;
+&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
     &lt;title&gt;&lt;/title&gt;
     &lt;id&gt;&lt;/id&gt;
     &lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;
-&lt;/feed&gt;&quot;#
+&lt;/feed&gt;"#
         </span>);
     }
 
@@ -2068,11 +2070,11 @@
             .unwrap();
         <span class="macro">assert_eq!</span>(
             String::from_utf8_lossy(<span class="kw-2">&amp;</span>xml),
-            <span class="string">r#&quot;&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+            <span class="string">r#"&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
     &lt;title&gt;&lt;/title&gt;
     &lt;id&gt;&lt;/id&gt;
     &lt;updated&gt;1970-01-01T00:00:00+00:00&lt;/updated&gt;
-&lt;/feed&gt;&quot;#
+&lt;/feed&gt;"#
         </span>);
     }
 }

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["LocalResult"],"struct":["FixedOffset","Utc"],"trait":["Offset","TimeZone"]};
+window.SIDEBAR_ITEMS = {"enum":["LocalResult"],"struct":["FixedOffset","Utc"],"trait":["Offset","TimeZone"],"type":["MappedLocalTime"]};

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/validation.rs`."><title>validation.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/validation.rs`."><title>validation.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../rss/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -300,7 +302,7 @@
 }
 
 <span class="kw">impl </span>StdError <span class="kw">for </span>ValidationError {
-    <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">&#39;static</span>)&gt; {
+    <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>StdError + <span class="lifetime">'static</span>)&gt; {
         <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
             ValidationError::DateParsing(<span class="kw-2">ref </span>err) =&gt; <span class="prelude-val">Some</span>(err),
             ValidationError::IntParsing(<span class="kw-2">ref </span>err) =&gt; <span class="prelude-val">Some</span>(err),
@@ -316,8 +318,8 @@
             ValidationError::DateParsing(<span class="kw-2">ref </span>err) =&gt; err.fmt(f),
             ValidationError::IntParsing(<span class="kw-2">ref </span>err) =&gt; err.fmt(f),
             ValidationError::UrlParsing(<span class="kw-2">ref </span>err) =&gt; err.fmt(f),
-            ValidationError::MimeParsing(<span class="kw">_</span>) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unable to parse MIME type&quot;</span>),
-            ValidationError::Validation(<span class="kw-2">ref </span>s) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, s),
+            ValidationError::MimeParsing(<span class="kw">_</span>) =&gt; <span class="macro">write!</span>(f, <span class="string">"Unable to parse MIME type"</span>),
+            ValidationError::Validation(<span class="kw-2">ref </span>s) =&gt; <span class="macro">write!</span>(f, <span class="string">"{}"</span>, s),
         }
     }
 }
@@ -352,7 +354,7 @@
     </span><span class="kw">fn </span>validate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), ValidationError&gt;;
 }
 
-<span class="macro">macro_rules! </span>validate {
+<span class="macro">macro_rules!</span> validate {
     (<span class="macro-nonterminal">$e</span>: expr, <span class="macro-nonterminal">$msg</span>: expr) =&gt; {{
         <span class="kw">if </span>!(<span class="macro-nonterminal">$e</span>) {
             <span class="kw">return </span><span class="prelude-val">Err</span>(ValidationError::Validation(String::from(<span class="macro-nonterminal">$msg</span>)));
@@ -396,26 +398,26 @@
             <span class="kw">let </span>hour = hour.parse::&lt;i64&gt;()<span class="question-mark">?</span>;
             <span class="macro">validate!</span>(
                 (<span class="number">0</span>..=<span class="number">23</span>).contains(<span class="kw-2">&amp;</span>hour),
-                <span class="string">&quot;Channel skip hour is not between 0 and 23&quot;
+                <span class="string">"Channel skip hour is not between 0 and 23"
             </span>);
         }
 
         <span class="kw">let </span>valid_days = {
             <span class="kw">let </span><span class="kw-2">mut </span>set = HashSet::with_capacity(<span class="number">7</span>);
-            set.insert(<span class="string">&quot;Monday&quot;</span>);
-            set.insert(<span class="string">&quot;Tuesday&quot;</span>);
-            set.insert(<span class="string">&quot;Wednesday&quot;</span>);
-            set.insert(<span class="string">&quot;Thursday&quot;</span>);
-            set.insert(<span class="string">&quot;Friday&quot;</span>);
-            set.insert(<span class="string">&quot;Saturday&quot;</span>);
-            set.insert(<span class="string">&quot;Sunday&quot;</span>);
+            set.insert(<span class="string">"Monday"</span>);
+            set.insert(<span class="string">"Tuesday"</span>);
+            set.insert(<span class="string">"Wednesday"</span>);
+            set.insert(<span class="string">"Thursday"</span>);
+            set.insert(<span class="string">"Friday"</span>);
+            set.insert(<span class="string">"Saturday"</span>);
+            set.insert(<span class="string">"Sunday"</span>);
             set
         };
 
         <span class="kw">for </span>day <span class="kw">in </span><span class="self">self</span>.skip_days() {
             <span class="macro">validate!</span>(
                 valid_days.contains(day.as_str()),
-                <span class="macro">format!</span>(<span class="string">&quot;Unknown skip day: {}&quot;</span>, day)
+                <span class="macro">format!</span>(<span class="string">"Unknown skip day: {}"</span>, day)
             );
         }
 
@@ -425,7 +427,7 @@
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(ttl) = <span class="self">self</span>.ttl() {
             <span class="kw">let </span>ttl = ttl.parse::&lt;i64&gt;()<span class="question-mark">?</span>;
-            <span class="macro">validate!</span>(ttl &gt; <span class="number">0</span>, <span class="string">&quot;Channel TTL is not greater than 0&quot;</span>);
+            <span class="macro">validate!</span>(ttl &gt; <span class="number">0</span>, <span class="string">"Channel TTL is not greater than 0"</span>);
         }
 
         <span class="prelude-val">Ok</span>(())
@@ -444,11 +446,11 @@
 <span class="kw">impl </span>Validate <span class="kw">for </span>Cloud {
     <span class="kw">fn </span>validate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), ValidationError&gt; {
         <span class="kw">let </span>port = <span class="self">self</span>.port().parse::&lt;i64&gt;()<span class="question-mark">?</span>;
-        <span class="macro">validate!</span>(port &gt; <span class="number">0</span>, <span class="string">&quot;Cloud port must be greater than 0&quot;</span>);
+        <span class="macro">validate!</span>(port &gt; <span class="number">0</span>, <span class="string">"Cloud port must be greater than 0"</span>);
         Url::parse(<span class="self">self</span>.domain())<span class="question-mark">?</span>;
         <span class="macro">validate!</span>(
-            <span class="macro">vec!</span>[<span class="string">&quot;xml-rpc&quot;</span>, <span class="string">&quot;soap&quot;</span>, <span class="string">&quot;http-post&quot;</span>].contains(<span class="kw-2">&amp;</span><span class="self">self</span>.protocol()),
-            <span class="macro">format!</span>(<span class="string">&quot;Unknown cloud protocol: {}&quot;</span>, <span class="self">self</span>.protocol())
+            <span class="macro">vec!</span>[<span class="string">"xml-rpc"</span>, <span class="string">"soap"</span>, <span class="string">"http-post"</span>].contains(<span class="kw-2">&amp;</span><span class="self">self</span>.protocol()),
+            <span class="macro">format!</span>(<span class="string">"Unknown cloud protocol: {}"</span>, <span class="self">self</span>.protocol())
         );
         <span class="prelude-val">Ok</span>(())
     }
@@ -459,7 +461,7 @@
         Url::parse(<span class="self">self</span>.url())<span class="question-mark">?</span>;
         <span class="self">self</span>.mime_type().parse::&lt;Mime&gt;()<span class="question-mark">?</span>;
         <span class="kw">let </span>length = <span class="self">self</span>.length().parse::&lt;i64&gt;()<span class="question-mark">?</span>;
-        <span class="macro">validate!</span>(length &gt; <span class="number">0</span>, <span class="string">&quot;Enclosure length is not greater than 0&quot;</span>);
+        <span class="macro">validate!</span>(length &gt; <span class="number">0</span>, <span class="string">"Enclosure length is not greater than 0"</span>);
         <span class="prelude-val">Ok</span>(())
     }
 }
@@ -480,7 +482,7 @@
             <span class="kw">let </span>width = width.parse::&lt;i64&gt;()<span class="question-mark">?</span>;
             <span class="macro">validate!</span>(
                 (<span class="number">0</span>..=<span class="number">144</span>).contains(<span class="kw-2">&amp;</span>width),
-                <span class="string">&quot;Image width is not between 0 and 144&quot;
+                <span class="string">"Image width is not between 0 and 144"
             </span>);
         }
 
@@ -488,7 +490,7 @@
             <span class="kw">let </span>height = height.parse::&lt;i64&gt;()<span class="question-mark">?</span>;
             <span class="macro">validate!</span>(
                 (<span class="number">0</span>..=<span class="number">144</span>).contains(<span class="kw-2">&amp;</span>height),
-                <span class="string">&quot;Image height is not between 0 and 144&quot;
+                <span class="string">"Image height is not between 0 and 144"
             </span>);
         }
 

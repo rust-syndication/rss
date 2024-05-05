@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/image.rs`."><title>image.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/image.rs`."><title>image.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../rss/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -327,15 +329,15 @@
 <span class="kw">use </span><span class="kw">crate</span>::util::{decode, element_text, skip};
 
 <span class="doccomment">/// Represents an image in an RSS feed.
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>Image {
@@ -362,8 +364,8 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_url(&quot;http://example.com/image.png&quot;);
-    /// assert_eq!(image.url(), &quot;http://example.com/image.png&quot;);
+    /// image.set_url("http://example.com/image.png");
+    /// assert_eq!(image.url(), "http://example.com/image.png");
     /// ```
     </span><span class="kw">pub fn </span>url(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.url.as_str()
@@ -377,7 +379,7 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_url(&quot;http://example.com/image.png&quot;);
+    /// image.set_url("http://example.com/image.png");
     /// ```
     </span><span class="kw">pub fn </span>set_url&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, url: V)
     <span class="kw">where
@@ -396,8 +398,8 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_title(&quot;Example image&quot;);
-    /// assert_eq!(image.title(), &quot;Example image&quot;);
+    /// image.set_title("Example image");
+    /// assert_eq!(image.title(), "Example image");
     /// ```
     </span><span class="kw">pub fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.title.as_str()
@@ -413,7 +415,7 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_title(&quot;Example image&quot;);
+    /// image.set_title("Example image");
     /// ```
     </span><span class="kw">pub fn </span>set_title&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: V)
     <span class="kw">where
@@ -430,8 +432,8 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_link(&quot;http://example.com&quot;);
-    /// assert_eq!(image.link(), &quot;http://example.com&quot;);
+    /// image.set_link("http://example.com");
+    /// assert_eq!(image.link(), "http://example.com");
     </span><span class="kw">pub fn </span>link(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.link.as_str()
     }
@@ -444,7 +446,7 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_link(&quot;http://example.com&quot;);
+    /// image.set_link("http://example.com");
     </span><span class="kw">pub fn </span>set_link&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, link: V)
     <span class="kw">where
         </span>V: Into&lt;String&gt;,
@@ -462,8 +464,8 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_width(&quot;80&quot;.to_string());
-    /// assert_eq!(image.width(), Some(&quot;80&quot;));
+    /// image.set_width("80".to_string());
+    /// assert_eq!(image.width(), Some("80"));
     </span><span class="kw">pub fn </span>width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.width.as_deref()
     }
@@ -476,7 +478,7 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_width(&quot;80&quot;.to_string());
+    /// image.set_width("80".to_string());
     </span><span class="kw">pub fn </span>set_width&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, width: V)
     <span class="kw">where
         </span>V: Into&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt;,
@@ -494,8 +496,8 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_height(&quot;31&quot;.to_string());
-    /// assert_eq!(image.height(), Some(&quot;31&quot;));
+    /// image.set_height("31".to_string());
+    /// assert_eq!(image.height(), Some("31"));
     /// ```
     </span><span class="kw">pub fn </span>height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.height.as_deref()
@@ -511,7 +513,7 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_height(&quot;31&quot;.to_string());
+    /// image.set_height("31".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_height&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, height: V)
     <span class="kw">where
@@ -528,8 +530,8 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_description(&quot;Example Title&quot;.to_string());
-    /// assert_eq!(image.description(), Some(&quot;Example Title&quot;));
+    /// image.set_description("Example Title".to_string());
+    /// assert_eq!(image.description(), Some("Example Title"));
     /// ```
     </span><span class="kw">pub fn </span>description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.description.as_deref()
@@ -543,7 +545,7 @@
     /// use rss::Image;
     ///
     /// let mut image = Image::default();
-    /// image.set_description(&quot;Example Title&quot;.to_string());
+    /// image.set_description("Example Title".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_description&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, description: V)
     <span class="kw">where
@@ -562,12 +564,12 @@
         <span class="kw">loop </span>{
             <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf)<span class="question-mark">? </span>{
                 Event::Start(element) =&gt; <span class="kw">match </span>decode(element.name().as_ref(), reader)<span class="question-mark">?</span>.as_ref() {
-                    <span class="string">&quot;url&quot; </span>=&gt; image.url = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
-                    <span class="string">&quot;title&quot; </span>=&gt; image.title = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
-                    <span class="string">&quot;link&quot; </span>=&gt; image.link = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
-                    <span class="string">&quot;width&quot; </span>=&gt; image.width = element_text(reader)<span class="question-mark">?</span>,
-                    <span class="string">&quot;height&quot; </span>=&gt; image.height = element_text(reader)<span class="question-mark">?</span>,
-                    <span class="string">&quot;description&quot; </span>=&gt; image.description = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"url" </span>=&gt; image.url = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
+                    <span class="string">"title" </span>=&gt; image.title = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
+                    <span class="string">"link" </span>=&gt; image.link = element_text(reader)<span class="question-mark">?</span>.unwrap_or_default(),
+                    <span class="string">"width" </span>=&gt; image.width = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"height" </span>=&gt; image.height = element_text(reader)<span class="question-mark">?</span>,
+                    <span class="string">"description" </span>=&gt; image.description = element_text(reader)<span class="question-mark">?</span>,
                     <span class="kw">_ </span>=&gt; skip(element.name(), reader)<span class="question-mark">?</span>,
                 },
                 Event::End(<span class="kw">_</span>) =&gt; <span class="kw">break</span>,
@@ -584,24 +586,24 @@
 
 <span class="kw">impl </span>ToXml <span class="kw">for </span>Image {
     <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
-        <span class="kw">let </span>name = <span class="string">&quot;image&quot;</span>;
+        <span class="kw">let </span>name = <span class="string">"image"</span>;
 
         writer.write_event(Event::Start(BytesStart::new(name)))<span class="question-mark">?</span>;
 
-        writer.write_text_element(<span class="string">&quot;url&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.url)<span class="question-mark">?</span>;
-        writer.write_text_element(<span class="string">&quot;title&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.title)<span class="question-mark">?</span>;
-        writer.write_text_element(<span class="string">&quot;link&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.link)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">"url"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.url)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">"title"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.title)<span class="question-mark">?</span>;
+        writer.write_text_element(<span class="string">"link"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.link)<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(width) = <span class="self">self</span>.width.as_ref() {
-            writer.write_text_element(<span class="string">&quot;width&quot;</span>, width)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"width"</span>, width)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(height) = <span class="self">self</span>.height.as_ref() {
-            writer.write_text_element(<span class="string">&quot;height&quot;</span>, height)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"height"</span>, height)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(description) = <span class="self">self</span>.description.as_ref() {
-            writer.write_text_element(<span class="string">&quot;description&quot;</span>, description)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"description"</span>, description)<span class="question-mark">?</span>;
         }
 
         writer.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
@@ -609,7 +611,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>ImageBuilder {
     <span class="doccomment">/// Builds a new `Image`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Image {

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/dublincore.rs`."><title>dublincore.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/dublincore.rs`."><title>dublincore.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../rss/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -438,66 +440,66 @@
 <span class="kw">use </span><span class="kw">crate</span>::toxml::{ToXml, WriterExt};
 
 <span class="doccomment">/// The Dublin Core XML namespace.
-</span><span class="kw">pub const </span>NAMESPACE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;http://purl.org/dc/elements/1.1/&quot;</span>;
+</span><span class="kw">pub const </span>NAMESPACE: <span class="kw-2">&amp;</span>str = <span class="string">"http://purl.org/dc/elements/1.1/"</span>;
 
 <span class="doccomment">/// A Dublin Core element extension.
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>DublinCoreExtension {
     <span class="doccomment">/// An entity responsible for making contributions to the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;contributor&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"contributor"</span>)))]
     </span><span class="kw">pub </span>contributors: Vec&lt;String&gt;,
     <span class="doccomment">/// The spatial or temporal topic of the resource, the spatial applicability of the resource,
     /// or the jurisdiction under which the resource is relevant.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;coverage&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"coverage"</span>)))]
     </span><span class="kw">pub </span>coverages: Vec&lt;String&gt;,
     <span class="doccomment">/// An entity primarily responsible for making the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;creator&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"creator"</span>)))]
     </span><span class="kw">pub </span>creators: Vec&lt;String&gt;,
     <span class="doccomment">/// A point or period of time associated with an event in the lifecycle of the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;date&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"date"</span>)))]
     </span><span class="kw">pub </span>dates: Vec&lt;String&gt;,
     <span class="doccomment">/// An account of the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;description&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"description"</span>)))]
     </span><span class="kw">pub </span>descriptions: Vec&lt;String&gt;,
     <span class="doccomment">/// The file format, physical medium, or dimensions of the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;format&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"format"</span>)))]
     </span><span class="kw">pub </span>formats: Vec&lt;String&gt;,
     <span class="doccomment">/// An unambiguous reference to the resource within a given context.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;identifier&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"identifier"</span>)))]
     </span><span class="kw">pub </span>identifiers: Vec&lt;String&gt;,
     <span class="doccomment">/// A language of the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;language&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"language"</span>)))]
     </span><span class="kw">pub </span>languages: Vec&lt;String&gt;,
     <span class="doccomment">/// An entity responsible for making the resource available.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;publisher&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"publisher"</span>)))]
     </span><span class="kw">pub </span>publishers: Vec&lt;String&gt;,
     <span class="doccomment">/// A related resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;relation&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"relation"</span>)))]
     </span><span class="kw">pub </span>relations: Vec&lt;String&gt;,
     <span class="doccomment">/// Information about rights held in and over the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;right&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"right"</span>)))]
     </span><span class="kw">pub </span>rights: Vec&lt;String&gt;,
     <span class="doccomment">/// A related resource from which the described resource is derived.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;source&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"source"</span>)))]
     </span><span class="kw">pub </span>sources: Vec&lt;String&gt;,
     <span class="doccomment">/// The topic of the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;subject&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"subject"</span>)))]
     </span><span class="kw">pub </span>subjects: Vec&lt;String&gt;,
     <span class="doccomment">/// A name given to the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;title&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"title"</span>)))]
     </span><span class="kw">pub </span>titles: Vec&lt;String&gt;,
     <span class="doccomment">/// The nature or genre of the resource.
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, builder(setter(each = <span class="string">&quot;r#type&quot;</span>)))]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"builders"</span>, builder(setter(each = <span class="string">"r#type"</span>)))]
     </span><span class="kw">pub </span>types: Vec&lt;String&gt;,
 }
 
@@ -784,21 +786,21 @@
         <span class="kw">let </span><span class="kw-2">mut </span>ext = DublinCoreExtension::default();
         <span class="kw">for </span>(key, v) <span class="kw">in </span>map {
             <span class="kw">match </span>key.as_str() {
-                <span class="string">&quot;contributor&quot; </span>=&gt; ext.contributors = get_extension_values(v),
-                <span class="string">&quot;coverage&quot; </span>=&gt; ext.coverages = get_extension_values(v),
-                <span class="string">&quot;creator&quot; </span>=&gt; ext.creators = get_extension_values(v),
-                <span class="string">&quot;date&quot; </span>=&gt; ext.dates = get_extension_values(v),
-                <span class="string">&quot;description&quot; </span>=&gt; ext.descriptions = get_extension_values(v),
-                <span class="string">&quot;format&quot; </span>=&gt; ext.formats = get_extension_values(v),
-                <span class="string">&quot;identifier&quot; </span>=&gt; ext.identifiers = get_extension_values(v),
-                <span class="string">&quot;language&quot; </span>=&gt; ext.languages = get_extension_values(v),
-                <span class="string">&quot;publisher&quot; </span>=&gt; ext.publishers = get_extension_values(v),
-                <span class="string">&quot;relation&quot; </span>=&gt; ext.relations = get_extension_values(v),
-                <span class="string">&quot;rights&quot; </span>=&gt; ext.rights = get_extension_values(v),
-                <span class="string">&quot;source&quot; </span>=&gt; ext.sources = get_extension_values(v),
-                <span class="string">&quot;subject&quot; </span>=&gt; ext.subjects = get_extension_values(v),
-                <span class="string">&quot;title&quot; </span>=&gt; ext.titles = get_extension_values(v),
-                <span class="string">&quot;type&quot; </span>=&gt; ext.types = get_extension_values(v),
+                <span class="string">"contributor" </span>=&gt; ext.contributors = get_extension_values(v),
+                <span class="string">"coverage" </span>=&gt; ext.coverages = get_extension_values(v),
+                <span class="string">"creator" </span>=&gt; ext.creators = get_extension_values(v),
+                <span class="string">"date" </span>=&gt; ext.dates = get_extension_values(v),
+                <span class="string">"description" </span>=&gt; ext.descriptions = get_extension_values(v),
+                <span class="string">"format" </span>=&gt; ext.formats = get_extension_values(v),
+                <span class="string">"identifier" </span>=&gt; ext.identifiers = get_extension_values(v),
+                <span class="string">"language" </span>=&gt; ext.languages = get_extension_values(v),
+                <span class="string">"publisher" </span>=&gt; ext.publishers = get_extension_values(v),
+                <span class="string">"relation" </span>=&gt; ext.relations = get_extension_values(v),
+                <span class="string">"rights" </span>=&gt; ext.rights = get_extension_values(v),
+                <span class="string">"source" </span>=&gt; ext.sources = get_extension_values(v),
+                <span class="string">"subject" </span>=&gt; ext.subjects = get_extension_values(v),
+                <span class="string">"title" </span>=&gt; ext.titles = get_extension_values(v),
+                <span class="string">"type" </span>=&gt; ext.types = get_extension_values(v),
                 <span class="kw">_ </span>=&gt; {}
             }
         }
@@ -808,32 +810,32 @@
 
 <span class="kw">impl </span>ToXml <span class="kw">for </span>DublinCoreExtension {
     <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
-        writer.write_text_elements(<span class="string">&quot;dc:contributor&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.contributors)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:coverage&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.coverages)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:creator&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.creators)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:date&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.dates)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:description&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.descriptions)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:format&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.formats)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:identifier&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.identifiers)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:language&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.languages)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:publisher&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.publishers)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:relation&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.relations)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:rights&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.rights)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:source&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.sources)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:subject&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.subjects)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:title&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.titles)<span class="question-mark">?</span>;
-        writer.write_text_elements(<span class="string">&quot;dc:type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.types)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:contributor"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.contributors)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:coverage"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.coverages)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:creator"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.creators)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:date"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.dates)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:description"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.descriptions)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:format"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.formats)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:identifier"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.identifiers)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:language"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.languages)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:publisher"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.publishers)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:relation"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.relations)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:rights"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.rights)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:source"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.sources)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:subject"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.subjects)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:title"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.titles)<span class="question-mark">?</span>;
+        writer.write_text_elements(<span class="string">"dc:type"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.types)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">fn </span>used_namespaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BTreeMap&lt;String, String&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>namespaces = BTreeMap::new();
-        namespaces.insert(<span class="string">&quot;dc&quot;</span>.to_owned(), NAMESPACE.to_owned());
+        namespaces.insert(<span class="string">"dc"</span>.to_owned(), NAMESPACE.to_owned());
         namespaces
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>DublinCoreExtensionBuilder {
     <span class="doccomment">/// Builds a new `DublinCoreExtension`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; DublinCoreExtension {

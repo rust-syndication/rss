@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/content.rs`."><title>content.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/content.rs`."><title>content.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../atom_syndication/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -366,15 +368,15 @@
 <span class="kw">use </span><span class="kw">crate</span>::util::{atom_text, atom_xhtml, attr_value, decode};
 
 <span class="doccomment">/// Represents the content of an Atom entry
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Deserialize, Serialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Deserialize, Serialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>Content {
@@ -386,7 +388,7 @@
     </span><span class="kw">pub </span>value: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="doccomment">/// The URI of where the content can be found.
     </span><span class="kw">pub </span>src: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="doccomment">/// Either &quot;text&quot;, &quot;html&quot;, &quot;xhtml&quot;, or the MIME type of the content.
+    <span class="doccomment">/// Either "text", "html", "xhtml", or the MIME type of the content.
     </span><span class="kw">pub </span>content_type: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
@@ -419,7 +421,7 @@
 
     <span class="doccomment">/// Return the text value of the content.
     ///
-    /// If the `content_type` is neither `&quot;text&quot;`, `&quot;html&quot;`, or `&quot;xhtml&quot;` then the value should
+    /// If the `content_type` is neither `"text"`, `"html"`, or `"xhtml"` then the value should
     /// be a base64 encoded document of the indicated MIME type.
     ///
     /// # Examples
@@ -428,8 +430,8 @@
     /// use atom_syndication::Content;
     ///
     /// let mut content = Content::default();
-    /// content.set_value(&quot;Example content&quot;.to_string());
-    /// assert_eq!(content.value(), Some(&quot;Example content&quot;));
+    /// content.set_value("Example content".to_string());
+    /// assert_eq!(content.value(), Some("Example content"));
     /// ```
     </span><span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.value.as_deref()
@@ -443,7 +445,7 @@
     /// use atom_syndication::Content;
     ///
     /// let mut content = Content::default();
-    /// content.set_value(&quot;Example content&quot;.to_string());
+    /// content.set_value("Example content".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_value&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: V)
     <span class="kw">where
@@ -460,8 +462,8 @@
     /// use atom_syndication::Content;
     ///
     /// let mut content = Content::default();
-    /// content.set_src(&quot;http://example.com/content.html&quot;.to_string());
-    /// assert_eq!(content.src(), Some(&quot;http://example.com/content.html&quot;));
+    /// content.set_src("http://example.com/content.html".to_string());
+    /// assert_eq!(content.src(), Some("http://example.com/content.html"));
     /// ```
     </span><span class="kw">pub fn </span>src(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.src.as_deref()
@@ -475,7 +477,7 @@
     /// use atom_syndication::Content;
     ///
     /// let mut content = Content::default();
-    /// content.set_src(&quot;http://example.com/content.html&quot;.to_string());
+    /// content.set_src("http://example.com/content.html".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_src&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, src: V)
     <span class="kw">where
@@ -486,7 +488,7 @@
 
     <span class="doccomment">/// Return the type of the content.
     ///
-    /// The type is either `&quot;text&quot;`, `&quot;html&quot;`, `&quot;xhtml&quot;`, or the MIME type of the content.
+    /// The type is either `"text"`, `"html"`, `"xhtml"`, or the MIME type of the content.
     ///
     /// # Examples
     ///
@@ -494,8 +496,8 @@
     /// use atom_syndication::Content;
     ///
     /// let mut content = Content::default();
-    /// content.set_content_type(&quot;image/png&quot;.to_string());
-    /// assert_eq!(content.content_type(), Some(&quot;image/png&quot;));
+    /// content.set_content_type("image/png".to_string());
+    /// assert_eq!(content.content_type(), Some("image/png"));
     /// ```
     </span><span class="kw">pub fn </span>content_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.content_type.as_deref()
@@ -509,8 +511,8 @@
     /// use atom_syndication::Content;
     ///
     /// let mut content = Content::default();
-    /// content.set_content_type(&quot;image/png&quot;.to_string());
-    /// assert_eq!(content.content_type(), Some(&quot;image/png&quot;));
+    /// content.set_content_type("image/png".to_string());
+    /// assert_eq!(content.content_type(), Some("image/png"));
     /// ```
     </span><span class="kw">pub fn </span>set_content_type&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, content_type: V)
     <span class="kw">where
@@ -523,22 +525,22 @@
 <span class="kw">impl </span>FromXml <span class="kw">for </span>Content {
     <span class="kw">fn </span>from_xml&lt;B: BufRead&gt;(
         reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;,
-        <span class="kw-2">mut </span>atts: Attributes&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="kw-2">mut </span>atts: Attributes&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>content = Content::default();
 
         <span class="kw">for </span>att <span class="kw">in </span>atts.with_checks(<span class="bool-val">false</span>).flatten() {
             <span class="kw">match </span>decode(att.key.as_ref(), reader)<span class="question-mark">? </span>{
-                Cow::Borrowed(<span class="string">&quot;xml:base&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"xml:base"</span>) =&gt; {
                     content.base = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
                 }
-                Cow::Borrowed(<span class="string">&quot;xml:lang&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"xml:lang"</span>) =&gt; {
                     content.lang = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
                 }
-                Cow::Borrowed(<span class="string">&quot;type&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"type"</span>) =&gt; {
                     content.content_type = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
                 }
-                Cow::Borrowed(<span class="string">&quot;src&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"src"</span>) =&gt; {
                     content.src = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string());
                 }
                 <span class="kw">_ </span>=&gt; {}
@@ -546,7 +548,7 @@
         }
 
         content.value = <span class="kw">match </span>content.content_type {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>t) <span class="kw">if </span>t == <span class="string">&quot;xhtml&quot; </span>=&gt; atom_xhtml(reader)<span class="question-mark">?</span>,
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>t) <span class="kw">if </span>t == <span class="string">"xhtml" </span>=&gt; atom_xhtml(reader)<span class="question-mark">?</span>,
             <span class="kw">_ </span>=&gt; atom_text(reader)<span class="question-mark">?</span>,
         };
 
@@ -556,27 +558,27 @@
 
 <span class="kw">impl </span>ToXml <span class="kw">for </span>Content {
     <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
-        <span class="kw">let </span>name = <span class="string">&quot;content&quot;</span>;
+        <span class="kw">let </span>name = <span class="string">"content"</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>element = BytesStart::new(name);
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>base) = <span class="self">self</span>.base {
-            element.push_attribute((<span class="string">&quot;xml:base&quot;</span>, base.as_str()));
+            element.push_attribute((<span class="string">"xml:base"</span>, base.as_str()));
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>lang) = <span class="self">self</span>.lang {
-            element.push_attribute((<span class="string">&quot;xml:lang&quot;</span>, lang.as_str()));
+            element.push_attribute((<span class="string">"xml:lang"</span>, lang.as_str()));
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>content_type) = <span class="self">self</span>.content_type {
-            <span class="kw">if </span>content_type == <span class="string">&quot;xhtml&quot; </span>{
-                element.push_attribute((<span class="string">&quot;type&quot;</span>, <span class="string">&quot;xhtml&quot;</span>));
+            <span class="kw">if </span>content_type == <span class="string">"xhtml" </span>{
+                element.push_attribute((<span class="string">"type"</span>, <span class="string">"xhtml"</span>));
             } <span class="kw">else </span>{
-                element.push_attribute((<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;**</span>content_type));
+                element.push_attribute((<span class="string">"type"</span>, <span class="kw-2">&amp;**</span>content_type));
             }
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>src) = <span class="self">self</span>.src {
-            element.push_attribute((<span class="string">&quot;src&quot;</span>, <span class="kw-2">&amp;**</span>src));
+            element.push_attribute((<span class="string">"src"</span>, <span class="kw-2">&amp;**</span>src));
         }
 
         writer
@@ -586,7 +588,7 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>value) = <span class="self">self</span>.value {
             writer
                 .write_event(Event::Text(
-                    <span class="kw">if </span><span class="self">self</span>.content_type.as_deref() == <span class="prelude-val">Some</span>(<span class="string">&quot;xhtml&quot;</span>) {
+                    <span class="kw">if </span><span class="self">self</span>.content_type.as_deref() == <span class="prelude-val">Some</span>(<span class="string">"xhtml"</span>) {
                         BytesText::from_escaped(value)
                     } <span class="kw">else </span>{
                         BytesText::new(value)
@@ -603,7 +605,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>ContentBuilder {
     <span class="doccomment">/// Builds a new `Content`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Content {
@@ -626,7 +628,7 @@
 
     <span class="kw">fn </span>to_xml(content: <span class="kw-2">&amp;</span>Content) -&gt; String {
         <span class="kw">let </span><span class="kw-2">mut </span>buffer = Vec::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>writer = Writer::new_with_indent(<span class="kw-2">&amp;mut </span>buffer, <span class="string">b&#39; &#39;</span>, <span class="number">4</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>writer = Writer::new_with_indent(<span class="kw-2">&amp;mut </span>buffer, <span class="string">b' '</span>, <span class="number">4</span>);
         content.to_xml(<span class="kw-2">&amp;mut </span>writer).unwrap();
         String::from_utf8(buffer).unwrap()
     }
@@ -639,7 +641,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::new();
             <span class="kw">match </span>reader.read_event_into(<span class="kw-2">&amp;mut </span>buf).map_err(XmlError::new)<span class="question-mark">? </span>{
                 Event::Start(element) =&gt; {
-                    <span class="kw">if </span>decode(element.name().as_ref(), <span class="kw-2">&amp;</span>reader)<span class="question-mark">? </span>== <span class="string">&quot;content&quot; </span>{
+                    <span class="kw">if </span>decode(element.name().as_ref(), <span class="kw-2">&amp;</span>reader)<span class="question-mark">? </span>== <span class="string">"content" </span>{
                         <span class="kw">let </span>content = Content::from_xml(<span class="kw-2">&amp;mut </span>reader, element.attributes())<span class="question-mark">?</span>;
                         <span class="kw">return </span><span class="prelude-val">Ok</span>(content);
                     } <span class="kw">else </span>{
@@ -655,10 +657,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_plain_text() {
         <span class="kw">let </span>content = Content {
-            value: <span class="prelude-val">Some</span>(<span class="string">&quot;Text with ampersand &amp; &lt;tag&gt;.&quot;</span>.into()),
+            value: <span class="prelude-val">Some</span>(<span class="string">"Text with ampersand &amp; &lt;tag&gt;."</span>.into()),
             ..Default::default()
         };
-        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;content&gt;Text with ampersand &amp;amp; &amp;lt;tag&amp;gt;.&lt;/content&gt;&quot;#</span>;
+        <span class="kw">let </span>xml_fragment = <span class="string">r#"&lt;content&gt;Text with ampersand &amp;amp; &amp;lt;tag&amp;gt;.&lt;/content&gt;"#</span>;
         <span class="macro">assert_eq!</span>(to_xml(<span class="kw-2">&amp;</span>content), xml_fragment);
         <span class="macro">assert_eq!</span>(from_xml(xml_fragment).unwrap(), content);
     }
@@ -666,11 +668,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_html() {
         <span class="kw">let </span>content = Content {
-            content_type: <span class="prelude-val">Some</span>(<span class="string">&quot;html&quot;</span>.into()),
-            value: <span class="prelude-val">Some</span>(<span class="string">&quot;Markup with ampersand, &lt;tag&gt;, &amp; &lt;/closing-tag&gt;.&quot;</span>.into()),
+            content_type: <span class="prelude-val">Some</span>(<span class="string">"html"</span>.into()),
+            value: <span class="prelude-val">Some</span>(<span class="string">"Markup with ampersand, &lt;tag&gt;, &amp; &lt;/closing-tag&gt;."</span>.into()),
             ..Default::default()
         };
-        <span class="kw">let </span>xml_fragment = <span class="string">r#&quot;&lt;content type=&quot;html&quot;&gt;Markup with ampersand, &amp;lt;tag&amp;gt;, &amp;amp; &amp;lt;/closing-tag&amp;gt;.&lt;/content&gt;&quot;#</span>;
+        <span class="kw">let </span>xml_fragment = <span class="string">r#"&lt;content type="html"&gt;Markup with ampersand, &amp;lt;tag&amp;gt;, &amp;amp; &amp;lt;/closing-tag&amp;gt;.&lt;/content&gt;"#</span>;
         <span class="macro">assert_eq!</span>(to_xml(<span class="kw-2">&amp;</span>content), xml_fragment);
         <span class="macro">assert_eq!</span>(from_xml(xml_fragment).unwrap(), content);
     }
@@ -678,12 +680,12 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_xhtml() {
         <span class="kw">let </span>content = Content {
-            content_type: <span class="prelude-val">Some</span>(<span class="string">&quot;xhtml&quot;</span>.into()),
-            value: <span class="prelude-val">Some</span>(<span class="string">r#&quot;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&quot;#</span>.into()),
+            content_type: <span class="prelude-val">Some</span>(<span class="string">"xhtml"</span>.into()),
+            value: <span class="prelude-val">Some</span>(<span class="string">r#"&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;"#</span>.into()),
             ..Default::default()
         };
         <span class="kw">let </span>xml_fragment =
-            <span class="string">r#&quot;&lt;content type=&quot;xhtml&quot;&gt;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&lt;/content&gt;&quot;#</span>;
+            <span class="string">r#"&lt;content type="xhtml"&gt;&lt;div&gt;a line&lt;br/&gt;&amp;amp; one more&lt;/div&gt;&lt;/content&gt;"#</span>;
         <span class="macro">assert_eq!</span>(to_xml(<span class="kw-2">&amp;</span>content), xml_fragment);
         <span class="macro">assert_eq!</span>(from_xml(xml_fragment).unwrap(), content);
     }
@@ -691,17 +693,17 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_write_image() {
         <span class="kw">let </span>content = Content {
-            content_type: <span class="prelude-val">Some</span>(<span class="string">&quot;image/png&quot;</span>.into()),
-            src: <span class="prelude-val">Some</span>(<span class="string">&quot;http://example.com/image.png&quot;</span>.into()),
+            content_type: <span class="prelude-val">Some</span>(<span class="string">"image/png"</span>.into()),
+            src: <span class="prelude-val">Some</span>(<span class="string">"http://example.com/image.png"</span>.into()),
             ..Default::default()
         };
         <span class="macro">assert_eq!</span>(
             lines(<span class="kw-2">&amp;</span>to_xml(<span class="kw-2">&amp;</span>content)),
             lines(
-                <span class="string">r#&quot;
-                    &lt;content type=&quot;image/png&quot; src=&quot;http://example.com/image.png&quot;&gt;
+                <span class="string">r#"
+                    &lt;content type="image/png" src="http://example.com/image.png"&gt;
                     &lt;/content&gt;
-                &quot;#
+                "#
             </span>)
         );
     }

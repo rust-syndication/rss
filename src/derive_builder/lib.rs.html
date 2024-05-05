@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_builder-0.12.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="derive_builder" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/derive_builder-0.20.0/src/lib.rs`."><title>lib.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="derive_builder" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../derive_builder/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -791,7 +793,7 @@
 //!         Ok(Lorem {
 //!             ipsum: Clone::clone(self.ipsum
 //!                 .as_ref()
-//!                 .ok_or(LoremBuilderError::from(UninitializedFieldError::new(&quot;ipsum&quot;)))?),
+//!                 .ok_or(LoremBuilderError::from(UninitializedFieldError::new("ipsum")))?),
 //!         })
 //!     }
 //! }
@@ -805,12 +807,12 @@
 //!
 //! The build method returns `Result&lt;T, E&gt;`, where `T` is the struct you started with
 //! and E is a generated builder error type.
-//! It returns `Err` if you didn&#39;t initialize all fields and no default values were
+//! It returns `Err` if you didn't initialize all fields and no default values were
 //! provided.
 //!
 //! # Builder Patterns
 //!
-//! Let&#39;s look again at the example above. You can now build structs like this:
+//! Let's look again at the example above. You can now build structs like this:
 //!
 //! ```rust
 //! # #[macro_use] extern crate derive_builder;
@@ -823,7 +825,7 @@
 //!
 //! Ok, _chaining_ method calls is nice, but what if `ipsum(42)` should only happen if `geek = true`?
 //!
-//! So let&#39;s make this call conditional
+//! So let's make this call conditional
 //!
 //! ```rust
 //! # #[macro_use] extern crate derive_builder;
@@ -850,19 +852,19 @@
 //!
 //! ## Owned, aka Consuming
 //!
-//! Precede your struct (or field) with `#[builder(pattern = &quot;owned&quot;)]` to opt into this pattern.
+//! Precede your struct (or field) with `#[builder(pattern = "owned")]` to opt into this pattern.
 //! Builders generated with this pattern do not automatically derive `Clone`, which allows builders
 //! to be generated for structs with fields that do not derive `Clone`.
 //!
 //! * Setters take and return `self`.
 //! * PRO: Setter calls and final build method can be chained.
-//! * CON: If you don&#39;t chain your calls, you have to create a reference to each return value,
+//! * CON: If you don't chain your calls, you have to create a reference to each return value,
 //!   e.g. `builder = builder.ipsum(42)`.
 //!
 //! ## Mutable, aka Non-Consuming (recommended)
 //!
-//! This pattern is recommended and active by default if you don&#39;t specify anything else.
-//! You can precede your struct (or field) with `#[builder(pattern = &quot;mutable&quot;)]`
+//! This pattern is recommended and active by default if you don't specify anything else.
+//! You can precede your struct (or field) with `#[builder(pattern = "mutable")]`
 //! to make this choice explicit.
 //!
 //! * Setters take and return `&amp;mut self`.
@@ -872,11 +874,11 @@
 //!
 //! ## Immutable
 //!
-//! Precede your struct (or field) with `#[builder(pattern = &quot;immutable&quot;)]` to opt into this pattern.
+//! Precede your struct (or field) with `#[builder(pattern = "immutable")]` to opt into this pattern.
 //!
 //! * Setters take and return `&amp;self`.
 //! * PRO: Setter calls and final build method can be chained.
-//! * CON: If you don&#39;t chain your calls, you have to create a reference to each return value,
+//! * CON: If you don't chain your calls, you have to create a reference to each return value,
 //!   e.g. `builder = builder.ipsum(42)`.
 //! * CON: The build method _and each setter_ must clone or copy data to create something owned
 //!   out of a reference. **(*)**
@@ -964,7 +966,7 @@
 //! # extern crate derive_builder;
 //! #
 //! #[derive(Builder)]
-//! #[builder(name = &quot;FooConstructor&quot;)]
+//! #[builder(name = "FooConstructor")]
 //! struct Foo { }
 //!
 //! # fn main() -&gt; Result&lt;(), FooConstructorError&gt; {
@@ -977,8 +979,8 @@
 //!
 //! Setter methods are named after their corresponding field by default.
 //!
-//! - You can customize the setter name via `#[builder(setter(name = &quot;foo&quot;))`.
-//! - Alternatively you can set a prefix via `#[builder(setter(prefix = &quot;xyz&quot;))`, which will change
+//! - You can customize the setter name via `#[builder(setter(name = "foo"))`.
+//! - Alternatively you can set a prefix via `#[builder(setter(prefix = "xyz"))`, which will change
 //!   the method name to `xyz_foo` if the field is named `foo`. Note that an underscore is
 //!   inserted, since Rust favors snake case here.
 //!
@@ -987,7 +989,7 @@
 //!
 //! ## Generic Setters
 //!
-//! You can make each setter generic over the `Into`-trait. It&#39;s as simple as adding
+//! You can make each setter generic over the `Into`-trait. It's as simple as adding
 //! `#[builder(setter(into))]` to either a field or the whole struct.
 //!
 //! ```rust
@@ -1001,19 +1003,19 @@
 //! }
 //!
 //! fn main() {
-//!     // `&quot;foo&quot;` will be converted into a `String` automatically.
-//!     let x = LoremBuilder::default().ipsum(&quot;foo&quot;).build().unwrap();
+//!     // `"foo"` will be converted into a `String` automatically.
+//!     let x = LoremBuilder::default().ipsum("foo").build().unwrap();
 //!
 //!     assert_eq!(x, Lorem {
-//!         ipsum: &quot;foo&quot;.to_string(),
+//!         ipsum: "foo".to_string(),
 //!     });
 //! }
 //! ```
 //!
 //! ## Setters for Option
 //!
-//! You can avoid to user to wrap value into `Some(...)` for field of type `Option&lt;T&gt;`. It&#39;s as simple as adding
-//! `#[builder(setter(strip_option))]` to either a field or the whole struct.
+//! You can avoid wrapping values in `Some(...)` for fields of type `Option&lt;T&gt;`. It's as simple as adding
+//! `#[builder(setter(strip_option))]` to either a single field or the whole struct.
 //!
 //! ```rust
 //! # #[macro_use]
@@ -1028,11 +1030,11 @@
 //! }
 //!
 //! fn main() {
-//!     // `&quot;foo&quot;` will be converted into a `String` automatically.
-//!     let x = LoremBuilder::default().ipsum(&quot;foo&quot;).build().unwrap();
+//!     // `"foo"` will be converted into a `String` automatically.
+//!     let x = LoremBuilder::default().ipsum("foo").build().unwrap();
 //!
 //!     assert_eq!(x, Lorem {
-//!         ipsum: Some(&quot;foo&quot;.to_string()),
+//!         ipsum: Some("foo".to_string()),
 //!         foo: None
 //!     });
 //! }
@@ -1049,7 +1051,7 @@
 //! `Into` with the key distinction that the conversion can fail, and therefore produces a
 //! `Result`.
 //!
-//! You can only declare the `try_setter` attribute today if you&#39;re targeting nightly, and you have
+//! You can only declare the `try_setter` attribute today if you're targeting nightly, and you have
 //! to add `#![feature(try_from)]` to your crate to use it.
 //!
 //! ```rust
@@ -1064,30 +1066,30 @@
 //!
 //! #[derive(Builder, Debug, PartialEq)]
 //! struct Ipsum {
-//!     #[builder(try_setter, setter(into, name = &quot;foo&quot;))]
+//!     #[builder(try_setter, setter(into, name = "foo"))]
 //!     pub dolor: u8,
 //! }
 //!
 //! fn main() {
 //!    LoremBuilder::default()
 //!        .try_ipsum(1u16).unwrap()
-//!        .name(&quot;hello&quot;)
+//!        .name("hello")
 //!        .build()
-//!        .expect(&quot;1 fits into a u8&quot;);
+//!        .expect("1 fits into a u8");
 //!
 //!    IpsumBuilder::default()
 //!        .try_foo(1u16).unwrap()
 //!        .build()
-//!        .expect(&quot;1 fits into a u8&quot;);
+//!        .expect("1 fits into a u8");
 //! }
 //! ```
 //!
 //! ## Default Values
 //!
-//! You can define default values for each field via annotation by `#[builder(default = &quot;...&quot;)]`,
+//! You can define default values for each field via annotation by `#[builder(default = "...")]`,
 //! where `...` stands for any Rust expression and must be string-escaped, e.g.
 //!
-//! * `#[builder(default = &quot;42&quot;)]`
+//! * `#[builder(default = "42")]`
 //! * `#[builder(default)]` delegates to the [`Default`] trait of the base type.
 //!
 //! The expression will be evaluated with each call to `build`.
@@ -1098,12 +1100,12 @@
 //! #
 //! #[derive(Builder, Debug, PartialEq)]
 //! struct Lorem {
-//!     #[builder(default = &quot;42&quot;)]
+//!     #[builder(default = "42")]
 //!     pub ipsum: u32,
 //! }
 //!
 //! fn main() {
-//!     // If we don&#39;t set the field `ipsum`,
+//!     // If we don't set the field `ipsum`,
 //!     let x = LoremBuilder::default().build().unwrap();
 //!
 //!     // .. the custom default will be used for `ipsum`:
@@ -1120,7 +1122,7 @@
 //! * Delegate to a private helper method on `FooBuilder` for anything fancy. This way
 //!   you will get _much better error diagnostics_ from the rust compiler and it will be _much
 //!   more readable_ for other human beings. :-)
-//! * Defaults will not work while using `#[builder(build_fn(skip))]`. In this case, you&#39;ll
+//! * Defaults will not work while using `#[builder(build_fn(skip))]`. In this case, you'll
 //!   need to handle default values yourself when converting from the builder, such as by
 //!   using `.unwrap_or()` and `.unwrap_or_else()`.
 //!
@@ -1135,7 +1137,7 @@
 //!     ipsum: String,
 //!     // Custom defaults can delegate to helper methods
 //!     // and pass errors to the enclosing `build()` method via `?`.
-//!     #[builder(default = &quot;self.default_dolor()?&quot;)]
+//!     #[builder(default = "self.default_dolor()?")]
 //!     dolor: String,
 //! }
 //!
@@ -1143,21 +1145,21 @@
 //!     // Private helper method with access to the builder struct.
 //!     fn default_dolor(&amp;self) -&gt; Result&lt;String, String&gt; {
 //!         match self.ipsum {
-//!             Some(ref x) if x.chars().count() &gt; 3 =&gt; Ok(format!(&quot;dolor {}&quot;, x)),
-//!             _ =&gt; Err(&quot;ipsum must at least 3 chars to build dolor&quot;.to_string()),
+//!             Some(ref x) if x.chars().count() &gt; 3 =&gt; Ok(format!("dolor {}", x)),
+//!             _ =&gt; Err("ipsum must at least 3 chars to build dolor".to_string()),
 //!         }
 //!     }
 //! }
 //!
 //! # fn main() {
 //! #     let x = LoremBuilder::default()
-//! #         .ipsum(&quot;ipsum&quot;.to_string())
+//! #         .ipsum("ipsum".to_string())
 //! #         .build()
 //! #         .unwrap();
 //! #
 //! #     assert_eq!(x, Lorem {
-//! #         ipsum: &quot;ipsum&quot;.to_string(),
-//! #         dolor: &quot;dolor ipsum&quot;.to_string(),
+//! #         ipsum: "ipsum".to_string(),
+//! #         dolor: "dolor ipsum".to_string(),
 //! #     });
 //! # }
 //! ```
@@ -1173,13 +1175,13 @@
 //! #
 //! #[derive(Builder, Debug, PartialEq, Default, Clone)]
 //! struct GenLorem&lt;T: Clone&gt; {
-//!     ipsum: &amp;&#39;static str,
+//!     ipsum: &amp;'static str,
 //!     dolor: T,
 //! }
 //!
 //! fn main() {
-//!     let x = GenLoremBuilder::default().ipsum(&quot;sit&quot;).dolor(42).build().unwrap();
-//!     assert_eq!(x, GenLorem { ipsum: &quot;sit&quot;.into(), dolor: 42 });
+//!     let x = GenLoremBuilder::default().ipsum("sit").dolor(42).build().unwrap();
+//!     assert_eq!(x, GenLorem { ipsum: "sit".into(), dolor: 42 });
 //! }
 //! ```
 //!
@@ -1187,12 +1189,12 @@
 //!
 //! You can rename or suppress the auto-generated build method, leaving you free to implement
 //! your own version. Suppression is done using `#[builder(build_fn(skip))]` at the struct level,
-//! and renaming is done with `#[builder(build_fn(name = &quot;YOUR_NAME&quot;))]`.
+//! and renaming is done with `#[builder(build_fn(name = "YOUR_NAME"))]`.
 //!
 //! ## Pre-Build Validation
 //!
-//! If you&#39;re using the provided `build` method, you can declare
-//! `#[builder(build_fn(validate = &quot;path::to::fn&quot;))]` to specify a validator function which gets
+//! If you're using the provided `build` method, you can declare
+//! `#[builder(build_fn(validate = "path::to::fn"))]` to specify a validator function which gets
 //! access to the builder before construction. The path does not need to be fully-qualified, and
 //! will consider `use` statements made at module level. It must be accessible from the scope
 //! where the target struct is declared.
@@ -1205,7 +1207,7 @@
 //! # extern crate derive_builder;
 //! #
 //! #[derive(Builder, Debug, PartialEq)]
-//! #[builder(build_fn(validate = &quot;Self::validate&quot;))]
+//! #[builder(build_fn(validate = "Self::validate"))]
 //! struct Lorem {
 //!     pub ipsum: u8,
 //! }
@@ -1215,8 +1217,8 @@
 //!     fn validate(&amp;self) -&gt; Result&lt;(), String&gt; {
 //!         if let Some(ref ipsum) = self.ipsum {
 //!             match *ipsum {
-//!                 i if i &lt; 20 =&gt; Err(&quot;Try harder&quot;.to_string()),
-//!                 i if i &gt; 100 =&gt; Err(&quot;You&#39;ll tire yourself out&quot;.to_string()),
+//!                 i if i &lt; 20 =&gt; Err("Try harder".to_string()),
+//!                 i if i &gt; 100 =&gt; Err("You'll tire yourself out".to_string()),
 //!                 _ =&gt; Ok(())
 //!             }
 //!         } else {
@@ -1226,11 +1228,11 @@
 //! }
 //!
 //! fn main() {
-//!     // If we&#39;re trying too hard...
+//!     // If we're trying too hard...
 //!     let x = LoremBuilder::default().ipsum(120).build().unwrap_err();
 //!
 //!     // .. the build will fail:
-//!     assert_eq!(&amp;x.to_string(), &quot;You&#39;ll tire yourself out&quot;);
+//!     assert_eq!(&amp;x.to_string(), "You'll tire yourself out");
 //! }
 //! ```
 //!
@@ -1280,11 +1282,11 @@
 //! struct Lorem {
 //!     /// `ipsum` may be any `String` (be creative).
 //!     ipsum: String,
-//!     #[doc = r&quot;`dolor` is the estimated amount of work.&quot;]
+//!     #[doc = r"`dolor` is the estimated amount of work."]
 //!     dolor: i32,
 //!     // `#[derive(Builder)]` understands conditional compilation via cfg-attributes,
-//!     // i.e. =&gt; &quot;no field = no setter&quot;.
-//!     #[cfg(target_os = &quot;macos&quot;)]
+//!     // i.e. =&gt; "no field = no setter".
+//!     #[cfg(target_os = "macos")]
 //!     #[allow(non_snake_case)]
 //!     Im_a_Mac: bool,
 //! }
@@ -1306,16 +1308,16 @@
 //! #
 //! #[derive(Builder)]
 //! #[builder(derive(serde::Serialize))]
-//! #[builder_struct_attr(serde(rename_all = &quot;camelCase&quot;))]
+//! #[builder_struct_attr(serde(rename_all = "camelCase"))]
 //! struct Lorem {
-//!     #[builder_field_attr(serde(rename=&quot;dolor&quot;))]
+//!     #[builder_field_attr(serde(rename="dolor"))]
 //!     ipsum: String,
 //! }
 //!
 //! # fn main() {
 //! let mut show = LoremBuilder::default();
-//! show.ipsum(&quot;sit&quot;.into());
-//! assert_eq!(serde_json::to_string(&amp;show).unwrap(), r#&quot;{&quot;dolor&quot;:&quot;sit&quot;}&quot;#);
+//! show.ipsum("sit".into());
+//! assert_eq!(serde_json::to_string(&amp;show).unwrap(), r#"{"dolor":"sit"}"#);
 //! # }
 //! ```
 //!
@@ -1328,12 +1330,12 @@
 //! # use derive_builder::UninitializedFieldError;
 //! # use std::fmt::{self, Display};
 //! #
-//! #[doc=&quot;Error type for LoremBuilder&quot;]
+//! #[doc="Error type for LoremBuilder"]
 //! #[derive(Debug)]
 //! #[non_exhaustive]
 //! pub enum LoremBuilderError { // where `LoremBuilder` is the name of the builder struct
 //!     /// Uninitialized field
-//!     UninitializedField(&amp;&#39;static str),
+//!     UninitializedField(&amp;'static str),
 //!     /// Custom validation error
 //!     ValidationError(String),
 //! }
@@ -1355,7 +1357,7 @@
 //! # use derive_builder::UninitializedFieldError;
 //! #
 //! #[derive(Builder, Debug, PartialEq)]
-//! #[builder(build_fn(error = &quot;OurLoremError&quot;))]
+//! #[builder(build_fn(error = "OurLoremError"))]
 //! struct Lorem {
 //!     pub ipsum: u32,
 //! }
@@ -1368,7 +1370,7 @@
 //!
 //! # fn main() {
 //! let err: OurLoremError = LoremBuilder::default().build().unwrap_err();
-//! assert_eq!(&amp;err.0, &quot;Field not initialized: ipsum&quot;);
+//! assert_eq!(&amp;err.0, "Field not initialized: ipsum");
 //! # }
 //! ```
 //!
@@ -1382,13 +1384,13 @@
 //! #[derive(Debug, PartialEq, Default, Builder, Clone)]
 //! #[builder(derive(Debug, PartialEq))]
 //! struct Lorem {
-//!     #[builder(setter(into), field(type = &quot;u32&quot;))]
+//!     #[builder(setter(into), field(ty = "u32"))]
 //!     ipsum: u32,
 //!
-//!     #[builder(field(type = &quot;String&quot;, build = &quot;()&quot;))]
+//!     #[builder(field(ty = "String", build = "()"))]
 //!     dolor: (),
 //!
-//!     #[builder(field(type = &quot;&amp;&#39;static str&quot;, build = &quot;self.amet.parse()?&quot;))]
+//!     #[builder(field(ty = "&amp;'static str", build = "self.amet.parse()?"))]
 //!     amet: u32,
 //! }
 //!
@@ -1400,14 +1402,14 @@
 //!
 //! # fn main() {
 //! let mut builder = LoremBuilder::default();
-//! builder.ipsum(42u16).dolor(&quot;sit&quot;.into()).amet(&quot;12&quot;);
-//! assert_eq!(builder, LoremBuilder { ipsum: 42, dolor: &quot;sit&quot;.into(), amet: &quot;12&quot; });
+//! builder.ipsum(42u16).dolor("sit".into()).amet("12");
+//! assert_eq!(builder, LoremBuilder { ipsum: 42, dolor: "sit".into(), amet: "12" });
 //! let lorem = builder.build().unwrap();
 //! assert_eq!(lorem, Lorem { ipsum: 42, dolor: (), amet: 12 });
 //! # }
 //! ```
 //!
-//! The builder field type (`type =`) must implement `Default`.
+//! The builder field type (`ty =`) must implement `Default`.
 //!
 //! The argument to `build` must be a literal string containing Rust code for the contents of a block, which must evaluate to the type of the target field.
 //! It may refer to the builder struct as `self`, use `?`, etc.
@@ -1425,7 +1427,7 @@
 //!
 //! - Tuple structs and unit structs are not supported as they have no field
 //!   names.
-//! - Generic setters introduce a type parameter `VALUE: Into&lt;_&gt;`. Therefore you can&#39;t use
+//! - Generic setters introduce a type parameter `VALUE: Into&lt;_&gt;`. Therefore you can't use
 //!  `VALUE` as a type parameter on a generic struct in combination with generic setters.
 //! - The `try_setter` attribute and `owned` builder pattern are not compatible in practice;
 //!   an error during building will consume the builder, making it impossible to continue
@@ -1447,9 +1449,9 @@
 //! [`derive_builder_core`]: https://crates.io/crates/derive_builder_core
 
 </span><span class="attr">#![deny(warnings)]
-#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), no_std)]
+#![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
 
-#[cfg(not(feature = <span class="string">&quot;std&quot;</span>))]
+#[cfg(feature = <span class="string">"alloc"</span>)]
 </span><span class="kw">extern crate </span>alloc;
 
 <span class="kw">extern crate </span>derive_builder_macro;
@@ -1464,11 +1466,11 @@
 <span class="attr">#[doc(hidden)]
 </span><span class="kw">pub mod </span>export {
     <span class="kw">pub mod </span>core {
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;std&quot;</span>))]
-        </span><span class="kw">pub use </span>alloc::string;
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;std&quot;</span>))]
+        <span class="attr">#[cfg(feature = <span class="string">"alloc"</span>)]
+        </span><span class="kw">pub use </span>::alloc::string;
+        <span class="attr">#[cfg(not(feature = <span class="string">"std"</span>))]
         </span><span class="kw">pub use </span>core::<span class="kw-2">*</span>;
-        <span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
         </span><span class="kw">pub use </span>std::<span class="kw-2">*</span>;
     }
 }

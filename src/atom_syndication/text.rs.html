@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/text.rs`."><title>text.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/text.rs`."><title>text.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../atom_syndication/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -246,7 +248,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::toxml::ToXmlNamed;
 <span class="kw">use </span><span class="kw">crate</span>::util::{atom_text, atom_xhtml, attr_value, decode};
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Deserialize, Serialize))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Deserialize, Serialize))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 </span><span class="doccomment">/// Represents the value of the [`type` attribute of a text construct](https://tools.ietf.org/html/rfc4287#section-3.1.1)
 /// in an Atom feed, e.g. the type of the content stored in the element.
@@ -266,11 +268,11 @@
 }
 
 <span class="kw">impl </span>TextType {
-    <span class="kw">fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="kw">fn </span>as_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::Text =&gt; <span class="string">&quot;text&quot;</span>,
-            <span class="self">Self</span>::Html =&gt; <span class="string">&quot;html&quot;</span>,
-            <span class="self">Self</span>::Xhtml =&gt; <span class="string">&quot;xhtml&quot;</span>,
+            <span class="self">Self</span>::Text =&gt; <span class="string">"text"</span>,
+            <span class="self">Self</span>::Html =&gt; <span class="string">"html"</span>,
+            <span class="self">Self</span>::Xhtml =&gt; <span class="string">"xhtml"</span>,
         }
     }
 }
@@ -280,26 +282,26 @@
 
     <span class="kw">fn </span>from_str(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
         <span class="kw">match </span>value {
-            <span class="string">&quot;text&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Text),
-            <span class="string">&quot;html&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Html),
-            <span class="string">&quot;xhtml&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Xhtml),
+            <span class="string">"text" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Text),
+            <span class="string">"html" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Html),
+            <span class="string">"xhtml" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Xhtml),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Error::WrongAttribute {
-                attribute: <span class="string">&quot;type&quot;</span>,
+                attribute: <span class="string">"type"</span>,
                 value: value.to_owned(),
             }),
         }
     }
 }
 
-<span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Deserialize, Serialize))]
+<span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Deserialize, Serialize))]
 #[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="doccomment">/// Represents a [text construct](https://tools.ietf.org/html/rfc4287#section-3.1) in an Atom feed.
@@ -315,7 +317,7 @@
 }
 
 <span class="kw">impl </span>Text {
-    <span class="doccomment">/// Creates a plain text construct (type = &quot;text&quot;).
+    <span class="doccomment">/// Creates a plain text construct (type = "text").
     </span><span class="kw">pub fn </span>plain(value: <span class="kw">impl </span>Into&lt;String&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             value: value.into(),
@@ -324,7 +326,7 @@
         }
     }
 
-    <span class="doccomment">/// Creates an html text construct (type = &quot;html&quot;).
+    <span class="doccomment">/// Creates an html text construct (type = "html").
     </span><span class="kw">pub fn </span>html(value: <span class="kw">impl </span>Into&lt;String&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             value: value.into(),
@@ -333,7 +335,7 @@
         }
     }
 
-    <span class="doccomment">/// Creates an html text construct (type = &quot;html&quot;).
+    <span class="doccomment">/// Creates an html text construct (type = "html").
     </span><span class="kw">pub fn </span>xhtml(value: <span class="kw">impl </span>Into&lt;String&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             value: value.into(),
@@ -354,8 +356,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;t</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;t </span>str&gt; <span class="kw">for </span>Text {
-    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;t </span>str) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'t</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'t </span>str&gt; <span class="kw">for </span>Text {
+    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">'t </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::plain(value)
     }
 }
@@ -389,19 +391,19 @@
 <span class="kw">impl </span>FromXml <span class="kw">for </span>Text {
     <span class="kw">fn </span>from_xml&lt;B: BufRead&gt;(
         reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;,
-        <span class="kw-2">mut </span>atts: Attributes&lt;<span class="lifetime">&#39;_</span>&gt;,
+        <span class="kw-2">mut </span>atts: Attributes&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>text = Text::default();
 
         <span class="kw">for </span>att <span class="kw">in </span>atts.with_checks(<span class="bool-val">false</span>).flatten() {
             <span class="kw">match </span>decode(att.key.as_ref(), reader)<span class="question-mark">? </span>{
-                Cow::Borrowed(<span class="string">&quot;xml:base&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"xml:base"</span>) =&gt; {
                     text.base = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string())
                 }
-                Cow::Borrowed(<span class="string">&quot;xml:lang&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"xml:lang"</span>) =&gt; {
                     text.lang = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string())
                 }
-                Cow::Borrowed(<span class="string">&quot;type&quot;</span>) =&gt; text.r#type = attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.parse()<span class="question-mark">?</span>,
+                Cow::Borrowed(<span class="string">"type"</span>) =&gt; text.r#type = attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.parse()<span class="question-mark">?</span>,
                 <span class="kw">_ </span>=&gt; {}
             }
         }
@@ -425,13 +427,13 @@
     {
         <span class="kw">let </span><span class="kw-2">mut </span>element = BytesStart::new(name);
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>base) = <span class="self">self</span>.base {
-            element.push_attribute((<span class="string">&quot;xml:base&quot;</span>, base.as_str()));
+            element.push_attribute((<span class="string">"xml:base"</span>, base.as_str()));
         }
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>lang) = <span class="self">self</span>.lang {
-            element.push_attribute((<span class="string">&quot;xml:lang&quot;</span>, lang.as_str()));
+            element.push_attribute((<span class="string">"xml:lang"</span>, lang.as_str()));
         }
         <span class="kw">if </span><span class="self">self</span>.r#type != TextType::default() {
-            element.push_attribute((<span class="string">&quot;type&quot;</span>, <span class="self">self</span>.r#type.as_str()));
+            element.push_attribute((<span class="string">"type"</span>, <span class="self">self</span>.r#type.as_str()));
         }
         writer
             .write_event(Event::Start(element))
@@ -453,7 +455,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>TextBuilder {
     <span class="doccomment">/// Builds a new `Text`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Text {

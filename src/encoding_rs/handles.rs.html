@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding_rs-0.8.33/src/handles.rs`."><title>handles.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="encoding_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding_rs-0.8.34/src/handles.rs`."><title>handles.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="encoding_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../encoding_rs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1967,6 +1969,38 @@
 <a href="#1967" id="1967">1967</a>
 <a href="#1968" id="1968">1968</a>
 <a href="#1969" id="1969">1969</a>
+<a href="#1970" id="1970">1970</a>
+<a href="#1971" id="1971">1971</a>
+<a href="#1972" id="1972">1972</a>
+<a href="#1973" id="1973">1973</a>
+<a href="#1974" id="1974">1974</a>
+<a href="#1975" id="1975">1975</a>
+<a href="#1976" id="1976">1976</a>
+<a href="#1977" id="1977">1977</a>
+<a href="#1978" id="1978">1978</a>
+<a href="#1979" id="1979">1979</a>
+<a href="#1980" id="1980">1980</a>
+<a href="#1981" id="1981">1981</a>
+<a href="#1982" id="1982">1982</a>
+<a href="#1983" id="1983">1983</a>
+<a href="#1984" id="1984">1984</a>
+<a href="#1985" id="1985">1985</a>
+<a href="#1986" id="1986">1986</a>
+<a href="#1987" id="1987">1987</a>
+<a href="#1988" id="1988">1988</a>
+<a href="#1989" id="1989">1989</a>
+<a href="#1990" id="1990">1990</a>
+<a href="#1991" id="1991">1991</a>
+<a href="#1992" id="1992">1992</a>
+<a href="#1993" id="1993">1993</a>
+<a href="#1994" id="1994">1994</a>
+<a href="#1995" id="1995">1995</a>
+<a href="#1996" id="1996">1996</a>
+<a href="#1997" id="1997">1997</a>
+<a href="#1998" id="1998">1998</a>
+<a href="#1999" id="1999">1999</a>
+<a href="#2000" id="2000">2000</a>
+<a href="#2001" id="2001">2001</a>
 </pre></div><pre class="rust"><code><span class="comment">// Copyright Mozilla Foundation. See the COPYRIGHT
 // file at the top-level directory of this distribution.
 //
@@ -1986,24 +2020,24 @@
 //! bound check at the read/write time.
 
 </span><span class="attr">#[cfg(all(
-    feature = <span class="string">&quot;simd-accel&quot;</span>,
+    feature = <span class="string">"simd-accel"</span>,
     any(
-        target_feature = <span class="string">&quot;sse2&quot;</span>,
-        all(target_endian = <span class="string">&quot;little&quot;</span>, target_arch = <span class="string">&quot;aarch64&quot;</span>),
-        all(target_endian = <span class="string">&quot;little&quot;</span>, target_feature = <span class="string">&quot;neon&quot;</span>)
+        target_feature = <span class="string">"sse2"</span>,
+        all(target_endian = <span class="string">"little"</span>, target_arch = <span class="string">"aarch64"</span>),
+        all(target_endian = <span class="string">"little"</span>, target_feature = <span class="string">"neon"</span>)
     )
 ))]
 </span><span class="kw">use </span><span class="kw">crate</span>::simd_funcs::<span class="kw-2">*</span>;
 
 <span class="attr">#[cfg(all(
-    feature = <span class="string">&quot;simd-accel&quot;</span>,
+    feature = <span class="string">"simd-accel"</span>,
     any(
-        target_feature = <span class="string">&quot;sse2&quot;</span>,
-        all(target_endian = <span class="string">&quot;little&quot;</span>, target_arch = <span class="string">&quot;aarch64&quot;</span>),
-        all(target_endian = <span class="string">&quot;little&quot;</span>, target_feature = <span class="string">&quot;neon&quot;</span>)
+        target_feature = <span class="string">"sse2"</span>,
+        all(target_endian = <span class="string">"little"</span>, target_arch = <span class="string">"aarch64"</span>),
+        all(target_endian = <span class="string">"little"</span>, target_feature = <span class="string">"neon"</span>)
     )
 ))]
-</span><span class="kw">use </span>packed_simd::u16x8;
+</span><span class="kw">use </span>core::simd::u16x8;
 
 <span class="kw">use </span><span class="kw">super</span>::DecoderResult;
 <span class="kw">use </span><span class="kw">super</span>::EncoderResult;
@@ -2040,39 +2074,43 @@
 <span class="kw">pub struct </span>BigEndian;
 
 <span class="kw">impl </span>Endian <span class="kw">for </span>BigEndian {
-    <span class="attr">#[cfg(target_endian = <span class="string">&quot;little&quot;</span>)]
+    <span class="attr">#[cfg(target_endian = <span class="string">"little"</span>)]
     </span><span class="kw">const </span>OPPOSITE_ENDIAN: bool = <span class="bool-val">true</span>;
 
-    <span class="attr">#[cfg(target_endian = <span class="string">&quot;big&quot;</span>)]
+    <span class="attr">#[cfg(target_endian = <span class="string">"big"</span>)]
     </span><span class="kw">const </span>OPPOSITE_ENDIAN: bool = <span class="bool-val">false</span>;
 }
 
 <span class="kw">pub struct </span>LittleEndian;
 
 <span class="kw">impl </span>Endian <span class="kw">for </span>LittleEndian {
-    <span class="attr">#[cfg(target_endian = <span class="string">&quot;little&quot;</span>)]
+    <span class="attr">#[cfg(target_endian = <span class="string">"little"</span>)]
     </span><span class="kw">const </span>OPPOSITE_ENDIAN: bool = <span class="bool-val">false</span>;
 
-    <span class="attr">#[cfg(target_endian = <span class="string">&quot;big&quot;</span>)]
+    <span class="attr">#[cfg(target_endian = <span class="string">"big"</span>)]
     </span><span class="kw">const </span>OPPOSITE_ENDIAN: bool = <span class="bool-val">true</span>;
 }
 
 <span class="attr">#[derive(Debug, Copy, Clone)]
 </span><span class="kw">struct </span>UnalignedU16Slice {
-    ptr: <span class="kw-2">*const </span>u8,
+    <span class="comment">// Safety invariant: ptr must be valid for reading 2*len bytes
+    </span>ptr: <span class="kw-2">*const </span>u8,
     len: usize,
 }
 
 <span class="kw">impl </span>UnalignedU16Slice {
-    <span class="attr">#[inline(always)]
+    <span class="doccomment">/// Safety: ptr must be valid for reading 2*len bytes
+    </span><span class="attr">#[inline(always)]
     </span><span class="kw">pub unsafe fn </span>new(ptr: <span class="kw-2">*const </span>u8, len: usize) -&gt; UnalignedU16Slice {
-        UnalignedU16Slice { ptr, len }
+        <span class="comment">// Safety: field invariant passed up to caller here
+        </span>UnalignedU16Slice { ptr, len }
     }
 
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>trim_last(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="macro">assert!</span>(<span class="self">self</span>.len &gt; <span class="number">0</span>);
-        <span class="self">self</span>.len -= <span class="number">1</span>;
+        <span class="comment">// Safety: invariant upheld here: a slice is still valid with a shorter len
+        </span><span class="self">self</span>.len -= <span class="number">1</span>;
     }
 
     <span class="attr">#[inline(always)]
@@ -2082,17 +2120,24 @@
         <span class="macro">assert!</span>(i &lt; <span class="self">self</span>.len);
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>u: MaybeUninit&lt;u16&gt; = MaybeUninit::uninit();
-            ::core::ptr::copy_nonoverlapping(<span class="self">self</span>.ptr.add(i * <span class="number">2</span>), u.as_mut_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>u8, <span class="number">2</span>);
-            u.assume_init()
+            <span class="comment">// Safety: i is at most len - 1, which works here
+            </span>::core::ptr::copy_nonoverlapping(<span class="self">self</span>.ptr.add(i * <span class="number">2</span>), u.as_mut_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>u8, <span class="number">2</span>);
+            <span class="comment">// Safety: valid read above lets us do this
+            </span>u.assume_init()
         }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;simd-accel&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"simd-accel"</span>)]
     #[inline(always)]
     </span><span class="kw">pub fn </span>simd_at(<span class="kw-2">&amp;</span><span class="self">self</span>, i: usize) -&gt; u16x8 {
-        <span class="macro">assert!</span>(i + SIMD_STRIDE_SIZE / <span class="number">2 </span>&lt;= <span class="self">self</span>.len);
+        <span class="comment">// Safety: i/len are on the scale of u16s, each one corresponds to 2 u8s
+        </span><span class="macro">assert!</span>(i + SIMD_STRIDE_SIZE / <span class="number">2 </span>&lt;= <span class="self">self</span>.len);
         <span class="kw">let </span>byte_index = i * <span class="number">2</span>;
-        <span class="kw">unsafe </span>{ to_u16_lanes(load16_unaligned(<span class="self">self</span>.ptr.add(byte_index))) }
+        <span class="comment">// Safety: load16_unaligned needs SIMD_STRIDE_SIZE=16 u8 elements to read,
+        // or 16/2 = 8 u16 elements to read.
+        // We have checked that we have at least that many above.
+
+        </span><span class="kw">unsafe </span>{ to_u16_lanes(load16_unaligned(<span class="self">self</span>.ptr.add(byte_index))) }
     }
 
     <span class="attr">#[inline(always)]
@@ -2105,29 +2150,34 @@
         <span class="comment">// XXX the return value should be restricted not to
         // outlive self.
         </span><span class="macro">assert!</span>(from &lt;= <span class="self">self</span>.len);
-        <span class="kw">unsafe </span>{ UnalignedU16Slice::new(<span class="self">self</span>.ptr.add(from * <span class="number">2</span>), <span class="self">self</span>.len - from) }
+        <span class="comment">// Safety: This upholds the same invariant: `from` is in bounds and we're returning a shorter slice
+        </span><span class="kw">unsafe </span>{ UnalignedU16Slice::new(<span class="self">self</span>.ptr.add(from * <span class="number">2</span>), <span class="self">self</span>.len - from) }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;simd-accel&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"simd-accel"</span>)]
     #[inline(always)]
     </span><span class="kw">pub fn </span>copy_bmp_to&lt;E: Endian&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;mut </span>[u16]) -&gt; <span class="prelude-ty">Option</span>&lt;(u16, usize)&gt; {
         <span class="macro">assert!</span>(<span class="self">self</span>.len &lt;= other.len());
         <span class="kw">let </span><span class="kw-2">mut </span>offset = <span class="number">0</span>;
-        <span class="kw">if </span>SIMD_STRIDE_SIZE / <span class="number">2 </span>&lt;= <span class="self">self</span>.len {
+        <span class="comment">// Safety: SIMD_STRIDE_SIZE is measured in bytes, whereas len is in u16s. We check we can
+        // munch SIMD_STRIDE_SIZE / 2 u16s which means we can write SIMD_STRIDE_SIZE u8s
+        </span><span class="kw">if </span>SIMD_STRIDE_SIZE / <span class="number">2 </span>&lt;= <span class="self">self</span>.len {
             <span class="kw">let </span>len_minus_stride = <span class="self">self</span>.len - SIMD_STRIDE_SIZE / <span class="number">2</span>;
             <span class="kw">loop </span>{
                 <span class="kw">let </span><span class="kw-2">mut </span>simd = <span class="self">self</span>.simd_at(offset);
                 <span class="kw">if </span>E::OPPOSITE_ENDIAN {
                     simd = simd_byte_swap(simd);
                 }
-                <span class="kw">unsafe </span>{
+                <span class="comment">// Safety: we have enough space on the other side to write this
+                </span><span class="kw">unsafe </span>{
                     store8_unaligned(other.as_mut_ptr().add(offset), simd);
                 }
                 <span class="kw">if </span>contains_surrogates(simd) {
                     <span class="kw">break</span>;
                 }
                 offset += SIMD_STRIDE_SIZE / <span class="number">2</span>;
-                <span class="kw">if </span>offset &gt; len_minus_stride {
+                <span class="comment">// Safety: This ensures we still have space for writing SIMD_STRIDE_SIZE u8s
+                </span><span class="kw">if </span>offset &gt; len_minus_stride {
                     <span class="kw">break</span>;
                 }
             }
@@ -2143,7 +2193,7 @@
         <span class="prelude-val">None
     </span>}
 
-    <span class="attr">#[cfg(not(feature = <span class="string">&quot;simd-accel&quot;</span>))]
+    <span class="attr">#[cfg(not(feature = <span class="string">"simd-accel"</span>))]
     #[inline(always)]
     </span><span class="kw">fn </span>copy_bmp_to&lt;E: Endian&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;mut </span>[u16]) -&gt; <span class="prelude-ty">Option</span>&lt;(u16, usize)&gt; {
         <span class="macro">assert!</span>(<span class="self">self</span>.len &lt;= other.len());
@@ -2188,7 +2238,7 @@
     }
 }
 
-<span class="attr">#[cfg(not(feature = <span class="string">&quot;simd-accel&quot;</span>))]
+<span class="attr">#[cfg(not(feature = <span class="string">"simd-accel"</span>))]
 #[inline(always)]
 </span><span class="kw">fn </span>copy_unaligned_basic_latin_to_ascii&lt;E: Endian&gt;(
     src: UnalignedU16Slice,
@@ -2197,7 +2247,7 @@
     copy_unaligned_basic_latin_to_ascii_alu::&lt;E&gt;(src, dst, <span class="number">0</span>)
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;simd-accel&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"simd-accel"</span>)]
 #[inline(always)]
 </span><span class="kw">fn </span>copy_unaligned_basic_latin_to_ascii&lt;E: Endian&gt;(
     src: UnalignedU16Slice,
@@ -2205,7 +2255,8 @@
 ) -&gt; CopyAsciiResult&lt;usize, (u16, usize)&gt; {
     <span class="kw">let </span>len = ::core::cmp::min(src.len(), dst.len());
     <span class="kw">let </span><span class="kw-2">mut </span>offset = <span class="number">0</span>;
-    <span class="kw">if </span>SIMD_STRIDE_SIZE &lt;= len {
+    <span class="comment">// Safety: This check ensures we are able to read/write at least SIMD_STRIDE_SIZE elements
+    </span><span class="kw">if </span>SIMD_STRIDE_SIZE &lt;= len {
         <span class="kw">let </span>len_minus_stride = len - SIMD_STRIDE_SIZE;
         <span class="kw">loop </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>first = src.simd_at(offset);
@@ -2218,11 +2269,14 @@
                 <span class="kw">break</span>;
             }
             <span class="kw">let </span>packed = simd_pack(first, second);
-            <span class="kw">unsafe </span>{
+            <span class="comment">// Safety: We are able to write SIMD_STRIDE_SIZE elements in this iteration
+            </span><span class="kw">unsafe </span>{
                 store16_unaligned(dst.as_mut_ptr().add(offset), packed);
             }
             offset += SIMD_STRIDE_SIZE;
-            <span class="kw">if </span>offset &gt; len_minus_stride {
+            <span class="comment">// Safety: This is `offset &gt; len - SIMD_STRIDE_SIZE`, which ensures that we can write at least SIMD_STRIDE_SIZE elements
+            // in the next iteration
+            </span><span class="kw">if </span>offset &gt; len_minus_stride {
                 <span class="kw">break</span>;
             }
         }
@@ -2242,7 +2296,7 @@
     <span class="kw">let </span><span class="kw-2">mut </span>dst_pos = <span class="number">0usize</span>;
     <span class="kw">let </span>src_len = src.len();
     <span class="kw">let </span>dst_len_minus_three = dst.len() - <span class="number">3</span>;
-    <span class="lifetime">&#39;outer</span>: <span class="kw">loop </span>{
+    <span class="lifetime">'outer</span>: <span class="kw">loop </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>non_ascii = <span class="kw">match </span>copy_unaligned_basic_latin_to_ascii::&lt;E&gt;(
             src.tail(src_pos),
             <span class="kw-2">&amp;mut </span>dst[dst_pos..],
@@ -2257,12 +2311,12 @@
             }
         };
         <span class="kw">if </span>dst_pos &gt;= dst_len_minus_three {
-            <span class="kw">break </span><span class="lifetime">&#39;outer</span>;
+            <span class="kw">break </span><span class="lifetime">'outer</span>;
         }
         <span class="comment">// We have enough destination space to commit to
         // having read `non_ascii`.
         </span>src_pos += <span class="number">1</span>;
-        <span class="lifetime">&#39;inner</span>: <span class="kw">loop </span>{
+        <span class="lifetime">'inner</span>: <span class="kw">loop </span>{
             <span class="kw">let </span>non_ascii_minus_surrogate_start = non_ascii.wrapping_sub(<span class="number">0xD800</span>);
             <span class="kw">if </span>non_ascii_minus_surrogate_start &gt; (<span class="number">0xDFFF </span>- <span class="number">0xD800</span>) {
                 <span class="kw">if </span>non_ascii &lt; <span class="number">0x800 </span>{
@@ -2298,7 +2352,7 @@
                         dst[dst_pos] = ((point &amp; <span class="number">0x3Fu32</span>) | <span class="number">0x80u32</span>) <span class="kw">as </span>u8;
                         dst_pos += <span class="number">1</span>;
                     } <span class="kw">else </span>{
-                        <span class="comment">// The next code unit is not a low surrogate. Don&#39;t advance
+                        <span class="comment">// The next code unit is not a low surrogate. Don't advance
                         // position and treat the high surrogate as unpaired.
                         </span><span class="kw">return </span>(src_pos, dst_pos, <span class="bool-val">true</span>);
                     }
@@ -2311,17 +2365,17 @@
                 </span><span class="kw">return </span>(src_pos, dst_pos, <span class="bool-val">true</span>);
             }
             <span class="kw">if </span>dst_pos &gt;= dst_len_minus_three || src_pos == src_len {
-                <span class="kw">break </span><span class="lifetime">&#39;outer</span>;
+                <span class="kw">break </span><span class="lifetime">'outer</span>;
             }
             <span class="kw">let </span>unit = swap_if_opposite_endian::&lt;E&gt;(src.at(src_pos));
             src_pos += <span class="number">1</span>;
             <span class="kw">if </span>unit &gt; <span class="number">0x7F </span>{
                 non_ascii = unit;
-                <span class="kw">continue </span><span class="lifetime">&#39;inner</span>;
+                <span class="kw">continue </span><span class="lifetime">'inner</span>;
             }
             dst[dst_pos] = unit <span class="kw">as </span>u8;
             dst_pos += <span class="number">1</span>;
-            <span class="kw">continue </span><span class="lifetime">&#39;outer</span>;
+            <span class="kw">continue </span><span class="lifetime">'outer</span>;
         }
     }
     (src_pos, dst_pos, <span class="bool-val">false</span>)
@@ -2329,18 +2383,18 @@
 
 <span class="comment">// Byte source
 
-</span><span class="kw">pub struct </span>ByteSource&lt;<span class="lifetime">&#39;a</span>&gt; {
-    slice: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8],
+</span><span class="kw">pub struct </span>ByteSource&lt;<span class="lifetime">'a</span>&gt; {
+    slice: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8],
     pos: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ByteSource&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ByteSource&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>new(src: <span class="kw-2">&amp;</span>[u8]) -&gt; ByteSource {
         ByteSource { slice: src, pos: <span class="number">0 </span>}
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_available&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteReadHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_available&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteReadHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos &lt; <span class="self">self</span>.slice.len() {
             Space::Available(ByteReadHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -2364,23 +2418,23 @@
     }
 }
 
-<span class="kw">pub struct </span>ByteReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>ByteReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    source: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">&#39;b</span>&gt;,
+    source: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; ByteReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; ByteReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; ByteReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">'b</span>&gt;) -&gt; ByteReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         ByteReadHandle { source: src }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>read(<span class="self">self</span>) -&gt; (u8, ByteUnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;) {
+    </span><span class="kw">pub fn </span>read(<span class="self">self</span>) -&gt; (u8, ByteUnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;) {
         <span class="kw">let </span>byte = <span class="self">self</span>.source.read();
         <span class="kw">let </span>handle = ByteUnreadHandle::new(<span class="self">self</span>.source);
         (byte, handle)
@@ -2391,19 +2445,19 @@
     }
 }
 
-<span class="kw">pub struct </span>ByteUnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>ByteUnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    source: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">&#39;b</span>&gt;,
+    source: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; ByteUnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; ByteUnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; ByteUnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">'b</span>&gt;) -&gt; ByteUnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         ByteUnreadHandle { source: src }
     }
     <span class="attr">#[inline(always)]
@@ -2415,26 +2469,26 @@
         <span class="self">self</span>.source.consumed()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteSource&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.source
     }
 }
 
 <span class="comment">// UTF-16 destination
 
-</span><span class="kw">pub struct </span>Utf16BmpHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+</span><span class="kw">pub struct </span>Utf16BmpHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf16BmpHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf16BmpHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf16BmpHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf16BmpHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf16BmpHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -2442,49 +2496,49 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_ascii(ascii);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp_excl_ascii(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_mid_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_mid_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_mid_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_upper_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest
     }
 }
 
-<span class="kw">pub struct </span>Utf16AstralHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>Utf16AstralHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf16AstralHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf16AstralHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf16AstralHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf16AstralHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf16AstralHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -2492,32 +2546,32 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_ascii(ascii);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp_excl_ascii(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_upper_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_astral(<span class="self">self</span>, astral: u32) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_astral(<span class="self">self</span>, astral: u32) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_astral(astral);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_surrogate_pair(<span class="self">self</span>, high: u16, low: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_surrogate_pair(<span class="self">self</span>, high: u16, low: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_surrogate_pair(high, low);
         <span class="self">self</span>.dest
     }
@@ -2526,28 +2580,28 @@
         <span class="self">self</span>,
         combined: u16,
         combining: u16,
-    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_big5_combination(combined, combining);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest
     }
 }
 
-<span class="kw">pub struct </span>Utf16Destination&lt;<span class="lifetime">&#39;a</span>&gt; {
-    slice: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>[u16],
+<span class="kw">pub struct </span>Utf16Destination&lt;<span class="lifetime">'a</span>&gt; {
+    slice: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>[u16],
     pos: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Utf16Destination&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Utf16Destination&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>new(dst: <span class="kw-2">&amp;mut </span>[u16]) -&gt; Utf16Destination {
         Utf16Destination { slice: dst, pos: <span class="number">0 </span>}
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_bmp&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf16BmpHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_bmp&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf16BmpHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos &lt; <span class="self">self</span>.slice.len() {
             Space::Available(Utf16BmpHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -2555,7 +2609,7 @@
         }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_astral&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf16AstralHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_astral&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf16AstralHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos + <span class="number">1 </span>&lt; <span class="self">self</span>.slice.len() {
             Space::Available(Utf16AstralHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -2606,7 +2660,7 @@
         <span class="self">self</span>.write_code_unit((<span class="number">0xDC00 </span>+ (astral &amp; <span class="number">0x3FF</span>)) <span class="kw">as </span>u16);
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_surrogate_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, high: u16, low: u16) {
+    </span><span class="kw">fn </span>write_surrogate_pair(<span class="kw-2">&amp;mut </span><span class="self">self</span>, high: u16, low: u16) {
         <span class="self">self</span>.write_code_unit(high);
         <span class="self">self</span>.write_code_unit(low);
     }
@@ -2615,11 +2669,12 @@
         <span class="self">self</span>.write_bmp_excl_ascii(combined);
         <span class="self">self</span>.write_bmp_excl_ascii(combining);
     }
-    <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_bmp&lt;<span class="lifetime">&#39;b</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>,
+    <span class="comment">// Safety-usable invariant: CopyAsciiResult::GoOn will only contain bytes &gt;=0x80
+    </span><span class="attr">#[inline(always)]
+    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_bmp&lt;<span class="lifetime">'b</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>,
         source: <span class="kw-2">&amp;mut </span>ByteSource,
-    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf16BmpHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf16BmpHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span>source.slice[source.pos..];
             <span class="kw">let </span>dst_remaining = <span class="kw-2">&amp;mut </span><span class="self">self</span>.slice[<span class="self">self</span>.pos..];
@@ -2628,7 +2683,9 @@
             } <span class="kw">else </span>{
                 (DecoderResult::InputEmpty, src_remaining.len())
             };
-            <span class="kw">match unsafe </span>{
+            <span class="comment">// Safety: This function is documented as needing valid pointers for src/dest and len, which
+            // is true since we've passed the minumum length of the two
+            </span><span class="kw">match unsafe </span>{
                 ascii_to_basic_latin(src_remaining.as_ptr(), dst_remaining.as_mut_ptr(), length)
             } {
                 <span class="prelude-val">None </span>=&gt; {
@@ -2636,21 +2693,25 @@
                     <span class="self">self</span>.pos += length;
                     <span class="kw">return </span>CopyAsciiResult::Stop((pending, source.pos, <span class="self">self</span>.pos));
                 }
-                <span class="prelude-val">Some</span>((non_ascii, consumed)) =&gt; {
+                <span class="comment">// Safety: the function is documented as returning bytes &gt;=0x80 in the Some
+                </span><span class="prelude-val">Some</span>((non_ascii, consumed)) =&gt; {
                     source.pos += consumed;
                     <span class="self">self</span>.pos += consumed;
                     source.pos += <span class="number">1</span>; <span class="comment">// +1 for non_ascii
+                                     // Safety: non-ascii bubbled out here
                     </span>non_ascii
                 }
             }
         };
-        CopyAsciiResult::GoOn((non_ascii_ret, Utf16BmpHandle::new(<span class="self">self</span>)))
+        <span class="comment">// Safety: non-ascii returned here
+        </span>CopyAsciiResult::GoOn((non_ascii_ret, Utf16BmpHandle::new(<span class="self">self</span>)))
     }
-    <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_astral&lt;<span class="lifetime">&#39;b</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>,
+    <span class="comment">// Safety-usable invariant: CopyAsciiResult::GoOn will only contain bytes &gt;=0x80
+    </span><span class="attr">#[inline(always)]
+    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_astral&lt;<span class="lifetime">'b</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>,
         source: <span class="kw-2">&amp;mut </span>ByteSource,
-    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf16AstralHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf16AstralHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>dst_len = <span class="self">self</span>.slice.len();
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span>source.slice[source.pos..];
@@ -2660,7 +2721,9 @@
             } <span class="kw">else </span>{
                 (DecoderResult::InputEmpty, src_remaining.len())
             };
-            <span class="kw">match unsafe </span>{
+            <span class="comment">// Safety: This function is documented as needing valid pointers for src/dest and len, which
+            // is true since we've passed the minumum length of the two
+            </span><span class="kw">match unsafe </span>{
                 ascii_to_basic_latin(src_remaining.as_ptr(), dst_remaining.as_mut_ptr(), length)
             } {
                 <span class="prelude-val">None </span>=&gt; {
@@ -2668,11 +2731,13 @@
                     <span class="self">self</span>.pos += length;
                     <span class="kw">return </span>CopyAsciiResult::Stop((pending, source.pos, <span class="self">self</span>.pos));
                 }
-                <span class="prelude-val">Some</span>((non_ascii, consumed)) =&gt; {
+                <span class="comment">// Safety: the function is documented as returning bytes &gt;=0x80 in the Some
+                </span><span class="prelude-val">Some</span>((non_ascii, consumed)) =&gt; {
                     source.pos += consumed;
                     <span class="self">self</span>.pos += consumed;
                     <span class="kw">if </span><span class="self">self</span>.pos + <span class="number">1 </span>&lt; dst_len {
                         source.pos += <span class="number">1</span>; <span class="comment">// +1 for non_ascii
+                                         // Safety: non-ascii bubbled out here
                         </span>non_ascii
                     } <span class="kw">else </span>{
                         <span class="kw">return </span>CopyAsciiResult::Stop((
@@ -2684,7 +2749,8 @@
                 }
             }
         };
-        CopyAsciiResult::GoOn((non_ascii_ret, Utf16AstralHandle::new(<span class="self">self</span>)))
+        <span class="comment">// Safety: non-ascii returned here
+        </span>CopyAsciiResult::GoOn((non_ascii_ret, Utf16AstralHandle::new(<span class="self">self</span>)))
     }
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>copy_utf8_up_to_invalid_from(<span class="kw-2">&amp;mut </span><span class="self">self</span>, source: <span class="kw-2">&amp;mut </span>ByteSource) {
@@ -2714,7 +2780,7 @@
         <span class="kw">let </span>last_unit = swap_if_opposite_endian::&lt;E&gt;(src_unaligned.at(src_unaligned.len() - <span class="number">1</span>));
         <span class="kw">if </span><span class="kw">super</span>::in_range16(last_unit, <span class="number">0xD800</span>, <span class="number">0xDC00</span>) {
             <span class="comment">// Last code unit is a high surrogate. It might
-            // legitimately form a pair later, so let&#39;s not
+            // legitimately form a pair later, so let's not
             // include it.
             </span>src_unaligned.trim_last();
         }
@@ -2755,19 +2821,19 @@
 
 <span class="comment">// UTF-8 destination
 
-</span><span class="kw">pub struct </span>Utf8BmpHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+</span><span class="kw">pub struct </span>Utf8BmpHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf8BmpHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf8BmpHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf8BmpHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf8BmpHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf8BmpHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -2775,49 +2841,49 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_ascii(ascii);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp_excl_ascii(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_mid_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_mid_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_mid_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_upper_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest
     }
 }
 
-<span class="kw">pub struct </span>Utf8AstralHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>Utf8AstralHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf8AstralHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf8AstralHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf8AstralHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf8AstralHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf8AstralHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -2825,32 +2891,32 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_ascii(<span class="self">self</span>, ascii: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_ascii(ascii);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_bmp_excl_ascii(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_bmp_excl_ascii(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_upper_bmp(<span class="self">self</span>, bmp: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_upper_bmp(bmp);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_astral(<span class="self">self</span>, astral: u32) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_astral(<span class="self">self</span>, astral: u32) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_astral(astral);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_surrogate_pair(<span class="self">self</span>, high: u16, low: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_surrogate_pair(<span class="self">self</span>, high: u16, low: u16) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_surrogate_pair(high, low);
         <span class="self">self</span>.dest
     }
@@ -2859,28 +2925,28 @@
         <span class="self">self</span>,
         combined: u16,
         combining: u16,
-    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_big5_combination(combined, combining);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Destination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest
     }
 }
 
-<span class="kw">pub struct </span>Utf8Destination&lt;<span class="lifetime">&#39;a</span>&gt; {
-    slice: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>[u8],
+<span class="kw">pub struct </span>Utf8Destination&lt;<span class="lifetime">'a</span>&gt; {
+    slice: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>[u8],
     pos: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Utf8Destination&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Utf8Destination&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>new(dst: <span class="kw-2">&amp;mut </span>[u8]) -&gt; Utf8Destination {
         Utf8Destination { slice: dst, pos: <span class="number">0 </span>}
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_bmp&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf8BmpHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_bmp&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf8BmpHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos + <span class="number">2 </span>&lt; <span class="self">self</span>.slice.len() {
             Space::Available(Utf8BmpHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -2888,7 +2954,7 @@
         }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_astral&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf8AstralHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_astral&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf8AstralHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos + <span class="number">3 </span>&lt; <span class="self">self</span>.slice.len() {
             Space::Available(Utf8AstralHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -2966,10 +3032,10 @@
         <span class="self">self</span>.write_mid_bmp(combining);
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_bmp&lt;<span class="lifetime">&#39;b</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>,
+    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_bmp&lt;<span class="lifetime">'b</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>,
         source: <span class="kw-2">&amp;mut </span>ByteSource,
-    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf8BmpHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf8BmpHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>dst_len = <span class="self">self</span>.slice.len();
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span>source.slice[source.pos..];
@@ -3006,10 +3072,10 @@
         CopyAsciiResult::GoOn((non_ascii_ret, Utf8BmpHandle::new(<span class="self">self</span>)))
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_astral&lt;<span class="lifetime">&#39;b</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>,
+    </span><span class="kw">pub fn </span>copy_ascii_from_check_space_astral&lt;<span class="lifetime">'b</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>,
         source: <span class="kw-2">&amp;mut </span>ByteSource,
-    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf8AstralHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+    ) -&gt; CopyAsciiResult&lt;(DecoderResult, usize, usize), (u8, Utf8AstralHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>dst_len = <span class="self">self</span>.slice.len();
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span>source.slice[source.pos..];
@@ -3076,7 +3142,7 @@
         }
         <span class="kw">if </span><span class="kw">super</span>::in_range16(last_unit, <span class="number">0xD800</span>, <span class="number">0xDC00</span>) {
             <span class="comment">// Last code unit is a high surrogate. It might
-            // legitimately form a pair later, so let&#39;s not
+            // legitimately form a pair later, so let's not
             // include it.
             </span>src_unaligned.trim_last();
         }
@@ -3094,13 +3160,13 @@
 
 <span class="comment">// UTF-16 source
 
-</span><span class="kw">pub struct </span>Utf16Source&lt;<span class="lifetime">&#39;a</span>&gt; {
-    slice: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u16],
+</span><span class="kw">pub struct </span>Utf16Source&lt;<span class="lifetime">'a</span>&gt; {
+    slice: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u16],
     pos: usize,
     old_pos: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Utf16Source&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Utf16Source&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>new(src: <span class="kw-2">&amp;</span>[u16]) -&gt; Utf16Source {
         Utf16Source {
@@ -3110,14 +3176,14 @@
         }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_available&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf16ReadHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_available&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf16ReadHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos &lt; <span class="self">self</span>.slice.len() {
             Space::Available(Utf16ReadHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
             Space::Full(<span class="self">self</span>.consumed())
         }
     }
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;cargo-clippy&quot;</span>, allow(collapsible_if))]
+    <span class="attr">#[cfg_attr(feature = <span class="string">"cargo-clippy"</span>, allow(collapsible_if))]
     #[inline(always)]
     </span><span class="kw">fn </span>read(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; char {
         <span class="self">self</span>.old_pos = <span class="self">self</span>.pos;
@@ -3142,16 +3208,16 @@
                         )
                     };
                 }
-                <span class="comment">// The next code unit is not a low surrogate. Don&#39;t advance
+                <span class="comment">// The next code unit is not a low surrogate. Don't advance
                 // position and treat the high surrogate as unpaired.
                 // fall through
             </span>}
             <span class="comment">// Unpaired surrogate at the end of buffer, fall through
         </span>}
         <span class="comment">// Unpaired low surrogate
-        </span><span class="string">&#39;\u{FFFD}&#39;
+        </span><span class="string">'\u{FFFD}'
     </span>}
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;cargo-clippy&quot;</span>, allow(collapsible_if))]
+    <span class="attr">#[cfg_attr(feature = <span class="string">"cargo-clippy"</span>, allow(collapsible_if))]
     #[inline(always)]
     </span><span class="kw">fn </span>read_enum(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; Unicode {
         <span class="self">self</span>.old_pos = <span class="self">self</span>.pos;
@@ -3179,7 +3245,7 @@
                         )
                     }));
                 }
-                <span class="comment">// The next code unit is not a low surrogate. Don&#39;t advance
+                <span class="comment">// The next code unit is not a low surrogate. Don't advance
                 // position and treat the high surrogate as unpaired.
                 // fall through
             </span>}
@@ -3198,10 +3264,10 @@
         <span class="self">self</span>.pos
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_two&lt;<span class="lifetime">&#39;b</span>&gt;(
+    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_two&lt;<span class="lifetime">'b</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;a</span>&gt;,
-    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteTwoHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+        dest: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'a</span>&gt;,
+    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteTwoHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>dst_len = dest.slice.len();
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span><span class="self">self</span>.slice[<span class="self">self</span>.pos..];
@@ -3243,7 +3309,7 @@
                                         )
                                     })
                                 } <span class="kw">else </span>{
-                                    <span class="comment">// The next code unit is not a low surrogate. Don&#39;t advance
+                                    <span class="comment">// The next code unit is not a low surrogate. Don't advance
                                     // position and treat the high surrogate as unpaired.
                                     </span>NonAscii::BmpExclAscii(<span class="number">0xFFFDu16</span>)
                                 }
@@ -3268,10 +3334,10 @@
         CopyAsciiResult::GoOn((non_ascii_ret, ByteTwoHandle::new(dest)))
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_four&lt;<span class="lifetime">&#39;b</span>&gt;(
+    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_four&lt;<span class="lifetime">'b</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;a</span>&gt;,
-    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteFourHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+        dest: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'a</span>&gt;,
+    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteFourHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>dst_len = dest.slice.len();
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span><span class="self">self</span>.slice[<span class="self">self</span>.pos..];
@@ -3316,7 +3382,7 @@
                                         )
                                     })
                                 } <span class="kw">else </span>{
-                                    <span class="comment">// The next code unit is not a low surrogate. Don&#39;t advance
+                                    <span class="comment">// The next code unit is not a low surrogate. Don't advance
                                     // position and treat the high surrogate as unpaired.
                                     </span>NonAscii::BmpExclAscii(<span class="number">0xFFFDu16</span>)
                                 }
@@ -3339,29 +3405,29 @@
     }
 }
 
-<span class="kw">pub struct </span>Utf16ReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>Utf16ReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    source: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">&#39;b</span>&gt;,
+    source: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf16ReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf16ReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf16ReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf16ReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf16ReadHandle { source: src }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>read(<span class="self">self</span>) -&gt; (char, Utf16UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;) {
+    </span><span class="kw">pub fn </span>read(<span class="self">self</span>) -&gt; (char, Utf16UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;) {
         <span class="kw">let </span>character = <span class="self">self</span>.source.read();
         <span class="kw">let </span>handle = Utf16UnreadHandle::new(<span class="self">self</span>.source);
         (character, handle)
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>read_enum(<span class="self">self</span>) -&gt; (Unicode, Utf16UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;) {
+    </span><span class="kw">pub fn </span>read_enum(<span class="self">self</span>) -&gt; (Unicode, Utf16UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;) {
         <span class="kw">let </span>character = <span class="self">self</span>.source.read_enum();
         <span class="kw">let </span>handle = Utf16UnreadHandle::new(<span class="self">self</span>.source);
         (character, handle)
@@ -3372,19 +3438,19 @@
     }
 }
 
-<span class="kw">pub struct </span>Utf16UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>Utf16UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    source: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">&#39;b</span>&gt;,
+    source: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf16UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf16UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf16UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf16UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf16UnreadHandle { source: src }
     }
     <span class="attr">#[inline(always)]
@@ -3396,20 +3462,20 @@
         <span class="self">self</span>.source.consumed()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf16Source&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.source
     }
 }
 
 <span class="comment">// UTF-8 source
 
-</span><span class="kw">pub struct </span>Utf8Source&lt;<span class="lifetime">&#39;a</span>&gt; {
-    slice: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u8],
+</span><span class="kw">pub struct </span>Utf8Source&lt;<span class="lifetime">'a</span>&gt; {
+    slice: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u8],
     pos: usize,
     old_pos: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Utf8Source&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Utf8Source&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>new(src: <span class="kw-2">&amp;</span>str) -&gt; Utf8Source {
         Utf8Source {
@@ -3419,7 +3485,7 @@
         }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_available&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf8ReadHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_available&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;Utf8ReadHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos &lt; <span class="self">self</span>.slice.len() {
             Space::Available(Utf8ReadHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -3494,10 +3560,10 @@
         <span class="self">self</span>.pos
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_one&lt;<span class="lifetime">&#39;b</span>&gt;(
+    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_one&lt;<span class="lifetime">'b</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;a</span>&gt;,
-    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteOneHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+        dest: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'a</span>&gt;,
+    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteOneHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span><span class="self">self</span>.slice[<span class="self">self</span>.pos..];
             <span class="kw">let </span>dst_remaining = <span class="kw-2">&amp;mut </span>dest.slice[dest.pos..];
@@ -3517,7 +3583,7 @@
                 <span class="prelude-val">Some</span>((non_ascii, consumed)) =&gt; {
                     <span class="self">self</span>.pos += consumed;
                     dest.pos += consumed;
-                    <span class="comment">// We don&#39;t need to check space in destination, because
+                    <span class="comment">// We don't need to check space in destination, because
                     // `ascii_to_ascii()` already did.
                     </span><span class="kw">if </span>non_ascii &lt; <span class="number">0xE0 </span>{
                         <span class="kw">let </span>point = ((u16::from(non_ascii) &amp; <span class="number">0x1F</span>) &lt;&lt; <span class="number">6</span>)
@@ -3544,10 +3610,10 @@
         CopyAsciiResult::GoOn((non_ascii_ret, ByteOneHandle::new(dest)))
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_two&lt;<span class="lifetime">&#39;b</span>&gt;(
+    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_two&lt;<span class="lifetime">'b</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;a</span>&gt;,
-    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteTwoHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+        dest: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'a</span>&gt;,
+    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteTwoHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>dst_len = dest.slice.len();
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span><span class="self">self</span>.slice[<span class="self">self</span>.pos..];
@@ -3601,10 +3667,10 @@
         CopyAsciiResult::GoOn((non_ascii_ret, ByteTwoHandle::new(dest)))
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_four&lt;<span class="lifetime">&#39;b</span>&gt;(
+    </span><span class="kw">pub fn </span>copy_ascii_to_check_space_four&lt;<span class="lifetime">'b</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;a</span>&gt;,
-    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteFourHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;)&gt; {
+        dest: <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'a</span>&gt;,
+    ) -&gt; CopyAsciiResult&lt;(EncoderResult, usize, usize), (NonAscii, ByteFourHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;)&gt; {
         <span class="kw">let </span>non_ascii_ret = {
             <span class="kw">let </span>dst_len = dest.slice.len();
             <span class="kw">let </span>src_remaining = <span class="kw-2">&amp;</span><span class="self">self</span>.slice[<span class="self">self</span>.pos..];
@@ -3659,29 +3725,29 @@
     }
 }
 
-<span class="kw">pub struct </span>Utf8ReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>Utf8ReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    source: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">&#39;b</span>&gt;,
+    source: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf8ReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf8ReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf8ReadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf8ReadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf8ReadHandle { source: src }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>read(<span class="self">self</span>) -&gt; (char, Utf8UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;) {
+    </span><span class="kw">pub fn </span>read(<span class="self">self</span>) -&gt; (char, Utf8UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;) {
         <span class="kw">let </span>character = <span class="self">self</span>.source.read();
         <span class="kw">let </span>handle = Utf8UnreadHandle::new(<span class="self">self</span>.source);
         (character, handle)
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>read_enum(<span class="self">self</span>) -&gt; (Unicode, Utf8UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;) {
+    </span><span class="kw">pub fn </span>read_enum(<span class="self">self</span>) -&gt; (Unicode, Utf8UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;) {
         <span class="kw">let </span>character = <span class="self">self</span>.source.read_enum();
         <span class="kw">let </span>handle = Utf8UnreadHandle::new(<span class="self">self</span>.source);
         (character, handle)
@@ -3692,19 +3758,19 @@
     }
 }
 
-<span class="kw">pub struct </span>Utf8UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>Utf8UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    source: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">&#39;b</span>&gt;,
+    source: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; Utf8UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; Utf8UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; Utf8UnreadHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(src: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">'b</span>&gt;) -&gt; Utf8UnreadHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         Utf8UnreadHandle { source: src }
     }
     <span class="attr">#[inline(always)]
@@ -3716,26 +3782,26 @@
         <span class="self">self</span>.source.consumed()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>commit(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Utf8Source&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.source
     }
 }
 
 <span class="comment">// Byte destination
 
-</span><span class="kw">pub struct </span>ByteOneHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+</span><span class="kw">pub struct </span>ByteOneHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; ByteOneHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; ByteOneHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; ByteOneHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;) -&gt; ByteOneHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         ByteOneHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -3743,25 +3809,25 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_one(first);
         <span class="self">self</span>.dest
     }
 }
 
-<span class="kw">pub struct </span>ByteTwoHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>ByteTwoHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; ByteTwoHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; ByteTwoHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; ByteTwoHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;) -&gt; ByteTwoHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         ByteTwoHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -3769,30 +3835,30 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_one(first);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_two(<span class="self">self</span>, first: u8, second: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_two(<span class="self">self</span>, first: u8, second: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_two(first, second);
         <span class="self">self</span>.dest
     }
 }
 
-<span class="kw">pub struct </span>ByteThreeHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>ByteThreeHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; ByteThreeHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; ByteThreeHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; ByteThreeHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;) -&gt; ByteThreeHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         ByteThreeHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -3800,17 +3866,17 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_one(first);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_two(<span class="self">self</span>, first: u8, second: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_two(<span class="self">self</span>, first: u8, second: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_two(first, second);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_three(<span class="self">self</span>, first: u8, second: u8, third: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_three(<span class="self">self</span>, first: u8, second: u8, third: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_three(first, second, third);
         <span class="self">self</span>.dest
     }
@@ -3821,19 +3887,19 @@
     }
 }
 
-<span class="kw">pub struct </span>ByteFourHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">pub struct </span>ByteFourHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
-    dest: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;,
+    dest: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; ByteFourHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt;
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; ByteFourHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;
 <span class="kw">where
-    </span><span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>,
+    </span><span class="lifetime">'b</span>: <span class="lifetime">'a</span>,
 {
     <span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt;) -&gt; ByteFourHandle&lt;<span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">fn </span>new(dst: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt;) -&gt; ByteFourHandle&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
         ByteFourHandle { dest: dst }
     }
     <span class="attr">#[inline(always)]
@@ -3841,12 +3907,12 @@
         <span class="self">self</span>.dest.written()
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_one(<span class="self">self</span>, first: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_one(first);
         <span class="self">self</span>.dest
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>write_two(<span class="self">self</span>, first: u8, second: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    </span><span class="kw">pub fn </span>write_two(<span class="self">self</span>, first: u8, second: u8) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_two(first, second);
         <span class="self">self</span>.dest
     }
@@ -3857,24 +3923,24 @@
         second: u8,
         third: u8,
         fourth: u8,
-    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">&#39;b</span>&gt; {
+    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ByteDestination&lt;<span class="lifetime">'b</span>&gt; {
         <span class="self">self</span>.dest.write_four(first, second, third, fourth);
         <span class="self">self</span>.dest
     }
 }
 
-<span class="kw">pub struct </span>ByteDestination&lt;<span class="lifetime">&#39;a</span>&gt; {
-    slice: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>[u8],
+<span class="kw">pub struct </span>ByteDestination&lt;<span class="lifetime">'a</span>&gt; {
+    slice: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>[u8],
     pos: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ByteDestination&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ByteDestination&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[inline(always)]
     </span><span class="kw">pub fn </span>new(dst: <span class="kw-2">&amp;mut </span>[u8]) -&gt; ByteDestination {
         ByteDestination { slice: dst, pos: <span class="number">0 </span>}
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_one&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteOneHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_one&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteOneHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos &lt; <span class="self">self</span>.slice.len() {
             Space::Available(ByteOneHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -3882,7 +3948,7 @@
         }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_two&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteTwoHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_two&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteTwoHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos + <span class="number">1 </span>&lt; <span class="self">self</span>.slice.len() {
             Space::Available(ByteTwoHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -3890,7 +3956,7 @@
         }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_three&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteThreeHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_three&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteThreeHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos + <span class="number">2 </span>&lt; <span class="self">self</span>.slice.len() {
             Space::Available(ByteThreeHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{
@@ -3898,7 +3964,7 @@
         }
     }
     <span class="attr">#[inline(always)]
-    </span><span class="kw">pub fn </span>check_space_four&lt;<span class="lifetime">&#39;b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteFourHandle&lt;<span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;a</span>&gt;&gt; {
+    </span><span class="kw">pub fn </span>check_space_four&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; Space&lt;ByteFourHandle&lt;<span class="lifetime">'b</span>, <span class="lifetime">'a</span>&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.pos + <span class="number">3 </span>&lt; <span class="self">self</span>.slice.len() {
             Space::Available(ByteFourHandle::new(<span class="self">self</span>))
         } <span class="kw">else </span>{

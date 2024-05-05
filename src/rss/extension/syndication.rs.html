@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/syndication.rs`."><title>syndication.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/syndication.rs`."><title>syndication.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../rss/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -230,10 +232,10 @@
 <span class="kw">use </span><span class="kw">crate</span>::toxml::WriterExt;
 
 <span class="doccomment">/// The Syndication XML namespace.
-</span><span class="kw">pub const </span>NAMESPACE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;http://purl.org/rss/1.0/modules/syndication/&quot;</span>;
+</span><span class="kw">pub const </span>NAMESPACE: <span class="kw-2">&amp;</span>str = <span class="string">"http://purl.org/rss/1.0/modules/syndication/"</span>;
 
 <span class="doccomment">/// The unit of time between updates/refreshes
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq)]
 </span><span class="kw">pub enum </span>UpdatePeriod {
     <span class="doccomment">/// refresh hourly
@@ -253,11 +255,11 @@
 
     <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
         <span class="kw">match </span>s {
-            <span class="string">&quot;hourly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Hourly),
-            <span class="string">&quot;daily&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Daily),
-            <span class="string">&quot;weekly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Weekly),
-            <span class="string">&quot;monthly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Monthly),
-            <span class="string">&quot;yearly&quot; </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Yearly),
+            <span class="string">"hourly" </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Hourly),
+            <span class="string">"daily" </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Daily),
+            <span class="string">"weekly" </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Weekly),
+            <span class="string">"monthly" </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Monthly),
+            <span class="string">"yearly" </span>=&gt; <span class="prelude-val">Ok</span>(UpdatePeriod::Yearly),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(()),
         }
     }
@@ -266,25 +268,25 @@
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>UpdatePeriod {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
         <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            UpdatePeriod::Hourly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;hourly&quot;</span>),
-            UpdatePeriod::Daily =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;daily&quot;</span>),
-            UpdatePeriod::Weekly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;weekly&quot;</span>),
-            UpdatePeriod::Monthly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;monthly&quot;</span>),
-            UpdatePeriod::Yearly =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;yearly&quot;</span>),
+            UpdatePeriod::Hourly =&gt; <span class="macro">write!</span>(f, <span class="string">"hourly"</span>),
+            UpdatePeriod::Daily =&gt; <span class="macro">write!</span>(f, <span class="string">"daily"</span>),
+            UpdatePeriod::Weekly =&gt; <span class="macro">write!</span>(f, <span class="string">"weekly"</span>),
+            UpdatePeriod::Monthly =&gt; <span class="macro">write!</span>(f, <span class="string">"monthly"</span>),
+            UpdatePeriod::Yearly =&gt; <span class="macro">write!</span>(f, <span class="string">"yearly"</span>),
         }
     }
 }
 
 <span class="doccomment">/// An RSS syndication element extension.
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>SyndicationExtension {
@@ -336,14 +338,14 @@
         <span class="kw">for </span>(prefix, namespace) <span class="kw">in </span>namespaces {
             <span class="kw">if </span>NAMESPACE == namespace {
                 writer.write_text_element(
-                    <span class="macro">format!</span>(<span class="string">&quot;{}:updatePeriod&quot;</span>, prefix),
+                    <span class="macro">format!</span>(<span class="string">"{}:updatePeriod"</span>, prefix),
                     <span class="kw-2">&amp;</span><span class="self">self</span>.period.to_string(),
                 )<span class="question-mark">?</span>;
                 writer.write_text_element(
-                    <span class="macro">format!</span>(<span class="string">&quot;{}:updateFrequency&quot;</span>, prefix),
-                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.frequency),
+                    <span class="macro">format!</span>(<span class="string">"{}:updateFrequency"</span>, prefix),
+                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{}"</span>, <span class="self">self</span>.frequency),
                 )<span class="question-mark">?</span>;
-                writer.write_text_element(<span class="macro">format!</span>(<span class="string">&quot;{}:updateBase&quot;</span>, prefix), <span class="kw-2">&amp;</span><span class="self">self</span>.base)<span class="question-mark">?</span>;
+                writer.write_text_element(<span class="macro">format!</span>(<span class="string">"{}:updateBase"</span>, prefix), <span class="kw-2">&amp;</span><span class="self">self</span>.base)<span class="question-mark">?</span>;
             }
         }
         <span class="prelude-val">Ok</span>(())
@@ -355,15 +357,15 @@
         SyndicationExtension {
             period: UpdatePeriod::Daily,
             frequency: <span class="number">1</span>,
-            base: String::from(<span class="string">&quot;1970-01-01T00:00+00:00&quot;</span>),
+            base: String::from(<span class="string">"1970-01-01T00:00+00:00"</span>),
         }
     }
 }
 
 <span class="doccomment">/// Retrieves the extensions for the nominated field and runs the callback if there is at least 1 extension value
-</span><span class="kw">fn </span>with_first_ext_value&lt;<span class="lifetime">&#39;a</span>, F&gt;(map: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>BTreeMap&lt;String, Vec&lt;Extension&gt;&gt;, field: <span class="kw-2">&amp;</span>str, f: F)
+</span><span class="kw">fn </span>with_first_ext_value&lt;<span class="lifetime">'a</span>, F&gt;(map: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>BTreeMap&lt;String, Vec&lt;Extension&gt;&gt;, field: <span class="kw-2">&amp;</span>str, f: F)
 <span class="kw">where
-    </span>F: FnOnce(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str),
+    </span>F: FnOnce(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str),
 {
     <span class="kw">if let </span><span class="prelude-val">Some</span>(extensions) = map.get(field) {
         <span class="kw">if </span>!extensions.is_empty() {
@@ -379,23 +381,23 @@
     </span><span class="kw">pub fn </span>from_map(map: BTreeMap&lt;String, Vec&lt;Extension&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>syn = SyndicationExtension::default();
 
-        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">&quot;updatePeriod&quot;</span>, |value| {
+        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">"updatePeriod"</span>, |value| {
             <span class="kw">if let </span><span class="prelude-val">Ok</span>(update_period) = value.parse() {
                 syn.period = update_period
             }
         });
-        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">&quot;updateFrequency&quot;</span>, |value| {
+        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">"updateFrequency"</span>, |value| {
             <span class="kw">if let </span><span class="prelude-val">Ok</span>(frequency) = value.parse() {
                 syn.frequency = frequency
             }
         });
-        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">&quot;updateBase&quot;</span>, |value| syn.base = value.to_owned());
+        with_first_ext_value(<span class="kw-2">&amp;</span>map, <span class="string">"updateBase"</span>, |value| syn.base = value.to_owned());
 
         syn
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>SyndicationExtensionBuilder {
     <span class="doccomment">/// Builds a new `SyndicationExtension`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; SyndicationExtension {
@@ -408,18 +410,18 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+    #[cfg(feature = <span class="string">"builders"</span>)]
     </span><span class="kw">fn </span>test_builder() {
         <span class="macro">assert_eq!</span>(
             SyndicationExtensionBuilder::default()
                 .period(UpdatePeriod::Weekly)
                 .frequency(<span class="number">2_u32</span>)
-                .base(<span class="string">&quot;2021-01-01T00:00+00:00&quot;</span>)
+                .base(<span class="string">"2021-01-01T00:00+00:00"</span>)
                 .build(),
             SyndicationExtension {
                 period: UpdatePeriod::Weekly,
                 frequency: <span class="number">2</span>,
-                base: <span class="string">&quot;2021-01-01T00:00+00:00&quot;</span>.to_string(),
+                base: <span class="string">"2021-01-01T00:00+00:00"</span>.to_string(),
             }
         );
     }

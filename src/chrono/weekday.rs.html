@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.31/src/weekday.rs`."><title>weekday.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/chrono-0.4.38/src/weekday.rs`."><title>weekday.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="chrono" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../chrono/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -383,9 +385,26 @@
 <a href="#383" id="383">383</a>
 <a href="#384" id="384">384</a>
 <a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>core::fmt;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;rkyv&quot;</span>)]
+<span class="attr">#[cfg(any(feature = <span class="string">"rkyv"</span>, feature = <span class="string">"rkyv-16"</span>, feature = <span class="string">"rkyv-32"</span>, feature = <span class="string">"rkyv-64"</span>))]
 </span><span class="kw">use </span>rkyv::{Archive, Deserialize, Serialize};
 
 <span class="kw">use </span><span class="kw">crate</span>::OutOfRange;
@@ -400,7 +419,7 @@
 /// ```
 /// use chrono::Weekday;
 ///
-/// let monday = &quot;Monday&quot;.parse::&lt;Weekday&gt;().unwrap();
+/// let monday = "Monday".parse::&lt;Weekday&gt;().unwrap();
 /// assert_eq!(monday, Weekday::Mon);
 ///
 /// let sunday = Weekday::try_from(6).unwrap();
@@ -415,9 +434,14 @@
 /// assert_eq!(sunday.pred(), Weekday::Sat);
 /// ```
 </span><span class="attr">#[derive(PartialEq, Eq, Copy, Clone, Debug, Hash)]
-#[cfg_attr(feature = <span class="string">&quot;rustc-serialize&quot;</span>, derive(RustcEncodable, RustcDecodable))]
-#[cfg_attr(feature = <span class="string">&quot;rkyv&quot;</span>, derive(Archive, Deserialize, Serialize))]
-#[cfg_attr(feature = <span class="string">&quot;arbitrary&quot;</span>, derive(arbitrary::Arbitrary))]
+#[cfg_attr(
+    any(feature = <span class="string">"rkyv"</span>, feature = <span class="string">"rkyv-16"</span>, feature = <span class="string">"rkyv-32"</span>, feature = <span class="string">"rkyv-64"</span>),
+    derive(Archive, Deserialize, Serialize),
+    archive(compare(PartialEq)),
+    archive_attr(derive(Clone, Copy, PartialEq, Eq, Debug, Hash))
+)]
+#[cfg_attr(feature = <span class="string">"rkyv-validation"</span>, archive(check_bytes))]
+#[cfg_attr(all(feature = <span class="string">"arbitrary"</span>, feature = <span class="string">"std"</span>), derive(arbitrary::Arbitrary))]
 </span><span class="kw">pub enum </span>Weekday {
     <span class="doccomment">/// Monday.
     </span>Mon = <span class="number">0</span>,
@@ -481,7 +505,7 @@
     /// `w.number_from_monday()`: | 1     | 2     | 3     | 4     | 5     | 6     | 7
     </span><span class="attr">#[inline]
     </span><span class="kw">pub const fn </span>number_from_monday(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-        <span class="self">self</span>.num_days_from(Weekday::Mon) + <span class="number">1
+        <span class="self">self</span>.days_since(Weekday::Mon) + <span class="number">1
     </span>}
 
     <span class="doccomment">/// Returns a day-of-week number starting from Sunday = 1.
@@ -491,7 +515,7 @@
     /// `w.number_from_sunday()`: | 2     | 3     | 4     | 5     | 6     | 7     | 1
     </span><span class="attr">#[inline]
     </span><span class="kw">pub const fn </span>number_from_sunday(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-        <span class="self">self</span>.num_days_from(Weekday::Sun) + <span class="number">1
+        <span class="self">self</span>.days_since(Weekday::Sun) + <span class="number">1
     </span>}
 
     <span class="doccomment">/// Returns a day-of-week number starting from Monday = 0.
@@ -502,19 +526,20 @@
     ///
     /// # Example
     ///
-    </span><span class="attr">#[cfg_attr(not(feature = <span class="string">&quot;clock&quot;</span>), doc = <span class="string">&quot;```ignore&quot;</span>)]
-    #[cfg_attr(feature = <span class="string">&quot;clock&quot;</span>, doc = <span class="string">&quot;```rust&quot;</span>)]
-    </span><span class="doccomment">/// # use chrono::{Local, Datelike};
+    /// ```
+    /// # #[cfg(feature = "clock")] {
+    /// # use chrono::{Local, Datelike};
     /// // MTWRFSU is occasionally used as a single-letter abbreviation of the weekdays.
     /// // Use `num_days_from_monday` to index into the array.
-    /// const MTWRFSU: [char; 7] = [&#39;M&#39;, &#39;T&#39;, &#39;W&#39;, &#39;R&#39;, &#39;F&#39;, &#39;S&#39;, &#39;U&#39;];
+    /// const MTWRFSU: [char; 7] = ['M', 'T', 'W', 'R', 'F', 'S', 'U'];
     ///
     /// let today = Local::now().weekday();
-    /// println!(&quot;{}&quot;, MTWRFSU[today.num_days_from_monday() as usize]);
+    /// println!("{}", MTWRFSU[today.num_days_from_monday() as usize]);
+    /// # }
     /// ```
     </span><span class="attr">#[inline]
     </span><span class="kw">pub const fn </span>num_days_from_monday(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-        <span class="self">self</span>.num_days_from(Weekday::Mon)
+        <span class="self">self</span>.days_since(Weekday::Mon)
     }
 
     <span class="doccomment">/// Returns a day-of-week number starting from Sunday = 0.
@@ -524,30 +549,40 @@
     /// `w.num_days_from_sunday()`: | 1     | 2     | 3     | 4     | 5     | 6     | 0
     </span><span class="attr">#[inline]
     </span><span class="kw">pub const fn </span>num_days_from_sunday(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-        <span class="self">self</span>.num_days_from(Weekday::Sun)
+        <span class="self">self</span>.days_since(Weekday::Sun)
     }
 
-    <span class="doccomment">/// Returns a day-of-week number starting from the parameter `day` (D) = 0.
+    <span class="doccomment">/// The number of days since the given day.
     ///
-    /// `w`:                        | `D`   | `D+1` | `D+2` | `D+3` | `D+4` | `D+5` | `D+6`
-    /// --------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | -----
-    /// `w.num_days_from(wd)`:      | 0     | 1     | 2     | 3     | 4     | 5     | 6
-    </span><span class="attr">#[inline]
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>num_days_from(<span class="kw-2">&amp;</span><span class="self">self</span>, day: Weekday) -&gt; u32 {
-        (<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>u32 + <span class="number">7 </span>- day <span class="kw">as </span>u32) % <span class="number">7
-    </span>}
+    /// # Examples
+    ///
+    /// ```
+    /// use chrono::Weekday::*;
+    /// assert_eq!(Mon.days_since(Mon), 0);
+    /// assert_eq!(Sun.days_since(Tue), 5);
+    /// assert_eq!(Wed.days_since(Sun), 3);
+    /// ```
+    </span><span class="kw">pub const fn </span>days_since(<span class="kw-2">&amp;</span><span class="self">self</span>, other: Weekday) -&gt; u32 {
+        <span class="kw">let </span>lhs = <span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>u32;
+        <span class="kw">let </span>rhs = other <span class="kw">as </span>u32;
+        <span class="kw">if </span>lhs &lt; rhs {
+            <span class="number">7 </span>+ lhs - rhs
+        } <span class="kw">else </span>{
+            lhs - rhs
+        }
+    }
 }
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>Weekday {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
         f.write_str(<span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            Weekday::Mon =&gt; <span class="string">&quot;Mon&quot;</span>,
-            Weekday::Tue =&gt; <span class="string">&quot;Tue&quot;</span>,
-            Weekday::Wed =&gt; <span class="string">&quot;Wed&quot;</span>,
-            Weekday::Thu =&gt; <span class="string">&quot;Thu&quot;</span>,
-            Weekday::Fri =&gt; <span class="string">&quot;Fri&quot;</span>,
-            Weekday::Sat =&gt; <span class="string">&quot;Sat&quot;</span>,
-            Weekday::Sun =&gt; <span class="string">&quot;Sun&quot;</span>,
+            Weekday::Mon =&gt; <span class="string">"Mon"</span>,
+            Weekday::Tue =&gt; <span class="string">"Tue"</span>,
+            Weekday::Wed =&gt; <span class="string">"Wed"</span>,
+            Weekday::Thu =&gt; <span class="string">"Thu"</span>,
+            Weekday::Fri =&gt; <span class="string">"Fri"</span>,
+            Weekday::Sat =&gt; <span class="string">"Sat"</span>,
+            Weekday::Sun =&gt; <span class="string">"Sun"</span>,
         })
     }
 }
@@ -611,26 +646,24 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) _dummy: (),
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;std&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;std&quot;</span>)))]
+<span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
 </span><span class="kw">impl </span>std::error::Error <span class="kw">for </span>ParseWeekdayError {}
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>ParseWeekdayError {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        f.write_fmt(<span class="macro">format_args!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>))
+        f.write_fmt(<span class="macro">format_args!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>))
     }
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>ParseWeekdayError {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;ParseWeekdayError {{ .. }}&quot;</span>)
+        <span class="macro">write!</span>(f, <span class="string">"ParseWeekdayError {{ .. }}"</span>)
     }
 }
 
 <span class="comment">// the actual `FromStr` implementation is in the `format` module to leverage the existing code
 
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;serde&quot;</span>)))]
+</span><span class="attr">#[cfg(feature = <span class="string">"serde"</span>)]
 </span><span class="kw">mod </span>weekday_serde {
     <span class="kw">use </span><span class="kw">super</span>::Weekday;
     <span class="kw">use </span>core::fmt;
@@ -647,25 +680,25 @@
 
     <span class="kw">struct </span>WeekdayVisitor;
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; de::Visitor&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>WeekdayVisitor {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; de::Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>WeekdayVisitor {
         <span class="kw">type </span>Value = Weekday;
 
         <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-            f.write_str(<span class="string">&quot;Weekday&quot;</span>)
+            f.write_str(<span class="string">"Weekday"</span>)
         }
 
         <span class="kw">fn </span>visit_str&lt;E&gt;(<span class="self">self</span>, value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt;
         <span class="kw">where
             </span>E: de::Error,
         {
-            value.parse().map_err(|<span class="kw">_</span>| E::custom(<span class="string">&quot;short or long weekday names expected&quot;</span>))
+            value.parse().map_err(|<span class="kw">_</span>| E::custom(<span class="string">"short or long weekday names expected"</span>))
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; de::Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Weekday {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; de::Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>Weekday {
         <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
         <span class="kw">where
-            </span>D: de::Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+            </span>D: de::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
         {
             deserializer.deserialize_str(WeekdayVisitor)
         }
@@ -677,51 +710,45 @@
     <span class="kw">use </span><span class="kw">super</span>::Weekday;
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_num_days_from() {
+    </span><span class="kw">fn </span>test_days_since() {
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">7 </span>{
             <span class="kw">let </span>base_day = Weekday::try_from(i).unwrap();
 
-            <span class="macro">assert_eq!</span>(base_day.num_days_from_monday(), base_day.num_days_from(Weekday::Mon));
-            <span class="macro">assert_eq!</span>(base_day.num_days_from_sunday(), base_day.num_days_from(Weekday::Sun));
+            <span class="macro">assert_eq!</span>(base_day.num_days_from_monday(), base_day.days_since(Weekday::Mon));
+            <span class="macro">assert_eq!</span>(base_day.num_days_from_sunday(), base_day.days_since(Weekday::Sun));
 
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day), <span class="number">0</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day), <span class="number">0</span>);
 
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.pred()), <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.pred().pred()), <span class="number">2</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.pred().pred().pred()), <span class="number">3</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.pred().pred().pred().pred()), <span class="number">4</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.pred().pred().pred().pred().pred()), <span class="number">5</span>);
-            <span class="macro">assert_eq!</span>(
-                base_day.num_days_from(base_day.pred().pred().pred().pred().pred().pred()),
-                <span class="number">6
-            </span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.pred()), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.pred().pred()), <span class="number">2</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.pred().pred().pred()), <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.pred().pred().pred().pred()), <span class="number">4</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.pred().pred().pred().pred().pred()), <span class="number">5</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.pred().pred().pred().pred().pred().pred()), <span class="number">6</span>);
 
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.succ()), <span class="number">6</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.succ().succ()), <span class="number">5</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.succ().succ().succ()), <span class="number">4</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.succ().succ().succ().succ()), <span class="number">3</span>);
-            <span class="macro">assert_eq!</span>(base_day.num_days_from(base_day.succ().succ().succ().succ().succ()), <span class="number">2</span>);
-            <span class="macro">assert_eq!</span>(
-                base_day.num_days_from(base_day.succ().succ().succ().succ().succ().succ()),
-                <span class="number">1
-            </span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.succ()), <span class="number">6</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.succ().succ()), <span class="number">5</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.succ().succ().succ()), <span class="number">4</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.succ().succ().succ().succ()), <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.succ().succ().succ().succ().succ()), <span class="number">2</span>);
+            <span class="macro">assert_eq!</span>(base_day.days_since(base_day.succ().succ().succ().succ().succ().succ()), <span class="number">1</span>);
         }
     }
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+    #[cfg(feature = <span class="string">"serde"</span>)]
     </span><span class="kw">fn </span>test_serde_serialize() {
         <span class="kw">use </span>serde_json::to_string;
         <span class="kw">use </span>Weekday::<span class="kw-2">*</span>;
 
         <span class="kw">let </span>cases: Vec&lt;(Weekday, <span class="kw-2">&amp;</span>str)&gt; = <span class="macro">vec!</span>[
-            (Mon, <span class="string">&quot;\&quot;Mon\&quot;&quot;</span>),
-            (Tue, <span class="string">&quot;\&quot;Tue\&quot;&quot;</span>),
-            (Wed, <span class="string">&quot;\&quot;Wed\&quot;&quot;</span>),
-            (Thu, <span class="string">&quot;\&quot;Thu\&quot;&quot;</span>),
-            (Fri, <span class="string">&quot;\&quot;Fri\&quot;&quot;</span>),
-            (Sat, <span class="string">&quot;\&quot;Sat\&quot;&quot;</span>),
-            (Sun, <span class="string">&quot;\&quot;Sun\&quot;&quot;</span>),
+            (Mon, <span class="string">"\"Mon\""</span>),
+            (Tue, <span class="string">"\"Tue\""</span>),
+            (Wed, <span class="string">"\"Wed\""</span>),
+            (Thu, <span class="string">"\"Thu\""</span>),
+            (Fri, <span class="string">"\"Fri\""</span>),
+            (Sat, <span class="string">"\"Sat\""</span>),
+            (Sun, <span class="string">"\"Sun\""</span>),
         ];
 
         <span class="kw">for </span>(weekday, expected_str) <span class="kw">in </span>cases {
@@ -731,28 +758,28 @@
     }
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+    #[cfg(feature = <span class="string">"serde"</span>)]
     </span><span class="kw">fn </span>test_serde_deserialize() {
         <span class="kw">use </span>serde_json::from_str;
         <span class="kw">use </span>Weekday::<span class="kw-2">*</span>;
 
         <span class="kw">let </span>cases: Vec&lt;(<span class="kw-2">&amp;</span>str, Weekday)&gt; = <span class="macro">vec!</span>[
-            (<span class="string">&quot;\&quot;mon\&quot;&quot;</span>, Mon),
-            (<span class="string">&quot;\&quot;MONDAY\&quot;&quot;</span>, Mon),
-            (<span class="string">&quot;\&quot;MonDay\&quot;&quot;</span>, Mon),
-            (<span class="string">&quot;\&quot;mOn\&quot;&quot;</span>, Mon),
-            (<span class="string">&quot;\&quot;tue\&quot;&quot;</span>, Tue),
-            (<span class="string">&quot;\&quot;tuesday\&quot;&quot;</span>, Tue),
-            (<span class="string">&quot;\&quot;wed\&quot;&quot;</span>, Wed),
-            (<span class="string">&quot;\&quot;wednesday\&quot;&quot;</span>, Wed),
-            (<span class="string">&quot;\&quot;thu\&quot;&quot;</span>, Thu),
-            (<span class="string">&quot;\&quot;thursday\&quot;&quot;</span>, Thu),
-            (<span class="string">&quot;\&quot;fri\&quot;&quot;</span>, Fri),
-            (<span class="string">&quot;\&quot;friday\&quot;&quot;</span>, Fri),
-            (<span class="string">&quot;\&quot;sat\&quot;&quot;</span>, Sat),
-            (<span class="string">&quot;\&quot;saturday\&quot;&quot;</span>, Sat),
-            (<span class="string">&quot;\&quot;sun\&quot;&quot;</span>, Sun),
-            (<span class="string">&quot;\&quot;sunday\&quot;&quot;</span>, Sun),
+            (<span class="string">"\"mon\""</span>, Mon),
+            (<span class="string">"\"MONDAY\""</span>, Mon),
+            (<span class="string">"\"MonDay\""</span>, Mon),
+            (<span class="string">"\"mOn\""</span>, Mon),
+            (<span class="string">"\"tue\""</span>, Tue),
+            (<span class="string">"\"tuesday\""</span>, Tue),
+            (<span class="string">"\"wed\""</span>, Wed),
+            (<span class="string">"\"wednesday\""</span>, Wed),
+            (<span class="string">"\"thu\""</span>, Thu),
+            (<span class="string">"\"thursday\""</span>, Thu),
+            (<span class="string">"\"fri\""</span>, Fri),
+            (<span class="string">"\"friday\""</span>, Fri),
+            (<span class="string">"\"sat\""</span>, Sat),
+            (<span class="string">"\"saturday\""</span>, Sat),
+            (<span class="string">"\"sun\""</span>, Sun),
+            (<span class="string">"\"sunday\""</span>, Sun),
         ];
 
         <span class="kw">for </span>(str, expected_weekday) <span class="kw">in </span>cases {
@@ -761,11 +788,20 @@
         }
 
         <span class="kw">let </span>errors: Vec&lt;<span class="kw-2">&amp;</span>str&gt; =
-            <span class="macro">vec!</span>[<span class="string">&quot;\&quot;not a weekday\&quot;&quot;</span>, <span class="string">&quot;\&quot;monDAYs\&quot;&quot;</span>, <span class="string">&quot;\&quot;mond\&quot;&quot;</span>, <span class="string">&quot;mon&quot;</span>, <span class="string">&quot;\&quot;thur\&quot;&quot;</span>, <span class="string">&quot;\&quot;thurs\&quot;&quot;</span>];
+            <span class="macro">vec!</span>[<span class="string">"\"not a weekday\""</span>, <span class="string">"\"monDAYs\""</span>, <span class="string">"\"mond\""</span>, <span class="string">"mon"</span>, <span class="string">"\"thur\""</span>, <span class="string">"\"thurs\""</span>];
 
         <span class="kw">for </span>str <span class="kw">in </span>errors {
             from_str::&lt;Weekday&gt;(str).unwrap_err();
         }
+    }
+
+    <span class="attr">#[test]
+    #[cfg(feature = <span class="string">"rkyv-validation"</span>)]
+    </span><span class="kw">fn </span>test_rkyv_validation() {
+        <span class="kw">let </span>mon = Weekday::Mon;
+        <span class="kw">let </span>bytes = rkyv::to_bytes::&lt;<span class="kw">_</span>, <span class="number">1</span>&gt;(<span class="kw-2">&amp;</span>mon).unwrap();
+
+        <span class="macro">assert_eq!</span>(rkyv::from_bytes::&lt;Weekday&gt;(<span class="kw-2">&amp;</span>bytes).unwrap(), mon);
     }
 }
 </code></pre></div></section></main></body></html>

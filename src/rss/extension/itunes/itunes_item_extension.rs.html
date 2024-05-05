@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/itunes/itunes_item_extension.rs`."><title>itunes_item_extension.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/extension/itunes/itunes_item_extension.rs`."><title>itunes_item_extension.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="rss" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../rss/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -658,15 +660,15 @@
 <span class="kw">use </span><span class="kw">crate</span>::toxml::{ToXml, WriterExt};
 
 <span class="doccomment">/// An iTunes item element extension.
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>ITunesItemExtension {
@@ -713,8 +715,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_author(&quot;John Doe&quot;.to_string());
-    /// assert_eq!(extension.author(), Some(&quot;John Doe&quot;));
+    /// extension.set_author("John Doe".to_string());
+    /// assert_eq!(extension.author(), Some("John Doe"));
     /// ```
     </span><span class="kw">pub fn </span>author(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.author.as_deref()
@@ -728,7 +730,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_author(&quot;John Doe&quot;.to_string());
+    /// extension.set_author("John Doe".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_author&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, author: V)
     <span class="kw">where
@@ -748,8 +750,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_block(&quot;Yes&quot;.to_string());
-    /// assert_eq!(extension.block(), Some(&quot;Yes&quot;));
+    /// extension.set_block("Yes".to_string());
+    /// assert_eq!(extension.block(), Some("Yes"));
     /// ```
     </span><span class="kw">pub fn </span>block(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.block.as_deref()
@@ -766,7 +768,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_block(&quot;Yes&quot;.to_string());
+    /// extension.set_block("Yes".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_block&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, block: V)
     <span class="kw">where
@@ -783,8 +785,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_image(&quot;http://example.com/artwork.png&quot;.to_string());
-    /// assert_eq!(extension.image(), Some(&quot;http://example.com/artwork.png&quot;));
+    /// extension.set_image("http://example.com/artwork.png".to_string());
+    /// assert_eq!(extension.image(), Some("http://example.com/artwork.png"));
     /// ```
     </span><span class="kw">pub fn </span>image(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.image.as_deref()
@@ -798,7 +800,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_image(&quot;http://example.com/artwork.png&quot;.to_string());
+    /// extension.set_image("http://example.com/artwork.png".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_image&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, image: V)
     <span class="kw">where
@@ -817,8 +819,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_duration(&quot;1:00&quot;.to_string());
-    /// assert_eq!(extension.duration(), Some(&quot;1:00&quot;));
+    /// extension.set_duration("1:00".to_string());
+    /// assert_eq!(extension.duration(), Some("1:00"));
     /// ```
     </span><span class="kw">pub fn </span>duration(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.duration.as_deref()
@@ -834,7 +836,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_duration(&quot;1:00&quot;.to_string());
+    /// extension.set_duration("1:00".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_duration&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, duration: V)
     <span class="kw">where
@@ -855,8 +857,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_explicit(&quot;Yes&quot;.to_string());
-    /// assert_eq!(extension.explicit(), Some(&quot;Yes&quot;));
+    /// extension.set_explicit("Yes".to_string());
+    /// assert_eq!(extension.explicit(), Some("Yes"));
     /// ```
     </span><span class="kw">pub fn </span>explicit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.explicit.as_deref()
@@ -874,7 +876,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_explicit(&quot;Yes&quot;.to_string());
+    /// extension.set_explicit("Yes".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_explicit&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, explicit: V)
     <span class="kw">where
@@ -893,8 +895,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_closed_captioned(&quot;Yes&quot;.to_string());
-    /// assert_eq!(extension.closed_captioned(), Some(&quot;Yes&quot;));
+    /// extension.set_closed_captioned("Yes".to_string());
+    /// assert_eq!(extension.closed_captioned(), Some("Yes"));
     /// ```
     </span><span class="kw">pub fn </span>closed_captioned(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.closed_captioned.as_deref()
@@ -910,7 +912,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_closed_captioned(&quot;Yes&quot;.to_string());
+    /// extension.set_closed_captioned("Yes".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_closed_captioned&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, closed_captioned: V)
     <span class="kw">where
@@ -927,8 +929,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_order(&quot;1&quot;.to_string());
-    /// assert_eq!(extension.order(), Some(&quot;1&quot;));
+    /// extension.set_order("1".to_string());
+    /// assert_eq!(extension.order(), Some("1"));
     /// ```
     </span><span class="kw">pub fn </span>order(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.order.as_deref()
@@ -942,7 +944,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_order(&quot;1&quot;.to_string());
+    /// extension.set_order("1".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_order&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: V)
     <span class="kw">where
@@ -959,8 +961,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_subtitle(&quot;An episode&quot;.to_string());
-    /// assert_eq!(extension.subtitle(), Some(&quot;An episode&quot;));
+    /// extension.set_subtitle("An episode".to_string());
+    /// assert_eq!(extension.subtitle(), Some("An episode"));
     /// ```
     </span><span class="kw">pub fn </span>subtitle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.subtitle.as_deref()
@@ -974,7 +976,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_subtitle(&quot;An episode&quot;.to_string());
+    /// extension.set_subtitle("An episode".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_subtitle&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, subtitle: V)
     <span class="kw">where
@@ -991,8 +993,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_summary(&quot;An episode&quot;.to_string());
-    /// assert_eq!(extension.summary(), Some(&quot;An episode&quot;));
+    /// extension.set_summary("An episode".to_string());
+    /// assert_eq!(extension.summary(), Some("An episode"));
     /// ```
     </span><span class="kw">pub fn </span>summary(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.summary.as_deref()
@@ -1006,7 +1008,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_summary(&quot;An episode&quot;.to_string());
+    /// extension.set_summary("An episode".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_summary&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, summary: V)
     <span class="kw">where
@@ -1025,8 +1027,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_keywords(&quot;technology&quot;.to_string());
-    /// assert_eq!(extension.keywords(), Some(&quot;technology&quot;));
+    /// extension.set_keywords("technology".to_string());
+    /// assert_eq!(extension.keywords(), Some("technology"));
     /// ```
     </span><span class="kw">pub fn </span>keywords(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.keywords.as_deref()
@@ -1042,7 +1044,7 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_keywords(&quot;technology&quot;.to_string());
+    /// extension.set_keywords("technology".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_keywords&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, keywords: V)
     <span class="kw">where
@@ -1061,8 +1063,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_episode(&quot;3&quot;.to_string());
-    /// assert_eq!(extension.episode(), Some(&quot;3&quot;));
+    /// extension.set_episode("3".to_string());
+    /// assert_eq!(extension.episode(), Some("3"));
     /// ```
     </span><span class="kw">pub fn </span>episode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.episode.as_deref()
@@ -1078,8 +1080,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_episode(&quot;2&quot;.to_string());
-    /// assert_eq!(extension.episode(), Some(&quot;2&quot;));
+    /// extension.set_episode("2".to_string());
+    /// assert_eq!(extension.episode(), Some("2"));
     /// ```
     </span><span class="kw">pub fn </span>set_episode&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, episode: V)
     <span class="kw">where
@@ -1098,8 +1100,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_season(&quot;3&quot;.to_string());
-    /// assert_eq!(extension.season(), Some(&quot;3&quot;));
+    /// extension.set_season("3".to_string());
+    /// assert_eq!(extension.season(), Some("3"));
     /// ```
     </span><span class="kw">pub fn </span>season(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.season.as_deref()
@@ -1115,8 +1117,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_season(&quot;3&quot;.to_string());
-    /// assert_eq!(extension.season(), Some(&quot;3&quot;));
+    /// extension.set_season("3".to_string());
+    /// assert_eq!(extension.season(), Some("3"));
     /// ```
     </span><span class="kw">pub fn </span>set_season&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, season: V)
     <span class="kw">where
@@ -1127,7 +1129,7 @@
 
     <span class="doccomment">/// Return the episode_type of this podcast episode
     ///
-    /// The episode type will be a string usually &quot;full&quot; &quot;trailer&quot; or &quot;bonus&quot;
+    /// The episode type will be a string usually "full" "trailer" or "bonus"
     ///
     /// # Examples
     ///
@@ -1135,8 +1137,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_episode_type(&quot;trailer&quot;.to_string());
-    /// assert_eq!(extension.episode_type(), Some(&quot;trailer&quot;));
+    /// extension.set_episode_type("trailer".to_string());
+    /// assert_eq!(extension.episode_type(), Some("trailer"));
     /// ```
     </span><span class="kw">pub fn </span>episode_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.episode_type.as_deref()
@@ -1144,7 +1146,7 @@
 
     <span class="doccomment">/// Set the the episode type for this episode.
     ///
-    /// A string, usually &quot;full&quot; but maybe &quot;trailer&quot; or &quot;bonus&quot;
+    /// A string, usually "full" but maybe "trailer" or "bonus"
     ///
     /// # Examples
     ///
@@ -1152,8 +1154,8 @@
     /// use rss::extension::itunes::ITunesItemExtension;
     ///
     /// let mut extension = ITunesItemExtension::default();
-    /// extension.set_episode_type(&quot;full&quot;.to_string());
-    /// assert_eq!(extension.episode_type(), Some(&quot;full&quot;));
+    /// extension.set_episode_type("full".to_string());
+    /// assert_eq!(extension.episode_type(), Some("full"));
     /// ```
     </span><span class="kw">pub fn </span>set_episode_type&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, episode_type: V)
     <span class="kw">where
@@ -1167,19 +1169,19 @@
     <span class="doccomment">/// Create an `ITunesChannelExtension` from a `BTreeMap`.
     </span><span class="kw">pub fn </span>from_map(<span class="kw-2">mut </span>map: BTreeMap&lt;String, Vec&lt;Extension&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            author: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;author&quot;</span>),
-            block: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;block&quot;</span>),
+            author: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"author"</span>),
+            block: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"block"</span>),
             image: parse_image(<span class="kw-2">&amp;mut </span>map),
-            duration: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;duration&quot;</span>),
-            explicit: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;explicit&quot;</span>),
-            closed_captioned: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;isClosedCaptioned&quot;</span>),
-            order: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;order&quot;</span>),
-            subtitle: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;subtitle&quot;</span>),
-            summary: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;summary&quot;</span>),
-            keywords: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;keywords&quot;</span>),
-            episode: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;episode&quot;</span>),
-            season: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;season&quot;</span>),
-            episode_type: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">&quot;episodeType&quot;</span>),
+            duration: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"duration"</span>),
+            explicit: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"explicit"</span>),
+            closed_captioned: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"isClosedCaptioned"</span>),
+            order: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"order"</span>),
+            subtitle: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"subtitle"</span>),
+            summary: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"summary"</span>),
+            keywords: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"keywords"</span>),
+            episode: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"episode"</span>),
+            season: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"season"</span>),
+            episode_type: remove_extension_value(<span class="kw-2">&amp;mut </span>map, <span class="string">"episodeType"</span>),
         }
     }
 }
@@ -1187,59 +1189,59 @@
 <span class="kw">impl </span>ToXml <span class="kw">for </span>ITunesItemExtension {
     <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(author) = <span class="self">self</span>.author.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:author&quot;</span>, author)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:author"</span>, author)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(block) = <span class="self">self</span>.block.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:block&quot;</span>, block)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:block"</span>, block)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(image) = <span class="self">self</span>.image.as_ref() {
-            <span class="kw">let </span>name = <span class="string">&quot;itunes:image&quot;</span>;
+            <span class="kw">let </span>name = <span class="string">"itunes:image"</span>;
             <span class="kw">let </span><span class="kw-2">mut </span>element = BytesStart::new(name);
-            element.push_attribute((<span class="string">&quot;href&quot;</span>, <span class="kw-2">&amp;**</span>image));
+            element.push_attribute((<span class="string">"href"</span>, <span class="kw-2">&amp;**</span>image));
             writer.write_event(Event::Start(element))<span class="question-mark">?</span>;
             writer.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(duration) = <span class="self">self</span>.duration.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:duration&quot;</span>, duration)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:duration"</span>, duration)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(explicit) = <span class="self">self</span>.explicit.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:explicit&quot;</span>, explicit)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:explicit"</span>, explicit)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(closed_captioned) = <span class="self">self</span>.closed_captioned.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:isClosedCaptioned&quot;</span>, closed_captioned)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:isClosedCaptioned"</span>, closed_captioned)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(order) = <span class="self">self</span>.order.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:order&quot;</span>, order)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:order"</span>, order)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(subtitle) = <span class="self">self</span>.subtitle.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:subtitle&quot;</span>, subtitle)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:subtitle"</span>, subtitle)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(summary) = <span class="self">self</span>.summary.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:summary&quot;</span>, summary)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:summary"</span>, summary)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(keywords) = <span class="self">self</span>.keywords.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:keywords&quot;</span>, keywords)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:keywords"</span>, keywords)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(episode) = <span class="self">self</span>.episode.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:episode&quot;</span>, episode)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:episode"</span>, episode)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(season) = <span class="self">self</span>.season.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:season&quot;</span>, season)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:season"</span>, season)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(episode_type) = <span class="self">self</span>.episode_type.as_ref() {
-            writer.write_text_element(<span class="string">&quot;itunes:episodeType&quot;</span>, episode_type)<span class="question-mark">?</span>;
+            writer.write_text_element(<span class="string">"itunes:episodeType"</span>, episode_type)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
@@ -1247,12 +1249,12 @@
 
     <span class="kw">fn </span>used_namespaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BTreeMap&lt;String, String&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>namespaces = BTreeMap::new();
-        namespaces.insert(<span class="string">&quot;itunes&quot;</span>.to_owned(), NAMESPACE.to_owned());
+        namespaces.insert(<span class="string">"itunes"</span>.to_owned(), NAMESPACE.to_owned());
         namespaces
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>ITunesItemExtensionBuilder {
     <span class="doccomment">/// Builds a new `ITunesItemExtension`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ITunesItemExtension {
@@ -1265,14 +1267,14 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+    #[cfg(feature = <span class="string">"builders"</span>)]
     </span><span class="kw">fn </span>test_builder() {
         <span class="macro">assert_eq!</span>(
             ITunesItemExtensionBuilder::default()
-                .author(<span class="string">&quot;John Doe&quot;</span>.to_string())
+                .author(<span class="string">"John Doe"</span>.to_string())
                 .build(),
             ITunesItemExtension {
-                author: <span class="prelude-val">Some</span>(<span class="string">&quot;John Doe&quot;</span>.to_string()),
+                author: <span class="prelude-val">Some</span>(<span class="string">"John Doe"</span>.to_string()),
                 ..Default::default()
             }
         );

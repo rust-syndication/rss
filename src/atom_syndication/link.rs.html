@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/link.rs`."><title>link.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/atom_syndication-0.12.2/src/link.rs`."><title>link.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="atom_syndication" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../atom_syndication/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -321,15 +323,15 @@
 <span class="kw">use </span><span class="kw">crate</span>::util::{attr_value, decode};
 
 <span class="doccomment">/// Represents a link in an Atom feed
-</span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Deserialize, Serialize))]
+</span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Deserialize, Serialize))]
 #[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;builders&quot;</span>, derive(Builder))]
+#[cfg_attr(feature = <span class="string">"builders"</span>, derive(Builder))]
 #[cfg_attr(
-    feature = <span class="string">&quot;builders&quot;</span>,
+    feature = <span class="string">"builders"</span>,
     builder(
         setter(into),
         default,
-        build_fn(name = <span class="string">&quot;build_impl&quot;</span>, private, error = <span class="string">&quot;never::Never&quot;</span>)
+        build_fn(name = <span class="string">"build_impl"</span>, private, error = <span class="string">"never::Never"</span>)
     )
 )]
 </span><span class="kw">pub struct </span>Link {
@@ -351,7 +353,7 @@
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         Link {
             href: Default::default(),
-            rel: <span class="string">&quot;alternate&quot;</span>.into(),
+            rel: <span class="string">"alternate"</span>.into(),
             hreflang: Default::default(),
             mime_type: Default::default(),
             title: Default::default(),
@@ -369,8 +371,8 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_href(&quot;http://example.com&quot;);
-    /// assert_eq!(link.href(), &quot;http://example.com&quot;);
+    /// link.set_href("http://example.com");
+    /// assert_eq!(link.href(), "http://example.com");
     /// ```
     </span><span class="kw">pub fn </span>href(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.href.as_str()
@@ -384,7 +386,7 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_href(&quot;http://example.com&quot;);
+    /// link.set_href("http://example.com");
     /// ```
     </span><span class="kw">pub fn </span>set_href&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, href: V)
     <span class="kw">where
@@ -401,8 +403,8 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_rel(&quot;alternate&quot;);
-    /// assert_eq!(link.rel(), &quot;alternate&quot;);
+    /// link.set_rel("alternate");
+    /// assert_eq!(link.rel(), "alternate");
     /// ```
     </span><span class="kw">pub fn </span>rel(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.rel.as_str()
@@ -416,7 +418,7 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_rel(&quot;alternate&quot;);
+    /// link.set_rel("alternate");
     /// ```
     </span><span class="kw">pub fn </span>set_rel&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, rel: V)
     <span class="kw">where
@@ -433,8 +435,8 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_hreflang(&quot;en&quot;.to_string());
-    /// assert_eq!(link.hreflang(), Some(&quot;en&quot;));
+    /// link.set_hreflang("en".to_string());
+    /// assert_eq!(link.hreflang(), Some("en"));
     /// ```
     </span><span class="kw">pub fn </span>hreflang(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.hreflang.as_deref()
@@ -448,7 +450,7 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_hreflang(&quot;en&quot;.to_string());
+    /// link.set_hreflang("en".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_hreflang&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, hreflang: V)
     <span class="kw">where
@@ -465,8 +467,8 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_mime_type(&quot;text/html&quot;.to_string());
-    /// assert_eq!(link.mime_type(), Some(&quot;text/html&quot;));
+    /// link.set_mime_type("text/html".to_string());
+    /// assert_eq!(link.mime_type(), Some("text/html"));
     /// ```
     </span><span class="kw">pub fn </span>mime_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.mime_type.as_deref()
@@ -480,7 +482,7 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_mime_type(&quot;text/html&quot;.to_string());
+    /// link.set_mime_type("text/html".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_mime_type&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, mime_type: V)
     <span class="kw">where
@@ -497,8 +499,8 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_title(&quot;Article Title&quot;.to_string());
-    /// assert_eq!(link.title(), Some(&quot;Article Title&quot;));
+    /// link.set_title("Article Title".to_string());
+    /// assert_eq!(link.title(), Some("Article Title"));
     /// ```
     </span><span class="kw">pub fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.title.as_deref()
@@ -512,7 +514,7 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_title(&quot;Article Title&quot;.to_string());
+    /// link.set_title("Article Title".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_title&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, title: V)
     <span class="kw">where
@@ -529,8 +531,8 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_length(&quot;1000&quot;.to_string());
-    /// assert_eq!(link.length(), Some(&quot;1000&quot;));
+    /// link.set_length("1000".to_string());
+    /// assert_eq!(link.length(), Some("1000"));
     /// ```
     </span><span class="kw">pub fn </span>length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.length.as_deref()
@@ -544,7 +546,7 @@
     /// use atom_syndication::Link;
     ///
     /// let mut link = Link::default();
-    /// link.set_length(&quot;1000&quot;.to_string());
+    /// link.set_length("1000".to_string());
     /// ```
     </span><span class="kw">pub fn </span>set_length&lt;V&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, length: V)
     <span class="kw">where
@@ -555,24 +557,24 @@
 }
 
 <span class="kw">impl </span>Link {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_xml&lt;<span class="lifetime">&#39;s</span>, B: BufRead&gt;(
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_xml&lt;<span class="lifetime">'s</span>, B: BufRead&gt;(
         reader: <span class="kw-2">&amp;mut </span>Reader&lt;B&gt;,
-        element: <span class="kw-2">&amp;</span><span class="lifetime">&#39;s </span>BytesStart&lt;<span class="lifetime">&#39;s</span>&gt;,
+        element: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>BytesStart&lt;<span class="lifetime">'s</span>&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>link = Link::default();
 
         <span class="kw">for </span>att <span class="kw">in </span>element.attributes().with_checks(<span class="bool-val">false</span>).flatten() {
             <span class="kw">match </span>decode(att.key.as_ref(), reader)<span class="question-mark">? </span>{
-                Cow::Borrowed(<span class="string">&quot;href&quot;</span>) =&gt; link.href = attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string(),
-                Cow::Borrowed(<span class="string">&quot;rel&quot;</span>) =&gt; link.rel = attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string(),
-                Cow::Borrowed(<span class="string">&quot;hreflang&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"href"</span>) =&gt; link.href = attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string(),
+                Cow::Borrowed(<span class="string">"rel"</span>) =&gt; link.rel = attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string(),
+                Cow::Borrowed(<span class="string">"hreflang"</span>) =&gt; {
                     link.hreflang = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string())
                 }
-                Cow::Borrowed(<span class="string">&quot;type&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"type"</span>) =&gt; {
                     link.mime_type = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string())
                 }
-                Cow::Borrowed(<span class="string">&quot;title&quot;</span>) =&gt; link.title = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string()),
-                Cow::Borrowed(<span class="string">&quot;length&quot;</span>) =&gt; {
+                Cow::Borrowed(<span class="string">"title"</span>) =&gt; link.title = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string()),
+                Cow::Borrowed(<span class="string">"length"</span>) =&gt; {
                     link.length = <span class="prelude-val">Some</span>(attr_value(<span class="kw-2">&amp;</span>att, reader)<span class="question-mark">?</span>.to_string())
                 }
                 <span class="kw">_ </span>=&gt; {}
@@ -585,24 +587,24 @@
 
 <span class="kw">impl </span>ToXml <span class="kw">for </span>Link {
     <span class="kw">fn </span>to_xml&lt;W: Write&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Writer&lt;W&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), XmlError&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>element = BytesStart::new(<span class="string">&quot;link&quot;</span>);
-        element.push_attribute((<span class="string">&quot;href&quot;</span>, <span class="kw-2">&amp;*</span><span class="self">self</span>.href));
-        element.push_attribute((<span class="string">&quot;rel&quot;</span>, <span class="kw-2">&amp;*</span><span class="self">self</span>.rel));
+        <span class="kw">let </span><span class="kw-2">mut </span>element = BytesStart::new(<span class="string">"link"</span>);
+        element.push_attribute((<span class="string">"href"</span>, <span class="kw-2">&amp;*</span><span class="self">self</span>.href));
+        element.push_attribute((<span class="string">"rel"</span>, <span class="kw-2">&amp;*</span><span class="self">self</span>.rel));
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>hreflang) = <span class="self">self</span>.hreflang {
-            element.push_attribute((<span class="string">&quot;hreflang&quot;</span>, <span class="kw-2">&amp;**</span>hreflang));
+            element.push_attribute((<span class="string">"hreflang"</span>, <span class="kw-2">&amp;**</span>hreflang));
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>mime_type) = <span class="self">self</span>.mime_type {
-            element.push_attribute((<span class="string">&quot;type&quot;</span>, <span class="kw-2">&amp;**</span>mime_type));
+            element.push_attribute((<span class="string">"type"</span>, <span class="kw-2">&amp;**</span>mime_type));
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>title) = <span class="self">self</span>.title {
-            element.push_attribute((<span class="string">&quot;title&quot;</span>, <span class="kw-2">&amp;**</span>title));
+            element.push_attribute((<span class="string">"title"</span>, <span class="kw-2">&amp;**</span>title));
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>length) = <span class="self">self</span>.length {
-            element.push_attribute((<span class="string">&quot;length&quot;</span>, <span class="kw-2">&amp;**</span>length));
+            element.push_attribute((<span class="string">"length"</span>, <span class="kw-2">&amp;**</span>length));
         }
 
         writer
@@ -613,7 +615,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;builders&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
 </span><span class="kw">impl </span>LinkBuilder {
     <span class="doccomment">/// Builds a new `Link`.
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Link {

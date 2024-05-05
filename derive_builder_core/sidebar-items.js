@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["builder_for_struct"]};
