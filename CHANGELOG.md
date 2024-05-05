@@ -1,6 +1,8 @@
 # Changelog
 
-## 2.x.x - Unreleased
+## 2.0.8 - Unreleased
+
+- Update quick-xml and derive_builder dependencies. [`#162`](https://github.com/rust-syndication/rss/pull/162)
 
 ## 2.0.7 - 2024-01-13
 
