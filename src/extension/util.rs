@@ -50,9 +50,7 @@ pub(crate) fn extension_entry<'e>(
     ns: &str,
     name: &str,
 ) -> &'e mut Vec<Extension> {
-    let map = extensions
-        .entry(ns.to_string())
-        .or_default();
+    let map = extensions.entry(ns.to_string()).or_default();
 
     map.entry(name.to_string()).or_default()
 }
