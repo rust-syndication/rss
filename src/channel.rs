@@ -6,6 +6,7 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use std::collections::BTreeMap;
+use std::fmt::Display;
 use std::io::{BufRead, Write};
 use std::str::{self, FromStr};
 
@@ -1178,11 +1179,11 @@ impl Channel {
     }
 }
 
-impl ToString for Channel {
-    fn to_string(&self) -> String {
+impl Display for Channel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let buf = self.write_to(Vec::new()).unwrap_or_default();
         // this unwrap should be safe since the bytes written from the Channel are all valid utf8
-        String::from_utf8(buf).unwrap()
+        f.write_str(String::from_utf8(buf).unwrap().as_str())
     }
 }
 

@@ -91,7 +91,7 @@ impl SyndicationExtension {
 
     /// Set the base from which the refresh periods are calculated
     pub fn set_base(&mut self, base: &str) {
-        self.base = base.to_owned();
+        base.clone_into(&mut self.base);
     }
 
     /// Retrieve the number of periods between refreshes
@@ -176,7 +176,7 @@ impl SyndicationExtension {
                 syn.frequency = frequency
             }
         });
-        with_first_ext_value(&map, "updateBase", |value| syn.base = value.to_owned());
+        with_first_ext_value(&map, "updateBase", |value| value.clone_into(&mut syn.base));
 
         syn
     }
