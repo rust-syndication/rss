@@ -15,17 +15,17 @@ use quick_xml::Reader;
 
 use crate::error::Error;
 
-pub(crate) fn decode<'s, 'r, B: BufRead>(
+pub(crate) fn decode<'s, B: BufRead>(
     bytes: &'s [u8],
-    reader: &'r Reader<B>,
+    reader: &Reader<B>,
 ) -> Result<Cow<'s, str>, Error> {
     let text = reader.decoder().decode(bytes)?;
     Ok(text)
 }
 
-pub(crate) fn attr_value<'s, 'r, B: BufRead>(
+pub(crate) fn attr_value<'s, B: BufRead>(
     attr: &'s Attribute<'s>,
-    reader: &'r Reader<B>,
+    reader: &Reader<B>,
 ) -> Result<Cow<'s, str>, Error> {
     let value = attr.decode_and_unescape_value(reader)?;
     Ok(value)

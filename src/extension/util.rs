@@ -28,11 +28,11 @@ where
 {
     let mut namespaces = Cow::Borrowed(base);
     for attr in atts.with_checks(false).flatten() {
-        let key = decode(attr.key.as_ref(), &reader)?;
+        let key = decode(attr.key.as_ref(), reader)?;
         if let Some(ns) = key.strip_prefix("xmlns:") {
             namespaces
                 .to_mut()
-                .insert(ns.to_string(), attr_value(&attr, &reader)?.to_string());
+                .insert(ns.to_string(), attr_value(&attr, reader)?.to_string());
         }
     }
     Ok(namespaces)
@@ -50,11 +50,9 @@ pub(crate) fn extension_entry<'e>(
     ns: &str,
     name: &str,
 ) -> &'e mut Vec<Extension> {
-    let map = extensions
-        .entry(ns.to_string())
-        .or_insert_with(BTreeMap::new);
+    let map = extensions.entry(ns.to_string()).or_default();
 
-    map.entry(name.to_string()).or_insert_with(Vec::new)
+    map.entry(name.to_string()).or_default()
 }
 
 pub(crate) fn parse_extension_element<R: BufRead>(
