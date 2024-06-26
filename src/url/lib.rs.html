@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/url-2.5.0/src/lib.rs`."><title>lib.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="url" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../url/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/url-2.5.2/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="url" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../url/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3044,6 +3042,34 @@
 <a href="#3042" id="3042">3042</a>
 <a href="#3043" id="3043">3043</a>
 <a href="#3044" id="3044">3044</a>
+<a href="#3045" id="3045">3045</a>
+<a href="#3046" id="3046">3046</a>
+<a href="#3047" id="3047">3047</a>
+<a href="#3048" id="3048">3048</a>
+<a href="#3049" id="3049">3049</a>
+<a href="#3050" id="3050">3050</a>
+<a href="#3051" id="3051">3051</a>
+<a href="#3052" id="3052">3052</a>
+<a href="#3053" id="3053">3053</a>
+<a href="#3054" id="3054">3054</a>
+<a href="#3055" id="3055">3055</a>
+<a href="#3056" id="3056">3056</a>
+<a href="#3057" id="3057">3057</a>
+<a href="#3058" id="3058">3058</a>
+<a href="#3059" id="3059">3059</a>
+<a href="#3060" id="3060">3060</a>
+<a href="#3061" id="3061">3061</a>
+<a href="#3062" id="3062">3062</a>
+<a href="#3063" id="3063">3063</a>
+<a href="#3064" id="3064">3064</a>
+<a href="#3065" id="3065">3065</a>
+<a href="#3066" id="3066">3066</a>
+<a href="#3067" id="3067">3067</a>
+<a href="#3068" id="3068">3068</a>
+<a href="#3069" id="3069">3069</a>
+<a href="#3070" id="3070">3070</a>
+<a href="#3071" id="3071">3071</a>
+<a href="#3072" id="3072">3072</a>
 </pre></div><pre class="rust"><code><span class="comment">// Copyright 2013-2015 The rust-url developers.
 //
 // Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or
@@ -3180,7 +3206,7 @@ url = { version = "2", features = ["debugger_visualizer"] }
 
 */
 
-</span><span class="attr">#![doc(html_root_url = <span class="string">"https://docs.rs/url/2.5.0"</span>)]
+</span><span class="attr">#![doc(html_root_url = <span class="string">"https://docs.rs/url/2.5.2"</span>)]
 #![cfg_attr(
     feature = <span class="string">"debugger_visualizer"</span>,
     debugger_visualizer(natvis_file = <span class="string">"../../debug_metadata/url.natvis"</span>)
@@ -3192,15 +3218,20 @@ url = { version = "2", features = ["debugger_visualizer"] }
 </span><span class="kw">extern crate </span>serde;
 
 <span class="kw">use </span><span class="kw">crate</span>::host::HostInternal;
-<span class="kw">use </span><span class="kw">crate</span>::parser::{to_u32, Context, Parser, SchemeType, PATH_SEGMENT, USERINFO};
+<span class="kw">use </span><span class="kw">crate</span>::parser::{
+    to_u32, Context, Parser, SchemeType, PATH_SEGMENT, SPECIAL_PATH_SEGMENT, USERINFO,
+};
 <span class="kw">use </span>percent_encoding::{percent_decode, percent_encode, utf8_percent_encode};
 <span class="kw">use </span>std::borrow::Borrow;
 <span class="kw">use </span>std::cmp;
 <span class="kw">use </span>std::fmt::{<span class="self">self</span>, Write};
 <span class="kw">use </span>std::hash;
-<span class="kw">use </span>std::io;
+<span class="attr">#[cfg(any(unix, windows, target_os = <span class="string">"redox"</span>, target_os = <span class="string">"wasi"</span>))]
+</span><span class="kw">use </span>std::io;
 <span class="kw">use </span>std::mem;
-<span class="kw">use </span>std::net::{IpAddr, SocketAddr, ToSocketAddrs};
+<span class="kw">use </span>std::net::IpAddr;
+<span class="attr">#[cfg(any(unix, windows, target_os = <span class="string">"redox"</span>, target_os = <span class="string">"wasi"</span>))]
+</span><span class="kw">use </span>std::net::{SocketAddr, ToSocketAddrs};
 <span class="kw">use </span>std::ops::{Range, RangeFrom, RangeTo};
 <span class="kw">use </span>std::path::{Path, PathBuf};
 <span class="kw">use </span>std::str;
@@ -3260,6 +3291,9 @@ url = { version = "2", features = ["debugger_visualizer"] }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ParseOptions&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Change the base URL
+    ///
+    /// See the notes of [`Url::join`] for more details about how this base is considered
+    /// when parsing.
     </span><span class="kw">pub fn </span>base_url(<span class="kw-2">mut </span><span class="self">self</span>, new: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Url&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.base_url = new;
         <span class="self">self
@@ -3411,9 +3445,14 @@ url = { version = "2", features = ["debugger_visualizer"] }
     ///
     /// The inverse of this is [`make_relative`].
     ///
-    /// Note: a trailing slash is significant.
+    /// # Notes
+    ///
+    /// - A trailing slash is significant.
     /// Without it, the last path component is considered to be a “file” name
-    /// to be removed to get at the “directory” that is used as the base:
+    /// to be removed to get at the “directory” that is used as the base.
+    /// - A [scheme relative special URL](https://url.spec.whatwg.org/#scheme-relative-special-url-string)
+    /// as input replaces everything in the base URL after the scheme.
+    /// - An absolute URL (with a scheme) as input replaces the whole base URL (even the scheme).
     ///
     /// # Examples
     ///
@@ -3421,14 +3460,27 @@ url = { version = "2", features = ["debugger_visualizer"] }
     /// use url::Url;
     /// # use url::ParseError;
     ///
+    /// // Base without a trailing slash
     /// # fn run() -&gt; Result&lt;(), ParseError&gt; {
     /// let base = Url::parse("https://example.net/a/b.html")?;
     /// let url = base.join("c.png")?;
     /// assert_eq!(url.as_str(), "https://example.net/a/c.png");  // Not /a/b.html/c.png
     ///
+    /// // Base with a trailing slash
     /// let base = Url::parse("https://example.net/a/b/")?;
     /// let url = base.join("c.png")?;
     /// assert_eq!(url.as_str(), "https://example.net/a/b/c.png");
+    ///
+    /// // Input as scheme relative special URL
+    /// let base = Url::parse("https://alice.com/a")?;
+    /// let url = base.join("//eve.com/b")?;
+    /// assert_eq!(url.as_str(), "https://eve.com/b");
+    ///
+    /// // Input as absolute URL
+    /// let base = Url::parse("https://alice.com/a")?;
+    /// let url = base.join("http://eve.com/b")?;
+    /// assert_eq!(url.as_str(), "http://eve.com/b");  // http instead of https
+
     /// # Ok(())
     /// # }
     /// # run().unwrap();
@@ -4296,6 +4348,7 @@ url = { version = "2", features = ["debugger_visualizer"] }
     ///     })
     /// }
     /// ```
+    </span><span class="attr">#[cfg(any(unix, windows, target_os = <span class="string">"redox"</span>, target_os = <span class="string">"wasi"</span>))]
     </span><span class="kw">pub fn </span>socket_addrs(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         default_port_number: <span class="kw">impl </span>Fn() -&gt; <span class="prelude-ty">Option</span>&lt;u16&gt;,
@@ -4570,7 +4623,8 @@ url = { version = "2", features = ["debugger_visualizer"] }
         }
     }
 
-    <span class="doccomment">/// Change this URL’s query string.
+    <span class="doccomment">/// Change this URL’s query string. If `query` is `None`, this URL's
+    /// query string will be cleared.
     ///
     /// # Examples
     ///
@@ -5862,7 +5916,7 @@ url = { version = "2", features = ["debugger_visualizer"] }
         serialization.push(<span class="string">'/'</span>);
         serialization.extend(percent_encode(
             component.as_os_str().as_bytes(),
-            PATH_SEGMENT,
+            SPECIAL_PATH_SEGMENT,
         ));
     }
     <span class="kw">if </span>empty {

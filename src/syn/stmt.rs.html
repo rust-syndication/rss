@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/syn-2.0.62/src/stmt.rs`."><title>stmt.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="syn" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../syn/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/syn-2.0.68/src/stmt.rs`."><title>stmt.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="syn" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../syn/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -468,6 +466,19 @@
 <a href="#466" id="466">466</a>
 <a href="#467" id="467">467</a>
 <a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::attr::Attribute;
 <span class="kw">use </span><span class="kw">crate</span>::expr::Expr;
 <span class="kw">use </span><span class="kw">crate</span>::item::Item;
@@ -477,7 +488,7 @@
 
 <span class="macro">ast_struct!</span> {
     <span class="doccomment">/// A braced block containing Rust statements.
-    </span><span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"full"</span>)))]
+    </span><span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"full"</span>)))]
     </span><span class="kw">pub struct </span>Block {
         <span class="kw">pub </span>brace_token: token::Brace,
         <span class="doccomment">/// Statements in a block
@@ -487,7 +498,7 @@
 
 <span class="macro">ast_enum!</span> {
     <span class="doccomment">/// A statement, usually ending in a semicolon.
-    </span><span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"full"</span>)))]
+    </span><span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"full"</span>)))]
     </span><span class="kw">pub enum </span>Stmt {
         <span class="doccomment">/// A local (let) binding.
         </span>Local(Local),
@@ -509,7 +520,7 @@
 
 <span class="macro">ast_struct!</span> {
     <span class="doccomment">/// A local `let` binding: `let x: u64 = s.parse()?`.
-    </span><span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"full"</span>)))]
+    </span><span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"full"</span>)))]
     </span><span class="kw">pub struct </span>Local {
         <span class="kw">pub </span>attrs: Vec&lt;Attribute&gt;,
         <span class="kw">pub </span>let_token: <span class="macro">Token!</span>[<span class="kw">let</span>],
@@ -525,7 +536,7 @@
     ///
     /// `LocalInit` represents `= s.parse()?` in `let x: u64 = s.parse()?` and
     /// `= r else { return }` in `let Ok(x) = r else { return }`.
-    </span><span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"full"</span>)))]
+    </span><span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"full"</span>)))]
     </span><span class="kw">pub struct </span>LocalInit {
         <span class="kw">pub </span>eq_token: <span class="macro">Token!</span>[=],
         <span class="kw">pub </span>expr: Box&lt;Expr&gt;,
@@ -539,7 +550,7 @@
     /// Syntactically it's ambiguous which other kind of statement this macro
     /// would expand to. It can be any of local variable (`let`), item, or
     /// expression.
-    </span><span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"full"</span>)))]
+    </span><span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"full"</span>)))]
     </span><span class="kw">pub struct </span>StmtMacro {
         <span class="kw">pub </span>attrs: Vec&lt;Attribute&gt;,
         <span class="kw">pub </span>mac: Macro,
@@ -550,8 +561,9 @@
 <span class="attr">#[cfg(feature = <span class="string">"parsing"</span>)]
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>parsing {
     <span class="kw">use </span><span class="kw">crate</span>::attr::Attribute;
+    <span class="kw">use </span><span class="kw">crate</span>::classify;
     <span class="kw">use </span><span class="kw">crate</span>::error::Result;
-    <span class="kw">use </span><span class="kw">crate</span>::expr::{<span class="self">self</span>, Expr, ExprBlock, ExprMacro};
+    <span class="kw">use </span><span class="kw">crate</span>::expr::{Expr, ExprBlock, ExprMacro};
     <span class="kw">use </span><span class="kw">crate</span>::ident::Ident;
     <span class="kw">use </span><span class="kw">crate</span>::item;
     <span class="kw">use </span><span class="kw">crate</span>::mac::{<span class="self">self</span>, Macro};
@@ -616,7 +628,7 @@
         ///     }
         /// }
         /// ```
-        </span><span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"parsing"</span>)))]
+        </span><span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"parsing"</span>)))]
         </span><span class="kw">pub fn </span>parse_within(input: ParseStream) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Stmt&gt;&gt; {
             <span class="kw">let </span><span class="kw-2">mut </span>stmts = Vec::new();
             <span class="kw">loop </span>{
@@ -628,7 +640,7 @@
                 }
                 <span class="kw">let </span>stmt = parse_stmt(input, AllowNoSemi(<span class="bool-val">true</span>))<span class="question-mark">?</span>;
                 <span class="kw">let </span>requires_semicolon = <span class="kw">match </span><span class="kw-2">&amp;</span>stmt {
-                    Stmt::Expr(stmt, <span class="prelude-val">None</span>) =&gt; expr::requires_terminator(stmt),
+                    Stmt::Expr(stmt, <span class="prelude-val">None</span>) =&gt; classify::requires_semi_to_be_stmt(stmt),
                     Stmt::Macro(stmt) =&gt; {
                         stmt.semi_token.is_none() &amp;&amp; !stmt.mac.delimiter.is_brace()
                     }
@@ -645,7 +657,7 @@
         }
     }
 
-    <span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"parsing"</span>)))]
+    <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"parsing"</span>)))]
     </span><span class="kw">impl </span>Parse <span class="kw">for </span>Block {
         <span class="kw">fn </span>parse(input: ParseStream) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
             <span class="kw">let </span>content;
@@ -656,7 +668,7 @@
         }
     }
 
-    <span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"parsing"</span>)))]
+    <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"parsing"</span>)))]
     </span><span class="kw">impl </span>Parse <span class="kw">for </span>Stmt {
         <span class="kw">fn </span>parse(input: ParseStream) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
             <span class="kw">let </span>allow_nosemi = AllowNoSemi(<span class="bool-val">false</span>);
@@ -767,8 +779,8 @@
             <span class="kw">let </span>eq_token: <span class="macro">Token!</span>[=] = eq_token;
             <span class="kw">let </span>expr: Expr = input.parse()<span class="question-mark">?</span>;
 
-            <span class="kw">let </span>diverge = <span class="kw">if let </span><span class="prelude-val">Some</span>(else_token) = input.parse()<span class="question-mark">? </span>{
-                <span class="kw">let </span>else_token: <span class="macro">Token!</span>[<span class="kw">else</span>] = else_token;
+            <span class="kw">let </span>diverge = <span class="kw">if </span>!classify::expr_trailing_brace(<span class="kw-2">&amp;</span>expr) &amp;&amp; input.peek(<span class="macro">Token!</span>[<span class="kw">else</span>]) {
+                <span class="kw">let </span>else_token: <span class="macro">Token!</span>[<span class="kw">else</span>] = input.parse()<span class="question-mark">?</span>;
                 <span class="kw">let </span>diverge = ExprBlock {
                     attrs: Vec::new(),
                     label: <span class="prelude-val">None</span>,
@@ -870,7 +882,7 @@
 
         <span class="kw">if </span>semi_token.is_some() {
             <span class="prelude-val">Ok</span>(Stmt::Expr(e, semi_token))
-        } <span class="kw">else if </span>allow_nosemi.<span class="number">0 </span>|| !expr::requires_terminator(<span class="kw-2">&amp;</span>e) {
+        } <span class="kw">else if </span>allow_nosemi.<span class="number">0 </span>|| !classify::requires_semi_to_be_stmt(<span class="kw-2">&amp;</span>e) {
             <span class="prelude-val">Ok</span>(Stmt::Expr(e, <span class="prelude-val">None</span>))
         } <span class="kw">else </span>{
             <span class="prelude-val">Err</span>(input.error(<span class="string">"expected semicolon"</span>))
@@ -879,13 +891,16 @@
 }
 
 <span class="attr">#[cfg(feature = <span class="string">"printing"</span>)]
-</span><span class="kw">mod </span>printing {
-    <span class="kw">use </span><span class="kw">crate</span>::expr;
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod </span>printing {
+    <span class="kw">use </span><span class="kw">crate</span>::classify;
+    <span class="kw">use </span><span class="kw">crate</span>::expr::{<span class="self">self</span>, Expr};
+    <span class="kw">use </span><span class="kw">crate</span>::fixup::FixupContext;
     <span class="kw">use </span><span class="kw">crate</span>::stmt::{Block, Local, Stmt, StmtMacro};
+    <span class="kw">use </span><span class="kw">crate</span>::token;
     <span class="kw">use </span>proc_macro2::TokenStream;
     <span class="kw">use </span>quote::{ToTokens, TokenStreamExt};
 
-    <span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"printing"</span>)))]
+    <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"printing"</span>)))]
     </span><span class="kw">impl </span>ToTokens <span class="kw">for </span>Block {
         <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
             <span class="self">self</span>.brace_token.surround(tokens, |tokens| {
@@ -894,14 +909,14 @@
         }
     }
 
-    <span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"printing"</span>)))]
+    <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"printing"</span>)))]
     </span><span class="kw">impl </span>ToTokens <span class="kw">for </span>Stmt {
         <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
             <span class="kw">match </span><span class="self">self </span>{
                 Stmt::Local(local) =&gt; local.to_tokens(tokens),
                 Stmt::Item(item) =&gt; item.to_tokens(tokens),
                 Stmt::Expr(expr, semi) =&gt; {
-                    expr.to_tokens(tokens);
+                    expr::printing::print_expr(expr, tokens, FixupContext::new_stmt());
                     semi.to_tokens(tokens);
                 }
                 Stmt::Macro(mac) =&gt; mac.to_tokens(tokens),
@@ -909,7 +924,7 @@
         }
     }
 
-    <span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"printing"</span>)))]
+    <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"printing"</span>)))]
     </span><span class="kw">impl </span>ToTokens <span class="kw">for </span>Local {
         <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
             expr::printing::outer_attrs_to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>.attrs, tokens);
@@ -917,17 +932,26 @@
             <span class="self">self</span>.pat.to_tokens(tokens);
             <span class="kw">if let </span><span class="prelude-val">Some</span>(init) = <span class="kw-2">&amp;</span><span class="self">self</span>.init {
                 init.eq_token.to_tokens(tokens);
-                init.expr.to_tokens(tokens);
+                <span class="kw">if </span>init.diverge.is_some() &amp;&amp; classify::expr_trailing_brace(<span class="kw-2">&amp;</span>init.expr) {
+                    token::Paren::default().surround(tokens, |tokens| init.expr.to_tokens(tokens));
+                } <span class="kw">else </span>{
+                    init.expr.to_tokens(tokens);
+                }
                 <span class="kw">if let </span><span class="prelude-val">Some</span>((else_token, diverge)) = <span class="kw-2">&amp;</span>init.diverge {
                     else_token.to_tokens(tokens);
-                    diverge.to_tokens(tokens);
+                    <span class="kw">match </span><span class="kw-2">&amp;**</span>diverge {
+                        Expr::Block(diverge) =&gt; diverge.to_tokens(tokens),
+                        <span class="kw">_ </span>=&gt; token::Brace::default().surround(tokens, |tokens| {
+                            expr::printing::print_expr(diverge, tokens, FixupContext::new_stmt());
+                        }),
+                    }
                 }
             }
             <span class="self">self</span>.semi_token.to_tokens(tokens);
         }
     }
 
-    <span class="attr">#[cfg_attr(doc_cfg, doc(cfg(feature = <span class="string">"printing"</span>)))]
+    <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"printing"</span>)))]
     </span><span class="kw">impl </span>ToTokens <span class="kw">for </span>StmtMacro {
         <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
             expr::printing::outer_attrs_to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>.attrs, tokens);

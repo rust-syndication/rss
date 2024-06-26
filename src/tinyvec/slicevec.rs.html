@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tinyvec-1.6.0/src/slicevec.rs`."><title>slicevec.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tinyvec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../tinyvec/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tinyvec-1.6.1/src/slicevec.rs`."><title>slicevec.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tinyvec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../tinyvec/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1080,6 +1078,8 @@
 <a href="#1078" id="1078">1078</a>
 <a href="#1079" id="1079">1079</a>
 <a href="#1080" id="1080">1080</a>
+<a href="#1081" id="1081">1081</a>
+<a href="#1082" id="1082">1082</a>
 </pre></div><pre class="rust"><code><span class="attr">#![allow(unused_variables)]
 #![allow(missing_docs)]
 
@@ -1408,7 +1408,7 @@
   {
     <span class="kw">if </span><span class="self">self</span>.len &gt; <span class="number">0 </span>{
       <span class="self">self</span>.len -= <span class="number">1</span>;
-      <span class="kw">let </span>out = take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.data[<span class="self">self</span>.len]);
+      <span class="kw">let </span>out = core::mem::take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.data[<span class="self">self</span>.len]);
       <span class="prelude-val">Some</span>(out)
     } <span class="kw">else </span>{
       <span class="prelude-val">None
@@ -1465,7 +1465,7 @@
     </span>T: Default,
   {
     <span class="kw">let </span>targets: <span class="kw-2">&amp;mut </span>[T] = <span class="kw-2">&amp;mut </span><span class="self">self</span>.deref_mut()[index..];
-    <span class="kw">let </span>item = take(<span class="kw-2">&amp;mut </span>targets[<span class="number">0</span>]);
+    <span class="kw">let </span>item = core::mem::take(<span class="kw-2">&amp;mut </span>targets[<span class="number">0</span>]);
     targets.rotate_left(<span class="number">1</span>);
     <span class="self">self</span>.len -= <span class="number">1</span>;
     item
@@ -1582,7 +1582,7 @@
     <span class="kw">for </span>idx <span class="kw">in </span><span class="number">0</span>..<span class="self">self</span>.len {
       <span class="comment">// Loop start invariant: idx = rest.done_end + rest.tail_start
       </span><span class="kw">if </span>!acceptable(<span class="kw-2">&amp;</span>rest.items[idx]) {
-        <span class="kw">let _ </span>= take(<span class="kw-2">&amp;mut </span>rest.items[idx]);
+        <span class="kw">let _ </span>= core::mem::take(<span class="kw-2">&amp;mut </span>rest.items[idx]);
         <span class="self">self</span>.len -= <span class="number">1</span>;
         rest.tail_start += <span class="number">1</span>;
       } <span class="kw">else </span>{
@@ -1640,7 +1640,7 @@
   </span><span class="attr">#[inline]
   </span><span class="kw">pub fn </span>split_off&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>, at: usize) -&gt; SliceVec&lt;<span class="lifetime">'s</span>, T&gt; {
     <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">Self</span>::default();
-    <span class="kw">let </span>backing: <span class="kw-2">&amp;</span><span class="lifetime">'s </span><span class="kw-2">mut </span>[T] = replace(<span class="kw-2">&amp;mut </span><span class="self">self</span>.data, <span class="kw-2">&amp;mut </span>[]);
+    <span class="kw">let </span>backing: <span class="kw-2">&amp;</span><span class="lifetime">'s </span><span class="kw-2">mut </span>[T] = core::mem::take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.data);
     <span class="kw">let </span>(me, other) = backing.split_at_mut(at);
     new.len = <span class="self">self</span>.len - at;
     new.data = other;
@@ -1768,6 +1768,7 @@
   /// let mut arr = [0_i32; 2];
   /// let mut sv = SliceVec::from(&amp;mut arr[..]);
   /// ```
+  </span><span class="attr">#[inline]
   </span><span class="kw">fn </span>from(data: <span class="kw-2">&amp;</span><span class="lifetime">'s </span><span class="kw-2">mut </span>[T]) -&gt; <span class="self">Self </span>{
     <span class="kw">let </span>len = data.len();
     <span class="self">Self </span>{ data, len }
@@ -1785,6 +1786,7 @@
   /// let mut arr = [0, 0];
   /// let mut sv = SliceVec::from(&amp;mut arr);
   /// ```
+  </span><span class="attr">#[inline]
   </span><span class="kw">fn </span>from(a: <span class="kw-2">&amp;</span><span class="lifetime">'s </span><span class="kw-2">mut </span>A) -&gt; <span class="self">Self </span>{
     <span class="kw">let </span>data = a.as_mut();
     <span class="kw">let </span>len = data.len();
@@ -1806,7 +1808,7 @@
   <span class="attr">#[inline]
   </span><span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
     <span class="kw">if </span><span class="self">self</span>.target_index != <span class="self">self</span>.target_end {
-      <span class="kw">let </span>out = take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.parent[<span class="self">self</span>.target_index]);
+      <span class="kw">let </span>out = core::mem::take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.parent[<span class="self">self</span>.target_index]);
       <span class="self">self</span>.target_index += <span class="number">1</span>;
       <span class="prelude-val">Some</span>(out)
     } <span class="kw">else </span>{
@@ -1984,7 +1986,7 @@
   <span class="attr">#[allow(clippy::missing_inline_in_public_items)]
   </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter) -&gt; core::fmt::Result {
     <span class="macro">write!</span>(f, <span class="string">"["</span>)<span class="question-mark">?</span>;
-    <span class="kw">if </span>f.alternate() {
+    <span class="kw">if </span>f.alternate() &amp;&amp; !<span class="self">self</span>.is_empty() {
       <span class="macro">write!</span>(f, <span class="string">"\n    "</span>)<span class="question-mark">?</span>;
     }
     <span class="kw">for </span>(i, elem) <span class="kw">in </span><span class="self">self</span>.iter().enumerate() {
@@ -1993,7 +1995,7 @@
       }
       Debug::fmt(elem, f)<span class="question-mark">?</span>;
     }
-    <span class="kw">if </span>f.alternate() {
+    <span class="kw">if </span>f.alternate() &amp;&amp; !<span class="self">self</span>.is_empty() {
       <span class="macro">write!</span>(f, <span class="string">",\n"</span>)<span class="question-mark">?</span>;
     }
     <span class="macro">write!</span>(f, <span class="string">"]"</span>)

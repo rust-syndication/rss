@@ -1,0 +1,1 @@
+searchState.loadedDescShard("never", 0, "The never type.\nA type that can never be constructed.\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.\nConvert this <code>Never</code> into a value of a different type.\nConvert this <code>Never</code> into a value of a different type.")

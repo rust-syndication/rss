@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tinyvec-1.6.0/src/arrayvec.rs`."><title>arrayvec.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tinyvec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../tinyvec/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tinyvec-1.6.1/src/arrayvec.rs`."><title>arrayvec.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="tinyvec" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../tinyvec/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1873,6 +1871,28 @@
 <a href="#1871" id="1871">1871</a>
 <a href="#1872" id="1872">1872</a>
 <a href="#1873" id="1873">1873</a>
+<a href="#1874" id="1874">1874</a>
+<a href="#1875" id="1875">1875</a>
+<a href="#1876" id="1876">1876</a>
+<a href="#1877" id="1877">1877</a>
+<a href="#1878" id="1878">1878</a>
+<a href="#1879" id="1879">1879</a>
+<a href="#1880" id="1880">1880</a>
+<a href="#1881" id="1881">1881</a>
+<a href="#1882" id="1882">1882</a>
+<a href="#1883" id="1883">1883</a>
+<a href="#1884" id="1884">1884</a>
+<a href="#1885" id="1885">1885</a>
+<a href="#1886" id="1886">1886</a>
+<a href="#1887" id="1887">1887</a>
+<a href="#1888" id="1888">1888</a>
+<a href="#1889" id="1889">1889</a>
+<a href="#1890" id="1890">1890</a>
+<a href="#1891" id="1891">1891</a>
+<a href="#1892" id="1892">1892</a>
+<a href="#1893" id="1893">1893</a>
+<a href="#1894" id="1894">1894</a>
+<a href="#1895" id="1895">1895</a>
 </pre></div><pre class="rust"><code><span class="kw">use super</span>::<span class="kw-2">*</span>;
 <span class="kw">use </span>core::convert::{TryFrom, TryInto};
 
@@ -1926,7 +1946,9 @@
 
 <span class="doccomment">/// An array-backed, vector-like data structure.
 ///
-/// * `ArrayVec` has a fixed capacity, equal to the array size.
+/// * `ArrayVec` has a fixed capacity, equal to the minimum of the array size
+/// and `u16::MAX`. Note that not all capacities are necessarily supported by
+/// default. See comments in [`Array`].
 /// * `ArrayVec` has a variable length, as you add and remove elements. Attempts
 ///   to fill the vec beyond its capacity will cause a panic.
 /// * All of the vec's array slots are always initialized in terms of Rust's
@@ -2005,7 +2027,7 @@
     <span class="kw">if let </span><span class="prelude-val">Some</span>(to_drop) =
       <span class="self">self</span>.data.as_slice_mut().get_mut((o.len <span class="kw">as </span>usize)..(<span class="self">self</span>.len <span class="kw">as </span>usize))
     {
-      to_drop.iter_mut().for_each(|x| drop(take(x)));
+      to_drop.iter_mut().for_each(|x| drop(core::mem::take(x)));
     }
     <span class="self">self</span>.len = o.len;
   }
@@ -2019,7 +2041,8 @@
 }
 
 <span class="kw">impl</span>&lt;A: Array&gt; Default <span class="kw">for </span>ArrayVec&lt;A&gt; {
-  <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+  <span class="attr">#[inline]
+  </span><span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
     <span class="self">Self </span>{ len: <span class="number">0</span>, data: A::default() }
   }
 }
@@ -2091,19 +2114,29 @@
   }
 }
 
-<span class="attr">#[cfg(all(feature = <span class="string">"arbitrary"</span>, feature = <span class="string">"nightly_const_generics"</span>))]
-#[cfg_attr(
-  docs_rs,
-  doc(cfg(all(feature = <span class="string">"arbitrary"</span>, feature = <span class="string">"nightly_const_generics"</span>)))
-)]
-</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T, <span class="kw">const </span>N: usize&gt; arbitrary::Arbitrary&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>ArrayVec&lt;[T; N]&gt;
+<span class="attr">#[cfg(feature = <span class="string">"arbitrary"</span>)]
+#[cfg_attr(docs_rs, doc(cfg(feature = <span class="string">"arbitrary"</span>)))]
+</span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, A&gt; arbitrary::Arbitrary&lt;<span class="lifetime">'a</span>&gt; <span class="kw">for </span>ArrayVec&lt;A&gt;
 <span class="kw">where
-  </span>T: arbitrary::Arbitrary&lt;<span class="lifetime">'a</span>&gt; + Default,
+  </span>A: Array,
+  A::Item: arbitrary::Arbitrary&lt;<span class="lifetime">'a</span>&gt;,
 {
   <span class="kw">fn </span>arbitrary(u: <span class="kw-2">&amp;mut </span>arbitrary::Unstructured&lt;<span class="lifetime">'a</span>&gt;) -&gt; arbitrary::Result&lt;<span class="self">Self</span>&gt; {
-    <span class="kw">let </span>v = &lt;[T; N]&gt;::arbitrary(u)<span class="question-mark">?</span>;
-    <span class="kw">let </span>av = ArrayVec::from(v);
-    <span class="prelude-val">Ok</span>(av)
+    <span class="kw">let </span>max_len = A::CAPACITY.min(u16::MAX <span class="kw">as </span>usize) <span class="kw">as </span>u16;
+    <span class="kw">let </span>len = u.int_in_range::&lt;u16&gt;(<span class="number">0</span>..=max_len)<span class="question-mark">?</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>self_: <span class="self">Self </span>= Default::default();
+    <span class="kw">for _ in </span><span class="number">0</span>..len {
+      self_.push(u.arbitrary()<span class="question-mark">?</span>);
+    }
+    <span class="prelude-val">Ok</span>(self_)
+  }
+
+  <span class="kw">fn </span>size_hint(depth: usize) -&gt; (usize, <span class="prelude-ty">Option</span>&lt;usize&gt;) {
+    arbitrary::size_hint::recursion_guard(depth, |depth| {
+      <span class="kw">let </span>max_len = A::CAPACITY.min(u16::MAX <span class="kw">as </span>usize);
+      <span class="kw">let </span>inner = A::Item::size_hint(depth).<span class="number">1</span>;
+      (<span class="number">0</span>, inner.map(|inner| <span class="number">2 </span>+ max_len * inner))
+    })
   }
 }
 
@@ -2157,7 +2190,7 @@
       <span class="kw">return </span><span class="prelude-val">Some</span>(other);
     }
 
-    <span class="kw">let </span>iter = other.iter_mut().map(take);
+    <span class="kw">let </span>iter = other.iter_mut().map(core::mem::take);
     <span class="kw">for </span>item <span class="kw">in </span>iter {
       <span class="self">self</span>.push(item);
     }
@@ -2213,7 +2246,7 @@
     <span class="comment">// Note: This shouldn't use A::CAPACITY, because unsafe code can't rely on
     // any Array invariants. This ensures that at the very least, the returned
     // value is a valid length for a subslice of the backing array.
-    </span><span class="self">self</span>.data.as_slice().len()
+    </span><span class="self">self</span>.data.as_slice().len().min(u16::MAX <span class="kw">as </span>usize)
   }
 
   <span class="doccomment">/// Truncates the `ArrayVec` down to length 0.
@@ -2478,7 +2511,8 @@
   </span><span class="kw">pub fn </span>pop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;A::Item&gt; {
     <span class="kw">if </span><span class="self">self</span>.len &gt; <span class="number">0 </span>{
       <span class="self">self</span>.len -= <span class="number">1</span>;
-      <span class="kw">let </span>out = take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.data.as_slice_mut()[<span class="self">self</span>.len <span class="kw">as </span>usize]);
+      <span class="kw">let </span>out =
+        core::mem::take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.data.as_slice_mut()[<span class="self">self</span>.len <span class="kw">as </span>usize]);
       <span class="prelude-val">Some</span>(out)
     } <span class="kw">else </span>{
       <span class="prelude-val">None
@@ -2553,7 +2587,7 @@
   </span><span class="attr">#[inline]
   </span><span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, index: usize) -&gt; A::Item {
     <span class="kw">let </span>targets: <span class="kw-2">&amp;mut </span>[A::Item] = <span class="kw-2">&amp;mut </span><span class="self">self</span>.deref_mut()[index..];
-    <span class="kw">let </span>item = take(<span class="kw-2">&amp;mut </span>targets[<span class="number">0</span>]);
+    <span class="kw">let </span>item = core::mem::take(<span class="kw-2">&amp;mut </span>targets[<span class="number">0</span>]);
 
     <span class="comment">// A previous implementation used rotate_left
     // rotate_right and rotate_left generate a huge amount of code and fail to
@@ -2667,7 +2701,7 @@
     <span class="kw">for </span>idx <span class="kw">in </span><span class="number">0</span>..len {
       <span class="comment">// Loop start invariant: idx = rest.done_end + rest.tail_start
       </span><span class="kw">if </span>!acceptable(<span class="kw-2">&amp;</span>rest.items[idx]) {
-        <span class="kw">let _ </span>= take(<span class="kw-2">&amp;mut </span>rest.items[idx]);
+        <span class="kw">let _ </span>= core::mem::take(<span class="kw-2">&amp;mut </span>rest.items[idx]);
         <span class="self">self</span>.len -= <span class="number">1</span>;
         rest.tail_start += <span class="number">1</span>;
       } <span class="kw">else </span>{
@@ -2856,7 +2890,7 @@
       <span class="kw">let </span>len = <span class="self">self</span>.len <span class="kw">as </span>usize;
       <span class="self">self</span>.data.as_slice_mut()[new_len..len]
         .iter_mut()
-        .map(take)
+        .map(core::mem::take)
         .for_each(drop);
     }
 
@@ -3081,7 +3115,8 @@
 <span class="kw">impl</span>&lt;<span class="lifetime">'p</span>, A: Array, I: Iterator&lt;Item = A::Item&gt;&gt; Drop
   <span class="kw">for </span>ArrayVecSplice&lt;<span class="lifetime">'p</span>, A, I&gt;
 {
-  <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+  <span class="attr">#[inline]
+  </span><span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
     <span class="kw">for _ in </span><span class="self">self</span>.by_ref() {}
 
     <span class="comment">// FIXME: reserve lower bound of size_hint
@@ -3157,7 +3192,8 @@
 </span><span class="kw">pub struct </span>TryFromSliceError(());
 
 <span class="kw">impl </span>core::fmt::Display <span class="kw">for </span>TryFromSliceError {
-  <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; core::fmt::Result {
+  <span class="attr">#[inline]
+  </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; core::fmt::Result {
     f.write_str(<span class="string">"could not convert slice to ArrayVec"</span>)
   }
 }
@@ -3173,7 +3209,6 @@
   <span class="kw">type </span>Error = TryFromSliceError;
 
   <span class="attr">#[inline]
-  #[must_use]
   </span><span class="doccomment">/// The output has a length equal to that of the slice, with the same capacity
   /// as `A`.
   </span><span class="kw">fn </span>try_from(slice: <span class="kw-2">&amp;</span>[T]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
@@ -3231,7 +3266,7 @@
       <span class="kw-2">&amp;mut </span><span class="self">self</span>.data.as_slice_mut()[<span class="self">self</span>.base <span class="kw">as </span>usize..<span class="self">self</span>.tail <span class="kw">as </span>usize];
     <span class="kw">let </span>itemref = slice.first_mut()<span class="question-mark">?</span>;
     <span class="self">self</span>.base += <span class="number">1</span>;
-    <span class="kw">return </span><span class="prelude-val">Some</span>(take(itemref));
+    <span class="kw">return </span><span class="prelude-val">Some</span>(core::mem::take(itemref));
   }
   <span class="attr">#[inline(always)]
   #[must_use]
@@ -3256,7 +3291,7 @@
     <span class="kw">if let </span><span class="prelude-val">Some</span>(x) = slice.get_mut(n) {
       <span class="comment">/* n is in range [0 .. self.tail - self.base) so in u16 range */
       </span><span class="self">self</span>.base += n <span class="kw">as </span>u16 + <span class="number">1</span>;
-      <span class="kw">return </span><span class="prelude-val">Some</span>(take(x));
+      <span class="kw">return </span><span class="prelude-val">Some</span>(core::mem::take(x));
     }
 
     <span class="self">self</span>.base = <span class="self">self</span>.tail;
@@ -3271,10 +3306,10 @@
       <span class="kw-2">&amp;mut </span><span class="self">self</span>.data.as_slice_mut()[<span class="self">self</span>.base <span class="kw">as </span>usize..<span class="self">self</span>.tail <span class="kw">as </span>usize];
     <span class="kw">let </span>item = slice.last_mut()<span class="question-mark">?</span>;
     <span class="self">self</span>.tail -= <span class="number">1</span>;
-    <span class="kw">return </span><span class="prelude-val">Some</span>(take(item));
+    <span class="kw">return </span><span class="prelude-val">Some</span>(core::mem::take(item));
   }
-  <span class="attr">#[cfg(feature = <span class="string">"rustc_1_40"</span>)]
-  #[inline]
+
+  <span class="attr">#[inline]
   </span><span class="kw">fn </span>nth_back(<span class="kw-2">&amp;mut </span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
     <span class="kw">let </span>base = <span class="self">self</span>.base <span class="kw">as </span>usize;
     <span class="kw">let </span>tail = <span class="self">self</span>.tail <span class="kw">as </span>usize;
@@ -3285,12 +3320,19 @@
       <span class="kw">let </span>item = <span class="kw-2">&amp;mut </span>slice[n];
       <span class="comment">/* n is in [0..self.tail - self.base] range, so in u16 range */
       </span><span class="self">self</span>.tail = <span class="self">self</span>.base + n <span class="kw">as </span>u16;
-      <span class="kw">return </span><span class="prelude-val">Some</span>(take(item));
+      <span class="kw">return </span><span class="prelude-val">Some</span>(core::mem::take(item));
     }
 
     <span class="self">self</span>.tail = <span class="self">self</span>.base;
     <span class="kw">return </span><span class="prelude-val">None</span>;
   }
+}
+
+<span class="kw">impl</span>&lt;A: Array&gt; ExactSizeIterator <span class="kw">for </span>ArrayVecIterator&lt;A&gt; {
+  <span class="attr">#[inline]
+  </span><span class="kw">fn </span>len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+    <span class="self">self</span>.size_hint().<span class="number">0
+  </span>}
 }
 
 <span class="kw">impl</span>&lt;A: Array&gt; Debug <span class="kw">for </span>ArrayVecIterator&lt;A&gt;
@@ -3448,7 +3490,7 @@
   <span class="attr">#[allow(clippy::missing_inline_in_public_items)]
   </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter) -&gt; core::fmt::Result {
     <span class="macro">write!</span>(f, <span class="string">"["</span>)<span class="question-mark">?</span>;
-    <span class="kw">if </span>f.alternate() {
+    <span class="kw">if </span>f.alternate() &amp;&amp; !<span class="self">self</span>.is_empty() {
       <span class="macro">write!</span>(f, <span class="string">"\n    "</span>)<span class="question-mark">?</span>;
     }
     <span class="kw">for </span>(i, elem) <span class="kw">in </span><span class="self">self</span>.iter().enumerate() {
@@ -3457,7 +3499,7 @@
       }
       Debug::fmt(elem, f)<span class="question-mark">?</span>;
     }
-    <span class="kw">if </span>f.alternate() {
+    <span class="kw">if </span>f.alternate() &amp;&amp; !<span class="self">self</span>.is_empty() {
       <span class="macro">write!</span>(f, <span class="string">",\n"</span>)<span class="question-mark">?</span>;
     }
     <span class="macro">write!</span>(f, <span class="string">"]"</span>)
@@ -3644,7 +3686,7 @@
   </span><span class="kw">pub fn </span>drain_to_vec_and_reserve(<span class="kw-2">&amp;mut </span><span class="self">self</span>, n: usize) -&gt; Vec&lt;A::Item&gt; {
     <span class="kw">let </span>cap = n + <span class="self">self</span>.len();
     <span class="kw">let </span><span class="kw-2">mut </span>v = Vec::with_capacity(cap);
-    <span class="kw">let </span>iter = <span class="self">self</span>.iter_mut().map(take);
+    <span class="kw">let </span>iter = <span class="self">self</span>.iter_mut().map(core::mem::take);
     v.extend(iter);
     <span class="self">self</span>.set_len(<span class="number">0</span>);
     <span class="kw">return </span>v;
@@ -3672,7 +3714,7 @@
     <span class="kw">let </span>cap = n + <span class="self">self</span>.len();
     <span class="kw">let </span><span class="kw-2">mut </span>v = Vec::new();
     v.try_reserve(cap)<span class="question-mark">?</span>;
-    <span class="kw">let </span>iter = <span class="self">self</span>.iter_mut().map(take);
+    <span class="kw">let </span>iter = <span class="self">self</span>.iter_mut().map(core::mem::take);
     v.extend(iter);
     <span class="self">self</span>.set_len(<span class="number">0</span>);
     <span class="kw">return </span><span class="prelude-val">Ok</span>(v);
