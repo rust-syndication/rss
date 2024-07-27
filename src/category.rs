@@ -136,6 +136,21 @@ impl ToXml for Category {
     }
 }
 
+impl From<String> for Category {
+    fn from(name: String) -> Self {
+        Self { name, domain: None }
+    }
+}
+
+impl From<&str> for Category {
+    fn from(name: &str) -> Self {
+        Self {
+            name: name.to_string(),
+            domain: None,
+        }
+    }
+}
+
 #[cfg(feature = "builders")]
 impl CategoryBuilder {
     /// Builds a new `Category`.
