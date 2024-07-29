@@ -1,3 +1,3 @@
 (function() {var implementors = {
-"atom_syndication":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.79.0/alloc/string/trait.ToString.html\" title=\"trait alloc::string::ToString\">ToString</a> for <a class=\"struct\" href=\"atom_syndication/struct.Feed.html\" title=\"struct atom_syndication::Feed\">Feed</a>"]]
+"atom_syndication":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.80.0/alloc/string/trait.ToString.html\" title=\"trait alloc::string::ToString\">ToString</a> for <a class=\"struct\" href=\"atom_syndication/struct.Feed.html\" title=\"struct atom_syndication::Feed\">Feed</a>"]]
 };if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
