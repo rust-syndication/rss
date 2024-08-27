@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update `quick-xml` to 0.36. [`#166`](https://github.com/rust-syndication/rss/pull/166)
+
 ## 2.0.8 - 2024-05-11
 
 - Update quick-xml and derive_builder dependencies. [`#162`](https://github.com/rust-syndication/rss/pull/162)
