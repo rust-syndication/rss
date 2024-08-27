@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/syn-2.0.72/src/expr.rs`."><title>expr.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="syn" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0 (051478957 2024-07-21)" data-channel="1.80.0" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/syn-2.0.76/src/expr.rs`."><title>expr.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="syn" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.1 (3f5fd8dd4 2024-08-06)" data-channel="1.80.1" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3907,6 +3907,26 @@
 <a href="#3907" id="3907">3907</a>
 <a href="#3908" id="3908">3908</a>
 <a href="#3909" id="3909">3909</a>
+<a href="#3910" id="3910">3910</a>
+<a href="#3911" id="3911">3911</a>
+<a href="#3912" id="3912">3912</a>
+<a href="#3913" id="3913">3913</a>
+<a href="#3914" id="3914">3914</a>
+<a href="#3915" id="3915">3915</a>
+<a href="#3916" id="3916">3916</a>
+<a href="#3917" id="3917">3917</a>
+<a href="#3918" id="3918">3918</a>
+<a href="#3919" id="3919">3919</a>
+<a href="#3920" id="3920">3920</a>
+<a href="#3921" id="3921">3921</a>
+<a href="#3922" id="3922">3922</a>
+<a href="#3923" id="3923">3923</a>
+<a href="#3924" id="3924">3924</a>
+<a href="#3925" id="3925">3925</a>
+<a href="#3926" id="3926">3926</a>
+<a href="#3927" id="3927">3927</a>
+<a href="#3928" id="3928">3928</a>
+<a href="#3929" id="3929">3929</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::attr::Attribute;
 <span class="attr">#[cfg(all(feature = <span class="string">"parsing"</span>, feature = <span class="string">"full"</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::error::Result;
@@ -5650,6 +5670,8 @@
             input.parse().map(Expr::Continue)
         } <span class="kw">else if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">return</span>]) {
             input.parse().map(Expr::Return)
+        } <span class="kw">else if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">become</span>]) {
+            expr_become(input)
         } <span class="kw">else if </span>input.peek(token::Bracket) {
             array_or_repeat(input)
         } <span class="kw">else if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">let</span>]) {
@@ -5760,7 +5782,8 @@
         input: ParseStream,
         <span class="attr">#[cfg(feature = <span class="string">"full"</span>)] </span>allow_struct: AllowStruct,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Expr&gt; {
-        <span class="kw">let </span>(qself, path) = path::parsing::qpath(input, <span class="bool-val">true</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>expr_style = <span class="bool-val">true</span>;
+        <span class="kw">let </span>(qself, path) = path::parsing::qpath(input, expr_style)<span class="question-mark">?</span>;
         rest_of_path_or_macro_or_struct(
             qself,
             path,
@@ -6303,6 +6326,14 @@
     }
 
     <span class="attr">#[cfg(feature = <span class="string">"full"</span>)]
+    </span><span class="kw">fn </span>expr_become(input: ParseStream) -&gt; <span class="prelude-ty">Result</span>&lt;Expr&gt; {
+        <span class="kw">let </span>begin = input.fork();
+        input.parse::&lt;<span class="macro">Token!</span>[<span class="kw">become</span>]&gt;()<span class="question-mark">?</span>;
+        input.parse::&lt;Expr&gt;()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(Expr::Verbatim(verbatim::between(<span class="kw-2">&amp;</span>begin, input)))
+    }
+
+    <span class="attr">#[cfg(feature = <span class="string">"full"</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"parsing"</span>)))]
     </span><span class="kw">impl </span>Parse <span class="kw">for </span>ExprTryBlock {
         <span class="kw">fn </span>parse(input: ParseStream) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
@@ -6581,7 +6612,8 @@
     <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"parsing"</span>)))]
     </span><span class="kw">impl </span>Parse <span class="kw">for </span>ExprStruct {
         <span class="kw">fn </span>parse(input: ParseStream) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-            <span class="kw">let </span>(qself, path) = path::parsing::qpath(input, <span class="bool-val">true</span>)<span class="question-mark">?</span>;
+            <span class="kw">let </span>expr_style = <span class="bool-val">true</span>;
+            <span class="kw">let </span>(qself, path) = path::parsing::qpath(input, expr_style)<span class="question-mark">?</span>;
             expr_struct_helper(input, qself, path)
         }
     }
@@ -6748,7 +6780,8 @@
             <span class="attr">#[cfg(feature = <span class="string">"full"</span>)]
             </span><span class="kw">let </span>attrs = input.call(Attribute::parse_outer)<span class="question-mark">?</span>;
 
-            <span class="kw">let </span>(qself, path) = path::parsing::qpath(input, <span class="bool-val">true</span>)<span class="question-mark">?</span>;
+            <span class="kw">let </span>expr_style = <span class="bool-val">true</span>;
+            <span class="kw">let </span>(qself, path) = path::parsing::qpath(input, expr_style)<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(ExprPath { attrs, qself, path })
         }
@@ -6907,6 +6940,7 @@
     <span class="kw">use </span><span class="kw">crate</span>::fixup::FixupContext;
     <span class="kw">use </span><span class="kw">crate</span>::op::BinOp;
     <span class="kw">use </span><span class="kw">crate</span>::path;
+    <span class="kw">use </span><span class="kw">crate</span>::path::printing::PathStyle;
     <span class="kw">use </span><span class="kw">crate</span>::precedence::Precedence;
     <span class="kw">use </span><span class="kw">crate</span>::token;
     <span class="attr">#[cfg(feature = <span class="string">"full"</span>)]
@@ -7520,7 +7554,13 @@
         );
         e.dot_token.to_tokens(tokens);
         e.method.to_tokens(tokens);
-        e.turbofish.to_tokens(tokens);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(turbofish) = <span class="kw-2">&amp;</span>e.turbofish {
+            path::printing::print_angle_bracketed_generic_arguments(
+                tokens,
+                turbofish,
+                PathStyle::Expr,
+            );
+        }
         e.paren_token.surround(tokens, |tokens| {
             e.args.to_tokens(tokens);
         });
@@ -7540,7 +7580,7 @@
     </span><span class="kw">impl </span>ToTokens <span class="kw">for </span>ExprPath {
         <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
             outer_attrs_to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>.attrs, tokens);
-            path::printing::print_path(tokens, <span class="kw-2">&amp;</span><span class="self">self</span>.qself, <span class="kw-2">&amp;</span><span class="self">self</span>.path);
+            path::printing::print_qpath(tokens, <span class="kw-2">&amp;</span><span class="self">self</span>.qself, <span class="kw-2">&amp;</span><span class="self">self</span>.path, PathStyle::Expr);
         }
     }
 
@@ -7627,7 +7667,7 @@
     </span><span class="kw">impl </span>ToTokens <span class="kw">for </span>ExprStruct {
         <span class="kw">fn </span>to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>, tokens: <span class="kw-2">&amp;mut </span>TokenStream) {
             outer_attrs_to_tokens(<span class="kw-2">&amp;</span><span class="self">self</span>.attrs, tokens);
-            path::printing::print_path(tokens, <span class="kw-2">&amp;</span><span class="self">self</span>.qself, <span class="kw-2">&amp;</span><span class="self">self</span>.path);
+            path::printing::print_qpath(tokens, <span class="kw-2">&amp;</span><span class="self">self</span>.qself, <span class="kw-2">&amp;</span><span class="self">self</span>.path, PathStyle::Expr);
             <span class="self">self</span>.brace_token.surround(tokens, |tokens| {
                 <span class="self">self</span>.fields.to_tokens(tokens);
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(dot2_token) = <span class="kw-2">&amp;</span><span class="self">self</span>.dot2_token {

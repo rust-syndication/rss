@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["decode","detect_encoding"],"struct":["Decoder"]};
+window.SIDEBAR_ITEMS = {"fn":["decode","decode_into","detect_encoding"],"struct":["Decoder"]};

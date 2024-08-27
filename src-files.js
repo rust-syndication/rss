@@ -20,7 +20,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["num_traits",["",[["ops",[],["bytes.rs","checked.rs","euclid.rs","inv.rs","mod.rs","mul_add.rs","overflowing.rs","saturating.rs","wrapping.rs"]]],["bounds.rs","cast.rs","float.rs","identities.rs","int.rs","lib.rs","macros.rs","pow.rs","sign.rs"]]],\
 ["percent_encoding",["",[],["lib.rs"]]],\
 ["proc_macro2",["",[],["detection.rs","extra.rs","fallback.rs","lib.rs","marker.rs","parse.rs","rcvec.rs","wrapper.rs"]]],\
-["quick_xml",["",[["events",[],["attributes.rs","mod.rs"]],["reader",[],["buffered_reader.rs","mod.rs","ns_reader.rs","slice_reader.rs","state.rs"]]],["encoding.rs","errors.rs","escapei.rs","lib.rs","name.rs","utils.rs","writer.rs"]]],\
+["quick_xml",["",[["events",[],["attributes.rs","mod.rs"]],["parser",[],["element.rs","mod.rs","pi.rs"]],["reader",[],["buffered_reader.rs","mod.rs","ns_reader.rs","slice_reader.rs","state.rs"]]],["encoding.rs","errors.rs","escape.rs","lib.rs","name.rs","utils.rs","writer.rs"]]],\
 ["quote",["",[],["ext.rs","format.rs","ident_fragment.rs","lib.rs","runtime.rs","spanned.rs","to_tokens.rs"]]],\
 ["rss",["",[["extension",[["itunes",[],["itunes_category.rs","itunes_channel_extension.rs","itunes_item_extension.rs","itunes_owner.rs","mod.rs"]]],["dublincore.rs","mod.rs","syndication.rs","util.rs"]]],["category.rs","channel.rs","cloud.rs","enclosure.rs","error.rs","guid.rs","image.rs","item.rs","lib.rs","source.rs","textinput.rs","toxml.rs","util.rs","validation.rs"]]],\
 ["serde",["",[["de",[],["format.rs","ignored_any.rs","impls.rs","mod.rs","seed.rs","size_hint.rs","value.rs"]],["private",[],["de.rs","doc.rs","mod.rs","ser.rs"]],["ser",[],["fmt.rs","impls.rs","impossible.rs","mod.rs"]]],["integer128.rs","lib.rs","macros.rs"]]],\
