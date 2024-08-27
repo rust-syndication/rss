@@ -27,7 +27,7 @@ pub(crate) fn attr_value<'s, B: BufRead>(
     attr: &'s Attribute<'s>,
     reader: &Reader<B>,
 ) -> Result<Cow<'s, str>, Error> {
-    let value = attr.decode_and_unescape_value(reader)?;
+    let value = attr.decode_and_unescape_value(reader.decoder())?;
     Ok(value)
 }
 
@@ -58,5 +58,5 @@ pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>
         buf.clear();
     }
 
-    Ok(Some(content).filter(|c| !c.is_empty()))
+    Ok(Some(content.trim().to_owned()).filter(|c| !c.is_empty()))
 }

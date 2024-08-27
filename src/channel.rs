@@ -1034,7 +1034,7 @@ impl Channel {
     /// ```
     pub fn read_from<R: BufRead>(reader: R) -> Result<Channel, Error> {
         let mut reader = Reader::from_reader(reader);
-        reader.trim_text(true).expand_empty_elements(true);
+        reader.config_mut().expand_empty_elements = true;
         let namespaces;
         let mut buf = Vec::new();
 
