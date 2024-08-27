@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 2.0.9 - 2024-08-28
+
+- Fix Clippy Warnings. [`#164`](https://github.com/rust-syndication/rss/pull/164)
+- Add `From<String>` constructor for `Category`. [`#165`](https://github.com/rust-syndication/rss/pull/165)
 - Update `quick-xml` to 0.36. [`#166`](https://github.com/rust-syndication/rss/pull/166)
 
 ## 2.0.8 - 2024-05-11
