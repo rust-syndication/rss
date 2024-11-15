@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quick-xml-0.36.1/src/reader/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.1 (3f5fd8dd4 2024-08-06)" data-channel="1.80.1" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quick-xml-0.36.2/src/reader/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1914,6 +1914,7 @@
 <a href="#1914" id="1914">1914</a>
 <a href="#1915" id="1915">1915</a>
 <a href="#1916" id="1916">1916</a>
+<a href="#1917" id="1917">1917</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Contains high-level interface for a pull-based XML parser.
 
 </span><span class="attr">#[cfg(feature = <span class="string">"encoding"</span>)]
@@ -2935,8 +2936,8 @@
     </span>CData,
     <span class="doccomment">/// &lt;!--...--&gt;
     </span>Comment,
-    <span class="doccomment">/// &lt;!DOCTYPE...&gt;
-    </span>DocType,
+    <span class="doccomment">/// &lt;!DOCTYPE...&gt;. Contains balance of '&lt;' (+1) and '&gt;' (-1)
+    </span>DocType(i32),
 }
 <span class="kw">impl </span>BangType {
     <span class="attr">#[inline(always)]
@@ -2944,7 +2945,7 @@
         <span class="prelude-val">Ok</span>(<span class="kw">match </span>byte {
             <span class="prelude-val">Some</span>(<span class="string">b'['</span>) =&gt; <span class="self">Self</span>::CData,
             <span class="prelude-val">Some</span>(<span class="string">b'-'</span>) =&gt; <span class="self">Self</span>::Comment,
-            <span class="prelude-val">Some</span>(<span class="string">b'D'</span>) | <span class="prelude-val">Some</span>(<span class="string">b'd'</span>) =&gt; <span class="self">Self</span>::DocType,
+            <span class="prelude-val">Some</span>(<span class="string">b'D'</span>) | <span class="prelude-val">Some</span>(<span class="string">b'd'</span>) =&gt; <span class="self">Self</span>::DocType(<span class="number">0</span>),
             <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::Syntax(SyntaxError::InvalidBangMarkup)),
         })
     }
@@ -2956,7 +2957,7 @@
     /// - `buf`: buffer with data consumed on previous iterations
     /// - `chunk`: data read on current iteration and not yet consumed from reader
     </span><span class="attr">#[inline(always)]
-    </span><span class="kw">fn </span>parse&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, buf: <span class="kw-2">&amp;</span>[u8], chunk: <span class="kw-2">&amp;</span><span class="lifetime">'b </span>[u8]) -&gt; <span class="prelude-ty">Option</span>&lt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span>[u8], usize)&gt; {
+    </span><span class="kw">fn </span>parse&lt;<span class="lifetime">'b</span>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, buf: <span class="kw-2">&amp;</span>[u8], chunk: <span class="kw-2">&amp;</span><span class="lifetime">'b </span>[u8]) -&gt; <span class="prelude-ty">Option</span>&lt;(<span class="kw-2">&amp;</span><span class="lifetime">'b </span>[u8], usize)&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Comment =&gt; {
                 <span class="kw">for </span>i <span class="kw">in </span>memchr::memchr_iter(<span class="string">b'&gt;'</span>, chunk) {
@@ -3001,15 +3002,16 @@
                     </span>}
                 }
             }
-            <span class="self">Self</span>::DocType =&gt; {
-                <span class="kw">for </span>i <span class="kw">in </span>memchr::memchr_iter(<span class="string">b'&gt;'</span>, chunk) {
-                    <span class="kw">let </span>content = <span class="kw-2">&amp;</span>chunk[..i];
-                    <span class="kw">let </span>balance = memchr::memchr2_iter(<span class="string">b'&lt;'</span>, <span class="string">b'&gt;'</span>, content)
-                        .map(|p| <span class="kw">if </span>content[p] == <span class="string">b'&lt;' </span>{ <span class="number">1i32 </span>} <span class="kw">else </span>{ -<span class="number">1 </span>})
-                        .sum::&lt;i32&gt;();
-                    <span class="kw">if </span>balance == <span class="number">0 </span>{
-                        <span class="kw">return </span><span class="prelude-val">Some</span>((content, i + <span class="number">1</span>)); <span class="comment">// +1 for `&gt;`
-                    </span>}
+            <span class="self">Self</span>::DocType(<span class="kw-2">ref mut </span>balance) =&gt; {
+                <span class="kw">for </span>i <span class="kw">in </span>memchr::memchr2_iter(<span class="string">b'&lt;'</span>, <span class="string">b'&gt;'</span>, chunk) {
+                    <span class="kw">if </span>chunk[i] == <span class="string">b'&lt;' </span>{
+                        <span class="kw-2">*</span>balance += <span class="number">1</span>;
+                    } <span class="kw">else </span>{
+                        <span class="kw">if </span><span class="kw-2">*</span>balance == <span class="number">0 </span>{
+                            <span class="kw">return </span><span class="prelude-val">Some</span>((<span class="kw-2">&amp;</span>chunk[..i], i + <span class="number">1</span>)); <span class="comment">// +1 for `&gt;`
+                        </span>}
+                        <span class="kw-2">*</span>balance -= <span class="number">1</span>;
+                    }
                 }
             }
         }
@@ -3020,7 +3022,7 @@
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::CData =&gt; Error::Syntax(SyntaxError::UnclosedCData),
             <span class="self">Self</span>::Comment =&gt; Error::Syntax(SyntaxError::UnclosedComment),
-            <span class="self">Self</span>::DocType =&gt; Error::Syntax(SyntaxError::UnclosedDoctype),
+            <span class="self">Self</span>::DocType(<span class="kw">_</span>) =&gt; Error::Syntax(SyntaxError::UnclosedDoctype),
         }
     }
 }
@@ -3330,7 +3332,7 @@
                                 </span>.<span class="macro-nonterminal">unwrap</span>();
                             <span class="macro">assert_eq!</span>(
                                 (ty, Bytes(bytes)),
-                                (BangType::DocType, Bytes(<span class="string">b"!DOCTYPE"</span>))
+                                (BangType::DocType(<span class="number">0</span>), Bytes(<span class="string">b"!DOCTYPE"</span>))
                             );
                             <span class="macro">assert_eq!</span>(position, <span class="number">10</span>);
                         }
@@ -3404,7 +3406,7 @@
                                 </span>.<span class="macro-nonterminal">unwrap</span>();
                             <span class="macro">assert_eq!</span>(
                                 (ty, Bytes(bytes)),
-                                (BangType::DocType, Bytes(<span class="string">b"!doctype"</span>))
+                                (BangType::DocType(<span class="number">0</span>), Bytes(<span class="string">b"!doctype"</span>))
                             );
                             <span class="macro">assert_eq!</span>(position, <span class="number">10</span>);
                         }

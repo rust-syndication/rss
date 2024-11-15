@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/syn-2.0.76/src/item.rs`."><title>item.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="syn" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.1 (3f5fd8dd4 2024-08-06)" data-channel="1.80.1" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/syn-2.0.87/src/item.rs`."><title>item.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="syn" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3441,6 +3441,65 @@
 <a href="#3441" id="3441">3441</a>
 <a href="#3442" id="3442">3442</a>
 <a href="#3443" id="3443">3443</a>
+<a href="#3444" id="3444">3444</a>
+<a href="#3445" id="3445">3445</a>
+<a href="#3446" id="3446">3446</a>
+<a href="#3447" id="3447">3447</a>
+<a href="#3448" id="3448">3448</a>
+<a href="#3449" id="3449">3449</a>
+<a href="#3450" id="3450">3450</a>
+<a href="#3451" id="3451">3451</a>
+<a href="#3452" id="3452">3452</a>
+<a href="#3453" id="3453">3453</a>
+<a href="#3454" id="3454">3454</a>
+<a href="#3455" id="3455">3455</a>
+<a href="#3456" id="3456">3456</a>
+<a href="#3457" id="3457">3457</a>
+<a href="#3458" id="3458">3458</a>
+<a href="#3459" id="3459">3459</a>
+<a href="#3460" id="3460">3460</a>
+<a href="#3461" id="3461">3461</a>
+<a href="#3462" id="3462">3462</a>
+<a href="#3463" id="3463">3463</a>
+<a href="#3464" id="3464">3464</a>
+<a href="#3465" id="3465">3465</a>
+<a href="#3466" id="3466">3466</a>
+<a href="#3467" id="3467">3467</a>
+<a href="#3468" id="3468">3468</a>
+<a href="#3469" id="3469">3469</a>
+<a href="#3470" id="3470">3470</a>
+<a href="#3471" id="3471">3471</a>
+<a href="#3472" id="3472">3472</a>
+<a href="#3473" id="3473">3473</a>
+<a href="#3474" id="3474">3474</a>
+<a href="#3475" id="3475">3475</a>
+<a href="#3476" id="3476">3476</a>
+<a href="#3477" id="3477">3477</a>
+<a href="#3478" id="3478">3478</a>
+<a href="#3479" id="3479">3479</a>
+<a href="#3480" id="3480">3480</a>
+<a href="#3481" id="3481">3481</a>
+<a href="#3482" id="3482">3482</a>
+<a href="#3483" id="3483">3483</a>
+<a href="#3484" id="3484">3484</a>
+<a href="#3485" id="3485">3485</a>
+<a href="#3486" id="3486">3486</a>
+<a href="#3487" id="3487">3487</a>
+<a href="#3488" id="3488">3488</a>
+<a href="#3489" id="3489">3489</a>
+<a href="#3490" id="3490">3490</a>
+<a href="#3491" id="3491">3491</a>
+<a href="#3492" id="3492">3492</a>
+<a href="#3493" id="3493">3493</a>
+<a href="#3494" id="3494">3494</a>
+<a href="#3495" id="3495">3495</a>
+<a href="#3496" id="3496">3496</a>
+<a href="#3497" id="3497">3497</a>
+<a href="#3498" id="3498">3498</a>
+<a href="#3499" id="3499">3499</a>
+<a href="#3500" id="3500">3500</a>
+<a href="#3501" id="3501">3501</a>
+<a href="#3502" id="3502">3502</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::attr::Attribute;
 <span class="kw">use </span><span class="kw">crate</span>::data::{Fields, FieldsNamed, Variant};
 <span class="kw">use </span><span class="kw">crate</span>::derive::{Data, DataEnum, DataStruct, DataUnion, DeriveInput};
@@ -4395,7 +4454,8 @@
         <span class="kw">let </span>vis: Visibility = ahead.parse()<span class="question-mark">?</span>;
 
         <span class="kw">let </span>lookahead = ahead.lookahead1();
-        <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead) {
+        <span class="kw">let </span>allow_safe = <span class="bool-val">false</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead, allow_safe) {
             <span class="kw">let </span>vis: Visibility = input.parse()<span class="question-mark">?</span>;
             <span class="kw">let </span>sig: Signature = input.parse()<span class="question-mark">?</span>;
             <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[;]) {
@@ -4648,7 +4708,15 @@
                     <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">where</span>]) || input.peek(<span class="macro">Token!</span>[=]) || input.peek(<span class="macro">Token!</span>[;]) {
                         <span class="kw">break</span>;
                     }
-                    bounds.push_value(input.parse::&lt;TypeParamBound&gt;()<span class="question-mark">?</span>);
+                    bounds.push_value({
+                        <span class="kw">let </span>allow_precise_capture = <span class="bool-val">false</span>;
+                        <span class="kw">let </span>allow_tilde_const = <span class="bool-val">true</span>;
+                        TypeParamBound::parse_single(
+                            input,
+                            allow_precise_capture,
+                            allow_tilde_const,
+                        )<span class="question-mark">?
+                    </span>});
                     <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">where</span>]) || input.peek(<span class="macro">Token!</span>[=]) || input.peek(<span class="macro">Token!</span>[;]) {
                         <span class="kw">break</span>;
                     }
@@ -4854,14 +4922,16 @@
                     <span class="kw-2">&amp;</span>content,
                     allow_crate_root_in_path &amp;&amp; !this_tree_starts_with_crate_root,
                 )<span class="question-mark">? </span>{
-                    <span class="prelude-val">Some</span>(tree) =&gt; items.push_value(tree),
-                    <span class="prelude-val">None </span>=&gt; has_any_crate_root_in_path = <span class="bool-val">true</span>,
+                    <span class="prelude-val">Some</span>(tree) <span class="kw">if </span>!has_any_crate_root_in_path =&gt; items.push_value(tree),
+                    <span class="kw">_ </span>=&gt; has_any_crate_root_in_path = <span class="bool-val">true</span>,
                 }
                 <span class="kw">if </span>content.is_empty() {
                     <span class="kw">break</span>;
                 }
                 <span class="kw">let </span>comma: <span class="macro">Token!</span>[,] = content.parse()<span class="question-mark">?</span>;
-                items.push_punct(comma);
+                <span class="kw">if </span>!has_any_crate_root_in_path {
+                    items.push_punct(comma);
+                }
             }
             <span class="kw">if </span>has_any_crate_root_in_path {
                 <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
@@ -4926,11 +4996,14 @@
         }
     }
 
-    <span class="kw">fn </span>peek_signature(input: ParseStream) -&gt; bool {
+    <span class="kw">fn </span>peek_signature(input: ParseStream, allow_safe: bool) -&gt; bool {
         <span class="kw">let </span>fork = input.fork();
         fork.parse::&lt;<span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">const</span>]&gt;&gt;().is_ok()
             &amp;&amp; fork.parse::&lt;<span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">async</span>]&gt;&gt;().is_ok()
-            &amp;&amp; fork.parse::&lt;<span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">unsafe</span>]&gt;&gt;().is_ok()
+            &amp;&amp; ((allow_safe
+                &amp;&amp; token::parsing::peek_keyword(fork.cursor(), <span class="string">"safe"</span>)
+                &amp;&amp; token::parsing::keyword(<span class="kw-2">&amp;</span>fork, <span class="string">"safe"</span>).is_ok())
+                || fork.parse::&lt;<span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">unsafe</span>]&gt;&gt;().is_ok())
             &amp;&amp; fork.parse::&lt;<span class="prelude-ty">Option</span>&lt;Abi&gt;&gt;().is_ok()
             &amp;&amp; fork.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>])
     }
@@ -4938,22 +5011,37 @@
     <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"parsing"</span>)))]
     </span><span class="kw">impl </span>Parse <span class="kw">for </span>Signature {
         <span class="kw">fn </span>parse(input: ParseStream) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-            <span class="kw">let </span>constness: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">const</span>]&gt; = input.parse()<span class="question-mark">?</span>;
-            <span class="kw">let </span>asyncness: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">async</span>]&gt; = input.parse()<span class="question-mark">?</span>;
-            <span class="kw">let </span>unsafety: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">unsafe</span>]&gt; = input.parse()<span class="question-mark">?</span>;
-            <span class="kw">let </span>abi: <span class="prelude-ty">Option</span>&lt;Abi&gt; = input.parse()<span class="question-mark">?</span>;
-            <span class="kw">let </span>fn_token: <span class="macro">Token!</span>[<span class="kw">fn</span>] = input.parse()<span class="question-mark">?</span>;
-            <span class="kw">let </span>ident: Ident = input.parse()<span class="question-mark">?</span>;
-            <span class="kw">let </span><span class="kw-2">mut </span>generics: Generics = input.parse()<span class="question-mark">?</span>;
+            <span class="kw">let </span>allow_safe = <span class="bool-val">false</span>;
+            parse_signature(input, allow_safe).map(Option::unwrap)
+        }
+    }
 
-            <span class="kw">let </span>content;
-            <span class="kw">let </span>paren_token = <span class="macro">parenthesized!</span>(content <span class="kw">in </span>input);
-            <span class="kw">let </span>(inputs, variadic) = parse_fn_args(<span class="kw-2">&amp;</span>content)<span class="question-mark">?</span>;
+    <span class="kw">fn </span>parse_signature(input: ParseStream, allow_safe: bool) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Signature&gt;&gt; {
+        <span class="kw">let </span>constness: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">const</span>]&gt; = input.parse()<span class="question-mark">?</span>;
+        <span class="kw">let </span>asyncness: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">async</span>]&gt; = input.parse()<span class="question-mark">?</span>;
+        <span class="kw">let </span>unsafety: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">unsafe</span>]&gt; = input.parse()<span class="question-mark">?</span>;
+        <span class="kw">let </span>safe = allow_safe
+            &amp;&amp; unsafety.is_none()
+            &amp;&amp; token::parsing::peek_keyword(input.cursor(), <span class="string">"safe"</span>);
+        <span class="kw">if </span>safe {
+            token::parsing::keyword(input, <span class="string">"safe"</span>)<span class="question-mark">?</span>;
+        }
+        <span class="kw">let </span>abi: <span class="prelude-ty">Option</span>&lt;Abi&gt; = input.parse()<span class="question-mark">?</span>;
+        <span class="kw">let </span>fn_token: <span class="macro">Token!</span>[<span class="kw">fn</span>] = input.parse()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ident: Ident = input.parse()<span class="question-mark">?</span>;
+        <span class="kw">let </span><span class="kw-2">mut </span>generics: Generics = input.parse()<span class="question-mark">?</span>;
 
-            <span class="kw">let </span>output: ReturnType = input.parse()<span class="question-mark">?</span>;
-            generics.where_clause = input.parse()<span class="question-mark">?</span>;
+        <span class="kw">let </span>content;
+        <span class="kw">let </span>paren_token = <span class="macro">parenthesized!</span>(content <span class="kw">in </span>input);
+        <span class="kw">let </span>(inputs, variadic) = parse_fn_args(<span class="kw-2">&amp;</span>content)<span class="question-mark">?</span>;
 
-            <span class="prelude-val">Ok</span>(Signature {
+        <span class="kw">let </span>output: ReturnType = input.parse()<span class="question-mark">?</span>;
+        generics.where_clause = input.parse()<span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(<span class="kw">if </span>safe {
+            <span class="prelude-val">None
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Some</span>(Signature {
                 constness,
                 asyncness,
                 unsafety,
@@ -4966,7 +5054,7 @@
                 variadic,
                 output,
             })
-        }
+        })
     }
 
     <span class="attr">#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"parsing"</span>)))]
@@ -5262,35 +5350,55 @@
             <span class="kw">let </span>vis: Visibility = ahead.parse()<span class="question-mark">?</span>;
 
             <span class="kw">let </span>lookahead = ahead.lookahead1();
-            <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead) {
+            <span class="kw">let </span>allow_safe = <span class="bool-val">true</span>;
+            <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead, allow_safe) {
                 <span class="kw">let </span>vis: Visibility = input.parse()<span class="question-mark">?</span>;
-                <span class="kw">let </span>sig: Signature = input.parse()<span class="question-mark">?</span>;
-                <span class="kw">if </span>input.peek(token::Brace) {
+                <span class="kw">let </span>sig = parse_signature(input, allow_safe)<span class="question-mark">?</span>;
+                <span class="kw">let </span>has_safe = sig.is_none();
+                <span class="kw">let </span>has_body = input.peek(token::Brace);
+                <span class="kw">let </span>semi_token: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[;]&gt; = <span class="kw">if </span>has_body {
                     <span class="kw">let </span>content;
                     <span class="macro">braced!</span>(content <span class="kw">in </span>input);
                     content.call(Attribute::parse_inner)<span class="question-mark">?</span>;
                     content.call(Block::parse_within)<span class="question-mark">?</span>;
-
+                    <span class="prelude-val">None
+                </span>} <span class="kw">else </span>{
+                    <span class="prelude-val">Some</span>(input.parse()<span class="question-mark">?</span>)
+                };
+                <span class="kw">if </span>has_safe || has_body {
                     <span class="prelude-val">Ok</span>(ForeignItem::Verbatim(verbatim::between(<span class="kw-2">&amp;</span>begin, input)))
                 } <span class="kw">else </span>{
                     <span class="prelude-val">Ok</span>(ForeignItem::Fn(ForeignItemFn {
                         attrs: Vec::new(),
                         vis,
-                        sig,
-                        semi_token: input.parse()<span class="question-mark">?</span>,
+                        sig: sig.unwrap(),
+                        semi_token: semi_token.unwrap(),
                     }))
                 }
-            } <span class="kw">else if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">static</span>]) {
+            } <span class="kw">else if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">static</span>])
+                || ((ahead.peek(<span class="macro">Token!</span>[<span class="kw">unsafe</span>])
+                    || token::parsing::peek_keyword(ahead.cursor(), <span class="string">"safe"</span>))
+                    &amp;&amp; ahead.peek2(<span class="macro">Token!</span>[<span class="kw">static</span>]))
+            {
                 <span class="kw">let </span>vis = input.parse()<span class="question-mark">?</span>;
+                <span class="kw">let </span>unsafety: <span class="prelude-ty">Option</span>&lt;<span class="macro">Token!</span>[<span class="kw">unsafe</span>]&gt; = input.parse()<span class="question-mark">?</span>;
+                <span class="kw">let </span>safe =
+                    unsafety.is_none() &amp;&amp; token::parsing::peek_keyword(input.cursor(), <span class="string">"safe"</span>);
+                <span class="kw">if </span>safe {
+                    token::parsing::keyword(input, <span class="string">"safe"</span>)<span class="question-mark">?</span>;
+                }
                 <span class="kw">let </span>static_token = input.parse()<span class="question-mark">?</span>;
                 <span class="kw">let </span>mutability = input.parse()<span class="question-mark">?</span>;
                 <span class="kw">let </span>ident = input.parse()<span class="question-mark">?</span>;
                 <span class="kw">let </span>colon_token = input.parse()<span class="question-mark">?</span>;
                 <span class="kw">let </span>ty = input.parse()<span class="question-mark">?</span>;
-                <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[=]) {
+                <span class="kw">let </span>has_value = input.peek(<span class="macro">Token!</span>[=]);
+                <span class="kw">if </span>has_value {
                     input.parse::&lt;<span class="macro">Token!</span>[=]&gt;()<span class="question-mark">?</span>;
                     input.parse::&lt;Expr&gt;()<span class="question-mark">?</span>;
-                    input.parse::&lt;<span class="macro">Token!</span>[;]&gt;()<span class="question-mark">?</span>;
+                }
+                <span class="kw">let </span>semi_token: <span class="macro">Token!</span>[;] = input.parse()<span class="question-mark">?</span>;
+                <span class="kw">if </span>unsafety.is_some() || safe || has_value {
                     <span class="prelude-val">Ok</span>(ForeignItem::Verbatim(verbatim::between(<span class="kw-2">&amp;</span>begin, input)))
                 } <span class="kw">else </span>{
                     <span class="prelude-val">Ok</span>(ForeignItem::Static(ForeignItemStatic {
@@ -5301,7 +5409,7 @@
                         ident,
                         colon_token,
                         ty,
-                        semi_token: input.parse()<span class="question-mark">?</span>,
+                        semi_token,
                     }))
                 }
             } <span class="kw">else if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">type</span>]) {
@@ -5625,7 +5733,11 @@
                 <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">where</span>]) || input.peek(token::Brace) {
                     <span class="kw">break</span>;
                 }
-                supertraits.push_value(input.parse()<span class="question-mark">?</span>);
+                supertraits.push_value({
+                    <span class="kw">let </span>allow_precise_capture = <span class="bool-val">false</span>;
+                    <span class="kw">let </span>allow_tilde_const = <span class="bool-val">true</span>;
+                    TypeParamBound::parse_single(input, allow_precise_capture, allow_tilde_const)<span class="question-mark">?
+                </span>});
                 <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">where</span>]) || input.peek(token::Brace) {
                     <span class="kw">break</span>;
                 }
@@ -5693,7 +5805,11 @@
             <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">where</span>]) || input.peek(<span class="macro">Token!</span>[;]) {
                 <span class="kw">break</span>;
             }
-            bounds.push_value(input.parse()<span class="question-mark">?</span>);
+            bounds.push_value({
+                <span class="kw">let </span>allow_precise_capture = <span class="bool-val">false</span>;
+                <span class="kw">let </span>allow_tilde_const = <span class="bool-val">false</span>;
+                TypeParamBound::parse_single(input, allow_precise_capture, allow_tilde_const)<span class="question-mark">?
+            </span>});
             <span class="kw">if </span>input.peek(<span class="macro">Token!</span>[<span class="kw">where</span>]) || input.peek(<span class="macro">Token!</span>[;]) {
                 <span class="kw">break</span>;
             }
@@ -5725,7 +5841,8 @@
             <span class="kw">let </span>ahead = input.fork();
 
             <span class="kw">let </span>lookahead = ahead.lookahead1();
-            <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead) {
+            <span class="kw">let </span>allow_safe = <span class="bool-val">false</span>;
+            <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead, allow_safe) {
                 input.parse().map(TraitItem::Fn)
             } <span class="kw">else if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">const</span>]) {
                 <span class="kw">let </span>const_token: <span class="macro">Token!</span>[<span class="kw">const</span>] = ahead.parse()<span class="question-mark">?</span>;
@@ -6070,7 +6187,8 @@
                 <span class="prelude-val">None
             </span>};
 
-            <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead) {
+            <span class="kw">let </span>allow_safe = <span class="bool-val">false</span>;
+            <span class="kw">let </span><span class="kw-2">mut </span>item = <span class="kw">if </span>lookahead.peek(<span class="macro">Token!</span>[<span class="kw">fn</span>]) || peek_signature(<span class="kw-2">&amp;</span>ahead, allow_safe) {
                 <span class="kw">let </span>allow_omitted_body = <span class="bool-val">true</span>;
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(item) = parse_impl_item_fn(input, allow_omitted_body)<span class="question-mark">? </span>{
                     <span class="prelude-val">Ok</span>(ImplItem::Fn(item))
