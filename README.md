@@ -70,8 +70,6 @@ async fn example_feed() -> Result<Channel, Box<dyn Error>> {
 
 A channel can be written to any object that implements the `Write` trait or converted to an XML string using the `ToString` trait.
 
-**Note**: Writing a channel does not perform any escaping of XML entities.
-
 ```rust
 use rss::Channel;
 

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Remove ambiguous statements about escaping from documentation. [`#171`](https://github.com/rust-syndication/rss/pull/171)
+
 ## 2.0.9 - 2024-08-28
 
 - Fix Clippy Warnings. [`#164`](https://github.com/rust-syndication/rss/pull/164)
