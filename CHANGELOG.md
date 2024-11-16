@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.10 - 2024-11-16
+
 - Remove ambiguous statements about escaping from documentation. [`#171`](https://github.com/rust-syndication/rss/pull/171)
 - Update `quick-xml` to 0.37. [`#172`](https://github.com/rust-syndication/rss/pull/172)
 
