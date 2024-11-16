@@ -7,7 +7,9 @@
 
 use std::error::Error as StdError;
 use std::fmt;
+use std::io;
 use std::str::Utf8Error;
+use std::sync::Arc;
 
 use quick_xml::Error as XmlError;
 
@@ -48,6 +50,18 @@ impl fmt::Display for Error {
 impl From<XmlError> for Error {
     fn from(err: XmlError) -> Error {
         Error::Xml(err)
+    }
+}
+
+impl From<quick_xml::encoding::EncodingError> for Error {
+    fn from(err: quick_xml::encoding::EncodingError) -> Error {
+        Error::Xml(XmlError::Encoding(err))
+    }
+}
+
+impl From<io::Error> for Error {
+    fn from(err: io::Error) -> Error {
+        Error::Xml(XmlError::Io(Arc::new(err)))
     }
 }
 
