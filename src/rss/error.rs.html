@@ -56,6 +56,20 @@
 <a href="#56" id="56">56</a>
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
 </pre></div><pre class="rust"><code><span class="comment">// This file is part of rss.
 //
 // Copyright © 2015-2021 The rust-syndication Developers
@@ -65,7 +79,9 @@
 
 </span><span class="kw">use </span>std::error::Error <span class="kw">as </span>StdError;
 <span class="kw">use </span>std::fmt;
+<span class="kw">use </span>std::io;
 <span class="kw">use </span>std::str::Utf8Error;
+<span class="kw">use </span>std::sync::Arc;
 
 <span class="kw">use </span>quick_xml::Error <span class="kw">as </span>XmlError;
 
@@ -106,6 +122,18 @@
 <span class="kw">impl </span>From&lt;XmlError&gt; <span class="kw">for </span>Error {
     <span class="kw">fn </span>from(err: XmlError) -&gt; Error {
         Error::Xml(err)
+    }
+}
+
+<span class="kw">impl </span>From&lt;quick_xml::encoding::EncodingError&gt; <span class="kw">for </span>Error {
+    <span class="kw">fn </span>from(err: quick_xml::encoding::EncodingError) -&gt; Error {
+        Error::Xml(XmlError::Encoding(err))
+    }
+}
+
+<span class="kw">impl </span>From&lt;io::Error&gt; <span class="kw">for </span>Error {
+    <span class="kw">fn </span>from(err: io::Error) -&gt; Error {
+        Error::Xml(XmlError::Io(Arc::new(err)))
     }
 }
 
