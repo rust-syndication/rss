@@ -86,7 +86,8 @@ impl<W: Write> WriterExt for Writer<W> {
     {
         let name = name.as_ref();
         self.write_event(Event::Start(BytesStart::new(name)))?;
-        self.write_event(Event::CData(BytesCData::new(text.as_ref())))?;
+        BytesCData::escaped(text.as_ref())
+            .try_for_each(|event| self.write_event(Event::CData(event)))?;
         self.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
