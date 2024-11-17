@@ -240,6 +240,7 @@ fn test_escape() {
                     .value("51ed8fb6-e7db-4b1d-a75a-0d1621e895b4")
                     .build(),
             )
+            .description("let's try & break this <item> ]]>, shall we?".to_owned())
             .content("Lorem ipsum dolor sit amet".to_owned())
             .enclosure(
                 EnclosureBuilder::default()
@@ -290,6 +291,7 @@ fn test_escape() {
     assert!(xml.contains("http://example.com?test=1&amp;another=true"));
     assert!(xml.contains("http://example.com?test=2&amp;another=false"));
     assert!(xml.contains("&lt;title&gt;"));
+    assert!(xml.contains("<![CDATA[let's try & break this <item> ]]]]><![CDATA[>, shall we?]]>"));
 
     let channel = rss::Channel::read_from(xml.as_bytes()).unwrap();
 
@@ -322,6 +324,10 @@ fn test_escape() {
             .as_ref()
             .unwrap(),
         "<title>"
+    );
+    assert_eq!(
+        channel.items[0].description.as_ref().unwrap(),
+        "let's try & break this <item> ]]>, shall we?"
     );
 }
 
