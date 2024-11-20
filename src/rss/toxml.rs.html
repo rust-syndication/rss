@@ -111,6 +111,7 @@
 <a href="#111" id="111">111</a>
 <a href="#112" id="112">112</a>
 <a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
 </pre></div><pre class="rust"><code><span class="comment">// This file is part of rss.
 //
 // Copyright © 2015-2021 The rust-syndication Developers
@@ -199,7 +200,8 @@
     {
         <span class="kw">let </span>name = name.as_ref();
         <span class="self">self</span>.write_event(Event::Start(BytesStart::new(name)))<span class="question-mark">?</span>;
-        <span class="self">self</span>.write_event(Event::CData(BytesCData::new(text.as_ref())))<span class="question-mark">?</span>;
+        BytesCData::escaped(text.as_ref())
+            .try_for_each(|event| <span class="self">self</span>.write_event(Event::CData(event)))<span class="question-mark">?</span>;
         <span class="self">self</span>.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
