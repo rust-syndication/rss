@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 2.0.11 - 2024-11-22
+
+- Fix `]]>` escaping in `CDATA` sections. [`#174`](https://github.com/rust-syndication/rss/pull/174)
+
 ## 2.0.10 - 2024-11-16
 
 - Remove ambiguous statements about escaping from documentation. [`#171`](https://github.com/rust-syndication/rss/pull/171)
