@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add a test to ensure that `Error` satisfies `Send` and `Sync`.
+
 ## 2.0.11 - 2024-11-22
 
 - Fix `]]>` escaping in `CDATA` sections. [`#174`](https://github.com/rust-syndication/rss/pull/174)
