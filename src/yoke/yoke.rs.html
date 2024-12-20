@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/yoke-0.7.4/src/yoke.rs`."><title>yoke.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="yoke" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/yoke-0.7.5/src/yoke.rs`."><title>yoke.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b0742ba02757f159.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="yoke" data-themes="" data-resource-suffix="" data-rustdoc-version="1.83.0 (90b35a623 2024-11-26)" data-channel="1.83.0" data-search-js="search-f0d225181b97f9a4.js" data-settings-js="settings-805db61a62df4bd2.js" ><script src="../../static.files/storage-1d39b6787ed640ff.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-f070b9041d14864c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-0111fcff984fae8f.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">yoke/</div>yoke.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1482,7 +1483,64 @@
 <a href="#1482" id="1482">1482</a>
 <a href="#1483" id="1483">1483</a>
 <a href="#1484" id="1484">1484</a>
-</pre></div><pre class="rust"><code><span class="comment">// This file is part of ICU4X. For terms of use, please see the file
+<a href="#1485" id="1485">1485</a>
+<a href="#1486" id="1486">1486</a>
+<a href="#1487" id="1487">1487</a>
+<a href="#1488" id="1488">1488</a>
+<a href="#1489" id="1489">1489</a>
+<a href="#1490" id="1490">1490</a>
+<a href="#1491" id="1491">1491</a>
+<a href="#1492" id="1492">1492</a>
+<a href="#1493" id="1493">1493</a>
+<a href="#1494" id="1494">1494</a>
+<a href="#1495" id="1495">1495</a>
+<a href="#1496" id="1496">1496</a>
+<a href="#1497" id="1497">1497</a>
+<a href="#1498" id="1498">1498</a>
+<a href="#1499" id="1499">1499</a>
+<a href="#1500" id="1500">1500</a>
+<a href="#1501" id="1501">1501</a>
+<a href="#1502" id="1502">1502</a>
+<a href="#1503" id="1503">1503</a>
+<a href="#1504" id="1504">1504</a>
+<a href="#1505" id="1505">1505</a>
+<a href="#1506" id="1506">1506</a>
+<a href="#1507" id="1507">1507</a>
+<a href="#1508" id="1508">1508</a>
+<a href="#1509" id="1509">1509</a>
+<a href="#1510" id="1510">1510</a>
+<a href="#1511" id="1511">1511</a>
+<a href="#1512" id="1512">1512</a>
+<a href="#1513" id="1513">1513</a>
+<a href="#1514" id="1514">1514</a>
+<a href="#1515" id="1515">1515</a>
+<a href="#1516" id="1516">1516</a>
+<a href="#1517" id="1517">1517</a>
+<a href="#1518" id="1518">1518</a>
+<a href="#1519" id="1519">1519</a>
+<a href="#1520" id="1520">1520</a>
+<a href="#1521" id="1521">1521</a>
+<a href="#1522" id="1522">1522</a>
+<a href="#1523" id="1523">1523</a>
+<a href="#1524" id="1524">1524</a>
+<a href="#1525" id="1525">1525</a>
+<a href="#1526" id="1526">1526</a>
+<a href="#1527" id="1527">1527</a>
+<a href="#1528" id="1528">1528</a>
+<a href="#1529" id="1529">1529</a>
+<a href="#1530" id="1530">1530</a>
+<a href="#1531" id="1531">1531</a>
+<a href="#1532" id="1532">1532</a>
+<a href="#1533" id="1533">1533</a>
+<a href="#1534" id="1534">1534</a>
+<a href="#1535" id="1535">1535</a>
+<a href="#1536" id="1536">1536</a>
+<a href="#1537" id="1537">1537</a>
+<a href="#1538" id="1538">1538</a>
+<a href="#1539" id="1539">1539</a>
+<a href="#1540" id="1540">1540</a>
+<a href="#1541" id="1541">1541</a>
+<a href="#1542" id="1542">1542</a></pre></div><pre class="rust"><code><span class="comment">// This file is part of ICU4X. For terms of use, please see the file
 // called LICENSE at the top level of the ICU4X source tree
 // (online at: https://github.com/unicode-org/icu4x/blob/main/LICENSE ).
 
@@ -1565,10 +1623,14 @@
     // this will have a 'static lifetime parameter, that parameter is a lie
     </span>yokeable: KindaSortaDangling&lt;Y&gt;,
     <span class="comment">// Safety invariant: this type can be anything, but `yokeable` may only contain references to
-    // StableDeref parts of this cart, and those references must be valid for the lifetime of
-    // this cart (it must own or borrow them). It's ok for this cart to contain stack data as long as it
-    // is not referenced by `yokeable` during construction. `attach_to_cart`, the typical constructor
-    // of this type, upholds this invariant, but other constructors like `replace_cart` need to uphold it.
+    // StableDeref parts of this cart, and the targets of those references must be valid for the
+    // lifetime of this cart (it must own or borrow them). It's ok for this cart to contain stack
+    // data as long as it is not referenced by `yokeable` during construction. `attach_to_cart`,
+    // the typical constructor of this type, upholds this invariant, but other constructors like
+    // `replace_cart` need to uphold it.
+    // The implementation guarantees that there are no live `yokeable`s that reference data
+    // in a `cart` when the `cart` is dropped; this is guaranteed in the drop glue through field
+    // order.
     </span>cart: C,
 }
 
@@ -1683,7 +1745,12 @@
     {
         <span class="kw">let </span>deserialized = f(cart.deref());
         <span class="self">Self </span>{
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ Y::make(deserialized) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs at the bottom of this file
+                // for the justification of why yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ Y::make(deserialized) },
+            ),
             cart,
         }
     }
@@ -1696,10 +1763,16 @@
     </span><span class="kw">pub fn </span>try_attach_to_cart&lt;E, F&gt;(cart: C, f: F) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, E&gt;
     <span class="kw">where
         </span>F: <span class="kw">for</span>&lt;<span class="lifetime">'de</span>&gt; FnOnce(<span class="kw-2">&amp;</span><span class="lifetime">'de </span>&lt;C <span class="kw">as </span>Deref&gt;::Target) -&gt; <span class="prelude-ty">Result</span>&lt;&lt;Y <span class="kw">as </span>Yokeable&lt;<span class="lifetime">'de</span>&gt;&gt;::Output, E&gt;,
+        &lt;C <span class="kw">as </span>Deref&gt;::Target: <span class="lifetime">'static</span>,
     {
         <span class="kw">let </span>deserialized = f(cart.deref())<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ Y::make(deserialized) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs at the bottom of this file
+                // for the justification of why yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ Y::make(deserialized) },
+            ),
             cart,
         })
     }
@@ -1851,7 +1924,10 @@
     </span><span class="attr">#[inline]
     </span><span class="kw">pub unsafe fn </span>replace_cart&lt;C2&gt;(<span class="self">self</span>, f: <span class="kw">impl </span>FnOnce(C) -&gt; C2) -&gt; Yoke&lt;Y, C2&gt; {
         Yoke {
-            yokeable: <span class="self">self</span>.yokeable,
+            <span class="comment">// Safety note: the safety invariant of this function guarantees that
+            // the data that the yokeable references has its ownership (if any)
+            // transferred to the new cart before self.cart is dropped.
+            </span>yokeable: <span class="self">self</span>.yokeable,
             cart: f(<span class="self">self</span>.cart),
         }
     }
@@ -1949,10 +2025,9 @@
     <span class="doccomment">/// Helper function allowing one to wrap the cart type `C` in an `Option&lt;T&gt;`.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>wrap_cart_in_option(<span class="self">self</span>) -&gt; Yoke&lt;Y, <span class="prelude-ty">Option</span>&lt;C&gt;&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just wrapped
-            </span><span class="self">self</span>.replace_cart(<span class="prelude-val">Some</span>)
-        }
+        <span class="comment">// Safety: the cart is preserved (since it is just wrapped into a Some),
+        // so any data it owns is too.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(<span class="prelude-val">Some</span>) }
     }
 }
 
@@ -1980,7 +2055,9 @@
     /// ```
     </span><span class="kw">pub fn </span>new_always_owned(yokeable: Y) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            yokeable: KindaSortaDangling::new(yokeable),
+            <span class="comment">// Safety note: this `yokeable` certainly does not reference data owned by (), so we do
+            // not have to worry about when the `yokeable` is dropped.
+            </span>yokeable: KindaSortaDangling::new(yokeable),
             cart: (),
         }
     }
@@ -1991,7 +2068,9 @@
     /// fine for `Yoke&lt;Y, ()&gt;` since there are no actual internal
     /// references
     </span><span class="kw">pub fn </span>into_yokeable(<span class="self">self</span>) -&gt; Y {
-        <span class="self">self</span>.yokeable.into_inner()
+        <span class="comment">// Safety note: since `yokeable` cannot reference data owned by `()`, this is certainly
+        // safe.
+        </span><span class="self">self</span>.yokeable.into_inner()
     }
 }
 
@@ -2024,7 +2103,8 @@
     /// ```
     </span><span class="kw">pub const fn </span>new_owned(yokeable: Y) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            yokeable: KindaSortaDangling::new(yokeable),
+            <span class="comment">// Safety note: this `yokeable` is known not to borrow from the cart.
+            </span>yokeable: KindaSortaDangling::new(yokeable),
             cart: <span class="prelude-val">None</span>,
         }
     }
@@ -2095,11 +2175,14 @@
     </span><span class="kw">pub fn </span>convert_cart_into_option_pointer(<span class="self">self</span>) -&gt; Yoke&lt;Y, CartableOptionPointer&lt;C&gt;&gt; {
         <span class="kw">match </span><span class="self">self</span>.cart {
             <span class="prelude-val">Some</span>(cart) =&gt; Yoke {
-                yokeable: <span class="self">self</span>.yokeable,
+                <span class="comment">// Safety note: CartableOptionPointer::from_cartable only wraps the `cart`,
+                // so the data referenced by the yokeable is still live.
+                </span>yokeable: <span class="self">self</span>.yokeable,
                 cart: CartableOptionPointer::from_cartable(cart),
             },
             <span class="prelude-val">None </span>=&gt; Yoke {
-                yokeable: <span class="self">self</span>.yokeable,
+                <span class="comment">// Safety note: this Yokeable cannot refer to any data since self.cart is None.
+                </span>yokeable: <span class="self">self</span>.yokeable,
                 cart: CartableOptionPointer::none(),
             },
         }
@@ -2139,12 +2222,18 @@
 </span><span class="kw">pub unsafe trait </span>CloneableCart: Clone {}
 
 <span class="attr">#[cfg(feature = <span class="string">"alloc"</span>)]
+</span><span class="comment">// Safety: Rc&lt;T&gt; implements CloneStableDeref.
 </span><span class="kw">unsafe impl</span>&lt;T: <span class="question-mark">?</span>Sized&gt; CloneableCart <span class="kw">for </span>Rc&lt;T&gt; {}
 <span class="attr">#[cfg(feature = <span class="string">"alloc"</span>)]
+</span><span class="comment">// Safety: Arc&lt;T&gt; implements CloneStableDeref.
 </span><span class="kw">unsafe impl</span>&lt;T: <span class="question-mark">?</span>Sized&gt; CloneableCart <span class="kw">for </span>Arc&lt;T&gt; {}
-<span class="kw">unsafe impl</span>&lt;T: CloneableCart&gt; CloneableCart <span class="kw">for </span><span class="prelude-ty">Option</span>&lt;T&gt; {}
-<span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, T: <span class="question-mark">?</span>Sized&gt; CloneableCart <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span>T {}
-<span class="kw">unsafe impl </span>CloneableCart <span class="kw">for </span>() {}
+<span class="comment">// Safety: Option&lt;T&gt; cannot deref to anything that T doesn't already deref to.
+</span><span class="kw">unsafe impl</span>&lt;T: CloneableCart&gt; CloneableCart <span class="kw">for </span><span class="prelude-ty">Option</span>&lt;T&gt; {}
+<span class="comment">// Safety: &amp;'a T is indeed StableDeref, and cloning it refers to the same data.
+// &amp;'a T does not own in the first place, so ownership is preserved.
+</span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">'a</span>, T: <span class="question-mark">?</span>Sized&gt; CloneableCart <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span>T {}
+<span class="comment">// Safety: () cannot deref to anything.
+</span><span class="kw">unsafe impl </span>CloneableCart <span class="kw">for </span>() {}
 
 <span class="doccomment">/// Clone requires that the cart type `C` derefs to the same address after it is cloned. This works for
 /// Rc, Arc, and &amp;'a T.
@@ -2164,7 +2253,11 @@
         <span class="comment">// We have an &amp;T not a T, and we can clone YokeTraitHack&lt;T&gt;
         </span><span class="kw">let </span>this_hack = YokeTraitHack(this).into_ref();
         Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ Y::make(this_hack.clone().<span class="number">0</span>) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: C being a CloneableCart guarantees that the data referenced by the
+                // `yokeable` is kept alive by the clone of the cart.
+                </span><span class="kw">unsafe </span>{ Y::make(this_hack.clone().<span class="number">0</span>) },
+            ),
             cart: <span class="self">self</span>.cart.clone(),
         }
     }
@@ -2268,7 +2361,7 @@
     /// # }
     /// ```
     </span><span class="comment">//
-    // Safety docs can be found below on `__project_safety_docs()`
+    // Safety docs can be found at the end of the file.
     </span><span class="kw">pub fn </span>map_project&lt;P, F&gt;(<span class="self">self</span>, f: F) -&gt; Yoke&lt;P, C&gt;
     <span class="kw">where
         </span>P: <span class="kw">for</span>&lt;<span class="lifetime">'a</span>&gt; Yokeable&lt;<span class="lifetime">'a</span>&gt;,
@@ -2279,7 +2372,12 @@
     {
         <span class="kw">let </span>p = f(<span class="self">self</span>.yokeable.into_inner().transform_owned(), PhantomData);
         Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart,
         }
     }
@@ -2300,7 +2398,12 @@
     {
         <span class="kw">let </span>p = f(<span class="self">self</span>.get(), PhantomData);
         Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart.clone(),
         }
     }
@@ -2376,7 +2479,12 @@
     {
         <span class="kw">let </span>p = f(<span class="self">self</span>.yokeable.into_inner().transform_owned(), PhantomData)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart,
         })
     }
@@ -2397,7 +2505,12 @@
     {
         <span class="kw">let </span>p = f(<span class="self">self</span>.get(), PhantomData)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart.clone(),
         })
     }
@@ -2424,7 +2537,12 @@
             PhantomData,
         );
         Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart,
         }
     }
@@ -2449,7 +2567,12 @@
     {
         <span class="kw">let </span>p = f(<span class="self">self</span>.get(), capture, PhantomData);
         Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart.clone(),
         }
     }
@@ -2478,7 +2601,12 @@
             PhantomData,
         )<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart,
         })
     }
@@ -2504,7 +2632,12 @@
     {
         <span class="kw">let </span>p = f(<span class="self">self</span>.get(), capture, PhantomData)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(Yoke {
-            yokeable: KindaSortaDangling::new(<span class="kw">unsafe </span>{ P::make(p) }),
+            yokeable: KindaSortaDangling::new(
+                <span class="comment">// Safety: the resulting `yokeable` is dropped before the `cart` because
+                // of the Yoke invariant. See the safety docs below for the justification of why
+                // yokeable could only borrow from the Cart.
+                </span><span class="kw">unsafe </span>{ P::make(p) },
+            ),
             cart: <span class="self">self</span>.cart.clone(),
         })
     }
@@ -2548,11 +2681,8 @@
     /// // Now erased1 and erased2 have the same type!
     /// ```
     </span><span class="kw">pub fn </span>erase_rc_cart(<span class="self">self</span>) -&gt; Yoke&lt;Y, ErasedRcCart&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just
-            // type-erased
-            </span><span class="self">self</span>.replace_cart(|c| c <span class="kw">as </span>ErasedRcCart)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just type-erased
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(|c| c <span class="kw">as </span>ErasedRcCart) }
     }
 }
 
@@ -2594,11 +2724,8 @@
     /// // Now erased1 and erased2 have the same type!
     /// ```
     </span><span class="kw">pub fn </span>erase_arc_cart(<span class="self">self</span>) -&gt; Yoke&lt;Y, ErasedArcCart&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just
-            // type-erased
-            </span><span class="self">self</span>.replace_cart(|c| c <span class="kw">as </span>ErasedArcCart)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just type-erased
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(|c| c <span class="kw">as </span>ErasedArcCart) }
     }
 }
 
@@ -2640,11 +2767,8 @@
     /// // Now erased1 and erased2 have the same type!
     /// ```
     </span><span class="kw">pub fn </span>erase_box_cart(<span class="self">self</span>) -&gt; Yoke&lt;Y, ErasedBoxCart&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just
-            // type-erased
-            </span><span class="self">self</span>.replace_cart(|c| c <span class="kw">as </span>ErasedBoxCart)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just type-erased
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(|c| c <span class="kw">as </span>ErasedBoxCart) }
     }
 }
 
@@ -2656,10 +2780,8 @@
     /// ✨ *Enabled with the `alloc` Cargo feature.*
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>wrap_cart_in_box(<span class="self">self</span>) -&gt; Yoke&lt;Y, Box&lt;C&gt;&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just wrapped
-            </span><span class="self">self</span>.replace_cart(Box::new)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just wrapped.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(Box::new) }
     }
     <span class="doccomment">/// Helper function allowing one to wrap the cart type `C` in an `Rc&lt;T&gt;`.
     /// Can be paired with [`Yoke::erase_rc_cart()`], or generally used
@@ -2668,10 +2790,8 @@
     /// ✨ *Enabled with the `alloc` Cargo feature.*
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>wrap_cart_in_rc(<span class="self">self</span>) -&gt; Yoke&lt;Y, Rc&lt;C&gt;&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just wrapped
-            </span><span class="self">self</span>.replace_cart(Rc::new)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just wrapped
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(Rc::new) }
     }
     <span class="doccomment">/// Helper function allowing one to wrap the cart type `C` in an `Rc&lt;T&gt;`.
     /// Can be paired with [`Yoke::erase_arc_cart()`], or generally used
@@ -2680,10 +2800,8 @@
     /// ✨ *Enabled with the `alloc` Cargo feature.*
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>wrap_cart_in_arc(<span class="self">self</span>) -&gt; Yoke&lt;Y, Arc&lt;C&gt;&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just wrapped
-            </span><span class="self">self</span>.replace_cart(Arc::new)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just wrapped
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(Arc::new) }
     }
 }
 
@@ -2696,10 +2814,8 @@
     /// For an example, see [`EitherCart`].
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>wrap_cart_in_either_a&lt;B&gt;(<span class="self">self</span>) -&gt; Yoke&lt;Y, EitherCart&lt;C, B&gt;&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just wrapped
-            </span><span class="self">self</span>.replace_cart(EitherCart::A)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just wrapped.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(EitherCart::A) }
     }
     <span class="doccomment">/// Helper function allowing one to wrap the cart type `C` in an [`EitherCart`].
     ///
@@ -2709,10 +2825,8 @@
     /// For an example, see [`EitherCart`].
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>wrap_cart_in_either_b&lt;A&gt;(<span class="self">self</span>) -&gt; Yoke&lt;Y, EitherCart&lt;A, C&gt;&gt; {
-        <span class="kw">unsafe </span>{
-            <span class="comment">// safe because the cart is preserved, just wrapped
-            </span><span class="self">self</span>.replace_cart(EitherCart::B)
-        }
+        <span class="comment">// Safety: safe because the cart is preserved, as it is just wrapped.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.replace_cart(EitherCart::B) }
     }
 }
 
@@ -2722,6 +2836,8 @@
 ///
 /// This is safe to perform because of the choice of lifetimes on `f`, that is,
 /// `for&lt;a&gt; fn(&lt;Y as Yokeable&lt;'a&gt;&gt;::Output, &amp;'a ()) -&gt; &lt;P as Yokeable&lt;'a&gt;&gt;::Output`.
+///
+/// Note that correctness arguments are similar if you replace `fn` with `FnOnce`.
 ///
 /// What we want this function to do is take a Yokeable (`Y`) that is borrowing from the cart, and
 /// produce another Yokeable (`P`) that also borrows from the same cart. There are a couple potential
