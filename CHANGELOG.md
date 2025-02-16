@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.12 - 2025-02-17
+
 - Add a test to ensure that `Error` satisfies `Send` and `Sync`.
 - Publish tests. [`#179`](https://github.com/rust-syndication/rss/pull/179)
 
