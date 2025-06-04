@@ -13,7 +13,7 @@ jobs:
       image: xd009642/tarpaulin:develop-nightly
       options: --security-opt seccomp=unconfined
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Measure coverage
       run: |
         cargo +nightly tarpaulin \
@@ -26,4 +26,6 @@ jobs:
           -- \
           --test-threads=1
     - name: Upload coverage report to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
