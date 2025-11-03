@@ -840,7 +840,32 @@ impl Item {
                             });
                         }
                     }
-                    "author" | "contributor" | "category" | "rights" | "source" => {
+                    "author" => {
+                        // RFC 4287: Parse author person construct
+                        let (name, email, _uri) = crate::channel::Channel::parse_atom_person(reader)?;
+
+                        // Format as RSS author: "email (name)" or just email or name
+                        if item.author.is_none() {
+                            item.author = match (email, name) {
+                                (Some(e), Some(n)) => Some(format!("{} ({})", e, n)),
+                                (Some(e), None) => Some(e),
+                                (None, Some(n)) => Some(n),
+                                (None, None) => None,
+                            };
+                        }
+                    }
+                    "contributor" => {
+                        // RFC 4287: Skip contributors for entry (no RSS equivalent)
+                        // Could be added to extensions in the future
+                        skip(element.name(), reader)?;
+                    }
+                    "category" => {
+                        // RFC 4287: Parse category element
+                        let category = crate::channel::Channel::parse_atom_category(reader, &element)?;
+                        item.categories.push(category);
+                        skip(element.name(), reader)?;
+                    }
+                    "rights" | "source" => {
                         // Skip optional elements we don't currently map
                         skip(element.name(), reader)?;
                     }

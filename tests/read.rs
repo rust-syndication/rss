@@ -1068,6 +1068,16 @@ fn read_atom_spec_compliance() {
     assert_eq!(channel.last_build_date(), Some("2025-01-01T00:00:00Z"));
     assert_eq!(channel.generator(), Some("Test Generator"));
 
+    // RFC 4287: Author element parsed as managing_editor
+    assert_eq!(channel.managing_editor(), Some("jane@example.org (Jane Doe)"));
+
+    // RFC 4287: Category elements parsed
+    assert_eq!(channel.categories().len(), 2);
+    assert_eq!(channel.categories()[0].name(), "Technology");
+    assert_eq!(channel.categories()[0].domain(), Some("http://example.org/categories"));
+    assert_eq!(channel.categories()[1].name(), "Software Development");
+    assert_eq!(channel.categories()[1].domain(), None);
+
     // RFC 4287: Link without rel attribute should default to "alternate"
     assert_eq!(channel.link(), "http://example.org/");
     let links = channel.atom_ext().unwrap().links();
@@ -1078,18 +1088,28 @@ fn read_atom_spec_compliance() {
 
     assert_eq!(channel.items().len(), 3);
 
-    // Entry 1: Has both published and updated
+    // Entry 1: Has both published and updated, author, and categories
     let item1 = &channel.items[0];
     assert_eq!(item1.title(), Some("Entry with published"));
     assert_eq!(item1.pub_date(), Some("2025-01-01T12:00:00Z")); // Should use published
     assert_eq!(item1.description(), Some("Entry with both published and updated"));
     assert_eq!(item1.guid().as_ref().map(|g| g.value()), Some("http://example.org/entry1"));
 
+    // RFC 4287: Author element parsed
+    assert_eq!(item1.author(), Some("john@example.org (John Smith)"));
+
+    // RFC 4287: Category elements parsed
+    assert_eq!(item1.categories().len(), 2);
+    assert_eq!(item1.categories()[0].name(), "news");
+    assert_eq!(item1.categories()[0].domain(), Some("http://example.org/categories"));
+    assert_eq!(item1.categories()[1].name(), "announcement");
+    assert_eq!(item1.categories()[1].domain(), None);
+
     // RFC 4287: Link without rel should default to "alternate"
     assert_eq!(item1.link(), Some("http://example.org/entry1"));
     assert_eq!(item1.atom_ext().unwrap().links()[0].rel, "alternate");
 
-    // Entry 2: Only has updated (no published)
+    // Entry 2: Only has updated (no published), author with name only
     let item2 = &channel.items[1];
     assert_eq!(item2.title(), Some("Entry without published"));
     assert_eq!(item2.pub_date(), Some("2025-01-03T00:00:00Z")); // Should use updated
@@ -1098,10 +1118,20 @@ fn read_atom_spec_compliance() {
     assert_eq!(item2.guid().as_ref().map(|g| g.value()), Some("http://example.org/entry2"));
     assert_eq!(item2.link(), Some("http://example.org/entry2"));
 
-    // Entry 3: Multiple links with different rel values
+    // RFC 4287: Author with only name (no email)
+    assert_eq!(item2.author(), Some("Alice Brown"));
+
+    // Entry 3: Multiple links with different rel values and categories
     let item3 = &channel.items[2];
     assert_eq!(item3.title(), Some("Entry with multiple links"));
     assert_eq!(item3.description(), Some("Entry with multiple link relations"));
+
+    // RFC 4287: Category elements with labels and schemes
+    assert_eq!(item3.categories().len(), 2);
+    assert_eq!(item3.categories()[0].name(), "Technology"); // label takes precedence
+    assert_eq!(item3.categories()[0].domain(), None);
+    assert_eq!(item3.categories()[1].name(), "tutorial");
+    assert_eq!(item3.categories()[1].domain(), Some("http://example.org/types"));
 
     let item3_links = item3.atom_ext().unwrap().links();
     assert_eq!(item3_links.len(), 2);

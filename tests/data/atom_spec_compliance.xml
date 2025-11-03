@@ -11,7 +11,18 @@
   <link href="http://example.org/feed" rel="self" type="application/atom+xml"/>
   <generator>Test Generator</generator>
 
-  <!-- Entry with published date -->
+  <!-- Author element -->
+  <author>
+    <name>Jane Doe</name>
+    <email>jane@example.org</email>
+    <uri>http://example.org/jane</uri>
+  </author>
+
+  <!-- Category elements -->
+  <category term="technology" scheme="http://example.org/categories" label="Technology"/>
+  <category term="software" label="Software Development"/>
+
+  <!-- Entry with published date, author, and categories -->
   <entry>
     <id>http://example.org/entry1</id>
     <title>Entry with published</title>
@@ -19,6 +30,19 @@
     <published>2025-01-01T12:00:00Z</published>
     <link href="http://example.org/entry1" /><!-- No rel, should default to "alternate" -->
     <summary>Entry with both published and updated</summary>
+
+    <author>
+      <name>John Smith</name>
+      <email>john@example.org</email>
+    </author>
+
+    <category term="news" scheme="http://example.org/categories"/>
+    <category term="announcement"/>
+
+    <contributor>
+      <name>Bob Jones</name>
+      <email>bob@example.org</email>
+    </contributor>
   </entry>
 
   <!-- Entry without published, only updated (required) -->
@@ -28,6 +52,10 @@
     <updated>2025-01-03T00:00:00Z</updated>
     <link href="http://example.org/entry2" rel="alternate"/>
     <content type="html">&lt;p&gt;Content only, no summary&lt;/p&gt;</content>
+
+    <author>
+      <name>Alice Brown</name>
+    </author>
   </entry>
 
   <!-- Entry with explicit alternate links -->
@@ -38,5 +66,8 @@
     <link href="http://example.org/entry3" rel="alternate" type="text/html"/>
     <link href="http://example.org/entry3.pdf" rel="related" type="application/pdf"/>
     <summary>Entry with multiple link relations</summary>
+
+    <category term="tech" label="Technology"/>
+    <category term="tutorial" scheme="http://example.org/types"/>
   </entry>
 </feed>

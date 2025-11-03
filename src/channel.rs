@@ -1354,6 +1354,67 @@ impl Channel {
         Ok(channel)
     }
 
+    /// Parse an Atom person construct (author/contributor)
+    /// Returns a tuple of (name, email, uri)
+    #[cfg(feature = "atom")]
+    pub(crate) fn parse_atom_person<R: BufRead>(
+        reader: &mut Reader<R>,
+    ) -> Result<(Option<String>, Option<String>, Option<String>), Error> {
+        let mut name = None;
+        let mut email = None;
+        let mut uri = None;
+        let mut buf = Vec::new();
+
+        loop {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), reader)?.as_ref() {
+                    "name" => name = element_text(reader)?,
+                    "email" => email = element_text(reader)?,
+                    "uri" => uri = element_text(reader)?,
+                    _ => skip(element.name(), reader)?,
+                },
+                Event::End(_) => break,
+                Event::Eof => return Err(Error::Eof),
+                _ => {}
+            }
+            buf.clear();
+        }
+
+        Ok((name, email, uri))
+    }
+
+    /// Parse an Atom category element
+    /// Returns a Category with term mapped to name and scheme mapped to domain
+    #[cfg(feature = "atom")]
+    pub(crate) fn parse_atom_category<R: BufRead>(
+        reader: &mut Reader<R>,
+        element: &BytesStart,
+    ) -> Result<Category, Error> {
+        let mut term = None;
+        let mut scheme = None;
+        let mut label = None;
+
+        for attr in element.attributes().with_checks(false).flatten() {
+            let key = decode(attr.key.as_ref(), reader)?;
+            let value = crate::util::attr_value(&attr, reader)?;
+
+            match key.as_ref() {
+                "term" => term = Some(value.to_string()),
+                "scheme" => scheme = Some(value.to_string()),
+                "label" => label = Some(value.to_string()),
+                _ => {}
+            }
+        }
+
+        // Use label if present, otherwise use term
+        let name = label.or(term).unwrap_or_default();
+
+        Ok(Category {
+            name,
+            domain: scheme,
+        })
+    }
+
     /// Builds a Channel from an Atom feed
     #[cfg(feature = "atom")]
     fn from_atom_feed<R: BufRead>(
@@ -1426,12 +1487,37 @@ impl Channel {
                         let item = Item::from_atom_entry(namespaces.as_ref(), reader, element.attributes())?;
                         channel.items.push(item);
                     }
+                    "author" => {
+                        // RFC 4287: Parse author person construct
+                        let (name, email, _uri) = Self::parse_atom_person(reader)?;
+
+                        // Format as RSS managing_editor: "email (name)" or just email or name
+                        if channel.managing_editor.is_none() {
+                            channel.managing_editor = match (email, name) {
+                                (Some(e), Some(n)) => Some(format!("{} ({})", e, n)),
+                                (Some(e), None) => Some(e),
+                                (None, Some(n)) => Some(n),
+                                (None, None) => None,
+                            };
+                        }
+                    }
+                    "contributor" => {
+                        // RFC 4287: Skip contributors for channel (no RSS equivalent)
+                        // Could be added to extensions in the future
+                        skip(element.name(), reader)?;
+                    }
+                    "category" => {
+                        // RFC 4287: Parse category element
+                        let category = Self::parse_atom_category(reader, &element)?;
+                        channel.categories.push(category);
+                        skip(element.name(), reader)?;
+                    }
                     "id" => {
                         // RFC 4287: id is required for atom:feed
                         // We skip it since RSS Channel doesn't have a direct equivalent
                         skip(element.name(), reader)?;
                     }
-                    "icon" | "logo" | "rights" | "author" | "contributor" | "category" => {
+                    "icon" | "logo" | "rights" => {
                         // Skip optional elements we don't currently map
                         skip(element.name(), reader)?;
                     }
