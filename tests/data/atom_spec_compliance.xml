@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <!-- RFC 4287 Required elements -->
+  <id>http://example.org/feed</id>
+  <title>Spec Compliance Test Feed</title>
+  <updated>2025-01-01T00:00:00Z</updated>
+
+  <!-- Optional elements -->
+  <subtitle>Testing RFC 4287 compliance</subtitle>
+  <link href="http://example.org/" /><!-- No rel, should default to "alternate" -->
+  <link href="http://example.org/feed" rel="self" type="application/atom+xml"/>
+  <generator>Test Generator</generator>
+
+  <!-- Entry with published date -->
+  <entry>
+    <id>http://example.org/entry1</id>
+    <title>Entry with published</title>
+    <updated>2025-01-02T00:00:00Z</updated>
+    <published>2025-01-01T12:00:00Z</published>
+    <link href="http://example.org/entry1" /><!-- No rel, should default to "alternate" -->
+    <summary>Entry with both published and updated</summary>
+  </entry>
+
+  <!-- Entry without published, only updated (required) -->
+  <entry>
+    <id>http://example.org/entry2</id>
+    <title>Entry without published</title>
+    <updated>2025-01-03T00:00:00Z</updated>
+    <link href="http://example.org/entry2" rel="alternate"/>
+    <content type="html">&lt;p&gt;Content only, no summary&lt;/p&gt;</content>
+  </entry>
+
+  <!-- Entry with explicit alternate links -->
+  <entry>
+    <id>http://example.org/entry3</id>
+    <title>Entry with multiple links</title>
+    <updated>2025-01-04T00:00:00Z</updated>
+    <link href="http://example.org/entry3" rel="alternate" type="text/html"/>
+    <link href="http://example.org/entry3.pdf" rel="related" type="application/pdf"/>
+    <summary>Entry with multiple link relations</summary>
+  </entry>
+</feed>

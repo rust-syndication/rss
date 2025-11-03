@@ -695,6 +695,174 @@ impl Item {
 
         Ok(item)
     }
+
+    /// Builds an Item from an Atom entry
+    #[cfg(feature = "atom")]
+    pub fn from_atom_entry<R: BufRead>(
+        namespaces: &BTreeMap<String, String>,
+        reader: &mut Reader<R>,
+        atts: Attributes,
+    ) -> Result<Self, Error> {
+        let mut item = Item::default();
+        let mut buf = Vec::new();
+        let mut atom_links = Vec::new();
+
+        let _namespaces = read_namespace_declarations(reader, atts, namespaces)?;
+
+        loop {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), reader)?.as_ref() {
+                    "title" => {
+                        item.title = element_text(reader)?;
+                    }
+                    "link" => {
+                        // Parse Atom link element
+                        let mut link = atom::Link::default();
+                        let mut has_rel = false;
+
+                        for attr in element.attributes().with_checks(false).flatten() {
+                            let key = decode(attr.key.as_ref(), reader)?;
+                            let value = crate::util::attr_value(&attr, reader)?;
+
+                            match key.as_ref() {
+                                "href" => link.href = value.to_string(),
+                                "rel" => {
+                                    link.rel = value.to_string();
+                                    has_rel = true;
+                                }
+                                "type" => link.mime_type = Some(value.to_string()),
+                                "hreflang" => link.hreflang = Some(value.to_string()),
+                                "title" => link.title = Some(value.to_string()),
+                                "length" => link.length = Some(value.to_string()),
+                                _ => {}
+                            }
+                        }
+
+                        // RFC 4287: If rel is not present, default to "alternate"
+                        if !has_rel {
+                            link.rel = "alternate".to_string();
+                        }
+
+                        // Set item.link to the first alternate link
+                        if item.link.is_none() && link.rel == "alternate" {
+                            item.link = Some(link.href.clone());
+                        }
+
+                        atom_links.push(link);
+                        skip(element.name(), reader)?;
+                    }
+                    "published" => {
+                        // RFC 4287: published is when the entry was first made available
+                        item.pub_date = element_text(reader)?;
+                    }
+                    "updated" => {
+                        // RFC 4287: updated is required for atom:entry
+                        // Use it as pub_date if published is not present
+                        if item.pub_date.is_none() {
+                            item.pub_date = element_text(reader)?;
+                        } else {
+                            skip(element.name(), reader)?;
+                        }
+                    }
+                    "content" => {
+                        // Read content including any HTML tags inside
+                        let mut content = String::new();
+                        let mut buf_inner = Vec::new();
+                        let mut depth = 0i32;
+
+                        loop {
+                            match reader.read_event_into(&mut buf_inner)? {
+                                Event::Start(e) => {
+                                    depth += 1;
+                                    content.push('<');
+                                    content.push_str(&decode(e.name().as_ref(), reader)?);
+                                    for attr in e.attributes().with_checks(false).flatten() {
+                                        content.push(' ');
+                                        content.push_str(&decode(attr.key.as_ref(), reader)?);
+                                        content.push_str("=\"");
+                                        content.push_str(&crate::util::attr_value(&attr, reader)?);
+                                        content.push('"');
+                                    }
+                                    content.push('>');
+                                }
+                                Event::End(e) => {
+                                    if depth == 0 {
+                                        break;
+                                    }
+                                    depth -= 1;
+                                    content.push_str("</");
+                                    content.push_str(&decode(e.name().as_ref(), reader)?);
+                                    content.push('>');
+                                }
+                                Event::Empty(e) => {
+                                    content.push('<');
+                                    content.push_str(&decode(e.name().as_ref(), reader)?);
+                                    for attr in e.attributes().with_checks(false).flatten() {
+                                        content.push(' ');
+                                        content.push_str(&decode(attr.key.as_ref(), reader)?);
+                                        content.push_str("=\"");
+                                        content.push_str(&crate::util::attr_value(&attr, reader)?);
+                                        content.push('"');
+                                    }
+                                    content.push_str("/>");
+                                }
+                                Event::Text(e) => {
+                                    content.push_str(&e.unescape()?);
+                                }
+                                Event::CData(e) => {
+                                    content.push_str(decode(&e, reader)?.as_ref());
+                                }
+                                Event::Eof => return Err(Error::Eof),
+                                _ => {}
+                            }
+                            buf_inner.clear();
+                        }
+
+                        if !content.is_empty() {
+                            item.content = Some(content);
+                        }
+                    }
+                    "summary" => {
+                        // Use summary as description if we don't have content
+                        if item.content.is_none() {
+                            item.description = element_text(reader)?;
+                        } else {
+                            skip(element.name(), reader)?;
+                        }
+                    }
+                    "id" => {
+                        // RFC 4287: id is required for atom:entry
+                        // Map Atom id to RSS guid
+                        if let Some(id_text) = element_text(reader)? {
+                            item.guid = Some(Guid {
+                                value: id_text,
+                                permalink: false,
+                            });
+                        }
+                    }
+                    "author" | "contributor" | "category" | "rights" | "source" => {
+                        // Skip optional elements we don't currently map
+                        skip(element.name(), reader)?;
+                    }
+                    _ => {
+                        skip(element.name(), reader)?;
+                    }
+                },
+                Event::End(_) => break,
+                Event::Eof => return Err(Error::Eof),
+                _ => {}
+            }
+
+            buf.clear();
+        }
+
+        // Set the Atom extension with the links
+        if !atom_links.is_empty() {
+            item.atom_ext = Some(atom::AtomExtension { links: atom_links });
+        }
+
+        Ok(item)
+    }
 }
 
 impl ToXml for Item {

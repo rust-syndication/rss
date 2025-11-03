@@ -1058,6 +1058,17 @@ impl Channel {
                         .into_owned();
                         break;
                     }
+                    #[cfg(feature = "atom")]
+                    "feed" => {
+                        namespaces = read_namespace_declarations(
+                            &mut reader,
+                            element.attributes(),
+                            &BTreeMap::new(),
+                        )?
+                        .into_owned();
+                        // Parse Atom feed
+                        return Channel::from_atom_feed(&namespaces, &mut reader, element.attributes());
+                    }
                     _ => {
                         return Err(Error::InvalidStartTag);
                     }
@@ -1339,6 +1350,109 @@ impl Channel {
         if let Some(v) = extensions.remove(syndication::NAMESPACE) {
             channel.syndication_ext = Some(syndication::SyndicationExtension::from_map(v));
         }
+
+        Ok(channel)
+    }
+
+    /// Builds a Channel from an Atom feed
+    #[cfg(feature = "atom")]
+    fn from_atom_feed<R: BufRead>(
+        namespaces: &BTreeMap<String, String>,
+        reader: &mut Reader<R>,
+        atts: Attributes,
+    ) -> Result<Self, Error> {
+        let mut channel = Channel::default();
+        let mut buf = Vec::new();
+        let mut atom_links = Vec::new();
+
+        let namespaces = read_namespace_declarations(reader, atts, namespaces)?;
+
+        loop {
+            match reader.read_event_into(&mut buf)? {
+                Event::Start(element) => match decode(element.name().as_ref(), reader)?.as_ref() {
+                    "title" => {
+                        if let Some(content) = element_text(reader)? {
+                            channel.title = content;
+                        }
+                    }
+                    "subtitle" => {
+                        if let Some(content) = element_text(reader)? {
+                            channel.description = content;
+                        }
+                    }
+                    "link" => {
+                        // Parse Atom link element
+                        let mut link = atom::Link::default();
+                        let mut has_rel = false;
+
+                        for attr in element.attributes().with_checks(false).flatten() {
+                            let key = decode(attr.key.as_ref(), reader)?;
+                            let value = crate::util::attr_value(&attr, reader)?;
+
+                            match key.as_ref() {
+                                "href" => link.href = value.to_string(),
+                                "rel" => {
+                                    link.rel = value.to_string();
+                                    has_rel = true;
+                                }
+                                "type" => link.mime_type = Some(value.to_string()),
+                                "hreflang" => link.hreflang = Some(value.to_string()),
+                                "title" => link.title = Some(value.to_string()),
+                                "length" => link.length = Some(value.to_string()),
+                                _ => {}
+                            }
+                        }
+
+                        // RFC 4287: If rel is not present, default to "alternate"
+                        if !has_rel {
+                            link.rel = "alternate".to_string();
+                        }
+
+                        // Set channel.link to the first alternate link
+                        if channel.link.is_empty() && link.rel == "alternate" {
+                            channel.link = link.href.clone();
+                        }
+
+                        atom_links.push(link);
+                        skip(element.name(), reader)?;
+                    }
+                    "updated" => {
+                        channel.last_build_date = element_text(reader)?;
+                    }
+                    "generator" => {
+                        channel.generator = element_text(reader)?;
+                    }
+                    "entry" => {
+                        let item = Item::from_atom_entry(namespaces.as_ref(), reader, element.attributes())?;
+                        channel.items.push(item);
+                    }
+                    "id" => {
+                        // RFC 4287: id is required for atom:feed
+                        // We skip it since RSS Channel doesn't have a direct equivalent
+                        skip(element.name(), reader)?;
+                    }
+                    "icon" | "logo" | "rights" | "author" | "contributor" | "category" => {
+                        // Skip optional elements we don't currently map
+                        skip(element.name(), reader)?;
+                    }
+                    _ => {
+                        skip(element.name(), reader)?;
+                    }
+                },
+                Event::End(_) => break,
+                Event::Eof => return Err(Error::Eof),
+                _ => {}
+            }
+
+            buf.clear();
+        }
+
+        // Set the Atom extension with the links
+        if !atom_links.is_empty() {
+            channel.atom_ext = Some(atom::AtomExtension { links: atom_links });
+        }
+
+        channel.namespaces = namespaces.into_owned();
 
         Ok(channel)
     }

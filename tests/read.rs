@@ -999,3 +999,119 @@ fn read_local_namespace_hijack() {
     assert!(channel.dublin_core_ext().is_some());
     assert_eq!(channel.dublin_core_ext().unwrap().creators, vec!["Creator"]);
 }
+
+#[cfg(feature = "atom")]
+#[test]
+fn read_atom_feed() {
+    let input = include_str!("data/atom_feed.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    // Verify channel metadata from Atom feed
+    assert_eq!(channel.title(), "XXXX XXXXXXXX");
+    assert_eq!(channel.description(), "Subtitle");
+    assert_eq!(channel.link(), "https://blog.example.com");
+    assert_eq!(channel.generator(), Some("Zola"));
+    assert_eq!(channel.last_build_date(), Some("2022-04-01T00:00:00+00:00"));
+
+    // Verify Atom links were parsed
+    assert_eq!(
+        channel.atom_ext().unwrap().links(),
+        &[
+            rss::extension::atom::Link {
+                href: "https://blog.example.com/atom.xml".into(),
+                rel: "self".into(),
+                mime_type: Some("application/atom+xml".into()),
+                ..Default::default()
+            },
+            rss::extension::atom::Link {
+                href: "https://blog.example.com".into(),
+                rel: "alternate".into(),
+                ..Default::default()
+            },
+        ]
+    );
+
+    // Verify one entry was parsed
+    assert_eq!(channel.items().len(), 1);
+
+    let item = &channel.items[0];
+    assert_eq!(item.title(), Some("2024 reflections"));
+    assert_eq!(item.pub_date(), Some("2025-04-01T00:00:00+00:00"));
+    assert_eq!(item.link(), Some("https://blog.example.com/2024-reflections/"));
+    assert_eq!(item.content(), Some("<p>Yes its html</p> "));
+
+    // Verify item GUID was set from Atom ID
+    assert_eq!(item.guid().as_ref().map(|g| g.value()), Some("https://blog.example.com/2024-reflections/"));
+    assert_eq!(item.guid().as_ref().map(|g| g.is_permalink()), Some(false));
+
+    // Verify item Atom links
+    assert_eq!(
+        item.atom_ext().unwrap().links(),
+        &[rss::extension::atom::Link {
+            href: "https://blog.example.com/2024-reflections/".into(),
+            rel: "alternate".into(),
+            mime_type: Some("text/html".into()),
+            ..Default::default()
+        }]
+    );
+}
+
+#[cfg(feature = "atom")]
+#[test]
+fn read_atom_spec_compliance() {
+    let input = include_str!("data/atom_spec_compliance.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+
+    // Verify required feed elements are parsed
+    assert_eq!(channel.title(), "Spec Compliance Test Feed");
+    assert_eq!(channel.description(), "Testing RFC 4287 compliance");
+    assert_eq!(channel.last_build_date(), Some("2025-01-01T00:00:00Z"));
+    assert_eq!(channel.generator(), Some("Test Generator"));
+
+    // RFC 4287: Link without rel attribute should default to "alternate"
+    assert_eq!(channel.link(), "http://example.org/");
+    let links = channel.atom_ext().unwrap().links();
+    assert_eq!(links[0].rel, "alternate"); // No rel in XML, should default
+    assert_eq!(links[0].href, "http://example.org/");
+    assert_eq!(links[1].rel, "self");
+    assert_eq!(links[1].href, "http://example.org/feed");
+
+    assert_eq!(channel.items().len(), 3);
+
+    // Entry 1: Has both published and updated
+    let item1 = &channel.items[0];
+    assert_eq!(item1.title(), Some("Entry with published"));
+    assert_eq!(item1.pub_date(), Some("2025-01-01T12:00:00Z")); // Should use published
+    assert_eq!(item1.description(), Some("Entry with both published and updated"));
+    assert_eq!(item1.guid().as_ref().map(|g| g.value()), Some("http://example.org/entry1"));
+
+    // RFC 4287: Link without rel should default to "alternate"
+    assert_eq!(item1.link(), Some("http://example.org/entry1"));
+    assert_eq!(item1.atom_ext().unwrap().links()[0].rel, "alternate");
+
+    // Entry 2: Only has updated (no published)
+    let item2 = &channel.items[1];
+    assert_eq!(item2.title(), Some("Entry without published"));
+    assert_eq!(item2.pub_date(), Some("2025-01-03T00:00:00Z")); // Should use updated
+    assert_eq!(item2.content(), Some("<p>Content only, no summary</p>"));
+    assert_eq!(item2.description(), None); // No summary, content only
+    assert_eq!(item2.guid().as_ref().map(|g| g.value()), Some("http://example.org/entry2"));
+    assert_eq!(item2.link(), Some("http://example.org/entry2"));
+
+    // Entry 3: Multiple links with different rel values
+    let item3 = &channel.items[2];
+    assert_eq!(item3.title(), Some("Entry with multiple links"));
+    assert_eq!(item3.description(), Some("Entry with multiple link relations"));
+
+    let item3_links = item3.atom_ext().unwrap().links();
+    assert_eq!(item3_links.len(), 2);
+    assert_eq!(item3_links[0].rel, "alternate");
+    assert_eq!(item3_links[0].href, "http://example.org/entry3");
+    assert_eq!(item3_links[0].mime_type, Some("text/html".to_string()));
+    assert_eq!(item3_links[1].rel, "related");
+    assert_eq!(item3_links[1].href, "http://example.org/entry3.pdf");
+    assert_eq!(item3_links[1].mime_type, Some("application/pdf".to_string()));
+
+    // The first alternate link should be used for item.link
+    assert_eq!(item3.link(), Some("http://example.org/entry3"));
+}
