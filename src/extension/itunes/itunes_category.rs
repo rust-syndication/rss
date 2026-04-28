@@ -31,7 +31,7 @@ pub struct ITunesCategory {
     // This is contained within a Box to ensure it gets allocated on the heap to prevent an
     // infinite size.
     /// An optional subcategory for the category.
-    pub subcategory: Option<Box<ITunesCategory>>,
+    pub subcategory: Option<Box<Vec<ITunesCategory>>>,
 }
 
 impl ITunesCategory {
@@ -74,10 +74,10 @@ impl ITunesCategory {
     /// use rss::extension::itunes::ITunesCategory;
     ///
     /// let mut category = ITunesCategory::default();
-    /// category.set_subcategory(Box::new(ITunesCategory::default()));
+    /// category.set_subcategory(Box::new(vec![ITunesCategory::default()]));
     /// assert!(category.subcategory().is_some());
     /// ```
-    pub fn subcategory(&self) -> Option<&ITunesCategory> {
+    pub fn subcategory(&self) -> Option<&Vec<ITunesCategory>> {
         self.subcategory.as_deref()
     }
 
@@ -89,11 +89,11 @@ impl ITunesCategory {
     /// use rss::extension::itunes::ITunesCategory;
     ///
     /// let mut category = ITunesCategory::default();
-    /// category.set_subcategory(Box::new(ITunesCategory::default()));
+    /// category.set_subcategory(Box::new(vec![ITunesCategory::default()]));
     /// ```
     pub fn set_subcategory<V>(&mut self, subcategory: V)
     where
-        V: Into<Option<Box<ITunesCategory>>>,
+        V: Into<Option<Box<Vec<ITunesCategory>>>>,
     {
         self.subcategory = subcategory.into();
     }
@@ -107,7 +107,9 @@ impl ToXml for ITunesCategory {
         writer.write_event(Event::Start(element))?;
 
         if let Some(subcategory) = self.subcategory.as_ref() {
-            subcategory.to_xml(writer)?;
+            for sub in subcategory.iter() {
+                sub.to_xml(writer)?;
+            }
         }
 
         writer.write_event(Event::End(BytesEnd::new(name)))?;
@@ -140,16 +142,16 @@ mod tests {
         assert_eq!(
             ITunesCategoryBuilder::default()
                 .text("music")
-                .subcategory(Some(Box::new(
-                    ITunesCategoryBuilder::default().text("pop").build()
-                )))
+                .subcategory(Some(Box::new(vec!(ITunesCategoryBuilder::default()
+                    .text("pop")
+                    .build()))))
                 .build(),
             ITunesCategory {
                 text: "music".to_string(),
-                subcategory: Some(Box::new(ITunesCategory {
+                subcategory: Some(Box::new(vec!(ITunesCategory {
                     text: "pop".to_string(),
                     subcategory: None,
-                })),
+                }))),
             }
         );
     }

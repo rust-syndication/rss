@@ -51,11 +51,15 @@ fn parse_categories(map: &mut BTreeMap<String, Vec<Extension>>) -> Vec<ITunesCat
         let text = elem.attrs.remove("text").unwrap_or_default();
 
         let child = {
-            if let Some(mut child) = elem.children.remove("category").map(|mut v| v.remove(0)) {
-                let text = child.attrs.remove("text").unwrap_or_default();
-                let mut category = ITunesCategory::default();
-                category.set_text(text);
-                Some(Box::new(category))
+            if let Some(mut child) = elem.children.remove("category") {
+                let mut children = Vec::new();
+                for child in &mut child {
+                    let text = child.attrs.remove("text").unwrap_or_default();
+                    let mut category = ITunesCategory::default();
+                    category.set_text(text);
+                    children.push(category);
+                }
+                Some(Box::new(children))
             } else {
                 None
             }

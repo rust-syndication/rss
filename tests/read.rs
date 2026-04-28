@@ -608,8 +608,20 @@ fn read_itunes() {
             .unwrap()
             .subcategory()
             .as_ref()
-            .map(|v| v.text()),
-        Some("Subcategory")
+            .map(|v| v.get(0).unwrap().text()),
+        Some("Subcategory 1")
+    );
+    assert_eq!(
+        channel
+            .itunes_ext()
+            .unwrap()
+            .categories()
+            .get(0)
+            .unwrap()
+            .subcategory()
+            .as_ref()
+            .map(|v| v.get(1).unwrap().text()),
+        Some("Subcategory 2")
     );
 
     assert_eq!(
