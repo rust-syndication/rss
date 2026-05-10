@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["AnyMarker","AnyPayload","AnyResponse","DowncastingAnyProvider","DynamicDataProviderAnyMarkerWrap"],"trait":["AnyProvider","AsDowncastingAnyProvider","AsDynamicDataProviderAnyMarkerWrap","MaybeSendSync"]};

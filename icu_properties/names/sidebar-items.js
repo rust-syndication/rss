@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["PropertyEnumToValueNameLinearMapper","PropertyEnumToValueNameLinearMapperBorrowed","PropertyEnumToValueNameLinearTiny4Mapper","PropertyEnumToValueNameLinearTiny4MapperBorrowed","PropertyEnumToValueNameSparseMapper","PropertyEnumToValueNameSparseMapperBorrowed","PropertyValueNameToEnumMapper","PropertyValueNameToEnumMapperBorrowed"]};

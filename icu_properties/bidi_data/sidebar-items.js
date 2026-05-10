@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["BidiPairingProperties"],"fn":["bidi_auxiliary_properties","load_bidi_auxiliary_properties_unstable","load_bidi_auxiliary_properties_with_any_provider"],"struct":["BidiAuxiliaryProperties","BidiAuxiliaryPropertiesBorrowed","BidiMirroringProperties"]};

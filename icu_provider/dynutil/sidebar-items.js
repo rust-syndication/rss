@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":["UpcastDataPayload"]};
+window.SIDEBAR_ITEMS = {"macro":["impl_casting_upcast","impl_dynamic_data_provider","impl_iterable_dynamic_data_provider"],"trait":["UpcastDataPayload"]};

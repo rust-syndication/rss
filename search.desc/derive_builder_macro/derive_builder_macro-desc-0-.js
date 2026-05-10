@@ -1,1 +1,0 @@
-searchState.loadedDescShard("derive_builder_macro", 0, "Derive a builder for a struct\nCreate a builder struct for the deriving struct.")
