@@ -28,7 +28,7 @@ pub const NAMESPACE: &str = "http://purl.org/dc/elements/1.1/";
     builder(
         setter(into),
         default,
-        build_fn(name = "build_impl", private, error = "never::Never")
+        build_fn(name = "build_impl", private, error = "std::convert::Infallible")
     )
 )]
 pub struct DublinCoreExtension {
