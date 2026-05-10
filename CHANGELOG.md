@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update `quick-xml` to 0.39. [`#186`](https://github.com/rust-syndication/rss/pull/186)
+
 ## 2.0.12 - 2025-02-17
 
 - Add a test to ensure that `Error` satisfies `Send` and `Sync`.

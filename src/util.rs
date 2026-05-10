@@ -8,6 +8,7 @@
 use std::borrow::Cow;
 use std::io::BufRead;
 
+use quick_xml::escape::resolve_predefined_entity;
 use quick_xml::events::attributes::Attribute;
 use quick_xml::events::Event;
 use quick_xml::name::QName;
@@ -46,8 +47,20 @@ pub fn element_text<R: BufRead>(reader: &mut Reader<R>) -> Result<Option<String>
                 skip(element.name(), reader)?;
             }
             Event::Text(element) => {
-                let decoded = element.unescape()?;
+                let decoded = element.decode()?;
                 content.push_str(decoded.as_ref());
+            }
+            Event::GeneralRef(gref) => {
+                let entity = gref.decode()?;
+                if let Some(resolved_entity) = resolve_predefined_entity(&entity) {
+                    content.push_str(resolved_entity);
+                } else if let Some(ch) = gref.resolve_char_ref()? {
+                    content.push(ch);
+                } else {
+                    content.push('&');
+                    content.push_str(&entity);
+                    content.push(';');
+                }
             }
             Event::CData(element) => {
                 content.push_str(decode(&element, reader)?.as_ref());
