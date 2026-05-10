@@ -124,11 +124,11 @@ impl SyndicationExtension {
             if NAMESPACE == namespace {
                 writer.write_text_element(
                     format!("{}:updatePeriod", prefix),
-                    &self.period.to_string(),
+                    self.period.to_string(),
                 )?;
                 writer.write_text_element(
                     format!("{}:updateFrequency", prefix),
-                    &format!("{}", self.frequency),
+                    format!("{}", self.frequency),
                 )?;
                 writer.write_text_element(format!("{}:updateBase", prefix), &self.base)?;
             }
