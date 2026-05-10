@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Update `quick-xml` to 0.39. [`#186`](https://github.com/rust-syndication/rss/pull/186)
+- Replace `Never` type from the `never` crate with `Infallible` from std [`#187`](https://github.com/rust-syndication/rss/pull/187)
 
 ## 2.0.12 - 2025-02-17
 

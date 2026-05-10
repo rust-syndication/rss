@@ -28,7 +28,7 @@ pub const NAMESPACE: &str = "http://www.w3.org/2005/Atom";
     builder(
         setter(into),
         default,
-        build_fn(name = "build_impl", private, error = "never::Never")
+        build_fn(name = "build_impl", private, error = "std::convert::Infallible")
     )
 )]
 pub struct AtomExtension {
