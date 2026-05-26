@@ -22,7 +22,7 @@ use crate::toxml::ToXml;
     builder(
         setter(into),
         default,
-        build_fn(name = "build_impl", private, error = "never::Never")
+        build_fn(name = "build_impl", private, error = "std::convert::Infallible")
     )
 )]
 pub struct ITunesCategory {

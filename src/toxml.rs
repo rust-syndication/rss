@@ -20,7 +20,7 @@ pub trait ToXml {
     }
 }
 
-impl<'a, T: ToXml> ToXml for &'a T {
+impl<T: ToXml> ToXml for &T {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
         (*self).to_xml(writer)
     }

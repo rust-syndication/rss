@@ -31,12 +31,7 @@ pub(crate) fn is_itunes_namespace(ns: &str) -> bool {
 }
 
 fn parse_image(map: &mut BTreeMap<String, Vec<Extension>>) -> Option<String> {
-    let mut element = match map.remove("image").map(|mut v| v.remove(0)) {
-        Some(element) => element,
-        None => return None,
-    };
-
-    element.attrs.remove("href")
+    map.remove("image")?.first_mut()?.attrs.remove("href")
 }
 
 fn parse_categories(map: &mut BTreeMap<String, Vec<Extension>>) -> Vec<ITunesCategory> {

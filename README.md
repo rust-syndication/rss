@@ -3,6 +3,7 @@
 [![Build status](https://github.com/rust-syndication/rss/workflows/Build/badge.svg)](https://github.com/rust-syndication/rss/actions?query=branch%3Amaster)
 [![Codecov](https://codecov.io/gh/rust-syndication/rss/branch/master/graph/badge.svg)](https://codecov.io/gh/rust-syndication/rss)
 [![crates.io Status](https://img.shields.io/crates/v/rss.svg)](https://crates.io/crates/rss)
+[![dependency status](https://deps.rs/crate/rss/latest/status.svg)](https://deps.rs/crate/rss/latest)
 [![Docs](https://docs.rs/rss/badge.svg)](https://docs.rs/rss)
 
 Library for deserializing and serializing the RSS web content syndication format.

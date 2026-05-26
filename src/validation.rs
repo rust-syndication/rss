@@ -182,7 +182,7 @@ impl Validate for Cloud {
         validate!(port > 0, "Cloud port must be greater than 0");
         Url::parse(self.domain())?;
         validate!(
-            vec!["xml-rpc", "soap", "http-post"].contains(&self.protocol()),
+            ["xml-rpc", "soap", "http-post"].contains(&self.protocol()),
             format!("Unknown cloud protocol: {}", self.protocol())
         );
         Ok(())
