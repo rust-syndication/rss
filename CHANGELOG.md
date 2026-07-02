@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.0.14 - 2026-07-03
+
+- Update `quick-xml` to 0.41. [`#190`](https://github.com/rust-syndication/rss/pull/190)
+- Fail clippy on warnings and migrate to the normalized quick-xml attribute API. [`#191`](https://github.com/rust-syndication/rss/pull/191)
+
 ## 2.0.13 - 2026-05-10
 
 - Update `quick-xml` to 0.39. [`#186`](https://github.com/rust-syndication/rss/pull/186)
