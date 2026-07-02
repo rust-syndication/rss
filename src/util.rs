@@ -13,6 +13,7 @@ use quick_xml::events::attributes::Attribute;
 use quick_xml::events::Event;
 use quick_xml::name::QName;
 use quick_xml::Reader;
+use quick_xml::XmlVersion;
 
 use crate::error::Error;
 
@@ -28,7 +29,7 @@ pub(crate) fn attr_value<'s, B: BufRead>(
     attr: &'s Attribute<'s>,
     reader: &Reader<B>,
 ) -> Result<Cow<'s, str>, Error> {
-    let value = attr.decode_and_unescape_value(reader.decoder())?;
+    let value = attr.decoded_and_normalized_value(XmlVersion::Implicit1_0, reader.decoder())?;
     Ok(value)
 }
 
