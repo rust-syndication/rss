@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 2.1.1 - 2026-09-06
+
+- Fix image height validation to accept values up to the RSS 2.0 limit of 400 pixels. [`#194`](https://github.com/rust-syndication/rss/pull/194)
+
 ## 2.1.0 - 2026-07-03
 
 - Update `quick-xml` to 0.41. [`#190`](https://github.com/rust-syndication/rss/pull/190)
