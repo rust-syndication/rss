@@ -1,6 +1,7 @@
 extern crate rss;
 
 use std::collections::BTreeMap;
+use std::io;
 
 use rss::extension::dublincore::DublinCoreExtension;
 use rss::extension::syndication;
@@ -998,4 +999,15 @@ fn read_local_namespace_hijack() {
 
     assert!(channel.dublin_core_ext().is_some());
     assert_eq!(channel.dublin_core_ext().unwrap().creators, vec!["Creator"]);
+}
+
+#[test]
+fn read_issue_175() {
+    let input = include_bytes!("data/record-pt.rss");
+    let channel = Channel::read_from(io::Cursor::new(&input)).expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "Record");
+    assert_eq!(channel.link(), "https://www.record.pt");
+
+    assert_eq!(channel.items().len(), 20);
 }
