@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.41.0/src/encoding.rs`."><title>encoding.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.96.1 (31fca3adb 2026-06-26)" data-channel="1.96.1" data-search-js="search-b5634cc7.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">quick_xml/</div>encoding.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! A module for wrappers that encode / decode data.
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.41.0/src/encoding.rs`."><title>encoding.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1ed95124.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.98.1 (48a229cea 2026-09-01)" data-channel="1.98.1" data-search-js="search-9944d736.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">quick_xml/</div>encoding.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! A module for wrappers that encode / decode data.
 <a href=#2 id=2 data-nosnippet>2</a>
 <a href=#3 id=3 data-nosnippet>3</a></span><span class="kw">use </span>std::borrow::Cow;
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>std::str::Utf8Error;
@@ -678,7 +678,7 @@
 <a href=#678 id=678 data-nosnippet>678</a>
 <a href=#679 id=679 data-nosnippet>679</a><span class="attr">#[cfg(all(test, feature = <span class="string">"encoding"</span>))]
 <a href=#680 id=680 data-nosnippet>680</a></span><span class="kw">mod </span>decoding_reader {
-<a href=#681 id=681 data-nosnippet>681</a>    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#681 id=681 data-nosnippet>681</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#682 id=682 data-nosnippet>682</a>    <span class="kw">use </span>std::io::{BufReader, Read};
 <a href=#683 id=683 data-nosnippet>683</a>
 <a href=#684 id=684 data-nosnippet>684</a>    <span class="doccomment">/// Helper reader that returns data in fixed-size chunks
@@ -758,7 +758,7 @@
 <a href=#758 id=758 data-nosnippet>758</a>
 <a href=#759 id=759 data-nosnippet>759</a>    <span class="doccomment">/// Simple edge cases and degenerate inputs
 <a href=#760 id=760 data-nosnippet>760</a>    </span><span class="kw">mod </span>edge_cases {
-<a href=#761 id=761 data-nosnippet>761</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#761 id=761 data-nosnippet>761</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#762 id=762 data-nosnippet>762</a>        <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#763 id=763 data-nosnippet>763</a>
 <a href=#764 id=764 data-nosnippet>764</a>        <span class="doccomment">/// Zero-length input should immediately return EOF (n == 0).
@@ -836,7 +836,7 @@
 <a href=#836 id=836 data-nosnippet>836</a>    <span class="doccomment">/// Tests that exercise the BufRead contract (fill_buf + consume) directly,
 <a href=#837 id=837 data-nosnippet>837</a>    /// as opposed to the Read-based helpers used elsewhere.
 <a href=#838 id=838 data-nosnippet>838</a>    </span><span class="kw">mod </span>bufread_interface {
-<a href=#839 id=839 data-nosnippet>839</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#839 id=839 data-nosnippet>839</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#840 id=840 data-nosnippet>840</a>        <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#841 id=841 data-nosnippet>841</a>        <span class="kw">use </span>std::io::BufRead;
 <a href=#842 id=842 data-nosnippet>842</a>
@@ -917,7 +917,7 @@
 <a href=#917 id=917 data-nosnippet>917</a>    }
 <a href=#918 id=918 data-nosnippet>918</a>
 <a href=#919 id=919 data-nosnippet>919</a>    <span class="kw">mod </span>accessors {
-<a href=#920 id=920 data-nosnippet>920</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#920 id=920 data-nosnippet>920</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#921 id=921 data-nosnippet>921</a>        <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#922 id=922 data-nosnippet>922</a>        <span class="kw">use </span>std::io::Cursor;
 <a href=#923 id=923 data-nosnippet>923</a>
@@ -963,7 +963,7 @@
 <a href=#963 id=963 data-nosnippet>963</a>    </span><span class="doccomment">/// Tests for encoding() and set_encoding(): detection, switching,
 <a href=#964 id=964 data-nosnippet>964</a>    /// same-encoding no-op safety, and mid-stream override behavior.
 <a href=#965 id=965 data-nosnippet>965</a>    </span><span class="kw">mod </span>encoding_switching {
-<a href=#966 id=966 data-nosnippet>966</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#966 id=966 data-nosnippet>966</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#967 id=967 data-nosnippet>967</a>        <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#968 id=968 data-nosnippet>968</a>        <span class="kw">use </span>std::io::BufRead;
 <a href=#969 id=969 data-nosnippet>969</a>
@@ -1068,7 +1068,7 @@
 <a href=#1068 id=1068 data-nosnippet>1068</a>    /// - Inputs larger than the 8192-byte internal output buffer
 <a href=#1069 id=1069 data-nosnippet>1069</a>    /// - Empty and single-character inputs (prefix-only decode path)
 <a href=#1070 id=1070 data-nosnippet>1070</a>    </span><span class="kw">mod </span>matrix_decoding_tests {
-<a href=#1071 id=1071 data-nosnippet>1071</a>        <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1071 id=1071 data-nosnippet>1071</a>        <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1072 id=1072 data-nosnippet>1072</a>        <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1073 id=1073 data-nosnippet>1073</a>
 <a href=#1074 id=1074 data-nosnippet>1074</a>        <span class="kw">struct </span>TestCase {

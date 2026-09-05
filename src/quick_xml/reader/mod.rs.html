@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.41.0/src/reader/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.96.1 (31fca3adb 2026-06-26)" data-channel="1.96.1" data-search-js="search-b5634cc7.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5013f961.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">quick_xml/reader/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! Contains high-level interface for a pull-based XML parser.
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/quick-xml-0.41.0/src/reader/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-1ed95124.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="quick_xml" data-themes="" data-resource-suffix="" data-rustdoc-version="1.98.1 (48a229cea 2026-09-01)" data-channel="1.98.1" data-search-js="search-9944d736.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">quick_xml/reader/</div>mod.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! Contains high-level interface for a pull-based XML parser.
 <a href=#2 id=2 data-nosnippet>2</a>
 <a href=#3 id=3 data-nosnippet>3</a></span><span class="attr">#[cfg(feature = <span class="string">"encoding"</span>)]
 <a href=#4 id=4 data-nosnippet>4</a></span><span class="kw">use </span>encoding_rs::Encoding;
@@ -1245,14 +1245,14 @@
 <a href=#1245 id=1245 data-nosnippet>1245</a>            $(, <span class="macro-nonterminal">$async</span>:ident, <span class="macro-nonterminal">$await</span>:ident)<span class="question-mark">?
 <a href=#1246 id=1246 data-nosnippet>1246</a>        </span>) =&gt; {
 <a href=#1247 id=1247 data-nosnippet>1247</a>            <span class="kw">mod </span>read_bang_element {
-<a href=#1248 id=1248 data-nosnippet>1248</a>                <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1248 id=1248 data-nosnippet>1248</a>                <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1249 id=1249 data-nosnippet>1249</a>                <span class="kw">use </span><span class="kw">crate</span>::errors::{Error, SyntaxError};
 <a href=#1250 id=1250 data-nosnippet>1250</a>                <span class="kw">use </span><span class="kw">crate</span>::reader::{BangType, DtdParser};
 <a href=#1251 id=1251 data-nosnippet>1251</a>                <span class="kw">use </span><span class="kw">crate</span>::utils::Bytes;
 <a href=#1252 id=1252 data-nosnippet>1252</a>
 <a href=#1253 id=1253 data-nosnippet>1253</a>                <span class="doccomment">/// Checks that reading CDATA content works correctly
 <a href=#1254 id=1254 data-nosnippet>1254</a>                </span><span class="kw">mod </span>cdata {
-<a href=#1255 id=1255 data-nosnippet>1255</a>                    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1255 id=1255 data-nosnippet>1255</a>                    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1256 id=1256 data-nosnippet>1256</a>                    <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1257 id=1257 data-nosnippet>1257</a>
 <a href=#1258 id=1258 data-nosnippet>1258</a>                    <span class="doccomment">/// Checks that if input begins like CDATA element, but CDATA start sequence
@@ -1352,7 +1352,7 @@
 <a href=#1352 id=1352 data-nosnippet>1352</a>                ///
 <a href=#1353 id=1353 data-nosnippet>1353</a>                /// [specification]: https://www.w3.org/TR/xml11/#dt-comment
 <a href=#1354 id=1354 data-nosnippet>1354</a>                </span><span class="kw">mod </span>comment {
-<a href=#1355 id=1355 data-nosnippet>1355</a>                    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1355 id=1355 data-nosnippet>1355</a>                    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1356 id=1356 data-nosnippet>1356</a>                    <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1357 id=1357 data-nosnippet>1357</a>
 <a href=#1358 id=1358 data-nosnippet>1358</a>                    <span class="attr">#[<span class="macro-nonterminal">$test</span>]
@@ -1480,10 +1480,10 @@
 <a href=#1480 id=1480 data-nosnippet>1480</a>
 <a href=#1481 id=1481 data-nosnippet>1481</a>                <span class="doccomment">/// Checks that reading DOCTYPE definition works correctly
 <a href=#1482 id=1482 data-nosnippet>1482</a>                </span><span class="kw">mod </span>doctype {
-<a href=#1483 id=1483 data-nosnippet>1483</a>                    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1483 id=1483 data-nosnippet>1483</a>                    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1484 id=1484 data-nosnippet>1484</a>
 <a href=#1485 id=1485 data-nosnippet>1485</a>                    <span class="kw">mod </span>uppercase {
-<a href=#1486 id=1486 data-nosnippet>1486</a>                        <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1486 id=1486 data-nosnippet>1486</a>                        <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1487 id=1487 data-nosnippet>1487</a>                        <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1488 id=1488 data-nosnippet>1488</a>
 <a href=#1489 id=1489 data-nosnippet>1489</a>                        <span class="attr">#[<span class="macro-nonterminal">$test</span>]
@@ -1557,7 +1557,7 @@
 <a href=#1557 id=1557 data-nosnippet>1557</a>                    }
 <a href=#1558 id=1558 data-nosnippet>1558</a>
 <a href=#1559 id=1559 data-nosnippet>1559</a>                    <span class="kw">mod </span>lowercase {
-<a href=#1560 id=1560 data-nosnippet>1560</a>                        <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1560 id=1560 data-nosnippet>1560</a>                        <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1561 id=1561 data-nosnippet>1561</a>                        <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1562 id=1562 data-nosnippet>1562</a>
 <a href=#1563 id=1563 data-nosnippet>1563</a>                        <span class="attr">#[<span class="macro-nonterminal">$test</span>]
@@ -1633,7 +1633,7 @@
 <a href=#1633 id=1633 data-nosnippet>1633</a>            }
 <a href=#1634 id=1634 data-nosnippet>1634</a>
 <a href=#1635 id=1635 data-nosnippet>1635</a>            <span class="kw">mod </span>read_text {
-<a href=#1636 id=1636 data-nosnippet>1636</a>                <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1636 id=1636 data-nosnippet>1636</a>                <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1637 id=1637 data-nosnippet>1637</a>                <span class="kw">use </span><span class="kw">crate</span>::reader::ReadTextResult;
 <a href=#1638 id=1638 data-nosnippet>1638</a>                <span class="kw">use </span><span class="kw">crate</span>::utils::Bytes;
 <a href=#1639 id=1639 data-nosnippet>1639</a>                <span class="kw">use </span>pretty_assertions::assert_eq;
@@ -1724,7 +1724,7 @@
 <a href=#1724 id=1724 data-nosnippet>1724</a>            }
 <a href=#1725 id=1725 data-nosnippet>1725</a>
 <a href=#1726 id=1726 data-nosnippet>1726</a>            <span class="kw">mod </span>read_ref {
-<a href=#1727 id=1727 data-nosnippet>1727</a>                <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1727 id=1727 data-nosnippet>1727</a>                <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1728 id=1728 data-nosnippet>1728</a>                <span class="kw">use </span><span class="kw">crate</span>::reader::ReadRefResult;
 <a href=#1729 id=1729 data-nosnippet>1729</a>                <span class="kw">use </span><span class="kw">crate</span>::utils::Bytes;
 <a href=#1730 id=1730 data-nosnippet>1730</a>                <span class="kw">use </span>pretty_assertions::assert_eq;
@@ -1805,7 +1805,7 @@
 <a href=#1805 id=1805 data-nosnippet>1805</a>            }
 <a href=#1806 id=1806 data-nosnippet>1806</a>
 <a href=#1807 id=1807 data-nosnippet>1807</a>            <span class="kw">mod </span>read_element {
-<a href=#1808 id=1808 data-nosnippet>1808</a>                <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1808 id=1808 data-nosnippet>1808</a>                <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1809 id=1809 data-nosnippet>1809</a>                <span class="kw">use </span><span class="kw">crate</span>::errors::{Error, SyntaxError};
 <a href=#1810 id=1810 data-nosnippet>1810</a>                <span class="kw">use </span><span class="kw">crate</span>::parser::ElementParser;
 <a href=#1811 id=1811 data-nosnippet>1811</a>                <span class="kw">use </span><span class="kw">crate</span>::utils::Bytes;
@@ -1832,7 +1832,7 @@
 <a href=#1832 id=1832 data-nosnippet>1832</a>                }
 <a href=#1833 id=1833 data-nosnippet>1833</a>
 <a href=#1834 id=1834 data-nosnippet>1834</a>                <span class="kw">mod </span>open {
-<a href=#1835 id=1835 data-nosnippet>1835</a>                    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1835 id=1835 data-nosnippet>1835</a>                    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1836 id=1836 data-nosnippet>1836</a>                    <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1837 id=1837 data-nosnippet>1837</a>
 <a href=#1838 id=1838 data-nosnippet>1838</a>                    <span class="attr">#[<span class="macro-nonterminal">$test</span>]
@@ -1907,7 +1907,7 @@
 <a href=#1907 id=1907 data-nosnippet>1907</a>                }
 <a href=#1908 id=1908 data-nosnippet>1908</a>
 <a href=#1909 id=1909 data-nosnippet>1909</a>                <span class="kw">mod </span>self_closed {
-<a href=#1910 id=1910 data-nosnippet>1910</a>                    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1910 id=1910 data-nosnippet>1910</a>                    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1911 id=1911 data-nosnippet>1911</a>                    <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1912 id=1912 data-nosnippet>1912</a>
 <a href=#1913 id=1913 data-nosnippet>1913</a>                    <span class="attr">#[<span class="macro-nonterminal">$test</span>]
@@ -1982,7 +1982,7 @@
 <a href=#1982 id=1982 data-nosnippet>1982</a>                }
 <a href=#1983 id=1983 data-nosnippet>1983</a>
 <a href=#1984 id=1984 data-nosnippet>1984</a>                <span class="kw">mod </span>close {
-<a href=#1985 id=1985 data-nosnippet>1985</a>                    <span class="kw">use </span>super::<span class="kw-2">*</span>;
+<a href=#1985 id=1985 data-nosnippet>1985</a>                    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#1986 id=1986 data-nosnippet>1986</a>                    <span class="kw">use </span>pretty_assertions::assert_eq;
 <a href=#1987 id=1987 data-nosnippet>1987</a>
 <a href=#1988 id=1988 data-nosnippet>1988</a>                    <span class="attr">#[<span class="macro-nonterminal">$test</span>]
