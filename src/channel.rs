@@ -1131,7 +1131,9 @@ impl Channel {
         namespaces.extend(&used_namespaces);
         namespaces.extend(&self.namespaces);
         for (name, url) in namespaces {
-            element.push_attribute((format!("xmlns:{}", name).as_bytes(), url.as_bytes()));
+            // The byte-slice form of `push_attribute` writes the value verbatim, so use the
+            // string form, which escapes the namespace URI.
+            element.push_attribute((format!("xmlns:{}", name).as_str(), url.as_str()));
         }
 
         writer.write_event(Event::Start(element))?;

@@ -214,6 +214,33 @@ fn test_namespaces() {
 }
 
 #[test]
+fn test_escape_namespace() {
+    let input = r#"<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:ex="http://example.com/ns?a=1&amp;b=2">
+    <channel>
+        <title>Title</title>
+        <link>http://example.com/</link>
+        <description>Description</description>
+    </channel>
+</rss>"#;
+
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    assert_eq!(
+        channel.namespaces().get("ex").map(String::as_str),
+        Some("http://example.com/ns?a=1&b=2")
+    );
+
+    let xml = channel.to_string();
+    assert!(
+        xml.contains(r#"xmlns:ex="http://example.com/ns?a=1&amp;b=2""#),
+        "namespace URI was not escaped exactly once: {}",
+        xml
+    );
+
+    test_write!(channel);
+}
+
+#[test]
 fn test_escape() {
     let mut channel = ChannelBuilder::default()
         .image(
