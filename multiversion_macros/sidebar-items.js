@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":["inherit_target","multiversion","target","target_cfg","target_cfg_attr","target_cfg_attr_impl","target_cfg_impl"],"macro":["match_target","match_target_impl","selected_target","target_cfg_f","target_cfg_f_impl"]};

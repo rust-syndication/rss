@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["validate_utf8"],"struct":["ChunkedUtf8ValidatorImp","Utf8ValidatorImp"]};

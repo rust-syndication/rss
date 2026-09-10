@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This crate provides a `no_std` version of std’s `is_x86_feature_detected!` macro."><title>core_detect - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-1ed95124.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="core_detect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.98.1 (48a229cea 2026-09-01)" data-channel="1.98.1" data-search-js="search-9944d736.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../static.files/storage-41dd4d93.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Crate core_detect</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../core_detect/index.html">core_<wbr>detect</a><span class="version">1.0.0</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#usage" title="Usage">Usage</a></li><li><a href="#caveats" title="Caveats">Caveats</a></li></ul><h3><a href="#macros">Crate Items</a></h3><ul class="block"><li><a href="#macros" title="Macros">Macros</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1>Crate <span>core_<wbr>detect</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/core_detect/lib.rs.html#1-162">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This crate provides a <code>no_std</code> version of std’s <a href="macro.is_x86_feature_detected.html" title="macro core_detect::is_x86_feature_detected"><code>is_x86_feature_detected!</code></a>
+macro.</p>
+<p>This is possible because x86 chips can just use the <code>cpuid</code> instruction to
+detect CPU features, whereas most other architectures require either reading
+files or querying the OS.</p>
+<h2 id="usage"><a class="doc-anchor" href="#usage">§</a>Usage</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">if </span><span class="macro">core_detect::is_x86_feature_detected!</span>(<span class="string">"ssse3"</span>) {
+    <span class="macro">println!</span>(<span class="string">"SSSE3 is available"</span>);
+}</code></pre></div>
+<p>Note that like the <a href="https://doc.rust-lang.org/nightly/std/macro.is_x86_feature_detected.html">equivalent macro in <code>std</code></a>, this will error
+on architectures other than x86/x86_64, so you should put the code behind a
+<code>#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]</code> check.</p>
+<p>(In the future, this crate may provide another macro which returns false in
+these cases instead, and supports testing multiple features simultaneously).</p>
+<h2 id="caveats"><a class="doc-anchor" href="#caveats">§</a>Caveats</h2>
+<p>The <code>cpuid</code> instruction doesn’t exist on all x86 machines, it was added
+around 1994. (It’s also not available on SGX, but this doesn’t cause any
+issues since we can check that with <code>cfg(target_env = "sgx")</code>).</p>
+<p>If you run <code>cpuid</code> on a machine older than that, it causes an illegal
+instruction fault (SIGILL). Unfortunately, there’s no good stable way to
+reliably determine if <code>cpuid</code> will fault in stable rust: A
+<a href="https://doc.rust-lang.org/nightly/core/arch/x86/fn.has_cpuid.html"><code>core::arch::x86::has_cpuid</code></a>
+function exists, but didn’t stabilize with the rest of <code>core::arch::x86</code>,
+and the only way to implement it ourselves is with inline asm, which… is
+also still unstable.</p>
+<p>For what it’s worth, it’s actually pretty uncommon that we’d need to call
+<code>has_cpuid</code> on common rust targets, since we perform the following compile
+time checks:</p>
+<ul>
+<li>We never have cpuid on <code>target_env = "sgx"</code> (as mentioned).</li>
+<li>We always have cpuid on <code>target_arch = "x86_64"</code>.</li>
+<li>And we always have cpuid if <code>target_feature = "sse"</code> (which covers the
+<code>i686-*</code> targets).</li>
+</ul>
+<p>Unfortunately, if none of those applies… we don’t know if calling CPUID
+will crash the process. This library has a few ways it can handle this:</p>
+<ol>
+<li>
+<p>Cautiously (the default): In this mode, we conceptually swap <code>has_cpuid</code>
+out with a function that always returns false. That is: we never call it
+unless we’re sure it wont crash the process.</p>
+</li>
+<li>
+<p>Recklessly (<code>feature = "assume_has_cpuid"</code>): This is essentially the
+opposite of the last one — assume <code>has_cpuid</code> would have returned true,
+and call <code>cpuid</code> anyway.</p>
+<p>In practice, this should be fine. These machines are rare now (they’re
+over 30 years old…), and pretty only are common through QEMU, and even
+then, usually after a misconfiguration.</p>
+<p>If you do happen to run the instruction, the process crashes, but in a
+controlled manner — Executing an illegal instruction to tringger a
+SIGILL is what <code>core::intrinsics::abort</code> does on x86, so it’s not
+dangerous or anything.</p>
+</li>
+<li>
+<p>Using unstable nightly features (<code>feature = "unstable_has_cpuid"</code>): This
+approach requires a nightly compiler, but has no other major downsides,
+besides the fact that the <code>has_cpuid</code> function could vanish at any time.</p>
+</li>
+</ol>
+<p>Eventually, inline asm will stabilize and we can solve this problem more
+cleanly.</p>
+</div></details><h2 id="macros" class="section-header">Macros<a href="#macros" class="anchor">§</a></h2><dl class="item-table"><dt><a class="macro" href="macro.is_x86_feature_detected.html" title="macro core_detect::is_x86_feature_detected">is_<wbr>x86_<wbr>feature_<wbr>detected</a></dt><dd>A macro to test at <em>runtime</em> whether a CPU feature is available on
+x86/x86-64 platforms.</dd></dl></section></div></main></body></html>

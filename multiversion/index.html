@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This crate provides the `multiversion` attribute for implementing function multiversioning."><title>multiversion - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-1ed95124.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="multiversion" data-themes="" data-resource-suffix="" data-rustdoc-version="1.98.1 (48a229cea 2026-09-01)" data-channel="1.98.1" data-search-js="search-9944d736.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../static.files/storage-41dd4d93.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Crate multiversion</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../multiversion/index.html">multiversion</a><span class="version">0.9.0</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#cargo-features" title="Cargo features">Cargo features</a></li><li><a href="#capabilities" title="Capabilities">Capabilities</a></li><li><a href="#target-specification-strings" title="Target specification strings">Target specification strings</a></li></ul><h3><a href="#modules">Crate Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#attributes" title="Attribute Macros">Attribute Macros</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1>Crate <span>multiversion</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/multiversion/lib.rs.html#1-265">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This crate provides the <a href="attr.multiversion.html"><code>multiversion</code></a> attribute for implementing function multiversioning.</p>
+<p>Many CPU architectures have a variety of instruction set extensions that provide additional
+functionality. Common examples are single instruction, multiple data (SIMD) extensions such as
+SSE and AVX on x86/x86-64 and NEON on ARM/AArch64. When available, these extended features can
+provide significant speed improvements to some functions. These optional features cannot be
+haphazardly compiled into programs–executing an unsupported instruction will result in a
+crash.</p>
+<p><strong>Function multiversioning</strong> is the practice of compiling multiple versions of a function
+with various features enabled and safely detecting which version to use at runtime.</p>
+<h2 id="cargo-features"><a class="doc-anchor" href="#cargo-features">§</a>Cargo features</h2>
+<p>The cargo feature <code>std</code> is enabled by default.  When enabled, <a href="attr.multiversion.html"><code>multiversion</code></a> will
+use CPU feature detection at runtime to dispatch the appropriate function. Disabling this
+feature will only allow compile-time function dispatch using <code>#[cfg(target_feature)]</code> and can
+be used in <code>#[no_std]</code> crates.</p>
+<p>The <code>target-features</code> feature enables <code>selected_target!</code> and adds the optional
+<code>target-features</code> dependency.</p>
+<p>The <code>nightly</code> feature adds nightly-only targets to <code>targets = "simd"</code>. On affected targets,
+the consuming crate must also enable the corresponding <code>*_target_feature</code> and
+<code>stdarch_*_feature_detection</code> nightly compiler features.</p>
+<h2 id="capabilities"><a class="doc-anchor" href="#capabilities">§</a>Capabilities</h2>
+<p>The intention of this crate is to allow nearly any function to be multiversioned.
+The following cases are not supported:</p>
+<ul>
+<li>functions that use <code>self</code> or <code>Self</code></li>
+<li><code>impl Trait</code> return types (arguments are fine)</li>
+</ul>
+<p>If any other functions do not work please file an issue on GitHub.</p>
+<h2 id="target-specification-strings"><a class="doc-anchor" href="#target-specification-strings">§</a>Target specification strings</h2>
+<p>Targets are specified as a combination of architecture (as specified in <a href="https://doc.rust-lang.org/reference/conditional-compilation.html#target_arch"><code>target_arch</code></a>) and
+feature (as specified in <a href="https://doc.rust-lang.org/reference/conditional-compilation.html#target_feature"><code>target_feature</code></a>).</p>
+<p>A target can be specified as:</p>
+<ul>
+<li><code>"arch"</code></li>
+<li><code>"arch+feature"</code></li>
+<li><code>"arch+feature1+feature2"</code></li>
+</ul>
+<p>The following are some valid target specification strings:</p>
+<ul>
+<li><code>"x86"</code> (matches the <code>"x86"</code> architecture)</li>
+<li><code>"x86_64+avx+avx2"</code> (matches the <code>"x86_64"</code> architecture with the <code>"avx"</code> and <code>"avx2"</code>
+features)</li>
+<li><code>"arm+neon"</code> (matches the <code>arm</code> architecture with the <code>"neon"</code> feature</li>
+</ul>
+</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="target/index.html" title="mod multiversion::target">target</a></dt><dd>Information related to the current target.</dd></dl><h2 id="attributes" class="section-header">Attribute Macros<a href="#attributes" class="anchor">§</a></h2><dl class="item-table"><dt><a class="attr" href="attr.inherit_target.html" title="attr multiversion::inherit_target">inherit_<wbr>target</a></dt><dd>Inherit the <code>target_feature</code> attributes of the selected target in a multiversioned function.</dd><dt><a class="attr" href="attr.multiversion.html" title="attr multiversion::multiversion">multiversion</a></dt><dd>Provides function multiversioning.</dd><dt><a class="attr" href="attr.target.html" title="attr multiversion::target">target</a></dt><dd>Provides a less verbose equivalent to the <code>cfg(target_arch)</code> and <code>target_feature</code> attributes.</dd></dl></section></div></main></body></html>

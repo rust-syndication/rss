@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/encoding_rs-0.8.35/src/big5.rs`."><title>big5.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1ed95124.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="encoding_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.98.1 (48a229cea 2026-09-01)" data-channel="1.98.1" data-search-js="search-9944d736.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">encoding_rs/</div>big5.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="comment">// Copyright Mozilla Foundation. See the COPYRIGHT
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/encoding_rs-0.8.41/src/big5.rs`."><title>big5.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1ed95124.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="encoding_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.98.1 (48a229cea 2026-09-01)" data-channel="1.98.1" data-search-js="search-9944d736.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">encoding_rs/</div>big5.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="comment">// Copyright Mozilla Foundation. See the COPYRIGHT
 <a href=#2 id=2 data-nosnippet>2</a>// file at the top-level directory of this distribution.
 <a href=#3 id=3 data-nosnippet>3</a>//
 <a href=#4 id=4 data-nosnippet>4</a>// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or
@@ -74,7 +74,7 @@
 <a href=#74 id=74 data-nosnippet>74</a>    }
 <a href=#75 id=75 data-nosnippet>75</a>
 <a href=#76 id=76 data-nosnippet>76</a>    <span class="macro">ascii_compatible_two_byte_decoder_functions!</span>(
-<a href=#77 id=77 data-nosnippet>77</a>        {
+<a href=#77 id=77 data-nosnippet>77</a>        lead = {
 <a href=#78 id=78 data-nosnippet>78</a>            <span class="comment">// If lead is between 0x81 and 0xFE, inclusive,
 <a href=#79 id=79 data-nosnippet>79</a>            // subtract offset 0x81.
 <a href=#80 id=80 data-nosnippet>80</a>            </span><span class="kw">let </span>non_ascii_minus_offset =
@@ -86,7 +86,7 @@
 <a href=#86 id=86 data-nosnippet>86</a>            }
 <a href=#87 id=87 data-nosnippet>87</a>            non_ascii_minus_offset
 <a href=#88 id=88 data-nosnippet>88</a>        },
-<a href=#89 id=89 data-nosnippet>89</a>        {
+<a href=#89 id=89 data-nosnippet>89</a>        trail = {
 <a href=#90 id=90 data-nosnippet>90</a>            <span class="comment">// If trail is between 0x40 and 0x7E, inclusive,
 <a href=#91 id=91 data-nosnippet>91</a>            // subtract offset 0x40. Else if trail is
 <a href=#92 id=92 data-nosnippet>92</a>            // between 0xA1 and 0xFE, inclusive, subtract
@@ -151,17 +151,17 @@
 <a href=#151 id=151 data-nosnippet>151</a>                handle.write_bmp_excl_ascii(low_bits)
 <a href=#152 id=152 data-nosnippet>152</a>            }
 <a href=#153 id=153 data-nosnippet>153</a>        },
-<a href=#154 id=154 data-nosnippet>154</a>        <span class="self">self</span>,
-<a href=#155 id=155 data-nosnippet>155</a>        non_ascii,
-<a href=#156 id=156 data-nosnippet>156</a>        byte,
-<a href=#157 id=157 data-nosnippet>157</a>        lead_minus_offset,
-<a href=#158 id=158 data-nosnippet>158</a>        unread_handle_trail,
-<a href=#159 id=159 data-nosnippet>159</a>        source,
-<a href=#160 id=160 data-nosnippet>160</a>        handle,
-<a href=#161 id=161 data-nosnippet>161</a>        <span class="lifetime">'outermost</span>,
-<a href=#162 id=162 data-nosnippet>162</a>        copy_ascii_from_check_space_astral,
-<a href=#163 id=163 data-nosnippet>163</a>        check_space_astral,
-<a href=#164 id=164 data-nosnippet>164</a>        <span class="bool-val">false</span>);
+<a href=#154 id=154 data-nosnippet>154</a>        <span class="self">self </span>= <span class="self">self</span>,
+<a href=#155 id=155 data-nosnippet>155</a>        non_ascii = non_ascii,
+<a href=#156 id=156 data-nosnippet>156</a>        byte = byte,
+<a href=#157 id=157 data-nosnippet>157</a>        lead_minus_offset = lead_minus_offset,
+<a href=#158 id=158 data-nosnippet>158</a>        unread_handle_trail = unread_handle_trail,
+<a href=#159 id=159 data-nosnippet>159</a>        source = source,
+<a href=#160 id=160 data-nosnippet>160</a>        handle = handle,
+<a href=#161 id=161 data-nosnippet>161</a>        outermost = <span class="lifetime">'outermost</span>,
+<a href=#162 id=162 data-nosnippet>162</a>        copy_ascii = copy_ascii_from_check_space_astral,
+<a href=#163 id=163 data-nosnippet>163</a>        destination_check = check_space_astral,
+<a href=#164 id=164 data-nosnippet>164</a>        ascii_punctuation = <span class="bool-val">false</span>);
 <a href=#165 id=165 data-nosnippet>165</a>}
 <a href=#166 id=166 data-nosnippet>166</a>
 <a href=#167 id=167 data-nosnippet>167</a><span class="kw">pub struct </span>Big5Encoder;
@@ -391,38 +391,17 @@
 <a href=#391 id=391 data-nosnippet>391</a>
 <a href=#392 id=392 data-nosnippet>392</a>    <span class="attr">#[test]
 <a href=#393 id=393 data-nosnippet>393</a>    #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
-<a href=#394 id=394 data-nosnippet>394</a>    </span><span class="kw">fn </span>test_big5_decode_all() {
-<a href=#395 id=395 data-nosnippet>395</a>        <span class="kw">let </span>input = <span class="macro">include_bytes!</span>(<span class="string">"test_data/big5_in.txt"</span>);
-<a href=#396 id=396 data-nosnippet>396</a>        <span class="kw">let </span>expectation = <span class="macro">include_str!</span>(<span class="string">"test_data/big5_in_ref.txt"</span>);
-<a href=#397 id=397 data-nosnippet>397</a>        <span class="kw">let </span>(cow, had_errors) = BIG5.decode_without_bom_handling(input);
-<a href=#398 id=398 data-nosnippet>398</a>        <span class="macro">assert!</span>(had_errors, <span class="string">"Should have had errors."</span>);
-<a href=#399 id=399 data-nosnippet>399</a>        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>cow[..], expectation);
-<a href=#400 id=400 data-nosnippet>400</a>    }
-<a href=#401 id=401 data-nosnippet>401</a>
-<a href=#402 id=402 data-nosnippet>402</a>    <span class="attr">#[test]
-<a href=#403 id=403 data-nosnippet>403</a>    #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
-<a href=#404 id=404 data-nosnippet>404</a>    </span><span class="kw">fn </span>test_big5_encode_all() {
-<a href=#405 id=405 data-nosnippet>405</a>        <span class="kw">let </span>input = <span class="macro">include_str!</span>(<span class="string">"test_data/big5_out.txt"</span>);
-<a href=#406 id=406 data-nosnippet>406</a>        <span class="kw">let </span>expectation = <span class="macro">include_bytes!</span>(<span class="string">"test_data/big5_out_ref.txt"</span>);
-<a href=#407 id=407 data-nosnippet>407</a>        <span class="kw">let </span>(cow, encoding, had_errors) = BIG5.encode(input);
-<a href=#408 id=408 data-nosnippet>408</a>        <span class="macro">assert!</span>(!had_errors, <span class="string">"Should not have had errors."</span>);
-<a href=#409 id=409 data-nosnippet>409</a>        <span class="macro">assert_eq!</span>(encoding, BIG5);
-<a href=#410 id=410 data-nosnippet>410</a>        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>cow[..], <span class="kw-2">&amp;</span>expectation[..]);
-<a href=#411 id=411 data-nosnippet>411</a>    }
-<a href=#412 id=412 data-nosnippet>412</a>
-<a href=#413 id=413 data-nosnippet>413</a>    <span class="attr">#[test]
-<a href=#414 id=414 data-nosnippet>414</a>    #[cfg_attr(miri, ignore)] </span><span class="comment">// Miri is too slow
-<a href=#415 id=415 data-nosnippet>415</a>    </span><span class="kw">fn </span>test_big5_encode_from_two_low_surrogates() {
-<a href=#416 id=416 data-nosnippet>416</a>        <span class="kw">let </span>expectation = <span class="string">b"&amp;#65533;&amp;#65533;"</span>;
-<a href=#417 id=417 data-nosnippet>417</a>        <span class="kw">let </span><span class="kw-2">mut </span>output = [<span class="number">0u8</span>; <span class="number">40</span>];
-<a href=#418 id=418 data-nosnippet>418</a>        <span class="kw">let </span><span class="kw-2">mut </span>encoder = BIG5.new_encoder();
-<a href=#419 id=419 data-nosnippet>419</a>        <span class="kw">let </span>(result, read, written, had_errors) =
-<a href=#420 id=420 data-nosnippet>420</a>            encoder.encode_from_utf16(<span class="kw-2">&amp;</span>[<span class="number">0xDC00u16</span>, <span class="number">0xDEDEu16</span>], <span class="kw-2">&amp;mut </span>output[..], <span class="bool-val">true</span>);
-<a href=#421 id=421 data-nosnippet>421</a>        <span class="macro">assert_eq!</span>(result, CoderResult::InputEmpty);
-<a href=#422 id=422 data-nosnippet>422</a>        <span class="macro">assert_eq!</span>(read, <span class="number">2</span>);
-<a href=#423 id=423 data-nosnippet>423</a>        <span class="macro">assert_eq!</span>(written, expectation.len());
-<a href=#424 id=424 data-nosnippet>424</a>        <span class="macro">assert!</span>(had_errors);
-<a href=#425 id=425 data-nosnippet>425</a>        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>output[..written], expectation);
-<a href=#426 id=426 data-nosnippet>426</a>    }
-<a href=#427 id=427 data-nosnippet>427</a>}
+<a href=#394 id=394 data-nosnippet>394</a>    </span><span class="kw">fn </span>test_big5_encode_from_two_low_surrogates() {
+<a href=#395 id=395 data-nosnippet>395</a>        <span class="kw">let </span>expectation = <span class="string">b"&amp;#65533;&amp;#65533;"</span>;
+<a href=#396 id=396 data-nosnippet>396</a>        <span class="kw">let </span><span class="kw-2">mut </span>output = [<span class="number">0u8</span>; <span class="number">40</span>];
+<a href=#397 id=397 data-nosnippet>397</a>        <span class="kw">let </span><span class="kw-2">mut </span>encoder = BIG5.new_encoder();
+<a href=#398 id=398 data-nosnippet>398</a>        <span class="kw">let </span>(result, read, written, had_errors) =
+<a href=#399 id=399 data-nosnippet>399</a>            encoder.encode_from_utf16(<span class="kw-2">&amp;</span>[<span class="number">0xDC00u16</span>, <span class="number">0xDEDEu16</span>], <span class="kw-2">&amp;mut </span>output[..], <span class="bool-val">true</span>);
+<a href=#400 id=400 data-nosnippet>400</a>        <span class="macro">assert_eq!</span>(result, CoderResult::InputEmpty);
+<a href=#401 id=401 data-nosnippet>401</a>        <span class="macro">assert_eq!</span>(read, <span class="number">2</span>);
+<a href=#402 id=402 data-nosnippet>402</a>        <span class="macro">assert_eq!</span>(written, expectation.len());
+<a href=#403 id=403 data-nosnippet>403</a>        <span class="macro">assert!</span>(had_errors);
+<a href=#404 id=404 data-nosnippet>404</a>        <span class="macro">assert_eq!</span>(<span class="kw-2">&amp;</span>output[..written], expectation);
+<a href=#405 id=405 data-nosnippet>405</a>    }
+<a href=#406 id=406 data-nosnippet>406</a>}
 </code></pre></div></section></main></body></html>

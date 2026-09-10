@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Provides function multiversioning."><title>multiversion in multiversion - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-1ed95124.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="multiversion" data-themes="" data-resource-suffix="" data-rustdoc-version="1.98.1 (48a229cea 2026-09-01)" data-channel="1.98.1" data-search-js="search-9944d736.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../static.files/storage-41dd4d93.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc attr"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">multiversion</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../multiversion/index.html">multiversion</a><span class="version">0.9.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">multiversion</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#example" title="Example">Example</a></li><li><a href="#notes-on-dispatcher-performance" title="Notes on dispatcher performance">Notes on dispatcher performance</a><ul><li><a href="#feature-detection-is-performed-only-once" title="Feature detection is performed only once">Feature detection is performed only once</a></li><li><a href="#dispatcher-elision" title="Dispatcher elision">Dispatcher elision</a></li></ul></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="index.html">In crate multiversion</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="index.html">multiversion</a></div><h1>Attribute Macro <span class="attr">multiversion</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/multiversion_macros/lib.rs.html#17-20">Source</a> </span></div><pre class="rust item-decl"><code>#[multiversion]</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Provides function multiversioning.</p>
+<p>The annotated function is compiled multiple times, once for each target, and the
+best target is selected at runtime.</p>
+<p>Options:</p>
+<ul>
+<li><code>targets</code>
+<ul>
+<li>Takes a list of targets, such as <code>targets("x86_64+avx2", "x86_64+sse4.1")</code>.</li>
+<li>Target priority is first to last.  The first matching target is used.</li>
+<li>May also take a special value <code>targets = "simd"</code> to automatically multiversion for common
+SIMD target features.</li>
+</ul>
+</li>
+<li><code>attrs</code>
+<ul>
+<li>Takes a list of attributes to attach to each target clone function.</li>
+</ul>
+</li>
+<li><code>dispatcher</code>
+<ul>
+<li>Selects the preferred dispatcher. Defaults to <code>default</code>.
+<ul>
+<li><code>default</code>: If the <code>std</code> feature is enabled, uses either <code>direct</code> or <code>indirect</code>,
+attempting to choose the fastest choice.  If the <code>std</code> feature is not enabled, uses <code>static</code>.</li>
+<li><code>static</code>: Detects features at compile time from the enabled target features.</li>
+<li><code>indirect</code>: Detect features at runtime, and dispatches with an indirect function call.
+Cannot be used with type or const generics, bounded lifetimes, <code>async</code>, or <code>impl Trait</code>.
+This is usually the default.</li>
+<li><code>direct</code>: Detects features at runtime, and dispatches with direct function calls. This is
+the default on functions that do not support indirect dispatch, or in the presence of
+indirect branch exploit mitigations such as retpolines.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
+<p>This function is a good candidate for optimization using SIMD.
+The following compiles <code>square</code> three times, once for each target and once for the generic
+target.  Calling <code>square</code> selects the appropriate version at runtime.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>multiversion::multiversion;
+
+<span class="attr">#[multiversion(targets(<span class="string">"x86_64+avx"</span>, <span class="string">"x86+sse"</span>))]
+</span><span class="kw">fn </span>square(x: <span class="kw-2">&amp;mut </span>[f32]) {
+    <span class="kw">for </span>v <span class="kw">in </span>x {
+        <span class="kw-2">*</span>v <span class="kw-2">*</span>= <span class="kw-2">*</span>v
+    }
+}</code></pre></div>
+<p>This example is similar, but targets all supported SIMD instruction sets (not just the two shown above):</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>multiversion::multiversion;
+
+<span class="attr">#[multiversion(targets = <span class="string">"simd"</span>)]
+</span><span class="kw">fn </span>square(x: <span class="kw-2">&amp;mut </span>[f32]) {
+    <span class="kw">for </span>v <span class="kw">in </span>x {
+        <span class="kw-2">*</span>v <span class="kw-2">*</span>= <span class="kw-2">*</span>v
+    }
+}</code></pre></div><h2 id="notes-on-dispatcher-performance"><a class="doc-anchor" href="#notes-on-dispatcher-performance">§</a>Notes on dispatcher performance</h2><h4 id="feature-detection-is-performed-only-once"><a class="doc-anchor" href="#feature-detection-is-performed-only-once">§</a>Feature detection is performed only once</h4>
+<p>The <code>direct</code> and <code>indirect</code> dispatchers perform function selection on the first invocation.
+This is implemented with a static atomic variable containing the selected function.</p>
+<p>This implementation has a few benefits:</p>
+<ul>
+<li>The function selector is typically only invoked once.  Subsequent calls are reduced to an
+atomic load.</li>
+<li>If called in multiple threads, there is no contention.  Both threads may perform feature
+detection, but the atomic ensures these are synchronized correctly.</li>
+</ul>
+<h4 id="dispatcher-elision"><a class="doc-anchor" href="#dispatcher-elision">§</a>Dispatcher elision</h4>
+<p>If the optimal set of features is already known to exist at compile time, the entire dispatcher
+is elided. For example, if the highest priority target requires <code>avx512f</code> and the function is
+compiled with <code>RUSTFLAGS=-Ctarget-cpu=skylake-avx512</code>, the function is not multiversioned and
+the highest priority target is used.</p>
+</div></details></section></div></main></body></html>
