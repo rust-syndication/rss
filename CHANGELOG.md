@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 2.1.2 - 2026-09-10
+
+- Escape XML special characters in namespace URIs when writing channels. [`#196`](https://github.com/rust-syndication/rss/pull/196)
+
 ## 2.1.1 - 2026-09-06
 
 - Fix image height validation to accept values up to the RSS 2.0 limit of 400 pixels. [`#194`](https://github.com/rust-syndication/rss/pull/194)
