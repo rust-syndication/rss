@@ -10,7 +10,7 @@ This project follows [Semantic Versioning](https://semver.org/):
 ## Prepare the release
 
 1. Start a `release/X.Y.Z` branch from the latest `master`.
-2. Update the package version in `Cargo.toml`.
+2. Update the package version with `cargo set-version X.Y.Z`.
 3. Add a dated `X.Y.Z` section below `Unreleased` in `CHANGELOG.md`. Include all
    user-visible changes since the previous release and link their pull requests.
 4. Commit only the version and release documentation changes with the subject
