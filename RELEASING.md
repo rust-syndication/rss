@@ -32,10 +32,23 @@ This project follows [Semantic Versioning](https://semver.org/):
    `CHANGELOG.md` contain the intended version.
 3. Run `cargo publish --dry-run` once more from the clean release commit, then
    publish it with `cargo publish`.
-4. Create a GitHub release and tag named `X.Y.Z` for the same commit. Use the
-   changelog entry as the release notes, or generate equivalent notes on GitHub.
-5. Confirm that the version is available on crates.io and that the GitHub tag
-   points to the published commit.
+4. Create the GitHub release with automatically generated notes. Pass the full
+   release commit SHA so the new tag cannot accidentally point to a later
+   `master` commit:
+
+   ```console
+   gh release create X.Y.Z \
+     --repo rust-syndication/rss \
+     --target RELEASE_COMMIT_SHA \
+     --title X.Y.Z \
+     --generate-notes \
+     --fail-on-no-commits
+   ```
+
+   If the tag does not exist, this command creates it at `RELEASE_COMMIT_SHA`.
+5. Confirm that the version is available on crates.io. Run
+   `gh release view X.Y.Z --repo rust-syndication/rss` and confirm that the
+   GitHub release and tag point to the published commit.
 
 Published crate versions cannot be overwritten, so resolve any version,
 packaging, or CI problem before running `cargo publish`.
