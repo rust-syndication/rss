@@ -39,8 +39,8 @@ impl StdError for Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            Error::Utf8(ref err) => fmt::Display::fmt(err, f),
-            Error::Xml(ref err) => fmt::Display::fmt(err, f),
+            Error::Utf8(_) => f.write_str("failed to decode RSS text as UTF-8"),
+            Error::Xml(_) => f.write_str("failed to process RSS XML"),
             Error::InvalidStartTag => write!(f, "the input did not begin with an rss tag"),
             Error::Eof => write!(f, "reached end of input without finding a complete channel"),
         }

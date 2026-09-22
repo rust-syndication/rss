@@ -48,9 +48,9 @@ impl StdError for ValidationError {
 impl fmt::Display for ValidationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            ValidationError::DateParsing(ref err) => err.fmt(f),
-            ValidationError::IntParsing(ref err) => err.fmt(f),
-            ValidationError::UrlParsing(ref err) => err.fmt(f),
+            ValidationError::DateParsing(_) => write!(f, "Unable to parse date"),
+            ValidationError::IntParsing(_) => write!(f, "Unable to parse integer"),
+            ValidationError::UrlParsing(_) => write!(f, "Unable to parse URL"),
             ValidationError::MimeParsing(_) => write!(f, "Unable to parse MIME type"),
             ValidationError::Validation(ref s) => write!(f, "{}", s),
         }
