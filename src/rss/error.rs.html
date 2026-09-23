@@ -39,8 +39,8 @@
 <a href=#39 id=39 data-nosnippet>39</a><span class="kw">impl </span>fmt::Display <span class="kw">for </span>Error {
 <a href=#40 id=40 data-nosnippet>40</a>    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
 <a href=#41 id=41 data-nosnippet>41</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-<a href=#42 id=42 data-nosnippet>42</a>            Error::Utf8(<span class="kw-2">ref </span>err) =&gt; fmt::Display::fmt(err, f),
-<a href=#43 id=43 data-nosnippet>43</a>            Error::Xml(<span class="kw-2">ref </span>err) =&gt; fmt::Display::fmt(err, f),
+<a href=#42 id=42 data-nosnippet>42</a>            Error::Utf8(<span class="kw">_</span>) =&gt; f.write_str(<span class="string">"failed to decode RSS text as UTF-8"</span>),
+<a href=#43 id=43 data-nosnippet>43</a>            Error::Xml(<span class="kw">_</span>) =&gt; f.write_str(<span class="string">"failed to process RSS XML"</span>),
 <a href=#44 id=44 data-nosnippet>44</a>            Error::InvalidStartTag =&gt; <span class="macro">write!</span>(f, <span class="string">"the input did not begin with an rss tag"</span>),
 <a href=#45 id=45 data-nosnippet>45</a>            Error::Eof =&gt; <span class="macro">write!</span>(f, <span class="string">"reached end of input without finding a complete channel"</span>),
 <a href=#46 id=46 data-nosnippet>46</a>        }
