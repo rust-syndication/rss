@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"attr":["target_cfg","target_cfg_attr"],"macro":["match_target","target_cfg_f"]};

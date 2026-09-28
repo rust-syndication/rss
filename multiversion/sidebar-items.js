@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"attr":["inherit_target","multiversion","target"],"mod":["target"]};
