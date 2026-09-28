@@ -18,9 +18,11 @@ fn image_height_limit() {
     image.validate().expect("image height 400 should be valid");
 
     image.height = Some("401".into());
-    image
+    let err = image
         .validate()
         .expect_err("image height 401 should exceed the RSS limit");
+    assert!(matches!(err, ValidationError::Validation(_)));
+    assert!(err.source().is_none());
 }
 
 #[test]
