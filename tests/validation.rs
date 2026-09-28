@@ -37,5 +37,5 @@ fn enclosure_mime_type_error_keeps_source() {
     assert!(matches!(err, ValidationError::MimeParsing(_)));
     assert_eq!(err.to_string(), "Unable to parse MIME type");
     let source = err.source().expect("MIME parse error should be the source");
-    assert!(source.to_string().contains("slash"));
+    assert!(source.is::<mime::FromStrError>());
 }

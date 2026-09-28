@@ -41,7 +41,7 @@ impl StdError for ValidationError {
             ValidationError::IntParsing(ref err) => Some(err),
             ValidationError::UrlParsing(ref err) => Some(err),
             ValidationError::MimeParsing(ref err) => Some(err),
-            _ => None,
+            ValidationError::Validation(_) => None,
         }
     }
 }
