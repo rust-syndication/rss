@@ -30,6 +30,8 @@ use crate::source::Source;
 use crate::toxml::{ToXml, WriterExt};
 use crate::util::{decode, element_text, skip};
 
+const CONTENT_NAMESPACE: &str = "http://purl.org/rss/1.0/modules/content/";
+
 /// Represents an item in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -667,6 +669,9 @@ impl Item {
                                 Some(ns @ dublincore::NAMESPACE) => {
                                     extension_entry(&mut extensions, ns, name).push(ext);
                                 }
+                                Some(CONTENT_NAMESPACE) if name == "encoded" => {
+                                    item.content = ext.value;
+                                }
                                 _ => extension_entry(&mut item.extensions, prefix, name).push(ext),
                             }
                         } else {
@@ -773,10 +778,7 @@ impl ToXml for Item {
     fn used_namespaces(&self) -> BTreeMap<String, String> {
         let mut namespaces = BTreeMap::new();
         if self.content.is_some() {
-            namespaces.insert(
-                "content".to_owned(),
-                "http://purl.org/rss/1.0/modules/content/".to_owned(),
-            );
+            namespaces.insert("content".to_owned(), CONTENT_NAMESPACE.to_owned());
         }
         if let Some(ext) = self.itunes_ext() {
             namespaces.extend(ext.used_namespaces());
