@@ -1,5 +1,8 @@
 extern crate rss;
 
+use quick_xml::events::Event;
+use quick_xml::name::{Namespace, ResolveResult};
+use quick_xml::NsReader;
 use rss::{
     extension, extension::itunes::ITunesChannelExtensionBuilder, CategoryBuilder, Channel,
     ChannelBuilder, CloudBuilder, EnclosureBuilder, GuidBuilder, ImageBuilder, Item, ItemBuilder,
@@ -187,6 +190,47 @@ fn test_content_namespace() {
     assert!(xml.contains("xmlns:content="));
     assert!(!xml.contains("xmlns:dc="));
     assert!(!xml.contains("xmlns:itunes="));
+}
+
+fn encoded_namespaces(xml: &str) -> Vec<Option<String>> {
+    let mut reader = NsReader::from_str(xml);
+    let mut namespaces = Vec::new();
+    loop {
+        match reader.read_resolved_event().expect("failed to read xml") {
+            (ns, Event::Start(element)) if element.local_name().as_ref() == b"encoded" => {
+                namespaces.push(match ns {
+                    ResolveResult::Bound(Namespace(uri)) => {
+                        Some(String::from_utf8_lossy(uri).into_owned())
+                    }
+                    _ => None,
+                });
+            }
+            (_, Event::Eof) => return namespaces,
+            _ => {}
+        }
+    }
+}
+
+#[test]
+fn test_content_prefix_conflict() {
+    let content_ns = Some("http://purl.org/rss/1.0/modules/content/".to_owned());
+
+    let input = r#"<rss version="2.0" xmlns:ce="http://purl.org/rss/1.0/modules/content/" xmlns:content="urn:other"><channel><item><ce:encoded>body</ce:encoded></item></channel></rss>"#;
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let xml = channel.to_string();
+    assert_eq!(encoded_namespaces(&xml), vec![content_ns.clone()]);
+    test_write!(channel);
+
+    let mut namespaces = BTreeMap::new();
+    namespaces.insert("content".to_string(), "urn:other".to_string());
+    let channel = ChannelBuilder::default()
+        .namespaces(namespaces)
+        .item(ItemBuilder::default().content("body".to_owned()).build())
+        .build();
+    let xml = channel.to_string();
+    assert_eq!(encoded_namespaces(&xml), vec![content_ns]);
+    let parsed = xml.parse::<Channel>().expect("failed to parse xml");
+    assert_eq!(parsed.items()[0].content(), Some("body"));
 }
 
 #[test]

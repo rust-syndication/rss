@@ -29,7 +29,7 @@ use crate::extension::util::{
 };
 use crate::extension::ExtensionMap;
 use crate::image::Image;
-use crate::item::Item;
+use crate::item::{content_prefix, Item};
 use crate::textinput::TextInput;
 use crate::toxml::{ToXml, WriterExt};
 use crate::util::{decode, element_text, skip};
@@ -1453,7 +1453,9 @@ impl ToXml for Channel {
             ext.to_xml(&self.namespaces, writer)?;
         }
 
-        writer.write_objects(&self.items)?;
+        for item in &self.items {
+            item.to_xml_with_namespaces(&self.namespaces, writer)?;
+        }
 
         writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
@@ -1463,6 +1465,9 @@ impl ToXml for Channel {
         let mut namespaces = BTreeMap::new();
         for item in &self.items {
             namespaces.extend(item.used_namespaces());
+        }
+        if let Some(ns) = namespaces.remove("content") {
+            namespaces.insert(content_prefix(&self.namespaces), ns);
         }
         if let Some(ext) = self.itunes_ext() {
             namespaces.extend(ext.used_namespaces());
