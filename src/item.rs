@@ -30,6 +30,26 @@ use crate::source::Source;
 use crate::toxml::{ToXml, WriterExt};
 use crate::util::{decode, element_text, skip};
 
+const CONTENT_NAMESPACE: &str = "http://purl.org/rss/1.0/modules/content/";
+
+/// Returns the prefix to write the content under: `content`, unless `namespaces` binds it to
+/// another namespace, in which case a prefix bound to the content namespace or a free one.
+pub(crate) fn content_prefix(namespaces: &BTreeMap<String, String>) -> String {
+    match namespaces.get("content") {
+        Some(ns) if ns != CONTENT_NAMESPACE => namespaces
+            .iter()
+            .find(|(_, ns)| *ns == CONTENT_NAMESPACE)
+            .map(|(prefix, _)| prefix.clone())
+            .unwrap_or_else(|| {
+                (1..)
+                    .map(|i| format!("content{}", i))
+                    .find(|prefix| !namespaces.contains_key(prefix))
+                    .unwrap()
+            }),
+        _ => "content".to_owned(),
+    }
+}
+
 /// Represents an item in an RSS feed.
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Default, Clone, PartialEq)]
@@ -667,6 +687,9 @@ impl Item {
                                 Some(ns @ dublincore::NAMESPACE) => {
                                     extension_entry(&mut extensions, ns, name).push(ext);
                                 }
+                                Some(CONTENT_NAMESPACE) if name == "encoded" => {
+                                    item.content = ext.value;
+                                }
                                 _ => extension_entry(&mut item.extensions, prefix, name).push(ext),
                             }
                         } else {
@@ -695,10 +718,14 @@ impl Item {
 
         Ok(item)
     }
-}
 
-impl ToXml for Item {
-    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+    /// Serializes this item, writing the content under the prefix `namespaces` binds to the
+    /// content module.
+    pub(crate) fn to_xml_with_namespaces<W: Write>(
+        &self,
+        namespaces: &BTreeMap<String, String>,
+        writer: &mut Writer<W>,
+    ) -> Result<(), XmlError> {
         let name = "item";
 
         writer.write_event(Event::Start(BytesStart::new(name)))?;
@@ -742,7 +769,8 @@ impl ToXml for Item {
         }
 
         if let Some(content) = self.content.as_ref() {
-            writer.write_cdata_element("content:encoded", content)?;
+            let element = format!("{}:encoded", content_prefix(namespaces));
+            writer.write_cdata_element(element, content)?;
         }
 
         for map in self.extensions.values() {
@@ -769,14 +797,17 @@ impl ToXml for Item {
         writer.write_event(Event::End(BytesEnd::new(name)))?;
         Ok(())
     }
+}
+
+impl ToXml for Item {
+    fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError> {
+        self.to_xml_with_namespaces(&BTreeMap::new(), writer)
+    }
 
     fn used_namespaces(&self) -> BTreeMap<String, String> {
         let mut namespaces = BTreeMap::new();
         if self.content.is_some() {
-            namespaces.insert(
-                "content".to_owned(),
-                "http://purl.org/rss/1.0/modules/content/".to_owned(),
-            );
+            namespaces.insert("content".to_owned(), CONTENT_NAMESPACE.to_owned());
         }
         if let Some(ext) = self.itunes_ext() {
             namespaces.extend(ext.used_namespaces());

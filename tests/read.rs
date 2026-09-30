@@ -256,6 +256,22 @@ fn read_content() {
 }
 
 #[test]
+fn read_content_altprefix() {
+    let input = include_str!("data/content_altprefix.xml");
+    let channel = input.parse::<Channel>().expect("failed to parse xml");
+    let item = channel.items().get(0).unwrap();
+
+    assert_eq!(
+        item.content(),
+        Some("An example <a href=\"http://example.com/\">link</a>.")
+    );
+    assert_eq!(
+        item.extensions()["ce"]["format"][0].value(),
+        Some("text/html")
+    );
+}
+
+#[test]
 fn read_source() {
     let input = include_str!("data/source.xml");
     let channel = input.parse::<Channel>().expect("failed to parse xml");
