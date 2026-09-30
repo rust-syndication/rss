@@ -29,7 +29,7 @@
 <a href=#29 id=29 data-nosnippet>29</a>};
 <a href=#30 id=30 data-nosnippet>30</a><span class="kw">use </span><span class="kw">crate</span>::extension::ExtensionMap;
 <a href=#31 id=31 data-nosnippet>31</a><span class="kw">use </span><span class="kw">crate</span>::image::Image;
-<a href=#32 id=32 data-nosnippet>32</a><span class="kw">use </span><span class="kw">crate</span>::item::Item;
+<a href=#32 id=32 data-nosnippet>32</a><span class="kw">use </span><span class="kw">crate</span>::item::{content_prefix, Item};
 <a href=#33 id=33 data-nosnippet>33</a><span class="kw">use </span><span class="kw">crate</span>::textinput::TextInput;
 <a href=#34 id=34 data-nosnippet>34</a><span class="kw">use </span><span class="kw">crate</span>::toxml::{ToXml, WriterExt};
 <a href=#35 id=35 data-nosnippet>35</a><span class="kw">use </span><span class="kw">crate</span>::util::{decode, element_text, skip};
@@ -1453,45 +1453,50 @@
 <a href=#1453 id=1453 data-nosnippet>1453</a>            ext.to_xml(<span class="kw-2">&amp;</span><span class="self">self</span>.namespaces, writer)<span class="question-mark">?</span>;
 <a href=#1454 id=1454 data-nosnippet>1454</a>        }
 <a href=#1455 id=1455 data-nosnippet>1455</a>
-<a href=#1456 id=1456 data-nosnippet>1456</a>        writer.write_objects(<span class="kw-2">&amp;</span><span class="self">self</span>.items)<span class="question-mark">?</span>;
-<a href=#1457 id=1457 data-nosnippet>1457</a>
-<a href=#1458 id=1458 data-nosnippet>1458</a>        writer.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
-<a href=#1459 id=1459 data-nosnippet>1459</a>        <span class="prelude-val">Ok</span>(())
-<a href=#1460 id=1460 data-nosnippet>1460</a>    }
-<a href=#1461 id=1461 data-nosnippet>1461</a>
-<a href=#1462 id=1462 data-nosnippet>1462</a>    <span class="kw">fn </span>used_namespaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BTreeMap&lt;String, String&gt; {
-<a href=#1463 id=1463 data-nosnippet>1463</a>        <span class="kw">let </span><span class="kw-2">mut </span>namespaces = BTreeMap::new();
-<a href=#1464 id=1464 data-nosnippet>1464</a>        <span class="kw">for </span>item <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.items {
-<a href=#1465 id=1465 data-nosnippet>1465</a>            namespaces.extend(item.used_namespaces());
-<a href=#1466 id=1466 data-nosnippet>1466</a>        }
-<a href=#1467 id=1467 data-nosnippet>1467</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.itunes_ext() {
-<a href=#1468 id=1468 data-nosnippet>1468</a>            namespaces.extend(ext.used_namespaces());
-<a href=#1469 id=1469 data-nosnippet>1469</a>        }
-<a href=#1470 id=1470 data-nosnippet>1470</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.dublin_core_ext() {
-<a href=#1471 id=1471 data-nosnippet>1471</a>            namespaces.extend(ext.used_namespaces());
-<a href=#1472 id=1472 data-nosnippet>1472</a>        }
-<a href=#1473 id=1473 data-nosnippet>1473</a>        <span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
-<a href=#1474 id=1474 data-nosnippet>1474</a>        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.atom_ext() {
-<a href=#1475 id=1475 data-nosnippet>1475</a>            namespaces.extend(ext.used_namespaces());
-<a href=#1476 id=1476 data-nosnippet>1476</a>        }
-<a href=#1477 id=1477 data-nosnippet>1477</a>        namespaces
-<a href=#1478 id=1478 data-nosnippet>1478</a>    }
-<a href=#1479 id=1479 data-nosnippet>1479</a>}
-<a href=#1480 id=1480 data-nosnippet>1480</a>
-<a href=#1481 id=1481 data-nosnippet>1481</a><span class="kw">impl </span>FromStr <span class="kw">for </span>Channel {
-<a href=#1482 id=1482 data-nosnippet>1482</a>    <span class="kw">type </span><span class="prelude-val">Err </span>= Error;
-<a href=#1483 id=1483 data-nosnippet>1483</a>
-<a href=#1484 id=1484 data-nosnippet>1484</a>    <span class="attr">#[inline]
-<a href=#1485 id=1485 data-nosnippet>1485</a>    </span><span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Channel, Error&gt; {
-<a href=#1486 id=1486 data-nosnippet>1486</a>        Channel::read_from(s.as_bytes())
-<a href=#1487 id=1487 data-nosnippet>1487</a>    }
-<a href=#1488 id=1488 data-nosnippet>1488</a>}
-<a href=#1489 id=1489 data-nosnippet>1489</a>
-<a href=#1490 id=1490 data-nosnippet>1490</a><span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
-<a href=#1491 id=1491 data-nosnippet>1491</a></span><span class="kw">impl </span>ChannelBuilder {
-<a href=#1492 id=1492 data-nosnippet>1492</a>    <span class="doccomment">/// Builds a new `Channel`.
-<a href=#1493 id=1493 data-nosnippet>1493</a>    </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Channel {
-<a href=#1494 id=1494 data-nosnippet>1494</a>        <span class="self">self</span>.build_impl().unwrap()
-<a href=#1495 id=1495 data-nosnippet>1495</a>    }
-<a href=#1496 id=1496 data-nosnippet>1496</a>}
+<a href=#1456 id=1456 data-nosnippet>1456</a>        <span class="kw">for </span>item <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.items {
+<a href=#1457 id=1457 data-nosnippet>1457</a>            item.to_xml_with_namespaces(<span class="kw-2">&amp;</span><span class="self">self</span>.namespaces, writer)<span class="question-mark">?</span>;
+<a href=#1458 id=1458 data-nosnippet>1458</a>        }
+<a href=#1459 id=1459 data-nosnippet>1459</a>
+<a href=#1460 id=1460 data-nosnippet>1460</a>        writer.write_event(Event::End(BytesEnd::new(name)))<span class="question-mark">?</span>;
+<a href=#1461 id=1461 data-nosnippet>1461</a>        <span class="prelude-val">Ok</span>(())
+<a href=#1462 id=1462 data-nosnippet>1462</a>    }
+<a href=#1463 id=1463 data-nosnippet>1463</a>
+<a href=#1464 id=1464 data-nosnippet>1464</a>    <span class="kw">fn </span>used_namespaces(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BTreeMap&lt;String, String&gt; {
+<a href=#1465 id=1465 data-nosnippet>1465</a>        <span class="kw">let </span><span class="kw-2">mut </span>namespaces = BTreeMap::new();
+<a href=#1466 id=1466 data-nosnippet>1466</a>        <span class="kw">for </span>item <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.items {
+<a href=#1467 id=1467 data-nosnippet>1467</a>            namespaces.extend(item.used_namespaces());
+<a href=#1468 id=1468 data-nosnippet>1468</a>        }
+<a href=#1469 id=1469 data-nosnippet>1469</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(ns) = namespaces.remove(<span class="string">"content"</span>) {
+<a href=#1470 id=1470 data-nosnippet>1470</a>            namespaces.insert(content_prefix(<span class="kw-2">&amp;</span><span class="self">self</span>.namespaces), ns);
+<a href=#1471 id=1471 data-nosnippet>1471</a>        }
+<a href=#1472 id=1472 data-nosnippet>1472</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.itunes_ext() {
+<a href=#1473 id=1473 data-nosnippet>1473</a>            namespaces.extend(ext.used_namespaces());
+<a href=#1474 id=1474 data-nosnippet>1474</a>        }
+<a href=#1475 id=1475 data-nosnippet>1475</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.dublin_core_ext() {
+<a href=#1476 id=1476 data-nosnippet>1476</a>            namespaces.extend(ext.used_namespaces());
+<a href=#1477 id=1477 data-nosnippet>1477</a>        }
+<a href=#1478 id=1478 data-nosnippet>1478</a>        <span class="attr">#[cfg(feature = <span class="string">"atom"</span>)]
+<a href=#1479 id=1479 data-nosnippet>1479</a>        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(ext) = <span class="self">self</span>.atom_ext() {
+<a href=#1480 id=1480 data-nosnippet>1480</a>            namespaces.extend(ext.used_namespaces());
+<a href=#1481 id=1481 data-nosnippet>1481</a>        }
+<a href=#1482 id=1482 data-nosnippet>1482</a>        namespaces
+<a href=#1483 id=1483 data-nosnippet>1483</a>    }
+<a href=#1484 id=1484 data-nosnippet>1484</a>}
+<a href=#1485 id=1485 data-nosnippet>1485</a>
+<a href=#1486 id=1486 data-nosnippet>1486</a><span class="kw">impl </span>FromStr <span class="kw">for </span>Channel {
+<a href=#1487 id=1487 data-nosnippet>1487</a>    <span class="kw">type </span><span class="prelude-val">Err </span>= Error;
+<a href=#1488 id=1488 data-nosnippet>1488</a>
+<a href=#1489 id=1489 data-nosnippet>1489</a>    <span class="attr">#[inline]
+<a href=#1490 id=1490 data-nosnippet>1490</a>    </span><span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Channel, Error&gt; {
+<a href=#1491 id=1491 data-nosnippet>1491</a>        Channel::read_from(s.as_bytes())
+<a href=#1492 id=1492 data-nosnippet>1492</a>    }
+<a href=#1493 id=1493 data-nosnippet>1493</a>}
+<a href=#1494 id=1494 data-nosnippet>1494</a>
+<a href=#1495 id=1495 data-nosnippet>1495</a><span class="attr">#[cfg(feature = <span class="string">"builders"</span>)]
+<a href=#1496 id=1496 data-nosnippet>1496</a></span><span class="kw">impl </span>ChannelBuilder {
+<a href=#1497 id=1497 data-nosnippet>1497</a>    <span class="doccomment">/// Builds a new `Channel`.
+<a href=#1498 id=1498 data-nosnippet>1498</a>    </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Channel {
+<a href=#1499 id=1499 data-nosnippet>1499</a>        <span class="self">self</span>.build_impl().unwrap()
+<a href=#1500 id=1500 data-nosnippet>1500</a>    }
+<a href=#1501 id=1501 data-nosnippet>1501</a>}
 </code></pre></div></section></main></body></html>
