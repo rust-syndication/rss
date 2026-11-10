@@ -1015,3 +1015,33 @@ fn read_local_namespace_hijack() {
     assert!(channel.dublin_core_ext().is_some());
     assert_eq!(channel.dublin_core_ext().unwrap().creators, vec!["Creator"]);
 }
+
+#[test]
+fn read_iso_8859_1() {
+    let mut xml = b"<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\
+        <rss version=\"2.0\"><channel><title>Caf"
+        .to_vec();
+    xml.push(0xE9);
+    xml.extend_from_slice(
+        b"</title><link>http://example.com</link><description>d</description></channel></rss>",
+    );
+    let channel = Channel::read_from(&xml[..]).expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "Café");
+}
+
+#[test]
+fn read_iso_8859_1_long_declaration() {
+    // The declaration is longer than 64 bytes.
+    // https://github.com/tafia/quick-xml/issues/1040
+    let mut xml = b"<?xml version=\"1.0\"                          encoding=\"ISO-8859-1\"?>\
+        <rss version=\"2.0\"><channel><title>Caf"
+        .to_vec();
+    xml.push(0xE9);
+    xml.extend_from_slice(
+        b"</title><link>http://example.com</link><description>d</description></channel></rss>",
+    );
+    let channel = Channel::read_from(&xml[..]).expect("failed to parse xml");
+
+    assert_eq!(channel.title(), "Café");
+}
