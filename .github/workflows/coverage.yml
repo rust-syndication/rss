@@ -9,9 +9,6 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     container:
       image: xd009642/tarpaulin:develop-nightly
       options: --security-opt seccomp=unconfined
@@ -30,6 +27,3 @@ jobs:
           --test-threads=1
     - name: Upload coverage report to Codecov
       uses: codecov/codecov-action@v6
-      with:
-        use_oidc: true
-        fail_ci_if_error: true
