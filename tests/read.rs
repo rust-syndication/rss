@@ -1032,6 +1032,7 @@ fn read_iso_8859_1() {
 
 #[test]
 fn read_iso_8859_1_long_declaration() {
+    // The declaration is longer than 64 bytes.
     // https://github.com/tafia/quick-xml/issues/1040
     let mut xml = b"<?xml version=\"1.0\"                          encoding=\"ISO-8859-1\"?>\
         <rss version=\"2.0\"><channel><title>Caf"
