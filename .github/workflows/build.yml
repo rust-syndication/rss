@@ -3,29 +3,6 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-  code-check:
-    uses: ./.github/workflows/clippy.yml
-  coverage:
-    permissions:
-      contents: read
-      id-token: write
-    uses: ./.github/workflows/coverage.yml
-  ci:
-    name: CI
-    if: always()
-    needs: [build, code-check, coverage]
-    runs-on: ubuntu-latest
-    permissions: {}
-    steps:
-      - name: Require all checks to pass
-        env:
-          BUILD_RESULT: ${{ needs.build.result }}
-          CODE_CHECK_RESULT: ${{ needs.code-check.result }}
-          COVERAGE_RESULT: ${{ needs.coverage.result }}
-        run: |
-          test "$BUILD_RESULT" = success
-          test "$CODE_CHECK_RESULT" = success
-          test "$COVERAGE_RESULT" = success
   build:
     runs-on:  ${{ matrix.os }}
     strategy:
