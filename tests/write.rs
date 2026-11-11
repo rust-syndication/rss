@@ -497,3 +497,34 @@ fn test_atom_write_item() {
 </rss>"#
     );
 }
+
+#[test]
+fn test_control_characters_replaced() {
+    let channel = ChannelBuilder::default()
+        .title("Chan\u{1E}nel\u{8}")
+        .items(vec![ItemBuilder::default()
+            .title("a\u{0}b\tc\nd".to_string())
+            .content("<p>x\u{1F}y</p>".to_string())
+            .enclosure(
+                EnclosureBuilder::default()
+                    .url("http://example.com/a\u{B}.mp3")
+                    .build(),
+            )
+            .build()])
+        .build();
+
+    let output = channel.to_string();
+    assert!(
+        !output.contains(|c| matches!(c, '\0'..='\u{8}' | '\u{B}' | '\u{C}' | '\u{E}'..='\u{1F}'))
+    );
+
+    let parsed = output.parse::<Channel>().expect("failed to parse xml");
+    assert_eq!(parsed.title(), "Chan\u{FFFD}nel\u{FFFD}");
+    let item = &parsed.items()[0];
+    assert_eq!(item.title(), Some("a\u{FFFD}b\tc\nd"));
+    assert_eq!(item.content(), Some("<p>x\u{FFFD}y</p>"));
+    assert_eq!(
+        item.enclosure().unwrap().url(),
+        "http://example.com/a\u{FFFD}.mp3"
+    );
+}
