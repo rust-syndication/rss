@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Replace control characters that XML 1.0 forbids with U+FFFD when writing channels. [`#204`](https://github.com/rust-syndication/rss/pull/204)
+
 ## 2.1.2 - 2026-09-10
 
 - Escape XML special characters in namespace URIs when writing channels. [`#196`](https://github.com/rust-syndication/rss/pull/196)

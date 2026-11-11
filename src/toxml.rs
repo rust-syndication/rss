@@ -6,11 +6,39 @@
 // it under the terms of the MIT License and/or Apache 2.0 License.
 
 use std::collections::BTreeMap;
-use std::io::Write;
+use std::io::{self, Write};
 
 use quick_xml::events::{BytesCData, BytesEnd, BytesStart, BytesText, Event};
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
+
+/// Writes U+FFFD for each control character XML 1.0 forbids.
+pub(crate) struct XmlSafeWriter<W>(pub(crate) W);
+
+impl<W> XmlSafeWriter<W> {
+    pub(crate) fn into_inner(self) -> W {
+        self.0
+    }
+}
+
+impl<W: Write> Write for XmlSafeWriter<W> {
+    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+        let forbidden = |b: &u8| matches!(b, 0x00..=0x08 | 0x0B | 0x0C | 0x0E..=0x1F);
+        let mut chunks = buf.split(forbidden);
+        if let Some(first) = chunks.next() {
+            self.0.write_all(first)?;
+        }
+        for chunk in chunks {
+            self.0.write_all("\u{FFFD}".as_bytes())?;
+            self.0.write_all(chunk)?;
+        }
+        Ok(buf.len())
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        self.0.flush()
+    }
+}
 
 pub trait ToXml {
     fn to_xml<W: Write>(&self, writer: &mut Writer<W>) -> Result<(), XmlError>;

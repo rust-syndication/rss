@@ -31,7 +31,7 @@ use crate::extension::ExtensionMap;
 use crate::image::Image;
 use crate::item::{content_prefix, Item};
 use crate::textinput::TextInput;
-use crate::toxml::{ToXml, WriterExt};
+use crate::toxml::{ToXml, WriterExt, XmlSafeWriter};
 use crate::util::{decode, element_text, skip};
 
 /// Represents the channel of an RSS feed.
@@ -1119,7 +1119,7 @@ impl Channel {
         }
     }
 
-    fn write<W: Write>(&self, mut writer: Writer<W>) -> Result<W, Error> {
+    fn write<W: Write>(&self, mut writer: Writer<XmlSafeWriter<W>>) -> Result<W, Error> {
         writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("utf-8"), None)))?;
 
         let name = "rss";
@@ -1142,7 +1142,7 @@ impl Channel {
 
         writer.write_event(Event::End(BytesEnd::new(name)))?;
 
-        Ok(writer.into_inner())
+        Ok(writer.into_inner().into_inner())
     }
 
     /// Attempt to write the RSS channel as XML to a writer.
@@ -1155,7 +1155,7 @@ impl Channel {
     /// channel.write_to(writer).unwrap();
     /// ```
     pub fn write_to<W: Write>(&self, writer: W) -> Result<W, Error> {
-        self.write(::quick_xml::Writer::new(writer))
+        self.write(::quick_xml::Writer::new(XmlSafeWriter(writer)))
     }
 
     /// Attempt to write the RSS channel as pretty XML to a writer.
@@ -1174,7 +1174,7 @@ impl Channel {
         indent_size: usize,
     ) -> Result<W, Error> {
         self.write(::quick_xml::Writer::new_with_indent(
-            writer,
+            XmlSafeWriter(writer),
             indent_char,
             indent_size,
         ))
